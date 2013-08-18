@@ -13,5 +13,6 @@ Altis isn't out yet, so for now it's just a placeholder :)
        TPG - AgentREV
        KoS - His_Shadow
        KoS - Bewilderbeest
+           - MercyfullFate
        
 
