@@ -10,10 +10,8 @@ Altis isn't out yet, so for now it's just a placeholder :)
 *Colabotators:* (a.k.a.: Team Wasteland)
 
        GoT - JoSchaap
-       TPG - AgentREV
+       TPG - AgentRev
        KoS - His_Shadow
        KoS - Bewilderbeest
        404 - Costly
-           - MercyfullFate
-       
-
+           - MercyfulFate
