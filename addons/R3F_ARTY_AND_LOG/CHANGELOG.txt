@@ -1,0 +1,47 @@
+v1.6
+- Added : smoke shells and cluster shells (sub-munitions/DPICM)
+- Added : the mortar of the Stryker MC has now the artillery features
+- Added : check if the AI is really able to aim in the requested direction before firing
+
+v1.5
+- Added : the AIs can now receive and execute a fire order
+- Added : virtual magazines system wich allows to add different charges and effects without addon
+- Added : MLRS and BM-21 Grad ballistics calculation for AA:OA and AA:CO 1.54+
+- Added : config variables to give access to the artillery computer from inside or outside
+- Added : the M109 gun from the vilas' project '85 is in the default configuration
+- Fixed : compatibility with the OA 1.54 patch
+- Fixed : UTF-8 encoding for the language files
+- Improved : source optimization and beautification
+
+v1.4
+- Added : compatibility to ArmA 2 (alone) + Operation Arrowhead (alone) + Combined Operations (A2 + OA)
+- Added : the Arrowhead (and ArmA 2) objects are now in the logisitics default config
+- Added : the ACE OA objects are now in the logisitics default config
+- Improved : the artillery system now manages both north-west and south-west origin coord systems
+- Added : many new island heights are listed in the config file
+- The stringtable.csv is replaced by a simpler alternative system
+- Fixed : script warning when a JIP player was not fully initialized
+- Added : we can now remove the logistics system (like we already could with the artillery part)
+
+v1.3
+- Improved : Lightweightness of the logistics (objects auto-detection)
+- Improved : Fire solution search algorithm (max duration decreased and script warning removed)
+- Fixed : Something seemed to make the ArmA 2 game engine unstable on specific computer configurations
+- Only the players in the same faction are now displayed in the arty computer interface
+- Help in the arty computer interface slightly improved
+
+v1.2
+- Fix the displayed value for elevation when the artillery piece is in slope
+- Adjust the cost capacity of the containers which were equals to their own capacity
+- Optimization of the ballistic calculations (speed and precision)
+- The longitude/latitude coordinates format are now in a 4 digits notation
+- The fire adjustments is now in a "Add, Drop, Left, Right + Dir. to target" notation
+- Add the possibility to close/open the interface in an artillery piece
+
+v1.1
+- Fix of a bug with velocity of objects with ACE2
+- Add the possibility to have a non-movable artillery command quarter
+- Some additionnal precisions in the explanation about the ballistic table generation
+
+v1.0
+- First public release
