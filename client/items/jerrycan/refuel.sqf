@@ -38,7 +38,7 @@ _success = [DURATION, ANIMATION, _checks, [_vehicle]] call mf_util_playUntil;
 if (_success) then {
     // the fuel qty is handled by mf_remote_refuel.
     // will execute locally if _currVehicle is local
-	[[netId _vehicle], "mf_remote_refuel",_vehicle] spawn BIS_fnc_MP;
+	[[netId _vehicle], "mf_remote_refuel",_vehicle] spawn TPG_fnc_MP;
 	[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_remove;
 	[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_add;
     ["Refueling Completed", 5] call mf_notify_client;
