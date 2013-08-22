@@ -31,10 +31,10 @@ player createDiaryRecord["info",
 	Development of this current version by:<br/>
 	* JoSchaap (GoT/Tweakers.Net)<br/>
 	* AgentREV (TPG/TeamPlayerGaming)<br/>
-	* MercyFullfate<br/>
+	* MercyFulfate<br/>
 	* His_Shadow (KoS/KillonSight)<br/>
 	* Bewilderbeast (KoS/KillonSight)<br/>
-	* Costly (404/404Games)<br/>
+	* Costlyy (404/404Games)<br/>
 	<br/>
 	<br/>
 	Others that contributed:<br/>
