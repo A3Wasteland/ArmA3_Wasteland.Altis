@@ -13,5 +13,5 @@ Altis isn't out yet, so for now it's just a placeholder :)
        TPG - AgentRev
        KoS - His_Shadow
        KoS - Bewilderbeest
-       404 - Costly
+       404 - Costlyy
            - MercyfulFate
