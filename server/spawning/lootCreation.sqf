@@ -92,11 +92,8 @@ randomweapon_weaponlist = [
 ["SMG_01_F","30Rnd_45ACP_Mag_SMG_01"],
 ["SMG_02_F","30Rnd_9x21_Mag"],
 ["hgun_ACPC2_snds_F","9Rnd_45ACP_Mag"],
-["hgun_ACPC2_F","9Rnd_45ACP_Mag"],
 ["hgun_P07_snds_F","16Rnd_9x21_Mag"],
-["hgun_P07_F","16Rnd_9x21_Mag"],
 ["hgun_Rook40_snds_F","16Rnd_9x21_Mag"],
-["hgun_Rook40_F","16Rnd_9x21_Mag"]
 ];
 
 
@@ -141,9 +138,20 @@ randomweapon_itemlist = [
 			_numf = (random 100);
 			if (_numf < _oddfuelcan) then {
 				_item setVariable["fuel", true, true];
+				_item setVariable["mf_item_id", MF_ITEMS_JERRYCAN_FULL, true]
 			} else {
 				_item setVariable["fuel", false, true];
+				_item setVariable["mf_item_id", MF_ITEMS_JERRYCAN_EMPTY, true]
 			};
+		};
+		if(_class == "Land_Basket_F") then {
+			_item setVariable["mf_item_id", MF_ITEMS_CANNED_FOOD, true]
+		};
+		if(_class == "Land_Bucket_F") then {
+			_item setVariable["mf_item_id", MF_ITEMS_WATER, true]
+		};
+		if(_class == "Land_Suitcase_F") then {
+			_item setVariable["mf_item_id", MF_ITEMS_REPAIR_KIT, true]
 		};
 		_item setPos _position;
     };

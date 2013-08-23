@@ -50,7 +50,7 @@ switch _key do
         _currPos = getPosATL player;
         
         _gunStore = nearestObjects [_currPos, ["C_man_1_1_F"], _storeInteractionZone];    
-        _genStore = nearestObjects [_currPos, ["C_man_1_2_F"], _storeInteractionZone];   
+        _genStore = nearestObjects [_currPos, ["C_man_polo_6_F"], _storeInteractionZone];   
         
         if (!isNull (_gunStore select 0)) then {
         	_relativeDir = [player, _gunStore select 0] call BIS_fnc_relativeDirTo;
