@@ -4,8 +4,8 @@
 //	Adjusted for Arma3 Wasteland use by: [GoT] JoSchaap (GoT2DayZ.nl), 
 //	Player near town spawning concept by: Na_Palm (BIS-Forums)
 
-_odd1 = 60;					//The odds that a building is selected to place loot.
-_odd2 = 50;					//The odds that the selected building's spots will have loot(almost like odds per room).
+_odd1 = 80;					//The odds that a building is selected to place loot.
+_odd2 = 30;					//The odds that the selected building's spots will have loot(almost like odds per room).
 _odditem = 45;					//Chance of item instead of weapon
 _oddfuelcan = 35;				//Chance of a spawned fuelcan to be full instead of empty
 _spawnradius = 50;				//Distance added to the radius around city's original marker to spawn loot (expands the radius with this value)
@@ -138,20 +138,20 @@ randomweapon_itemlist = [
 			_numf = (random 100);
 			if (_numf < _oddfuelcan) then {
 				_item setVariable["fuel", true, true];
-				_item setVariable["mf_item_id", MF_ITEMS_JERRYCAN_FULL, true]
+				_item setVariable["mf_item_id", MF_ITEMS_JERRYCAN_FULL, true];
 			} else {
 				_item setVariable["fuel", false, true];
-				_item setVariable["mf_item_id", MF_ITEMS_JERRYCAN_EMPTY, true]
+				_item setVariable["mf_item_id", MF_ITEMS_JERRYCAN_EMPTY, true];
 			};
 		};
 		if(_class == "Land_Basket_F") then {
-			_item setVariable["mf_item_id", MF_ITEMS_CANNED_FOOD, true]
+			_item setVariable["mf_item_id", MF_ITEMS_CANNED_FOOD, true];
 		};
 		if(_class == "Land_Bucket_F") then {
-			_item setVariable["mf_item_id", MF_ITEMS_WATER, true]
+			_item setVariable["mf_item_id", MF_ITEMS_WATER, true];
 		};
 		if(_class == "Land_Suitcase_F") then {
-			_item setVariable["mf_item_id", MF_ITEMS_REPAIR_KIT, true]
+			_item setVariable["mf_item_id", MF_ITEMS_REPAIR_KIT, true];
 		};
 		_item setPos _position;
     };

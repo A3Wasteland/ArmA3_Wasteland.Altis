@@ -28,7 +28,7 @@ if (!isNil "_inviterUID") then {
 	};
 }forEach playableUnits;
 
-if(_groupExists == true) then
+if(_groupExists) then
 {
 	[player] join (group _inviter);
     player globalChat format["you have accepted the invite"];
