@@ -93,7 +93,7 @@ randomweapon_weaponlist = [
 ["SMG_02_F","30Rnd_9x21_Mag"],
 ["hgun_ACPC2_snds_F","9Rnd_45ACP_Mag"],
 ["hgun_P07_snds_F","16Rnd_9x21_Mag"],
-["hgun_Rook40_snds_F","16Rnd_9x21_Mag"],
+["hgun_Rook40_snds_F","16Rnd_9x21_Mag"]
 ];
 
 
