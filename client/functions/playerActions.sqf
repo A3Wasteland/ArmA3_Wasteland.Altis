@@ -17,6 +17,6 @@ aActionsIDs = aActionsIDs + [player addAction["<img image='client\icons\money.pa
 aActionsIDs = aActionsIDs + [player addAction[("<img image='\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa' width='32' height='32'/> <t color=""#FFFFFF"">Cancel Action</t>"), "noscript.sqf", 'doCancelAction = true;', 1, false, false, "", 'mutexScriptInProgress']];
 
 //stores (not sure if this works, needs testing tonight!)
-aActionsIDs = aActionsIDs + [player addAction["<img image='\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\attack_ca.paa' width='32' height='32'/> Open gun store", "[] spawn loadGunStore;", [], 1, false, false, "", '(vehicle player == player) && player distance (nearestobjects [player, ["C_man_1_1_F"],  3] select 0) < 3']];
-aActionsIDs = aActionsIDs + [player addAction["<img image='\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\defend_ca.paa' width='32' height='32'/> Open general store", "[] spawn loadGeneralStore;", [], 1, false, false, "", '(vehicle player == player) && player distance (nearestobjects [player, ["C_man_1_2_F"],  3] select 0) < 3']];
+aActionsIDs = aActionsIDs + [player addAction["<img image='\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\attack_ca.paa' width='32' height='32'/> Open gun store", "[] spawn loadGunStore;", [], 1, false, false, "", '(vehicle player == player) && player distance (nearestobjects [player, ["C_man_1_1_F"],  3] select 0) < 2']];
+aActionsIDs = aActionsIDs + [player addAction["<img image='\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\defend_ca.paa' width='32' height='32'/> Open general store", "[] spawn loadGeneralStore;", [], 1, false, false, "", '(vehicle player == player) && player distance (nearestobjects [player, ["C_man_polo_6_F"],  3] select 0) < 2']];
 
