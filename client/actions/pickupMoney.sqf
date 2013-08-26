@@ -33,7 +33,7 @@ if (isNil "_moneyBag") exitWith
 
 if (!((toLower (_moneyBag getVariable ["owner", ""])) in ["world", getPlayerUID player])) exitWith
 {
-	player globalChat "This object is already in use.";
+	player globalChat "This bag is empty or already in use.";
 	mutexScriptInProgress = false;
 };
 
