@@ -13,14 +13,15 @@ private ["_MainMissions","_mission","_missionType","_notPlayedMainMissions","_ne
 diag_log format["WASTELAND SERVER - Started Main Mission State"];
 
 _MainMissions = [[mission_ArmedHeli,"mission_ArmedHeli"],
-	[mission_ArmedDiversquad,"mission_ArmedDiversquad"],
+	//[mission_ArmedDiversquad,"mission_ArmedDiversquad"],
 	[mission_LightArmVeh,"mission_LightArmVeh"],
-	[mission_HostileHeliFormation,"mission_HostileHeliFormation"],
+	//[mission_HostileHeliFormation,"mission_HostileHeliFormation"],
 	[mission_CivHeli,"mission_CivHeli"],
-	[mission_Coastal_Convoy,"mission_Coastal_Convoy"],
+	//[mission_Coastal_Convoy,"mission_Coastal_Convoy"],
 	[mission_APC,"mission_APC"],
-	[mission_Outpost,"mission_Outpost"],
-	[mission_Convoy,"mission_Convoy"]]; 
+	[mission_Outpost,"mission_Outpost"]
+	//[mission_Convoy,"mission_Convoy"]
+	]; 
 
 _notPlayedMainMissions = +_MainMissions;
 

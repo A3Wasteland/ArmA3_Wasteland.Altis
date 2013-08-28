@@ -14,7 +14,7 @@ X_Server = false;
 X_Client = false;
 X_JIP = false;
 hitStateVar = false;
-versionName = "Wasteland v1";
+versionName = "Wasteland v0.1";
 
 // Compile a function from a file.
 // if in debug mode, the function will be dyncamically compiled every call.

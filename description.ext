@@ -12,11 +12,11 @@ class Header
 	minPlayers=1;
 	maxPlayers=65;
 };
-author="The Wasteland Team";
-OnLoadName = "Wasteland (v1)";
-OnLoadMission = "Wasteland is a harsh survival sandbox where 2 teams and independent players fight for survival. For more info, hints or tips open the map (M), and click on [HOW-TO-PLAY] <img size='4' image='client\icons\logo.paa'/>";
-overviewText = "Wasteland is a harsh survival sandbox where 2 teams and independent players fight for survival. For more info, hints or tips open the map (M), and click on [HOW-TO-PLAY] <img size='4' image='client\icons\logo.paa'/>";
-overviewTextLocked = "Wasteland is a harsh survival sandbox where 2 teams and independent players fight for survival. For more info, hints or tips open the map (M), and click on [HOW-TO-PLAY] <img size='4' image='client\icons\logo.paa'/>";
+author="JoSchaap";
+OnLoadName = "Wasteland ALTIS(v0)";
+OnLoadMission = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
+overviewText = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
+overviewTextLocked = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
 overviewPicture = "Loading.jpg";
 //Dialog includes
 #include "addons\R3F_ARTY_AND_LOG\desc_include.h"

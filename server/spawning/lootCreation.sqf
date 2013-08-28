@@ -137,21 +137,21 @@ randomweapon_itemlist = [
 		if(_class == "Land_CanisterFuel_F") then {
 			_numf = (random 100);
 			if (_numf < _oddfuelcan) then {
-				_item setVariable["fuel", true, true];
-				_item setVariable["mf_item_id", MF_ITEMS_JERRYCAN_FULL, true];
+				//_item setVariable["fuel", true, true];
+				_item setVariable["mf_item_id", "jerrycan_full", true];
 			} else {
-				_item setVariable["fuel", false, true];
-				_item setVariable["mf_item_id", MF_ITEMS_JERRYCAN_EMPTY, true];
+				//_item setVariable["fuel", false, true];
+				_item setVariable["mf_item_id", "jerrycan_empty", true];
 			};
 		};
 		if(_class == "Land_Basket_F") then {
-			_item setVariable["mf_item_id", MF_ITEMS_CANNED_FOOD, true];
+			_item setVariable["mf_item_id", "canned_food", true];
 		};
 		if(_class == "Land_Bucket_F") then {
-			_item setVariable["mf_item_id", MF_ITEMS_WATER, true];
+			_item setVariable["mf_item_id", "water", true];
 		};
 		if(_class == "Land_Suitcase_F") then {
-			_item setVariable["mf_item_id", MF_ITEMS_REPAIR_KIT, true];
+			_item setVariable["mf_item_id", "repair_kit", true];
 		};
 		_item setPos _position;
     };
