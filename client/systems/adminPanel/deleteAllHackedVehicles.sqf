@@ -1,5 +1,4 @@
-
-{ deleteVehicle (_x select 0) } forEach (call findHackedVehicle);
+{ deleteVehicle (_x select 0) } forEach (call findHackedVehicles);
 
 player commandChat "All Hacked Vehicles Deleted";
 
