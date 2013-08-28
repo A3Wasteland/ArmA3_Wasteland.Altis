@@ -32,7 +32,7 @@ _vehicleClass = ["O_MRAP_02_gmg_F","B_MRAP_01_hmg_F","B_MRAP_01_gmg_F","O_MRAP_0
 _vehicle = [_vehicleClass,_randomPos,0,1,0.35,"NONE"] call createMissionVehicle;
 
 _picture = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "picture");
-_vehicleName = _vehicleClass;
+_vehicleName = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "displayName");
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>An armed <t color='%4'> %3</t>, has been spoted in the area marked! it seems to be immobile, it might just need fuel!</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor];
 messageSystem = _hint;
 publicVariable "messageSystem";

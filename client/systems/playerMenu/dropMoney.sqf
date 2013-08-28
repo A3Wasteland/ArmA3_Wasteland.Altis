@@ -20,7 +20,7 @@ if((player getVariable "cmoney" < _money) OR (player getVariable "cmoney" < 0)) 
 mutexScriptInProgress = true;
 _pos = getPosATL player;
 player playmove "AinvPknlMstpSlayWrflDnon";
-_cash = "Land_Sack_F" createVehicle (position player); _cash setPos _pos;
+_cash = "Land_Money_F" createVehicle (position player); _cash setPos _pos;
 _cash setVariable["money",_money,true];
 _cash setVariable["owner","world",true];
 player setVariable["cmoney",(player getVariable "cmoney") - _money,true];

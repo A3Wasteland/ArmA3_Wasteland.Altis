@@ -83,7 +83,7 @@ for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 _amount = MF_ITEMS_CAMO_NET call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Improv. roof"];
+	playerInventory set [_index, "Camo Net"];
 	_index = _index + 1;
 };
 

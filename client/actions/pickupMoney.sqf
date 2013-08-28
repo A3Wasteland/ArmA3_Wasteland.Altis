@@ -18,7 +18,7 @@ _bagDistance = 5;
 _lockDuration = 3;
 _originalState = animationState player;
 
-_moneyBags = nearestObjects [player, ["Land_Sack_F"], _bagDistance];
+_moneyBags = nearestObjects [player, ["Land_Money_F"], _bagDistance];
 
 if (count _moneyBags > 0) then
 {

@@ -176,24 +176,28 @@ generalStore = compileFinal str [
 	["Jerry Can (Full)","fuelFull",localize "STR_WL_ShopDescriptions_fuelFull","client\icons\jerrycan.paa",150,75],
     ["Jerry Can (Empty)","fuelEmpty",localize "STR_WL_ShopDescriptions_fuelEmpty","client\icons\jerrycan.paa",50,25],
     ["Spawn Beacon","Spawn Beacon",localize "STR_WL_ShopDescriptions_spawnBeacon","client\icons\briefcase.paa",1500,750],
-    ["Improv. roof","Spawn Beacon",localize "STR_WL_ShopDescriptions_Camo","client\icons\briefcase.paa",200,100]
+    ["Camo Net","Camo Net",localize "STR_WL_ShopDescriptions_Camo","client\icons\briefcase.paa",200,100]
 ];
 
 // Stratis town and city array
 //Marker Name, Radius, City Name
 cityList = compileFinal str [
-		["Town_1",500,"Kavala"],
-		["Town_2",400,"Agios Dionysios"],
-		["Town_3",350,"Abdera"],
-		["Town_4",250,"Athira"],			
-		["Town_5",250,"Telos"],
-		["Town_6",350,"Sofia"],
+		["Town_1",400,"Kavala"],
+		["Town_2",300,"Agios Dionysios"],
+		["Town_3",150,"Abdera"],
+		["Town_4",200,"Athira"],			
+		["Town_5",200,"Telos"],
+		["Town_6",250,"Sofia"],
 		["Town_7",250,"Paros"],
 		["Town_8",300,"Pyrgos"],
-		["Town_9",250,"Selakano"],
-		["Town_10",300,"Vikos"],
-		["Town_11",350,"Zaros"]
-
+		["Town_9",150,"Selakano"],
+		["Town_10",200,"Vikos"],
+		["Town_11",250,"Zaros"],
+		["Town_12",300,"Neochori"],
+		["Town_13",200,"Aggelochori"],
+		["Town_14",200,"Panochori"],			
+		["Town_15",200,"Charkia"],
+		["Town_16",150,"Chalkeia"]
 ];
 
 cityLocations = [];
