@@ -11,7 +11,7 @@ _counter = 0;
 
 //changed to 1/3rd of the ammount to see if performance increases
 
-for "_i" from 1 to 252 step 2 do  
+for "_i" from 1 to 300 step 3 do  
 {
     _pos = getMarkerPos format ["Spawn_%1", _i];
 	_newpos = [_pos, 40, 55, 2, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;
