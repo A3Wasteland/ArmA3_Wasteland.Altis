@@ -20,7 +20,7 @@ _doUnlock = 1;
 _est_desactive = _objet getVariable "R3F_LOG_disabled";
 if (isNil "_est_desactive") then
 {
-	_objet setVariable ["R3F_LOG_disabled", false];
+	_objet setVariable ["R3F_LOG_disabled", false];  //on altis its smarter to only enable deplacement on objects we WANT players to move so if it doesnt find an r3f tag, it disables r3f on the object
 };
 
 // Définition locale de la variable si elle n'est pas définie sur le réseau
