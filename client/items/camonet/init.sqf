@@ -8,8 +8,8 @@ private ["_path","_ground_type", "_icon", "_unpack", "_pack"];
 _path = _this;
 
 MF_ITEMS_CAMO_NET = "camo_net";
-MF_ITEMS_CAMO_NET_TYPE = "Land_cargo_addon02_V2_F";
-_ground_type = "Land_cargo_addon02_V2_F";
+MF_ITEMS_CAMO_NET_TYPE = "CamoNet_INDP_open_F";
+_ground_type = "CamoNet_INDP_open_F";
 _icon = "client\icons\gunner.paa";
 
 _pack = [_path, "pack.sqf"] call mf_compile;
@@ -24,7 +24,7 @@ mf_items_camo_net_nearest = {
     _camonet;
 };
 
-[MF_ITEMS_CAMO_NET, "Improv. roof", _unpack, _ground_type, _icon, 1] call mf_inventory_create;
+[MF_ITEMS_CAMO_NET, "Camo Net", _unpack, _ground_type, _icon, 1] call mf_inventory_create;
 
 private ["_label", "_condition", "_action"];
 _label = format["<img image='%1' width='32' height='32' /> Packup Camouflage Netting", _icon];

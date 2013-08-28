@@ -7,7 +7,7 @@
 
 aActionsIDs = [];
 //Pickup Money
-aActionsIDs = aActionsIDs + [player addAction["<img image='client\icons\money.paa' width='32' height='32'/> Pickup Money", "client\actions\pickupMoney.sqf", [], 1, false, false, "", 'player distance (nearestobjects [player, ["Land_Sack_F"],  5] select 0) < 5']];
+aActionsIDs = aActionsIDs + [player addAction["<img image='client\icons\money.paa' width='32' height='32'/> Pickup Money", "client\actions\pickupMoney.sqf", [], 1, false, false, "", 'player distance (nearestobjects [player, ["Land_Money_F"],  5] select 0) < 5']];
 
 //Interact with radar trucks
 //aActionsIDs = aActionsIDs + [player addAction[("<t color=""#21DE31"">Deploy radar</t>"), "client\functions\radarDeploy.sqf",nil, 6, false, false, "", '_currRadar = (nearestobjects [player, ["M1133_MEV_EP1"],  5]); player distance (_currRadar select 0) < 5; ((nearestObjects[player, ["M1133_MEV_EP1"], 10] select 0) getVariable "deployed") == 0']];

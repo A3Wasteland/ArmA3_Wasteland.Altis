@@ -77,7 +77,7 @@ _to_delete_quick = [];
 [_player, objNull] call mf_player_actions_refresh;
 
 if((_player getVariable "cmoney") > 0) then {
-	_m = "Land_Sack_F" createVehicle (position _player);
+	_m = "Land_Money_F" createVehicle (position _player);
 	_m setVariable["money", (_player getVariable "cmoney"), true];
 	_m setVariable ["owner", "world", true];
 	_player setVariable["cmoney",0,true];

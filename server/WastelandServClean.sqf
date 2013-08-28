@@ -26,7 +26,7 @@ while { true } do
 			{
 				deleteVehicle _x;
 				_delQtyO = _delQtyO + 1;
-			} forEach (nearestobjects [_x, ["Land_Sack_F", "Land_Basket_F", "Land_Bucket_F", "Land_Suitcase_F", "Land_CanisterFuel_F"], _itemDistance] );
+			} forEach (nearestobjects [_x, ["Land_Money_F", "Land_Basket_F", "Land_Bucket_F", "Land_Suitcase_F", "Land_CanisterFuel_F"], _itemDistance] );
 			
 			deleteVehicle _x;
 			_delQtyP = _delQtyP + 1;

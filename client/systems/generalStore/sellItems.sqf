@@ -29,7 +29,7 @@ for [{_x=0},{_x<=_size},{_x=_x+1}] do
     if(_itemText == "Jerry Can (Full)") then {[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_remove;};
     if(_itemText == "Jerry Can (Empty)") then {[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_remove;};
     if(_itemText == "Spawn Beacon") then {[MF_ITEMS_SPAWN_BEACON, 1] call mf_inventory_remove;};
-	if(_itemText == "Improv. roof") then {[MF_ITEMS_CAMO_NET, 1] call mf_inventory_remove;};
+	if(_itemText == "Camo Net") then {[MF_ITEMS_CAMO_NET, 1] call mf_inventory_remove;};
 };
 
 player setVariable["cmoney",_playerMoney + genStoreCart,true];
