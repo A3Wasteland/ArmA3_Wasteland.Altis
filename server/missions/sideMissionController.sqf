@@ -12,10 +12,11 @@ private ["_SideMissions","_mission","_missionType","_notPlayedSideMissions","_ne
 
 diag_log format["WASTELAND SERVER - Started Side Mission State"];
 
-_SideMissions = [[mission_SunkenSupplies,"Sunken Supplies"],
+_SideMissions = [
+//[mission_SunkenSupplies,"Sunken Supplies"],
 		[mission_WepCache,"mission_WepCache"],
-		[mission_HostileHelicopter,"mission_HostileHelicopter"],
-		[mission_MiniConvoy,"mission_MiniConvoy"],
+		//[mission_HostileHelicopter,"mission_HostileHelicopter"],
+		//[mission_MiniConvoy,"mission_MiniConvoy"],
 		[mission_Truck,"mission_Truck"],
 	        [mission_AirWreck,"mission_AirWreck"]]; 
 

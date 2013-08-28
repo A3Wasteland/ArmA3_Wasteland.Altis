@@ -12,7 +12,7 @@ _counter = 0;
 _countActual = 0;
 _i = 0;
 
-while {_counter < 6} do // 5 helis spawn at the beginning
+while {_counter < 12} do // 12 helis spawn at the beginning
 {
 	_selectedMarker = floor (random 24);
     if(_selectedMarker in currentStaticHelis) then

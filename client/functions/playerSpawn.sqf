@@ -52,8 +52,10 @@ if(doKickTeamSwitcher) exitWith {
 	[] spawn {sleep 20; endMission "LOSER";};
 };
 
-//Send player to debug to stop fake spawn locations.
-player setPos [3755.94,7945.76,0.00160313];
+//Send player to debug zone to stop fake spawn locations.
+player setPosATL [7837.37,7627.14,0.00230217];
+player setDir 333.429;
+//             
 
 titleText ["Loading...", "BLACK OUT", 0.00001];
 

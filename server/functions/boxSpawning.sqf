@@ -12,7 +12,7 @@ _counter = 0;
 
 _nerfBoxes = ["Box_East_Support_F","Box_East_Wps_F","Box_East_WpsSpecial_F","Box_NATO_Support_F","Box_NATO_Wps_F","Box_NATO_WpsSpecial_F"];
 
-for "_i" from 1 to 134 step 35 do
+for "_i" from 1 to 252 step 35 do
 {
 	_pos = getMarkerPos format ["Spawn_%1", _i];
     _currBox = _nerfBoxes call BIS_fnc_selectRandom;
