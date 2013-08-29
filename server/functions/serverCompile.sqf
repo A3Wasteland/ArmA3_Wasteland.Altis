@@ -62,6 +62,7 @@ defendArea2 = compile preprocessFileLineNumbers "server\functions\defendArea2.sq
 defendArea3 = compile preprocessFileLineNumbers "server\functions\defendArea3.sqf";
 checkHackedVehicles = compileFinal preprocessFileLineNumbers "server\functions\checkHackedVehicles.sqf";
 findClientPlayer = compileFinal preprocessFileLineNumbers "server\functions\findClientPlayer.sqf";
+hintBroadcast = compile preprocessFileLineNumbers "server\functions\hintBroadcast.sqf";
 
 //Spawning Compiles
 randomWeapons = compile preprocessFileLineNumbers "server\spawning\randomWeapon.sqf";
