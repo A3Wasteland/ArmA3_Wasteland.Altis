@@ -24,7 +24,7 @@ _max = {
 };
 
 mf_jerrycan_nearest_pump = {
-    _objects = nearestobjects [player, ["Land_FuelStation_Feed_F", "Land_MetalBarrel_F"],  3];
+    _objects = nearestobjects [player, ["Land_FuelStation_Feed_F", "Land_MetalBarrel_F", "Land_fs_feed_F", "Land_Tank_rust_F"],  3];
     _object = objNull;
     if (count _objects > 0) then {_object = _objects select 0;};
     _object;

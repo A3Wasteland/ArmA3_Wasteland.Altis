@@ -4,83 +4,99 @@
 //	Adjusted for Arma3 Wasteland use by: [GoT] JoSchaap (GoT2DayZ.nl), 
 //	Player near town spawning concept by: Na_Palm (BIS-Forums)
 
-_odd1 = 80;					//The odds that a building is selected to place loot.
+_odd1 = 65;					//The odds that a building is selected to place loot.
 _odd2 = 30;					//The odds that the selected building's spots will have loot(almost like odds per room).
-_odditem = 45;					//Chance of item instead of weapon
+_odditem = 65;					//Chance of item instead of weapon
 _oddfuelcan = 35;				//Chance of a spawned fuelcan to be full instead of empty
 _spawnradius = 50;				//Distance added to the radius around city's original marker to spawn loot (expands the radius with this value)
 _interval = 5400;				//Time (in sec.) to pass before a city spawns new loot
-randomweapontestint = 0.01;			//Sets the intervals in which weaponpositions are tested. (Lower = slower, but more accurate. Higher = faster, but less accurate.)
+randomweapontestint = 0.05;			//Sets the intervals in which weaponpositions are tested. (Lower = slower, but more accurate. Higher = faster, but less accurate.)
 									
 //Array of buildings that are eligeble to spawn loot in :)
-_spawnlootIN = [
-"Land_LightHouse_F", 
-"Land_Lighthouse_small_F", 
-"Land_Metal_Shed_F", 
-"Land_i_House_Big_01_V1_F", 
-"Land_i_House_Big_01_V1_dam_F", 
-"Land_i_House_Big_02_V1_F", 
-"Land_i_House_Big_02_V1_dam_F", 
-"Land_i_Shop_01_V1_F", 
-"Land_u_Addon_01_V1_F", 
-"Land_Addon_01_V1_dam_F", 
-"Land_u_Addon_02_V1_F", 
-"Land_i_Addon_03_V1_F", 
-"Land_i_Addon_03mid_V1_F", 
-"Land_i_Addon_04_V1_F", 
-"Land_i_Garage_V1_F", 
-"Land_Garage_V1_dam_F", 
-"Land_i_Shop_01_V1_dam_F", 
-"Land_i_Shop_02_V1_F", 
-"Land_i_Shop_02_V1_dam_F", 
-"Land_i_House_Small_01_V1_F", 
-"Land_i_House_Small_01_V1_dam_F", 
-"Land_i_House_Small_01_V2_dam_F", 
-"Land_i_House_Small_01_V2_F", 
-"Land_u_House_Small_01_V1_F", 
-"Land_u_House_Small_01_V1_dam_F", 
-"Land_i_House_Small_02_V1_F", 
-"Land_i_House_Small_02_V1_dam_F", 
-"Land_u_House_Small_02_V1_F", 
-"Land_u_House_Small_02_V1_dam_F", 
-"Land_i_House_Small_03_V1_F", 
-"Land_i_House_Small_03_V1_dam_F", 
-"Land_cargo_addon01_V1_F", 
-"Land_cargo_addon01_V2_F", 
-"Land_cargo_addon02_V2_F", 
-"Land_Slum_House01_F", 
-"Land_Slum_House02_F", 
-"Land_Slum_House03_F", 
-"Land_i_Stone_HouseBig_V1_F", 
-"Land_i_Stone_HouseBig_V1_dam_F", 
-"Land_i_Stone_Shed_V1_F", 
-"Land_i_Stone_Shed_V1_dam_F", 
-"Land_d_Stone_Shed_V1_F", 
-"Land_i_Stone_HouseSmall_V1_F", 
-"Land_i_Stone_HouseSmall_V1_dam_F", 
-"Land_Unfinished_Building_01_F", 
-"Land_Airport_Tower_F", 
-"Land_Airport_Tower_dam_F", 
-"Land_dp_bigTank_F", 
-"Land_dp_smallFactory_F", 
-"Land_dp_smallTank_F", 
-"Land_FuelStation_Build_F", 
-"Land_FuelStation_Shed_F", 
-"Land_ReservoirTank_Airport_F", 
-"Land_Shed_Big_F", 
-"Land_Shed_Small_F",  
-"Land_Communication_anchor_F", 
-"Land_Communication_F", 
-"Land_TBox_F", 
-"Land_TTowerBig_1_F", 
-"Land_TTowerBig_2_F", 
-"Land_i_Barracks_V1_F", 
-"Land_MilOffices_V1_F", 
-"Land_Radar_F"
+_buildCIV = [
+"Land_Airport_center_F",
+"Land_Airport_left_F",
+"Land_Airport_right_F",
+"Land_Airport_Tower_F",
+"Land_CarService_F",
+"Land_Castle_01_tower_F",
+"Land_Chapel_Small_V1_F",
+"Land_Chapel_Small_V2_F",
+"Land_Chapel_V1_F",
+"Land_Chapel_V2_F",
+"Land_dp_bigTank_F",
+"Land_dp_mainFactory_F",
+"Land_Hospital_main_F",
+"Land_Hospital_side1_F",
+"Land_Hospital_side2_F",
+"Land_i_Addon_02_V1_F",
+"Land_i_Addon_03_V1_F",
+"Land_i_Garage_V1_F",
+"Land_i_Garage_V2_F",
+"Land_i_House_Big_01_V1_F",
+"Land_i_House_Big_01_V2_F",
+"Land_i_House_Big_01_V3_F",
+"Land_i_House_Big_02_V1_F",
+"Land_i_House_Big_02_V2_F",
+"Land_i_House_Big_02_V3_F",
+"Land_i_House_Small_01_V1_F",
+"Land_i_House_Small_01_V2_F",
+"Land_i_House_Small_01_V3_F",
+"Land_i_House_Small_02_V1_F",
+"Land_i_House_Small_02_V2_F",
+"Land_i_House_Small_02_V3_F",
+"Land_i_House_Small_03_V1_F",
+"Land_i_Shed_Ind_F",
+"Land_i_Shop_01_V1_F",
+"Land_i_Shop_01_V2_F",
+"Land_i_Shop_01_V3_F",
+"Land_i_Shop_02_V1_F",
+"Land_i_Shop_02_V2_F",
+"Land_i_Shop_02_V3_F",
+"Land_i_Stone_HouseBig_V1_F",
+"Land_i_Stone_HouseBig_V2_F",
+"Land_i_Stone_HouseBig_V3_F",
+"Land_i_Stone_HouseSmall_V1_F",
+"Land_i_Stone_HouseSmall_V2_F",
+"Land_i_Stone_HouseSmall_V3_F",
+"Land_i_Stone_Shed_V1_F",
+"Land_i_Stone_Shed_V2_F",
+"Land_i_Stone_Shed_V3_F",
+"Land_i_Windmill01_F",
+"Land_Metal_Shed_F",
+"Land_Offices_01_V1_F",
+"Land_Slum_House01_F",
+"Land_Slum_House02_F",
+"Land_Slum_House03_F",
+"Land_spp_Tower_F",
+"Land_u_Addon_01_V1_F",
+"Land_u_Addon_02_V1_F",
+"Land_u_House_Small_01_V1_F",
+"Land_u_House_Small_02_V1_F",
+"Land_u_Shop_01_V1_F",
+"Land_u_Shop_02_V1_F",
+"Land_WIP_F"
 ];
 
+_buildMIL = [
+"Land_MilOffices_V1_F",
+"Land_i_Barracks_V2_F",
+"Land_i_Barracks_V2_F",
+"Land_Cargo_HQ_V1_F",
+"Land_Cargo_HQ_V2_F",
+"Land_Cargo_HQ_V3_F",
+"Land_Cargo_Patrol_V1_F",
+"Land_Cargo_Patrol_V2_F",
+"Land_Cargo_Patrol_V3_F",
+"Land_Hangar_F",
+"Land_Cargo_Tower_V1_F",
+"Land_Cargo_Tower_V2_F",
+"Land_Cargo_Tower_V3_F",
+"Land_Dome_Big_F",
+"Land_Dome_Small_F"
+];
 
-
+// weapons to be found in civilian buildings aside from items
 randomweapon_weaponlist = [
 ["arifle_SDAR_F","20Rnd_556x45_UW_mag"],
 ["arifle_TRG21_ACO_pointer_F","30Rnd_556x45_Stanag_Tracer_Red"],
@@ -94,6 +110,22 @@ randomweapon_weaponlist = [
 ["hgun_ACPC2_snds_F","9Rnd_45ACP_Mag"],
 ["hgun_P07_snds_F","16Rnd_9x21_Mag"],
 ["hgun_Rook40_snds_F","16Rnd_9x21_Mag"]
+];
+
+// weapons to be found in military buildings
+randomweapon_milweaponlist = [
+["arifle_MXC_F","30Rnd_65x39_caseless_mag"],
+["arifle_MXM_F","30Rnd_65x39_caseless_mag"],
+["arifle_TRG21_F","30Rnd_65x39_caseless_mag"],
+["arifle_TRG20_F","30Rnd_556x45_Stanag"],
+["arifle_MX_F","30Rnd_65x39_caseless_mag"],
+["arifle_MXC_F","30Rnd_65x39_caseless_mag"],
+["arifle_MXM_F","30Rnd_65x39_caseless_mag"],
+["arifle_Katiba_F","30Rnd_65x39_caseless_green"],
+["arifle_Katiba_C_F","30Rnd_65x39_caseless_green"],
+["arifle_MX_GL_F","30Rnd_65x39_caseless_mag"],
+["arifle_Katiba_GL_F","30Rnd_65x39_caseless_green"],
+["arifle_TRG21_GL_F","30Rnd_556x45_Stanag_Tracer_Red"]
 ];
 
 
@@ -120,6 +152,22 @@ randomweapon_itemlist = [
 		if((count((randomweapon_weaponlist) select _selectedgroup)) > 1) then {
 			for[{_rm = 0}, {_rm < (2 + floor(random(3)))}, {_rm = _rm + 1}] do {
 				_mag = randomweapon_weaponlist select _selectedgroup select ((floor(random((count(randomweapon_weaponlist select _selectedgroup) - 1)))) + 1);
+				_weaponholder addMagazineCargoGlobal [_mag, 1]; 
+			};
+		};
+		_weaponholder setPos _position;
+    };
+	
+	randomweaponspawnmilweapon = 
+	{
+		_position = _this;
+		_selectedgroup = (floor(random(count randomweapon_milweaponlist)));
+		_weapon = randomweapon_milweaponlist select _selectedgroup select 0;
+		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
+		_weaponholder addWeaponCargoGlobal [_weapon, 1];
+		if((count((randomweapon_milweaponlist) select _selectedgroup)) > 1) then {
+			for[{_rm = 0}, {_rm < (2 + floor(random(3)))}, {_rm = _rm + 1}] do {
+				_mag = randomweapon_milweaponlist select _selectedgroup select ((floor(random((count(randomweapon_milweaponlist select _selectedgroup) - 1)))) + 1);
 				_weaponholder addMagazineCargoGlobal [_mag, 1]; 
 			};
 		};
@@ -161,8 +209,8 @@ randomweapon_itemlist = [
 	spawnlootintown =
 	{
     _pos = _this;
-    randomweapon_buildings = nearestObjects [_pos, _spawnlootIN, _spawnradius];
-    sleep 30;
+    randomweapon_buildings = nearestObjects [_pos, _buildCIV, _spawnradius];
+    sleep 10;
 	{
 		_building = _x;
 		_buildingpos = [];
@@ -211,6 +259,51 @@ randomweapon_itemlist = [
 			};    
 		};
     }foreach randomweapon_buildings;
+	randomweapon_milbuildings = nearestObjects [_pos, _buildMIL, _spawnradius];
+	sleep 10;
+	{
+		_building = _x;
+		_buildingpos = [];
+		_endloop = false;
+		_poscount = 0;
+		while {!_endloop} do {
+			if(((_building buildingPos _poscount) select 0) != 0 && ((_building buildingPos _poscount) select 1) != 0) then {
+				_buildingpos = _buildingpos + [_building buildingPos _poscount];
+				_poscount = _poscount + 1;
+			} else {
+				_endloop = true;
+			};
+		};
+		_num = (random 100);
+		if (_num < _odd1) then {
+			if (count _buildingpos > 0) then {  
+				for[{_r = 0}, {_r < count _buildingpos}, {_r = _r + 1}] do
+				{
+					_num2 = (random 100);
+					if (_num2 < _odd2) then {
+						_pos = _buildingpos select _r;
+						_posnew = _pos;
+						if(_pos select 2 < 0) then {
+							_pos = [_pos select 0, _pos select 1, 1];
+						};
+						_z = 0;
+						_testpos = true;
+						while {_testpos} do 
+						{
+							if((!lineIntersects[ATLtoASL(_pos), ATLtoASL([_pos select 0, _pos select 1, (_pos select 2) - (randomweapontestint * _z)])]) && (!terrainIntersect[(_pos), ([_pos select 0, _pos select 1, (_pos select 2) - (randomweapontestint * _z)])]) && (_pos select 2 > 0)) then {
+								_posnew = [_pos select 0, _pos select 1, (_pos select 2) - (randomweapontestint * _z)];
+								_z = _z + 1;
+							} else {
+								_testpos = false;
+							};
+						};
+						_posnew = [_posnew select 0,_posnew select 1,(_posnew select 2) + 0.05];
+						_posnew call randomweaponspawnmilweapon;
+					};
+				};
+			};    
+		};
+    }foreach randomweapon_milbuildings;
 	};
 
 //-------------------------------------------------------------------------------------
