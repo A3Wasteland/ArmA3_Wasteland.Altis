@@ -64,8 +64,6 @@ if (serverSpawning == 1) then {
 	waitUntil{sleep 0.1; scriptDone _vehSpawn};
     _objSpawn = [] ExecVM "server\functions\objectsSpawning.sqf";
 	waitUntil{sleep 0.1; scriptDone _objSpawn};
-    _objSpawn2 = [] ExecVM "server\functions\objectsSpawning2.sqf";
-	waitUntil{sleep 0.1; scriptDone _objSpawn2};
     _heliSpawn = [] ExecVM "server\functions\staticHeliSpawning.sqf";
     waitUntil{sleep 0.1; scriptDone _heliSpawn};
     _boatSpawn = [] ExecVM "server\functions\BoatSpawning.sqf";
