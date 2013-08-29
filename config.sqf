@@ -200,4 +200,20 @@ cityList = compileFinal str [
 		["Town_16",150,"Chalkeia"]
 ];
 
+militarylist = compileFinal str [
+		["milSpawn_1"],
+		["milSpawn_2"],
+		["milSpawn_3"],
+		["milSpawn_4"],			
+		["milSpawn_5"],
+		["milSpawn_6"],
+		["milSpawn_7"],
+		["milSpawn_8"],
+		["milSpawn_9"],
+		["milSpawn_10"],
+		["milSpawn_11"],
+		["milSpawn_12"],
+		["milSpawn_13"]
+];
+
 cityLocations = [];

@@ -28,7 +28,9 @@ else
 	if (_num < 25) then { _cartype = mediumMilitaryVehicles call BIS_fnc_selectRandom; _type = 2 };
 };
 
-_pos = [_markerPos, 2, 45, ( if (_type == 1) then { 2 } else { 5 } ), 0, 60 * (pi / 180), 0, [], [_markerPos]] call BIS_fnc_findSafePos;
+//_pos = [_markerPos, 2, 25, ( if (_type == 1) then { 2 } else { 5 } ), 0, 60 * (pi / 180), 0, [], [_markerPos]] call BIS_fnc_findSafePos;
+// diabled as a test. might break other features
+_pos = _markerPos;
 
 //Car Initialization
 _car = createVehicle [_cartype,_pos, [], 0, "None"];
