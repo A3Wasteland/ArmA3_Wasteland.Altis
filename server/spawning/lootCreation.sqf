@@ -318,9 +318,14 @@ randomweapon_itemlist = [
 		_tradius = (_x select 1);
 		townarea_list set [count townarea_list, [_pos, _lastSpawned]];
 	}forEach (call citylist);
+	{
+		_pos = getMarkerPos (_x select 0);
+		_tradius = 200;
+		townarea_list set [count townarea_list, [_pos, _lastSpawned]];
+	}forEach (call militarylist);
 	while {true} do {
 		{
-			if ((isPlayer _x) && (alive _x)) then {
+			if ((isPlayer _x) && (alive _x) && (vehicle _x == _x)) then {
 				_posPlayer = getPos _x;
 				usedtown_list = [];
 				{
