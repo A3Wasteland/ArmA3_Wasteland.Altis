@@ -22,7 +22,7 @@ _lcounter = 0;
 	_vehammount = ((_tradius / 25) *2);  // spawns 2 vehicles for every 25 mtr radius the townmarker has, this might need tweaking! 
 	_minrad = 1;
 	_maxrad = 25;
-	while {(_counter < (_vehammount + 2))} do {
+	while {(_lcounter < (_vehammount + 2))} do {
 		_pos = [_pos,_minrad,_maxrad,1,0,0,0,[],[_pos]] call BIS_fnc_findSafePos;
 		[_pos] call vehicleCreation;
 		_counter = (_counter + 1);
