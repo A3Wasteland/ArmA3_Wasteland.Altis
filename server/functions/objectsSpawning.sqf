@@ -19,10 +19,10 @@ _lcounter = 0;
 	_pos = getMarkerPos (_x select 0);
 	_tradius = (_x select 1);
 	_townname = (_x select 2);
-	_objammount = ((_tradius / 25) *2);  // spawns 2 objects for every 25 mtr radius the townmarker has, this might need tweaking! 
-	_minrad = 1;
-	_maxrad = 25;
-	while {(_lcounter < (_objammount + 2))} do {
+	_objammount = (((_tradius / 25) *2) -2);  // spawns 2 objects for every 25 mtr radius the townmarker has, this might need tweaking! 
+	_minrad = 25;
+	_maxrad = 50;
+	while {(_lcounter < _objammount)} do {
 		_pos = [_pos,_minrad,_maxrad,2,0,60 * (pi / 180),0,[],[_pos]] call BIS_fnc_findSafePos;
 		[_pos] call objectCreation;
 		_counter = (_counter + 1);
