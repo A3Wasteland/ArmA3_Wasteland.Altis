@@ -40,6 +40,7 @@ class Mission
 		"A3_Structures_F_Mil_Cargo",
 		"A3_Structures_F_Mil_Flags",
 		"A3_Structures_F_Mil_Barracks",
+		"a3_structures_f_mil_shelters",
 		"A3_Structures_F_Training",
 		"A3_Structures_F_Ind_Cargo",
 		"A3_Structures_F_Dominants_Lighthouse",
