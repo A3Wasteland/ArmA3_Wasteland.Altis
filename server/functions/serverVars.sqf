@@ -53,6 +53,9 @@ BoatList = ["O_Boat_Transport_01_F","B_Boat_Transport_01_F","O_Lifeboat","B_Life
                             
 //Object List - Random Spawns.
 objectList = ["Land_Sacks_goods_F",
+			"Land_CncShelter_F",
+			"Land_HBarrierWall4_F",
+			"Land_HBarrierWall6_F",
 			"Land_HBarrierBig_F",
 			"Land_HBarrier_5_F",
 			"Land_LampShabby_F",
