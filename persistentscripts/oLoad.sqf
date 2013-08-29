@@ -27,7 +27,7 @@ for[{_i = 0}, {_i < _objectscount}, {_i = _i + 1}] do {
 			_obj setVariable["food",_supplyleft,true];
 		};
 
-		if(_class == "Land_BarrelWater_F") then 
+		if(_class == "Land_WaterBarrel_F") then 
 		{
 			_obj setVariable["water",_supplyleft,true];
 		};
