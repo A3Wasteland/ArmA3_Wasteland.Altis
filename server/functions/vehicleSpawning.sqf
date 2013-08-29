@@ -34,7 +34,7 @@ _lcounter = 0;
 		_minrad = (_minrad + 25);
 		_maxrad = (_maxrad + 25);
 	};	
-	diag_log format["WASTELAND DEBUG - spawned %1 Vehicles in: %2",_lcounter,_townname];
+	//diag_log format["WASTELAND DEBUG - spawned %1 Vehicles in: %2",_lcounter,_townname];
 	_lcounter = 0;
 }forEach (call citylist);
 

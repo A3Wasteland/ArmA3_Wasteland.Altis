@@ -64,12 +64,12 @@
 	#endif
 	
 	// Auto-d�tection permanente des objets sur le jeu
-	if (isDedicated) then
-	{
-		// Version all�g�e pour le serveur d�di�
-		execVM "addons\R3F_ARTY_AND_LOG\surveiller_nouveaux_objets_dedie.sqf";
-	}
-	else
+	if (!isDedicated) then
+//	{
+//		// Version all�g�e pour le serveur d�di�
+//		execVM "addons\R3F_ARTY_AND_LOG\surveiller_nouveaux_objets_dedie.sqf";
+//	}
+//	else
 	{
 		execVM "addons\R3F_ARTY_AND_LOG\surveiller_nouveaux_objets.sqf";
 	};
