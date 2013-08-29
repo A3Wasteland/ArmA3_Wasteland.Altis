@@ -52,8 +52,7 @@ while {true} do
 	
     diag_log format["WASTELAND SERVER - Execute New Side Mission: %1",_missionType];
     _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Side Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t color='%3' size='1.0'>Starting in %1 Minutes</t>", sideMissionDelayTime / 60, sideMissionColor, subTextColor];
-	messageSystem = _hint;
-	publicVariable "messageSystem";
+	[_hint] call hintBroadcast;
 	waitUntil{sleep 0.1; scriptDone _missionRunning};
     sleep 5;
 };

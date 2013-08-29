@@ -70,9 +70,11 @@ defendArea = compile preprocessFileLineNumbers "server\functions\defendArea.sqf"
 defendArea2 = compile preprocessFileLineNumbers "server\functions\defendArea2.sqf";
 defendArea3 = compile preprocessFileLineNumbers "server\functions\defendArea3.sqf";
 findClientPlayer = compileFinal preprocessFileLineNumbers "server\functions\findClientPlayer.sqf";
-hintBroadcast = compile preprocessFileLineNumbers "server\functions\hintBroadcast.sqf";
 fn_refillbox = compile preprocessFileLineNumbers "server\functions\fn_refillbox.sqf";
 fn_selectRandomWeighted = compileFinal preprocessFileLineNumbers "server\functions\fn_selectRandomWeighted.sqf";
+fn_refillbox = compile preprocessFileLineNumbers "server\functions\fn_refillbox.sqf";
+fn_selectRandomWeighted = compileFinal preprocessFileLineNumbers "server\functions\fn_selectRandomWeighted.sqf";
+hintBroadcast = compile preprocessFileLineNumbers "server\functions\hintBroadcast.sqf";
 
 //Spawning Compiles
 randomWeapons = compile preprocessFileLineNumbers "server\spawning\randomWeapon.sqf";

@@ -143,9 +143,7 @@ _marker setMarkerText "Coastal Patrol";
 _picture = getText (configFile >> "CfgVehicles" >> _randomboat >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _randomboat >> "displayName");
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> transporting 2 weapon crates, is patroling the coast with air-support. Stop them!</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor];
-messageSystem = _hint;
-if (!isDedicated) then { call serverMessage };
-publicVariable "messageSystem";
+[_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to be Finished: %1", _missionType];
 
@@ -175,9 +173,7 @@ if(_failed) then
 	{deleteVehicle _x;}forEach units _group;
 	deleteGroup _group; 
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
-    messageSystem = _hint;
-    if (!isDedicated) then { call serverMessage };
-    publicVariable "messageSystem";
+    [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
 	if not(isNil "_vehicle") then 
@@ -200,9 +196,7 @@ if(_failed) then
     [_ammobox2,"mission_USLaunchers2"] call fn_refillbox;
     deleteGroup _group;
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The patrol has been stopped. The weapon crates and vehicles are yours to take. O.M.G.! did they just sink!?</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
-    messageSystem = _hint;
-    if (!isDedicated) then { call serverMessage };
-    publicVariable "messageSystem";
+    [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Success: %1",_missionType];
 };
 
