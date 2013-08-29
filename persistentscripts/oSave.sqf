@@ -25,7 +25,7 @@ while {true} do {
 					};
 				};
 
-				if(_x isKindOf "Land_BarrelWater_F") then { 
+				if(_x isKindOf "Land_WaterBarrel_F") then { 
 					_supplyleft = _x getVariable "water";
 					if(isNil "_supplyleft") then
 					{
