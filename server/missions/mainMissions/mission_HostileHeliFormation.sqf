@@ -129,9 +129,7 @@ _marker setMarkerText "HostileHelis";
 _picture = getText (configFile >> "CfgVehicles" >> _classKeep >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _classKeep >> "displayName");
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>! AIR ALARM !</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>Hostile AirSquad</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A formation of a <t color='%4'>%3</t>, and <t color='%4'>2 other helicopters</t> classified: <t color='%4'>(Armed-Dangerous)</t> are patroling the island, transporting two weapon crates. Take them out before they kill you!</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor];
-messageSystem = _hint;
-if (!isDedicated) then { call serverMessage };
-publicVariable "messageSystem";
+[_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to be Finished: %1", _missionType];
 
@@ -161,9 +159,7 @@ if(_failed) then
 	{deleteVehicle _x;}forEach units _grouphsq;
 	deleteGroup _grouphsq; 
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>Hostile AirSquad</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The enemy has got away, better luck next time!</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
-    messageSystem = _hint;
-    if (!isDedicated) then { call serverMessage };
-    publicVariable "messageSystem";
+    [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
     // Mission complete
@@ -181,9 +177,7 @@ if(_failed) then
     clearWeaponCargoGlobal _ammobox3; 
     [_ammobox3,"mission_Side_USSpecial"] call fn_refillbox;
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>Hostile AirSquad</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The Hostile AirSquad has been taken down! The weapon crates have survived the crash and are near the wreck!</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
-    messageSystem = _hint;
-    if (!isDedicated) then { call serverMessage };
-    publicVariable "messageSystem";
+    [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Success: %1",_missionType];
 };
 

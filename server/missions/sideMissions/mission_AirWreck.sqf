@@ -54,8 +54,7 @@ _box2 = createVehicle ["Box_NATO_WpsSpecial_F",[(_randomPos select 0), (_randomP
 _picture = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "displayName");
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Side Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A<t color='%4'> %3</t>, has come down under enemy fire!</t>", _missionType, _picture, _vehicleName, sideMissionColor, subTextColor];
-messageSystem = _hint;
-publicVariable "messageSystem";
+[_hint] call hintBroadcast;
 
 CivGrpS = createGroup civilian;
 [CivGrpS,_randomPos] spawn createSmallGroup;
@@ -90,16 +89,14 @@ if(_result == 1) then
     {deleteVehicle _x;}forEach units CivGrps;
     deleteGroup CivGrpS;
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
-	messageSystem = _hint;
-    publicVariable "messageSystem";
+	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
 } else {
 	//Mission Complete.
     deleteVehicle _vehicle;
     deleteGroup CivGrpS;
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The ammo caches have been collected well done team</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
-	messageSystem = _hint;
-    publicVariable "messageSystem";
+	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Side Mission Success: %1",_missionType];
 };
 
