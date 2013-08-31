@@ -181,9 +181,9 @@ _createVehicle = {
 };
 
 _vehicles = [];
-_vehicles set [0, [_veh1, (_starts select 0;), (_startdirs select 0;), _group] call _createVehicle];
-_vehicles set [1, [_veh2, (_starts select 1;), (_startdirs select 1;), _group] call _createVehicle];
-_vehicles set [2, [_veh3, (_starts select 2;), (_startdirs select 2;), _group] call _createVehicle];
+_vehicles set [0, [_veh1, (_starts select 0), (_startdirs select 0), _group] call _createVehicle];
+_vehicles set [1, [_veh2, (_starts select 1), (_startdirs select 1), _group] call _createVehicle];
+_vehicles set [2, [_veh3, (_starts select 2), (_startdirs select 2), _group] call _createVehicle];
 
 _leader = driver (_vehicles select 0);
 _group selectLeader _leader;
