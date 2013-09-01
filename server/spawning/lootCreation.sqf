@@ -107,7 +107,7 @@ randomweapon_weaponlist = [
 ["arifle_MK20C_F","30Rnd_556x45_Stanag"],
 ["SMG_01_F","30Rnd_45ACP_Mag_SMG_01"],
 ["SMG_02_F","30Rnd_9x21_Mag"],
-["muzzle_snds_acp","9Rnd_45ACP_Mag"],
+["muzzle_snds_acp","9Rnd_45ACP_Mag"]
 ];
 
 // weapons to be found in military buildings
