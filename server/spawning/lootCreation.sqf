@@ -147,6 +147,7 @@ randomweapon_itemlist = [
 		_position = _this;
 		_selectedgroup = (floor(random(count randomweapon_weaponlist)));
 		_weapon = randomweapon_weaponlist select _selectedgroup select 0;
+		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3]   //dirty fix for piling loot after 12hours
 		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
 		_weaponholder addWeaponCargoGlobal [_weapon, 1];
 		if((count((randomweapon_weaponlist) select _selectedgroup)) > 1) then {
@@ -163,6 +164,7 @@ randomweapon_itemlist = [
 		_position = _this;
 		_selectedgroup = (floor(random(count randomweapon_milweaponlist)));
 		_weapon = randomweapon_milweaponlist select _selectedgroup select 0;
+		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3]   //dirty fix for piling loot after 12hours
 		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
 		_weaponholder addWeaponCargoGlobal [_weapon, 1];
 		if((count((randomweapon_milweaponlist) select _selectedgroup)) > 1) then {
@@ -181,6 +183,7 @@ randomweapon_itemlist = [
 		_numf = 0;
 		_selectedgroup = (floor(random(count randomweapon_itemlist)));
 		_class = randomweapon_itemlist select _selectedgroup;
+		{ deleteVehicle _x; } forEach nearestObjects [_position,randomweapon_itemlist,0.3]   //dirty fix for piling loot after 12hours
 		_item = createVehicle [_class, _position, [], 0, "CAN_COLLIDE"];
 		if(_class == "Land_CanisterFuel_F") then {
 			_numf = (random 100);
@@ -318,9 +321,14 @@ randomweapon_itemlist = [
 		_tradius = (_x select 1);
 		townarea_list set [count townarea_list, [_pos, _lastSpawned]];
 	}forEach (call citylist);
+	{
+		_pos = getMarkerPos (_x select 0);
+		_tradius = 200;
+		townarea_list set [count townarea_list, [_pos, _lastSpawned]];
+	}forEach (call militarylist);
 	while {true} do {
 		{
-			if ((isPlayer _x) && (alive _x)) then {
+			if ((isPlayer _x) && (alive _x) && (vehicle _x == _x)) then {
 				_posPlayer = getPos _x;
 				usedtown_list = [];
 				{

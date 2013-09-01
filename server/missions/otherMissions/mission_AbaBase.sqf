@@ -46,7 +46,7 @@ waitUntil {_GotLoc};
 
 //Tell everyone their will be a mission soon.
 _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t color='%3' size='1.0'>Starting in %1 Minutes</t>", _missionDelayTime / 60, _mainTextColour, _subTextColour];
-[nil,nil,rHINT,_hint] call RE;
+[_hint] call hintBroadcast;
 
 //Wait till the mission is ready to be ran.
 diag_log format["WASTELAND SERVER - Mission Waiting to run"];
@@ -78,7 +78,7 @@ _base = [_veh, 0, _randomPos] execVM "server\functions\createBase.sqf";
 
 _vehicleName = "Outpost";
 _hint = parseText format ["<t align='center' color='%3' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%3'>------------------------------</t><br/><t align='center' color='%4' size='1.25'>%1</t><br/><t align='center' color='%4'>A<t color='%3'> %2</t>, has been spotted near the marker go capture it.</t>", _missionType, _vehicleName, _mainTextColour, _subTextColour];
-[nil,nil,rHINT,_hint] call RE;
+[_hint] call hintBroadcast;
 
 _group = createGroup civilian;
 [_group,_randomPos]execVM "server\missions\createUnits\largeGroup.sqf";
@@ -101,12 +101,12 @@ if(_result == 1) then
 {
 	//Mission Failed.
     _hint = parseText format ["<t align='center' color='%3' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%3'>------------------------------</t><br/><t align='center' color='%4' size='1.25'>%1</t><br/><t align='center' color='%4'>Objective failed, better luck next time</t>", _missionType, _vehicleName, _failTextColour, _subTextColour];
-	[nil,nil,rHINT,_hint] call RE;
+	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Mission Failed"];
 } else {
 	//Mission Complete.
     _hint = parseText format ["<t align='center' color='%3' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%3'>------------------------------</t><br/><t align='center' color='%4' size='1.25'>%1</t><br/><t align='center' color='%4'>The base has been captured, use what you found to help you crush the enemy</t>", _missionType, _vehicleName, _successTextColour, _subTextColour];
-	[nil,nil,rHINT,_hint] call RE;
+	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Mission Finished"];
 };
 

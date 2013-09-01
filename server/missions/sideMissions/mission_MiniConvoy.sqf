@@ -89,9 +89,7 @@ _marker setMarkerText "Truck Convoy";
 _picture = getText (configFile >> "CfgVehicles" >> "I_Truck_02_covered_F" >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> "I_Truck_02_covered_F" >> "displayName");
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Side Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> transporting a crate of GL weapons and ammo is convoyed by two ATV squads. Stop them!</t>", _missionType, _picture, _vehicleName, sideMissionColor, subTextColor];
-messageSystem = _hint;
-if (!isDedicated) then { call serverMessage };
-publicVariable "messageSystem";
+[_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Side Mission Waiting to be Finished: %1", _missionType];
 
@@ -121,9 +119,7 @@ if(_failed) then
 	{deleteVehicle _x;}forEach units _groupsm;
 	deleteGroup _groupsm; 
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
-    messageSystem = _hint;
-    if (!isDedicated) then { call serverMessage };
-    publicVariable "messageSystem";
+    [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
 } else {
     // Mission complete
@@ -133,9 +129,7 @@ if(_failed) then
     clearWeaponCargoGlobal _ammobox; 
     [_ammobox,"mission_USSpecial2"] call fn_refillbox;
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The convoy has been sucessfully stopped. Now the weapons and cars are yours.</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
-    messageSystem = _hint;
-    if (!isDedicated) then { call serverMessage };
-    publicVariable "messageSystem";
+    [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Side Mission Success: %1",_missionType];
 };
 

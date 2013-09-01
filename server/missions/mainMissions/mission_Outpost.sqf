@@ -33,8 +33,7 @@ _base = [_veh, 0, _randomPos] execVM "server\functions\createOutpost.sqf";
 
 _vehicleName = "Outpost";
 _hint = parseText format ["<t align='center' color='%3' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%3'>------------------------------</t><br/><t align='center' color='%4' size='1.25'>%1</t><br/><t align='center' color='%4'>An<t color='%3'> %2</t>, with special weapons has been spotted near the marker, go capture it. They also seem to have some nice base building materials!</t>", _missionType, _vehicleName, mainMissionColor, subTextColor];
-messageSystem = _hint;
-publicVariable "messageSystem";
+[_hint] call hintBroadcast;
 
 CivGrpM = createGroup civilian;
 [CivGrpM,_randomPos] spawn createMidGroup;
@@ -59,15 +58,13 @@ if(_result == 1) then
     {deleteVehicle _x;}forEach units CivGrpM;
     deleteGroup CivGrpM;
     _hint = parseText format ["<t align='center' color='%3' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%3'>------------------------------</t><br/><t align='center' color='%4' size='1.25'>%1</t><br/><t align='center' color='%4'>Objective failed, better luck next time</t>", _missionType, _vehicleName, failMissionColor, subTextColor];
-	messageSystem = _hint;
-	publicVariable "messageSystem";
+	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
 	//Mission Complete.
     deleteGroup CivGrpM;
     _hint = parseText format ["<t align='center' color='%3' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%3'>------------------------------</t><br/><t align='center' color='%4' size='1.25'>%1</t><br/><t align='center' color='%4'>The outpost has been captured, the special weapons and base parts are now yours to take. Did you bring a truck? Great work!</t>", _missionType, _vehicleName, successMissionColor, subTextColor];
-	messageSystem = _hint;
-	publicVariable "messageSystem";
+	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Success: %1",_missionType];
 };
 
