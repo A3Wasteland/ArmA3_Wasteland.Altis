@@ -14,18 +14,13 @@ _uid = getPlayerUID player;
 if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
 	_dialog = createDialog "ObjectSearch";
 	_display = findDisplay objectSearchDialog;
-	_objectSearchTerm = _display displayCtrl objectSearchFindTexteditBox;
-	_objectListBox = _display displayCtrl objectSearchObjectList;
-	
-	_objectClass = ctrlText _objectSearchTerm;
-	diag_log format["Search class is %1", _objectClass];
+	_objectSearchTermCtrl = _display displayCtrl objectSearchFindTexteditBox;
 
-	_objects = nearestObjects [position player, [_objectClass], 1000];
+	if (!isNil "objectSearchLastTermEntered") then {
+		diag_log format["We have a previous term %1", objectSearchLastTermEntered];
+		ctrlSetText [objectSearchFindTexteditBox, objectSearchLastTermEntered];
+	} else {
+		diag_log "objectSearchLastTermEntered was nil!";
+	};
 
-	{
-		_objPos = position _x;
-		_str = format["Object %1 at %2", _x, _objPos];
-		_index = _objectListBox lbAdd _str;
-		_objectListBox lbSetData [_index, str(_objPos)];
-	} forEach _objects;
 };  

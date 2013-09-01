@@ -1174,7 +1174,7 @@ class ObjectSearch
 		{
 			style=1
 			idc = -1;
-			text = "Search for an object type and we'll find every instance";
+			text = "Find every instance of a given class within 1km";
 			x = 0.1;
 			y = 0.12;
 			w = 0.8;

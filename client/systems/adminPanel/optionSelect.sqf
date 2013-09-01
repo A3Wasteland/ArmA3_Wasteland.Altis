@@ -99,9 +99,9 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
    	            case 6: //Object search menu
 			    {   
 	            	closeDialog 0;
-	                execVM "client\systems\adminPanel\objectSearch.sqf";
+	                execVM "client\systems\adminPanel\loadObjectSearch.sqf";
 			    };
-			    case 7: // toggle god mode
+			    case 7: // toggle God mode
 			    {
 			    	execVM "client\systems\adminPanel\toggleGodMode.sqf";
 			    };

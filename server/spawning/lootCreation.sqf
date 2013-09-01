@@ -147,7 +147,7 @@ randomweapon_itemlist = [
 		_position = _this;
 		_selectedgroup = (floor(random(count randomweapon_weaponlist)));
 		_weapon = randomweapon_weaponlist select _selectedgroup select 0;
-		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3]   //dirty fix for piling loot after 12hours
+		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3];   //dirty fix for piling loot after 12hours
 		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
 		_weaponholder addWeaponCargoGlobal [_weapon, 1];
 		if((count((randomweapon_weaponlist) select _selectedgroup)) > 1) then {
@@ -164,7 +164,7 @@ randomweapon_itemlist = [
 		_position = _this;
 		_selectedgroup = (floor(random(count randomweapon_milweaponlist)));
 		_weapon = randomweapon_milweaponlist select _selectedgroup select 0;
-		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3]   //dirty fix for piling loot after 12hours
+		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3];   //dirty fix for piling loot after 12hours
 		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
 		_weaponholder addWeaponCargoGlobal [_weapon, 1];
 		if((count((randomweapon_milweaponlist) select _selectedgroup)) > 1) then {
@@ -183,7 +183,7 @@ randomweapon_itemlist = [
 		_numf = 0;
 		_selectedgroup = (floor(random(count randomweapon_itemlist)));
 		_class = randomweapon_itemlist select _selectedgroup;
-		{ deleteVehicle _x; } forEach nearestObjects [_position,randomweapon_itemlist,0.3]   //dirty fix for piling loot after 12hours
+		{ deleteVehicle _x; } forEach nearestObjects [_position,randomweapon_itemlist,0.3];   //dirty fix for piling loot after 12hours
 		_item = createVehicle [_class, _position, [], 0, "CAN_COLLIDE"];
 		if(_class == "Land_CanisterFuel_F") then {
 			_numf = (random 100);

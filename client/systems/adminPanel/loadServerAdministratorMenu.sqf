@@ -22,7 +22,7 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 	                "Money",
 	                "Debug Menu",
 	                "Object Search",
-	                "Toggle god-mode"
+	                "Toggle God-mode"
 	                ];
 	
 	{

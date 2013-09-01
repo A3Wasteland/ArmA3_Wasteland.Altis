@@ -9,7 +9,9 @@
 
 #define OBJECT_SEARCH_ACTION_FIND 0
 #define OBJECT_SEARCH_ACTION_TELEPORT 1
-#define OBJECT_SEARCH_ACTION_DISMISS 2
+
+// Limit to 1000m to stop this being crazy laggy
+#define OBJECT_SEARCH_RADIUS 1000
 
 disableSerialization;
 
@@ -17,124 +19,56 @@ private ["_uid"];
 
 _uid = getPlayerUID player;
 if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
-	_dialog = createDialog "ObjectSearch";
+	private ["_display", "_objectSearchTerm", "_objectListBox", "_switch"];
 	_display = findDisplay objectSearchDialog;
-	_objectSearchTerm = _dialog displayCtrl objectSearchFindTexteditBox;
-	_objectListBox = _dialog displayCtrl objectSearchObjectList;
+	// Get handles on the UI elements we need
+	_objectSearchTermCtrl = _display displayCtrl objectSearchFindTexteditBox;
+	_objectListBoxCtrl = _display displayCtrl objectSearchObjectList;
 	
 	_switch = _this select 0;
 
-
-
-	_index = lbCurSel _objectListBox;
-	_positionData = _objectListBox lbData _index;
-	
-	if (_check == 0) exitWith{};
-	
 	switch (_switch) do
 	{
 	    case OBJECT_SEARCH_ACTION_FIND:
 		{
-			if (!isNil "_target") then
+			lbClear _objectListBox;
+			// The thing we're searching for
+			_objectClass = ctrlText _objectSearchTermCtrl;
+
+			// Set our global so we can default the UI to that upon next open
+			objectSearchLastTermEntered = _objectClass;
+
+			//diag_log format["Search class is %1", _objectClass];
+
+			// Perform the search.
+			_objects = nearestObjects [position player, [_objectClass], OBJECT_SEARCH_RADIUS];
+
 			{
-				_spectating = ctrlText _spectateButton;
-				if (_spectating == "Spectate") then {
-					_spectateButton ctrlSetText "Spectating";
-					//player commandChat format ["Viewing %1.", name _target];
-					
-					if (!isNil "_camadm") then { camDestroy _camadm; };
-					_camadm = "camera" camCreate ([(position vehicle _target select 0) - 5,(position vehicle _target select 1), (position vehicle _target select 2) + 10]);
-					_camadm cameraEffect ["external", "TOP"];
-					_camadm camSetTarget (vehicle _target);
-					_camadm camCommit 1;
-								
-					_rnum = 0;
-					while {ctrlText _spectateButton == "Spectating"} do {
-						switch (_rnum) do 
-						{
-							if (daytime > 19 || daytime < 5) then {camUseNVG true;} else {camUseNVG false;};
-							case 0: {detach _camadm; _camadm attachTo [(vehicle _target), [0,-10,4]]; _camadm setVectorUp [0, 1, 5];}; 
-							case 1: {detach _camadm; _camadm attachTo [(vehicle _target), [0,10,4]]; _camadm setDir 180; _camadm setVectorUp [0, 1, -5];};
-							case 2: {detach _camadm; _camadm attachTo [(vehicle _target), [0,1,50]]; _camadm setVectorUp [0, 50, 1];};
-							case 3: {detach _camadm; _camadm attachTo [(vehicle _target), [-10,0,2]]; _camadm setDir 90; _camadm setVectorUp [0, 1, 5];};
-							case 4: {detach _camadm; _camadm attachTo [(vehicle _target), [10,0,2]]; _camadm setDir -90; _camadm setVectorUp [0, 1, -5];};                                                                        
-						};
-						player commandchat "Viewing cam " + str(_rnum) + " on " + str(name vehicle _target);
-						_rnum = _rnum + 1;
-						if (_rnum > 4) then {_rnum = 0;};
-						sleep 5;
-					};
-				} else {
-					_spectateButton ctrlSetText "Spectate";
-					player commandchat format ["No Longer Viewing.", name _target];
-					player cameraEffect ["terminate","back"];
-					if (!isNil "_camadm") then { camDestroy _camadm; };
-				};
-			};
+				_name = gettext(configFile >> "CfgVehicles" >> (typeOf _x) >> "displayName");
+				_objPos = getPosATL _x;
+				_dist = floor(player distance _x);
+				_str = format["%1 %2m away at %3", _name, _dist, _objPos];
+				_index = _objectListBox lbAdd _str;
+				_objectListBoxCtrl lbSetData [_index, str(_objPos)];
+				diag_log format["Setting data to %1", str(_objPos)];
+			} forEach _objects;
+
 		};
-		case 1: //Warn
+		case OBJECT_SEARCH_ACTION_TELEPORT:
 		{
-			_warnText = ctrlText _warnMessage;
-	        _playerName = name player;
-			[format ["Message from Admin: %1", _warnText], "titleTextMessage", _target, false] call TPG_fnc_MP;
+			_index = lbCurSel _objectListBoxCtrl;
+			_positionStr = _objectListBoxCtrl lbData _index;
+			// Convert the string back to the position array it was
+			_objPos = call compile _positionStr;
+			diag_log format["_objPos is %1", _objPos];
+			// Find us somewhere safe to spawn close by
+			_safePos = [_objPos,0,8,1,0,0,0] call BIS_fnc_findSafePos;
+			vehicle player setPos _safePos;
+			_playerPos = getPosATL player;
+			// player lookAt _objPos is broken on my setup :(
+			_vector = ((((_objPos select 0) - (_playerPos select 0)) atan2 ((_objPos select 1) - (_playerPos select 1))) + 360) % 360;
+			player setDir _vector;
+			player globalChat "Teleported to your object";
 		};
-	    case 2: //Slay
-	    {
-			[{player setDamage 1; endMission "LOSER"; deleteVehicle player}, "BIS_fnc_spawn", _target, false] call TPG_fnc_MP;
-	    };
-	    case 3: //Unlock Team Switcher
-	    {      
-			_targetUID = getPlayerUID _target;
-	        {
-			    if(_x select 0 == _targetUID) then
-			    {
-			    	pvar_teamSwitchList = [pvar_teamSwitchList, _forEachIndex] call BIS_fnc_removeIndex;
-			        publicVariable "pvar_teamSwitchList";
-	                
-					[{client_firstSpawn = nil}, "BIS_fnc_spawn", _target, false] call TPG_fnc_MP;
-			    };
-			}forEach pvar_teamSwitchList;			
-	    };
-		case 4: //Unlock Team Killer
-	    {      
-			_targetUID = getPlayerUID _target;
-	        {
-			    if(_x select 0 == _targetUID) then
-			    {
-			    	pvar_teamKillList = [pvar_teamKillList, _forEachIndex] call BIS_fnc_removeIndex;
-			        publicVariable "pvar_teamKillList";
-			    };
-			}forEach pvar_teamKillList;       		
-	    };
-        case 5: //Remove All Money
-	    {      
-			_targetUID = getPlayerUID _target;
-	        {
-			    if(getPlayerUID _x == _targetUID) exitWith
-			    {
-  					_x setVariable["cmoney",0,true];
-			    };
-			}forEach playableUnits;       		
-	    };
-        case 6: //Remove All Weapons
-	    {      
-			_targetUID = getPlayerUID _target;
-	        {
-			    if(getPlayerUID _x == _targetUID) exitWith
-			    {
-  					removeAllWeapons _x;
-			    };
-			}forEach playableUnits;       		
-	    };
-        case 7: //Check Player Gear
-	    {      
-			_targetUID = getPlayerUID _target;
-	        {
-			    if(getPlayerUID _x == _targetUID) exitWith
-			    {
-  					createGearDialog [_x, "RscDisplayInventory"];
-			    };
-			}forEach playableUnits;        		
-	    };
 	};
 };

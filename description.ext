@@ -12,7 +12,7 @@ class Header
 	minPlayers=1;
 	maxPlayers=108;
 };
-author="JoSchaap";
+author="Team Wasteland";
 OnLoadName = "Wasteland ALTIS(v0)";
 OnLoadMission = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
 overviewText = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
