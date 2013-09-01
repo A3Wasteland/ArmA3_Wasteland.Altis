@@ -1245,12 +1245,22 @@ class ObjectSearch
 			w = 5.5 * GUI_GRID_W;
 			h = 1.5 * GUI_GRID_H;
 		};
+		class ObjectSearchClearMapButton: tw_RscButton
+		{
+			idc = idc_objectSearchCancelButton;
+			text = "Clear map";
+			onButtonClick = "[2] execVM 'client\systems\adminPanel\objectSearchInteraction.sqf'";
+			x = 23.5 * GUI_GRID_W + GUI_GRID_X;
+			y = 19 * GUI_GRID_H + GUI_GRID_Y;
+			w = 5 * GUI_GRID_W;
+			h = 1.5 * GUI_GRID_H;
+		};
 		class ObjectSearchCancelButton: tw_RscButton
 		{
 			idc = idc_objectSearchCancelButton;
 			text = "Cancel";
 			onButtonClick = "closeDialog 0;";
-			x = 23.5 * GUI_GRID_W + GUI_GRID_X;
+			x = 17.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 19 * GUI_GRID_H + GUI_GRID_Y;
 			w = 5 * GUI_GRID_W;
 			h = 1.5 * GUI_GRID_H;

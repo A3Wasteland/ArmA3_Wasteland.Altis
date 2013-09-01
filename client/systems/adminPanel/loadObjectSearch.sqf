@@ -7,11 +7,17 @@
 
 disableSerialization;
 				
-private ["_dialog", "_display", "_objectListBox"];
+if (isNil "objectSearchMapMarkers") then {
+	// This is the global we use to keep track of map markers
+	objectSearchMapMarkers = [];
+};
+
+private ["_uid"];
 
 _uid = getPlayerUID player;
 
 if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
+	private ["_dialog", "_display", "_objectSearchTermCtrl"];
 	_dialog = createDialog "ObjectSearch";
 	_display = findDisplay objectSearchDialog;
 	_objectSearchTermCtrl = _display displayCtrl objectSearchFindTexteditBox;
