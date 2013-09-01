@@ -24,7 +24,7 @@ switch (true) do {
     case (vehicle player != player):{_error = ERR_IN_VEHICLE};
 	case (isNull _vehicle): {_error = ERR_NO_VEHICLE};
 	case (damage _vehicle < 0.05): {_error = ERR_FULL_HEALTH};
-	case (ITEM_COUNT(MF_ITEMS_REPAIR_KIT_FULL) <= 0): {_error = ERR_NO_REPAIR_KITS};
+	case (ITEM_COUNT(MF_ITEMS_REPAIR_KIT) <= 0): {_error = ERR_NO_REPAIR_KITS};
     default {};
 };
 _error;

@@ -1,15 +1,152 @@
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_waypoints","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader"];
+//	@file Version: 2
+//	@file Name: mission_Convoy.sqf
+//	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo)
+//	@file Created: 31/08/2013 18:19
+//	@file Args: none
+
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader"];
 
 #include "mainMissionDefines.sqf"
 
 _missionMarkerName = "Convoy_Marker";
 _missionType = "Convoy";
-
 diag_log format["WASTELAND SERVER - Main Mission Started: %1", _missionType];
-
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionType];
 [mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
+
+//pick the vehicles for the convoy (veh2 is the 'convoyed' vehicle
+_veh1 = ["O_MRAP_02_gmg_F","B_MRAP_01_gmg_F","I_MRAP_03_gmg_F"] call BIS_fnc_selectRandom;
+_veh2 = ["B_MRAP_01_F","O_MRAP_02_F","I_MRAP_03_F","B_Truck_01_Transport_F","B_Truck_01_Covered_F"] call BIS_fnc_selectRandom;
+_veh3 = ["B_MRAP_01_hmg_F","O_MRAP_02_hmg_F","I_MRAP_03_hmg_F"] call BIS_fnc_selectRandom;
+
+// available routes to add a route. If you add more routes append ,4 to the array and so on
+_routes = [1,2,3];
+
+// pick one of the routes
+_rn = _routes select (floor(random(count _routes)));
+
+// set starts and waypoints depending on above (random) choice
+switch (_rn) do 
+{ 
+	case 1: {
+		// route 1
+		// starting positions for this route
+		_starts = [
+			[11877.198,22464.334,16.133373],
+			[11921.394,22530.055,17.224131],
+			[11956.172,22594.484,18.018967]
+		];
+		// starting directions in which the vehicles are spawned on this route
+		_startdirs = [
+			210,
+			210,
+			210
+		];
+		// the routes
+		_waypoints = [
+			[11869.673,22208.621,18.313629],
+			[11125.767,20896.094,131.5762],
+			[12994.632,19462.133,33.778721],
+			[12748.146,18834.535,29.596584],
+			[11160.02,17270.051,57.112164],
+			[9703.3369,16182.543,83.560249],
+			[8348.6055,15781.597,108.55094],
+			[6614.5122,15335.907,37.11795],
+			[4709.3672,13381.538,48.192379]
+		];
+		// end of route one
+	}; 
+	case 2: {
+		// route 2
+		// starting positions for this route
+		_starts = [
+			[21676.07,19098.602,19.740389],
+			[21706.025,19143.395,20.686287],
+			[21733.701,19188.068,21.83143]
+		];
+		// starting directions in which the vehicles are spawned on this route
+		_startdirs = [
+			215,
+			215,
+			215
+		];
+		// the routes
+		_waypoints = [
+			[21651.148,18949.061,18.721802],
+			[20927.098,18642.852,27.24435],
+			[19996.465,18402.379,41.286507],
+			[20469.039,17205.83,62.79401],
+			[20332.428,16846.414,41.794998],
+			[20768.957,16632.809,36.363457],
+			[18278.49,14655.104,16.817299],
+			[18335.752,13940.664,24.597376],
+			[18311.52,13544.588,21.471191],
+			[18257.242,13530.432,20.79612],
+			[20485.871,10990.865,44.599953],
+			[21824.99,7174.1509,14.066642]
+		];
+		// end of route two
+	}; 
+	case 3: {
+		// route 3
+		// starting positions for this route
+		_starts = [
+			[4358.6313,21123.746,254.40459],
+			[4353.8003,21175.734,248.28143],
+			[4352.7617,21228.533,247.36967]
+		];
+		// starting directions in which the vehicles are spawned on this route
+		_startdirs = [
+			157,
+			157,
+			157
+		];
+		// the routes
+		_waypoints = [
+			[4384.667,21031.82,262.16455],
+			[6832.0098,19443.926,198.91882],
+			[7139.0513,16877.182,152.38431],
+			[6789.5913,16126.018,67.751434],
+			[8190.9907,15869.275,108.909],
+			[9230.667,14191.858,42.160519],
+			[9883,12795.109,15.03497],
+			[10779.979,10752.867,6.9041996],
+			[9573.9238,8603.8203,21.783022]
+		];
+		// end of route three
+	}; 
+	default {
+		// this shouldnt happen but just to be sure..
+		diag_log format["WASTELAND SERVER - WARNING! %1 encountered an error selecting routes - defaulting to route 1", _missionType];
+		// route 1
+		// starting positions for this route
+		_starts = [
+			[11877.198,22464.334,16.133373],
+			[11921.394,22530.055,17.224131],
+			[11956.172,22594.484,18.018967]
+		];
+		// starting directions in which the vehicles are spawned on this route
+		_startdirs = [
+			210,
+			210,
+			210
+		];
+		// the routes
+		_waypoints = [
+			[11869.673,22208.621,18.313629],
+			[11125.767,20896.094,131.5762],
+			[12994.632,19462.133,33.778721],
+			[12748.146,18834.535,29.596584],
+			[11160.02,17270.051,57.112164],
+			[9703.3369,16182.543,83.560249],
+			[8348.6055,15781.597,108.55094],
+			[6614.5122,15335.907,37.11795],
+			[4709.3672,13381.538,48.192379]
+		];
+		// end of route one
+	}; 
+}; 
 
 _group = createGroup civilian;
 
@@ -35,56 +172,37 @@ _createVehicle = {
     _soldier = [_group, _position] call createRandomSoldier; 
     _soldier moveInCargo [_vehicle, 1];
     _soldier = [_group, _position] call createRandomSoldier; 
-    if (_vehicle isKindOf "I_MRAP_03_F") then {
+	// get a unit inside gunner seat on the armed vehicles
+    if (_vehicle isKindOf _veh2) then {
         _soldier moveInCargo [_vehicle, 2];
     } else {
         _soldier moveInTurret [_vehicle, [0]];
     };
-    _vehicle setVehicleLock "LOCKED";
-	_vehicle spawn cleanVehicleWreck;
+    _vehicle setVehicleLock "LOCKED";  // prevents players from getting into the vehicle while the AI are still owning it
+	_vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
     _vehicle
 };
 
 _vehicles = [];
-_vehicles set [0, ["I_MRAP_03_hmg_F", [3272.0862, 6818.0166, 4.1839767], 110, _group] call _createVehicle];
-_vehicles set [1, ["I_MRAP_03_F", [3256.6409, 6823.4746, 3.8003173], 110, _group] call _createVehicle];
-_vehicles set [2, ["I_MRAP_03_gmg_F", [3240.3447, 6829.6089, 4.275979], 110, _group] call _createVehicle];
+_vehicles set [0, [_veh1, (_starts select 0), (_startdirs select 0), _group] call _createVehicle];
+_vehicles set [1, [_veh2, (_starts select 1), (_startdirs select 1), _group] call _createVehicle];
+_vehicles set [2, [_veh3, (_starts select 2), (_startdirs select 2), _group] call _createVehicle];
 
 _leader = driver (_vehicles select 0);
 _group selectLeader _leader;
 _leader setRank "LIEUTENANT";
 
-_group setCombatMode "GREEN";
-_group setBehaviour "SAFE";
+_group setCombatMode "GREEN"; // units will defend themselves
+_group setBehaviour "SAFE"; // units feel safe until they spot an enemy or get into contact
 _group setFormation "STAG COLUMN";
 _group setSpeedMode "LIMITED";
 
-_waypoints = [
-    [4376.2495,6777.9741,129.06226],
-    [4093.5972,6355.2212,124.87359],
-    [4795.2671,6547.9424,122.12956],
-    [4989.0015,6177.1587,157.54677],
-    [4650.4116,5920.8677,140.14188],
-    [5209.6572,5804.0298,159.34062],
-    [5355.2534,5447.2158,172.12018],
-    [5179.1089,5317.814,190.49104],
-    [5332.6191,4984.7158,205.06071],
-    [5034.1582,4551.7168,178.10799],
-    [4453.8467,4265.6416,192.45946],
-    [4256.2026,3987.7041,203.7189],
-    [4278.4458,3617.1807,216.10374],
-    [3811.5823,3352.3765,168.52522],
-    [3782.2229,2991.4355,163.68361],
-    [2796.7263,1814.6265,150.85146],
-    [3121.2034,1679.9956,107.86488],
-    [2620.1548,612.56152,64.304039]
-];
 {
     _waypoint = _group addWaypoint [_x, 0];
     _waypoint setWaypointType "MOVE";
-    _waypoint setWaypointCompletionRadius 75;
-    _waypoint setWaypointCombatMode "GREEN"; // Defensiv behaviour
-    _waypoint setWaypointBehaviour "SAFE"; // Force convoy to normaly drive on the street.
+    _waypoint setWaypointCompletionRadius 50;
+    _waypoint setWaypointCombatMode "GREEN"; 
+    _waypoint setWaypointBehaviour "SAFE"; // safe is the best behaviour to make AI follow roads, as soon as they spot an enemy or go into combat they WILL leave the road for cover though!
     _waypoint setWaypointFormation "STAG COLUMN";
     _waypoint setWaypointSpeed "LIMITED";
 } forEach _waypoints;
@@ -95,8 +213,8 @@ _marker setMarkerSize [1.25, 1.25];
 _marker setMarkerColor "ColorRed";
 _marker setMarkerText "Armed Convoy";
 
-_picture = getText (configFile >> "CfgVehicles" >> "I_MRAP_03_F" >> "picture");
-_vehicleName = getText (configFile >> "cfgVehicles" >> "I_MRAP_03_F" >> "displayName");
+_picture = getText (configFile >> "CfgVehicles" >> _veh2 >> "picture");
+_vehicleName = getText (configFile >> "cfgVehicles" >> _veh2 >> "displayName");
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> transporting 2 weapon crates, is convoyed by two armored vehicles. Stop them!</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 

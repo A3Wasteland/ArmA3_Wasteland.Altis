@@ -1,19 +1,17 @@
 *Wasteland.Altis* by Team Wasteland!
 ===================
 
-Arma 3 Wasteland is a harsh survival sandbox mission for ArmA 3 where 2 teams and independent players fight for survival.
+ArmA 3 Wasteland is a harsh survival sandbox mission where 2 teams and independent players fight for survival.
 
 
-Altis isn't out yet, so for now it's just a placeholder :)
+The mission is not ready yet, so for now it's just a placeholder :)
 
 
-*Colabotators:* (a.k.a.: Team Wasteland)
+*Team Wasteland* collaborators:
 
        GoT - JoSchaap
-       TPG - AgentREV
+       TPG - AgentRev
+           - MercyfulFate
        KoS - His_Shadow
        KoS - Bewilderbeest
-       404 - Costlyy
-           - MercyfulFate
-       
-
+       404 - Del1te

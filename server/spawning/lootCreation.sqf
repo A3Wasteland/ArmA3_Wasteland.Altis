@@ -7,6 +7,7 @@
 _odd1 = 60;					//The odds that a building is selected to place loot.
 _odd2 = 30;					//The odds that the selected building's spots will have loot(almost like odds per room).
 _odditem = 65;					//Chance of item instead of weapon
+_oddweapitem = 45;				//instead of the weapon picked in above declared chance above there's also a chance to spawn other items instead of a rifle like medkits,toolkits,optics,silencers etc.
 _oddfuelcan = 35;				//Chance of a spawned fuelcan to be full instead of empty
 _spawnradius = 25;				//Distance added to the radius around city's original marker to spawn loot (expands the radius with this value)
 _interval = 5400;				//Time (in sec.) to pass before a city spawns new loot
@@ -87,13 +88,13 @@ _buildMIL = [
 "Land_Cargo_HQ_V3_F",
 "Land_Cargo_Patrol_V1_F",
 "Land_Cargo_Patrol_V2_F",
-"Land_Cargo_Patrol_V3_F",
-"Land_Hangar_F",
-"Land_Cargo_Tower_V1_F",
-"Land_Cargo_Tower_V2_F",
-"Land_Cargo_Tower_V3_F",
-"Land_Dome_Big_F",
-"Land_Dome_Small_F"
+"Land_Cargo_Patrol_V3_F"
+//"Land_Hangar_F",
+//"Land_Cargo_Tower_V1_F",
+//"Land_Cargo_Tower_V2_F",
+//"Land_Cargo_Tower_V3_F",
+//"Land_Dome_Big_F",
+//"Land_Dome_Small_F"
 ];
 
 // weapons to be found in civilian buildings aside from items
@@ -101,15 +102,24 @@ randomweapon_weaponlist = [
 ["arifle_SDAR_F","20Rnd_556x45_UW_mag"],
 ["arifle_TRG21_ACO_pointer_F","30Rnd_556x45_Stanag_Tracer_Red"],
 ["arifle_TRG20_ACO_F","30Rnd_556x45_Stanag_Tracer_Yellow"],
-["arifle_TRG21_F","30Rnd_556x45_Stanag"],
-["arifle_TRG20_F","30Rnd_556x45_Stanag"],
 ["arifle_MK20_F","30Rnd_556x45_Stanag"],
 ["arifle_MK20C_F","30Rnd_556x45_Stanag"],
 ["SMG_01_F","30Rnd_45ACP_Mag_SMG_01"],
-["SMG_02_F","30Rnd_9x21_Mag"],
-["hgun_ACPC2_snds_F","9Rnd_45ACP_Mag"],
-["hgun_P07_snds_F","16Rnd_9x21_Mag"],
-["hgun_Rook40_snds_F","16Rnd_9x21_Mag"]
+["SMG_02_F","30Rnd_9x21_Mag"]
+];
+
+// random weaponitems/ammo to be found in civillian buildings aside from items
+randomweapon_weaponitemlist = [
+["ItemGPS","20Rnd_556x45_UW_mag"],
+["optic_ACO_grn","30Rnd_556x45_Stanag_Tracer_Red"],
+["ToolKit","30Rnd_556x45_Stanag_Tracer_Yellow"],
+["muzzle_snds_M","30Rnd_556x45_Stanag"],
+["optic_Holosight_smg","30Rnd_45ACP_Mag_SMG_01"],
+["optic_Aco","30Rnd_556x45_Stanag"],
+["FirstAidKit","30Rnd_556x45_Stanag"],
+["Medikit","30Rnd_45ACP_Mag_SMG_01"],
+["optic_aco_smg","30Rnd_9x21_Mag"],
+["muzzle_snds_acp","9Rnd_45ACP_Mag"]
 ];
 
 // weapons to be found in military buildings
@@ -155,6 +165,21 @@ randomweapon_itemlist = [
 				_mag = randomweapon_weaponlist select _selectedgroup select ((floor(random((count(randomweapon_weaponlist select _selectedgroup) - 1)))) + 1);
 				_weaponholder addMagazineCargoGlobal [_mag, 1]; 
 			};
+		};
+		_weaponholder setPos _position;
+    };
+	
+	randomweaponspawnweaponitem = 
+	{
+		_position = _this;
+		_selectedgroup = (floor(random(count randomweapon_weaponitemlist)));
+		_weapon = randomweapon_weaponitemlist select _selectedgroup select 0;
+		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3];   //dirty fix for piling loot after 12hours
+		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
+		_weaponholder addItemCargoGlobal [_weapon, 1];
+		if((count((randomweapon_weaponitemlist) select _selectedgroup)) > 1) then {
+			_mag = randomweapon_weaponitemlist select _selectedgroup select ((floor(random((count(randomweapon_weaponitemlist select _selectedgroup) - 1)))) + 1);
+			_weaponholder addMagazineCargoGlobal [_mag, 1]; 
 		};
 		_weaponholder setPos _position;
     };
@@ -255,7 +280,12 @@ randomweapon_itemlist = [
 						if(_woi < _odditem) then {
 							_posnew call randomweaponspawnitem;
 						} else {
-							_posnew call randomweaponspawnweapon;
+							_woi2 = floor(random(100));
+							if(_woi2 < _oddweapitem) then {
+								_posnew call randomweaponspawnweaponitem;
+							} else {
+								_posnew call randomweaponspawnweapon;
+							};
 						};
 					};
 				};
