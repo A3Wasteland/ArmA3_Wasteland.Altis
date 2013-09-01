@@ -87,13 +87,13 @@ _buildMIL = [
 "Land_Cargo_HQ_V3_F",
 "Land_Cargo_Patrol_V1_F",
 "Land_Cargo_Patrol_V2_F",
-"Land_Cargo_Patrol_V3_F",
-"Land_Hangar_F",
-"Land_Cargo_Tower_V1_F",
-"Land_Cargo_Tower_V2_F",
-"Land_Cargo_Tower_V3_F",
-"Land_Dome_Big_F",
-"Land_Dome_Small_F"
+"Land_Cargo_Patrol_V3_F"
+//"Land_Hangar_F",
+//"Land_Cargo_Tower_V1_F",
+//"Land_Cargo_Tower_V2_F",
+//"Land_Cargo_Tower_V3_F",
+//"Land_Dome_Big_F",
+//"Land_Dome_Small_F"
 ];
 
 // weapons to be found in civilian buildings aside from items
@@ -101,15 +101,13 @@ randomweapon_weaponlist = [
 ["arifle_SDAR_F","20Rnd_556x45_UW_mag"],
 ["arifle_TRG21_ACO_pointer_F","30Rnd_556x45_Stanag_Tracer_Red"],
 ["arifle_TRG20_ACO_F","30Rnd_556x45_Stanag_Tracer_Yellow"],
-["arifle_TRG21_F","30Rnd_556x45_Stanag"],
-["arifle_TRG20_F","30Rnd_556x45_Stanag"],
+["muzzle_snds_M","30Rnd_556x45_Stanag"],
+["optic_Holosight_smg","30Rnd_45ACP_Mag_SMG_01"],
 ["arifle_MK20_F","30Rnd_556x45_Stanag"],
 ["arifle_MK20C_F","30Rnd_556x45_Stanag"],
 ["SMG_01_F","30Rnd_45ACP_Mag_SMG_01"],
 ["SMG_02_F","30Rnd_9x21_Mag"],
-["hgun_ACPC2_snds_F","9Rnd_45ACP_Mag"],
-["hgun_P07_snds_F","16Rnd_9x21_Mag"],
-["hgun_Rook40_snds_F","16Rnd_9x21_Mag"]
+["muzzle_snds_acp","9Rnd_45ACP_Mag"]
 ];
 
 // weapons to be found in military buildings
