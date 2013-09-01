@@ -20,8 +20,10 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 					"Tags",
 					"Teleport",
 	                "Money",
-	                "Debug Menu"
-	];
+	                "Debug Menu",
+	                "Object Search",
+	                "Toggle god-mode"
+	                ];
 	
 	{
 		_serverAdminSelect lbAdd _x;

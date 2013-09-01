@@ -18,10 +18,11 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 	};
     if ((_uid in serverAdministrators)) then {
 		execVM "client\systems\adminPanel\loadServerAdministratorMenu.sqf";
-        hint "JoSchaap wuz Here!";		
+        hint "Welcome Server Admin!";		
 	};	
 } else {
     sleep 1;
     _handle = player execVM "client\systems\adminPanel\checkAdmin2.sqf"; 
     waitUntil {scriptDone _handle};
 };
+

@@ -24,7 +24,7 @@
 mf_inventory_mutex = false;
 
 MF_INVENTORY_PATH = _this;
-MF_INVENTORY_TAKE_DISTANCE = 5;
+MF_INVENTORY_TAKE_DISTANCE = 3;
 
 // initialize players inventory
 mf_inventory = [];
@@ -39,4 +39,4 @@ mf_inventory_drop = [_this, "drop.sqf"] call mf_compile;
 mf_inventory_takeable = [_this, "takeable.sqf"] call mf_compile;
 mf_inventory_take = [_this, "take.sqf"] call mf_compile;
 mf_inventory_use = [_this, "use.sqf"] call mf_compile;
-mf_inventory_count = [_this, "count.sqf"] call mf_compile;
+mf_inventory_count = [_this, "count.sqf"] call mf_compile;
