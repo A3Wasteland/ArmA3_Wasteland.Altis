@@ -96,6 +96,15 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 	            	closeDialog 0;   
 	                execVM "client\systems\adminPanel\loadDebugMenu.sqf";
 			    };
+   	            case 6: //Object search menu
+			    {   
+	            	closeDialog 0;
+	                execVM "client\systems\adminPanel\loadObjectSearch.sqf";
+			    };
+			    case 7: // toggle God mode
+			    {
+			    	execVM "client\systems\adminPanel\toggleGodMode.sqf";
+			    };
 			};
 	    };
 	    case 3: //Debug panel
@@ -122,7 +131,7 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 	                closeDialog 0;      
 					createDialog "balca_debug_main";
 			    };
-	            case 4: //Restart Function
+	            case 4: //Show server FPS function
 			    {      
 					hint format["Server FPS: %1",serverFPS];
 			    };

@@ -189,7 +189,7 @@ randomweapon_itemlist = [
 		_position = _this;
 		_selectedgroup = (floor(random(count randomweapon_milweaponlist)));
 		_weapon = randomweapon_milweaponlist select _selectedgroup select 0;
-		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3];  //dirty fix for piling loot after 12hours
+		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3];   //dirty fix for piling loot after 12hours
 		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
 		_weaponholder addWeaponCargoGlobal [_weapon, 1];
 		if((count((randomweapon_milweaponlist) select _selectedgroup)) > 1) then {
