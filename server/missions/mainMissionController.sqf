@@ -16,8 +16,8 @@ diag_log format["WASTELAND SERVER - Started Main Mission State"];
 _MainMissions =
 [
 	// ["mission_ArmedDiversquad", 1],
-	// ["mission_Coastal_Convoy", 1],
-	["mission_Convoy", 19],    //weight at 19 for TESTING PURPOSES ONLY! CHANGE BACK TO 1 (: 
+	["mission_Coastal_Convoy", 19], //weight at 19 for TESTING PURPOSES ONLY! CHANGE BACK TO 1 (:
+	["mission_Convoy", 1],
 	// ["mission_HostileHeliFormation", 1],
 	["mission_APC", 1],
 	["mission_LightArmVeh", 1],
