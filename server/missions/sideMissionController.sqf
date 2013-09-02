@@ -15,8 +15,8 @@ diag_log format["WASTELAND SERVER - Started Side Mission State"];
 
 _SideMissions =
 [
-	// ["mission_HostileHelicopter", 1],
-	["mission_MiniConvoy", 19],  //weight of 19 for debugging purposes
+	["mission_HostileHelicopter", 19],  //weight of 19 for debugging purposes
+	["mission_MiniConvoy", 1], 
 	// ["mission_SunkenSupplies", 1],
 	["mission_AirWreck", 1],
 	["mission_WepCache", 1],

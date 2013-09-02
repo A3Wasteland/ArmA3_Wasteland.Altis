@@ -1058,7 +1058,7 @@ class tw_RscButtonMenuOK
 		"0x00050000 + 0",
 		28,
 		57,
-		156
+		156;
 	};
 	default = 1;
 	text = "OK";
@@ -1172,7 +1172,7 @@ class ObjectSearch
 
 		class ObjectSearchSubtitleBar: tw_RscText
 		{
-			style=1
+			style = 1;
 			idc = -1;
 			text = "Find every instance of a given class within 1km";
 			x = 0.1;
