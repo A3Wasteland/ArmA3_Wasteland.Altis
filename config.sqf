@@ -213,7 +213,8 @@ militarylist = compileFinal str [
 		["milSpawn_10"],
 		["milSpawn_11"],
 		["milSpawn_12"],
-		["milSpawn_13"]
+		["milSpawn_13"],
+		["milSpawn_14"]
 ];
 
 cityLocations = [];
