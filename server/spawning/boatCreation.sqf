@@ -12,7 +12,8 @@ _markerPos = _this select 0;
 
 _boattype = BoatList call BIS_fnc_selectRandom; 
 _type = 3;
-_pos = [_markerPos, 1, 15, 5, 2, 60 * (pi / 180), 0, [], [[], _markerPos]] call BIS_fnc_findSafePos;
+//_pos = [_markerPos, 1, 15, 5, 2, 60 * (pi / 180), 0, [], [[], _markerPos]] call BIS_fnc_findSafePos;
+_pos = _markerPos;
 
 //Car Initialization
 _boat = createVehicle [_boattype,_pos, [], 0, "None"];

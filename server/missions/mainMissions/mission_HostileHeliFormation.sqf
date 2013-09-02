@@ -72,9 +72,9 @@ _createVehicle = {
 };
 
 _vehicles = [];
-_vehicles set [0, [_heli1, [8436.93,0.0012207,25250.8], 13, _grouphf] call _createVehicle];  // static value update when porting to different maps
-_vehicles set [1, [_heli2, [8458.97,0.0012207,25134.8], 171, _grouphf] call _createVehicle];
-_vehicles set [2, [_heli3, [8476.16,0.00119781,25254.1], 222, _grouphf] call _createVehicle];
+_vehicles set [0, [_heli1, [8436.93,25250.8,0.0012207], 13, _grouphf] call _createVehicle];  // static value update when porting to different maps
+_vehicles set [1, [_heli2, [8458.97,25134.8,0.0012207], 171, _grouphf] call _createVehicle];
+_vehicles set [2, [_heli3, [8476.16,25254.1,0.00119781], 222, _grouphf] call _createVehicle];
 
 _leader = driver (_vehicles select 0);
 _grouphf selectLeader _leader;
