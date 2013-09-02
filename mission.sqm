@@ -1198,7 +1198,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={3363.55,0.00144172,13205};
+					position[]={3363.55,0.30144172,13205};
 					azimut=42;
 					id=65;
 					side="LOGIC";
@@ -1218,7 +1218,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={9435.09,0.00144196,20267};
+					position[]={9435.09,0.30144196,20267};
 					azimut=59;
 					id=66;
 					side="LOGIC";
@@ -1238,7 +1238,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={25767.2,0.00143814,21372.4};
+					position[]={25767.2,0.30143814,21372.4};
 					azimut=308;
 					id=67;
 					side="LOGIC";
@@ -1258,7 +1258,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={16702.9,0.00143814,12782.2};
+					position[]={16702.9,0.30143814,12782.2};
 					azimut=308;
 					id=68;
 					side="LOGIC";
@@ -1278,7 +1278,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={18155,0.00144005,15256.8};
+					position[]={18155,0.30144005,15256.8};
 					azimut=233;
 					id=69;
 					side="LOGIC";
@@ -1298,7 +1298,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={20786.5,0.00143814,6807.17};
+					position[]={20786.5,0.30143814,6807.17};
 					azimut=218.5;
 					id=70;
 					side="LOGIC";
@@ -1318,7 +1318,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={11532.3,0.00143433,9433.33};
+					position[]={11532.3,0.30143433,9433.33};
 					azimut=210;
 					id=71;
 					side="LOGIC";
@@ -2122,7 +2122,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={9268.2,0.00144196,15870.6};
+					position[]={9268.2,0.30144196,15870.6};
 					azimut=290;
 					id=120;
 					side="LOGIC";
@@ -2427,43 +2427,43 @@ class Mission
 		};
 		class Item45
 		{
-			position[]={3363.55,0.00144172,13205};
+			position[]={3363.55,0.30144172,13205};
 			name="Store_Gun_1";
 			type="Empty";
 		};
 		class Item46
 		{
-			position[]={9435.09,0.00144196,20267};
+			position[]={9435.09,0.30144196,20267};
 			name="Store_Gun_2";
 			type="Empty";
 		};
 		class Item47
 		{
-			position[]={25767.2,0.00143814,21372.4};
+			position[]={25767.2,0.30143814,21372.4};
 			name="Store_Gun_3";
 			type="Empty";
 		};
 		class Item48
 		{
-			position[]={18155,0.00144005,15256.8};
+			position[]={18155,0.30144005,15256.8};
 			name="Store_Gen_1";
 			type="Empty";
 		};
 		class Item49
 		{
-			position[]={20786.5,0.00143814,6807.17};
+			position[]={20786.5,0.30143814,6807.17};
 			name="Store_Gen_2";
 			type="Empty";
 		};
 		class Item50
 		{
-			position[]={11532.3,0.00143433,9433.33};
+			position[]={11532.3,0.30143433,9433.33};
 			name="Store_Gen_3";
 			type="Empty";
 		};
 		class Item51
 		{
-			position[]={16702.9,0.00143814,12782.2};
+			position[]={16702.9,0.30143814,12782.2};
 			name="Store_Gun_4";
 			type="Empty";
 		};
@@ -2761,7 +2761,7 @@ class Mission
 		};
 		class Item94
 		{
-			position[]={9268.2,0.00144196,15870.6};
+			position[]={9268.2,0.30144196,15870.6};
 			name="Store_Gen_4";
 			type="Empty";
 		};
