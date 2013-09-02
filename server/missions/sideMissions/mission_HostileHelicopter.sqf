@@ -3,7 +3,7 @@
 //	@file Author: JoSchaap
 //  new one, no longer requires static routes, can use all helicopters now
 
-private ["_runloop","_helipick","_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_waypoints","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
+private ["_helipick","_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_waypoints","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
 #include "sideMissionDefines.sqf"
 _missionMarkerName = "HostileHeli_Marker";
 _missionType = "HostileHeli";
@@ -11,7 +11,6 @@ _missionType = "HostileHeli";
 _travels = 20; 						// the ammount of towns the helicopter should visit before the mission ends
 _travelcount = 0;
 _waypoints = [];
-_runloop = true;
 
 diag_log format["WASTELAND SERVER - Side Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionType];
@@ -82,13 +81,9 @@ _groupsm setFormation "STAG COLUMN";
 _groupsm setSpeedMode "NORMAL";
 
 									// pick random townmarkers from the citylist and use their location as waypoints
-while (_runloop) do {
+while {_travelcount < _travels} do {
 	_travelcount = (_travelcount + 1);
 	_waypoints set [count _waypoints, getMarkerPos (((call citylist) call BIS_fnc_selectRandom) select 0)];
-	if (_travelcount == _travels) then 
-	{
-		_runloop = false;
-	};
 };
 
 {

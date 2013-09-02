@@ -1172,7 +1172,7 @@ class ObjectSearch
 
 		class ObjectSearchSubtitleBar: tw_RscText
 		{
-			style=1
+			style = 1;
 			idc = -1;
 			text = "Find every instance of a given class within 1km";
 			x = 0.1;

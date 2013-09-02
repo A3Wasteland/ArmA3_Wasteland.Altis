@@ -3,7 +3,7 @@
 //	@file Author: JoSchaap
 //  new one, no longer requires static routes, can use all helicopters now
 
-private ["_runloop","_heli1","_heli2","_heli3","_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_waypoints","_grouphf","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_ammobox3","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
+private ["_heli1","_heli2","_heli3","_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_waypoints","_grouphf","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_ammobox3","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
 #include "mainMissionDefines.sqf"
 _missionMarkerName = "HostileHelis_Marker";
 _missionType = "Hostile Helicopters";
@@ -11,7 +11,6 @@ _missionType = "Hostile Helicopters";
 _travels = 20; 						// the ammount of towns the helicopter should visit before the mission ends
 _travelcount = 0;
 _waypoints = [];
-_runloop = true;
 
 diag_log format["WASTELAND SERVER - Main Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionType];
@@ -87,13 +86,9 @@ _grouphf setFormation "STAG COLUMN";
 _grouphf setSpeedMode "NORMAL";
 
 									// pick random townmarkers from the citylist and use their location as waypoints
-while (_runloop) do {
+while {_travelcount < _travels} do {
 	_travelcount = (_travelcount + 1);
 	_waypoints set [count _waypoints, getMarkerPos (((call citylist) call BIS_fnc_selectRandom) select 0)];
-	if (_travelcount == _travels) then 
-	{
-		_runloop = false;
-	};
 };
 
 {
