@@ -11,7 +11,7 @@ diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionTy
 [sideMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
 
-_helipick = ["O_Heli_Attack_02_black_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F"] call BIS_fnc_selectRandom;
+_helipick = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
 _groupsm = createGroup civilian;
 
 _createVehicle = {
@@ -30,8 +30,21 @@ _createVehicle = {
     _soldier = [_groupsm, _position] call createRandomSoldier; 
     _soldier moveInDriver _vehicle;
     _soldier = [_groupsm, _position] call createRandomSoldier; 
-    _soldier assignAsGunner _vehicle;
-    _soldier moveInTurret [_vehicle, [0]];  
+    if ((_vehicle isKindOf "B_Heli_Transport_01_camo_F") || (_vehicle isKindOf "B_Heli_Transport_01_F")) then {
+		// these choppers have 2 turrets so we need 2 gunners :)
+	   _soldier = [_groupsm, _position] call createRandomSoldier; 
+	   _soldier assignAsGunner _vehicle;
+       _soldier moveInTurret [_vehicle, [1]];
+  	   _soldier = [_groupsm, _position] call createRandomSoldier; 
+	   _soldier assignAsGunner _vehicle;
+       _soldier moveInTurret [_vehicle, [2]];
+    };
+	if ((_vehicle isKindOf "B_Heli_Attack_01_F") || (_vehicle isKindOf "O_Heli_Attack_02_black_F") || (_vehicle isKindOf "O_Heli_Attack_02_F")) then {
+		// these choppers need 1 gunner
+	   _soldier = [_groupsm, _position] call createRandomSoldier; 
+	   _soldier assignAsGunner _vehicle;
+       _soldier moveInTurret [_vehicle, [0]];
+    };
 
 	if ("CMFlareLauncher" in getArray (configFile >> "CfgVehicles" >> _type >> "weapons")) then
 	{

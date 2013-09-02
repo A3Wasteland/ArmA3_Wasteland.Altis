@@ -209,10 +209,10 @@ _createVehicle = {
 		// these choppers have 2 turrets so we need 2 gunners :)
 	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
-       _soldier moveInTurret [_vehicle, [0]];
+       _soldier moveInTurret [_vehicle, [1]];
   	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
-       _soldier moveInTurret [_vehicle, [1]];
+       _soldier moveInTurret [_vehicle, [2]];
     };
 	if ((_vehicle isKindOf "B_Heli_Attack_01_F") || (_vehicle isKindOf "O_Heli_Attack_02_black_F") || (_vehicle isKindOf "O_Heli_Attack_02_F")) then {
 		// these choppers need 1 gunner
@@ -224,10 +224,11 @@ _createVehicle = {
 	if ((_vehicle isKindOf _veh1) || (_vehicle isKindOf _veh3)) then {
 		// the boats need a gunner (rear) and a commander (frontgunner) aside from a driver
 	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
-	   _soldier assignAsCommander _vehicle;
-       _soldier moveInCommander _vehicle;
 	   _soldier assignAsGunner _vehicle;
-       _soldier moveInTurret [_vehicle, [0]];
+       _soldier moveInTurret [_vehicle, [0]]; //commanderseat - front funner
+	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
+	   _soldier assignAsGunner _vehicle;
+       _soldier moveInTurret [_vehicle, [1]]; //rear gunner
     };
 	// remove flares because it overpowers AI choppers
 	if ("CMFlareLauncher" in getArray (configFile >> "CfgVehicles" >> _type >> "weapons")) then

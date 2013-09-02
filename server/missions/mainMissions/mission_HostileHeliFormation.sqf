@@ -31,16 +31,16 @@ _createVehicle = {
     _soldier moveInDriver _vehicle;
     if ((_vehicle isKindOf "B_Heli_Transport_01_camo_F") || (_vehicle isKindOf "B_Heli_Transport_01_F")) then {
 		// these choppers have 2 turrets so we need 2 gunners :)
-	   _soldier = [_grouphsq, _position] call createRandomSoldier; 
+	   _soldier = [_groupshq, _position] call createRandomSoldier; 
 	   _soldier assignAsGunner _vehicle;
-       _soldier moveInTurret [_vehicle, [0]];
-  	   _soldier = [_grouphsq, _position] call createRandomSoldier; 
+       _soldier moveInTurret [_vehicle, [1]];  //turret 0 = copilot in this helicopter
+  	   _soldier = [_groupshq, _position] call createRandomSoldier; 
 	   _soldier assignAsGunner _vehicle;
-       _soldier moveInTurret [_vehicle, [1]];
+       _soldier moveInTurret [_vehicle, [2]];
     };
 	if ((_vehicle isKindOf "B_Heli_Attack_01_F") || (_vehicle isKindOf "O_Heli_Attack_02_black_F") || (_vehicle isKindOf "O_Heli_Attack_02_F")) then {
 		// these choppers need 1 gunner
-	   _soldier = [_grouphsq, _position] call createRandomSoldier; 
+	   _soldier = [_groupshq, _position] call createRandomSoldier; 
 	   _soldier assignAsGunner _vehicle;
        _soldier moveInTurret [_vehicle, [0]];
     };
