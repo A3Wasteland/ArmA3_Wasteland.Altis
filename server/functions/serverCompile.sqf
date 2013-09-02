@@ -86,5 +86,5 @@ boatCreation = compile preprocessFileLineNumbers "server\spawning\boatCreation.s
 //Player Management
 server_playerDied = compile preprocessFileLineNumbers "server\functions\serverPlayerDied.sqf";
 
-if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = compileFinal str BIS_fnc_MP };
-if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = compileFinal str BIS_fnc_MPexec }; 
+if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = compileFinal preprocessFileLineNumbers "A3\functions_f\MP\fn_MP.sqf" };
+if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = compileFinal preprocessFileLineNumbers "A3\functions_f\MP\fn_MPexec.sqf" };
