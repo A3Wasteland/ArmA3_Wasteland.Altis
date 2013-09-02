@@ -162,8 +162,15 @@ if(_failed) then
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
-    // Mission complete
-	if not(isNil "_vehicle") then {_vehicle setVehicleLock "UNLOCKED";};
+	// Mission completed
+	// unlock the vehicles incase the player cleared the mission without destroying them
+	if (!isNil "_vehicles") then { 
+		{
+			_x setVehicleLock "UNLOCKED"; 
+			_x setVariable ["R3F_LOG_disabled", false, true];
+		}forEach _vehicles;
+	};
+	// give the rewards
     _ammobox = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
     clearMagazineCargoGlobal _ammobox;
     clearWeaponCargoGlobal _ammobox; 

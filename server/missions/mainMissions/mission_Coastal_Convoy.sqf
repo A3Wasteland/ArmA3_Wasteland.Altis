@@ -207,23 +207,23 @@ _createVehicle = {
     _soldier moveInDriver _vehicle;
     if ((_vehicle isKindOf "B_Heli_Transport_01_camo_F") || (_vehicle isKindOf "B_Heli_Transport_01_F")) then {
 		// these choppers have 2 turrets so we need 2 gunners :)
-	   _soldier = [_grouphsq, _position] call createRandomSoldierC; 
+	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
        _soldier moveInTurret [_vehicle, [0]];
-  	   _soldier = [_grouphsq, _position] call createRandomSoldierC; 
+  	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
        _soldier moveInTurret [_vehicle, [1]];
     };
 	if ((_vehicle isKindOf "B_Heli_Attack_01_F") || (_vehicle isKindOf "O_Heli_Attack_02_black_F") || (_vehicle isKindOf "O_Heli_Attack_02_F")) then {
 		// these choppers need 1 gunner
-	   _soldier = [_grouphsq, _position] call createRandomSoldierC; 
+	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
        _soldier moveInTurret [_vehicle, [0]];
     };
 	
 	if ((_vehicle isKindOf _veh1) || (_vehicle isKindOf _veh3)) then {
 		// the boats need a gunner (rear) and a commander (frontgunner) aside from a driver
-	   _soldier = [_grouphsq, _position] call createRandomSoldierC; 
+	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsCommander _vehicle;
        _soldier moveInCommander _vehicle;
 	   _soldier assignAsGunner _vehicle;
@@ -314,9 +314,15 @@ if(_failed) then
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
-	if (!isNil "_vehicle") then { _vehicle setVehicleLock "UNLOCKED"; };
-	if (!isNil "_vehicle") then { _vehicle setVariable ["R3F_LOG_disabled", false, true]; };
     // Mission complete
+	// unlock the vehicles and enable R3F incase they manage to kill all AI without destroying the vehicles
+	if (!isNil "_vehicles") then { 
+		{
+			_x setVehicleLock "UNLOCKED"; 
+			_x setVariable ["R3F_LOG_disabled", false, true];
+		}forEach _vehicles;
+	};
+	// give the rewards
 	_ammobox = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
     clearMagazineCargoGlobal _ammobox;
     clearWeaponCargoGlobal _ammobox; 
