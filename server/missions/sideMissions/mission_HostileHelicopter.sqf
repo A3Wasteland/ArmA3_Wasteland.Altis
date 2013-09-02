@@ -1,38 +1,58 @@
-private ["_helipick","_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_waypoints","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader"];
+//	@file Version: 1
+//	@file Name: mission_HostileHelicopter.sqf
+//	@file Author: JoSchaap
+//  new one, no longer requires static routes, can use all helicopters now
 
+private ["_helipick","_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_waypoints","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
 #include "sideMissionDefines.sqf"
-
 _missionMarkerName = "HostileHeli_Marker";
 _missionType = "HostileHeli";
 
-diag_log format["WASTELAND SERVER - Side Mission Started: %1", _missionType];
+_travels = 20; 						// the ammount of towns the helicopter should visit before the mission ends
+_travelcount = 0;
+_waypoints = [];
 
+diag_log format["WASTELAND SERVER - Side Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionType];
 [sideMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
 
-_helipick = ["O_Heli_Attack_02_black_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F"] call BIS_fnc_selectRandom;
+// helicopters available for this mission
+_helipick = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
 _groupsm = createGroup civilian;
 
 _createVehicle = {
     private ["_type","_position","_direction","_groupsm","_vehicle","_soldier"];
-    
     _type = _this select 0;
     _position = _this select 1;
     _direction = _this select 2;
     _groupsm = _this select 3;
-    
     _vehicle = _type createVehicle _position;
     _vehicle setDir _direction;
 	_vehicle setVariable [call vChecksum, true, false];
     _groupsm addVehicle _vehicle;
-    
+    // create units
+	// driver/pilot
     _soldier = [_groupsm, _position] call createRandomSoldier; 
-    _soldier moveInDriver _vehicle;
-    _soldier = [_groupsm, _position] call createRandomSoldier; 
-    _soldier assignAsGunner _vehicle;
-    _soldier moveInTurret [_vehicle, [0]];  
-
+    _soldier moveInDriver _vehicle;	
+	// create additional gunners if needed
+    if ((_vehicle isKindOf "B_Heli_Transport_01_camo_F") || (_vehicle isKindOf "B_Heli_Transport_01_F")) then {
+		// these choppers have 2 turrets so we need 2 gunners :)
+	   _soldier = [_groupsm, _position] call createRandomSoldier; 
+	   _soldier assignAsGunner _vehicle;
+       _soldier moveInTurret [_vehicle, [1]];
+  	   _soldier = [_groupsm, _position] call createRandomSoldier; 
+	   _soldier assignAsGunner _vehicle;
+       _soldier moveInTurret [_vehicle, [2]];
+    };
+	if ((_vehicle isKindOf "B_Heli_Attack_01_F") || (_vehicle isKindOf "O_Heli_Attack_02_black_F") || (_vehicle isKindOf "O_Heli_Attack_02_F")) then {
+		// these choppers need 1 gunner
+	   _soldier = [_groupsm, _position] call createRandomSoldier; 
+	   _soldier assignAsGunner _vehicle;
+       _soldier moveInTurret [_vehicle, [0]];
+    };
+	
+	// remove flares, as they are OP when controlled by AI
 	if ("CMFlareLauncher" in getArray (configFile >> "CfgVehicles" >> _type >> "weapons")) then
 	{
 		{
@@ -42,13 +62,14 @@ _createVehicle = {
 			};
 		} forEach (_vehicle magazinesTurret [-1]);
 	};
+	// lock the vehicle untill the mission is finished and initialize cleanup on it
     _vehicle setVehicleLock "LOCKED";
 	_vehicle spawn cleanVehicleWreck;
     _vehicle
 };
 
 _vehicles = [];
-_vehicles set [0, [_helipick, [7108.42,5996.3,0.00166416], 284, _groupsm] call _createVehicle];
+_vehicles set [0, [_helipick, [2387.74,9336.96,0.00169849], 349, _groupsm] call _createVehicle];  // static value update when porting to different maps
 
 _leader = driver (_vehicles select 0);
 _groupsm selectLeader _leader;
@@ -57,25 +78,14 @@ _leader setRank "LIEUTENANT";
 _groupsm setCombatMode "WHITE";
 _groupsm setBehaviour "AWARE";
 _groupsm setFormation "STAG COLUMN";
-_groupsm setSpeedMode "LIMITED";
+_groupsm setSpeedMode "NORMAL";
 
-_waypoints = [
-    [7096.54,5961.44,0.0016098],
-    [6421.47,5425.19,0.00143147],
-    [4368.64,3818.18,0.00146484],
-    [5027.28,5904.69,0.00134277],
-    [2695.63,5802.37,0.00144649],
-    [1955.14,3525.81,0.00142336],
-    [2984.66,1869.46,0.00144958],
-    [4601.99,5296.73,0.00160217],
-    [4368.64,3818.18,0.00146484],
-    [5027.28,5904.69,0.00134277],
-    [2695.63,5802.37,0.00144649],
-    [1955.14,3525.81,0.00142336],
-    [2984.66,1869.46,0.00144958],
-    [4601.99,5296.73,0.00160217],
-    [1886.15,5728.88,0.00145006]
-];
+									// pick random townmarkers from the citylist and use their location as waypoints
+while {_travelcount < _travels} do {
+	_travelcount = (_travelcount + 1);
+	_waypoints set [count _waypoints, getMarkerPos (((call citylist) call BIS_fnc_selectRandom) select 0)];
+};
+
 {
     _waypoint = _groupsm addWaypoint [_x, 0];
     _waypoint setWaypointType "MOVE";
@@ -83,7 +93,7 @@ _waypoints = [
     _waypoint setWaypointCombatMode "WHITE"; // Defensiv behaviour
     _waypoint setWaypointBehaviour "AWARE"; // Force convoy to normaly drive on the street.
     _waypoint setWaypointFormation "STAG COLUMN";
-    _waypoint setWaypointSpeed "LIMITED";
+    _waypoint setWaypointSpeed "NORMAL";
 } forEach _waypoints;
 
 _marker = createMarker [_missionMarkerName, position leader _groupsm];
@@ -127,8 +137,15 @@ if(_failed) then
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
 } else {
-    // Mission complete
-    if not(isNil "_vehicle") then {_vehicle setVehicleLock "UNLOCKED";};
+	// Mission completed
+	// unlock the vehicles incase the player cleared the mission without destroying them
+	if (!isNil "_vehicles") then { 
+		{
+			_x setVehicleLock "UNLOCKED"; 
+			_x setVariable ["R3F_LOG_disabled", false, true];
+		}forEach _vehicles;
+	};
+	// give the rewards
     _ammobox = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
     clearMagazineCargoGlobal _ammobox;
     clearWeaponCargoGlobal _ammobox; 

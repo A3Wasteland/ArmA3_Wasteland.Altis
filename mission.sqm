@@ -50,6 +50,7 @@ class Mission
 		"a3_structures_f_mil_bagfence",
 		"a3_structures_f_mil_bagbunker",
 		"a3_structures_f_items_luggage",
+		"a3_structures_f_items_valuables",
 		"A3_Air_F_Heli_Light_01",
 		"A3_Air_F_Beta_Heli_Attack_01",
 		"A3_Air_F_Beta_Heli_Transport_02",
@@ -2116,7 +2117,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=93;
+		items=94;
 		class Item0
 		{
 			position[]={3485.074,8.067543,12969.054};
@@ -2728,6 +2729,13 @@ class Mission
 		{
 			position[]={8301.9346,76.223221,10079.425};
 			name="milSpawn_13";
+			type="Empty";
+			colorName="ColorPink";
+		};
+		class Item93
+		{
+			position[]={14585.606,17.91,16843.018};
+			name="milSpawn_14";
 			type="Empty";
 			colorName="ColorPink";
 		};

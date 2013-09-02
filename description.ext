@@ -10,7 +10,7 @@ class Header
 {
 	gameType=Sandbox;
 	minPlayers=1;
-	maxPlayers=108;
+	maxPlayers=113;
 };
 author="Team Wasteland";
 OnLoadName = "Wasteland ALTIS(v0)";
