@@ -4,7 +4,9 @@
 //	@file Created: 02/09/2013 11:29
 //	@file Args: none
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupcc","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupcc","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader","_mmode"];
+
+_mmode = 1;		// difficulty (1-hard 0-easy)
 
 #include "mainMissionDefines.sqf"
 
@@ -223,9 +225,11 @@ _createVehicle = {
 	
 	if ((_vehicle isKindOf _veh1) || (_vehicle isKindOf _veh3)) then {
 		// the boats need a gunner (rear) and a commander (frontgunner) aside from a driver
-	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
-	   _soldier assignAsGunner _vehicle;
-       _soldier moveInTurret [_vehicle, [0]]; //commanderseat - front funner
+	   if (_mmode == 1) then {  // frontgunner will be here if mission is running at hard dificulty
+			_soldier = [_groupcc, _position] call createRandomSoldierC; 
+			_soldier assignAsGunner _vehicle;
+			_soldier moveInTurret [_vehicle, [0]]; //commanderseat - front funner
+		};
 	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
        _soldier moveInTurret [_vehicle, [1]]; //rear gunner
