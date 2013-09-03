@@ -11,6 +11,7 @@
 #define ERR_EMPTY "The vehicle has no fuel left"
 #define ERR_NO_JERRYCAN "You have no empty fuel cans"
 #define ERR_NO_SYPHON "You do not have a syphon hose"
+#define ERR_VEHICLE_LOCKED "Vehicle is locked/disabled"
 #define ITEM_COUNT(ITEMID) ITEMID call mf_inventory_count
 private ["_vehicle", "_error"];
 _vehicle = objNull;
@@ -24,6 +25,7 @@ _error = "";
 switch (true) do {
     case (vehicle player != player):{_error = ERR_IN_VEHICLE};
 	case (isNull _vehicle): {_error = ERR_NO_VEHICLE};
+    case (locked _vehicle > 1): {_error = ERR_VEHICLE_LOCKED};
 	case (ITEM_COUNT(MF_ITEMS_JERRYCAN_EMPTY) <= 0): {_error = ERR_NO_JERRYCAN};
 	case (ITEM_COUNT(MF_ITEMS_SYPHON_HOSE) <= 0): {_error = ERR_NO_SYPHON};
 	case not(fuel _vehicle >= ([_vehicle] call mf_jerrycan_fuel_amount)): {_error = ERR_EMPTY};
