@@ -77,12 +77,16 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 			_objPos = call compile _positionStr;
 			diag_log format["_objPos is %1", _objPos];
 			// Find us somewhere safe to spawn close by
-			_safePos = [_objPos,0,8,1,0,0,0] call BIS_fnc_findSafePos;
+			_safePos = [_objPos,2,20,0.2,0,1,0,[],[[0,0], [0,0]]] call BIS_fnc_findSafePos;
+			if (_safePos select 0 == 0 and _safePos select 1 == 0) exitWith {
+				// fsp is shit
+				player globalChat "BIS_fnc_findSafePos failed";
+			};
+
 			vehicle player setPos _safePos;
-			_playerPos = getPosATL player;
-			// player lookAt _objPos is broken on my setup :(
-			_vector = ((((_objPos select 0) - (_playerPos select 0)) atan2 ((_objPos select 1) - (_playerPos select 1))) + 360) % 360;
-			player setDir _vector;
+			_newPlayerPos = getPosATL player;
+			_dir = [player, _objPos] call BIS_fnc_dirTo;
+			player setDir _dir;
 			player globalChat "Teleported to your object";
 		};
 		case OBJECT_SEARCH_ACTION_CLEAR_MAP:
