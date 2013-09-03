@@ -4,9 +4,8 @@
 //	@file Created: 02/09/2013 11:29
 //	@file Args: none
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupcc","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader","_mmode"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupcc","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader"];
 
-_mmode = 1;		// difficulty (1-hard 0-easy)
 
 #include "mainMissionDefines.sqf"
 
@@ -17,9 +16,13 @@ diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionTy
 [mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 
-//pick the vehicles for the patrol 
+//pick the vehicles for the patrol (in hard difficulty also allows chance of mi48)
 _veh1 = ["O_Boat_Armed_01_hmg_F","B_Boat_Armed_01_minigun_F","I_Boat_Armed_01_minigun_F"] call BIS_fnc_selectRandom;
-_veh2 = ["O_Heli_Attack_02_black_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
+if (Mission_Diff == 1) then {
+	_veh2 = ["O_Heli_Attack_02_black_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
+} else {
+	_veh2 = ["O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
+};
 _veh3 = ["O_Boat_Armed_01_hmg_F","B_Boat_Armed_01_minigun_F","I_Boat_Armed_01_minigun_F"] call BIS_fnc_selectRandom;
 
 // available routes to add a route. If you add more routes append ,4 to the array and so on
@@ -225,7 +228,7 @@ _createVehicle = {
 	
 	if ((_vehicle isKindOf _veh1) || (_vehicle isKindOf _veh3)) then {
 		// the boats need a gunner (rear) and a commander (frontgunner) aside from a driver
-	   if (_mmode == 1) then {  // frontgunner will be here if mission is running at hard dificulty
+	   if (Mission_Diff == 1) then {  // frontgunner will be here if mission is running at hard dificulty
 			_soldier = [_groupcc, _position] call createRandomSoldierC; 
 			_soldier assignAsGunner _vehicle;
 			_soldier moveInTurret [_vehicle, [0]]; //commanderseat - front funner
