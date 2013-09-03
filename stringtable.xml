@@ -97,7 +97,7 @@
 			<English>With this kit you wont need a technician!.</English>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_MedKit">
-			<English>Nope not selling..</English>
+			<English>With this kit you wont need a Medic!</English>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_fuelFull">
 			<English>25 litres of pure unleaded fuel!</English>
@@ -107,6 +107,9 @@
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_spawnBeacon">
 			<English>Choose your spawn location. Disclaimer: This product does not guarantee safe delivery of goods.</English>
+		</Key>
+		<Key ID="STR_WL_ShopDescriptions_SyphonHose">
+			<English>Go forth and steal fuel from Vehicles!</English>
 		</Key>
 	</Package>
 	<Package name="Dialogs">
