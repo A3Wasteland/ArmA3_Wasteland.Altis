@@ -1,9 +1,12 @@
 //	@file Version: 1.0
 //	@file Name: mission_Truck.sqf
-//	@file Author: [404] Deadbeat, [404] Costlyy
+//	@file Author: [404] Deadbeat, [404] Costlyy, JoSchaap
 //	@file Created: 08/12/2012 15:19
 //	@file Args:
 #include "sideMissionDefines.sqf";
+
+// todo, incase if (Mission_Diff == 1) then add a minefield arround the truck
+// todo, add some nice contents inside the truck (food/water?)
 
 if(!isServer) exitwith {};
 
