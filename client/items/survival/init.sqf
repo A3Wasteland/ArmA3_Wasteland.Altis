@@ -82,6 +82,6 @@ MF_ITEMS_WATER = "water";
         [MF_ITEMS_WATER, 1] call mf_inventory_add;
         hint "You have filled a water bottle";
     };
-    _condition = 'player distance (nearestobjects [player, ["Land_StallWater_F"],  3] select 0) < 3 and not(MF_ITEMS_WATER call mf_inventory_is_full)';
+    _condition = 'player distance (nearestobjects [player, ["Land_StallWater_F","Land_Water_source_F"],  3] select 0) < 3 and not(MF_ITEMS_WATER call mf_inventory_is_full)';
 	["take-water-well", [_label, _code, nil,0, false, false, "", _condition]] call mf_player_actions_set;
 };
