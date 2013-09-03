@@ -140,14 +140,11 @@ randomweapon_milweaponlist = [
 
 
 randomweapon_itemlist = [
-							//Water
-"Land_Basket_F",
-							//Food
-"Land_Bucket_F",
-							//repairkit
-"Land_Suitcase_F",
-							//fuelcan
-"Land_CanisterFuel_F"
+	"Land_Basket_F", // Food
+	"Land_Bucket_F", // Water
+	"Land_Suitcase_F",
+	"Land_CanisterFuel_F", //fuelcan
+	"Land_CanisterOil_F" // syphon hose
 ];
 
 //-------------------------------------------------------------------------------------
@@ -219,6 +216,9 @@ randomweapon_itemlist = [
 				//_item setVariable["fuel", false, true];
 				_item setVariable["mf_item_id", "jerrycan_empty", true];
 			};
+		};
+		if(_class == "Land_CanisterOil_F")then {
+			_item setVariable["mf_item_id", "syphon_hose", true];
 		};
 		if(_class == "Land_Basket_F") then {
 			_item setVariable["mf_item_id", "canned_food", true];
