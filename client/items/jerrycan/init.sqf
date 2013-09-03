@@ -7,7 +7,9 @@
 
 MF_ITEMS_JERRYCAN_EMPTY = "jerrycan_empty";
 MF_ITEMS_JERRYCAN_FULL = "jerrycan_full";
-MF_ITEMS_JERRYCAN_MAX = 1;
+MF_ITEMS_SYPHON_HOSE = "syphon_hose";
+MF_ITEMS_JERRYCAN_MAX = (call config_items_jerrycans_max);
+MF_ITEMS_SYHON_HOSE_MAX = (call config_items_syphon_hose_max);
 #define build(file) format["%1\%2", _path, file] call mf_compile;
 
 private ["_path","_refill", "_refuel", "_icon"];
@@ -15,7 +17,9 @@ _path = _this;
 
 _refill = [_path, "refill.sqf"] call mf_compile;
 _refuel = [_path, "refuel.sqf"] call mf_compile;
+_syphon = [_path, "syphon.sqf"] call mf_compile;
 _icon = "client\icons\jerrycan.paa";
+
 _max = {
     private ["_empty", "_full"];
     _empty = MF_ITEMS_JERRYCAN_EMPTY call mf_inventory_count;
@@ -24,7 +28,8 @@ _max = {
 };
 
 mf_jerrycan_nearest_pump = {
-    _objects = nearestobjects [player, ["Land_FuelStation_Feed_F", "Land_MetalBarrel_F", "Land_fs_feed_F", "Land_Tank_rust_F"],  3];
+	_pump_objects = ["Land_FuelStation_Feed_F", "Land_MetalBarrel_F", "Land_fs_feed_F", "Land_Tank_rust_F"];
+    _objects = nearestobjects [player, _pump_objects,  3];
     _object = objNull;
     if (count _objects > 0) then {_object = _objects select 0;};
     _object;
@@ -37,26 +42,45 @@ mf_jerrycan_nearest_vehicle = {
     _object;
 };
 
+mf_jerrycan_fuel_amount = {
+	private ["_vehicle", "_fuel_amount", "_current", "_config", "_type"];
+	_vehicle = _this select 0;
+	_fuel_amount = (call config_refuel_amount_default);
+	_current = "All";
+	{
+		_type = _x select 0;
+		if (_vehicle isKindOf _type and _type isKindOf _current) then {
+			_current = _config;
+			_fuel_amount = _x select 1;
+		};
+	} forEach (call config_refuel_amounts);
+	_fuel_amount;
+};
+
 mf_remote_refuel = {
     private ["_vehicle", "_qty", "_fuel"];
     _vehicle = objectFromNetId (_this select 0);
-    _qty = 0.25;
-    switch true do {
-        case (_vehicle isKindOf "Air"): {_qty = 0.10};
-        case (_vehicle isKindOf "Tank"): {_qty = 0.10};
-        case (_vehicle isKindOf "Motorcycle"): {_qty = 0.75};
-        case (_vehicle isKindOf "ATV_Base_EP1"): {_qty = 0.75};
-    };
-    _fuel = fuel _vehicle + _qty;
+    _fuel = fuel _vehicle + ([_vehicle] call mf_jerrycan_fuel_amount);
     if (_fuel > 1) then {_fuel = 1.0}; 
 	_vehicle setFuel _fuel;
 };
 
+mf_remote_syphon = {
+    private ["_vehicle", "_qty", "_fuel"];
+    _vehicle = objectFromNetId (_this select 0);
+    _fuel = fuel _vehicle - ([_vehicle] call mf_jerrycan_fuel_amount);
+    if (_fuel < 0) then {_fuel = 0.0}; 
+	_vehicle setFuel _fuel;
+};
+
+
 [MF_ITEMS_JERRYCAN_EMPTY, "Empty Jerrycan", _refill, "Land_CanisterFuel_F", _icon, _max] call mf_inventory_create;
 [MF_ITEMS_JERRYCAN_FULL, "Full Jerrycan", _refuel, "Land_CanisterFuel_F", _icon, _max] call mf_inventory_create;
+[MF_ITEMS_SYPHON_HOSE, "Syphon Hose", _syphon, "Land_CanisterOil_F", _icon, MF_ITEMS_SYHON_HOSE_MAX] call mf_inventory_create;
 
-mf_jerrycan_can_refill = compile preProcessFileLineNumbers format["%1\can_refill.sqf", _path];
-mf_jerrycan_can_refuel = compile preProcessFileLineNumbers format["%1\can_refuel.sqf", _path];
+mf_jerrycan_can_refill = compileFinal preProcessFileLineNumbers format["%1\can_refill.sqf", _path];
+mf_jerrycan_can_refuel = compileFinal preProcessFileLineNumbers format["%1\can_refuel.sqf", _path];
+mf_jerrycan_can_syphon = compileFinal preProcessFileLineNumbers format["%1\can_syphon.sqf", _path];
 
 // Setting up refill action.
 private ["_label1", "_execute1", "_condition1", "_action1"];
@@ -73,3 +97,12 @@ _execute2 = {MF_ITEMS_JERRYCAN_FULL call mf_inventory_use};
 _condition2 = format["[] call %1 == ''", mf_jerrycan_can_refuel];
 _action2 = [_label2, _execute2, [], 1, false, false, "", _condition2];
 ["jerrycan-refuel", _action2] call mf_player_actions_set;
+
+
+// setting up syphon action
+private ["_label3", "_execute3", "_condition3", "_action3"];
+_label3 = format["<img image='%1' width='32' height='32'/> Syphon Fuel", _icon];
+_execute3 = {MF_ITEMS_SYPHON_HOSE call mf_inventory_use};
+_condition3 = format["[] call %1 == ''", mf_jerrycan_can_syphon];
+_action3= [_label3, _execute3, [], 1, false, false, "", _condition3];
+["syphon-hose", _action3] call mf_player_actions_set;

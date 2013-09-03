@@ -86,6 +86,12 @@ for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 	playerInventory set [_index, "Camo Net"];
 	_index = _index + 1;
 };
+_amount = MF_ITEMS_SYPHON_HOSE call mf_inventory_count;
+for [{_x=1},{_x<=_amount},{_x=_x+1}] do
+{
+	playerInventory set [_index, "Syphon Hose"];
+	_index = _index + 1;
+};
 
 {
 	_itemlistIndex = _itemlist lbAdd format["%1",_x];

@@ -104,6 +104,15 @@ for [{_x=0},{_x<=_size},{_x=_x+1}] do
             	genStoreCart = genStoreCart - _price;    
             };
         };
+		case "Syphon Hose": {
+			if not(MF_ITEMS_SYPHON_HOSE call mf_inventory_is_full) then {
+				[MF_ITEMS_SYPHON_HOSE, 1] call mf_inventory_add;
+            } else {
+            	_price = 0;
+                {if(_x select 0 == "Syphon Hose") then{_price = _x select 4;};}forEach (call generalStore);
+            	genStoreCart = genStoreCart - _price;    
+            };
+		};
 	};
 };
 
