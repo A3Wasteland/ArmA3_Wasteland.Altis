@@ -31,14 +31,15 @@ if (loadFile "GoT_Wasteland-config.sqf" != "") then
 {
     call compile preprocessFileLineNumbers "GoT_Wasteland-config.sqf";
 } else {
-		diag_log "[ERROR] GoT Wasteland v2.3 configuration could not be loaded";
-		diag_log "[ERROR] GoT Wasteland v2.3 requires additional files";
-		diag_log "[ERROR] You can download the full package on: www.got2dayz.nl";
+		diag_log "[ERROR] Wasteland v2.3 configuration could not be loaded";
+		diag_log "[ERROR] Wasteland v2.3 requires additional files";
+		diag_log "[ERROR] You can download the full package on: a3wasteland.com";
 		diag_log "[INFO] Setting default settings due to lack of config-file";
-		GoT_buildingsloot = 1;
-		GoT_nightTime = 0;
-		GoT_baseSaving = 0;
+		GoT_buildingsloot = 1;	// loot inside buildings 1-yes 0-no
+		GoT_nightTime = 0;		// server starts at 19:00
+		GoT_baseSaving = 0;		// requires @inidb mod
 		PDB_ServerID = "any";
+		Mission_Diff = 0;		// 0-normal  1-hard
 };
 
 if (!isNil "GoT_nightTime" && {GoT_nightTime > 0}) then
@@ -48,13 +49,13 @@ if (!isNil "GoT_nightTime" && {GoT_nightTime > 0}) then
 
 if (!isNil "GoT_baseSaving" && {GoT_baseSaving > 0}) then
 {
-   diag_log "[GoT Wasteland - Initializing base-saving]";
+   diag_log "[Wasteland - Initializing base-saving]";
    execVM "persistentscripts\init.sqf";
 };
 
 if (!isNil "GoT_buildingsloot" && {GoT_buildingsloot > 0}) then 
 {
-	diag_log format["GOT WASTELAND - Lootspawner started"];
+	diag_log format["WASTELAND - Lootspawner started"];
 	execVM "server\spawning\lootCreation.sqf";
 };
 

@@ -17,8 +17,13 @@ diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionTy
 [sideMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
 
-// helicopters available for this mission
-_helipick = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
+// helicopters available for this mission (if mission is in hard difficulty also chance on a mi48)
+// if mission set to easy, helicopter will fly at half speed
+if (Mission_Diff == 1) then {
+	_helipick = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
+} else {
+	_helipick = ["O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
+};
 _groupsm = createGroup civilian;
 
 _createVehicle = {
@@ -78,7 +83,11 @@ _leader setRank "LIEUTENANT";
 _groupsm setCombatMode "WHITE";
 _groupsm setBehaviour "AWARE";
 _groupsm setFormation "STAG COLUMN";
-_groupsm setSpeedMode "NORMAL";
+if (Mission_Diff == 1) then {
+	_groupsm setSpeedMode "NORMAL";
+} else {
+	_groupsm setSpeedMode "LIMITED";
+};
 
 									// pick random townmarkers from the citylist and use their location as waypoints
 while {_travelcount < _travels} do {
@@ -93,7 +102,11 @@ while {_travelcount < _travels} do {
     _waypoint setWaypointCombatMode "WHITE"; // Defensiv behaviour
     _waypoint setWaypointBehaviour "AWARE"; // Force convoy to normaly drive on the street.
     _waypoint setWaypointFormation "STAG COLUMN";
-    _waypoint setWaypointSpeed "NORMAL";
+	if (Mission_Diff == 1) then {
+		_waypoint setWaypointSpeed "NORMAL";
+	} else {
+		_waypoint setWaypointSpeed "LIMITED";
+	};
 } forEach _waypoints;
 
 _marker = createMarker [_missionMarkerName, position leader _groupsm];
