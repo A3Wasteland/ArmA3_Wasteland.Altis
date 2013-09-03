@@ -1,0 +1,12 @@
+#define genstore_DIALOG 2009
+#define genstore_item_TEXT 2010
+#define genstore_item_list 2011
+#define genstore_money 2012
+#define genstore_item_pic 2013
+#define genstore_item_info 2014
+#define genstore_cart 2015
+#define genstore_total 2016
+#define genstore_switch 2017
+#define genstore_buysell 2018
+#define genstore_iteminventory 2019
+#define genstore_item_Info 2022
