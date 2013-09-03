@@ -104,7 +104,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=66;
+		items=67;
 		class Item0
 		{
 			side="WEST";
@@ -1198,8 +1198,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={16909.6,0.88815701,12658.7};
-					azimut=351;
+					position[]={3363.55,0.30144172,13205};
+					azimut=42;
 					id=65;
 					side="LOGIC";
 					vehicle="C_man_1_1_F";
@@ -1218,8 +1218,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={25640.5,0.17039301,21431.301};
-					azimut=285;
+					position[]={9435.09,0.30144196,20267};
+					azimut=59;
 					id=66;
 					side="LOGIC";
 					vehicle="C_man_1_1_F";
@@ -1238,8 +1238,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={9445.4404,0.34024,20253.699};
-					azimut=152;
+					position[]={25767.2,0.30143814,21372.4};
+					azimut=308;
 					id=67;
 					side="LOGIC";
 					vehicle="C_man_1_1_F";
@@ -1258,8 +1258,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={3047.1399,1.35346,13200.9};
-					azimut=88;
+					position[]={16702.9,0.30143814,12782.2};
+					azimut=308;
 					id=68;
 					side="LOGIC";
 					vehicle="C_man_1_1_F";
@@ -1278,8 +1278,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={20766.801,0.591187,6685.9502};
-					azimut=351;
+					position[]={18155,0.30144005,15256.8};
+					azimut=233;
 					id=69;
 					side="LOGIC";
 					vehicle="C_man_polo_6_F";
@@ -1298,8 +1298,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={9522.2695,0.45864099,15907.1};
-					azimut=270;
+					position[]={20786.5,0.30143814,6807.17};
+					azimut=218.5;
 					id=70;
 					side="LOGIC";
 					vehicle="C_man_polo_6_F";
@@ -1318,8 +1318,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={11532.7,0.58913797,9433.0898};
-					azimut=240;
+					position[]={11532.3,0.30143433,9433.33};
+					azimut=210;
 					id=71;
 					side="LOGIC";
 					vehicle="C_man_polo_6_F";
@@ -2114,10 +2114,30 @@ class Mission
 				};
 			};
 		};
+		class Item66
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={9268.2,0.30144196,15870.6};
+					azimut=290;
+					id=120;
+					side="LOGIC";
+					vehicle="C_man_polo_6_F";
+					leader=1;
+					skill=0.60000002;
+					text="generalStore4";
+					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addUniform ""U_C_Novak""; this disableAI 'MOVE'; this DisableAI 'ANIM'; this disableAI 'FSM'; this setPos(getMarkerPos 'Store_Gen_4'); this spawn { sleep 1; _this enableSimulation false; };";
+				};
+			};
+		};
 	};
 	class Markers
 	{
-		items=94;
+		items=95;
 		class Item0
 		{
 			position[]={3485.074,8.067543,12969.054};
@@ -2407,43 +2427,43 @@ class Mission
 		};
 		class Item45
 		{
-			position[]={16909.6,0.88815701,12658.7};
+			position[]={3363.55,0.30144172,13205};
 			name="Store_Gun_1";
 			type="Empty";
 		};
 		class Item46
 		{
-			position[]={25640.5,0.17039301,21431.301};
+			position[]={9435.09,0.30144196,20267};
 			name="Store_Gun_2";
 			type="Empty";
 		};
 		class Item47
 		{
-			position[]={9445.4404,0.34024,20253.699};
+			position[]={25767.2,0.30143814,21372.4};
 			name="Store_Gun_3";
 			type="Empty";
 		};
 		class Item48
 		{
-			position[]={20766.801,0.591187,6685.9502};
+			position[]={18155,0.30144005,15256.8};
 			name="Store_Gen_1";
 			type="Empty";
 		};
 		class Item49
 		{
-			position[]={9522.2695,0.45864099,15907.1};
+			position[]={20786.5,0.30143814,6807.17};
 			name="Store_Gen_2";
 			type="Empty";
 		};
 		class Item50
 		{
-			position[]={11532.7,0.58913797,9433.0898};
+			position[]={11532.3,0.30143433,9433.33};
 			name="Store_Gen_3";
 			type="Empty";
 		};
 		class Item51
 		{
-			position[]={3047.1399,1.35346,13200.9};
+			position[]={16702.9,0.30143814,12782.2};
 			name="Store_Gun_4";
 			type="Empty";
 		};
@@ -2738,6 +2758,12 @@ class Mission
 			name="milSpawn_14";
 			type="Empty";
 			colorName="ColorPink";
+		};
+		class Item94
+		{
+			position[]={9268.2,0.30144196,15870.6};
+			name="Store_Gen_4";
+			type="Empty";
 		};
 	};
 };
