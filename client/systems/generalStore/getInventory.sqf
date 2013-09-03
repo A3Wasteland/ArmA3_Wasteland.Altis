@@ -93,6 +93,13 @@ for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 	_index = _index + 1;
 };
 
+_amount = MF_ITEMS_ENERGY_DRINK call mf_inventory_count;
+for [{_x=1},{_x<=_amount},{_x=_x+1}] do
+{
+	playerInventory set [_index, "Energy Drink"];
+	_index = _index + 1;
+};
+
 {
 	_itemlistIndex = _itemlist lbAdd format["%1",_x];
 } forEach playerInventory;

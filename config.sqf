@@ -177,7 +177,8 @@ generalStore = compileFinal str [
     ["Jerry Can (Empty)","fuelEmpty",localize "STR_WL_ShopDescriptions_fuelEmpty","client\icons\jerrycan.paa",50,25],
     ["Spawn Beacon","Spawn Beacon",localize "STR_WL_ShopDescriptions_spawnBeacon","client\icons\briefcase.paa",1500,750],
     ["Camo Net","Camo Net",localize "STR_WL_ShopDescriptions_Camo","client\icons\briefcase.paa",200,100],
-    ["Syphon Hose","Syphon Hose",localize "STR_WL_ShopDescriptions_SyphonHose","client\icons\jerrycan.paa",200,100]
+    ["Syphon Hose","Syphon Hose",localize "STR_WL_ShopDescriptions_SyphonHose","client\icons\jerrycan.paa",200,100],
+    ["Energy Drink","Energy Drink",localize "STR_WL_ShopDescriptions_Energy_Drink","client\icons\briefcase.paa",100,100]
 ];
 
 // Stratis town and city array
