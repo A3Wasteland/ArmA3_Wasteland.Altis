@@ -114,6 +114,9 @@
 		<Key ID="STR_WL_ShopDescriptions_Energy_Drink">
 			<English>Allows you to sprint continuously for 5 minutes.</English>
 		</Key>
+		<Key ID="STR_WL_ShopDescriptions_Warchest">
+			<English>A Safer place for your teams money</English>
+		</Key>
 	</Package>
 	<Package name="Dialogs">
 		<Key ID="STR_WL_dialog_TeamkillText">

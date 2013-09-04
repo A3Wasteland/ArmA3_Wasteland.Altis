@@ -179,6 +179,7 @@ generalStore = compileFinal str [
     ["Spawn Beacon","Spawn Beacon",localize "STR_WL_ShopDescriptions_spawnBeacon","client\icons\briefcase.paa",1500,750],
     ["Camo Net","Camo Net",localize "STR_WL_ShopDescriptions_Camo","client\icons\briefcase.paa",200,100],
     ["Syphon Hose","Syphon Hose",localize "STR_WL_ShopDescriptions_SyphonHose","client\icons\jerrycan.paa",200,100],
+    ["Warchest","Warchest",localize "STR_WL_ShopDescriptions_Warchest","client\icons\briefcase.paa",1000,500],
     ["Energy Drink","Energy Drink",localize "STR_WL_ShopDescriptions_Energy_Drink","client\icons\briefcase.paa",100,50]
 ];
 

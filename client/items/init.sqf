@@ -10,4 +10,5 @@
 [_this, "misc"] call mf_init;
 [_this, "beacon"] call mf_init;
 [_this, "camonet"] call mf_init;
+[_this, "warchest"] call mf_init;
 //init("warchest");

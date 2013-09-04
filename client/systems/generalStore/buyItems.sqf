@@ -114,12 +114,21 @@ for [{_x=0},{_x<=_size},{_x=_x+1}] do
             };
 		};
         case "Energy Drink": {
-			if not(MF_ITEMS_ENERGY_DRINK call mf_inventory_is_full) then {
-				[MF_ITEMS_ENERGY_DRINK, 1] call mf_inventory_add;
+            if not(MF_ITEMS_ENERGY_DRINK call mf_inventory_is_full) then {
+                [MF_ITEMS_ENERGY_DRINK, 1] call mf_inventory_add;
             } else {
-            	_price = 0;
+                _price = 0;
                 {if(_x select 0 == "Energy Drink") then{_price = _x select 4;};}forEach (call generalStore);
-            	genStoreCart = genStoreCart - _price;    
+                genStoreCart = genStoreCart - _price;    
+            };
+        };
+        case "Warchest": {
+            if not(MF_ITEMS_WARCHEST call mf_inventory_is_full) then {
+                [MF_ITEMS_WARCHEST, 1] call mf_inventory_add;
+            } else {
+                _price = 0;
+                {if(_x select 0 == "Warchest") then{_price = _x select 4;};}forEach (call generalStore);
+                genStoreCart = genStoreCart - _price;    
             };
         };
 	};

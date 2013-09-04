@@ -395,38 +395,6 @@ class w_RscButton : w_RscButtonBase {
 	};
 };
 
-class RscButton
-{
-
-    type                      = CT_BUTTON;
-    idc                       = -1;
-    style                     = ST_CENTER;
-    colorText[]               = {1, 1, 1, 1};
-    font                      = "";
-    sizeEx                    = 0.025;
-    soundPush[]               = {"", 0.2, 1};
-    soundClick[]              = {"ui\ui_ok", 0.2, 1};
-    soundEscape[]             = {"ui\ui_cc", 0.2, 1};
-    default                   = false;
-    text                      = "";
-    action                    = "";
-    colorActive[]             = {0, 0, 0, 0};
-    colorDisabled[]           = {0, 0, 0, 0.1};
-    colorBackground[]         = {0.8,0.8,0.8,0.3};
-    colorBackgroundActive[]   = {0.7,0.7,0.7,1};
-    colorBackgroundDisabled[] = {1,1,1,0.5};
-    colorFocused[]            = {0.84,1,0.55,1};
-    colorShadow[]             = {0, 0, 0, 0.1};
-    colorBorder[]             = {1, 1, 1, 0.1};
-    offsetX                   = 0;
-    offsetY                   = 0;
-    offsetPressedX            = 0;
-    offsetPressedY            = 0;
-    borderSize                = 0;
-    soundEnter[]              = {"", 0.15, 1};
-
-};
-
 class w_RscCombo {
 
 	idc = -1;
