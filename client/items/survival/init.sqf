@@ -31,7 +31,7 @@ MF_ITEMS_ENERGY_DRINK = "energy_drink";
     _code = {
         _nobj = (nearestobjects [player, ["Land_Sacks_goods_F"],  5] select 0);
         _nobj setVariable["food",(_nobj getVariable "food")-1,true];
-        player setVariable["canfood",(player getVariable "canfood")+1,true];
+        [MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
         player playmove "AinvPknlMstpSlayWrflDnon";
         if(_nobj getVariable "food" < 1) then {
             _nobj spawn {
