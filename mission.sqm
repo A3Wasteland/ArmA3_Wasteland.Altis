@@ -2131,7 +2131,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="generalStore4";
-					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addUniform ""U_C_Novak""; this disableAI 'MOVE'; this DisableAI 'ANIM'; this disableAI 'FSM'; this setPos(getMarkerPos 'Store_Gen_4'); this spawn { sleep 1; _this enableSimulation false; };";
+					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addUniform ""C_Orestes""; this disableAI 'MOVE'; this DisableAI 'ANIM'; this disableAI 'FSM'; this setPos(getMarkerPos 'Store_Gen_4'); this spawn { sleep 1; _this enableSimulation false; };";
 				};
 			};
 		};
