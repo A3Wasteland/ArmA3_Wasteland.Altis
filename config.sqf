@@ -129,6 +129,10 @@ accessoriesArray = compileFinal str [
     	["ARCO Sight","optic_Arco", 190,"item"],
     	["MRCO Sight","optic_MRCO", 190,"item"],
     	["SOS Sight","optic_SOS", 290,"item"],
+		["Nightstalker Sight","optic_Nightstalker", 490,"item"],
+		["Nightvision Sight","optic_SOS", 320,"item"],
+		["TWS Sight","optic_tws", 500,"item"],
+		["TWS Sight (MG)","optic_tws_mg", 580,"item"],
     	
     	["Backpack (Large)","B_Bergen_Base", 200,"backpack"],
     	["Backpack (Extra Large)","B_Carryall_Base", 350,"backpack"], 

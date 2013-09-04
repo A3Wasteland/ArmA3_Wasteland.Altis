@@ -14,12 +14,13 @@ private ["_MainMissions", "_MainMissionsOdds", "_missionType", "_nextMission", "
 diag_log format["WASTELAND SERVER - Started Main Mission State"];
 
 _MainMissions =
-[
+[		// increase the number (weight) to increase the missions chance to be selected
 	// ["mission_ArmedDiversquad", 1],
-	["mission_Coastal_Convoy", 9], //weight at 9 for TESTING PURPOSES ONLY! CHANGE BACK TO 1 (:
+	["mission_Coastal_Convoy", 1], 
 	["mission_Convoy", 1],
-	["mission_HostileHeliFormation", 9],  //weight at 9 for TESTING PURPOSES ONLY! CHANGE BACK TO 1 (:
+	["mission_HostileHeliFormation", 1],  
 	["mission_APC", 1],
+	["mission_MBT", 1],
 	["mission_LightArmVeh", 1],
 	["mission_ArmedHeli", 1],
 	["mission_CivHeli", 1],
