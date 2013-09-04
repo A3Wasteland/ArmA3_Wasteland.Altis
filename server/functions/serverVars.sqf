@@ -39,17 +39,17 @@ publicVariable "currentInvites";
 currentStaticHelis = []; // Storage for the heli marker numbers so that we don't spawn wrecks on top of live helis
 
 //Civilian Vehicle List - Random Spawns
-civilianVehicles = ["C_Offroad_01_F"];
+civilianVehicles = ["C_Hatchback_01_F","C_Hatchback_01_sport_F","C_Offroad_01_F","I_G_Offroad_01_F","I_G_Offroad_01_armed_F","C_SUV_01_F","C_Van_01_transport_F","I_G_Van_01_transport_F","C_Van_01_box_F"];
 
 //Light Military Vehicle List - Random Spawns
-lightMilitaryVehicles = ["B_Quadbike_01_F","O_Quadbike_01_F","I_Quadbike_01_F","C_Quadbike_01_F"];
+lightMilitaryVehicles = ["I_G_Quadbike_01_F","B_Quadbike_01_F","O_Quadbike_01_F","I_Quadbike_01_F","C_Quadbike_01_F","O_Truck_02_covered_F","I_Truck_02_covered_F","O_Truck_02_transport_F","I_Truck_02_transport_F"];
 
 //Medium Military Vehicle List - Random Spawns
-mediumMilitaryVehicles = ["B_MRAP_01_F","O_MRAP_02_F","I_MRAP_03_F","O_Truck_02_covered_F","I_Truck_02_covered_F","O_Truck_02_transport_F","I_Truck_02_transport_F"];
+mediumMilitaryVehicles = ["B_MRAP_01_F","O_MRAP_02_F","I_MRAP_03_F","I_Truck_02_Fuel_F","O_Truck_02_Fuel_F","I_Truck_02_medical_F","O_Truck_02_medical_F"];
 
 
 //boat - Random Boats.
-BoatList = ["O_Boat_Transport_01_F","B_Boat_Transport_01_F","O_Lifeboat","B_Lifeboat","C_Rubberboat","B_SDV_01_F","O_SDV_01_F","I_SDV_01_F"];
+BoatList = ["O_Boat_Transport_01_F","I_G_Boat_Transport_01_F","B_Boat_Transport_01_F","O_Lifeboat","C_Boat_Civil_01_F","C_Boat_Civil_01_police_F","C_Boat_Civil_01_rescue_F","B_Lifeboat","C_Rubberboat","B_SDV_01_F","O_SDV_01_F","I_SDV_01_F"];
                             
 //Object List - Random Spawns.
 objectList = ["CamoNet_INDP_open_F",

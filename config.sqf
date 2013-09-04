@@ -13,6 +13,7 @@ weaponsArray = compileFinal str [
         ["Rook-40","hgun_Rook40_F",70,40], 
 	
 	//SMG's
+	["PDW 2000 (9mm)","hgun_PDW2000_F",80,45],
 	["SMG (9mm)","SMG_02_F",100,50],
 	["SMG (46ACP)","SMG_01_F",100,50],
 	["MK20 (5.56)","arifle_MK20_F",140,60],

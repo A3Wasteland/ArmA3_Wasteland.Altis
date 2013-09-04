@@ -103,6 +103,7 @@ randomweapon_weaponlist = [
 ["arifle_TRG21_ACO_pointer_F","30Rnd_556x45_Stanag_Tracer_Red"],
 ["arifle_TRG20_ACO_F","30Rnd_556x45_Stanag_Tracer_Yellow"],
 ["arifle_MK20_F","30Rnd_556x45_Stanag"],
+["hgun_PDW2000_F","30Rnd_9x21_Mag"],
 ["arifle_MK20C_F","30Rnd_556x45_Stanag"],
 ["SMG_01_F","30Rnd_45ACP_Mag_SMG_01"],
 ["SMG_02_F","30Rnd_9x21_Mag"]
