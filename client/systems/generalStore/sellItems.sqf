@@ -1,4 +1,3 @@
-
 //	@file Version: 1.0
 //	@file Name: sellItems.sqf
 //	@file Author: [404] Deadbeat
@@ -31,6 +30,7 @@ for [{_x=0},{_x<=_size},{_x=_x+1}] do
     if(_itemText == "Spawn Beacon") then {[MF_ITEMS_SPAWN_BEACON, 1] call mf_inventory_remove;};
 	if(_itemText == "Camo Net") then {[MF_ITEMS_CAMO_NET, 1] call mf_inventory_remove;};
 	if(_itemText == "Syphon Hose") then {[MF_ITEMS_SYPHON_HOSE, 1] call mf_inventory_remove;};
+	if(_itemText == "Energy Drink") then {[MF_ITEMS_ENERGY_DRINK, 1] call mf_inventory_remove;};
 };
 
 player setVariable["cmoney",_playerMoney + genStoreCart,true];

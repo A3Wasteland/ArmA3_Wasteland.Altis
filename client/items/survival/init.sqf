@@ -8,6 +8,7 @@
 //_this should be the path to this folder
 mf_items_survival_eat = [_this, "eat.sqf"] call mf_compile;
 mf_items_survival_drink = [_this, "drink.sqf"] call mf_compile;
+_energy_drink = [_this, "energy_drink.sqf"] call mf_compile;
 //mf_items_survival_cook = [_this, "cook.sqf"] call mf_compile;
 //mf_items_survival_cook = [_this, "cookable.sqf"] call mf_compile;
 
@@ -15,11 +16,13 @@ mf_items_survival_drink = [_this, "drink.sqf"] call mf_compile;
 //MF_ITEMS_RAW_MEAT = "raw_meat";
 MF_ITEMS_CANNED_FOOD = "canned_food";
 MF_ITEMS_WATER = "water";
+MF_ITEMS_ENERGY_DRINK = "energy_drink";
 
 //[MF_ITEMS_RAW_MEAT, "Raw Meat", {[MF_ITEMS_RAW_MEAT, MF_ITEMS_COOKED_MEAT] call mf_items_survival_cook}, "Land_Basket_F", "", 5];
 //[MF_ITEMS_COOKED_MEAT, "Raw Meat", {50 call mf_items_survival_eat}, "Land_Basket_F", "", 5];
 [MF_ITEMS_CANNED_FOOD, "Canned Food", {50 call mf_items_survival_eat}, "Land_Basket_F","client\icons\cannedfood.paa", 5] call mf_inventory_create;
 [MF_ITEMS_WATER, "Bottled Water", {50 call mf_items_survival_drink}, "Land_Bucket_F","client\icons\water.paa", 5] call mf_inventory_create;
+[MF_ITEMS_ENERGY_DRINK, "Energy Drink", _energy_drink, "Land_Can_V3_F","client\icons\water.paa", 2] call mf_inventory_create;
 
 // Take Food from Sacks
 [] call {
@@ -28,7 +31,7 @@ MF_ITEMS_WATER = "water";
     _code = {
         _nobj = (nearestobjects [player, ["Land_Sacks_goods_F"],  5] select 0);
         _nobj setVariable["food",(_nobj getVariable "food")-1,true];
-        player setVariable["canfood",(player getVariable "canfood")+1,true];
+        [MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
         player playmove "AinvPknlMstpSlayWrflDnon";
         if(_nobj getVariable "food" < 1) then {
             _nobj spawn {
