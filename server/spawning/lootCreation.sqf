@@ -144,6 +144,7 @@ randomweapon_itemlist = [
 	"Land_Bucket_F", // Water
 	"Land_Suitcase_F",
 	"Land_CanisterFuel_F", //fuelcan
+	"Land_Can_V3_F", //energydrink redgull gives you stamina!
 	"Land_CanisterOil_F" // syphon hose
 ];
 
@@ -219,6 +220,9 @@ randomweapon_itemlist = [
 		};
 		if(_class == "Land_CanisterOil_F")then {
 			_item setVariable["mf_item_id", "syphon_hose", true];
+		};
+		if(_class == "Land_Can_V3_F")then {
+			_item setVariable["mf_item_id", "energy_drink", true];
 		};
 		if(_class == "Land_Basket_F") then {
 			_item setVariable["mf_item_id", "canned_food", true];
