@@ -223,7 +223,7 @@ randomweapon_itemlist = [
 		};
 		if(_class == "Land_Can_V3_F")then {
 			_item setVariable["mf_item_id", "energy_drink", true];
-		}
+		};
 		if(_class == "Land_Basket_F") then {
 			_item setVariable["mf_item_id", "canned_food", true];
 		};
