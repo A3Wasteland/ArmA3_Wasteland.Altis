@@ -50,7 +50,7 @@ if (!isNil "GoT_nightTime" && {GoT_nightTime > 0}) then
 if (!isNil "GoT_baseSaving" && {GoT_baseSaving > 0}) then
 {
    diag_log "[Wasteland - Initializing base-saving]";
-   execVM "persistentscripts\init.sqf";
+   execVM "persistence\init.sqf";
 };
 
 if (!isNil "GoT_buildingsloot" && {GoT_buildingsloot > 0}) then 
