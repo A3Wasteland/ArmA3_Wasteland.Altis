@@ -2,7 +2,7 @@
 applyPlayerDBValues =
 {
 	private ["_array","_varName","_varValue","_i","_in","_exe","_backpack","_sendToServer","_uid"];
-	diag_log format["applyPlayerDBValues called with %1", _this];
+	//diag_log format["applyPlayerDBValues called with %1", _this];
 	_array = _this;
 	_uid = _array select 0;
 	_varName = _array select 1;
@@ -10,18 +10,18 @@ applyPlayerDBValues =
 	if (count _array == 3) then {
 		_varValue = _array select 2;
 	} else {
-		 diag_log format["Failed to load value for %1", _varName];
+		 diag_log format["applyPlayerDBValues failed to get a value for %1", _varName];
 	};
 
-	//ensure this is the correct player
-	if(((getPlayerUID player) != _uid) AND ((getPlayerUID player) + "_donation" != _uid)) exitWith {if(_varName == 'ComputedMoney') then {moneyLoaded = 1;};};
+	// Donation error catch
+	if(((getPlayerUID player) != _uid) AND ((getPlayerUID player) + "_donation" != _uid)) exitWith {if(_varName == 'DonationMoney') then {donationMoneyLoaded = 1;};};
 
 	//if there is not a value for items we care about exit early
-	if(isNil '_varValue') exitWith 
+	if(isNil '_varValue') exitWith 	
 	{
-		diag_log format["Early termination with nil value for %1", _varName];
+		diag_log format["applyPlayerDBValues early termination with nil value for %1", _varName];
 		if(_varName == 'Position') then {positionLoaded = 1;};
-		if(_varName == 'ComputedMoney') then {moneyLoaded = 1;};
+		if(_varName == 'DonationMoney') then {donationMoneyLoaded = 1;};
 		
 		if(_varName == 'PrimaryWeapon') then {primaryLoaded = 1;};
 		if(_varName == 'HandgunWeapon') then {handgunLoaded = 1;};
@@ -33,48 +33,49 @@ applyPlayerDBValues =
 		if(_varName == 'Items') then { itemsLoaded = 1;};
 	};
 	
-	//player globalChat format["%1", _varName];
-	if(_varName == 'ComputedMoney') then {player setVariable["computedMoney",_varValue,true]; moneyLoaded = 1;};
-	if(_varName == 'Money') then {
-		if (_varValue > 5000) then { _varValue = 5000;};
-		player setVariable["cmoney",_varValue,true];
-	};
+	if(_varName == 'DonationMoney') then {player setVariable["donationMoney",_varValue,true]; donationMoneyLoaded = 1;};
 
-	if(_varName == MF_ITEMS_WATER) then { [MF_ITEMS_WATER, _varValue] call mf_inventory_add; };
-	if(_varName == MF_ITEMS_CANNED_FOOD) then { [MF_ITEMS_CANNED_FOOD, _varValue] call mf_inventory_add; };
-	//if(_varName == MF_ITEMS_MEDKIT) then { [MF_ITEMS_MEDKIT, _varValue] call mf_inventory_add; };
-	if(_varName == MF_ITEMS_REPAIR_KIT) then { [MF_ITEMS_REPAIR_KIT, _varValue] call mf_inventory_add; };
-	if(_varName == MF_ITEMS_JERRYCAN_FULL) then { [MF_ITEMS_JERRYCAN_FULL, _varValue] call mf_inventory_add; };
-	if(_varName == MF_ITEMS_JERRYCAN_EMPTY) then { [MF_ITEMS_JERRYCAN_EMPTY, _varValue] call mf_inventory_add; };
-	if(_varName == MF_ITEMS_SPAWN_BEACON) then { [MF_ITEMS_SPAWN_BEACON, _varValue] call mf_inventory_add; };
-	if(_varName == MF_ITEMS_CAMO_NET) then { [MF_ITEMS_CAMO_NET, _varValue] call mf_inventory_add; };
-	if(_varName == MF_ITEMS_SYPHON_HOSE) then { [MF_ITEMS_SYPHON_HOSE, _varValue] call mf_inventory_add; };
-	if(_varName == MF_ITEMS_ENERGY_DRINK) then { [MF_ITEMS_ENERGY_DRINK, _varValue] call mf_inventory_add; };
+	// Inventory item section. Use mf_inventory_registered_item_ids as set up by mf_inventory_create
+	{
+		_itemID = _x;
+		if (_varName == _itemID) then {
+			// Special call to mf_inventory_add specifying an absolute value
+			[_varName, _varValue, true] call mf_inventory_add;
+		};
+	} forEach mf_inventory_registered_item_ids;
 
 	if(_varName == 'Health') then {player setDamage _varValue;};
 
 	//if(_varName == 'Magazines') then {{player addMagazine _x;}foreach _varValue;};
 
-	if((_varName == 'Items') || (_varName == 'Magazines') || (_varName == 'HandgunMagazine') || (_varName == 'SecondaryMagazine') || (_varName == 'PrimaryMagazine')) then 
+	if((_varName == 'Items')
+		|| (_varName == 'Magazines')
+		|| (_varName == 'HandgunMagazine')
+		|| (_varName == 'SecondaryWeaponMagazine')
+		|| (_varName == 'PrimaryWeaponMagazine')) then 
 	{
 		for "_i" from 0 to (count _varValue) - 1 do 
 		{
 			_name = _varValue select _i;
 			_backpack = unitBackpack player;
-			_in = isClass (configFile >> "cfgWeapons" >> _name);
-			if((str(_in) == "true") && (!isNil '_backpack'))then{_backpack addWeaponCargo [_name,1];}
+			_inCfgWeapons = isClass (configFile >> "cfgWeapons" >> _name);
+
+			// Optics seems to denote an 'item' if 1 or 'weapon' is 0
+			_cfgOptics = getNumber (configFile >> "cfgWeapons" >> _name >> "optics");
+
+			if((str(_inCfgWeapons) == "true") && _cfgOptics == 0 && (!isNil '_backpack'))then{_backpack addWeaponCargo [_name,1];}
 			else
 			{
-				_in = isClass (configFile >> "cfgMagazines" >> _name);
+				_inCfgMagazines = isClass (configFile >> "cfgMagazines" >> _name);
 				_fits = [player, (_name)] call fn_fitsInventory;
 				if((_fits == 1)||(_fits == 2))then
 				{
-					if(str(_in) == "false")then{player addItem _name;}
+					if(str(_inCfgMagazines) == "false")then{player addItem _name;}
 					else{player addMagazine _name;};
 				};
 				if(_fits == 3) then
 				{
-					if(str(_in) == "false")then
+					if(str(_inCfgMagazines) == "false")then
 					{
 						_backpack = unitBackpack player;
 						_backpack addItemCargo [_name,1];
@@ -89,13 +90,14 @@ applyPlayerDBValues =
 		};
 		if(_varName == 'Items') then {itemsLoaded = 1;};
 	};
-	if(_varName == 'PrimaryItems') then 
+
+	if(_varName == 'PrimaryWeaponItems') then 
 	{
 		{
 			player addPrimaryWeaponItem _x;
 		}foreach _varValue;
 	};
-	if(_varName == 'SecondaryItems') then 
+	if(_varName == 'SecondaryWeaponItems') then 
 	{
 		{
 			player addSecondaryWeaponItem _x;

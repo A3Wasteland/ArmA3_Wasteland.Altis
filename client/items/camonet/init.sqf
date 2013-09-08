@@ -7,7 +7,7 @@
 private ["_path","_ground_type", "_icon", "_unpack", "_pack"];
 _path = _this;
 
-MF_ITEMS_CAMO_NET = "camo_net";
+MF_ITEMS_CAMO_NET = "camonet";
 MF_ITEMS_CAMO_NET_TYPE = "CamoNet_INDP_open_F";
 _ground_type = "CamoNet_INDP_open_F";
 _icon = "client\icons\gunner.paa";
@@ -30,4 +30,4 @@ private ["_label", "_condition", "_action"];
 _label = format["<img image='%1' width='32' height='32' /> Packup Camouflage Netting", _icon];
 _condition = "'' == [] call mf_items_camo_net_can_pack;";
 _action = [_label, _pack, [], 1, true, false, "", _condition];
-["camonet-pack", _action] call mf_player_actions_set;
+["camonet-pack", _action] call mf_player_actions_set;

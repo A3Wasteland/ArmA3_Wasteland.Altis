@@ -23,16 +23,7 @@ _serverCompiledScripts = [] execVM "server\functions\serverCompile.sqf";
 [] execVM "server\functions\serverTimeSync.sqf";
 waitUntil{scriptDone _serverCompiledScripts};
 
-
-if ((call config_player_saving_enabled) == 1) then {
-	diag_log "[INFO] A3W server player saving is ENABLED";
-	call compile preProcessFile "\iniDB\init.sqf";
-	execVM "persistence\players\s_serverGather.sqf";
-} else {
-	diag_log "[INFO] A3W server player saving is DISABLED";
-};
-
-diag_log format["A3W SERVER - Server Compile Finished"];
+diag_log format["A3W SERVER - Server compile finished"];
 "requestCompensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore }; 
 
 // load external config
@@ -49,20 +40,45 @@ if (loadFile "A3W_Wasteland-config.sqf" != "") then
 		Mission_Diff = 0;		// 0-normal  1-hard
 };
 
+// Do we need any persistence?
+if ((!isNil "A3W_baseSaving" && {A3W_baseSaving > 0} || (call config_player_saving_enabled) == 1)) then {
+	// Our custom iniDB methods which fixes some issues with the current iniDB addon release
+	call compile preProcessFile "persistence\fn_inidb_custom.sqf";
+	diag_log format["[INFO] A3W running with iniDB version %1", ([] call iniDB_version)];
+
+	// Have we got player persistence enabled?
+	if ((call config_player_saving_enabled) == 1) then {
+		diag_log "[INFO] A3W player saving is ENABLED";
+		execVM "persistence\players\s_serverGather.sqf";
+
+		if ((call config_player_donations_enabled) == 1) then {
+			diag_log "[INFO] A3W player donations are ENABLED. Players can spawn with additional money";
+		} else {
+			diag_log "[INFO] A3W player donations are DISABLED";
+		};
+
+	} else {
+		diag_log "[INFO] A3W player saving is DISABLED";
+	};
+
+	// Have we got base saving enabled?
+	if (!isNil "A3W_baseSaving" && {A3W_baseSaving > 0}) then
+	{
+		diag_log "[INFO] A3W base saving is ENABLED";
+		execVM "persistence\world\init.sqf";
+	} else {
+		diag_log "[INFO] A3W base saving is DISABLED";
+	};
+};
+
 if (!isNil "A3W_nightTime" && {A3W_nightTime > 0}) then
 {
     setDate [date select 0, date select 1, date select 2, 21, 0];
 };
 
-if (!isNil "A3W_baseSaving" && {A3W_baseSaving > 0}) then
-{
-	diag_log "[A3W - Initializing base-saving]";
-	execVM "persistence\world\init.sqf";
-};
-
 if (!isNil "A3W_buildingsloot" && {A3W_buildingsloot > 0}) then 
 {
-	diag_log format["WASTELAND - Lootspawner started"];
+	diag_log "[INFO] A3W loot spawning is  ENABLED";
 	execVM "server\spawning\lootCreation.sqf";
 };
 

@@ -94,7 +94,7 @@ switch (_switch) do
                     {
                     	case "binoc":
                         {
-                            if ((_playerSlots select 5) > 0 || {[player, _class] call fn_fitsInventory}) then
+                            if ((_playerSlots select 5) > 0 || {([player, _class] call fn_fitsInventory) > 0}) then
 							{
 								player addWeapon _class;
 							}
@@ -106,7 +106,8 @@ switch (_switch) do
                         };
                         case "item":
                         {
-							if ([player, _class] call fn_fitsInventory) then
+                        	_fits = [player, _class] call fn_fitsInventory;
+							if (_fits > 0) then
 							{
 								player addItem _class;
 							}

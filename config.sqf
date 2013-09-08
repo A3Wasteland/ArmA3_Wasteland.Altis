@@ -230,3 +230,9 @@ config_refuel_amounts = compileFinal str [
 
 // Is player saving enabled?
 config_player_saving_enabled = compileFinal "1";
+
+// Can players get extra in-game cash at spawn by donating?
+config_player_donations_enabled = compileFinal "1";
+
+// How much do players spawn with?
+config_initial_spawn_money = compileFinal "100";

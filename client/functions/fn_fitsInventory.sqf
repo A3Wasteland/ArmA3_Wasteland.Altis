@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-//	@file Version: 1.0
-//	@file Name: fn_fitsInventory.sqf
-//	@file Author: AgentRev
-//	@file Created: 05/05/2013 00:22
-//	@file Args: _player, _item
-
-private ["_player", "_item", "_uniformFree", "_vestFree", "_backpackFree", "_uniform", "_vest", "_backpack", "_containerClass", "_uniformCapacity", "_vestCapacity", "_backpackCapacity", "_itemSize"];
-=======
 //  @file Version: 1.1
 //	@file Name: fn_fitsInventory.sqf
 //	@file Author: AgentRev, Modified by His_Shadow
@@ -22,7 +13,6 @@ private ["_player", "_item", "_uniformFree", "_vestFree", "_backpackFree", "_uni
 // 3 = Item fits in backpack
 
 private ["_player", "_item", "_totalCapacity","_containerClass","_uniform","_vest","_backpack","_uniformCapacity","_vestCapacity","_backpackCapacity","_uniformFree","_vestFree","_backpackFree","_size","_itemSize"];
->>>>>>> More work on player persistence
 
 _player = _this select 0;
 _item = _this select 1;

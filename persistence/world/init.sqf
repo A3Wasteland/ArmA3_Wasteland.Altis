@@ -11,13 +11,5 @@
 
 if(!isServer) exitWith {};
 
-PDB_databaseNameCompiler = {
-	_return = "";
-	_name = _this;
-	_prefix = PDB_ServerID;
-	_return = format["%1%2", _prefix, _name];
-	_return;
-};
-
 execVM "persistence\world\oSave.sqf";
 execVM "persistence\world\oLoad.sqf";

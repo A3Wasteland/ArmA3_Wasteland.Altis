@@ -8,7 +8,16 @@ _switch = _this select 0;
 _button = _this select 1;
 
 player removeAllEventHandlers "HandleDamage";
-player setVariable["cmoney",95,true];
+
+// If there are server donations, bump up the amount players spawn with
+_baseMoney = (call config_initial_spawn_money);
+if ((call config_player_donations_enabled) == 1) then {
+	_donationMoney = player getVariable ["donationMoney", 0];
+	player setVariable["cmoney",_baseMoney + _donationMoney,true];
+} else {
+	player setVariable["cmoney",_baseMoney,true];
+};
+
 [MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
 [MF_ITEMS_WATER, 1] call mf_inventory_add;
 
