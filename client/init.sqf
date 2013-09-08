@@ -1,6 +1,6 @@
 //@file Version: 1.1
 //@file Name: init.sqf
-//@file Author: [404] Deadbeat, [GoT] JoSchaap
+//@file Author: [404] Deadbeat, [GoT] JoSchaap, [KoS] Bewilderbeest
 //@file Created: 20/11/2012 05:19
 //@file Description: The client init.
 
@@ -37,9 +37,46 @@ if(!(playerSide in [BLUFOR, OPFOR, INDEPENDENT, sideEnemy])) then {
 //Call client compile list.
 player call compile preprocessFileLineNumbers "client\functions\clientCompile.sqf";
 
-
 //Player setup
 player call playerSetup;
+
+// Player saving - Load from iniDB
+if ((call config_player_saving_enabled) == 1) then {
+	positionLoaded = 0;
+	donationMoneyLoaded = 0; // used only if config_player_donations_enabled is set
+
+	[] execVM "persistence\players\c_serverSaveRelay.sqf";
+	waitUntil {!isNil "fn_SaveToServer"};
+	[] execVM "persistence\players\c_playerDBSetup.sqf";
+	waitUntil {!isNil "statFunctionsLoaded"};
+	[] execVM "persistence\players\c_loadAccount.sqf";
+
+	if ((call config_player_donations_enabled) == 1) then {
+		// If the server has configured donation money, load that from the DB
+		waitUntil {donationMoneyLoaded == 1};
+		_donationMoney = player getVariable ["donationMoney", 0];
+		if(_donationMoney > 0) then {player globalChat format["Thank you for your donation. You will have $%1 extra cash on spawn", _donationMoney];};
+	};
+
+	// Deal with money here
+	// If there are server donations, bump up the amount players spawn with
+	_baseMoney = (call config_initial_spawn_money);
+	if ((call config_player_donations_enabled) == 1) then {
+		_donationMoney = player getVariable ["donationMoney", 0];
+		diag_log format["Player starting with $%1 (%2 + %3)", _baseMoney + _donationMoney, _baseMoney, _donationMoney];
+		player setVariable["cmoney",_baseMoney + _donationMoney,true];
+	} else {
+		diag_log format["Player starting with $%1", _baseMoney];
+		player setVariable["cmoney",_baseMoney,true];
+	};
+
+	waitUntil {positionLoaded == 1};
+} else {
+	diag_log format["Client has no player save functionality"];
+};
+
+// Find out if the player has been moved by the persistence system
+_playerWasMoved = player getVariable ["playerWasMoved", 0];
 
 //Setup player events.
 if(!isNil "client_initEH") then {player removeEventHandler ["Respawn", client_initEH];};
@@ -75,8 +112,13 @@ if (isNil "FZF_IC_INIT") then   {
 	call compile preprocessFileLineNumbers "client\functions\newPlayerIcons.sqf";
 };
 
+// If we've got a position from the player save system, don't go through playerSpawn
+if(_playerWasMoved == 0) then {
+	true spawn playerSpawn;
+} else {
+	player switchMove "AmovPpneMstpSnonWnonDnon";
+};
 
-true spawn playerSpawn;
 [] spawn FZF_IC_INIT;
 
 {

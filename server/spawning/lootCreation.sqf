@@ -213,26 +213,26 @@ randomweapon_itemlist = [
 			_numf = (random 100);
 			if (_numf < _oddfuelcan) then {
 				//_item setVariable["fuel", true, true];
-				_item setVariable["mf_item_id", "jerrycan_full", true];
+				_item setVariable["mf_item_id", "jerrycanfull", true];
 			} else {
 				//_item setVariable["fuel", false, true];
-				_item setVariable["mf_item_id", "jerrycan_empty", true];
+				_item setVariable["mf_item_id", "jerrycanempty", true];
 			};
 		};
 		if(_class == "Land_CanisterOil_F")then {
-			_item setVariable["mf_item_id", "syphon_hose", true];
+			_item setVariable["mf_item_id", "syphonhose", true];
 		};
 		if(_class == "Land_Can_V3_F")then {
-			_item setVariable["mf_item_id", "energy_drink", true];
+			_item setVariable["mf_item_id", "energydrink", true];
 		};
 		if(_class == "Land_Basket_F") then {
-			_item setVariable["mf_item_id", "canned_food", true];
+			_item setVariable["mf_item_id", "cannedfood", true];
 		};
 		if(_class == "Land_Bucket_F") then {
 			_item setVariable["mf_item_id", "water", true];
 		};
 		if(_class == "Land_Suitcase_F") then {
-			_item setVariable["mf_item_id", "repair_kit", true];
+			_item setVariable["mf_item_id", "repairkit", true];
 		};
 		_item setPos _position;
     };

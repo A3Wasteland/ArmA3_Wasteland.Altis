@@ -33,7 +33,7 @@ player createDiaryRecord["info",
 	* AgentREV (TPG/TeamPlayerGaming)<br/>
 	* MercyFulfate<br/>
 	* His_Shadow (KoS/KillonSight)<br/>
-	* Bewilderbeast (KoS/KillonSight)<br/>
+	* Bewilderbeest (KoS/KillonSight)<br/>
 	* Costlyy (404/404Games)<br/>
 	<br/>
 	<br/>

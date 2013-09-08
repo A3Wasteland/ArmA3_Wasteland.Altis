@@ -4,7 +4,7 @@
 :: directory based on a match on your Windows username
 ::
 
-@ECHO OFF
+::@ECHO OFF
 
 :: Set your ArmA3 profile name etc. below
 
@@ -24,7 +24,7 @@ SET "PBO_TOOL=C:\Program Files (x86)\Bohemia Interactive\Tools\BinPBO Personal E
 
 ECHO Packaging into PBO...
 
-mkdir "%TEMP%%LOCAL_MISSION_NAME%"
+mkdir "%TEMP%\%LOCAL_MISSION_NAME%"
 xcopy /q /s /y "%SOURCE_DIR%\*" "%TEMP%%LOCAL_MISSION_NAME%"
 echo Mission assembled to %TEMP%%LOCAL_MISSION_NAME%
 "%PBO_TOOL%" "%TEMP%\%LOCAL_MISSION_NAME%" %PBO_DESTINATION_DIR%

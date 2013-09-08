@@ -1,4 +1,3 @@
-#include "setup.sqf"
 #include "sideMissionDefines.sqf";
 
 if(!isServer) exitwith {};
@@ -9,11 +8,7 @@ private ["_result","_missionMarkerName","_missionType","_startTime","_randomPos"
 _result = 0;
 _missionMarkerName = "SunkenCache_Marker";
 _missionType = "Sunken Supplies";
-#ifdef __A2NET__
-_startTime = floor(netTime);
-#else
 _startTime = floor(time);
-#endif
 
 diag_log format["WASTELAND SERVER - Side Mission Started: %1",_missionType];
 
@@ -48,20 +43,12 @@ CivGrpS = createGroup civilian;
 [CivGrpS,_randomPos] spawn createSmallDivers;
 
 diag_log format["WASTELAND SERVER - Side Mission Waiting to be Finished: %1",_missionType];
-#ifdef __A2NET__
-_startTime = floor(netTime);
-#else
 _startTime = floor(time);
-#endif
 waitUntil
 {
     sleep 1; 
 	_playerPresent = false;
-	#ifdef __A2NET__
-	_currTime = floor(netTime);
-	#else
     _currTime = floor(time);
-	#endif
     if(_currTime - _startTime >= sideMissionTimeout) then {_result = 1;};
     {if((isPlayer _x) AND (_x distance _sbox <= missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
     _unitsAlive = ({alive _x} count units CivGrpS);
@@ -93,4 +80,4 @@ if(_result == 1) then
 
 //Reset Mission Spot.
 //MissionSpawnMarkers select _randomIndex set[1, false];
-[_missionMarkerName] call deleteClientMarker;
+[_missionMarkerName] call deleteClientMarker;

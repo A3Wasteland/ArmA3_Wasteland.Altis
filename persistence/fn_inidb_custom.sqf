@@ -3,20 +3,21 @@
 //Email: edwin(at)vodamail(dot)co(dot)za
 //Date: 26/03/2013
 //Thanx to iniDB's author SicSemperTyrannis! May you have many wives and children!
-//changes to persistentdb for arma3 and GoT Wasteland mission by JoSchaap (got2dayz.nl)
 
-// WARNING! This is a modified version for use with the GoT Wasteland v2 missionfile!
+// WARNING! This is a modified version for use with the A3W missionfile!
 // This is NOT a default persistantdb script!
-// changes by: JoSchaap (GoT2DayZ.nl)
+// changes by: JoSchaap & Bewilderbeest @ http://a3wasteland.com/
+
+#define __DEBUG_INIDB_CALLS__ 1
 
 if(!isServer) exitWith {};
 
 PDB_databaseNameCompiler = {
-_return = "";
-_name = _this;
-_prefix = PDB_ServerID;
-_return = format["%1%2", _prefix, _name];
-_return;
+	_return = "";
+	_name = _this;
+	_prefix = PDB_ServerID;
+	_return = format["%1%2", _prefix, _name];
+	_return;
 };
 
 iniDB_version = {
@@ -32,10 +33,10 @@ iniDB_HashFunction = {
 	
 	if((typeName _data) == "STRING") then {	
 		_data = "iniDB" callExtension format["%1;%2", _mode, _data];
-		_data = call compile _data;
+		_cdata = call compile _data;
 
-		if((_data select 0)) then {
-			_data select 1
+		if((_cdata select 0)) then {
+			_cdata select 1
 		} else {
 			nil
 		};
@@ -66,76 +67,96 @@ iniDB_Base64Decode = {
 
 iniDB_exists = {
 	private["_data"];
+	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_exists called with %1", _this]; };
 	_data = "iniDB" callExtension format["exists;%1", _this];
-	_data = call compile _data;
+	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_exists returned %1", _data]; };
+	_cdata = call compile _data;
 	
-	if((_data select 0) && (_data select 1)) then {
+	if((_cdata select 0) && (_cdata select 1)) then {
 		true
 	} else {
 		false
 	};
 };
+
 
 iniDB_delete = {
 	_data = "iniDB" callExtension format["delete;%1", _this];
-	_data = call compile _data;
+	_cdata = call compile _data;
 	
-	if((_data select 0)) then {
+	if((_cdata select 0)) then {
 		true
 	} else {
 		false
 	};
 };
 
+// =======================================================================
+
 iniDB_readRaw = {
 	private["_file", "_sec", "_key", "_data"];
+	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_readRaw called with %1", _this]; };
 	_file = _this select 0;
 	_sec = _this select 1;
 	_key = _this select 2;
 	_data = "iniDB" callExtension format["read;%1;%2;%3", _file, _sec, _key];
-	_data = call compile _data;
+	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_readRaw returned '%1'", _data]; };
+	_cdata = [false];
+	// Better handling of empty strings which don't compile well
+	if (_data != "") then {
+		_cdata = call compile _data;
+	};
 	
-	if((_data select 0)) then {
-		_data select 1
+	if((_cdata select 0)) then {
+		_cdata select 1
 	} else {
-		false
+		""
 	};
 };
 
 iniDB_writeRaw = {
 	private["_file", "_sec", "_key", "_val", "_data"];
+	if (__DEBUG_INIDB_CALLS__ == 1) then {diag_log format["iniDB_writeRaw called with %1", _this];};
+
 	_file = _this select 0;
 	_sec = _this select 1;
 	_key = _this select 2;
 	_val = _this select 3;
 	_data = "iniDB" callExtension format["write;%1;%2;%3;%4", _file, _sec, _key, _val];
-	_data = call compile _data;
+	_cdata = call compile _data;
 
-	if((_data select 0)) then {
+	if((_cdata select 0)) then {
 		true
 	} else {
 		false
 	};
 };
 
+// =======================================================================
+
 iniDB_Datarizer = {
-	private["_string", "_type"];
+	private["_string", "_type", "_return"];
+	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_Datarizer called with %1", _this]; };
 	_string = _this select 0;
 	_type = _this select 1;
 	
 	if(_type == "ARRAY") then {
-		_string = call compile _string;
+		_return = call compile _string;
 	} else {
 		if((_type == "SCALAR") || (_type == "NUMBER")) then { // "NUMBER" is less confusing for new folks
-			_string = parseNumber _string;
+			_return = parseNumber _string;
+		} else {
+			_return = _string;
 		};
 	};
 	
-	_string
+	_return
 };
 
 iniDB_read = {
 	private["_file", "_sec", "_key", "_type", "_data"];
+	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_read called with %1", _this]; };
+
 	_file = _this select 0;
 	_sec = _this select 1;
 	_key = _this select 2;
@@ -151,6 +172,8 @@ iniDB_read = {
 
 iniDB_write = {
 	private["_file", "_sec", "_key", "_data"];
+	if (__DEBUG_INIDB_CALLS__ == 1) then {diag_log format["iniDB_write called with %1", _this];};
+
 	_file = _this select 0;
 	_sec = _this select 1;
 	_key = _this select 2;
@@ -161,6 +184,3 @@ iniDB_write = {
 	_data
 };
 
-
-execVM "persistentscripts\oSave.sqf";
-execVM "persistentscripts\oLoad.sqf";

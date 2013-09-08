@@ -1,4 +1,3 @@
-#include "setup.sqf"
 //	@file Version: 1.1
 //	@file Name: serverCompile.sqf
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev
@@ -7,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-diag_log format["WASTELAND SERVER - Initilizing Server Compile"];
+diag_log format["WASTELAND SERVER - Initializing server compile"];
 
 /*
 //Main Mission Compiles

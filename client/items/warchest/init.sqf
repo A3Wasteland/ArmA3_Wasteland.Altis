@@ -39,4 +39,4 @@ _action = ["Pack Warchest", mf_items_warchest_pack, nil, 1, true, false, "", _co
 
 _condition = "'' == [] call mf_items_warchest_can_hack;";
 _action = ["Hack Warchest", mf_items_warchest_hack, nil, 2, true, false, "", _condition];
-["warchest-hack", _action] call mf_player_actions_set;
+["warchest-hack", _action] call mf_player_actions_set;
