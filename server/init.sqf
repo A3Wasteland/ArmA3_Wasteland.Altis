@@ -9,7 +9,6 @@ if(!X_Server) exitWith {};
 
 A3W_sideMissions = 1;
 A3W_serverSpawning = 1;
-A3W_playerSaving = 1;
 
 vChecksum = compileFinal format ["'%1'", call generateKey];
 
@@ -35,7 +34,7 @@ if (loadFile "A3W_Wasteland-config.sqf" != "") then
 		diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 		A3W_buildingLoot = 1;	// loot inside buildings 1-yes 0-no
 		A3W_nightTime = 0;		// server starts at 19:00
-		A3W_baseSaving = 0;		// requires @inidb mod
+		A3W_baseSaving = 1;		// requires @inidb mod
 		PDB_ServerID = "any";
 		Mission_Diff = 0;		// 0-normal  1-hard
 };
@@ -76,9 +75,9 @@ if (!isNil "A3W_nightTime" && {A3W_nightTime > 0}) then
     setDate [date select 0, date select 1, date select 2, 21, 0];
 };
 
-if (!isNil "A3W_buildingsloot" && {A3W_buildingsloot > 0}) then 
+if (!isNil "A3W_buildingLoot" && {A3W_buildingLoot > 0}) then 
 {
-	diag_log "[INFO] A3W loot spawning is  ENABLED";
+	diag_log "[INFO] A3W loot spawning is ENABLED";
 	execVM "server\spawning\lootCreation.sqf";
 };
 

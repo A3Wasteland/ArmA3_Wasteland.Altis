@@ -1,6 +1,6 @@
 //@file Version: 1.1
 //@file Name: init.sqf
-//@file Author: [404] Deadbeat, [GoT] JoSchaap
+//@file Author: [404] Deadbeat, [GoT] JoSchaap, [KoS] Bewilderbeest
 //@file Created: 20/11/2012 05:19
 //@file Description: The client init.
 

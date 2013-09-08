@@ -34,10 +34,3 @@ _label = format ['<img image="%1" width="32" height="32" /> Take %2', _item sele
 _condition = format['not isNull ("%1" call mf_inventory_takeable);', _item select 0];
 _action = [_label, mf_inventory_take, _item select 0, 1, false, false, "", _condition];
 [format["take-%1", _this select 0], _action] call mf_player_actions_set;
-
-// Add to global array of all registered inventory items
-if (isNil "mf_inventory_registered_item_ids") then {
-	mf_inventory_registered_item_ids = [_this select 0];
-} else {
-	mf_inventory_registered_item_ids set [count mf_inventory_registered_item_ids, _this select 0];
-};

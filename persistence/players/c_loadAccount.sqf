@@ -18,8 +18,10 @@ if ((call config_player_donations_enabled) == 1) then {
 
 // Survival + wasteland inventory
 {
-	[_UID, _UID, _x, "NUMBER"] call sendToServer;
-} forEach mf_inventory_registered_item_ids;
+	_keyName = _x select 0;
+	diag_log format["calling sendToServer with %1", _keyName];
+	[_UID, _UID, _keyName, "NUMBER"] call sendToServer;
+} forEach call mf_inventory_all;
 
 // Player inventory
 [_UID, _UID, "Uniform", "STRING"] call sendToServer;

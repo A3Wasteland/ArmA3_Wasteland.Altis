@@ -50,6 +50,6 @@ while {true} do {
 			};
 	} forEach allMissionObjects "All";
 	["Objects" call PDB_databaseNameCompiler, "Count", "Count", PersistentDB_ObjCount] call iniDB_write;
-	diag_log format["GoT Wasteland - baseSaving saved %1 parts to iniDB", PersistentDB_ObjCount];
+	diag_log format["A3W - Base saving has saved %1 parts to iniDB", PersistentDB_ObjCount];
 	sleep 120;
-};
+};

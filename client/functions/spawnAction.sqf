@@ -1,6 +1,6 @@
 //	@file Version: 1.0
 //	@file Name: spawnAction.sqf
-//	@file Author: [404] Deadbeat
+//	@file Author: [404] Deadbeat, [KoS] Bewilderbeest
 //	@file Created: 20/11/2012 05:19
 //	@file Args: [int(type of spawn)]
 

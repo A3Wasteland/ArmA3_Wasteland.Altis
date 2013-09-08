@@ -10,7 +10,7 @@ applyPlayerDBValues =
 	if (count _array == 3) then {
 		_varValue = _array select 2;
 	} else {
-		 diag_log format["applyPlayerDBValues failed to get a value for %1", _varName];
+		 //diag_log format["applyPlayerDBValues failed to get a value for %1", _varName];
 	};
 
 	// Donation error catch
@@ -19,7 +19,7 @@ applyPlayerDBValues =
 	//if there is not a value for items we care about exit early
 	if(isNil '_varValue') exitWith 	
 	{
-		diag_log format["applyPlayerDBValues early termination with nil value for %1", _varName];
+		//diag_log format["applyPlayerDBValues early termination with nil value for %1", _varName];
 		if(_varName == 'Position') then {positionLoaded = 1;};
 		if(_varName == 'DonationMoney') then {donationMoneyLoaded = 1;};
 		
@@ -35,14 +35,14 @@ applyPlayerDBValues =
 	
 	if(_varName == 'DonationMoney') then {player setVariable["donationMoney",_varValue,true]; donationMoneyLoaded = 1;};
 
-	// Inventory item section. Use mf_inventory_registered_item_ids as set up by mf_inventory_create
+	// Inventory item section. Use mf_inventory_all as set up by the mf_inv system
 	{
-		_itemID = _x;
+		_itemID = _x select 0;
 		if (_varName == _itemID) then {
 			// Special call to mf_inventory_add specifying an absolute value
 			[_varName, _varValue, true] call mf_inventory_add;
 		};
-	} forEach mf_inventory_registered_item_ids;
+	} forEach call mf_inventory_all;
 
 	if(_varName == 'Health') then {player setDamage _varValue;};
 
@@ -50,8 +50,6 @@ applyPlayerDBValues =
 
 	if (_varName == 'MagazinesWithAmmoCount') then {
 		{
-			diag_log format["MagazinesWithAmmoCount processing line %1", _x];
-
 			_className = _x select 0; // eg. 30Rnd_65x39_caseless_mag
 			_ammoCount = _x select 1; // Magazine current ammo count
 
@@ -60,12 +58,10 @@ applyPlayerDBValues =
 
 			if ((_fits == 1)||(_fits == 2))then
 			{
-				diag_log format["MagazinesWithAmmoCount adding class %1 count %2",_className, _ammoCount];
 				player addMagazine [_className, _ammoCount];
 			};
 			if(_fits == 3) then
 			{
-				diag_log format["MagazinesWithAmmoCount adding class %1 to backpack",_className];
 				_backpack = unitBackpack player;
 				_backpack addMagazineCargo [_name,1];
 			};
