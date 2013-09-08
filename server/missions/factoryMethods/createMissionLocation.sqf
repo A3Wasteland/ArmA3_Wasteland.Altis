@@ -15,7 +15,7 @@ while {!_GotLoc} do
 	//If the index of the mission markers array is false then break the loop and finish up doing the mission
 	if (!((MissionSpawnMarkers select _randomIndex) select 1)) then 
 	{
-		_selectedMarker = MissionSpawnMarkers select _randomIndex select 0;the
+		_selectedMarker = MissionSpawnMarkers select _randomIndex select 0;
 		_randomPos = getMarkerPos _selectedMarker;
         _returnData = [_randomPos,_randomIndex];
 		MissionSpawnMarkers select _randomIndex set[1, true];
