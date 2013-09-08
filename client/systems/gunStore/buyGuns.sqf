@@ -70,7 +70,8 @@ switch (_switch) do
 					_class = _x select 1;
 					_type = getNumber (configFile >> "CfgMagazines" >> _class >> "type");
 					
-					if ([player, _class] call fn_fitsInventory) then
+					_fits = [player, _class] call fn_fitsInventory;
+					if (_fits > 0) then
 					{
 						player addMagazine _class;
 					}
