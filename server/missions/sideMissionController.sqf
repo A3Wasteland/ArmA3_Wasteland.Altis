@@ -14,9 +14,9 @@ private ["_SideMissions", "_SideMissionsOdds", "_missionType", "_nextMission", "
 diag_log format["WASTELAND SERVER - Started Side Mission State"];
 
 _SideMissions =
-[
-	["mission_HostileHelicopter", 9],  //weight of 19 for debugging purposes
-	["mission_MiniConvoy", 9],  //weight at 9 for TESTING PURPOSES ONLY! CHANGE BACK TO 1 (:
+[			// increase the number behind the mission (weight) to increase the chance of the mission to be selected
+	["mission_HostileHelicopter", 1], 
+	["mission_MiniConvoy", 1], 
 	// ["mission_SunkenSupplies", 1],
 	["mission_AirWreck", 1],
 	["mission_WepCache", 1],

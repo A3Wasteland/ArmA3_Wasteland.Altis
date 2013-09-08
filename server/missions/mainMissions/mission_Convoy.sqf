@@ -17,7 +17,7 @@ diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the convoy (veh2 is the 'convoyed' vehicle
 _veh1 = ["O_MRAP_02_gmg_F","B_MRAP_01_gmg_F","I_MRAP_03_gmg_F"] call BIS_fnc_selectRandom;
-_veh2 = ["B_MRAP_01_F","O_MRAP_02_F","I_MRAP_03_F","B_Truck_01_Transport_F","B_Truck_01_Covered_F"] call BIS_fnc_selectRandom;
+_veh2 = ["B_MRAP_01_F","O_MRAP_02_F","I_MRAP_03_F","B_Truck_01_Transport_F","I_G_Offroad_01_armed_F","C_SUV_01_F","C_Van_01_transport_F","I_G_Van_01_transport_F","C_Van_01_box_F","B_Truck_01_Covered_F"] call BIS_fnc_selectRandom;
 _veh3 = ["B_MRAP_01_hmg_F","O_MRAP_02_hmg_F","I_MRAP_03_hmg_F"] call BIS_fnc_selectRandom;
 
 // available routes to add a route. If you add more routes append ,4 to the array and so on

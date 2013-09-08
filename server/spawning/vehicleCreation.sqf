@@ -41,7 +41,7 @@ clearMagazineCargoGlobal _car;
 clearWeaponCargoGlobal _car;
 
 //Set Cars Attributes
-_car setFuel (0.50);
+_car setFuel (random 0.50);
 _car setDamage (random 0.50);
 
 if (_type in [0,1]) then

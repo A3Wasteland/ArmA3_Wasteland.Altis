@@ -16,9 +16,9 @@ diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionTy
 diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the convoy (veh2 is the 'convoyed' vehicle
-_veh1 = ["B_Quadbike_01_F","O_Quadbike_01_F","C_Offroad_01_F","I_Quadbike_01_F","C_Quadbike_01_F"] call BIS_fnc_selectRandom;
-_veh2 = ["O_Truck_02_covered_F","C_Offroad_01_F","I_Truck_02_covered_F","O_Truck_02_transport_F","I_Truck_02_transport_F"] call BIS_fnc_selectRandom;
-_veh3 = ["B_Quadbike_01_F","O_Quadbike_01_F","C_Offroad_01_F","I_Quadbike_01_F","C_Quadbike_01_F"] call BIS_fnc_selectRandom;
+_veh1 = ["B_Quadbike_01_F","C_Offroad_01_F","I_G_Offroad_01_F","I_G_Offroad_01_armed_F","C_SUV_01_F","O_Quadbike_01_F","C_Offroad_01_F","I_Quadbike_01_F","C_Quadbike_01_F"] call BIS_fnc_selectRandom;
+_veh2 = ["O_Truck_02_covered_F","C_Offroad_01_F","I_Truck_02_Fuel_F","O_Truck_02_Fuel_F","I_Truck_02_medical_F","O_Truck_02_medical_F","C_Van_01_Fuel_F","I_G_Van_01_Fuel_F","I_Truck_02_covered_F","O_Truck_02_transport_F","I_Truck_02_transport_F"] call BIS_fnc_selectRandom;
+_veh3 = ["B_Quadbike_01_F","C_Offroad_01_F","I_G_Offroad_01_F","I_G_Offroad_01_armed_F","C_SUV_01_F","O_Quadbike_01_F","C_Offroad_01_F","I_Quadbike_01_F","C_Quadbike_01_F"] call BIS_fnc_selectRandom;
 
 // available routes to add a route. If you add more routes append ,4 to the array and so on
 _routes = [1,2,3];

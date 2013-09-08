@@ -25,6 +25,10 @@ pvar_teamKillList = [];
 publicVariable "pvar_teamKillList";
 pvar_spawn_beacons = [];
 publicVariable "pvar_spawn_beacons";
+pvar_warchest_funds_east = 0;
+publicVariable "pvar_warchest_funds_east";
+pvar_warchest_funds_west = 0;
+publicVariable "pvar_warchest_funds_west";
 clientMissionMarkers = [];
 publicVariable "clientMissionMarkers";
 clientRadarMarkers = [];
@@ -103,6 +107,7 @@ staticHeliList = ["O_Heli_Light_02_unarmed_F","B_Heli_Light_01_F","I_Heli_Transp
 vehicleWeapons = ["arifle_SDAR_F",
 				"SMG_01_F",
 				"SMG_02_F",
+				"hgun_PDW2000_F",
 				"arifle_MXM_F",
 				"arifle_TRG21_F",
 				"arifle_TRG20_F",
@@ -138,10 +143,11 @@ vehicleAddition = [
 			"optic_ACO_grn",
 			"optic_aco_smg", 
 			"optic_Holosight",
+			"optic_Nightstalker",
+			"optic_NVS",
 			"optic_Holosight_smg", 
 			"acc_flashlight", 
 			"acc_pointer_IR",
-			"Medikit",
 			"Medikit",
 			"FirstAidKit",
             	"ToolKit"

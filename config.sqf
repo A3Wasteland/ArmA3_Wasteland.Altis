@@ -118,6 +118,7 @@ accessoriesArray = compileFinal str [
 
 	["Flash Light","acc_flashlight", 40,"item"],
 
+	// optics
 	["ACO Sight(Red)","optic_Aco", 80,"item"],
 	["ACO Sight(Green)","optic_ACO_grn", 80,"item"], 
 	["ACO Sight(SMG)","optic_aco_smg", 70,"item"],
@@ -127,17 +128,11 @@ accessoriesArray = compileFinal str [
 	["ARCO Sight","optic_Arco", 190,"item"],
 	["MRCO Sight","optic_MRCO", 190,"item"],
 	["SOS Sight","optic_SOS", 290,"item"],
-	
-	["Backpack (Large)","B_Bergen_Base", 200,"backpack"],
-	["Backpack (Extra Large)","B_Carryall_Base", 350,"backpack"], 
+	["Nightstalker Sight","optic_Nightstalker", 490,"item"],
+	["Nightvision Sight","optic_SOS", 320,"item"],
+	["TWS Sight","optic_tws", 500,"item"],
+	["TWS Sight (MG)","optic_tws_mg", 580,"item"],
 
-	["Carrier Lite (Coyote)","V_PlateCarrier1_cbr", 70,"vest"],
-	["Carrier Lite (Green)","V_PlateCarrier1_rgr", 70,"vest"],
-	["Chest Rig (Khaki)","V_Chestrig_khk", 70,"vest"],
-	["Chest Rig (Green)","V_ChestrigB_rgr", 70,"vest"],
-	["Tactical Vest (Brown)","V_TacVest_brn", 70,"vest"],
-	["Tactical Vest (Khaki)","V_TacVest_khk", 70,"vest"],
-	["Tactical Vest (Olive)","V_TacVest_oli", 70,"vest"],
 	//diving gear
 	["Dive Goggles","G_Diving", 20,"gogg"],
 	["Rebreather","V_RebreatherIA", 50,"vest"],
@@ -177,7 +172,8 @@ generalStore = compileFinal str [
     ["Spawn Beacon","spawnbeacon",localize "STR_WL_ShopDescriptions_spawnBeacon","client\icons\briefcase.paa",1500,750],
     ["Camo Net","camonet",localize "STR_WL_ShopDescriptions_Camo","client\icons\briefcase.paa",200,100],
     ["Syphon Hose","syphonhose",localize "STR_WL_ShopDescriptions_SyphonHose","client\icons\jerrycan.paa",200,100],
-    ["Energy Drink","energydrink",localize "STR_WL_ShopDescriptions_Energy_Drink","client\icons\briefcase.paa",100,50]
+    ["Energy Drink","energydrink",localize "STR_WL_ShopDescriptions_Energy_Drink","client\icons\briefcase.paa",100,50],
+    ["Warchest","warchest",localize "STR_WL_ShopDescriptions_Warchest","client\icons\briefcase.paa",1000,500]
 ];
 
 // Stratis town and city array

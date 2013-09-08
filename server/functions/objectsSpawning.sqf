@@ -19,20 +19,22 @@ _lcounter = 0;
 	_pos = getMarkerPos (_x select 0);
 	_tradius = (_x select 1);
 	_townname = (_x select 2);
-	_objammount = (((_tradius / 25) *2) -2);  // spawns 2 objects for every 25 mtr radius the townmarker has, this might need tweaking! 
-	_minrad = 25;
-	_maxrad = 50;
+	_objammount = (round (((_tradius / 30) *2) -2));  // spawns 2 objects for every 25 mtr radius the townmarker has, this might need tweaking! 
+	_minrad = 45;
+	_maxrad = 60;
 	while {(_lcounter < _objammount)} do {
-		_pos = [_pos,_minrad,_maxrad,2,0,60 * (pi / 180),0,[],[_pos]] call BIS_fnc_findSafePos;
+		_pos = [_pos,_minrad,_maxrad,2,0,80 * (pi / 180),0,[],[_pos]] call BIS_fnc_findSafePos;
+		[_pos] call objectCreation;
+		_minrad = (_minrad + 15);
+		_maxrad = (_maxrad + 15);
+		_counter = (_counter + 1);
+		_lcounter = (_lcounter + 1);
+		_pos = [_pos,_minrad,_maxrad,2,0,120 * (pi / 180),0,[],[_pos]] call BIS_fnc_findSafePos;
 		[_pos] call objectCreation;
 		_counter = (_counter + 1);
 		_lcounter = (_lcounter + 1);
-		_pos = [_pos,_minrad,_maxrad,2,0,60 * (pi / 180),0,[],[_pos]] call BIS_fnc_findSafePos;
-		[_pos] call objectCreation;
-		_counter = (_counter + 1);
-		_lcounter = (_lcounter + 1);
-		_minrad = (_minrad + 25);
-		_maxrad = (_maxrad + 25);
+		_minrad = (_minrad + 15);
+		_maxrad = (_maxrad + 15);
 	};	
 	//diag_log format["WASTELAND DEBUG - spawned %1 Objects in: %2",_lcounter,_townname];
 	_lcounter = 0;
