@@ -4,7 +4,6 @@
 
 // Cargo drop script used by 404Games with permission from [OCUK] MarKeR.
 // Modifications made by [404] Costlyy
-#include "setup.sqf"
 #include "mainMissionDefines.sqf";
 
 if(!isServer) exitwith {};
@@ -14,11 +13,7 @@ private [];
 _result = 0;
 _missionType = "C130 Supply Drop";
 _missionMarkerName = "SupplyDrop_Marker";
-#ifdef __A2NET__
-_startTime = floor(netTime);
-#else
 _startTime = floor(time);
-#endif
 
 diag_log format["WASTELAND SERVER - Main Mission Started: %1",_missionType];
 

@@ -9,7 +9,7 @@
 #define path(file) format["%1\%2",_this, file]
 
 MF_ITEMS_SPAWN_BEACON_PATH = _this;
-MF_ITEMS_SPAWN_BEACON = "spawn-beacon";
+MF_ITEMS_SPAWN_BEACON = "spawnbeacon";
 MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE = "Land_TentDome_F";
 MF_ITEMS_SPAWN_BEACON_STEAL_DURATION = 60;
 MF_ITEMS_SPAWN_BEACON_DURATION = 30;

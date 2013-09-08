@@ -2,13 +2,13 @@
 //	@file Name: serverPlayerDied.sqf
 //	@file Author: [404] Pulse
 //	@file Created: 20/11/2012 05:19
-#include "setup.sqf"
 if(!X_Server) exitWith {};
 
-private["_newObject"];
-_newObject = _this select 0;
-#ifdef __A2NET__
-_newObject setVariable["processedDeath",netTime];
-#else
-_newObject setVariable["processedDeath",time];
-#endif
+private["_newPlayerObject"];
+_newPlayerObject = _this select 0;
+_newPlayerObject setVariable["processedDeath",time];
+
+// Remove any persistent info about the player on death
+if ((call config_player_saving_enabled) == 1) then {
+	getPlayerUID _newPlayerObject call iniDB_delete;
+};

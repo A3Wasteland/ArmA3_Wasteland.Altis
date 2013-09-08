@@ -1,10 +1,8 @@
-																																																												asaerw3rw3r4 = 1; 
 //	@file Version: 1.2
 //	@file Name: init.sqf
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap
 //	@file Description: The main init.
 
-#include "setup.sqf"
 #define DEBUG false
 
 StartProgress = false;

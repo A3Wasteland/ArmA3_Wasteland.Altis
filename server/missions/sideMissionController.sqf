@@ -3,7 +3,6 @@
 //	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, Sanjo, AgentRev
 //	@file Created: 08/12/2012 15:19
 
-#include "setup.sqf"
 #include "sideMissions\sideMissionDefines.sqf";
 
 if (!isServer) exitWith {};

@@ -8,7 +8,7 @@ private ["_delQtyP","_delQtyO","_runInt","_deathTime","_itemDistance"];
 // configure cleanup below this line
 
 _runInt = 300;		// Interval to run the cleanup (default: 300 = 5 minutes)
-_deathTime = 600;	// Time a body has to have been dead before cleaning it up (default: 900 = 10 minutes)
+_deathTime = 600;	// Time a body has to have been dead before cleaning it up (default: 600 = 10 minutes)
 _itemDistance = 20;	// the radius around the body (mtr) in which items will be searched for removal
 
 // you should not change code below this line :)

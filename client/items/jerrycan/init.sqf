@@ -5,9 +5,9 @@
 //@file Description: Initialize Jerrycans
 //@file Argument: The path of the directory holding this file.
 
-MF_ITEMS_JERRYCAN_EMPTY = "jerrycan_empty";
-MF_ITEMS_JERRYCAN_FULL = "jerrycan_full";
-MF_ITEMS_SYPHON_HOSE = "syphon_hose";
+MF_ITEMS_JERRYCAN_EMPTY = "jerrycanempty";
+MF_ITEMS_JERRYCAN_FULL = "jerrycanfull";
+MF_ITEMS_SYPHON_HOSE = "syphonhose";
 MF_ITEMS_JERRYCAN_MAX = (call config_items_jerrycans_max);
 MF_ITEMS_SYHON_HOSE_MAX = (call config_items_syphon_hose_max);
 #define build(file) format["%1\%2", _path, file] call mf_compile;

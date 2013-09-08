@@ -5,7 +5,6 @@
 //	@file Args:
 
 if(!isServer) exitwith {};
-#include "setup.sqf"
 #include "mainMissionDefines.sqf";
 
 private ["_result","_missionMarkerName","_missionType","_startTime","_returnData","_randomPos","_randomIndex","_vehicleClass","_vehicle","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive"];
@@ -14,11 +13,7 @@ private ["_result","_missionMarkerName","_missionType","_startTime","_returnData
 _result = 0;
 _missionMarkerName = "Heli_Marker";
 _missionType = "Immobile Helicopter";
-#ifdef __A2NET__
-_startTime = floor(netTime);
-#else
 _startTime = floor(time);
-#endif
 
 diag_log format["WASTELAND SERVER - Main Mission Started: %1",_missionType];
 
@@ -47,20 +42,12 @@ CivGrpM = createGroup civilian;
 [CivGrpM,_randomPos] spawn createMidGroup;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to be Finished: %1",_missionType];
-#ifdef __A2NET__
-_startTime = floor(netTime);
-#else
 _startTime = floor(time);
-#endif
 waitUntil
 {
     sleep 1; 
 	_playerPresent = false;
-	#ifdef __A2NET__
-	_currTime = floor(netTime);
-	#else
     _currTime = floor(time);
-	#endif
     if(_currTime - _startTime >= mainMissionTimeout) then {_result = 1;};
     {if((isPlayer _x) AND (_x distance _vehicle <= missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
     _unitsAlive = ({alive _x} count units CivGrpM);

@@ -14,9 +14,9 @@ _energy_drink = [_this, "energy_drink.sqf"] call mf_compile;
 
 //MF_ITEMS_COOKED_MEAT = "cooked_meat";
 //MF_ITEMS_RAW_MEAT = "raw_meat";
-MF_ITEMS_CANNED_FOOD = "canned_food";
+MF_ITEMS_CANNED_FOOD = "cannedfood";
 MF_ITEMS_WATER = "water";
-MF_ITEMS_ENERGY_DRINK = "energy_drink";
+MF_ITEMS_ENERGY_DRINK = "energydrink";
 
 //[MF_ITEMS_RAW_MEAT, "Raw Meat", {[MF_ITEMS_RAW_MEAT, MF_ITEMS_COOKED_MEAT] call mf_items_survival_cook}, "Land_Basket_F", "", 5];
 //[MF_ITEMS_COOKED_MEAT, "Raw Meat", {50 call mf_items_survival_eat}, "Land_Basket_F", "", 5];

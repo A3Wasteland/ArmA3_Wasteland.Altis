@@ -26,11 +26,12 @@ _hasFailed = {
 _success = [5, ANIMATION, _hasFailed, []] call mf_util_playUntil;
 if (_success) then {
 	[] spawn {
-        for "_i" from 0 to 36 do {
+        for "_i" from 0 to 30 do {
             player setFatigue 0;
             sleep 10;
         };
+        ["The effects of the energy drink are wearing off", 5] call mf_notify_client;
     };
-	["You have Unlimited Stamina for 5 mins", 5] call mf_notify_client;
+    ["You have unlimited stamina for 5 minutes", 5] call mf_notify_client;
 };
-_success;
+_success;
