@@ -6,7 +6,6 @@
 // Modifications made by [404] Costlyy
 
 #include "mainMissionDefines.sqf";
-#include "setup.sqf";
 
 if(!isServer) exitwith {};
 
@@ -24,20 +23,13 @@ _cargoItem_3 = "Barrels";
 _cargoItem_4 = "Land_stand_small_EP1"; 
 _parachute = "ParachuteMediumWest";
 
-#ifdef __A2NET__
-_startTime = floor(netTime);
-#else
 _startTime = floor(time);
-#endif
 Waituntil {	
-#ifdef __A2NET__
-_currTime = floor(netTime);
-#else
-_currTime = floor(time);
-#endif
-if(_currTime - _startTime >= 1200) then {_result = 1;};
-(_result == 1) OR ((_plane distance _randomPos) < 2000)};
-	
+	_currTime = floor(time);
+	if(_currTime - _startTime >= 1200) then {_result = 1;};
+	(_result == 1) OR ((_plane distance _randomPos) < 2000)
+};
+
 _plane animate ["ramp_top",1];
 _plane animate ["ramp_bottom",1];
 _plane FlyInHeight 125;
@@ -52,7 +44,7 @@ sleep 7;
 	for "_i" from 1 to 45 do {
 		if ((_plane ammo "CMFlareLauncher") == 0) then {
 			_plane addMagazineTurret ["120Rnd_CMFlare_Chaff_Magazine",[-1]];
-        	reload _plane;
+    		reload _plane;
 		};
 		_plane action ["useWeapon", _plane, driver _plane,0];
 		sleep 0.3;
@@ -119,13 +111,9 @@ if(damage _plane == 1) then {
 	    _plane flyInHeight 1500;
 		_plane forceSpeed 600;
 		Waituntil {
-		#ifdef __A2NET__
-		_currTime = floor(netTime);
-		#else
 		_currTime = floor(time);
-		#endif
 		if(_currTime - _startTime >= 1200) then {_result = 1;};
 		(_result == 1) OR((_plane distance _randomPos) > 2500) OR (damage _plane == 1)};
 	};   
 };
-	
+	

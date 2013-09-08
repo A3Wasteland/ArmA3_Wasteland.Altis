@@ -1,4 +1,3 @@
-#include "setup.sqf"
 #include "mainMissionDefines.sqf";
 
 if(!isServer) exitwith {};
@@ -11,7 +10,6 @@ _missionMarkerName = "Light_Vehicle";
 _missionType = "Light Armored Vehicle";
 
 _startTime = floor(time);
-
 
 diag_log format["WASTELAND SERVER - Main Mission Started: %1",_missionType];
 
