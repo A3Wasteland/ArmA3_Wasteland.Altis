@@ -27,20 +27,31 @@ if(playerSetupComplete) then
 
 	[_uid, _uid, "PrimaryWeapon", primaryWeapon player] call fn_SaveToServer;
 	[_uid, _uid, "PrimaryWeaponItems", primaryWeaponItems player] call fn_SaveToServer;
-	[_uid, _uid, "PrimaryWeaponMagazine", primaryWeaponMagazine player] call fn_SaveToServer;
+	//[_uid, _uid, "PrimaryWeaponMagazine", primaryWeaponMagazine player] call fn_SaveToServer;
 
 	[_uid, _uid, "SecondaryWeapon", SecondaryWeapon player] call fn_SaveToServer;
 	[_uid, _uid, "SecondaryWeaponItems", secondaryWeaponItems player] call fn_SaveToServer;
-	[_uid, _uid, "SecondaryWeaponMagazine", secondaryWeaponMagazine player] call fn_SaveToServer;
+	//[_uid, _uid, "SecondaryWeaponMagazine", secondaryWeaponMagazine player] call fn_SaveToServer;
 
 	[_uid, _uid, "HandgunWeapon", handgunWeapon player] call fn_SaveToServer;
 	[_uid, _uid, "HandgunItems", handgunItems player] call fn_SaveToServer;
-	[_uid, _uid, "HandgunMagazine", handgunMagazine player] call fn_SaveToServer;
+	//[_uid, _uid, "HandgunMagazine", handgunMagazine player] call fn_SaveToServer;
 
 	[_uid, _uid, "Items", items player] call fn_SaveToServer;
 	[_uid, _uid, "AssignedItems", assignedItems player] call fn_SaveToServer;
 	
-	[_uid, _uid, "Magazines", magazines player] call fn_SaveToServer;
+	magsWithAmmoCounts = [];
+	{
+		_class = _x select 0;
+		_count = _x select 1;
+		_elem = [_class, _count];
+		magsWithAmmoCounts set [count magsWithAmmoCounts, _elem];
+	} forEach (magazinesAmmoFull player);
+
+	[_uid, _uid, "MagazinesWithAmmoCount", magsWithAmmoCounts] call fn_SaveToServer;
 	//[_uid, _uid, "Weapons", Weapons player] call fn_SaveToServer;
 	player globalChat "Player saved!";
 };
+
+// Possible new methods
+

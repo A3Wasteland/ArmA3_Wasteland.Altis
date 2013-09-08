@@ -2,7 +2,7 @@
 applyPlayerDBValues =
 {
 	private ["_array","_varName","_varValue","_i","_in","_exe","_backpack","_sendToServer","_uid"];
-	//diag_log format["applyPlayerDBValues called with %1", _this];
+	diag_log format["applyPlayerDBValues called with %1", _this];
 	_array = _this;
 	_uid = _array select 0;
 	_varName = _array select 1;
@@ -48,11 +48,31 @@ applyPlayerDBValues =
 
 	//if(_varName == 'Magazines') then {{player addMagazine _x;}foreach _varValue;};
 
-	if((_varName == 'Items')
-		|| (_varName == 'Magazines')
-		|| (_varName == 'HandgunMagazine')
-		|| (_varName == 'SecondaryWeaponMagazine')
-		|| (_varName == 'PrimaryWeaponMagazine')) then 
+	if (_varName == 'MagazinesWithAmmoCount') then {
+		{
+			diag_log format["MagazinesWithAmmoCount processing line %1", _x];
+
+			_className = _x select 0; // eg. 30Rnd_65x39_caseless_mag
+			_ammoCount = _x select 1; // Magazine current ammo count
+
+			_backpack = unitBackpack player;
+			_fits = [player, (_className)] call fn_fitsInventory;
+
+			if ((_fits == 1)||(_fits == 2))then
+			{
+				diag_log format["MagazinesWithAmmoCount adding class %1 count %2",_className, _ammoCount];
+				player addMagazine [_className, _ammoCount];
+			};
+			if(_fits == 3) then
+			{
+				diag_log format["MagazinesWithAmmoCount adding class %1 to backpack",_className];
+				_backpack = unitBackpack player;
+				_backpack addMagazineCargo [_name,1];
+			};
+		} forEach _varValue;
+	};
+
+	if((_varName == 'Items')) then 
 	{
 		for "_i" from 0 to (count _varValue) - 1 do 
 		{
@@ -66,25 +86,15 @@ applyPlayerDBValues =
 			if((str(_inCfgWeapons) == "true") && _cfgOptics == 0 && (!isNil '_backpack'))then{_backpack addWeaponCargo [_name,1];}
 			else
 			{
-				_inCfgMagazines = isClass (configFile >> "cfgMagazines" >> _name);
 				_fits = [player, (_name)] call fn_fitsInventory;
 				if((_fits == 1)||(_fits == 2))then
 				{
-					if(str(_inCfgMagazines) == "false")then{player addItem _name;}
-					else{player addMagazine _name;};
+					player addItem _name;
 				};
 				if(_fits == 3) then
 				{
-					if(str(_inCfgMagazines) == "false")then
-					{
-						_backpack = unitBackpack player;
-						_backpack addItemCargo [_name,1];
-					}
-					else
-					{	
-						_backpack = unitBackpack player;
-						_backpack addMagazineCargo [_name,1];
-					};
+					_backpack = unitBackpack player;
+					_backpack addItemCargo [_name,1];
 				};
 			};
 		};
@@ -116,7 +126,7 @@ applyPlayerDBValues =
 	if(_varName == 'HeadGear') then {removeHeadgear player; player addHeadgear _varValue;};
 	if(_varName == 'Goggles') then {player addGoggles _varValue};
 
-	if(_varName == 'Position') then {player setPos _varValue; player setVariable["positionLoaded",1,true]; positionLoaded = 1;};
+	if(_varName == 'Position') then {player setPos _varValue; player setVariable["playerWasMoved",1,true]; positionLoaded = 1;};
 	if(_varName == 'Direction') then {player setDir _varValue;};
 
 	if(_varName == 'PrimaryWeapon') then{player addWeapon _varValue; primaryLoaded = 1;};
@@ -125,8 +135,13 @@ applyPlayerDBValues =
 
 	if(_varName == 'AssignedItems') then {
 		{
-			player addItem _varValue;
-			player assignItem _varValue;
+			_inCfgWeapons = isClass (configFile >> "cfgWeapons" >> _x);
+			if (_inCfgWeapons) then {
+				// Its a 'weapon'
+				player addWeapon _x;
+			} else {
+				player linkItem _x;
+			};
 		} foreach _varValue;
 	};
 };

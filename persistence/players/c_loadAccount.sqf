@@ -30,7 +30,10 @@ if ((call config_player_donations_enabled) == 1) then {
 waitUntil {!isNil "uniformLoaded"};		
 waitUntil {!isNil "vestLoaded"};
 waitUntil {!isNil "backpackLoaded"};
-	
+
+[_UID, _UID, "AssignedItems", "ARRAY"] call sendToServer;
+[_UID, _UID, "MagazinesWithAmmoCount", "ARRAY"] call sendToServer;
+
 //wait until everything has loaded in to add items
 
 [_UID, _UID, "Items", "ARRAY"] call sendToServer;
@@ -43,18 +46,17 @@ waitUntil {!isNil "primaryLoaded"};
 waitUntil {!isNil "secondaryLoaded"};
 waitUntil {!isNil "handgunLoaded"};
 
-[_UID, _UID, "PrimaryItems", "ARRAY"] call sendToServer;
-[_UID, _UID, "SecondaryItems", "ARRAY"] call sendToServer;
+[_UID, _UID, "PrimaryWeaponItems", "ARRAY"] call sendToServer;
+[_UID, _UID, "SecondaryWeaponItems", "ARRAY"] call sendToServer;
 [_UID, _UID, "HandgunItems", "ARRAY"] call sendToServer;
 
-[_UID, _UID, "PrimaryMagazine", "ARRAY"] call sendToServer;
-[_UID, _UID, "SecondaryMagazine", "ARRAY"] call sendToServer;
-[_UID, _UID, "HandgunMagazine", "ARRAY"] call sendToServer;
+//[_UID, _UID, "PrimaryMagazine", "ARRAY"] call sendToServer;
+//[_UID, _UID, "SecondaryMagazine", "ARRAY"] call sendToServer;
+//[_UID, _UID, "HandgunMagazine", "ARRAY"] call sendToServer;
 
 [_UID, _UID, "HeadGear", "STRING"] call sendToServer;
 [_UID, _UID, "Goggles", "STRING"] call sendToServer;
 
-[_UID, _UID, "Magazines", "ARRAY"] call sendToServer;
 
 //===========================================================================
 

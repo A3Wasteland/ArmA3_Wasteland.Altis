@@ -58,10 +58,25 @@ if ((call config_player_saving_enabled) == 1) then {
 		if(_donationMoney > 0) then {player globalChat format["Thank you for your donation. You will have $%1 extra cash on spawn", _donationMoney];};
 	};
 
+	// Deal with money here
+	// If there are server donations, bump up the amount players spawn with
+	_baseMoney = (call config_initial_spawn_money);
+	if ((call config_player_donations_enabled) == 1) then {
+		_donationMoney = player getVariable ["donationMoney", 0];
+		diag_log format["Player starting with $%1 (%2 + %3)", _baseMoney + _donationMoney, _baseMoney, _donationMoney];
+		player setVariable["cmoney",_baseMoney + _donationMoney,true];
+	} else {
+		diag_log format["Player starting with $%1", _baseMoney];
+		player setVariable["cmoney",_baseMoney,true];
+	};
+
 	waitUntil {positionLoaded == 1};
 } else {
 	diag_log format["Client has no player save functionality"];
 };
+
+// Find out if the player has been moved by the persistence system
+_playerWasMoved = player getVariable ["playerWasMoved", 0];
 
 //Setup player events.
 if(!isNil "client_initEH") then {player removeEventHandler ["Respawn", client_initEH];};
@@ -98,21 +113,9 @@ if (isNil "FZF_IC_INIT") then   {
 };
 
 // If we've got a position from the player save system, don't go through playerSpawn
-if(isNil "positionLoaded") then {
+if(_playerWasMoved == 0) then {
 	true spawn playerSpawn;
 } else {
-	// Not going via standard spawn, so they get money here
-	// If there are server donations, bump up the amount players spawn with
-	_baseMoney = (call config_initial_spawn_money);
-	if ((call config_player_donations_enabled) == 1) then {
-		_donationMoney = player getVariable ["donationMoney", 0];
-		diag_log format["Player starting with $%1 (%2 + %3)", _baseMoney + _donationMoney, _baseMoney, _donationMoney];
-		player setVariable["cmoney",_baseMoney + _donationMoney,true];
-	} else {
-		diag_log format["Player starting with $%1", _baseMoney];
-		player setVariable["cmoney",_baseMoney,true];
-	};
-	
 	player switchMove "AmovPpneMstpSnonWnonDnon";
 };
 
