@@ -48,7 +48,7 @@ _slbox2 setVariable ["R3F_LOG_disabled", true, true];
 // spawn AI
 [CivGrpM,_randomPos] spawn createLargeDivers;
 // add vehicle to the AI group, drain the fuel to avoid AI from driving the boat
-_group addVehicle _vehicle;
+CivGrpM addVehicle _vehicle;
 _vehicle setFuel 0;
 
 // announce the mission
