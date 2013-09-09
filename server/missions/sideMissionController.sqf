@@ -16,7 +16,7 @@ _SideMissions =
 [			// increase the number behind the mission (weight) to increase the chance of the mission to be selected
 	["mission_HostileHelicopter", 1], 
 	["mission_MiniConvoy", 1], 
-	["mission_SunkenSupplies", 1],
+	["mission_SunkenSupplys", 1],
 	["mission_AirWreck", 1],
 	["mission_WepCache", 1],
 	["mission_Truck", 1]
