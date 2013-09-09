@@ -1,7 +1,7 @@
 // @file Version: 1.0
 // @file Name: mission_ArmedDiversquad.sqf
 // @file Author: JoSchaap
-#include "setup.sqf"
+//#include "setup.sqf"
 #include "mainMissionDefines.sqf";
 
 if(!isServer) exitwith {};

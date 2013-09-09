@@ -5,7 +5,7 @@
 
 if (!isServer) exitWith {};
 
-#include "setup.sqf"
+//#include "setup.sqf"
 #include "mainMissions\mainMissionDefines.sqf";
 
 private ["_MainMissions", "_MainMissionsOdds", "_missionType", "_nextMission", "_missionRunning", "_hint"];

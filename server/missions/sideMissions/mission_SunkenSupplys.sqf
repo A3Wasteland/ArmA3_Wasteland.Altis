@@ -1,7 +1,7 @@
 // @file Version: 1.0
 // @file Name: mission_SunkenSupplys.sqf
 // @file Author: JoSchaap
-#include "setup.sqf"
+//#include "setup.sqf"
 #include "sideMissionDefines.sqf";
 if(!isServer) exitwith {};
 private ["_result","_missionMarkerName","_missionType","_startTime","_randomPos","_vehicleClass","_sbox","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive","_positions"];
