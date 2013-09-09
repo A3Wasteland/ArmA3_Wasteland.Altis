@@ -63,7 +63,7 @@ applyPlayerDBValues =
 			if(_fits == 3) then
 			{
 				_backpack = unitBackpack player;
-				_backpack addMagazineCargo [_name,1];
+				_backpack addMagazineCargo [_className,1];
 			};
 		} forEach _varValue;
 	};
