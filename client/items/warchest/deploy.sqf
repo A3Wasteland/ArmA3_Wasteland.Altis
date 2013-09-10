@@ -33,6 +33,7 @@ if (_success) then {
     _warchest setPos position player;
     _warchest setVariable ['side', playerSide, true];
 	_warchest setVariable ["R3F_LOG_disabled", true];
+    _warchest setVariable ["a3w_warchest", true];
 	["Warchest Deployed!", 5] call mf_notify_client;
 };
 _success;
