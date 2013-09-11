@@ -1,104 +1,113 @@
 //	@file Version: 1.0
 //	@file Name: fn_refillbox.sqf  "fn_refillbox"
-//	@file Author: [404] Pulse , [404] Costlyy , [404] Deadbeat, [GoT] JoSchaap
-//	@file Args: [ OBJECT (Weapons box that needs filling), STRING (Name of the fill to give to object)]  mission_Main_A3snipers
+//	@file Author: [404] Pulse , [404] Costlyy , [404] Deadbeat, AgentRev
+//	@file Created: 22/1/2012 00:00
+//	@file Args: [OBJECT (Weapons box that needs filling), STRING (Name of the fill to give to object)]
+
 if (!isServer) exitWith {};
-private ["_selectedBox", "_selectedBoxPos", "_finishedBox", "_currBox"];
 
+private ["_box", "_boxType", "_box", "_boxItems", "_mag"];
 _box = _this select 0;
-_selectedBox = _this select 1;
+_boxType = _this select 1;
 
-switch(_selectedBox) do {
-    case "mission_Side_USLaunchers": { // Used in the airwreck side mission
-    	_currBox = _box;
+_box allowDamage false; // No more fucking busted crates
 
-        // Clear prexisting weapons first
-        clearMagazineCargoGlobal _currBox;
-		clearWeaponCargoGlobal _currBox;
+// Clear pre-existing cargo first
+clearMagazineCargoGlobal _box;
+clearWeaponCargoGlobal _box;
+clearItemCargoGlobal _box;
 
-		// Add new weapons before ammunition
-		_currBox addWeaponCargoGlobal ["launch_NLAW_F",2];
-		_currBox addWeaponCargoGlobal ["launch_RPG32_F",2];
-		// Add ammunition
-		_currBox addMagazineCargoGlobal ["RPG32_HE_F",5];
-//		_currBox addMagazineCargoGlobal ["RPG32_F",5];
-		_currBox addMagazineCargoGlobal ["NLAW_F",5];
-		_currBox addMagazineCargoGlobal ["DemoCharge_Remote_Mag",5];
-		_currBox addMagazineCargoGlobal ["APERSMine_Range_Mag",6];
+switch (_boxType) do
+{
+    case "mission_USLaunchers":
+	{
+    	_boxItems =
+		[
+			// Item type, Item class, # of items, # of magazines per weapon
+			["wep", "launch_NLAW_F", 2, 2],
+			["wep", "launch_RPG32_F", 2, 2],
+			["wep", "launch_Titan_F", 2, 2],
+			["mag", "ClaymoreDirectionalMine_Remote_Mag", 3],
+			["mag", "DemoCharge_Remote_Mag", 3]
+		];
     };
-    case "mission_Side_USSpecial": { // Used in the airwreck side mission
-    	_currBox = _box;
-        
-        // Clear prexisting weapons first
-        clearMagazineCargoGlobal _currBox;
-		clearWeaponCargoGlobal _currBox;
-        
-        // Add new weapons before ammunition
-		_currBox addWeaponCargoGlobal ["LMG_Mk200_F",1];
-		_currBox addWeaponCargoGlobal ["arifle_MX_SW_F",1];
-		_currBox addWeaponCargoGlobal ["arifle_MXM_F",2];
-		_currBox addWeaponCargoGlobal ["srifle_EBR_F",2];
-		_currBox addWeaponCargoGlobal ["hgun_P07_F",1];
-		_currBox addWeaponCargoGlobal ["hgun_Rook40_F",1];
-
-//		_currBox addItemCargoGlobal ["NVGoggles",3];
-		_currBox addWeaponCargoGlobal ["Binocular",2];
-
-		_currBox addMagazineCargoGlobal ["16Rnd_9x21_Mag",10];
-		_currBox addMagazineCargoGlobal ["20Rnd_762x51_Mag",25];
-		_currBox addMagazineCargoGlobal ["100Rnd_65x39_caseless_mag_Tracer",20];
-		_currBox addMagazineCargoGlobal ["200Rnd_65x39_cased_Box",20];		
+    case "mission_USSpecial":
+	{
+    	_boxItems =
+		[
+			// Item type, Item class, # of items, # of magazines per weapon
+			//["itm", "NVGoggles", 5],
+			["wep", "Binocular", 5],
+			["itm", "Medikit", 4],
+			["itm", "Toolkit", 2],
+			["wep", "arifle_MXM_F", 2, 5],
+			["wep", "srifle_EBR_F", 2, 5],
+			["wep", "arifle_MX_SW_F", 2, 4],
+			["wep", "LMG_Mk200_F", 2, 4],
+			["wep", "LMG_Zafir_F", 1, 4],
+			["mag", "30Rnd_556x45_Stanag", 10],
+			["mag", "30Rnd_65x39_caseless_mag", 10],
+			["mag", "30Rnd_65x39_caseless_green", 10],
+			["mag", "9Rnd_45ACP_Mag", 10]
+		];
     };
-    case "mission_USLaunchers2": { // Used in the some other mission
-    	_currBox = _box;
-
-        // Clear prexisting weapons first
-        clearMagazineCargoGlobal _currBox;
-		clearWeaponCargoGlobal _currBox;
-
-		// Add new weapons before ammunition
-		_currBox addWeaponCargoGlobal ["launch_NLAW_F",1];
-		_currBox addWeaponCargoGlobal ["launch_RPG32_F",1];
-		_currBox addMagazineCargoGlobal ["16Rnd_9x21_Mag",10];
-		_currBox addMagazineCargoGlobal ["RPG32_HE_F",5];
-//		_currBox addMagazineCargoGlobal ["RPG32_F",5];
-		_currBox addMagazineCargoGlobal ["NLAW_F",5];
-		_currBox addMagazineCargoGlobal ["DemoCharge_Remote_Mag",8];
-		_currBox addMagazineCargoGlobal ["APERSMine_Range_Mag",8];
+    case "mission_USSpecial2":
+	{
+    	_boxItems =
+		[
+			// Item type, Item class, # of items, # of magazines per weapon
+			["wep", "arifle_TRG21_GL_F", 3, 5],
+			["wep", "arifle_Katiba_GL_F", 3, 5],
+			["wep", "arifle_MX_GL_F", 3, 5],
+			["mag", "1Rnd_HE_Grenade_shell", 10],
+			["mag", "SmokeShell", 2],
+			["mag", "SmokeShellPurple", 2],
+			["mag", "SmokeShellBlue", 2],
+			["mag", "SmokeShellGreen", 2],
+			["mag", "SmokeShellYellow", 2],
+			["mag", "SmokeShellOrange", 2],
+			["mag", "SmokeShellRed", 2],
+			["mag", "UGL_FlareWhite_F", 2],
+			["mag", "UGL_FlareGreen_F", 2],
+			["mag", "UGL_FlareYellow_F", 2],
+			["mag", "UGL_FlareRed_F", 2],
+			["mag", "UGL_FlareCIR_F", 2]
+		];
     };
-    case "mission_USSpecial2": { // Used in some other mission
-    	_currBox = _box;
-        
-        // Clear prexisting weapons first
-        clearMagazineCargoGlobal _currBox;
-		clearWeaponCargoGlobal _currBox;
-        
-        // Add new weapons before ammunition
-		_currBox addWeaponCargoGlobal ["arifle_Katiba_GL_F",3];
-		_currBox addWeaponCargoGlobal ["arifle_TRG21_GL_F",3];
-		_currBox addWeaponCargoGlobal ["arifle_MX_GL_F",3];
-		_currBox addMagazineCargoGlobal ["UGL_FlareWhite_F",10];
-		_currBox addMagazineCargoGlobal ["UGL_FlareGreen_F",10];
-		_currBox addMagazineCargoGlobal ["UGL_FlareRed_F",10];
-		_currBox addMagazineCargoGlobal ["UGL_FlareYellow_F",10];
-		_currBox addMagazineCargoGlobal ["UGL_FlareCIR_F",10];
-		_currBox addMagazineCargoGlobal ["30Rnd_556x45_Stanag",15];
-		_currBox addMagazineCargoGlobal ["30Rnd_65x39_caseless_mag",10];
-		_currBox addMagazineCargoGlobal ["200Rnd_65x39_cased_Box",5];		
-    };
-	case "mission_Main_A3snipers": { // Used in the diving expedition mission
-    	_currBox = _box;
-        
-        // Clear prexisting weapons first
-        clearMagazineCargoGlobal _currBox;
-		clearWeaponCargoGlobal _currBox;
-        // Add new weapons before ammunition
-		_currBox addWeaponCargoGlobal ["srifle_GM6_SOS_F",1];
-		_currBox addWeaponCargoGlobal ["srifle_LRR_SOS_F",1];
-		_currBox addWeaponCargoGlobal ["srifle_EBR_F",2];
-		_currBox addWeaponCargoGlobal ["Rangefinder",2];
-		_currBox addMagazineCargoGlobal ["5Rnd_127x108_Mag",6];
-		_currBox addMagazineCargoGlobal ["20Rnd_762x51_Mag",15];
-		_currBox addMagazineCargoGlobal ["7Rnd_408_Mag",5];	
+	case "mission_Main_A3snipers":
+	{
+    	_boxItems =
+		[
+			// Item type, Item class, # of items, # of magazines per weapon
+			["wep", "srifle_LRR_SOS_F", 1, 5],
+			["wep", "srifle_GM6_SOS_F", 1, 5],
+			["wep", "srifle_EBR_F", 2, 6],
+			["wep", "Rangefinder", 2]
+		];
     };
 };
+
+// Add items
+{
+	switch (_x select 0) do
+	{
+		case "wep":
+		{
+			_box addWeaponCargoGlobal [_x select 1, _x select 2];
+			
+			if (count _x > 3 && {_x select 3 > 0}) then
+			{
+				_mag = ((getArray (configFile >> "CfgWeapons" >> (_x select 1) >> "magazines")) select 0) call getBallMagazine;
+				_box addMagazineCargoGlobal [_mag, (_x select 2) * (_x select 3)];
+			};
+		};
+		case "mag":
+		{
+			_box addMagazineCargoGlobal [_x select 1, _x select 2];
+		};
+		case "itm":
+		{
+			_box addItemCargoGlobal [_x select 1, _x select 2];
+		};
+	};
+} forEach _boxItems;

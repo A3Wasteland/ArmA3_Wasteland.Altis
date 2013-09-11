@@ -1,7 +1,7 @@
 //	@file Version: 1.0
 //	@file Name: checkHackedVehicles.sqf
 //	@file Author: AgentRev
-//	@file Created: 09/06/2012 16:29
+//	@file Created: 09/06/2013 16:29
 
 private ["_array", "_client", "_checksum", "_hackedVehicles", "_owner", "_name"];
 

@@ -6,85 +6,89 @@
 
 if (!isServer) exitWith {};
 
-diag_log format["WASTELAND SERVER - Initializing server compile"];
+diag_log "WASTELAND SERVER - Initializing Server Compile";
 
 /*
 //Main Mission Compiles
 
-mission_ArmedHeli = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_ArmedHeli.sqf";
-mission_LightArmVeh = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_LightArmVeh.sqf";
-mission_CivHeli = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_CivHeli.sqf";
-mission_HostileHeliFormation = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_HostileHeliFormation.sqf";
-mission_Convoy = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_Convoy.sqf";
-mission_ArmedDiversquad = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_ArmedDiversquad.sqf";
-mission_APC = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_APC.sqf";
-mission_Outpost = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_Outpost.sqf";
-mission_Coastal_Convoy = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_Coastal_Convoy.sqf";
+mission_ArmedHeli = "server\missions\mainMissions\mission_ArmedHeli.sqf" call mf_compile;
+mission_LightArmVeh = "server\missions\mainMissions\mission_LightArmVeh.sqf" call mf_compile;
+mission_CivHeli = "server\missions\mainMissions\mission_CivHeli.sqf" call mf_compile;
+mission_HostileHeliFormation = "server\missions\mainMissions\mission_HostileHeliFormation.sqf" call mf_compile;
+mission_Convoy = "server\missions\mainMissions\mission_Convoy.sqf" call mf_compile;
+mission_ArmedDiversquad = "server\missions\mainMissions\mission_ArmedDiversquad.sqf" call mf_compile;
+mission_APC = "server\missions\mainMissions\mission_APC.sqf" call mf_compile;
+mission_Outpost = "server\missions\mainMissions\mission_Outpost.sqf" call mf_compile;
+mission_Coastal_Convoy = "server\missions\mainMissions\mission_Coastal_Convoy.sqf" call mf_compile;
 */
 
 /*
-mission_LightTank = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_LightTank.sqf";
-mission_MBT = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_MBT.sqf";
-mission_RadarTruck = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_RadarTruck.sqf";
-mission_SupplyDrop = compile preprocessFileLineNumbers "server\missions\mainMissions\mission_SupplyDrop.sqf";
+mission_LightTank = "server\missions\mainMissions\mission_LightTank.sqf" call mf_compile;
+mission_MBT = "server\missions\mainMissions\mission_MBT.sqf" call mf_compile;
+mission_RadarTruck = "server\missions\mainMissions\mission_RadarTruck.sqf" call mf_compile;
+mission_SupplyDrop = "server\missions\mainMissions\mission_SupplyDrop.sqf" call mf_compile;
 */
 
 /*
 //Side Mission Compiles
 
-mission_AirWreck = compile preprocessFileLineNumbers "server\missions\sideMissions\mission_AirWreck.sqf";
-mission_WepCache = compile preprocessFileLineNumbers "server\missions\sideMissions\mission_WepCache.sqf";
-mission_MiniConvoy = compile preprocessFileLineNumbers "server\missions\sideMissions\mission_MiniConvoy.sqf";
-mission_SunkenSupplies = compile preprocessFileLineNumbers "server\missions\sideMissions\mission_SunkenSupplys.sqf";
-mission_HostileHelicopter = compile preprocessFileLineNumbers "server\missions\sideMissions\mission_HostileHelicopter.sqf";
-mission_Truck = compile preprocessFileLineNumbers "server\missions\sideMissions\mission_Truck.sqf";
+mission_AirWreck = "server\missions\sideMissions\mission_AirWreck.sqf" call mf_compile;
+mission_WepCache = "server\missions\sideMissions\mission_WepCache.sqf" call mf_compile;
+mission_MiniConvoy = "server\missions\sideMissions\mission_MiniConvoy.sqf" call mf_compile;
+mission_SunkenSupplies = "server\missions\sideMissions\mission_SunkenSupplys.sqf" call mf_compile;
+mission_HostileHelicopter = "server\missions\sideMissions\mission_HostileHelicopter.sqf" call mf_compile;
+mission_Truck = "server\missions\sideMissions\mission_Truck.sqf" call mf_compile;
 */
 
 /*
-mission_ReconVeh = compile preprocessFileLineNumbers "server\missions\sideMissions\mission_ReconVeh.sqf";
+mission_ReconVeh = "server\missions\sideMissions\mission_ReconVeh.sqf" call mf_compile;
 */
 
 //Factory Compiles
-createMissionLocation = compile preprocessFileLineNumbers "server\missions\factoryMethods\createMissionLocation.sqf";
-createClientMarker = compile preprocessFileLineNumbers "server\missions\factoryMethods\createClientMarker.sqf";
-createWaitCondition = compile preprocessFileLineNumbers "server\missions\factoryMethods\createWaitCondition.sqf";
-deleteClientMarker = compile preprocessFileLineNumbers "server\missions\factoryMethods\deleteClientMarker.sqf";
-createRandomSoldier = compile preprocessFileLineNumbers "server\missions\factoryMethods\createUnits\createRandomSoldier.sqf";
-createRandomSoldierC = compile preprocessFileLineNumbers "server\missions\factoryMethods\createUnits\createRandomSoldierC.sqf";
-createSmallGroup = compile preprocessFileLineNumbers "server\missions\factoryMethods\createUnits\smallGroup.sqf";
-createSmallDivers = compile preprocessFileLineNumbers "server\missions\factoryMethods\createUnits\smallDivers.sqf";
-createLargeDivers = compile preprocessFileLineNumbers "server\missions\factoryMethods\createUnits\largeDivers.sqf";
-createMidGroup = compile preprocessFileLineNumbers "server\missions\factoryMethods\createUnits\midGroup.sqf";
-createLargeGroup = compile preprocessFileLineNumbers "server\missions\factoryMethods\createUnits\largeGroup.sqf";
-createMissionVehicle = compile preprocessFileLineNumbers "server\missions\factoryMethods\createMissionVehicle.sqf";
-createMissionVehicle2 = compile preprocessFileLineNumbers "server\missions\factoryMethods\createMissionVehicle2.sqf";
-createMissionVehicleWL = compile preprocessFileLineNumbers "server\missions\factoryMethods\createMissionVehicleWithLog.sqf";
-createSupplyDrop = compile preprocessFileLineNumbers "server\missions\factoryMethods\createSupplyDrop.sqf";
-createCargoItem = compile preprocessFileLineNumbers "server\missions\factoryMethods\createCargoItem.sqf";
+_path = "server\missions\factoryMethods";
+createCargoItem = [_path, "createCargoItem.sqf"] call mf_compile;
+createClientMarker = [_path, "createClientMarker.sqf"] call mf_compile;
+createLargeDivers = [_path, "createUnits\largeDivers.sqf"] call mf_compile;
+createLargeGroup = [_path, "createUnits\largeGroup.sqf"] call mf_compile;
+createMidGroup = [_path, "createUnits\midGroup.sqf"] call mf_compile;
+createMissionLocation = [_path, "createMissionLocation.sqf"] call mf_compile;
+createMissionVehicle = [_path, "createMissionVehicle.sqf"] call mf_compile;
+createMissionVehicle2 = [_path, "createMissionVehicle2.sqf"] call mf_compile;
+createMissionVehicleWL = [_path, "createMissionVehicleWithLog.sqf"] call mf_compile;
+createRandomSoldier = [_path, "createUnits\createRandomSoldier.sqf"] call mf_compile;
+createRandomSoldierC = [_path, "createUnits\createRandomSoldierC.sqf"] call mf_compile;
+createSmallDivers = [_path, "createUnits\smallDivers.sqf"] call mf_compile;
+createSmallGroup = [_path, "createUnits\smallGroup.sqf"] call mf_compile;
+createSupplyDrop = [_path, "createSupplyDrop.sqf"] call mf_compile;
+createWaitCondition = [_path, "createWaitCondition.sqf"] call mf_compile;
+deleteClientMarker = [_path, "deleteClientMarker.sqf"] call mf_compile;
 
 //Function Compiles
-checkHackedVehicles = compileFinal preprocessFileLineNumbers "server\functions\checkHackedVehicles.sqf";
-cleanVehicleWreck = compile preprocessFileLineNumbers "server\functions\cleanVehicleWreck.sqf";
-defendArea = compile preprocessFileLineNumbers "server\functions\defendArea.sqf";
-defendArea2 = compile preprocessFileLineNumbers "server\functions\defendArea2.sqf";
-defendArea3 = compile preprocessFileLineNumbers "server\functions\defendArea3.sqf";
-findClientPlayer = compileFinal preprocessFileLineNumbers "server\functions\findClientPlayer.sqf";
-fn_refillbox = compile preprocessFileLineNumbers "server\functions\fn_refillbox.sqf";
-fn_selectRandomWeighted = compileFinal preprocessFileLineNumbers "server\functions\fn_selectRandomWeighted.sqf";
-fn_refillbox = compile preprocessFileLineNumbers "server\functions\fn_refillbox.sqf";
-fn_selectRandomWeighted = compileFinal preprocessFileLineNumbers "server\functions\fn_selectRandomWeighted.sqf";
-hintBroadcast = compile preprocessFileLineNumbers "server\functions\hintBroadcast.sqf";
-
-//Spawning Compiles
-randomWeapons = compile preprocessFileLineNumbers "server\spawning\randomWeapon.sqf";
-vehicleCreation = compile preprocessFileLineNumbers "server\spawning\vehicleCreation.sqf";
-objectCreation = compile preprocessFileLineNumbers "server\spawning\objectCreation.sqf";
-// staticGunCreation = compile preprocessFileLineNumbers "server\spawning\staticGunCreation.sqf";
-staticHeliCreation = compile preprocessFileLineNumbers "server\spawning\staticHeliCreation.sqf";
-boatCreation = compile preprocessFileLineNumbers "server\spawning\boatCreation.sqf";
+_path = "server\functions";
+checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
+cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
+defendArea = [_path, "defendArea.sqf"] call mf_compile;
+findClientPlayer = [_path, "findClientPlayer.sqf"] call mf_compile;
+fn_refillBox = [_path, "fn_refillbox.sqf"] call mf_compile;
+fn_refillTruck = [_path, "fn_refilltruck.sqf"] call mf_compile;
+fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;
+fn_replaceWeapons = [_path, "fn_replaceWeapons.sqf"] call mf_compile;
+fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile;
+getBallMagazine = [_path, "getBallMagazine.sqf"] call mf_compile;
+hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
+vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
 
 //Player Management
-server_playerDied = compile preprocessFileLineNumbers "server\functions\serverPlayerDied.sqf";
+server_playerDied = [_path, "serverPlayerDied.sqf"] call mf_compile;
 
-if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = compileFinal preprocessFileLineNumbers "A3\functions_f\MP\fn_MP.sqf" };
-if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = compileFinal preprocessFileLineNumbers "A3\functions_f\MP\fn_MPexec.sqf" };
+//Spawning Compiles
+_path = "server\spawning";
+boatCreation = [_path, "boatCreation.sqf"] call mf_compile;
+objectCreation = [_path, "objectCreation.sqf"] call mf_compile;
+randomWeapons = [_path, "randomWeapon.sqf"] call mf_compile;
+// staticGunCreation = [_path, "staticGunCreation.sqf"] call mf_compile;
+staticHeliCreation = [_path, "staticHeliCreation.sqf"] call mf_compile;
+vehicleCreation = [_path, "vehicleCreation.sqf"] call mf_compile;
+
+if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = "A3\functions_f\MP\fn_MP.sqf" call mf_compile };
+if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = "A3\functions_f\MP\fn_MPexec.sqf" call mf_compile };

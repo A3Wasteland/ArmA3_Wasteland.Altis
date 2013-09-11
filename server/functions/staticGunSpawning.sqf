@@ -1,10 +1,10 @@
 //	@file Version: 1.0
-//	@file Name: vehicleTestSpawn.sqf
+//	@file Name: staticGunSpawning.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-if(!X_Server) exitWith {};
+if (!isServer) exitWith {};
 
 private ["_counter","_pos","_markerName","_marker","_hint","_newpos"];
 _counter = 0;

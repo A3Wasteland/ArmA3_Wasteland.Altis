@@ -2,7 +2,8 @@
 //	@file Name: serverPlayerDied.sqf
 //	@file Author: [404] Pulse
 //	@file Created: 20/11/2012 05:19
-if(!X_Server) exitWith {};
+
+if (!isServer) exitWith {};
 
 private["_newPlayerObject"];
 _newPlayerObject = _this select 0;
