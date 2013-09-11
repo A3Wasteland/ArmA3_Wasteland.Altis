@@ -1,7 +1,7 @@
 /**
- * V�rifie r�guli�rement des conditions portant sur l'objet point� par l'arme du joueur
- * Permet de diminuer la fr�quence des v�rifications des conditions normalement faites dans les addAction (~60Hz)
- * La justification de ce syst�me est que les conditions sont tr�s complexes (count, nearestObjects)
+ * Vérifie régulièrement des conditions portant sur l'objet pointé par l'arme du joueur
+ * Permet de diminuer la fréquence des vérifications des conditions normalement faites dans les addAction (~60Hz)
+ * La justification de ce système est que les conditions sont très complexes (count, nearestObjects)
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -24,11 +24,11 @@ while {true} do
 		{
 			R3F_LOG_objet_addAction = _objet_pointe;
 			
-			// Note : les expressions de conditions ne sont pas factoris�es pour garder de la clart� (d�j� que c'est pas vraiment �a) (et le gain serait minime)
+			// Note : les expressions de conditions ne sont pas factorisées pour garder de la clarté (déjà que c'est pas vraiment ça) (et le gain serait minime)
 
 			Object_canLock = !(_objet_pointe getVariable ['objectLocked', false]);
 			
-			// Si l'objet est un objet d�pla�able
+			// Si l'objet est un objet déplaçable
 			if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 			{
 				// Condition action deplacer_objet
@@ -40,7 +40,7 @@ while {true} do
 			// Si l'objet est un objet remorquable
 			if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0) then
 			{
-				// Et qu'il est d�pla�able
+				// Et qu'il est déplaçable
 				if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 				{
 					// Condition action remorquer_deplace
@@ -64,7 +64,7 @@ while {true} do
 			// Si l'objet est un objet transportable
 			if ({_objet_pointe isKindOf _x} count R3F_LOG_classes_objets_transportables > 0) then
 			{
-				// Et qu'il est d�pla�able
+				// Et qu'il est déplaçable
 				if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 				{
 					// Condition action charger_deplace
@@ -81,7 +81,7 @@ while {true} do
 					!(_objet_pointe getVariable "R3F_LOG_disabled"));
 			};
 			
-			// Si l'objet est un v�hicule remorqueur
+			// Si l'objet est un véhicule remorqueur
 			if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_remorqueurs > 0) then
 			{
 				// Condition action remorquer_deplace
@@ -100,7 +100,7 @@ while {true} do
 					(getPos _objet_pointe select 2 < 2) && !(_objet_pointe getVariable "R3F_LOG_disabled"));
 			};
 			
-			// Si l'objet est un v�hicule transporteur
+			// Si l'objet est un véhicule transporteur
 			if ({_objet_pointe isKindOf _x} count R3F_LOG_classes_transporteurs > 0) then
 			{
 				// Condition action charger_deplace
@@ -123,13 +123,13 @@ while {true} do
 		};
 	};
 	
-	// Pour l'h�liportation, l'objet n'est plus point�, mais on est dedans
-	// Si le joueur est dans un h�liporteur
+	// Pour l'héliportation, l'objet n'est plus pointé, mais on est dedans
+	// Si le joueur est dans un héliporteur
 	if ({(vehicle player) isKindOf _x} count R3F_LOG_CFG_heliporteurs > 0) then
 	{
 		R3F_LOG_objet_addAction = vehicle player;
 		
-		// On est dans le v�hicule, on affiche pas les options de transporteur et remorqueur
+		// On est dans le véhicule, on affiche pas les options de transporteur et remorqueur
 		R3F_LOG_action_charger_deplace_valide = false;
 		R3F_LOG_action_charger_selection_valide = false;
 		R3F_LOG_action_contenu_vehicule_valide = false;

@@ -1,5 +1,5 @@
 //	@file Version: 1.0
-//	@file Name: createMissionVehicle.sqf
+//	@file Name: createMissionVehicle2.sqf
 //	@file Author: [404] Deadbeat
 //	@file Created: 26/1/2013 15:19
 
@@ -26,6 +26,7 @@ _veh2 setVariable ["R3F_LOG_disabled", false, true];
 clearMagazineCargoGlobal _veh2;
 //clearWeaponCargoGlobal _veh2;
 
+_veh2 spawn vehicleRepair;
 _veh2 spawn cleanVehicleWreck;
 
 _veh2

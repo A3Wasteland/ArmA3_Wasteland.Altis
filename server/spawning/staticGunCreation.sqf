@@ -4,7 +4,7 @@
 //	@file Created: DD/MM/YYYY HH:MM
 //	@file Args:
 
-if(!X_Server) exitWith {};
+if (!isServer) exitWith {};
 
 _objPos = _this select 0;
 _Objtype = staticWeaponsList select (random (count staticWeaponsList - 1));

@@ -4,30 +4,28 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-#define serverAdminMenu_option 50007
+#define adminMenu_option 50001
 disableSerialization;
 
-private ["_start","_panelOptions","_displayServerAdmin","_serverAdminSelect"];
+private ["_start","_panelOptions","_displayAdmin","_adminSelect"];
 _uid = getPlayerUID player;
-if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
-	_start = createDialog "ServerAdminMenu";
+if ([_uid, 3] call isAdmin) then {
+	_start = createDialog "AdminMenu";
 	
-	_displayServerAdmin = uiNamespace getVariable "ServerAdminMenu";
-	_serverAdminSelect = _displayServerAdmin displayCtrl serverAdminMenu_option;
+	_displayAdmin = uiNamespace getVariable "AdminMenu";
+	_adminSelect = _displayAdmin displayCtrl adminMenu_option;
 	
-	_panelOptions = ["Player Menu",
+	_panelOptions = ["Player Management",
 					"Vehicle Management",
-					"Tags",
+					"Player Markers",
 					"Teleport",
 	                "Money",
 	                "Debug Menu",
-	                "Object Search",
+					"Object Search",
 	                "Toggle God-mode"
-	                ];
+	];
 	
 	{
-		_serverAdminSelect lbAdd _x;
+		_adminSelect lbAdd _x;
 	} forEach _panelOptions;
-} else {
-  exit;  
 };

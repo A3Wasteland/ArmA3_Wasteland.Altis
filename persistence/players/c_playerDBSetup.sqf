@@ -53,18 +53,18 @@ applyPlayerDBValues =
 			_className = _x select 0; // eg. 30Rnd_65x39_caseless_mag
 			_ammoCount = _x select 1; // Magazine current ammo count
 
-			_backpack = unitBackpack player;
-			_fits = [player, (_className)] call fn_fitsInventory;
-
-			if ((_fits == 1)||(_fits == 2))then
+			if ([player, _className] call fn_fitsInventory) then
 			{
 				player addMagazine [_className, _ammoCount];
 			};
+<<<<<<< Updated upstream
 			if(_fits == 3) then
 			{
 				_backpack = unitBackpack player;
 				_backpack addMagazineCargo [_className,1];
 			};
+=======
+>>>>>>> Stashed changes
 		} forEach _varValue;
 	};
 
@@ -79,18 +79,12 @@ applyPlayerDBValues =
 			// Optics seems to denote an 'item' if 1 or 'weapon' is 0
 			_cfgOptics = getNumber (configFile >> "cfgWeapons" >> _name >> "optics");
 
-			if((str(_inCfgWeapons) == "true") && _cfgOptics == 0 && (!isNil '_backpack'))then{_backpack addWeaponCargo [_name,1];}
+			if (_inCfgWeapons && _cfgOptics == 0 && (!isNil '_backpack')) then {_backpack addWeaponCargoGlobal [_name,1];}
 			else
 			{
-				_fits = [player, (_name)] call fn_fitsInventory;
-				if((_fits == 1)||(_fits == 2))then
+				if ([player, _name] call fn_fitsInventory) then
 				{
 					player addItem _name;
-				};
-				if(_fits == 3) then
-				{
-					_backpack = unitBackpack player;
-					_backpack addItemCargo [_name,1];
 				};
 			};
 		};

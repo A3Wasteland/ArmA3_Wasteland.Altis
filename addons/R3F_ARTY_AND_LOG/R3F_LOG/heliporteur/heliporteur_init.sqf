@@ -21,6 +21,6 @@ if (isNil "_heliporte") then
 	_heliporteur setVariable ["R3F_LOG_heliporte", objNull, false];
 };
 
-_heliporteur addAction [("<img image=""client\icons\r3f_lift.paa""/> <t color=""#ff0000"">" + STR_R3F_LOG_action_heliporter + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\heliporteur\heliporter.sqf", nil, 6, true, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_heliporter_valide"];
+_heliporteur addAction [("<img image=""client\icons\r3f_lift.paa""/> <t color=""#ffff00"">" + STR_R3F_LOG_action_heliporter + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\heliporteur\heliporter.sqf", nil, 6, true, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_heliporter_valide"];
 
 _heliporteur addAction [("<img image=""client\icons\r3f_drop.paa""/> <t color=""#06ef00"">" + STR_R3F_LOG_action_heliport_larguer + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\heliporteur\larguer.sqf", nil, 6, true, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_heliport_larguer_valide"];

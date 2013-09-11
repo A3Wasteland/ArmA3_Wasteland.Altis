@@ -1,7 +1,9 @@
-if(!isServer) exitWith {};
+//	@file Name: worldMissionController.sqf
+
+if (!isServer) exitWith {};
 
 //waitUntil{sleep 1; staticGunSpawningComplete};
-diag_log format["WASTELAND SERVER - Started Mission State"];
+diag_log "WASTELAND SERVER - Started Mission State";
 
 //Main Mission Array
 _MMarray = [];
@@ -32,4 +34,4 @@ while {true} do
     } else {
     	sleep 1;  
     };    
-};
+};

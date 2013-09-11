@@ -5,7 +5,7 @@
 //	@file Description: Random static helis
 //	@file Args:
 
-if(!X_Server) exitWith {};
+if (!isServer) exitWith {};
 
 private ["_counter","_position","_markerName","_marker","_hint","_newPos","_countActual", "_i", "_doSpawnWreck"];
 _counter = 0;
@@ -15,11 +15,8 @@ _i = 0;
 while {_counter < 15} do // 15 helis spawn at the beginning
 {
 	_selectedMarker = floor (random 24);
-    if(_selectedMarker in currentStaticHelis) then
-    {
-        //Failed to find a marker.
-    }
-    else
+   
+	if (!(_selectedMarker in currentStaticHelis)) then
     {
         _position = getMarkerPos format ["heliSpawn_%1", _selectedMarker];
     	//_newPos = [_position, 25, 50, 1, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;

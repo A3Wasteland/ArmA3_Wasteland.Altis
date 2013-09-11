@@ -32,6 +32,8 @@ else
 	
 	detach _objet;
 	
+	sleep 0.1;
+	
 	if ([0,0,0] distance velocity _heliporteur < 15 && getPos _heliporteur select 2 < 40) then
 	{
 		_objet setPos [getPos _objet select 0, getPos _objet select 1, 1];
@@ -39,7 +41,7 @@ else
 	}
 	else
 	{
-		_objet setVelocity (_velocity);
+		_objet setVelocity _velocity;
 	};
 	
 	player globalChat format [STR_R3F_LOG_action_heliport_larguer_fait, getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];

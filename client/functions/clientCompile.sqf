@@ -1,18 +1,23 @@
 //	@file Name: clientCompile.sqf
-//	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, MercyfulFate
+//	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, MercyfulFate, AgentRev
 //	@file Args:
 
 mf_notify_client = "client\functions\notifyClient.sqf" call mf_compile;
 mf_util_playUntil = "client\functions\playUntil.sqf" call mf_compile;
 
 // Event handlers
-onRespawn = compile preprocessfile "client\clientEvents\onRespawn.sqf";
-onKilled = compile preprocessfile "client\clientEvents\onKilled.sqf";
-onKeyPress = compile preprocessFile "client\clientEvents\onKeyPress.sqf";
-fn_fitsInventory = compile preprocessFileLineNumbers "client\functions\fn_fitsInventory.sqf";
-findHackedVehicles = compileFinal preprocessFileLineNumbers "client\systems\adminPanel\findHackedVehicles.sqf";
-serverMessage = compileFinal preprocessFileLineNumbers "client\functions\serverMessage.sqf";
-titleTextMessage = compileFinal preprocessFileLineNumbers "client\functions\titleTextMessage.sqf";
+onRespawn = "client\clientEvents\onRespawn.sqf" call mf_compile;
+onKilled = "client\clientEvents\onKilled.sqf" call mf_compile;
+onKeyPress = "client\clientEvents\onKeyPress.sqf" call mf_compile;
+
+// Functions
+fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
+findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
+serverMessage = "client\functions\serverMessage.sqf" call mf_compile;
+titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
+isAdmin = "client\systems\adminPanel\isAdmin.sqf" call mf_compile;
+isWeaponType = "client\functions\isWeaponType.sqf" call mf_compile;
+isAssignableBinocular = "client\functions\isAssignableBinocular.sqf" call mf_compile;
 
 // Player details and actions
 loadPlayerMenu = "client\systems\playerMenu\init.sqf" call mf_compile;
@@ -24,7 +29,7 @@ refuelVehicle = "client\systems\playerMenu\refuel.sqf" call mf_compile;
 repairVehicle = "client\systems\playerMenu\repair.sqf" call mf_compile;
 
 // Sync client with server time
-timeSync = compile preprocessFileLineNumbers "client\functions\clientTimeSync.sqf";
+timeSync = "client\functions\clientTimeSync.sqf" call mf_compile;
 
 // Update scripts
 updateMissionsMarkers = "client\functions\updatePlayerMissionMarkers.sqf" call mf_compile;

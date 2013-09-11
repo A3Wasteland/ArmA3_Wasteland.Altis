@@ -13,7 +13,7 @@ _assignChecksum = _this select 4;
 _varPayload = _this select 5;
 _fastVarPayload = _this select 6;
 
-_unit addEventHandler ["HandleDamage", {false}];
+_unit allowDamage false;
 _unit disableAI "MOVE";
 _unit disableAI "FSM";
 
@@ -55,9 +55,9 @@ if (isNil _checksum) then
 	{
 		if (!isServer) then
 		{
-			TPG_fnc_MPexec = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\antihack\remote\fn_MPexec.sqf"));
-			TPG_fnc_MP = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\antihack\remote\fn_MP.sqf"));
-			call compile (_assignPacketKey + (preprocessFileLineNumbers "server\antihack\remote\fn_initMultiplayer.sqf"));
+			TPG_fnc_MPexec = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MPexec.sqf"));
+			TPG_fnc_MP = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MP.sqf"));
+			call compile (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_initMultiplayer.sqf"));
 		};
 		
 		clientFlagHandler = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\clientFlagHandler.sqf"));

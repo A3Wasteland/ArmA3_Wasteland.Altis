@@ -1,12 +1,14 @@
 //@file Version: 1.1
 //@file Name: init.sqf
-//@file Author: [404] Deadbeat, [GoT] JoSchaap, [KoS] Bewilderbeest
+//@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev, [KoS] Bewilderbeest
 //@file Created: 20/11/2012 05:19
 //@file Description: The client init.
 
 if (isDedicated) exitWith {};
 
-showPlayerIcons = true; 
+[] execVM "client\functions\bannedNames.sqf";
+
+showPlayerIcons = true;
 mutexScriptInProgress = false;
 respawnDialogActive = false;
 groupManagmentActive = false;
@@ -20,12 +22,13 @@ playerCompiledScripts = false;
 playerSetupComplete = false;
 
 waitUntil {!isNull player};
-waitUntil{time > 2};
+waitUntil {time > 0.1};
+
 removeAllWeapons player;
 player switchMove "";
 
 //Stop people being civ's.
-if(!(playerSide in [BLUFOR, OPFOR, INDEPENDENT, sideEnemy])) then { 
+if(!(playerSide in [BLUFOR, OPFOR, INDEPENDENT, sideEnemy])) then {
 	endMission "LOSER";
 };
 
@@ -108,12 +111,13 @@ waituntil {!(IsNull (findDisplay 46))};
 [] execVM "client\functions\groupTags.sqf";
 [] call updateMissionsMarkers;
 [] call updateRadarMarkers;
-if (isNil "FZF_IC_INIT") then   {
+if (isNil "FZF_IC_INIT") then
+{
 	call compile preprocessFileLineNumbers "client\functions\newPlayerIcons.sqf";
 };
 
 // If we've got a position from the player save system, don't go through playerSpawn
-if(_playerWasMoved == 0) then {
+if (_playerWasMoved == 0) then {
 	true spawn playerSpawn;
 } else {
 	player switchMove "AmovPpneMstpSnonWnonDnon";
@@ -126,4 +130,4 @@ if(_playerWasMoved == 0) then {
 	{
 		_x call removeNegativeScore;
 	};
-} forEach playableUnits; 
+} forEach playableUnits;

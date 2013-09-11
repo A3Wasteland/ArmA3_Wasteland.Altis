@@ -32,7 +32,7 @@ if (_success) then {
 	_pos = position player;
 	_beacon = MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE createVehicle _pos;
 	_beacon setPos _pos;
-	_beacon addEventHandler["handleDamage", {false}];
+	_beacon allowDamage false;
     _beacon setVariable ["spawn-beacon", true, true];
 	_beacon setVariable ["R3F_LOG_disabled", true];
 	_beacon setVariable ['side', playerSide, true];

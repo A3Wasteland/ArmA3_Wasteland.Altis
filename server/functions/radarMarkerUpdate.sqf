@@ -4,7 +4,7 @@
 //	@file Created: 08/12/2012 15:19
 //	@file Args: [int(key)]
 
-if(!X_Server) exitWith {};
+if (!isServer) exitWith {};
 
 private["_uniqueID", "_radarStationPos", "_playerSide", "_markerState", "_enemyCount", "_friendlyCount", "_currSide", "_runLoop", "_stillAlive"];
 

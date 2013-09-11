@@ -11,7 +11,8 @@ disableSerialization;
 				
 private ["_start","_dialog","_playerListBox","_decimalPlaces","_health","_namestr","_index","_punishCount","_side"];
 _uid = getPlayerUID player;
-if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
+if (_uid call isAdmin) then
+{
 	_start = createDialog "PlayersMenu";
 	_punishCount = 0;
     _lockedSide = "None";		
