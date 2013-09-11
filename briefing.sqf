@@ -1,8 +1,8 @@
 waitUntil {!isNull player && isPlayer player};
 
-player createDiarySubject ["Wasteland", "HOW-TO-PLAY??"];
-player createDiarySubject ["changelog", "The Changelog"];
 player createDiarySubject ["info", "Mission Info"];
+player createDiarySubject ["changelog", "Changelog"];
+player createDiarySubject ["Wasteland", "How to play"];
 
 player createDiaryRecord["changelog",
 [
@@ -21,35 +21,35 @@ player createDiaryRecord["info",
 "
 <br/>
 	First things first: <br/>
-	The idea of wasteland and the first originals in arma2:<br/> 
-	* TAW_Tonic<br/>
+	The idea of Wasteland and the first originals in ArmA 2:<br/> 
+	* Tonic<br/>
 	* Sa-Matra<br/>
 	* Marker<br/>
 	<br/>
-	Originally re-developed and released for arma3 by 404<br/>
+	Originally re-developed and released for ArmA 3 by 404Games<br/>
 	<br/><br/>
-	Development of this current version by:<br/>
-	* JoSchaap (GoT/Tweakers.Net)<br/>
-	* AgentREV (TPG/TeamPlayerGaming)<br/>
+	Development of this version by:<br/>
+	* JoSchaap (GoT/Tweakers.net)<br/>
+	* AgentRev (TeamPlayerGaming)<br/>
 	* MercyFulfate<br/>
 	* His_Shadow (KoS/KillonSight)<br/>
 	* Bewilderbeest (KoS/KillonSight)<br/>
-	* Costlyy (404/404Games)<br/>
+	* Del1te (404Games)<br/>
 	<br/>
 	<br/>
 	Others that contributed:<br/>
-	* afroVoodo (ArmaHolic)<br/>
+	* afroVoodo (Armaholic)<br/>
 	* Sanjo (GitHub)<br/>
-	* Ed! (404forums)<br/>
-	* SPJESTER (404forums)<br/>
-	* Hub (404forums)<br/>
-	* Tonic-_- (BIS-forums)<br/>
-	* spunFIN (BIS-forums)<br/><br/>
-	* AWA (OpenDayZ.Net)<br/>
-	* Sa-Matra (BIS-forums)</br>
+	* Ed! (404Games forums)<br/>
+	* SPJESTER (404Games forums)<br/>
+	* Hub (TeamPlayerGaming)<br/>
+	* Tonic (BIS forums)<br/>
+	* spunFIN (BIS forums)<br/><br/>
+	* AWA (OpenDayZ.net)<br/>
+	* Sa-Matra (BIS forums)</br>
 	* SicSemperTyrannis (iniDB)<br/>
 	* {ZAG}Ed!<br/>
-	* Na-Palm (BIS-Forums)<br/>
+	* Na-Palm (BIS forums)<br/>
 	* SCETheFuzz (GitHub)<br/>
 	* s3kShUn61 (GitHub)<br/>
 	* RockHound (BierAG)<br/>
