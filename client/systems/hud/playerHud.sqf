@@ -52,7 +52,7 @@ while {true} do
 
         if(isStreamFriendlyUIEnabled) then
         {
-        	_tempString = format ["<img image='client\icons\logo.paa'/><br/>Wasteland<br/>by<br/>Team Wasteland<br/>[StreamFriendly:ON]<br/>"];
+        	_tempString = format ["Wasteland<br/>by<br/>Team Wasteland<br/>[StreamFriendly:ON]<br/>"];
 			_yOffset = _yOffset + 0.20;
         	_hudVehicle ctrlSetStructuredText parseText _tempString;
         } else {
@@ -65,7 +65,7 @@ while {true} do
     } else {
 		_tempString = "";
         _yOffset = 0.26;
-		_tempString = format ["<img image='client\icons\logo.paa'/>"];
+		//_tempString = format ["<img image='client\icons\logo.paa'/>"];
 		_hudVehicle ctrlSetStructuredText parseText _tempString;
         _x = safeZoneX + (safeZoneW * (1 - (0.42 / SafeZoneW)));
         _y = safeZoneY + (safeZoneH * (1 - (_yOffset / SafeZoneH)));
