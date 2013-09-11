@@ -15,7 +15,8 @@ disableSerialization;
 
 private ["_switch","_vehicle","_vehicleType","_vehicleClass","_dialog","_vehicleListBox","_weaponText","_userText","_damageText","_speedText","_check"];
 _uid = getPlayerUID player;
-if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
+if (_uid call isAdmin) then
+{
 	_switch = _this select 0;
 	_allVehicles = vehicles;
 	
@@ -101,7 +102,7 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 					_vehicleClass = "Tank";
 				};
 				
-				if (_vehicleType isKindOf "Wheeled_APC_F" || _vehicleType isKindOf "Tracked_APC_F") then
+				if (_vehicleType isKindOf "Wheeled_APC_F") then
 				{
 					_vehicleClass = "APC";
 				};
@@ -152,7 +153,7 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 					{
 						_vehicleClass = "Truck";
 					};
-					case (_vehicleType isKindOf "Wheeled_APC_F" || _vehicleType isKindOf "Tracked_APC_F"):
+					case (_vehicleType isKindOf "Wheeled_APC_F"):
 					{
 						_vehicleClass = "APC";
 					};

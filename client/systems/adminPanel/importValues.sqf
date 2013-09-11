@@ -24,7 +24,8 @@ disableSerialization;
 
 private ["_index1","_type1","_dialog","_vehicleListBox","_weaponText","_userText","_damageText","_speedText","_data1"];
 _uid = getPlayerUID player;
-if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
+if (_uid call isAdmin) then
+{
 	_index1 = _this select 1;
 	_type1 = _this select 0;
 	

@@ -16,7 +16,8 @@ private ["_uid"];
 
 _uid = getPlayerUID player;
 
-if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
+if (_uid call isAdmin) then
+{
 	private ["_dialog", "_display", "_objectSearchTermCtrl"];
 	_dialog = createDialog "ObjectSearch";
 	_display = findDisplay objectSearchDialog;
@@ -28,5 +29,4 @@ if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministr
 	} else {
 		diag_log "objectSearchLastTermEntered was nil!";
 	};
-
 };  

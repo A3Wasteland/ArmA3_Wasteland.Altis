@@ -9,13 +9,13 @@ disableSerialization;
 
 private ["_start","_panelOptions","_adminSelect","_displayAdmin"];
 _uid = getPlayerUID player;
-if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
+if ([_uid, 2] call isAdmin) then {
 	_start = createDialog "AdminMenu";
 	
 	_displayAdmin = uiNamespace getVariable "AdminMenu";
 	_adminSelect = _displayAdmin displayCtrl adminMenu_option;
 	
-	_panelOptions = ["Player Menu",
+	_panelOptions = ["Player Management",
 					"Vehicle Management",
 					"Tags"
 	];

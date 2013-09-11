@@ -1,23 +1,21 @@
+//@file Name: toggleGodMode.sqf
 
-if (X_Client) then {
-	_curPlayerInvulnState = player getVariable ["isAdminInvulnerable", 0];
+if (isDedicated) exitWith {};
 
-	if (_curPlayerInvulnState == 0) then
+if ((getPlayerUID player) call isAdmin) then
+{
+	_curPlayerInvulnState = player getVariable ["isAdminInvulnerable", false];
+
+	if (!_curPlayerInvulnState) then
 	{
-		hint "You are now invulnerable";
-		player setVariable ["isAdminInvulnerable", 1, true];
-
-		player removeAllEventHandlers "handleDamage";
-		player addEventHandler ["handleDamage", { false }];        
 		player allowDamage false;
+		player setVariable ["isAdminInvulnerable", true, true];
+		hint "You are now invulnerable";
 	}
 	else
 	{
-		hint "You are no longer invulnerable";
-		player setVariable ["isAdminInvulnerable", 0, true];
-
-		player removeAllEventHandlers "handleDamage";
-		player addEventHandler ["handleDamage", { true }];        
 		player allowDamage true;
+		player setVariable ["isAdminInvulnerable", false, true];
+		hint "You are no longer invulnerable";
 	};
-};
+};

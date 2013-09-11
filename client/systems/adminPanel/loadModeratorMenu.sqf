@@ -4,24 +4,22 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-#define modMenu_option 50005
+#define adminMenu_option 50001
 disableSerialization;
 
-private ["_start","_panelOptions","_displayMod","_modSelect"];
+private ["_start","_panelOptions","_displayAdmin","_adminSelect"];
 _uid = getPlayerUID player;
-if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
-	_start = createDialog "ModMenu";
+if ([_uid, 1] call isAdmin) then {
+	_start = createDialog "AdminMenu";
 	
-	_displayMod = uiNamespace getVariable "ModMenu";
-	_modSelect = _displayMod displayCtrl modMenu_option;
+	_displayAdmin = uiNamespace getVariable "AdminMenu";
+	_adminSelect = _displayAdmin displayCtrl adminMenu_option;
 	
-	_panelOptions = ["Player Menu",
+	_panelOptions = ["Player Management",
 					"Vehicle Management"
 	];
 	
 	{
-		_modSelect lbAdd _x;
+		_adminSelect lbAdd _x;
 	} forEach _panelOptions;
-} else {
-  exit;  
 };
