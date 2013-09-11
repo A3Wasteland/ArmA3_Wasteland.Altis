@@ -14,135 +14,140 @@ _interval = 5400;				//Time (in sec.) to pass before a city spawns new loot (540
 randomweapontestint = 0.05;			//Sets the intervals in which weaponpositions are tested. (Lower = slower, but more accurate. Higher = faster, but less accurate.)
 									
 //Array of buildings that are eligeble to spawn loot in :)
-_buildCIV = [
-"Land_Airport_center_F",
-"Land_Airport_left_F",
-"Land_Airport_right_F",
-"Land_Airport_Tower_F",
-"Land_CarService_F",
-"Land_Castle_01_tower_F",
-"Land_Chapel_Small_V1_F",
-"Land_Chapel_Small_V2_F",
-"Land_Chapel_V1_F",
-"Land_Chapel_V2_F",
-"Land_dp_bigTank_F",
-"Land_dp_mainFactory_F",
-"Land_Hospital_main_F",
-"Land_Hospital_side1_F",
-"Land_Hospital_side2_F",
-"Land_i_Addon_02_V1_F",
-"Land_i_Addon_03_V1_F",
-"Land_i_Garage_V1_F",
-"Land_i_Garage_V2_F",
-"Land_i_House_Big_01_V1_F",
-"Land_i_House_Big_01_V2_F",
-"Land_i_House_Big_01_V3_F",
-"Land_i_House_Big_02_V1_F",
-"Land_i_House_Big_02_V2_F",
-"Land_i_House_Big_02_V3_F",
-"Land_i_House_Small_01_V1_F",
-"Land_i_House_Small_01_V2_F",
-"Land_i_House_Small_01_V3_F",
-"Land_i_House_Small_02_V1_F",
-"Land_i_House_Small_02_V2_F",
-"Land_i_House_Small_02_V3_F",
-"Land_i_House_Small_03_V1_F",
-"Land_i_Shed_Ind_F",
-"Land_i_Shop_01_V1_F",
-"Land_i_Shop_01_V2_F",
-"Land_i_Shop_01_V3_F",
-"Land_i_Shop_02_V1_F",
-"Land_i_Shop_02_V2_F",
-"Land_i_Shop_02_V3_F",
-"Land_i_Stone_HouseBig_V1_F",
-"Land_i_Stone_HouseBig_V2_F",
-"Land_i_Stone_HouseBig_V3_F",
-"Land_i_Stone_HouseSmall_V1_F",
-"Land_i_Stone_HouseSmall_V2_F",
-"Land_i_Stone_HouseSmall_V3_F",
-"Land_i_Stone_Shed_V1_F",
-"Land_i_Stone_Shed_V2_F",
-"Land_i_Stone_Shed_V3_F",
-"Land_i_Windmill01_F",
-"Land_Metal_Shed_F",
-"Land_Offices_01_V1_F",
-"Land_Slum_House01_F",
-"Land_Slum_House02_F",
-"Land_Slum_House03_F",
-"Land_spp_Tower_F",
-"Land_u_Addon_01_V1_F",
-"Land_u_Addon_02_V1_F",
-"Land_u_House_Small_01_V1_F",
-"Land_u_House_Small_02_V1_F",
-"Land_u_Shop_01_V1_F",
-"Land_u_Shop_02_V1_F",
-"Land_WIP_F"
+_buildCIV = 
+[
+	"Land_Airport_center_F",
+	"Land_Airport_left_F",
+	"Land_Airport_right_F",
+	"Land_Airport_Tower_F",
+	"Land_CarService_F",
+	"Land_Castle_01_tower_F",
+	"Land_Chapel_Small_V1_F",
+	"Land_Chapel_Small_V2_F",
+	"Land_Chapel_V1_F",
+	"Land_Chapel_V2_F",
+	"Land_dp_bigTank_F",
+	"Land_dp_mainFactory_F",
+	"Land_Hospital_main_F",
+	"Land_Hospital_side1_F",
+	"Land_Hospital_side2_F",
+	"Land_i_Addon_02_V1_F",
+	"Land_i_Addon_03_V1_F",
+	"Land_i_Garage_V1_F",
+	"Land_i_Garage_V2_F",
+	"Land_i_House_Big_01_V1_F",
+	"Land_i_House_Big_01_V2_F",
+	"Land_i_House_Big_01_V3_F",
+	"Land_i_House_Big_02_V1_F",
+	"Land_i_House_Big_02_V2_F",
+	"Land_i_House_Big_02_V3_F",
+	"Land_i_House_Small_01_V1_F",
+	"Land_i_House_Small_01_V2_F",
+	"Land_i_House_Small_01_V3_F",
+	"Land_i_House_Small_02_V1_F",
+	"Land_i_House_Small_02_V2_F",
+	"Land_i_House_Small_02_V3_F",
+	"Land_i_House_Small_03_V1_F",
+	"Land_i_Shed_Ind_F",
+	"Land_i_Shop_01_V1_F",
+	"Land_i_Shop_01_V2_F",
+	"Land_i_Shop_01_V3_F",
+	"Land_i_Shop_02_V1_F",
+	"Land_i_Shop_02_V2_F",
+	"Land_i_Shop_02_V3_F",
+	"Land_i_Stone_HouseBig_V1_F",
+	"Land_i_Stone_HouseBig_V2_F",
+	"Land_i_Stone_HouseBig_V3_F",
+	"Land_i_Stone_HouseSmall_V1_F",
+	"Land_i_Stone_HouseSmall_V2_F",
+	"Land_i_Stone_HouseSmall_V3_F",
+	"Land_i_Stone_Shed_V1_F",
+	"Land_i_Stone_Shed_V2_F",
+	"Land_i_Stone_Shed_V3_F",
+	"Land_i_Windmill01_F",
+	"Land_Metal_Shed_F",
+	"Land_Offices_01_V1_F",
+	"Land_Slum_House01_F",
+	"Land_Slum_House02_F",
+	"Land_Slum_House03_F",
+	"Land_spp_Tower_F",
+	"Land_u_Addon_01_V1_F",
+	"Land_u_Addon_02_V1_F",
+	"Land_u_House_Small_01_V1_F",
+	"Land_u_House_Small_02_V1_F",
+	"Land_u_Shop_01_V1_F",
+	"Land_u_Shop_02_V1_F",
+	"Land_WIP_F"
 ];
 
-_buildMIL = [
-"Land_MilOffices_V1_F",
-"Land_i_Barracks_V2_F",
-"Land_i_Barracks_V2_F",
-"Land_Cargo_HQ_V1_F",
-"Land_Cargo_HQ_V2_F",
-"Land_Cargo_HQ_V3_F",
-"Land_Cargo_Patrol_V1_F",
-"Land_Cargo_Patrol_V2_F",
-"Land_Cargo_Patrol_V3_F"
-//"Land_Hangar_F",
-//"Land_Cargo_Tower_V1_F",
-//"Land_Cargo_Tower_V2_F",
-//"Land_Cargo_Tower_V3_F",
-//"Land_Dome_Big_F",
-//"Land_Dome_Small_F"
+_buildMIL = 
+[
+	"Land_MilOffices_V1_F",
+	"Land_i_Barracks_V2_F",
+	"Land_i_Barracks_V2_F",
+	"Land_Cargo_HQ_V1_F",
+	"Land_Cargo_HQ_V2_F",
+	"Land_Cargo_HQ_V3_F",
+	"Land_Cargo_Patrol_V1_F",
+	"Land_Cargo_Patrol_V2_F",
+	"Land_Cargo_Patrol_V3_F"
+	//"Land_Hangar_F",
+	//"Land_Cargo_Tower_V1_F",
+	//"Land_Cargo_Tower_V2_F",
+	//"Land_Cargo_Tower_V3_F",
+	//"Land_Dome_Big_F",
+	//"Land_Dome_Small_F"
 ];
 
 // weapons to be found in civilian buildings aside from items
-randomweapon_weaponlist = [
-["arifle_SDAR_F","20Rnd_556x45_UW_mag"],
-["arifle_TRG21_ACO_pointer_F","30Rnd_556x45_Stanag_Tracer_Red"],
-["arifle_TRG20_ACO_F","30Rnd_556x45_Stanag_Tracer_Yellow"],
-["arifle_MK20_F","30Rnd_556x45_Stanag"],
-["hgun_PDW2000_F","30Rnd_9x21_Mag"],
-["arifle_MK20C_F","30Rnd_556x45_Stanag"],
-["SMG_01_F","30Rnd_45ACP_Mag_SMG_01"],
-["SMG_02_F","30Rnd_9x21_Mag"]
+randomweapon_weaponlist = 
+[
+	["SMG_01_F"],
+	["SMG_02_F"],
+	["hgun_PDW2000_F"],
+	["arifle_MK20C_F"],
+	["arifle_MK20_F"],
+	["arifle_TRG20_ACO_F"],
+	["arifle_TRG21_ACO_pointer_F"]
 ];
 
 // random weaponitems/ammo to be found in civillian buildings aside from items
-randomweapon_weaponitemlist = [
-["ItemGPS","20Rnd_556x45_UW_mag"],
-["optic_ACO_grn","30Rnd_556x45_Stanag_Tracer_Red"],
-["ToolKit","30Rnd_556x45_Stanag_Tracer_Yellow"],
-["muzzle_snds_M","30Rnd_556x45_Stanag"],
-["optic_Holosight_smg","30Rnd_45ACP_Mag_SMG_01"],
-["optic_Aco","30Rnd_556x45_Stanag"],
-["FirstAidKit","30Rnd_556x45_Stanag"],
-["Medikit","30Rnd_45ACP_Mag_SMG_01"],
-["optic_aco_smg","30Rnd_9x21_Mag"],
-["muzzle_snds_acp","9Rnd_45ACP_Mag"]
+randomweapon_weaponitemlist =
+[
+	["ItemGPS"],
+	["Medikit"],
+	["ToolKit"],
+	["FirstAidKit"],
+	["muzzle_snds_M"],
+	["muzzle_snds_H"],
+	["muzzle_snds_acp"],
+	["optic_Aco"],
+	["optic_ACO_grn"],
+	["optic_aco_smg"],
+	["optic_Holosight"],
+	["optic_Holosight_smg"]
 ];
 
 // weapons to be found in military buildings
-randomweapon_milweaponlist = [
-["arifle_MXC_F","30Rnd_65x39_caseless_mag"],
-["arifle_MXM_F","30Rnd_65x39_caseless_mag"],
-["arifle_TRG21_F","30Rnd_65x39_caseless_mag"],
-["arifle_TRG20_F","30Rnd_556x45_Stanag"],
-["arifle_MX_F","30Rnd_65x39_caseless_mag"],
-["arifle_MXC_F","30Rnd_65x39_caseless_mag"],
-["arifle_MXM_F","30Rnd_65x39_caseless_mag"],
-["arifle_Katiba_F","30Rnd_65x39_caseless_green"],
-["arifle_Katiba_C_F","30Rnd_65x39_caseless_green"],
-["arifle_MX_GL_F","30Rnd_65x39_caseless_mag"],
-["arifle_Katiba_GL_F","30Rnd_65x39_caseless_green"],
-["arifle_TRG21_GL_F","30Rnd_556x45_Stanag_Tracer_Red"]
+randomweapon_milweaponlist = 
+[
+	["arifle_TRG20_F"],
+	["arifle_TRG21_F"],
+	["arifle_TRG21_GL_F"],
+	["arifle_Katiba_C_F"],
+	["arifle_Katiba_F"],
+	["arifle_Katiba_GL_F"],
+	["arifle_MXC_F"],
+	["arifle_MX_F"],
+	["arifle_MX_GL_F"],
+	["arifle_MXM_F"]
 ];
 
 
-randomweapon_itemlist = [
+randomweapon_itemlist = 
+[
 	"Land_Basket_F", // Food
-	"Land_Bucket_F", // Water
+	"Land_CanisterPlastic_F", // Water
 	"Land_Suitcase_F",
 	"Land_CanisterFuel_F", //fuelcan
 	"Land_Can_V3_F", //energydrink redgull gives you stamina!
@@ -159,12 +164,12 @@ randomweapon_itemlist = [
 		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3];   //dirty fix for piling loot after 12hours
 		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
 		_weaponholder addWeaponCargoGlobal [_weapon, 1];
-		if((count((randomweapon_weaponlist) select _selectedgroup)) > 1) then {
+		//if((count((randomweapon_weaponlist) select _selectedgroup)) > 1) then {
 			for[{_rm = 0}, {_rm < (2 + floor(random(3)))}, {_rm = _rm + 1}] do {
-				_mag = randomweapon_weaponlist select _selectedgroup select ((floor(random((count(randomweapon_weaponlist select _selectedgroup) - 1)))) + 1);
+				_mag = ((getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select 0) call getBallMagazine;
 				_weaponholder addMagazineCargoGlobal [_mag, 1]; 
 			};
-		};
+		//};
 		_weaponholder setPos _position;
     };
 	
@@ -191,12 +196,12 @@ randomweapon_itemlist = [
 		{ deleteVehicle _x; } forEach nearestObjects [_position,["groundWeaponHolder"],0.3];   //dirty fix for piling loot after 12hours
 		_weaponholder = createVehicle ["groundWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
 		_weaponholder addWeaponCargoGlobal [_weapon, 1];
-		if((count((randomweapon_milweaponlist) select _selectedgroup)) > 1) then {
+		//if((count((randomweapon_milweaponlist) select _selectedgroup)) > 1) then {
 			for[{_rm = 0}, {_rm < (2 + floor(random(3)))}, {_rm = _rm + 1}] do {
-				_mag = randomweapon_milweaponlist select _selectedgroup select ((floor(random((count(randomweapon_milweaponlist select _selectedgroup) - 1)))) + 1);
+				_mag = ((getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select 0) call getBallMagazine;
 				_weaponholder addMagazineCargoGlobal [_mag, 1]; 
 			};
-		};
+		//};
 		_weaponholder setPos _position;
     };
 
@@ -228,7 +233,7 @@ randomweapon_itemlist = [
 		if(_class == "Land_Basket_F") then {
 			_item setVariable["mf_item_id", "cannedfood", true];
 		};
-		if(_class == "Land_Bucket_F") then {
+		if(_class == "Land_CanisterPlastic_F") then {
 			_item setVariable["mf_item_id", "water", true];
 		};
 		if(_class == "Land_Suitcase_F") then {
