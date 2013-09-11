@@ -1,11 +1,10 @@
 respawn="BASE";
 respawnDelay=15;
 disabledAI=1;
-disableChannels[]={6};  //set {0,6} to disable global
+disableChannels[] = {}; // {0} to disable global
 joinUnassigned = 0;
 enableItemsDropping = 0;
 loadScreen = "Loading.jpg";
-aikills = 1;
 class Header
 {
 	gameType=Sandbox;
@@ -13,12 +12,14 @@ class Header
 	maxPlayers=113;
 };
 author="Team Wasteland";
-OnLoadName = "Wasteland ALTIS(v0)";
-OnLoadMission = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
+onLoadName = "Wasteland ALTIS(v0)";
+onLoadMission = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
 overviewText = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
 overviewTextLocked = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
 overviewPicture = "Loading.jpg";
+
 //Dialog includes
+
 #include "client\gui_base.hpp"
 #include "addons\R3F_ARTY_AND_LOG\desc_include.h"
 #include "client\systems\common.hpp"
@@ -38,7 +39,8 @@ overviewPicture = "Loading.jpg";
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
 
-class RscTitles {
+class RscTitles
+{
 	#include "addons\proving_ground\PG_rsctitles.hpp"
  	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
