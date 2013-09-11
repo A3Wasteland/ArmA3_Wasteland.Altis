@@ -1,3 +1,4 @@
+//	@file Name: createRandomSoldier.sqf
 /*
  * Creates a random civilian soldier.
  *
@@ -9,13 +10,14 @@
  *    rank: String - (optional, default "PRIVATE")
  */
 
+if (!isServer) exitWith {};
+
 private ["_soldierTypes","_uniformTypes","_vestTypes","_weaponTypes","_group","_position","_soldier"];
 
 _soldierTypes = ["C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F"];
 _uniformTypes = ["U_B_CombatUniform_mcam_vest","U_B_CombatUniform_mcam_tshirt","U_B_CombatUniform_mcam"];
 _vestTypes = ["V_Chestrig_khk","V_ChestrigB_rgr"];
 _weaponTypes = ["arifle_TRG20_F","LMG_Mk200_F","arifle_MXM_F","arifle_MX_GL_F"];
-
 
 _group = _this select 0;
 _position = _this select 1;
@@ -25,6 +27,9 @@ _soldier addUniform (_uniformTypes call BIS_fnc_selectRandom);
 _soldier addVest (_vestTypes call BIS_fnc_selectRandom);
 [_soldier, _weaponTypes call BIS_fnc_selectRandom, 3] call BIS_fnc_addWeapon;
 
-_soldier addEventHandler ["Killed",{(_this select 1) call removeNegativeScore;}];
+removeHeadgear _soldier;
+_soldier addHeadgear "H_MilCap_mcamo";
+
+_soldier addEventHandler ["Killed", {_this call server_playerDied; (_this select 1) call removeNegativeScore}];
 
 _soldier
