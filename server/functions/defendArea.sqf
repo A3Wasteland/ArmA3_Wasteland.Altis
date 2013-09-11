@@ -73,8 +73,6 @@ _wp1 setWaypointType "GUARD";
 	{
 		sleep 60;
 		_this setCurrentWaypoint [_this, 2];
-		systemChat format ["%1 - Waypoint 2", _this];
-		diag_log format ["%1 - Waypoint 2", _this];
 	};
 '];
 
@@ -85,8 +83,6 @@ _wp2 setWaypointType "CYCLE";
 	(group this) spawn
 	{
 		_this setCurrentWaypoint [_this, 1];
-		systemChat format ["%1 - Waypoint 1", _this];
-		diag_log format ["%1 - Waypoint 1", _this];
 	};
 '];
 
