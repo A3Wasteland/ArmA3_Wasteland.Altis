@@ -135,27 +135,31 @@ while {respawnDialogActive} do
             } foreach _dynamicControlsArray;
 			_btn_number = 0;
 			_btn_max = count _dynamicControlsArray;
-            {
-                if(_x getVariable ["side", ""] == playerSide) then {
-                    _button = _display displayCtrl (_dynamicControlsArray select _btn_number select 0);
-                    _centrePos = getPos _x;
-                    { 
-                        if(playerSide != side _x) then {
-                            if((getPos _x distance _centrePos) < 100) then {
-                                _enemyCount = _enemyCount + 1; 
-                            }; 
-                        };  
-                    } forEach playableUnits;
+			
+			if (!isNil "pvar_spawn_beacons") then
+			{
+				{
+					if(_x getVariable ["side", ""] == playerSide) then {
+						_button = _display displayCtrl (_dynamicControlsArray select _btn_number select 0);
+						_centrePos = getPos _x;
+						{ 
+							if(playerSide != side _x) then {
+								if((getPos _x distance _centrePos) < 100) then {
+									_enemyCount = _enemyCount + 1; 
+								}; 
+							};  
+						} forEach playableUnits;
 
-                    if(_enemyCount == 0) then {
-                        _button ctrlSetText	format["%1",_x getVariable ["ownerName", ""]]; 
-                        _button ctrlShow true;
-						_btn_number = _btn_number + 1;
-                    };
-                };
-				if (_btn_number >= _btn_max) exitWith {}; // no more buttons to display on
-                _enemyCount = 0;         
-            } forEach pvar_spawn_beacons;
+						if(_enemyCount == 0) then {
+							_button ctrlSetText	format["%1",_x getVariable ["ownerName", ""]]; 
+							_button ctrlShow true;
+							_btn_number = _btn_number + 1;
+						};
+					};
+					if (_btn_number >= _btn_max) exitWith {}; // no more buttons to display on
+					_enemyCount = 0;         
+				} forEach pvar_spawn_beacons;
+			};
         };
     };
     

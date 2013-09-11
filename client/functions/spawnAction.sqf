@@ -7,11 +7,11 @@
 _switch = _this select 0;
 _button = _this select 1;
 
-player removeAllEventHandlers "HandleDamage";
+player allowDamage true;
 
 // If there are server donations, bump up the amount players spawn with
-_baseMoney = (call config_initial_spawn_money);
-if ((call config_player_donations_enabled) == 1) then {
+_baseMoney = call config_initial_spawn_money;
+if (call config_player_donations_enabled == 1) then {
 	_donationMoney = player getVariable ["donationMoney", 0];
 	player setVariable["cmoney",_baseMoney + _donationMoney,true];
 } else {
@@ -21,6 +21,7 @@ if ((call config_player_donations_enabled) == 1) then {
 [MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
 [MF_ITEMS_WATER, 1] call mf_inventory_add;
 
+// Remove unrealistic blur effects
 ppEffectDestroy BIS_fnc_feedback_fatigueBlur;
 ppEffectDestroy BIS_fnc_feedback_damageBlur; 
 
@@ -39,6 +40,17 @@ switch(_switch) do
 if(isNil{client_firstSpawn}) then {
 	client_firstSpawn = true;
 	[] execVM "client\functions\welcomeMessage.sqf";
+	
+	player addEventHandler ["Take",
+	{
+		private "_vehicle";
+		_vehicle = _this select 1;
+		
+		if (_vehicle isKindOf "Car" && {!(_vehicle getVariable ["itemTakenFromVehicle", false])}) then
+		{
+			_vehicle setVariable ["itemTakenFromVehicle", true, true];
+		};
+	}];
     
     true spawn {      
         _startTime = floor(time);
