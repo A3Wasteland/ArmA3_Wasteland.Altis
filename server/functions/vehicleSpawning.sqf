@@ -40,7 +40,7 @@ _createRandomVehicle =
 	
 	[_pos, _vehicleType] call vehicleCreation;
 	
-	diag_log format ["Vehicle spawn #%1 done", _counter];
+	//diag_log format ["Vehicle spawn #%1 done", _counter];
 };
 
 _vehammount = ceil (_tradius / 15);
@@ -72,7 +72,7 @@ _vehammount = ceil (_tradius / 15);
 } forEach (call citylist);
 
 {
-	diag_log format ["Waiting vehicle spawn #%1", _forEachIndex + 1];
+	//diag_log format ["Waiting vehicle spawn #%1", _forEachIndex + 1];
 	waitUntil {scriptDone _x};
 } forEach _spawnedVehicles;
 
