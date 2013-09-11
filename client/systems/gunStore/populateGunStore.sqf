@@ -17,17 +17,17 @@ _gunpicture = _dialog displayCtrl gunshop_gun_pic;
 _gunlist = _dialog displayCtrl gunshop_gun_list;								
 _gunInfo = _dialog displayCtrl gunshop_gun_Info;
 
+//Clear the list
+lbClear _gunlist;
+_gunlist lbSetCurSel -1;
+_gunpicture ctrlSettext "";
+_gunlisttext ctrlSettext "";
+_gunInfo ctrlSetStructuredText parseText "";
+
 switch(_switch) do 
 {
 	case 0: 
 	{
-		//Clear the list
-		lbClear _gunlist;
-		_gunlist lbSetCurSel -1;
-		_gunpicture ctrlSettext "";
-		_gunlisttext ctrlSettext "";
-        _gunInfo ctrlSetStructuredText parseText "";
-
 		// Populate the gun shop weapon list
 		{
 			_gunlistIndex = _gunlist lbAdd format["%1",_x select 0];
@@ -36,14 +36,7 @@ switch(_switch) do
 	
 	case 1:
 	{
-		//Clear the list
-		lbClear _gunlist;
-		_gunlist lbSetCurSel -1;
-		_gunpicture ctrlSettext "";
-		_gunlisttext ctrlSettext "";
-        _gunInfo ctrlSetStructuredText parseText "";
-
-		// Populate the gun shop weapon list
+		// Populate the gun shop ammo list
 		{
 			_gunlistIndex = _gunlist lbAdd format["%1",_x select 0];
 		} forEach (call ammoArray);	
@@ -51,16 +44,17 @@ switch(_switch) do
 
 	case 2:
 	{
-		//Clear the list
-		lbClear _gunlist;
-		_gunlist lbSetCurSel -1;
-		_gunpicture ctrlSettext "";
-		_gunlisttext ctrlSettext "";
-        _gunInfo ctrlSetStructuredText parseText "";
-
-		// Populate the gun shop weapon list
+		// Populate the gun shop equipment list
 		{
 			_gunlistIndex = _gunlist lbAdd format["%1",_x select 0];
 		} forEach (call accessoriesArray);	
+	};
+	
+	case 3:
+	{
+		// Populate the gun shop gear list
+		{
+			_gunlistIndex = _gunlist lbAdd format["%1",_x select 0];
+		} forEach (call gearArray);	
 	};
 };

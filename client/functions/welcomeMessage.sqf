@@ -32,7 +32,7 @@ switch (playerSide) do {
 	};
 };
 
-_message = format ["<t shadow=""1""><t size=""2"">%1</t> (%2)<br/>%4<br/>%3<br/><img size=""6"" image=""client\icons\logo.paa""></t>",
+_message = format ["<t shadow=""1""><t size=""2"">%1</t> (%2)<br/>%4<br/>%3<br/></t>",
 	localize "STR_WL_WelcomeToWasteland",
 	versionName,
 	format [localize _teamrules, 

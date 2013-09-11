@@ -309,8 +309,8 @@ class w_RscButtonBase {
 	
 	period = 0.4;
 	font = "PuristaMedium";
-	size = 0.023;
-	sizeEx = 0.024;
+	size = 0.027;
+	sizeEx = 0.028;
 	text = "";
 	
 	soundEnter[] = {"\A3\ui_f\data\Sound\MOUSE2", 0.09, 1};
@@ -372,7 +372,7 @@ class w_RscButton : w_RscButtonBase {
 	class TextPos {
 	
 		left = 0.002;
-		top = 0.014;
+		top = 0.0105;
 		right = 0.002;
 		bottom = 0.005;
 	};
@@ -387,7 +387,7 @@ class w_RscButton : w_RscButtonBase {
 	
 	class Attributes {
 	
-		font = "PuristaSemibold";
+		font = "PuristaMedium";
 		color = "#E5E5E5";
 		align = "center";
 		shadow = "true";

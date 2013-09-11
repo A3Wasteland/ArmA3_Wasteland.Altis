@@ -1,13 +1,11 @@
 //	@file Name: groupIcons.sqf
-//	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap
+//	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, AgentRev
 
+#define __REFRESH 0.34
 
 private["_inGroup","_isLeader","_refresh","_distance","_myGroup","_tempArray","_icon"];
 
 _tempArray = [];
-_refresh = 0.34;  //lol they forgot to define the duration :)  also added streamfriendly support
-
-
 
 while {true} do
 {
@@ -29,11 +27,12 @@ while {true} do
                 {
 					if(isStreamFriendlyUIEnabled) then 
 					{
-						_nameString = "<t size='0.3' shadow='2' color='#7FFF00'>[PLAYER]</t>";
+						_namestring = "<t size='0.5' shadow='2' color='#7FFF00'>[PLAYER]</t>";
 					} else {
-						_nameString = "<t size='0.3' shadow='2' color='#7FFF00'>" + format['%1',_target getVariable ['unitname', name _target]] + "</t>";
+						_nameString = "<t size='0.5' shadow='2' color='#7FFF00'>" + format['%1',_target getVariable ['unitname', name _target]] + "</t>";
 					};
-					if not(isNil "_nameString") then { [_nameString,0,0.8,_refresh,0,0,3] spawn bis_fnc_dynamicText; };
+
+					if (!isNil "_nameString") then { [_nameString,0,0.8,__REFRESH,0,0,3] spawn bis_fnc_dynamicText };
                 };				
 			};
 		};
@@ -42,16 +41,21 @@ while {true} do
         {
 			if(player distance _target < 300)then 
             {
-				if(getPlayerUID _target in _tempArray) then
-                {
-				if(isStreamFriendlyUIEnabled) then 
+				_target = driver _target;
+				
+				if (!isNil "_target") then
+				{
+					if(getPlayerUID _target in _tempArray) then
 					{
-						_nameString = "<t size='0.3' shadow='2' color='#7FFF00'>[VEHICLE]</t>";
-					} else {
-						_nameString = "<t size='0.3' shadow='2' color='#7FFF00'>" + format['%1',_target getVariable ['unitname', name _target]] + "</t>";
-					};	
-					if not(isNil "_nameString") then { [_nameString,0,0.8,_refresh,0,0,3] spawn bis_fnc_dynamicText; };
-                };				
+						if(isStreamFriendlyUIEnabled) then
+						{
+							_nameString = "<t size='0.5' shadow='2' color='#7FFF00'>[VEHICLE]</t>";
+						} else {
+							_nameString = "<t size='0.5' shadow='2' color='#7FFF00'>" + format['%1',_target getVariable ['unitname', name _target]] + "</t>";
+						};
+						if (!isNil "_nameString") then { [_nameString,0,0.8,__REFRESH,0,0,3] spawn bis_fnc_dynamicText };	    
+					};
+				};				
 			};
 		}; 	
 	} else {
@@ -73,7 +77,7 @@ while {true} do
        	_absoluteDir = abs _relativeDir;      
         
         if (_absoluteDir < _storeInteractionBuffer OR _absoluteDir > (360 - _storeInteractionBuffer)) then {
-        	_nameString = "<t size='0.5' shadow='2' color='#FFFFFF'>" + "Gun Store (Press E, or use scroll wheel)" + "</t>";
+        	_nameString = "<t size='0.5' shadow='2' color='#FFFFFF'>" + "Gun Store (Press E)" + "</t>";
        		[_nameString,0,0.8,0.5,0,0,3] spawn bis_fnc_dynamicText;
         };
     }; 
@@ -83,7 +87,7 @@ while {true} do
        	_absoluteDir = abs _relativeDir;      
         
         if (_absoluteDir < _storeInteractionBuffer OR _absoluteDir > (360 - _storeInteractionBuffer)) then {
-        	_nameString = "<t size='0.5' shadow='2' color='#FFFFFF'>" + "General Store (Press E, or use scroll wheel)" + "</t>";
+        	_nameString = "<t size='0.5' shadow='2' color='#FFFFFF'>" + "General Store (Press E)" + "</t>";
        		[_nameString,0,0.8,0.5,0,0,3] spawn bis_fnc_dynamicText;
         };
     };         

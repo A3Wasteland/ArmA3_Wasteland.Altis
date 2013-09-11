@@ -4,7 +4,7 @@
 //	@file Created: 08/12/2012 15:19
 //	@file Args:
 
-if(!isServer) exitwith {};
+if (!isServer) exitwith {};
 #include "mainMissionDefines.sqf";
 
 private ["_result","_missionMarkerName","_missionType","_startTime","_returnData","_randomPos","_randomIndex","_vehicleClass","_vehicle","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive"];
@@ -12,7 +12,7 @@ private ["_result","_missionMarkerName","_missionType","_startTime","_returnData
 //Mission Initialization.
 _result = 0;
 _missionMarkerName = "Heli_Marker";
-_missionType = "Immobile Helicopter";
+_missionType = "Helicopter";
 _startTime = floor(time);
 
 diag_log format["WASTELAND SERVER - Main Mission Started: %1",_missionType];
@@ -38,11 +38,12 @@ _vehicleName = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "displ
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A<t color='%4'> %3</t>, has been immobilized go get it for your team.</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 
-CivGrpM = createGroup civilian;
-[CivGrpM,_randomPos] spawn createMidGroup;
+_CivGrpM = createGroup civilian;
+[_CivGrpM,_randomPos] spawn createMidGroup;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to be Finished: %1",_missionType];
 _startTime = floor(time);
+
 waitUntil
 {
     sleep 1; 
@@ -50,7 +51,7 @@ waitUntil
     _currTime = floor(time);
     if(_currTime - _startTime >= mainMissionTimeout) then {_result = 1;};
     {if((isPlayer _x) AND (_x distance _vehicle <= missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
-    _unitsAlive = ({alive _x} count units CivGrpM);
+    _unitsAlive = ({alive _x} count units _CivGrpM);
     (_result == 1) OR ((_playerPresent) AND (_unitsAlive < 1)) OR ((damage _vehicle) == 1)
 };
 
@@ -61,19 +62,15 @@ if(_result == 1) then
 {
 	//Mission Failed.
     if not(isNil "_vehicle") then {deleteVehicle _vehicle;};
-    {deleteVehicle _x;}forEach units CivGrpM;
-    deleteGroup CivGrpM;
+    {deleteVehicle _x;}forEach units _CivGrpM;
+    deleteGroup _CivGrpM;
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
 	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
 	//Mission Complete.
 	// check if the vehicle is broken, if so delete it and the units
-	if ((damage _vehicle) == 1) {
-		    deleteVehicle _vehicle;
-		{deleteVehicle _x;}forEach units CivGrpM;
-	};
-    deleteGroup CivGrpM;
+	deleteGroup _CivGrpM;
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The helicopter has been captured, now go destroy the enemy</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
 	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Success: %1",_missionType];

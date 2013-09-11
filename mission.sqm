@@ -154,7 +154,7 @@ class Mission
 					special="NONE";
 					id=3;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -209,7 +209,7 @@ class Mission
 					special="NONE";
 					id=7;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -264,7 +264,7 @@ class Mission
 					special="NONE";
 					id=11;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -319,7 +319,7 @@ class Mission
 					special="NONE";
 					id=15;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -374,7 +374,7 @@ class Mission
 					special="NONE";
 					id=19;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -431,7 +431,7 @@ class Mission
 					special="NONE";
 					id=23;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -488,7 +488,7 @@ class Mission
 					special="NONE";
 					id=27;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -545,7 +545,7 @@ class Mission
 					special="NONE";
 					id=31;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -602,7 +602,7 @@ class Mission
 					special="NONE";
 					id=35;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -659,7 +659,7 @@ class Mission
 					special="NONE";
 					id=39;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -742,7 +742,7 @@ class Mission
 					special="NONE";
 					id=43;
 					side="GUER";
-					vehicle="I_soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
@@ -847,7 +847,7 @@ class Mission
 					special="NONE";
 					id=48;
 					side="GUER";
-					vehicle="I_soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
@@ -952,7 +952,7 @@ class Mission
 					special="NONE";
 					id=53;
 					side="GUER";
-					vehicle="I_soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
@@ -1057,7 +1057,7 @@ class Mission
 					special="NONE";
 					id=58;
 					side="GUER";
-					vehicle="I_soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
@@ -1162,7 +1162,7 @@ class Mission
 					special="NONE";
 					id=63;
 					side="GUER";
-					vehicle="I_soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
@@ -1407,7 +1407,7 @@ class Mission
 					special="NONE";
 					id=75;
 					side="GUER";
-					vehicle="I_Soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
@@ -1491,7 +1491,7 @@ class Mission
 					special="NONE";
 					id=79;
 					side="GUER";
-					vehicle="I_Soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
@@ -1549,7 +1549,7 @@ class Mission
 					special="NONE";
 					id=83;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -1606,7 +1606,7 @@ class Mission
 					special="NONE";
 					id=87;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -1661,7 +1661,7 @@ class Mission
 					special="NONE";
 					id=91;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -1716,7 +1716,7 @@ class Mission
 					special="NONE";
 					id=95;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -1771,7 +1771,7 @@ class Mission
 					special="NONE";
 					id=99;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -1826,7 +1826,7 @@ class Mission
 					special="NONE";
 					id=103;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="B_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -1883,7 +1883,7 @@ class Mission
 					special="NONE";
 					id=107;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -1940,7 +1940,7 @@ class Mission
 					special="NONE";
 					id=111;
 					side="EAST";
-					vehicle="O_soldier_repair_F";
+					vehicle="O_engineer_F";
 					player="PLAY CDG";
 					lock="UNLOCKED";
 					skill=0.60000002;
@@ -2023,7 +2023,7 @@ class Mission
 					special="NONE";
 					id=115;
 					side="GUER";
-					vehicle="I_Soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
@@ -2107,7 +2107,7 @@ class Mission
 					special="NONE";
 					id=119;
 					side="GUER";
-					vehicle="I_Soldier_repair_F";
+					vehicle="I_engineer_F";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";

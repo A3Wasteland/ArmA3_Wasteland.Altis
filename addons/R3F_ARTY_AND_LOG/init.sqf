@@ -1,5 +1,5 @@
 /**
- * Script principal qui initialise les syst�mes d'artillerie r�aliste et de logistique
+ * Script principal qui initialise les systèmes d'artillerie réaliste et de logistique
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -18,11 +18,11 @@
  */
 
 /*
- * Nouveau fil d'ex�cution pour assurer une compatibilit� ascendante (v1.0 � v1.2).
- * Ces versions pr�conisaient un #include plut�t que execVM pour appeler ce script.
- * A partir de la v1.3 l'ex�cution par execVM prend l'avantage pour 3 raisons :
- *     - permettre des appels conditionnels optimis�s (ex : seulement pour des slots particuliers)
- *     - l'execVM est mieux connu et compris par l'�diteur de mission
+ * Nouveau fil d'exécution pour assurer une compatibilité ascendante (v1.0 à v1.2).
+ * Ces versions préconisaient un #include plutôt que execVM pour appeler ce script.
+ * A partir de la v1.3 l'exécution par execVM prend l'avantage pour 3 raisons :
+ *     - permettre des appels conditionnels optimisés (ex : seulement pour des slots particuliers)
+ *     - l'execVM est mieux connu et compris par l'éditeur de mission
  *     - l'init client de l'arty devient bloquant : il attend une PUBVAR du serveur (le point d'attache)
  */
 [] spawn
@@ -36,7 +36,7 @@
 	
 	if (isServer) then
 	{
-		// Service offert par le serveur : orienter un objet (car setDir est � argument local)
+		// Service offert par le serveur : orienter un objet (car setDir est à argument local)
 		R3F_ARTY_AND_LOG_FNCT_PUBVAR_setDir =
 		{
 			private ["_objet", "_direction"];
@@ -63,18 +63,19 @@
 		R3F_LOG_joueur_deplace_objet = objNull;
 	#endif
 	
-	// Auto-d�tection permanente des objets sur le jeu
-	if (!isDedicated) then
-//	{
-//		// Version all�g�e pour le serveur d�di�
-//		execVM "addons\R3F_ARTY_AND_LOG\surveiller_nouveaux_objets_dedie.sqf";
-//	}
-//	else
+	// Auto-détection permanente des objets sur le jeu
+	if (isDedicated) then
+	{
+		// Version allégée pour le serveur dédié
+		//execVM "addons\R3F_ARTY_AND_LOG\surveiller_nouveaux_objets_dedie.sqf";
+	}
+	else
 	{
 		execVM "addons\R3F_ARTY_AND_LOG\surveiller_nouveaux_objets.sqf";
+		
+		// Disable R3F on map objects that are not network-synced
+		//{
+		//	_x setVariable ["R3F_LOG_disabled", true];
+		//} forEach ((nearestObjects [[0,0], R3F_LOG_CFG_objets_deplacables, 99999]) - (allMissionObjects "All"));
 	};
-	
-//	{
-//		_x setVariable ["R3F_LOG_disabled", true];
-//	} forEach ((nearestObjects [[0,0], R3F_LOG_CFG_objets_deplacables, 99999]) - (allMissionObjects "All"));
 };

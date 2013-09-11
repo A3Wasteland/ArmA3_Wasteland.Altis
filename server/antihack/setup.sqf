@@ -37,9 +37,9 @@ if (isNil "ahSetupDone") then
 	} forEach toArray _checksum;
 	_assignChecksum = _assignChecksum + (str toArray _checksumArray) + "; ";
 	
-	TPG_fnc_MPexec = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\antihack\remote\fn_MPexec.sqf"));
-	TPG_fnc_MP = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\antihack\remote\fn_MP.sqf"));
-	call compile (_assignPacketKey + (preprocessFileLineNumbers "server\antihack\remote\fn_initMultiplayer.sqf"));
+	TPG_fnc_MPexec = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MPexec.sqf"));
+	TPG_fnc_MP = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MP.sqf"));
+	call compile (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_initMultiplayer.sqf"));
 	
 	flagHandler = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\flagHandler.sqf"));
 	

@@ -9,7 +9,9 @@
 //Fail Mission Colour = #FF1717 - Light red
 //Fail Mission Colour = #17FF41 - Light green
 //Sub Colour = #FFF - White
-if(!isServer) exitwith {};
+
+if (!isServer) exitwith {};
+
 diag_log format["WASTELAND SERVER - Mission Started"];
 private ["_base","_unitsAlive","_playerPresent","_missionType","_successTextColour","_mainTextColour","_failTextColour","_subTextColour","_picture","_vehicleName","_rad","_centerPos","_missionTimeOut","_missionDelayTime","_missionTriggerRadius","_missionPlayerRadius","_flatAreas","_randomArea","_hint","_startTime","_currTime","_result","_tank", "_randomPos"];
 
@@ -84,7 +86,7 @@ waitUntil
     _currTime = floor(time);
     if(_currTime - _startTime >= _missionTimeOut) then {_result = 1;};
     {if((isPlayer _x) AND (_x distance _tank <= _missionPlayerRadius)) then {_playerPresent = true};}forEach playableUnits;
-    _unitsAlive = ({alive _x} count units CivGrpM);
+    _unitsAlive = ({alive _x} count units _CivGrpM);
     (_result == 1) OR ((_playerPresent) AND (_unitsAlive < 1)) OR ((damage _tank) == 1)
 };
 

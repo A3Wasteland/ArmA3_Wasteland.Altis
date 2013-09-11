@@ -1,7 +1,7 @@
 /**
- * D�tacher un objet d'un v�hicule
+ * Détacher un objet d'un véhicule
  * 
- * @param 0 l'objet � d�tacher
+ * @param 0 l'objet à détacher
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -23,29 +23,64 @@ else
 	_objet = _this select 0;
 	_remorqueur = _objet getVariable "R3F_LOG_est_transporte_par";
 	
-	// Ne pas permettre de d�crocher un objet s'il est port� h�liport�
+	// Ne pas permettre de décrocher un objet s'il est porté héliporté
 	if ({_remorqueur isKindOf _x} count R3F_LOG_CFG_remorqueurs > 0) then
 	{
-		// On m�morise sur le r�seau que le v�hicule remorque quelque chose
+		player playMove "AinvPknlMstpSlayWrflDnon_medic";
+		
+		player addEventHandler ["AnimDone", 
+		{
+			if (_this select 1 == "AinvPknlMstpSlayWrflDnon_medic") then
+			{
+				player switchMove "";
+				player removeAllEventHandlers "AnimDone";
+			};
+		}];
+		
+		if ((getPosASL player) select 2 > 0) then
+		{
+			player attachTo [_remorqueur, [
+					(boundingBox _remorqueur select 1 select 0),
+					(boundingBox _remorqueur select 0 select 1) + 1,
+					(boundingBox _remorqueur select 0 select 2) - (boundingBox player select 0 select 2)
+				]];
+				
+			player setDir 270;
+			player setPos (getPos player);
+			sleep 0.05;
+			detach player;
+		};
+		
+		sleep 2;
+		
+		// On mémorise sur le réseau que le véhicule remorque quelque chose
 		_remorqueur setVariable ["R3F_LOG_remorque", objNull, true];
-		// On m�morise aussi sur le r�seau que le objet est attach� en remorque
+		// On mémorise aussi sur le réseau que le objet est attaché en remorque
 		_objet setVariable ["R3F_LOG_est_transporte_par", objNull, true];
 		
 		if (_objet isKindOf "Car") then
 		{
 			detach _objet;
 			_objet setVelocity [0,0,0.01];
-		} else {
-			detach _objet;
-			_objet setVelocity [0,0,0];
+		}
+		else
+		{
+			if (local _objet) then
+			{
+				[netId _objet] execVM "server\functions\detachTowedObject.sqf";
+			}
+			else
+			{
+				requestDetachTowedObject = netId _objet;
+				publicVariable "requestDetachTowedObject";
+			};
 		};
 		
-		player playMove "AinvPknlMstpSlayWrflDnon_medic";
-		sleep 5;
+		sleep 4;
 		
 		if ({_objet isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 		{
-			// Si personne n'a re-remorquer l'objet pendant le sleep 7
+			// Si personne n'a re-remorquer l'objet pendant le sleep 6
 			if (isNull (_remorqueur getVariable "R3F_LOG_remorque") &&
 				(isNull (_objet getVariable "R3F_LOG_est_transporte_par")) &&
 				(isNull (_objet getVariable "R3F_LOG_est_deplace_par"))

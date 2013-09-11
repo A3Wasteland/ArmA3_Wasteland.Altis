@@ -1,19 +1,38 @@
-if(!X_Server) exitWith {};
+if (!isServer) exitWith {};
 
-//Admin menu access levels
+// Admin menu (U key) access levels
 
-//replace my ID's with your own in this file
-//if you want to give limited admin access add the id to the moderators array
-//by changing [] to ["12345678"] (replace the id with your limited-admins arma3 profile id)
-//you should only add an ID to 1 group
+/*******************************************************
+ Player UID examples :
 
-moderators = []; 
-publicVariable "moderators"; 
-           
-administrators = [];
-publicVariable "administrators";
+	"1234567887654321", // Meatwad
+	"8765432112345678", // Master Shake
+	"1234876543211234", // Frylock
+	"1337133713371337"  // Carl
 
-serverAdministrators = ["76561197960482553", //JoSchaap
-                        "76561197970432186"  //Bewilderbeest
-                       ]; 
-publicVariable "serverAdministrators";
+ Important: Don't put a coma at the end of the last one
+********************************************************/
+
+// Low Administrators: manage & spectate players, remove hacked vehicles
+lowAdmins = compileFinal str
+[
+	// Put player UIDs here
+];
+
+// High Administrators: manage & spectate players, remove hacked vehicles, show player tags
+highAdmins = compileFinal str
+[
+	// Put player UIDs here
+];
+
+// Server Owners: access to everything
+serverOwners = compileFinal str
+[
+	// Put player UIDs here
+];
+
+/********************************************************/
+
+publicVariable "lowAdmins";
+publicVariable "highAdmins";
+publicVariable "serverOwners";

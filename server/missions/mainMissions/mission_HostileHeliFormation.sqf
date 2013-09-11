@@ -3,8 +3,11 @@
 //	@file Author: JoSchaap
 //  new one, no longer requires static routes, can use all helicopters now
 
+if (!isServer) exitwith {};
+#include "mainMissionDefines.sqf";
+
 private ["_heli1","_heli2","_heli3","_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_waypoints","_grouphf","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_ammobox3","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
-#include "mainMissionDefines.sqf"
+
 _missionMarkerName = "HostileHelis_Marker";
 _missionType = "Hostile Helicopters";
 
@@ -20,7 +23,7 @@ diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 // helicopters available for this mission (if missions set to diffucult also allows chance of mi48 helicopters)
 // incase mission difficulty is set to easy (0) the choppers will also fly at half speed
 
-if (Mission_Diff == 1) then {
+if (A3W_missionsDifficulty == 1) then {
 	_heli1 = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
 	_heli2 = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
 	_heli3 = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
@@ -80,9 +83,9 @@ _createVehicle = {
 };
 
 _vehicles = [];
-_vehicles set [0, [_heli1, [8436.93,25250.8,0.0012207], 13, _grouphf] call _createVehicle];  // static value update when porting to different maps
-_vehicles set [1, [_heli2, [8458.97,25134.8,0.0012207], 171, _grouphf] call _createVehicle];
-_vehicles set [2, [_heli3, [8476.16,25254.1,0.00119781], 222, _grouphf] call _createVehicle];
+_vehicles set [0, [_heli1, [8436.93, 25250.8], 13, _grouphf] call _createVehicle];  // static value update when porting to different maps
+_vehicles set [1, [_heli2, [8458.97, 25134.8], 171, _grouphf] call _createVehicle];
+_vehicles set [2, [_heli3, [8476.16, 25254.1], 222, _grouphf] call _createVehicle];
 
 _leader = driver (_vehicles select 0);
 _grouphf selectLeader _leader;
@@ -91,7 +94,7 @@ _leader setRank "LIEUTENANT";
 _grouphf setCombatMode "WHITE";
 _grouphf setBehaviour "AWARE";
 _grouphf setFormation "STAG COLUMN";
-if (Mission_Diff == 1) then {
+if (A3W_missionsDifficulty == 1) then {
 	_grouphf setSpeedMode "NORMAL";
 } else {
 	_grouphf setSpeedMode "LIMITED";
@@ -110,7 +113,7 @@ while {_travelcount < _travels} do {
     _waypoint setWaypointCombatMode "WHITE"; // Defensiv behaviour
     _waypoint setWaypointBehaviour "AWARE"; // Force convoy to normaly drive on the street.
     _waypoint setWaypointFormation "STAG COLUMN";
-	if (Mission_Diff == 1) then {
+	if (A3W_missionsDifficulty == 1) then {
 		_waypoint setWaypointSpeed "NORMAL";
 	} else {
 		_waypoint setWaypointSpeed "LIMITED";
@@ -127,7 +130,15 @@ _picture = getText (configFile >> "CfgVehicles" >> _heli1 >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _heli1 >> "displayName");
 _vehicleName2 = getText (configFile >> "cfgVehicles" >> _heli2 >> "displayName");
 _vehicleName3 = getText (configFile >> "cfgVehicles" >> _heli3 >> "displayName");
-_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>! AIR RAID !</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A formation of armed helicopters containing a <t color='%4'>%3</t>, a <t color='%4'>%6</t> and a <t color='%4'>%7</t> are patrolling the island. Destroy them and steal the weaponcrates inside!</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor, _vehicleName2, _vehicleName3];
+_hint = parseText format 
+[
+	"<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/>" +
+	"<t align='center' color='%4'>------------------------------</t><br/>" +
+	"<t align='center' color='%5' size='1.25'>%1</t><br/>" +
+	"<t align='center'><img size='5' image='%2'/></t><br/>" +
+	"<t align='center' color='%5'>A formation of armed helicopters containing a <t color='%4'>%3</t>, a <t color='%4'>%6</t> and a <t color='%4'>%7</t> are patrolling the island. Destroy them and recover their cargo!</t>", 
+	_missionType, _picture, _vehicleName, mainMissionColor, subTextColor, _vehicleName2, _vehicleName3
+];
 [_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to be Finished: %1", _missionType];
@@ -156,7 +167,7 @@ if(_failed) then
 	{if (vehicle _x != _x) then { deleteVehicle vehicle _x; }; deleteVehicle _x;}forEach units _grouphf;
 	{deleteVehicle _x;}forEach units _grouphf;
 	deleteGroup _grouphf; 
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>! NOTICE !</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The patrol ended, the enemy has survived and escaped with the weaponcrate</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
+    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The patrol ended, the enemy has survived and escaped with the ammo crates.</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
@@ -168,20 +179,22 @@ if(_failed) then
 			_x setVariable ["R3F_LOG_disabled", false, true];
 		}forEach _vehicles;
 	};
+	
 	// give the rewards
     _ammobox = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
-    clearMagazineCargoGlobal _ammobox;
-    clearWeaponCargoGlobal _ammobox; 
     [_ammobox,"mission_USSpecial2"] call fn_refillbox;
-    _ammobox2 = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
-    clearMagazineCargoGlobal _ammobox2;
-    clearWeaponCargoGlobal _ammobox2; 
-    [_ammobox2,"mission_USLaunchers2"] call fn_refillbox;
-    _ammobox3 = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
-    clearMagazineCargoGlobal _ammobox3;
-    clearWeaponCargoGlobal _ammobox3; 
-    [_ammobox3,"mission_Side_USSpecial"] call fn_refillbox;
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>PATROL IS DOWN</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The sky is clear agian, the enemy patrol was taken out! The ammocrates seem to be intact near the wreck!</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
+	_ammobox allowDamage false;
+	
+    _ammobox2 = "Box_East_Wps_F" createVehicle getMarkerPos _marker;
+    [_ammobox2,"mission_USLaunchers"] call fn_refillbox;
+	_ammobox2 allowDamage false;
+	
+    _ammobox3 = "Box_NATO_WpsSpecial_F" createVehicle getMarkerPos _marker;
+    [_ammobox3,"mission_USSpecial"] call fn_refillbox;
+	_ammobox3 allowDamage false;
+	
+	deleteGroup _grouphf; 
+    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The sky is clear again, the enemy patrol was taken out! Ammo crates have fallen near the wreck.</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Main Mission Success: %1",_missionType];
 };

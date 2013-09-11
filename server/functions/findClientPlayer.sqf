@@ -1,7 +1,7 @@
 //	@file Version: 1.0
 //	@file Name: findClientPlayer.sqf
 //	@file Author: AgentRev
-//	@file Created: 09/06/2012 16:39
+//	@file Created: 09/06/2013 16:39
 
 private ["_clientID", "_player"];
 _clientID = _this select 0;

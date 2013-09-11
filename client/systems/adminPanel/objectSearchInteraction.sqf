@@ -19,7 +19,8 @@ disableSerialization;
 private ["_uid"];
 
 _uid = getPlayerUID player;
-if ((_uid in moderators) OR (_uid in administrators) OR (_uid in serverAdministrators)) then {
+if (_uid call isAdmin) then
+{
 	private ["_display", "_objectSearchTermCtrl", "_objectListBoxCtrl", "_switch"];
 	_display = findDisplay objectSearchDialog;
 	// Get handles on the UI elements we need

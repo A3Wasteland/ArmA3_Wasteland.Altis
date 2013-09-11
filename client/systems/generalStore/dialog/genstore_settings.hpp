@@ -12,10 +12,11 @@ class genstored {
 		class MainBackground: w_RscPicture
 		{
 			idc = -1;
-			text = "client\ui\ui_background_controlers_ca.paa";	
-			x = 0.29375 * safezoneW + safezoneX;
+			text = "client\ui\ui_background_controlers_ca.paa";
+
+			x = 0.1875 * safezoneW + safezoneX;
 			y = 0.15 * safezoneH + safezoneY;
-			w = 0.553688 * safezoneW;
+			w = 0.837499 * safezoneW;
 			h = 0.661111 * safezoneH;
 		};
 		
@@ -24,10 +25,10 @@ class genstored {
 			idc = genstore_item_pic;
 			text = "";
 
-			x = 0.5325 * safezoneW + safezoneX;
-			y = 0.250 * safezoneH + safezoneY;
-			w = 0.030 * safezoneW;
-			h = 0.055 * safezoneH;
+			x = 0.5216751 * safezoneW + safezoneX;
+			y = 0.2264812 * safezoneH + safezoneY;
+			w = 0.09 * (safezoneH^2/safezoneW);
+			h = 0.09 * safezoneH;
 		};
 
 		class ItemSelectedInfo: w_RscStructuredText
@@ -35,10 +36,10 @@ class genstored {
 			idc = genstore_item_Info;
 			text = "";
 
-			x = 0.448438 * safezoneW + safezoneX;
-			y = 0.412 * safezoneH + safezoneY;
-			w = 0.12375 * safezoneW;
-			h = 0.044 * safezoneH;
+			x = 0.445104 * safezoneW + safezoneX;
+			y = 0.50463 * safezoneH + safezoneY;
+			w = 0.214166 * safezoneW;
+			h = 0.192963 * safezoneH;
 		};
 
 		class ItemSelectedPrice: w_RscStructuredText
@@ -46,32 +47,21 @@ class genstored {
 			idc = genstore_item_TEXT;
 			text = "";
 
-			x = 0.448438 * safezoneW + safezoneX;
-			y = 0.456 * safezoneH + safezoneY;
-			w = 0.12375 * safezoneW;
-			h = 0.044 * safezoneH;
+			x = 0.502604 * safezoneW + safezoneX;
+			y = 0.327594 * safezoneH + safezoneY;
+			w = 0.0891667 * safezoneW;
+			h = 0.068889 * safezoneH;
 		};
 
 		class DialogTitleText: w_RscText
 		{
 			idc = -1;
-			text = "Welcome at the General store!";
+			text = "General Store Menu";
 
-			x = 0.29375 * safezoneW + safezoneX;
-			y = 0.225 * safezoneH + safezoneY;
-			w = 0.4125 * safezoneW;
-			h = 0.022 * safezoneH;
-			tooltip = "You can purchase food, water, repairkits and fueltanks here..";
-		};
-
-		class DialogTitleText2: w_RscText
-		{
-			idc = -1;
-			text = "Wasteland for ArmA 3"; //--- ToDo: Localize;
-			x = 0.443281 * safezoneW + safezoneX;
-			y = 0.72 * safezoneH + safezoneY;
-			w = 0.128906 * safezoneW;
-			h = 0.055 * safezoneH;
+			x = 0.203125 * safezoneW + safezoneX;
+			y = 0.175 * safezoneH + safezoneY;
+			w = 0.0880 * safezoneW;
+			h = 0.0448148 * safezoneH;
 		};
 
 		class PlayerMoneyText: w_RscText
@@ -79,10 +69,10 @@ class genstored {
 			idc = genstore_money;
 			text = "Cash:";
 
-			x = 0.613437 * safezoneW + safezoneX;
-			y = 0.742 * safezoneH + safezoneY;
-			w = 0.0825 * safezoneW;
-			h = 0.022 * safezoneH;
+			x = 0.6875 * safezoneW + safezoneX;
+			y = 0.175 * safezoneH + safezoneY;
+			w = 0.0844792 * safezoneW;
+			h = 0.0448148 * safezoneH;
 		};
 
 		class CartTotalText: w_RscText
@@ -90,10 +80,10 @@ class genstored {
 			idc = genstore_total;
 			text = "Total: $0";
 
-			x = 0.592812 * safezoneW + safezoneX;
-			y = 0.665 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
-			h = 0.022 * safezoneH;
+			x = 0.6875 * safezoneW + safezoneX;
+			y = 0.65 * safezoneH + safezoneY;
+			w = 0.0844792 * safezoneW;
+			h = 0.0448148 * safezoneH;
 		};
 		
 	};
@@ -105,10 +95,10 @@ class genstored {
 			idc = genstore_item_list;
 			onLBSelChanged = "[] execvm 'client\systems\generalStore\itemInfo.sqf'";
 
-			x = 0.304062 * safezoneW + safezoneX;
-			y = 0.302 * safezoneH + safezoneY;
-			w = 0.12375 * safezoneW;
-			h = 0.411 * safezoneH;
+			x = 0.3125 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.0916666 * safezoneW;
+			h = 0.422222 * safezoneH;
 		};
 
 		class CartList: w_RscListbox
@@ -116,10 +106,10 @@ class genstored {
 			idc = genstore_cart;
 			onLBSelChanged = "[] execvm 'client\systems\generalStore\itemInfo.sqf'";
 
-			x = 0.592812 * safezoneW + safezoneX;
-			y = 0.302 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
-			h = 0.352 * safezoneH;
+			x = 0.690104 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.0916666 * safezoneW;
+			h = 0.422222 * safezoneH;
 		};
 
 		class StoreButton0: w_RscButton
@@ -129,12 +119,10 @@ class genstored {
 			text = "Items";
 			onButtonClick = "[] execVM 'client\systems\generalStore\populateSwitch.sqf'";
 			
-			x = 0.304062 * safezoneW + safezoneX;
-			y = 0.258 * safezoneH + safezoneY;
-			w = 0.12375 * safezoneW;
-			h = 0.033 * safezoneH;
-			tooltip = "Go to the Items-section"; //--- ToDo: Localize;
-			sizeEx = 2 * GUI_GRID_H;
+			x = 0.203125 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.088 * safezoneW;
+			h = 0.040 * safezoneH;
 		};
 
 		class AddToCart : w_RscButton {
@@ -142,12 +130,10 @@ class genstored {
 			text = "Add";
 			onButtonClick = "[] execVM 'client\systems\generalStore\addToCart.sqf'";
 			
-			x = 0.448438 * safezoneW + safezoneX;
-			y = 0.511 * safezoneH + safezoneY;
-			w = 0.12375 * safezoneW;
-			h = 0.033 * safezoneH;
-			sizeEx = 1 * GUI_GRID_H;
-			tooltip = "Add the selected item to your shopping cart"; //--- ToDo: Localize;
+			x = 0.515625 * safezoneW + safezoneX;
+			y = 0.385 * safezoneH + safezoneY;
+			w = 0.065 * safezoneW;
+			h = 0.040 * safezoneH;
 		};
 
 		class RemoveFromCart : w_RscButton {
@@ -155,25 +141,22 @@ class genstored {
 			text = "Remove";
 			onButtonClick = "[] execVM 'client\systems\generalStore\removeFromCart.sqf'";
 
-			x = 0.448438 * safezoneW + safezoneX;
-			y = 0.555 * safezoneH + safezoneY;
-			w = 0.12375 * safezoneW;
-			h = 0.033 * safezoneH;
-			sizeEx = 1 * GUI_GRID_H;
-			tooltip = "Remove the selected item from your shopping cart"; //--- ToDo: Localize;
+			x = 0.515625 * safezoneW + safezoneX;
+			y = 0.425 * safezoneH + safezoneY;
+			w = 0.065 * safezoneW;
+			h = 0.040 * safezoneH;
 		};
 
 		class CancelButton : w_RscButton {
 			
 			idc = -1;
+			text = "Cancel";
 			onButtonClick = "closeDialog 0;";
 
-			text = "X"; //--- ToDo: Localize;
-			x = 0.68381 * safezoneW + safezoneX;
-			y = 0.225 * safezoneH + safezoneY;
-			w = 0.0194688 * safezoneW;
-			h = 0.033 * safezoneH;
-			tooltip = "Exit the gunstore"; //--- ToDo: Localize;
+			x = 0.203125 * safezoneW + safezoneX;
+			y = 0.750 * safezoneH + safezoneY;
+			w = 0.072 * safezoneW;
+			h = 0.040 * safezoneH;
 			color[] = {0.95,0.1,0.1,1};
 		};
 
@@ -184,12 +167,10 @@ class genstored {
 			text = "Sell Items";
 			onButtonClick = "[] execVM 'client\systems\generalStore\switchMode.sqf'";
 
-			x = 0.448438 * safezoneW + safezoneX;
-			y = 0.643 * safezoneH + safezoneY;
-			w = 0.12375 * safezoneW;
-			h = 0.033 * safezoneH;
-			tooltip = "WARNING! This in inreversable!"; //--- ToDo: Localize;
-			sizeEx = 1 * GUI_GRID_H;
+			x = 0.4615 * safezoneW + safezoneX;
+			y = 0.750 * safezoneH + safezoneY;
+			w = 0.077 * safezoneW;
+			h = 0.040 * safezoneH;
 		};
 
 		class BuyToPlayer : w_RscButton {
@@ -199,12 +180,10 @@ class genstored {
 			text = "Buy";
 			onButtonClick = "[0] execVM 'client\systems\generalStore\buysellSwitch.sqf'";
 
-			x = 0.592812 * safezoneW + safezoneX;
-			y = 0.690 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
-			h = 0.033 * safezoneH;
-			tooltip = "Purchase the contents of your cart (if you have enough money and/or inventory space)"; //--- ToDo: Localize;
-			sizeEx = 2 * GUI_GRID_H;
+			x = 0.703125 * safezoneW + safezoneX;
+			y = 0.750 * safezoneH + safezoneY;
+			w = 0.088 * safezoneW;
+			h = 0.040 * safezoneH;
 			color[] = {0.1,0.95,0.1,1};
 		};
 	};

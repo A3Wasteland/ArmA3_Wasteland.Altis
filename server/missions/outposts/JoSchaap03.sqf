@@ -2,9 +2,9 @@ private ["_objs"];
 _objs =
 [
 	["Land_BagFence_Long_F",[1.0166,-0.0737305,3.8147e-006],285.438,1,0,{}], 
-	["Box_East_WpsSpecial_F",[-0.327026,1.0708,3.8147],286.618,1,0,{[_this,'mission_USLaunchers2'] call fn_refillbox}], 
+	["Box_East_WpsSpecial_F",[-0.327026,1.0708,3.8147],286.618,1,0,{[_this,'mission_USLaunchers'] call fn_refillbox}], 
 	["Land_LampShabby_F",[0.452637,-1.02686,-3.8147e-006],51.0459,1,0,{}], 
-	["Box_East_WpsSpecial_F",[-0.566162,-0.33252,1.90735],284.82,1,0,{[_this,'mission_Main_A3snipers'] call fn_refillbox}], 
+	["Box_IND_WpsSpecial_F",[-0.566162,-0.33252,1.90735],284.82,1,0,{[_this,'mission_Main_A3snipers'] call fn_refillbox}], 
 	["Land_LampShabby_F",[0.563965,0.834961,7.62939e-006],336.307,1,0,{}], 
 	["Land_LampShabby_F",[-1.1709,-0.387207,-0.130957],155.107,1,0,{}], 
 	["Land_LampShabby_F",[-1.01208,1.35107,0],219.089,1,0,{}], 

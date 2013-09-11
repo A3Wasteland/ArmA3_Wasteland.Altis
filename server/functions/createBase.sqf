@@ -59,8 +59,8 @@ for "_i" from 0 to ((count _objs) - 1) do
 		_newObj setPos _newPos;
 		if (!isNil "_fuel") then {_newObj setFuel _fuel};
 		if (!isNil "_damage") then {_newObj setDamage _damage};
-		if (!isNil "_vehicleinit") then {_newObj setVehicleInit format ["%1;",_vehicleinit]};
-		processInitCommands;
+		if (!isNil "_vehicleinit") then {[_newObj, format ["%1;",_vehicleinit]] call fn_vehicleInit};
+		// processInitCommands;
 		_newObjs = _newObjs + [_newObj];
 	
 };
