@@ -67,7 +67,7 @@ for "_i" from 1 to _lockDuration do
 	
 	if (_i >= _lockDuration) exitWith
 	{
-		_money = _moneyBag getVariable ["money", 0];
+		_money = _moneyBag getVariable ["cmoney", 0];
 		deleteVehicle _moneyBag;
 		if (_money < 0) then { _money = 0 };
 		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
@@ -80,7 +80,7 @@ for "_i" from 1 to _lockDuration do
 		}
 		else
 		{
-			player globalChat "The money bag is empty.";
+			player globalChat "The money was counterfeit!";
 		};
 	};
 };
