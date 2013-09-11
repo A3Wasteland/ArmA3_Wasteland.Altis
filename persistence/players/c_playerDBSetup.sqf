@@ -57,14 +57,6 @@ applyPlayerDBValues =
 			{
 				player addMagazine [_className, _ammoCount];
 			};
-<<<<<<< Updated upstream
-			if(_fits == 3) then
-			{
-				_backpack = unitBackpack player;
-				_backpack addMagazineCargo [_className,1];
-			};
-=======
->>>>>>> Stashed changes
 		} forEach _varValue;
 	};
 
