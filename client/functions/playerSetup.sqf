@@ -7,8 +7,6 @@ _player setskill 0;
 _player setVariable ["BIS_noCoreConversations", true];
 _player allowDamage false;
 
-enableSentences false;
-
 removeAllWeapons _player;
 removeUniform _player;
 removeVest _player;
