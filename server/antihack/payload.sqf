@@ -25,6 +25,7 @@ for "_i" from 0 to (count _cfgPatches - 1) do
     };
 };
 
+/*
 {
 	if (loadFile _x != "") exitWith
 	{
@@ -33,6 +34,7 @@ for "_i" from 0 to (count _cfgPatches - 1) do
 		_cheatFlag = ["hack menu", _x];
 	};
 } forEach ["used for hacking", "wuat\screen.sqf", "menu\exec.sqf", "scripts\fazeddays.sqf", "vet@folder\vet@start.sqf", "WookieMenuV5.sqf", "menu\initmenu.sqf", "scripts\WookieMenuFinal.sqf", "LystoArma3\start.sqf", "fazeddays.sqf", "ShadowyFaze\exec.sqf", "WookieMenuFinal.sqf", "wuat\exec.sqf", "crinkly\keymenu.sqf", "scripts\ajmenu.sqf", "Wookie_Beta\start.sqf", "jestersMENU\exec.sqf", "scripts\WookieMenuV5.sqf", "scripts\WookieMenu.sqf", "scr\start.sqf", "WookieMenu.sqf", "wookie_wuat\startup.sqf", "scripts\defaultmenu.sqf"];
+*/
 
 // diag_log "ANTI-HACK 0.8.0: Starting loop!";
 
