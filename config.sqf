@@ -129,6 +129,8 @@ ammoArray = compileFinal str
 //Text name, classname, buy cost
 accessoriesArray = compileFinal str
 [
+	["Quadrotor UAV", "B_UAV_01_backpack_F", 500, "bpack"],
+	["UAV Terminal", "B_UavTerminal", 200, "item"],
 	["GPS","ItemGPS", 100,"item"],
 	["Binoculars","Binocular",50,"binoc"],
 	["Rangefinder","Rangefinder", 100,"binoc"],
@@ -181,11 +183,12 @@ gearArray = compileFinal str
 	
 	["Parachute","B_Parachute", 250,"bpack"],
 	
-	["Diving Goggles","G_Diving", 50,"gogg"],
-	["Rebreather","V_RebreatherB", 100,"vest"],
-	["Wetsuit","U_B_Wetsuit", 100,"uni"],
-	
 	["Ghillie Suit","U_I_GhillieSuit", 250,"uni"],
+	
+	["Wetsuit","U_B_Wetsuit", 100,"uni"],
+	["Rebreather","V_RebreatherB", 100,"vest"],
+	["Diving Goggles","G_Diving", 50,"gogg"],
+	
 	["Default Uniform","U_B_CombatUniform_mcam", 25,"uni"],
 	
 	// Most vest camos are not implemented yet

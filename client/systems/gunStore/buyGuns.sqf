@@ -126,7 +126,22 @@ else
 								{
 									if ([player, _class] call fn_fitsInventory) then
 									{
-										player addItem _class;
+										switch (_name) do
+										{
+											case "UAV Terminal":
+											{
+												switch (faction player) do
+												{
+													case "BLU_F": { player addItem "B_UavTerminal" };
+													case "OPF_F": { player addItem "O_UavTerminal" };
+													default       { player addItem "I_UavTerminal" };
+												};
+											};
+											default
+											{
+												player addItem _class;
+											};
+										};
 									}
 									else
 									{
@@ -134,11 +149,26 @@ else
 										hint format [_notEnoughSpace,_name];
 									};
 								};
-								case "backpack":
+								case "bpack":
 								{
 									if (backpack player == "") then
 									{
-										player addBackpack _class;
+										switch (_name) do
+										{
+											case "Quadrotor UAV":
+											{
+												switch (faction player) do
+												{
+													case "BLU_F": { player addBackpack "B_UAV_01_backpack_F" };
+													case "OPF_F": { player addBackpack "O_UAV_01_backpack_F" };
+													default       { player addBackpack "I_UAV_01_backpack_F" };
+												};
+											};
+											default
+											{
+												player addBackpack _class;
+											};
+										};
 									}
 									else
 									{
@@ -215,7 +245,7 @@ else
 												{
 													case "BLU_F": { player addVest "V_RebreatherB" };
 													case "OPF_F": { player addVest "V_RebreatherIR" };
-													default { player addVest "V_RebreatherIA" };
+													default       { player addVest "V_RebreatherIA" };
 												};
 											};
 											default

@@ -99,9 +99,11 @@ R3F_LOG_CFG_transporteurs =
  
 R3F_LOG_CFG_objets_transportables = 
 [
-	["ReammoBox_F", 5],
+	["B_supplyCrate_F", 5],
+	["ReammoBox_F", 3],
 	["Quadbike_01_base_F", 10],
 	["Rubber_duck_base_F", 10],
+	["UAV_01_base_F", 2],
 	["Land_BagBunker_Large_F", 10],
 	["Land_BagBunker_Small_F", 5],
 	["Land_BagBunker_Tower_F", 7],
@@ -144,6 +146,7 @@ R3F_LOG_CFG_objets_deplacables =
 	"ReammoBox_F",
 	"Quadbike_01_base_F",
 	"Rubber_duck_base_F",
+	"UAV_01_base_F",
 	"Land_BagBunker_Large_F",
 	"Land_BagBunker_Small_F",
 	"Land_BagBunker_Tower_F",

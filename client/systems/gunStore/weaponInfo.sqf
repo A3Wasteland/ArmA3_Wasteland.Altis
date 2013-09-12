@@ -165,15 +165,29 @@ _descCapacity =
 		{
 			_weapon = (configFile >> "CfgVehicles" >> _weap_type);
 			
-			if (_weap_type == "B_Parachute") then
+			switch (_itemText) do 
 			{
-				_name = getText (_weapon >> "displayName");
-				_description = "Safely jump from above";
-			}
-			else
-			{
-				_name = _itemText;
-				_description = [_weap_type, "bpack"] call _descCapacity;
+				case "Parachute":
+				{
+					_name = getText (_weapon >> "displayName");
+					_description = "Safely jump from above";
+				};
+				case "Quadrotor UAV":
+				{
+					_uavType = getText (_weapon >> "assembleInfo" >> "assembleTo");
+					_uavVeh = configFile >> "CfgVehicles" >> _uavType;
+					
+					_weapon = _uavVeh;
+					_itempicture = _gunpicture;
+					
+					_name = getText (_weapon >> "displayName") + " UAV";
+					_description = "Remote-controlled quadcopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
+				};
+				default
+				{
+					_name = _itemText;
+					_description = [_weap_type, "bpack"] call _descCapacity;
+				};
 			};
 			
 			_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", _name, _description]);
@@ -225,10 +239,10 @@ _descCapacity =
 			_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", _name, _description]);
 		};
 	};
+	
+	_picture = getText(_weapon >> "picture");
     
 	_gunpicture ctrlSettext "";
-	
-    _picture = getText(_weapon >> "picture");
 	_itempicture ctrlSettext _picture;
     
 	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
