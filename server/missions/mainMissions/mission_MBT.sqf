@@ -33,6 +33,30 @@ _vehicleClass = ["B_MBT_01_cannon_F", "O_MBT_02_cannon_F"] call BIS_fnc_selectRa
 //Vehicle Class, Posistion, Fuel, Ammo, Damage, State
 _vehicle = [_vehicleClass,_randomPos,1,0.5,0,"NONE"] call createMissionVehicle;
 
+switch (_vehicleClass) do 
+{
+	case "B_MBT_01_cannon_F":
+	{
+		_vehicle removeMagazinesTurret ["16Rnd_120mm_HE_shells_Tracer_Red", [0]];
+		_vehicle removeMagazinesTurret ["2000Rnd_65x39_belt", [0]];
+		_vehicle addMagazineTurret ["2000Rnd_65x39_belt", [0]];
+		_vehicle setVehicleAmmo 0.5;
+		_vehicle addMagazineTurret ["16Rnd_120mm_HE_shells_Tracer_Red", [0]];
+		reload _vehicle;
+	};
+	case "O_MBT_02_cannon_F":
+	{
+		_vehicle removeMagazinesTurret ["16Rnd_120mm_HE_shells_Tracer_Green", [0]];
+		_vehicle removeMagazinesTurret ["450Rnd_127x108_Ball", [0,0]];
+		_vehicle removeMagazinesTurret ["SmokeLauncherMag", [0,0]];
+		_vehicle setVehicleAmmo 0.5;
+		_vehicle addMagazineTurret ["16Rnd_120mm_HE_shells_Tracer_Red", [0]];
+		_vehicle addMagazineTurret ["450Rnd_127x108_Ball", [0,0]];
+		_vehicle addMagazineTurret ["SmokeLauncherMag", [0,0]];
+		reload _vehicle;
+	};
+};
+
 _picture = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "displayName");
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> has been immobilized, go get it for your team.</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor];
