@@ -85,8 +85,8 @@ class Mission
 	randomSeed=14957468;
 	class Intel
 	{
-		briefingName="Wasteland by Team-WL (v0)";
-		overviewText="Wasteland survival sandbox by Team-Wasteland - visit a3wasteland.com for more details";
+		briefingName="A3Wasteland Beta v0.9";
+		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3wasteland.com for more details";
 		resistanceWest=0;
 		startWeather=0.10000001;
 		startWind=0.30000001;
