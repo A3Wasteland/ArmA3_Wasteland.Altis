@@ -60,4 +60,3 @@ if (isServer) then
 [] execVM "addons\R3F_ARTY_AND_LOG\init.sqf";
 [] execVM "addons\proving_Ground\init.sqf";
 [] execVM "addons\scripts\DynamicWeatherEffects.sqf";
-[] execVM "addons\scripts\adjustBuildings.sqf";
