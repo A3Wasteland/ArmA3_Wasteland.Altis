@@ -24,7 +24,7 @@ loadPlayerMenu = "client\systems\playerMenu\init.sqf" call mf_compile;
 playerSpawn = "client\functions\playerSpawn.sqf" call mf_compile;
 playerSetup = "client\functions\playerSetup.sqf" call mf_compile;
 spawnAction = "client\functions\spawnAction.sqf" call mf_compile;
-placeSpawnBeacon = "client\systems\playerMenu\placeSpawnBeacon.sqf" call mf_compile;
+// placeSpawnBeacon = "client\systems\playerMenu\placeSpawnBeacon.sqf" call mf_compile;
 refuelVehicle = "client\systems\playerMenu\refuel.sqf" call mf_compile;
 repairVehicle = "client\systems\playerMenu\repair.sqf" call mf_compile;
 
