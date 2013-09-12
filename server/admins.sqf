@@ -18,7 +18,7 @@ else
 		"1234876543211234", // Frylock
 		"1337133713371337"  // Carl
 
-	 Important: Don't put a coma at the end of the last one
+	 Important: Don't put a comma (,) at the end of the last one
 	********************************************************/
 
 	// Low Administrators: manage & spectate players, remove hacked vehicles
