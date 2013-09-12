@@ -157,9 +157,12 @@ staticWeaponsList =
 staticHeliList = 
 [
 	"B_Heli_Light_01_F",
+	"B_Heli_Light_01_F",
+	"B_Heli_Light_01_F",
 	"B_Heli_Light_01_armed_F",
 	"O_Heli_Light_02_unarmed_F",
-	"I_Heli_Transport_02_F"
+	"O_Heli_Light_02_unarmed_F",
+	"O_Heli_Light_02_unarmed_F"
 ];
 
 //Random Weapon List - Change this to what you want to spawn in cars.
@@ -170,7 +173,7 @@ vehicleWeapons =
 //	"hgun_ACPC2_F",
 //	"arifle_SDAR_F",
 	"SMG_01_F",	// Vermin .45 ACP
-	"SMG_02_F",	// Scorpion 9mm
+	"SMG_02_F",	// Sting 9mm
 	"hgun_PDW2000_F",
 	"arifle_TRG20_F",
 	"arifle_TRG21_F",
