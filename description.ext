@@ -12,10 +12,10 @@ class Header
 	maxPlayers=113;
 };
 author="Team Wasteland";
-onLoadName = "Wasteland ALTIS(v0)";
-onLoadMission = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
-overviewText = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
-overviewTextLocked = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
+onLoadName = "A3Wasteland Altis";
+//onLoadMission = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
+//overviewText = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
+//overviewTextLocked = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
 overviewPicture = "Loading.jpg";
 
 //Dialog includes
