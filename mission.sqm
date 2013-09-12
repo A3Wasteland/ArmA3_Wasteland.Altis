@@ -85,7 +85,7 @@ class Mission
 	randomSeed=14957468;
 	class Intel
 	{
-		briefingName="A3Wasteland Beta v0.9";
+		briefingName="A3Wasteland Altis v0.9 Beta";
 		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3wasteland.com for more details";
 		resistanceWest=0;
 		startWeather=0.10000001;
