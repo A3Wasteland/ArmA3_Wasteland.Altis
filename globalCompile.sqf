@@ -1,6 +1,6 @@
 //	@file Version: 1.0
 //	@file Name: globalCompile.sqf
-//	@file Author: AgentRev
+//	@file Author: AgentRev, MercyfulFate
 //	@file Created: 07/09/2013 15:06
 
 // The purpose of this script is to compile certain functions both on client and server.
