@@ -48,8 +48,8 @@ if (isServer) then
 
 if (isNil _checksum) then
 {
-	fn_findString = compileFinal preprocessFileLineNumbers "server\antihack\fn_findString.sqf";
-	fn_filterString = compileFinal preprocessFileLineNumbers "server\antihack\fn_filterString.sqf";
+	if (isNil "fn_findString") then { fn_findString = compileFinal preprocessFileLineNumbers "server\functions\fn_findString.sqf" };
+	if (isNil "fn_filterString") then { fn_filterString = compileFinal preprocessFileLineNumbers "server\functions\fn_filterString.sqf" };
 	
 	if (!isDedicated) then
 	{
