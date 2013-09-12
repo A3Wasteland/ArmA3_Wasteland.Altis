@@ -4,7 +4,7 @@ if (!isServer) exitWith {};
 
 if (loadFile (externalConfigFolder + "\admins.sqf") != "") then
 {
-	execVM "scripts\admins.sqf";
+	call compile preprocessFileLineNumbers (externalConfigFolder + "\admins.sqf");
 }
 else
 {
