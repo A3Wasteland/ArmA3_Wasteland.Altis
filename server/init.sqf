@@ -38,13 +38,13 @@ A3W_serverSpawning = 1;     // Vehicle, object, and loot spawning (0 = no, 1 = y
 PDB_ServerID = "any";       // iniDB saves prefix
 
 // load external config
-if (loadFile (externalConfigFolder + "\config.sqf") != "") then
+if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 {
-    call compile preprocessFileLineNumbers (externalConfigFolder + "\config.sqf");
+    call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
 }
 else
 {
-	diag_log "[WARNING] A3W configuration file '" + externalConfigFolder + "\config.sqf' was not found. Using default settings!";
+	diag_log "[WARNING] A3W configuration file '" + externalConfigFolder + "\main_config.sqf' was not found. Using default settings!";
 	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 };
 
