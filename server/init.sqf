@@ -7,7 +7,7 @@
 
 if (!isServer) exitWith {};
 
-externalConfigFolder = "A3Wasteland_Altis";
+externalConfigFolder = "A3Wasteland_settings";
 
 vChecksum = compileFinal format ["'%1'", call generateKey];
 
