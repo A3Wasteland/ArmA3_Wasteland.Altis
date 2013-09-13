@@ -26,8 +26,8 @@ _gunInfo = _dialog displayCtrl gunshop_gun_Info;
 _selectedItem = lbCurSel _gunlist;
 _itemText = _gunlist lbText _selectedItem;
 
-_gunpicture ctrlSettext _picture;
-_itempicture ctrlSettext _picture;
+_gunpicture ctrlSettext "";
+_itempicture ctrlSettext "";
 _gunlisttext ctrlSetText format [""];
 
 _descCapacity =
@@ -174,10 +174,16 @@ _descCapacity =
 				};
 				case "Quadrotor UAV":
 				{
-					_uavType = getText (_weapon >> "assembleInfo" >> "assembleTo");
-					_uavVeh = configFile >> "CfgVehicles" >> _uavType;
+					private "_uavType";
 					
-					_weapon = _uavVeh;
+					switch (faction player) do
+					{
+						case "BLU_F": { _uavType = "B_UAV_01_F" };
+						case "OPF_F": { _uavType = "O_UAV_01_F" };
+						default       { _uavType = "I_UAV_01_F" };
+					};
+					
+					_weapon = configFile >> "CfgVehicles" >> _uavType;
 					_itempicture = _gunpicture;
 					
 					_name = getText (_weapon >> "displayName") + " UAV";
