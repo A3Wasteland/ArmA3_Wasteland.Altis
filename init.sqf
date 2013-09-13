@@ -13,7 +13,7 @@ X_Server = false;
 X_Client = false;
 X_JIP = false;
 hitStateVar = false;
-versionName = "Wasteland v0.1";
+versionName = "Beta v0.9";
 
 if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
@@ -25,7 +25,7 @@ if (isNull player) then { X_JIP = true };
 {
 	if (!isDedicated) then
 	{
-		titleText ["Welcome to Wasteland, please wait for your player to setup", "BLACK", 0];
+		titleText ["Welcome to A3Wasteland, please wait for your player to setup", "BLACK", 0];
 		waitUntil {!isNull player};
 		client_initEH = player addEventHandler ["Respawn", {removeAllWeapons (_this select 0)}];
 	};
@@ -60,4 +60,3 @@ if (isServer) then
 [] execVM "addons\R3F_ARTY_AND_LOG\init.sqf";
 [] execVM "addons\proving_Ground\init.sqf";
 [] execVM "addons\scripts\DynamicWeatherEffects.sqf";
-[] execVM "addons\scripts\adjustBuildings.sqf";

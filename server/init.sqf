@@ -7,6 +7,8 @@
 
 if (!isServer) exitWith {};
 
+externalConfigFolder = "A3Wasteland_settings";
+
 vChecksum = compileFinal format ["'%1'", call generateKey];
 
 //Execute Server Side Scripts.
@@ -18,6 +20,7 @@ _serverCompiledScripts = [] execVM "server\functions\serverCompile.sqf";
 [] execVM "server\functions\broadcaster.sqf";
 [] execVM "server\functions\relations.sqf";
 [] execVM "server\functions\serverTimeSync.sqf";
+[] execVM (externalConfigFolder + "\init.sqf");
 waitUntil {scriptDone _serverCompiledScripts};
 
 diag_log "WASTELAND SERVER - Server Compile Finished";
@@ -35,13 +38,13 @@ A3W_serverSpawning = 1;     // Vehicle, object, and loot spawning (0 = no, 1 = y
 PDB_ServerID = "any";       // iniDB saves prefix
 
 // load external config
-if (loadFile "A3Wasteland_config.sqf" != "") then
+if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 {
-    call compile preprocessFileLineNumbers "A3Wasteland_config.sqf";
+    call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
 }
 else
 {
-	diag_log "[WARNING] A3W configuration file 'A3Wasteland_config.sqf' was not found. Using default settings!";
+	diag_log "[WARNING] A3W configuration file '" + externalConfigFolder + "\main_config.sqf' was not found. Using default settings!";
 	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 };
 

@@ -7,8 +7,6 @@ _player setskill 0;
 _player setVariable ["BIS_noCoreConversations", true];
 _player allowDamage false;
 
-enableSentences false;
-
 removeAllWeapons _player;
 removeUniform _player;
 removeVest _player;
@@ -110,10 +108,11 @@ if (!_hasNVGoggles) then
 
 _player addBackpack "B_Kitbag_Base";
 _player addMagazine "9Rnd_45ACP_Mag";
+_player addWeapon "hgun_ACPC2_F";
+_player addMagazine "9Rnd_45ACP_Mag";
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addItem "FirstAidKit";
-_player addWeapon "hgun_ACPC2_F";
 _player selectWeapon "hgun_ACPC2_F";
 
 _player addrating 9999999;

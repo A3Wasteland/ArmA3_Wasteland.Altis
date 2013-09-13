@@ -10,7 +10,7 @@ if (!isNil "storePurchaseHandle" && {!scriptDone storePurchaseHandle}) exitWith 
 
 if (genStoreCart > player getVariable ["cmoney", 0]) then
 {
-	hint "You do not have enough money"};
+	hint "You do not have enough money";
 }
 else
 {
