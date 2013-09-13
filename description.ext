@@ -11,11 +11,11 @@ class Header
 	minPlayers=1;
 	maxPlayers=113;
 };
-author="Team Wasteland";
+author="Team Wasteland (A3Wasteland.com)";
 onLoadName = "A3Wasteland Altis";
-//onLoadMission = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
-//overviewText = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
-//overviewTextLocked = "TESTMISSION DO NOT USE!! <img size='4' image='client\icons\logo.paa'/>";
+onLoadMission = "Wasteland is a harsh survival sandbox where two teams, and independent players fight for survival.";
+overviewText = "Wasteland is a harsh survival sandbox where two teams, and independent players fight for survival.";
+overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams, and independent players fight for survival.";
 overviewPicture = "Loading.jpg";
 
 //Dialog includes
