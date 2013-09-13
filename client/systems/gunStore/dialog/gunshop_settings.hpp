@@ -129,7 +129,7 @@ class gunshopd {
 			text = "Add";
 
 			x = 0.515625 * safezoneW + safezoneX;
-			y = 0.425 * safezoneH + safezoneY;
+			y = 0.385 * safezoneH + safezoneY;
 			w = 0.065 * safezoneW;
 			h = 0.040 * safezoneH;
 
@@ -184,7 +184,7 @@ class gunshopd {
 
 			x = 0.3815 * safezoneW + safezoneX;
 			y = 0.750 * safezoneH + safezoneY;
-			w = 0.077 * safezoneW;
+			w = 0.080 * safezoneW;
 			h = 0.040 * safezoneH;
 
 		};
@@ -197,7 +197,7 @@ class gunshopd {
 
 			x = 0.4615 * safezoneW + safezoneX;
 			y = 0.750 * safezoneH + safezoneY;
-			w = 0.077 * safezoneW;
+			w = 0.080 * safezoneW;
 			h = 0.040 * safezoneH;
 
 		};
@@ -210,7 +210,7 @@ class gunshopd {
 
 			x = 0.5415 * safezoneW + safezoneX;
 			y = 0.750 * safezoneH + safezoneY;
-			w = 0.077 * safezoneW;
+			w = 0.080 * safezoneW;
 			h = 0.040 * safezoneH;
 
 		};

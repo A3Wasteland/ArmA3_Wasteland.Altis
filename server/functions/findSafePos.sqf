@@ -72,8 +72,10 @@ _posX = _pos select 0;
 _posY = _pos select 1;
 
 //Limit the amount of attempts at finding a good location.
-private "_attempts";
-for "_attempts" from 0 to 9999 do
+private ["_attempts", "_maxAttempts"];
+_maxAttempts = if (isDedicated) then { 9999 } else { 999 };
+
+for "_attempts" from 0 to _maxAttempts do
 {
 	private "_testPos";
 	_testPos = [_pos, ([[(_minDist + (random (_maxDist - _minDist))),0], random 360] call BIS_fnc_rotateVector2D)] call BIS_fnc_vectorAdd;

@@ -7,13 +7,13 @@ private ["_varName", "_defaultValue", "_varValue"];
 _varName = _this select 0;
 _defaultValue = _this select 1;
 
-/*if (isNil _varName) then
+_varValue = missionNamespace getVariable [_varName, _defaultValue];
+	
+if (typeName _varValue == "CODE") then
 {
-	_defaultValue
+	call _varValue
 }
 else
 {
-	call compile _varName
-};*/
-
-missionNamespace getVariable [_varName, _defaultValue]
+	_varValue
+};
