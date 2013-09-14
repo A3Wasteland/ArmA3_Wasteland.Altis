@@ -28,7 +28,7 @@ _additionThree = vehicleAddition2 call BIS_fnc_selectRandom;
 //add a probability of 50% of a vehicle getting a gun or some more additional loot instead
 if (random 1 < 0.5) then {
 	_car addWeaponCargoGlobal [_weapon,1];
-	_car addMagazineCargoGlobal [_mag,2];
+	_car addMagazineCargoGlobal [_mag,(2 + floor(random 3))];  //incase a weapon spawns it will have a random amount of mags
 } else {
 	_car addItemCargoGlobal [_additionTwo,1];
 	_car addMagazineCargoGlobal [_additionThree,1];
