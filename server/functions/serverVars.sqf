@@ -188,10 +188,10 @@ vehicleWeapons =
 	"arifle_MX_F",
 	"arifle_MX_GL_F",
 	"arifle_MX_SW_F",
-	"arifle_MXM_F",
-	"srifle_EBR_F",
-	"LMG_Mk200_F",
-	"LMG_Zafir_F"
+	"arifle_MXM_F"
+//	"srifle_EBR_F",
+//	"LMG_Mk200_F",
+//	"LMG_Zafir_F"
 ];
 
 vehicleAddition =
