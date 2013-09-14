@@ -27,8 +27,8 @@ _createRandomVehicle =
 	_num = floor (random 100);
 
 	if (_num < 100) then { _vehicleType = civilianVehicles call BIS_fnc_selectRandom };
-	if (_num < 70) then { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom };
-	if (_num < 25) then { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom };
+	if (_num < 50) then { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom };
+	if (_num < 15) then { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom };
 	
 	if (_vehicleType isKindOf "Quadbike_01_base_F") then {
 		_mindist = 1.5;
