@@ -23,8 +23,8 @@ else
 	_num = floor (random 100);
 
 	if (_num < 100) then { _vehicleType = civilianVehicles call BIS_fnc_selectRandom; _type = 0 };
-	if (_num < 70) then { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom; _type = 1 };
-	if (_num < 25) then { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom; _type = 2 };
+	if (_num < 50) then { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom; _type = 1 };
+	if (_num < 15) then { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom; _type = 2 };
 };
 
 //_pos = [_markerPos, 2, 25, ( if (_type == 1) then { 2 } else { 5 } ), 0, 60 * (pi / 180), 0, [], [_markerPos]] call BIS_fnc_findSafePos;
