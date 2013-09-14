@@ -88,7 +88,6 @@ switch (playerSide) do
 };
 
 // seems ghillysuit comes with a GPS so moved this here:
-// this doesnt work for the sniper class, open for suggestions!
 _player removeWeapon "ItemRadio";
 _player removeWeapon "ItemGPS";
 
@@ -107,7 +106,7 @@ if (!_hasNVGoggles) then
 	_player assignItem "NVGoggles";
 };
 
-//_player addBackpack "B_Kitbag_Base";
+_player addBackpack "B_Kitbag_Base";
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addWeapon "hgun_ACPC2_F";
 _player addMagazine "9Rnd_45ACP_Mag";
