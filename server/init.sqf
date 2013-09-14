@@ -35,7 +35,10 @@ A3W_baseSaving = 0;			// Save base objects between restarts (0 = no, 1 = yes) - 
 A3W_missionsDifficulty = 0;	// Missions difficulty (0 = normal, 1 = hard)
 A3W_sideMissions = 1;       // Side missions (0 = no, 1 = yes)
 A3W_serverSpawning = 1;     // Vehicle, object, and loot spawning (0 = no, 1 = yes)
-PDB_ServerID = "any";       // iniDB saves prefix
+A3W_boxSpawning = 1;		// if spawning is enabled, also spawn ammo boxes arround the map (0 = no, 1 = yes)
+A3W_boatSpawning = 1;		// if spawning is enabled, also spawn boats near marked areas at coasts (0 = no, 1 = yes)
+A3W_baseBuilding = 1;		// if spawning is enabled, also spawn basebuilding parts arround the map (0 = no, 1 = yes)
+PDB_ServerID = "any";       // iniDB savefile prefix (change per server incase you run multiple servers from the same folder)
 
 // load external config
 if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
@@ -97,14 +100,20 @@ if (A3W_serverSpawning == 1) then {
     diag_log "WASTELAND SERVER - Initializing Server Spawning";
 	_vehSpawn = [] ExecVM "server\functions\vehicleSpawning.sqf";
 	waitUntil{sleep 0.1; scriptDone _vehSpawn};
-    _objSpawn = [] ExecVM "server\functions\objectsSpawning.sqf";
-	waitUntil{sleep 0.1; scriptDone _objSpawn};
-    _boxSpawn = [] ExecVM "server\functions\boxSpawning.sqf";
-	waitUntil{sleep 0.1; scriptDone _boxSpawn};
+	if (A3W_baseBuilding == 1) then {
+		_objSpawn = [] ExecVM "server\functions\objectsSpawning.sqf";
+		waitUntil{sleep 0.1; scriptDone _objSpawn};
+	};
+	if (A3W_boxSpawning == 1) then {
+		_boxSpawn = [] ExecVM "server\functions\boxSpawning.sqf";
+		waitUntil{sleep 0.1; scriptDone _boxSpawn};
+	};
     _heliSpawn = [] ExecVM "server\functions\staticHeliSpawning.sqf";
     waitUntil{sleep 0.1; scriptDone _heliSpawn};
-    _boatSpawn = [] ExecVM "server\functions\BoatSpawning.sqf";
-    waitUntil{sleep 0.1; scriptDone _boatSpawn};
+	if (A3W_boatSpawning == 1) then {
+		_boatSpawn = [] ExecVM "server\functions\BoatSpawning.sqf";
+		waitUntil{sleep 0.1; scriptDone _boatSpawn};
+	};
 };
 
 //Execute Server Missions.
