@@ -300,5 +300,5 @@ config_initial_spawn_money = compileFinal "100";
 // This is the food and water level above which players slowly regenerate
 // health from minor injuries (player must be at 75 health or greater).
 // Set to 0 to disable
-config_sated_health_regen_threshold = compileFinal "90";
+config_sated_health_regen_threshold = compileFinal "0";
 
