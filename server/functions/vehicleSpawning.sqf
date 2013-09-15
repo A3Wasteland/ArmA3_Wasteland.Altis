@@ -43,13 +43,13 @@ _createRandomVehicle =
 	//diag_log format ["Vehicle spawn #%1 done", _counter];
 };
 
-_vehammount = ceil (_tradius / 15);
+_vehammount = ceil (_tradius / 30);
 
 {
 	_pos = getMarkerPos (_x select 0);
 	_tradius = _x select 1;
 	_townname = _x select 2;
-	_vehammount = ceil (_tradius / 15);  // spawns a vehicle for every 15m radius the townmarker has, this might need tweaking! 
+	_vehammount = ceil (_tradius / 30);  // spawns a vehicle for every 30m radius the townmarker has, this might need tweaking! 
 	_angleIncr = 360 / _vehammount;
 	_langle = random _angleIncr;
 	//_minrad = 15;
