@@ -87,10 +87,10 @@ switch (playerSide) do
 	};
 };
 
-// remove GPS and Radio (GPS is found as loot, radio only causes annoying spam in groupchat)
+// remove GPS (GPS is found as loot in buildings)
 sleep 0.1;
-_player unAssignItem "ItemRadio";
-_player removeItem "ItemRadio";
+//_player unAssignItem "ItemRadio";
+//_player removeItem "ItemRadio";
 _player unAssignItem "ItemGPS";
 _player removeItem "ItemGPS";
 
