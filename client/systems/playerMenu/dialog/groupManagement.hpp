@@ -1,7 +1,7 @@
 #define groupManagementDialog 55510
 #define groupManagementPlayerList 55511
 #define groupManagementGroupList 55512
-#define groupManagementCreateButton 55513
+#define groupManagementPromoteButton 55513
 #define groupManagementInviteButton 55514
 #define groupManagementKickButton 55515
 #define groupManagementDisbandButton 55516
@@ -74,10 +74,19 @@ class GroupManagement {
 			color[] = {0.95,0.1,0.1,1};
 		};
 
-		class CreateGroupButton : w_RscButton {
-			idc = groupManagementCreateButton;
-			text = "Create Group";
-			onButtonClick = "[] execVM 'client\systems\groups\createGroup.sqf'";
+		//class CreateGroupButton : w_RscButton {
+		//	idc = groupManagementCreateButton;
+		//	text = "Create Group";
+		//	onButtonClick = "[] execVM 'client\systems\groups\createGroup.sqf'";
+		//	x = 0.3075; y = 0.200;
+		//	w = 0.125; h = 0.033 * safezoneH;
+		//	color[] = {0.1,0.95,0.1,1};
+		//};
+		
+		class PromotePlayerButton : w_RscButton {
+			idc = groupManagementPromoteButton;
+			text = "Promote";
+			onButtonClick = "[] execVM 'client\systems\groups\promotePlayer.sqf'";
 			x = 0.3075; y = 0.200;
 			w = 0.125; h = 0.033 * safezoneH;
 			color[] = {0.1,0.95,0.1,1};
@@ -120,4 +129,4 @@ class GroupManagement {
 		};
 	};
 
-};
+};
