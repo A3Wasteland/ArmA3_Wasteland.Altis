@@ -30,6 +30,10 @@ _success = [MF_ITEMS_SPAWN_BEACON_DURATION, ANIM, _hasFailed, []] call mf_util_p
 if (_success) then {
     _uid = getPlayerUID player;
 	_pos = getPosATL player;
+    _dir = getdir player;
+    // Spawn 4m in front of the player  
+    _pos = [(_pos select 0)+4*sin(_dir),(_pos select 1)+4*cos(_dir),0];
+
 	_beacon = MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE createVehicle _pos;
 	_beacon setPosATL _pos;
 	_beacon allowDamage false;
@@ -39,7 +43,7 @@ if (_success) then {
 	_beacon setVariable ['ownerName', name player, true];
 	_beacon setVariable ['ownerUID', _uid, true];
     _beacon setVariable ['packing', false, true];
-    
+    _beacon setVariable ['groupOnly', false, true];    
     {
         if (_x getVariable ["ownerUID",""] == _uid) exitWith {
             pvar_spawn_beacons set [_forEachIndex, "removeMe"];
@@ -48,6 +52,6 @@ if (_success) then {
     pvar_spawn_beacons = pvar_spawn_beacons - ["removeMe"];
 	pvar_spawn_beacons = pvar_spawn_beacons + [_beacon];
     publicVariable "pvar_spawn_beacons";
-	["Placed the Spawn Beacon successfully!", 5] call mf_notify_client;
+	["You placed the Spawn Beacon successfully!", 5] call mf_notify_client;
 };
-_success;
+_success;
