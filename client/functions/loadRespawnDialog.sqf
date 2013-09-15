@@ -138,27 +138,40 @@ while {respawnDialogActive} do
 			
 			if (!isNil "pvar_spawn_beacons") then
 			{
-				{
-					if(_x getVariable ["side", ""] == playerSide) then {
-						_button = _display displayCtrl (_dynamicControlsArray select _btn_number select 0);
-						_centrePos = getPos _x;
-						{ 
-							if(playerSide != side _x) then {
-								if((getPos _x distance _centrePos) < 100) then {
-									_enemyCount = _enemyCount + 1; 
-								}; 
-							};  
-						} forEach playableUnits;
+                { // forEach pvar_spawn_beacons
+                    if(_x getVariable ["side", ""] == playerSide) then {
+                        _button = _display displayCtrl (_dynamicControlsArray select _btn_number select 0);
+                        _enemyCount = 0;
+                        _centrePos = getPos _x;
+                        { 
+                            if(playerSide != side _x) then {
+                                if((_x distance _centrePos) < 100) then {
+                                    _enemyCount = _enemyCount + 1; 
+                                }; 
+                            };  
+                        } forEach playableUnits;
 
-						if(_enemyCount == 0) then {
-							_button ctrlSetText	format["%1",_x getVariable ["ownerName", ""]]; 
-							_button ctrlShow true;
-							_btn_number = _btn_number + 1;
-						};
-					};
-					if (_btn_number >= _btn_max) exitWith {}; // no more buttons to display on
-					_enemyCount = 0;         
-				} forEach pvar_spawn_beacons;
+                        _allowed = false;
+                        _groupOnly = _x getVariable ["groupOnly", false];
+                        _beaconOwnerUID = _x getVariable ["ownerUID", 0];
+                        if (_groupOnly) then {
+                            {
+                                if (getPlayerUID _x == _beaconOwnerUID) then {
+                                    _allowed = true;
+                                };
+                            } forEach (units group player);
+                        } else {
+                            _allowed = true;
+                        };
+
+                        if(_allowed && {_enemyCount == 0} && {damage _x < 1}) then {
+                            _button ctrlSetText format["%1",_x getVariable ["ownerName", ""]]; 
+                            _button ctrlShow true;
+                            _btn_number = _btn_number + 1;
+                        };
+                    };
+                    if (_btn_number >= _btn_max) exitWith {}; // no more buttons to display on
+                } forEach pvar_spawn_beacons;
 			};
         };
     };
