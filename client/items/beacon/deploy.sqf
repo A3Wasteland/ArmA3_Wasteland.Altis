@@ -29,9 +29,9 @@ _success = [MF_ITEMS_SPAWN_BEACON_DURATION, ANIM, _hasFailed, []] call mf_util_p
 
 if (_success) then {
     _uid = getPlayerUID player;
-	_pos = position player;
+	_pos = getPosATL player;
 	_beacon = MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE createVehicle _pos;
-	_beacon setPos _pos;
+	_beacon setPosATL _pos;
 	_beacon allowDamage false;
     _beacon setVariable ["spawn-beacon", true, true];
 	_beacon setVariable ["R3F_LOG_disabled", true];
