@@ -5,16 +5,24 @@
 //	@file Args:
 
 #define TIME_DELTA 1 //seconds between each "check"
-#define HEALTH_TIME 180*3 //seconds till death
-#define HUNGER_TIME 1800*3 //seconds till starving
-#define THIRST_TIME 1500*3 //seconds till dehydrated
-#define HEALTH_DELTA TIME_DELTA*(100/HEALTH_TIME)/100
-#define HUNGER_DELTA TIME_DELTA*(100/HUNGER_TIME)
-#define THIRST_DELTA TIME_DELTA*(100/THIRST_TIME)
+
+#define HEALTH_TIME (9*60)  //seconds till death
+#define HUNGER_TIME (90*60) //seconds till starving
+#define THIRST_TIME (75*60) //seconds till dehydrated
+
+#define HEALTH_DELTA TIME_DELTA*(100.0/HEALTH_TIME)/100
+#define HUNGER_DELTA TIME_DELTA*(100.0/HUNGER_TIME)
+#define THIRST_DELTA TIME_DELTA*(100.0/THIRST_TIME)
+
+#define REGEN_DELAY 30                  // How long since the last damage taken does regen kick in?
+#define REGEN_DELTA TIME_DELTA*0.1/100  // How much to regenerate per second when sated. default is 10 second for 1 health 
+
 #define STARVATION "<t size='2' color='#ffff00'> R.I.P.</t><br/><br/>You have died from: <br/><t size='2' color='#ff0000'>starvation</t><br/><br/>You need to eat to survive here!<br/>"
 #define DEHYDRATION "<t size='2' color='#ffff00'> R.I.P.</t><br/><br/>You have died from: <br/><t size='2' color='#ff0000'>dehydration</t><br/><br/>You need to drink to survive here!<br/>"
 
+
 private["_warnf1","_warnf2","_warnf3","_warnf4","_warnd1","_warnd2","_warnd3","_warnd4"];
+
 _warnf1 = true; 
 _warnf2 = true; 
 _warnf3 = true; 
@@ -25,7 +33,14 @@ _warnd3 = true;
 _warnd4 = true;
 
 if not(isNil "mf_survival_handle1") then {terminate mf_survival_handle1};
+
 mf_survival_handle1 = [] spawn {
+	private["_regen_threshold", "_last_player_damage", "_time_since_last_damage_change"];
+
+	_regen_threshold = call config_sated_health_regen_threshold;
+	_last_player_damage = damage player;
+	_time_since_last_damage_change = 0;
+
 	_decrementHunger = {
 		if (hungerLevel > 0) then {hungerLevel = hungerLevel - HUNGER_DELTA };
 	};
@@ -37,9 +52,24 @@ mf_survival_handle1 = [] spawn {
 	while {true} do {
 		sleep TIME_DELTA;
 		waitUntil {!respawnDialogActive && alive player};
-		if (round random 1 == 0) then _decrementHunger;
-		if (round random 1 == 0) then  _decrementThirst;
+
+		// Bump our counter if the player's health has stayed constant or improved this tick
+		if (damage player <= _last_player_damage) then {
+			_time_since_last_damage_change = _time_since_last_damage_change + TIME_DELTA
+		} else {
+			_time_since_last_damage_change = 0;
+		};
+
+		call _decrementHunger;
+		call _decrementThirst;
+
 		switch (true) do {
+			// If they're within the criteria for regeneration, add some health back
+			case (_regen_threshold > 0 && { round thirstLevel >= _regen_threshold } && { round hungerLevel >= _regen_threshold } && { _time_since_last_damage_change >= REGEN_DELAY}): {
+				if (damage player <= 0.25) then {
+					player setDamage (damage player) - REGEN_DELTA;
+				};
+			};
 			case (hungerLevel <= 0): {
 				_health = (damage player) + HEALTH_DELTA;
 				if (_health > 1) then {hint parseText STARVATION};
@@ -51,6 +81,9 @@ mf_survival_handle1 = [] spawn {
 				player setDamage _health;
 			};
 		};
+
+		// Store this for evaluation on the next trip round this loop
+		_last_player_damage = damage player; 
 	};
 };
 
@@ -83,3 +116,4 @@ mf_survival_handle1 = [] spawn {
 		};
 	};
 };
+

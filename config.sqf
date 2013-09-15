@@ -296,3 +296,9 @@ config_player_donations_enabled = compileFinal "0";
 
 // How much do players spawn with?
 config_initial_spawn_money = compileFinal "100";
+
+// This is the food and water level above which players slowly regenerate
+// health from minor injuries (player must be at 75 health or greater).
+// Set to 0 to disable
+config_sated_health_regen_threshold = compileFinal "90";
+
