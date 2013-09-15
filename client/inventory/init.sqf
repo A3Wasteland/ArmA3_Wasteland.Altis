@@ -29,6 +29,7 @@ MF_INVENTORY_TAKE_DISTANCE = 2;
 // initialize players inventory
 mf_inventory = [];
 mf_inventory_all = {mf_inventory};
+mf_inventory_list = [_this, "list.sqf"] call mf_compile;
 mf_inventory_get = [_this, "get.sqf"] call mf_compile;
 mf_inventory_set = [_this, "set.sqf"] call mf_compile;
 mf_inventory_is_full = [_this, "is_full.sqf"] call mf_compile;
