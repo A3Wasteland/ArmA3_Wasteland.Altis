@@ -87,9 +87,12 @@ switch (playerSide) do
 	};
 };
 
-// seems ghillysuit comes with a GPS so moved this here:
-_player removeWeapon "ItemRadio";
-_player removeWeapon "ItemGPS";
+// remove GPS and Radio (GPS is found as loot, radio only causes annoying spam in groupchat)
+sleep 0.1;
+_player unAssignItem "ItemRadio";
+_player removeItem "ItemRadio";
+_player unAssignItem "ItemGPS";
+_player removeItem "ItemGPS";
 
 _hasNVGoggles = false;
 
@@ -106,7 +109,7 @@ if (!_hasNVGoggles) then
 	_player assignItem "NVGoggles";
 };
 
-_player addBackpack "B_Kitbag_Base";
+_player addBackpack "B_Kitbag_Base";  //make this configurable for serveradmins!
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addWeapon "hgun_ACPC2_F";
 _player addMagazine "9Rnd_45ACP_Mag";
