@@ -2,12 +2,9 @@
 # @@ScriptName: createCaptureTriggers.sqf
 # @@Author: Nick 'Bewilderbeest' Ludlam <bewilder@recoil.org>
 # @@Create Date: 2013-09-15 16:26:38
-# @@Modify Date: 2013-09-15 19:06:54
+# @@Modify Date: 2013-09-15 22:35:19
 # @@Function: Creates client-side capture zone triggers
 #*********************************************************/
-
-// Exit early if we're not enabled
-if (count (call config_territory_markers) == 0) exitWith { diag_log "[INFO] Territory system not enabled, not creating capture triggers"; };
 
 // Only make the global if we've not made it already
 if (isNil "clientTerritoryCaptureTriggers") then {
@@ -31,7 +28,7 @@ if (count clientTerritoryCaptureTriggers > 0) exitWith { diag_log "clientTerrito
 
         // If there's no corresponding marker in the config, we hide it locally
         if (count _territoryDetails == 0) then {
-            player globalChat format["WARNING: No config_territory_markers definition for marker %1. Hiding it!", _markerName];
+            //player globalChat format["WARNING: No config_territory_markers definition for marker %1. Hiding it!", _markerName];
             diag_log format["WARNING: No config_territory_markers definition for marker %1. Hiding it!", _markerName];
             _markerName setMarkerAlphaLocal 0;
         } else {
@@ -56,3 +53,4 @@ if (count clientTerritoryCaptureTriggers > 0) exitWith { diag_log "clientTerrito
         };
     };
 } forEach allMapMarkers;
+    

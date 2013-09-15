@@ -2,7 +2,7 @@
 # @@ScriptName: monitorTerritories.sqf
 # @@Author: Nick 'Bewilderbeest' Ludlam <bewilder@recoil.org>
 # @@Create Date: 2013-09-09 18:14:47
-# @@Modify Date: 2013-09-15 20:35:00
+# @@Modify Date: 2013-09-15 22:40:31
 # @@Function:
 #*********************************************************/
 
@@ -23,10 +23,10 @@
 //    and an array of the players in that zone
 //
 // 3. Call _handleCapPointTick with this array. This goes through each territory
-//    in turn and compares the current occupants with the previous tick
+//    in turn and compares the current occupants with those from the previous tick
 //
-// 4. For each territoru we call _sideCountsForPlayerArray which returns the
-//    relative size of each team in the area.
+// 4. For each territory we call _sideCountsForPlayerArray which returns the
+//    relative size of each team in the area
 // 
 // 5. The team counts are then passed to _handleSideCounts which assesses
 //    the action to be taken for each territory: CAPTURE< BLOCK or RESET
@@ -50,7 +50,7 @@
 
 // timings
 #define BASE_SLEEP_INTERVAL 5
-#define CAPTURE_PERIOD 30
+#define CAPTURE_PERIOD 300
 
 if(!isServer) exitWith {};
 

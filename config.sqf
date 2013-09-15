@@ -306,6 +306,6 @@ config_initial_spawn_money = compileFinal "100";
 // 4 - Territory category, currently unused. See territory/README.md for details.
 config_territory_markers = compileFinal str
 [
-	["TERRITORY_AIRPORT_TEST", "Main Airport", 500, "AIRFIELD"] // Uncomment for testing!
+	//["TERRITORY_AIRPORT_TEST", "Main Airport", 500, "AIRFIELD"] // Also add to the map to test
 ];
 
