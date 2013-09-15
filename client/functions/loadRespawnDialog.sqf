@@ -133,11 +133,11 @@ while {respawnDialogActive} do
                 _text ctrlShow false;  
                 
             } foreach _dynamicControlsArray;
-			_btn_number = 0;
-			_btn_max = count _dynamicControlsArray;
+            _btn_number = 0;
+            _btn_max = count _dynamicControlsArray;
 			
-			if (!isNil "pvar_spawn_beacons") then
-			{
+            if (!isNil "pvar_spawn_beacons") then
+            {
                 { // forEach pvar_spawn_beacons
                     if(_x getVariable ["side", ""] == playerSide) then {
                         _button = _display displayCtrl (_dynamicControlsArray select _btn_number select 0);
