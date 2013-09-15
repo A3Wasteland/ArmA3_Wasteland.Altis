@@ -51,4 +51,4 @@ class AdminMenu
 			h=0.071;
 		};
 	};
-};
+};

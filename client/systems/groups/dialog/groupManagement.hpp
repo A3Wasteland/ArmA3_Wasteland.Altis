@@ -1,6 +1,7 @@
 #define groupManagementDialog 55510
 #define groupManagementPlayerList 55511
 #define groupManagementGroupList 55512
+#define groupManagementPromoteButton 55513
 #define groupManagementInviteButton 55514
 #define groupManagementKickButton 55515
 #define groupManagementDisbandButton 55516
@@ -19,10 +20,23 @@ class GroupManagement {
 		
 		class MainBG : w_RscPicture {
 			idc = -1;
-			text = "client\ui\ui_background_controlers_ca.paa";		
+			colorText[] = {1, 1, 1, 1};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";	
 			moving = true;
 			x = 0.0; y = 0.1;
-			w = 1.0; h = 0.65;
+			w = 0.745; h = 0.65;
+		};
+
+		class TopBar: w_RscPicture
+		{
+			idc = -1;
+			colorText[] = {1, 1, 1, 1};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.25,0.51,0.96,0.8)";
+
+			x = 0.0; y = 0.1;
+			w = 0.745; h = 0.05;
 		};
 		
 		class MainTitle : w_RscText {
@@ -30,7 +44,7 @@ class GroupManagement {
 			text = "Group Management";
 			sizeEx = 0.04;
 			shadow = 2;		
-			x = 0.260; y = 0.112;
+			x = 0.260; y = 0.10;
 			w = 0.3; h = 0.05;
 		};
 
@@ -82,9 +96,8 @@ class GroupManagement {
 			idc = -1;
 			text = "Close";
 			onButtonClick = "closeDialog 0; groupManagmentActive = false;";
-			x = 0.02; y = 0.68;
+			x = 0.02; y = 0.662;
 			w = 0.125; h = 0.033 * safezoneH;
-			color[] = {0.95,0.1,0.1,1};
 		};
 
 		class InviteButton : w_RscButton {
@@ -92,35 +105,39 @@ class GroupManagement {
 			text = "Invite";
 			onButtonClick = "[] execVM 'client\systems\groups\inviteToGroup.sqf'";
 			x = 0.3075; y = 0.200;
-			w = 0.125; h = 0.033 * safezoneH;
-			color[] = {0.1,0.95,0.1,1};
+			w = 0.14; h = 0.033 * safezoneH;
+		};
+		
+		class PromoteButton : w_RscButton {
+			idc = groupManagementPromoteButton;
+			text = "Promote";
+			onButtonClick = "[] execVM 'client\systems\groups\promotePlayer.sqf'";
+			x = 0.3075; y = 0.270;
+			w = 0.14; h = 0.033 * safezoneH;
 		};
 
 		class KickButton : w_RscButton {
 			idc = groupManagementKickButton;
 			text = "Kick";
 			onButtonClick = "[] execVM 'client\systems\groups\kickFromGroup.sqf'";
-			x = 0.3075; y = 0.250;
-			w = 0.125; h = 0.033 * safezoneH;
-			color[] = {0.95,0.1,0.1,1};
+			x = 0.3075; y = 0.340;
+			w = 0.14; h = 0.033 * safezoneH;
 		};
 
 		class DisbandButton : w_RscButton {
 			idc = groupManagementDisbandButton;
 			text = "Disband";
 			onButtonClick = "[] execVM 'client\systems\groups\disbandGroup.sqf'";
-			x = 0.3075; y = 0.300;
-			w = 0.125; h = 0.033 * safezoneH;
-			color[] = {0.95,0.1,0.1,1};
+			x = 0.3075; y = 0.410;
+			w = 0.14; h = 0.033 * safezoneH;
 		};
 
 		class LeaveButton : w_RscButton {
 			idc = groupManagementLeaveButton;
-			text = "Leave Group";
+			text = "Leave";
 			onButtonClick = "[] execVM 'client\systems\groups\leaveGroup.sqf'";
-			x = 0.3075; y = 0.350;
-			w = 0.125; h = 0.033 * safezoneH;
-			color[] = {0.95,0.1,0.1,1};
+			x = 0.3075; y = 0.480;
+			w = 0.14; h = 0.033 * safezoneH;
 		};
 
 		class AcceptInviteButton : w_RscButton {
@@ -129,7 +146,6 @@ class GroupManagement {
 			onButtonClick = "[] execVM 'client\systems\groups\acceptGroupInvite.sqf'";
 			x = 0.275; y = 0.625 - 0.0255 * safezoneH;
 			w = 0.100; h = 0.033 * safezoneH;
-			color[] = {0.1,0.95,0.1,1};
 		};
 
 		class DeclineInviteButton : w_RscButton {
@@ -138,8 +154,6 @@ class GroupManagement {
 			onButtonClick = "[] execVM 'client\systems\groups\declineGroupInvite.sqf'";
 			x = 0.375; y = 0.625 - 0.0255 * safezoneH;
 			w = 0.100; h = 0.033 * safezoneH;
-			color[] = {0.95,0.1,0.1,1};
 		};
 	};
-
-};
+};
