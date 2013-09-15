@@ -2141,7 +2141,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=97;
+		items=96;
 		class Item0
 		{
 			position[]={3485.074,8.067543,12969.054};
@@ -2800,17 +2800,6 @@ class Mission
 			type="Empty";
 		};
 		class Item95
-		{
-			position[]={9932.665,11.104993,11440.686};
-			name="T";
-			markerType="RECTANGLE";
-			type="Empty";
-			colorName="ColorYellow";
-			fillName="DiagGrid";
-			a=20;
-			b=20;
-		};
-		class Item96
 		{
 			position[]={14681.988,17.91,16689.555};
 			name="TERRITORY_AIRPORT_TEST";
