@@ -50,7 +50,7 @@ mf_jerrycan_fuel_amount = {
 	{
 		_type = _x select 0;
 		if (_vehicle isKindOf _type and _type isKindOf _current) then {
-			_current = _config;
+			_current = _type;
 			_fuel_amount = _x select 1;
 		};
 	} forEach (call config_refuel_amounts);

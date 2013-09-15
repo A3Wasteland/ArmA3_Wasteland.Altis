@@ -10,7 +10,7 @@
 #define ERR_IN_VEHICLE "Unpacking Camouflage Netting Failed. You can't do this in a vehicle."
 #define ERR_CANCELLED "Unpacking Camouflage Netting Cancelled"
 
-private ["_beacon", "_error", "_hasFailed", "_success"];
+private ["_netting", "_error", "_hasFailed", "_success", "_pos"];
 
 if (MF_ITEMS_CAMO_NET call mf_inventory_count <= 0) exitWith {
     [ERR_NO_NETS,5] call mf_notify_client;
@@ -38,8 +38,9 @@ _hasFailed = {
 _success =  [DURATION, ANIM, _hasFailed, []] call mf_util_playUntil;
     
 if (_success) then {
-	_netting = MF_ITEMS_CAMO_NET_TYPE createVehicle (position player);
-    _netting setPos (position player);
+	_pos = getPosATL player;
+	_netting = MF_ITEMS_CAMO_NET_TYPE createVehicle _pos;
+    _netting setPosATL _pos;
     ["You successfully unpacked the Camouflage Netting", 5] call mf_notify_client;
 };
 _success

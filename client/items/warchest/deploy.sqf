@@ -16,7 +16,7 @@ _checks = {
         case not(playerSide == east || playerSide == west) : {_text = ERR_NOT_EAST_WEST };
         case not(alive player): {}; //player dead, not need to notify them
         case (vehicle player != player): {_text = ERR_IN_VEHICLE};
-        case (player distance _position > 3): {_text = ERR_IN_TOO_FAR_AWAY};
+        case (player distance _position > 3): {_text = ERR_TOO_FAR_AWAY};
         case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};
         default {
             _text = format["Warchest %1%2 Deployed", round(100 * _progress), "%"];
@@ -27,10 +27,10 @@ _checks = {
 };
 
 private ["_success", "_warchest", "_hackAction", "_accessAction"];
-_success = [DURATION, ANIMATION, _checks, [position player]] call mf_util_playUntil;
+_success = [DURATION, ANIMATION, _checks, [getPosATL player]] call mf_util_playUntil;
 if (_success) then {
-    _warchest = MF_ITEMS_WARCHEST_OBJECT_TYPE createVehicle position player;
-    _warchest setPos position player;
+    _warchest = MF_ITEMS_WARCHEST_OBJECT_TYPE createVehicle getPosATL player;
+    _warchest setPosATL (getPosATL player);
     _warchest setVariable ['side', playerSide, true];
 	_warchest setVariable ["R3F_LOG_disabled", true];
     _warchest setVariable ["a3w_warchest", true];

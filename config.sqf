@@ -241,7 +241,7 @@ cityList = compileFinal str
 	["Town_1",400,"Kavala"],
 	["Town_2",300,"Agios Dionysios"],
 	["Town_3",150,"Abdera"],
-	["Town_4",200,"Athira"],
+	["Town_4",300,"Athira"],
 	["Town_5",200,"Telos"],
 	["Town_6",250,"Sofia"],
 	["Town_7",250,"Paros"],
