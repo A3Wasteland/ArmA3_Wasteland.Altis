@@ -1,28 +1,121 @@
 //	@file Version: 1.0
 //	@file Name: playerHud.sqf
-//	@file Author: [GoT] JoSchaap
+//	@file Author: [404] Deadbeat, [GoT] JoSchaap, [KoS] Bewilderbeest
 //	@file Created: 11/09/2012 04:23
 //	@file Args:
 
+#define hud_status_idc 3600
+#define hud_vehicle_idc 3601
+#define hud_activity_icon_idc 3602
+#define hud_activity_textbox_idc 3603
+
 disableSerialization;
-private["_ui","_hud","_food","_water","_vitals","_hudVehicle","_health","_decimalPlaces","_tempString","_yOffset","_vehicle"];
+private["_lastHealthReading", "_lastTerritoryName", "_lastTerritoryDescriptiveName", "_territoryCaptureIcon"];
+
+_lastHealthReading = 100; // Used to flash the health reading when it changes
+
+// Needed for territory system
+_lastTerritoryName = "";
+_lastTerritoryDescriptiveName = "";
+
+_displayTerritoryActivity = {
+    private['_boldFont', '_descriptiveName', '_configEntry', '_territoryActionText', '_territoryAction', '_seconds', '_minutes'];
+
+    _boldFont = "PuristaBold";
+
+    _descriptiveName = "Unknown territory";
+
+    // Expensive lookup for the HUD, so cache it
+    if (_territoryName != _lastTerritoryName) then {
+        // Look up the descriptive name of this territory
+        _configEntry = [(call config_territory_markers), { _x select 0 == _territoryName }] call BIS_fnc_conditionalSelect;
+        _descriptiveName = (_configEntry select 0) select 1;
+        _lastTerritoryName = _territoryName;
+        _lastTerritoryDescriptiveName = _descriptiveName;
+    } else {
+        _descriptiveName = _lastTerritoryDescriptiveName;
+    };
+
+    _territoryActionText = "";
+    _territoryAction = _territoryActivity select 0;
+
+    switch (_territoryAction) do {
+        case "CAPTURE": {
+            _territoryCaptureCountdown = round (_territoryActivity select 1);
+
+            if (_territoryCaptureCountdown > 60) then {
+                _seconds = _territoryCaptureCountdown % 60;
+                _territoryCaptureCountdown = (_territoryCaptureCountdown - _seconds) / 60;
+                _minutes = _territoryCaptureCountdown % 60;
+
+                _territoryActionText = format["Capturing territory in about <t font='%1'>%2 minutes</t>", _boldFont, _minutes + 1];
+            } else {
+                if (_territoryCaptureCountdown < 5) then {
+                    _territoryActionText = format["Territory transition in progress..."];
+                } else {
+                    _territoryActionText = format["Capturing territory in <t font='%1'>%2 seconds</t>", _boldFont, _territoryCaptureCountdown];
+                };
+            };
+        };
+        case "BLOCKEDATTACKER": {
+            _territoryActionText = format["Territory capture blocked"];
+        };
+        case "BLOCKEDDEFENDER": {
+            _territoryActionText = format["Territory under attack"];
+        };
+        case "RESET": {
+            _territoryActionText = format["Territory capture started"];
+        };
+        default {};
+    };
+
+    _activityMessage = format["Location: <t font='%1'>%2</t><br/>%3", _boldFont, _descriptiveName, _territoryActionText];
+    _topLeftIconText = "<img size='3' image='territory\client\icons\territory_cap_white.paa'/>";
+
+    [_topLeftIconText, _activityMessage]
+};
 
 while {true} do
 {
+    private["_ui","_vitals","_hudVehicle","_health","_tempString","_yOffset","_vehicle"];
+
     1000 cutRsc ["WastelandHud","PLAIN"];
     _ui = uiNameSpace getVariable "WastelandHud";
-    _vitals = _ui displayCtrl 3600;
-    _hudVehicle = _ui displayCtrl 3601;
-    
+    _vitals = _ui displayCtrl hud_status_idc;
+    _hudVehicle = _ui displayCtrl hud_vehicle_idc;
+    _hudActivityIcon = _ui displayCtrl hud_activity_icon_idc;
+    _hudActivityTextbox = _ui displayCtrl hud_activity_textbox_idc;
+
     //Calculate Health 0 - 100
-    _decimalPlaces = 2;
     _health = 1 - damage player;
     _health = round (_health * 100);
-    
-//  _vitals ctrlSetStructuredText parseText format ["%1 <img size='0.8' image='client\icons\1.paa'/><br/>%3 <img size='0.8' image='client\icons\water.paa'/><br/>%2 <img size='0.8' image='client\icons\food.paa'/><br/>%4 <img size='0.8' image='client\icons\money.paa'/>", round _health, round hungerLevel, round thirstLevel, (player getVariable "cmoney")];
-	_vitals ctrlSetStructuredText parseText format ["%1 <img size='0.7' image='client\icons\money.paa'/><br/>%2 <img size='0.7' image='client\icons\water.paa'/><br/>%3 <img size='0.7' image='client\icons\food.paa'/><br/>%4 <img size='0.7' image='client\icons\1.paa'/>", (player getVariable "cmoney"), round thirstLevel, round hungerLevel, round _health];
+
+    // Flash the health colour on the HUD according to it going up, down or the same
+    _healthTextColor = "#FFFFFF";
+    if (_health != _lastHealthReading) then {
+        // Health change. Up or down?
+        if (_health < _lastHealthReading) then {
+            // Gone down. Red flash
+            _healthTextColor = "#FF1717";
+        } else {
+            // Gone up. Green flash
+            _healthTextColor = "#17FF17";
+        };
+    };
+
+    // Make sure we keep a record of the health value from this iteration
+    _lastHealthReading = _health;
+
+    // Icons in bottom right
+    _str = format ["%1 <img size='0.7' image='client\icons\running_man.paa'/>", 100 - round((getFatigue player) * 100)];
+    _str = format["%1<br/>%2 <img size='0.7' image='client\icons\money.paa'/>", _str, player getVariable "cmoney"];
+    _str = format["%1<br/>%2 <img size='0.7' image='client\icons\water.paa'/>", _str, round thirstLevel];
+    _str = format["%1<br/>%2 <img size='0.7' image='client\icons\food.paa'/>", _str, round hungerLevel];
+    _str = format["%1<br/><t color='%2'>%3</t> <img size='0.7' image='client\icons\1.paa'/>", _str, _healthTextColor, _health];
+
+	_vitals ctrlSetStructuredText parseText _str;
     _vitals ctrlCommit 0;
-        
+    
     if(player != vehicle player) then
     {
         _tempString = "";
@@ -72,6 +165,43 @@ while {true} do
         _hudVehicle ctrlSetPosition [_x, _y, 0.4, 0.65];
         _hudVehicle ctrlCommit 0;
 	};
-        
+
+
+    // Territory system! Uses two new boxes in the top left of the HUD. We
+    // can extend the system later to encompas other activities
+    //
+    // This does nothing if the system is not enabled, as TERRITORY_ACTIVITY is never set
+    _activityIconStr = "";
+    _activityMessage = "";
+    _activityBackgroundAlpha = 0;
+
+    // Activity does not show when the map is open
+    if (!visibleMap) then {
+
+        // Determine activity. Currently this is territory cap only
+        _territoryActivity = player getVariable ["TERRITORY_ACTIVITY", []];
+        _territoryName = player getVariable ["TERRITORY_OCCUPATION", ""];
+
+        if (count _territoryActivity > 0 && {_territoryName != ""}) then {
+            _activityDetails = [] call _displayTerritoryActivity;
+
+            _activityIconStr = _activityDetails select 0;
+            _activityMessage = _activityDetails select 1;
+        };
+    };
+
+    // Show the UI if we have activity
+    if (_activityIconStr != "" && {_activityMessage != ""}) then {
+        _activityBackgroundAlpha = 0.4;
+    };
+
+    _hudActivityIcon ctrlSetBackgroundColor [0, 0, 0, _activityBackgroundAlpha];
+    _hudActivityIcon ctrlSetStructuredText parseText _activityIconStr;
+    _hudActivityIcon ctrlCommit 0;
+
+    _hudActivityTextbox ctrlSetBackgroundColor [0, 0, 0, _activityBackgroundAlpha];
+    _hudActivityTextbox ctrlSetStructuredText parseText _activityMessage;
+    _hudActivityTextbox ctrlCommit 0;
+
     sleep 1;
 };
