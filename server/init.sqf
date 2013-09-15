@@ -28,16 +28,16 @@ diag_log "WASTELAND SERVER - Server Compile Finished";
 "requestCompensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 
 // Default config
-A3W_buildingLoot = 1;		// Loot inside buildings (0 = no, 1 = yes)
+A3W_buildingLoot = 0;		// Loot inside buildings (0 = no, 1 = yes)
 A3W_startHour = 6;			// In-game hour at mission start (0 to 23)
 A3W_moonLight = 1;			// Moon light during night (0 = no, 1 = yes)
 A3W_baseSaving = 0;			// Save base objects between restarts (0 = no, 1 = yes) - requires iniDB mod 
 A3W_missionsDifficulty = 0;	// Missions difficulty (0 = normal, 1 = hard)
-A3W_sideMissions = 1;       // Side missions (0 = no, 1 = yes)
-A3W_serverSpawning = 1;     // Vehicle, object, and loot spawning (0 = no, 1 = yes)
-A3W_boxSpawning = 1;		// if spawning is enabled, also spawn ammo boxes arround the map (0 = no, 1 = yes)
-A3W_boatSpawning = 1;		// if spawning is enabled, also spawn boats near marked areas at coasts (0 = no, 1 = yes)
-A3W_baseBuilding = 1;		// if spawning is enabled, also spawn basebuilding parts arround the map (0 = no, 1 = yes)
+A3W_sideMissions = 0;      // Side missions (0 = no, 1 = yes)
+A3W_serverSpawning = 0;     // Vehicle, object, and loot spawning (0 = no, 1 = yes)
+A3W_boxSpawning = 0;		// if spawning is enabled, also spawn ammo boxes arround the map (0 = no, 1 = yes)
+A3W_boatSpawning = 0;		// if spawning is enabled, also spawn boats near marked areas at coasts (0 = no, 1 = yes)
+A3W_baseBuilding = 0;		// if spawning is enabled, also spawn basebuilding parts arround the map (0 = no, 1 = yes)
 PDB_ServerID = "any";       // iniDB savefile prefix (change per server incase you run multiple servers from the same folder)
 
 // load external config
@@ -114,6 +114,14 @@ if (A3W_serverSpawning == 1) then {
 		_boatSpawn = [] ExecVM "server\functions\BoatSpawning.sqf";
 		waitUntil{sleep 0.1; scriptDone _boatSpawn};
 	};
+};
+
+// Hooks for new players connecting, in case we need to manually update state
+onPlayerConnected "[_id, _name] execVM ""server\functions\onPlayerConnected.sqf""";
+
+if (count (call config_territory_markers) > 0) then {
+	diag_log "[INFO] A3W territory capturing is ENABLED";
+	[] ExecVM "territory\server\monitorTerritories.sqf";
 };
 
 //Execute Server Missions.

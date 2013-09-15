@@ -101,7 +101,6 @@ class Mission
 		forecastLightnings=0.30000001;
 		year=2013;
 		month=6;
-		day=10;
 		hour=6;
 		minute=0;
 		startFogDecay=0.0029333001;
@@ -2142,7 +2141,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=95;
+		items=97;
 		class Item0
 		{
 			position[]={3485.074,8.067543,12969.054};
@@ -2800,6 +2799,29 @@ class Mission
 			name="Store_Gen_4";
 			type="Empty";
 		};
+		class Item95
+		{
+			position[]={9932.665,11.104993,11440.686};
+			name="T";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=20;
+			b=20;
+		};
+		class Item96
+		{
+			position[]={14681.988,17.91,16689.555};
+			name="TERRITORY_AIRPORT_TEST";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="BDiagonal";
+			a=200;
+			b=400;
+			angle=-136.327;
+		};
 	};
 };
 class Intro
@@ -2825,7 +2847,6 @@ class Intro
 		forecastLightnings=0.30000001;
 		year=2013;
 		month=6;
-		day=10;
 		hour=6;
 		minute=0;
 		startFogDecay=0.0029333001;
@@ -2855,7 +2876,6 @@ class OutroWin
 		forecastLightnings=0.30000001;
 		year=2013;
 		month=6;
-		day=10;
 		hour=6;
 		minute=0;
 		startFogDecay=0.0029333001;
@@ -2885,7 +2905,6 @@ class OutroLoose
 		forecastLightnings=0.30000001;
 		year=2013;
 		month=6;
-		day=10;
 		hour=6;
 		minute=0;
 		startFogDecay=0.0029333001;

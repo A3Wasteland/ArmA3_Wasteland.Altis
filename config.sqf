@@ -296,3 +296,11 @@ config_player_donations_enabled = compileFinal "0";
 
 // How much do players spawn with?
 config_initial_spawn_money = compileFinal "100";
+
+// Territory system definitions. See territory/README.md for more details.
+config_territory_markers = compileFinal str
+[
+	//["TERRITORY_MARKER_NAME", "HUMAN DESCRIPTIVE NAME", MONETARY_VALUE, "TYPE"],
+	["TERRITORY_AIRPORT_TEST", "Main Airport", 500, "AIRFIELD"];
+];
+
