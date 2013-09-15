@@ -298,9 +298,14 @@ config_player_donations_enabled = compileFinal "0";
 config_initial_spawn_money = compileFinal "100";
 
 // Territory system definitions. See territory/README.md for more details.
+//
+// Format is:
+// 1 - Territory marker name. Must begin with 'TERRITORY_'
+// 2 - Descriptive name
+// 3 - Monetary value
+// 4 - Territory category, currently unused. See territory/README.md for details.
 config_territory_markers = compileFinal str
 [
-	//["TERRITORY_MARKER_NAME", "HUMAN DESCRIPTIVE NAME", MONETARY_VALUE, "TYPE"],
-	["TERRITORY_AIRPORT_TEST", "Main Airport", 500, "AIRFIELD"];
+	["TERRITORY_AIRPORT_TEST", "Main Airport", 500, "AIRFIELD"] // Uncomment for testing!
 ];
 

@@ -2,7 +2,7 @@
 # @@ScriptName: monitorTerritories.sqf
 # @@Author: Nick 'Bewilderbeest' Ludlam <bewilder@recoil.org>
 # @@Create Date: 2013-09-09 18:14:47
-# @@Modify Date: 2013-09-15 17:52:08
+# @@Modify Date: 2013-09-15 20:35:00
 # @@Function:
 #*********************************************************/
 
@@ -50,7 +50,7 @@
 
 // timings
 #define BASE_SLEEP_INTERVAL 5
-#define CAPTURE_PERIOD 300
+#define CAPTURE_PERIOD 30
 
 if(!isServer) exitWith {};
 
@@ -87,59 +87,79 @@ _newPlayersWithTerritoryActivity = [];
 
 // Trigger for when a capture of a territory has started
 _onCaptureStarted = {
-    private['_territoryDescriptiveName', '_side', '_msg'];
+    private['_territoryDescriptiveName', '_ownerSideStr', '_msg', '_sideObject', '_descriptiveSideName'];
 
     _territoryDescriptiveName = _this select 0;
-    _side = _this select 1;
+    _ownerSideStr = _this select 1;
 
-    if (_side != "unknown") then {
-        _msg = format["Your territory at %1 is being captured by %2!", _territoryDescriptiveName, _currentDominantSideName];
-        clientRelaySystem = [MESSAGE_BROADCAST_MSG_TO_SIDE, MESSAGE_BROADCAST_MSG_TYPE_TITLE, _currentTerritoryOwner, _msg];
-        publicVariable "clientRelaySystem";
+    if (_side != "") then {
+        _sideObject = [_ownerSideStr] call _sideObjectForSideStr;
+        _descriptiveSideName = [_ownerSideStr] call _nameForSideStr;
+        _msg = format["Your territory at %1 is being captured by %2!", _territoryDescriptiveName, _descriptiveSideName];
+        [[_msg], "territoryActivityHandler", _sideObject, false] call TPG_fnc_MP;
     };
 };
 
 // Trigger for when a capture of a territory has ended.
 _onCaptureFinished = {
-    private['_captureTeam', '_captureValue', '_captureDescription', '_sideName', '_msg', '_msgOthers'];
+    private['_captureSideStr', '_captureValue', '_captureDescription', '_descriptiveSideName', '_msg', '_otherSides', '_msgOthers'];
 
     //diag_log format['_onCapture called with %1', _this];
 
-    _captureTeam = _this select 0;
+    _captureSideStr = _this select 0;
     _captureValue = _this select 1;
     _captureDescription = _this select 2;
-    _sideName = [_captureTeam] call _nameForSide;
+    _descriptiveSideName = [_captureSideStr] call _nameForSideStr;
 
-    _msg = format["Your team has successfully captured %1 and you've received $%2", _captureDescription, _captureValue];
-    _msgOthers = format["%1 has captured %2", _sideName, _captureDescription];
-    clientRelaySystem = [MESSAGE_BROADCAST_MSG_TO_SIDE, MESSAGE_BROADCAST_MSG_TYPE_TITLE, _captureTeam, _msg, _captureValue, _msgOthers];
-    publicVariable "clientRelaySystem";
+    _sideObject = [_captureSideStr] call _sideObjectForSideStr;
+    _otherSideObjects = [west, east, resistance] - [_sideObject];
+
+    _msg = format["Your side has successfully captured %1 and you've received $%2", _captureDescription, _captureValue];
+    [[_msg, _captureValue], "territoryActivityHandler", _sideObject, false] call TPG_fnc_MP;
+
+    _msgOthers = format["%1 has captured %2", _descriptiveSideName, _captureDescription];
+    [[_msgOthers], "territoryActivityHandler", _otherSideObjects, false] call TPG_fnc_MP;
+};
+
+// Gives the side object for a side string
+_sideObjectForSideStr = {
+    private['_side', '_sideStr'];
+    _sideStr = _this select 0;
+
+    _sideObj = sideUnknown;
+
+    switch (_sideStr) do {
+        case "WEST": { _sideObj = west;};
+        case "EAST": { _sideObj = east; };
+        case "GUER": { _sideObj = resistance; };
+    };
+    _sideObj
 };
 
 // Give the human readable name for a side
-_nameForSide = {
+_nameForSideStr = {
     private['_side', '_sideName'];
     _side = _this select 0;
-    //diag_log format["_nameForSide called with %1", _this];
+    //diag_log format["_nameForSideStr called with %1", _this];
 
     _sideName = "";
     switch (_side) do {
         case "WEST": { _sideName = "Blufor"; };
         case "EAST": { _sideName = "Opfor"; };
         case "GUER": { _sideName = "Gfor"; };
-        default { _sideName = "unknown"; };
+        default { _sideName = ""; };
     };
 
-    //diag_log format["_nameForSide returning %1", _markerColor];
+    //diag_log format["_nameForSideStr returning %1", _markerColor];
 
     _sideName
 };
 
 // Give the marker colour for a side. Also duplicated in territory/client/updateConnectingClients.sqf
-_markerColorForSide = {
+_markerColorForSideStr = {
     private['_side', '_markerColor'];
     _side = _this select 0;
-    //diag_log format["_markerColorForSide called with %1", _this];
+    //diag_log format["_markerColorForSideStr called with %1", _this];
 
     _markerColor = "";
     switch (_side) do {
@@ -149,32 +169,9 @@ _markerColorForSide = {
         default { _markerColor = "coloryellow"; };
     };
 
-    //diag_log format["_markerColorForSide returning %1", _markerColor];
+    //diag_log format["_markerColorForSideStr returning %1", _markerColor];
 
     _markerColor
-};
-
-// Turns a marker colour into a side string
-_getSideForCaptureArea = {
-    //diag_log format["_getSideForCaptureArea called with %1", _this];
-
-    private ['_markerName', '_markerColor', '_side'];
-    _markerName = _this select 0;
-    _markerColor = getMarkerColor _markerName;
-    
-    _side = nil;
-
-    switch (_markerColor) do {
-        case "colorblue": { _side = "WEST"; };
-        case "colorred": { _side = "EAST"; };
-        case "colorgreen": { _side = "GUER"; };
-        case "coloryellow": { _side = ""; };
-        default { _side = "unknown"; };
-    };
-
-    //diag_log format["_getSideForCaptureArea returning %1", _side];
-
-    _side
 };
 
 // Count players in a particular area for each side, and calculate if its
@@ -409,7 +406,7 @@ _handleCapPointTick = {
 
                     if (_currentTerritoryTimer == 0 && {_currentTerritoryOwner != ""}) then {
                        // Just started capping. Let the current owners know!
-                        _currentDominantSideName = [_currentDominantSide] call _nameForSide;
+                        _currentDominantSideName = [_currentDominantSide] call _nameForSideStr;
 
                         _configEntry = [(call config_territory_markers), { _x select 0 == _currentTerritoryName }] call BIS_fnc_conditionalSelect;
                         _territoryDescriptiveName = (_configEntry select 0) select 1;
@@ -432,7 +429,7 @@ _handleCapPointTick = {
 
                 if (_newCapPointTimer >= CAPTURE_PERIOD) then {
                     // Find the current marker color which denotes capture status
-                     _newMarkerColor = [_newDominantSide] call _markerColorForSide;
+                     _newMarkerColor = [_newDominantSide] call _markerColorForSideStr;
 
                     if (getMarkerColor _currentTerritoryName != _newMarkerColor) then {
                         // If the timer is above what we consider a successful capture and its not already theirs...
