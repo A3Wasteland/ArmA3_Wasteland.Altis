@@ -25,7 +25,7 @@ if (isNull player) then { X_JIP = true };
 {
 	if (!isDedicated) then
 	{
-		titleText ["Welcome to A3Wasteland, please wait for your player to setup", "BLACK", 0];
+		titleText ["Welcome to A3Wasteland, please wait for your client to initialize", "BLACK", 0];
 		waitUntil {!isNull player};
 		client_initEH = player addEventHandler ["Respawn", {removeAllWeapons (_this select 0)}];
 	};

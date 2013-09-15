@@ -101,7 +101,6 @@ class Mission
 		forecastLightnings=0.30000001;
 		year=2013;
 		month=6;
-		day=10;
 		hour=6;
 		minute=0;
 		startFogDecay=0.0029333001;
@@ -2825,7 +2824,6 @@ class Intro
 		forecastLightnings=0.30000001;
 		year=2013;
 		month=6;
-		day=10;
 		hour=6;
 		minute=0;
 		startFogDecay=0.0029333001;
@@ -2855,7 +2853,6 @@ class OutroWin
 		forecastLightnings=0.30000001;
 		year=2013;
 		month=6;
-		day=10;
 		hour=6;
 		minute=0;
 		startFogDecay=0.0029333001;
@@ -2885,7 +2882,6 @@ class OutroLoose
 		forecastLightnings=0.30000001;
 		year=2013;
 		month=6;
-		day=10;
 		hour=6;
 		minute=0;
 		startFogDecay=0.0029333001;
