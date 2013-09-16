@@ -28,7 +28,7 @@ else
 	{
 		_remorqueur = _remorqueur select 0;
 		
-		if (alive _remorqueur && isNull (_remorqueur getVariable "R3F_LOG_remorque") && ([0,0,0] distance velocity _remorqueur < 6) && (getPos _remorqueur select 2 < 2) && !(_remorqueur getVariable "R3F_LOG_disabled")) then
+		if (alive _remorqueur && isNull (_remorqueur getVariable "R3F_LOG_remorque") && ((velocity _remorqueur) call BIS_fnc_magnitude < 6) && (getPos _remorqueur select 2 < 2) && !(_remorqueur getVariable "R3F_LOG_disabled")) then
 		{
 			// On mémorise sur le réseau que le véhicule remorque quelque chose
 			_remorqueur setVariable ["R3F_LOG_remorque", _objet, true];
