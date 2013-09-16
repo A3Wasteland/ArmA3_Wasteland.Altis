@@ -81,21 +81,26 @@ if (_uid call isAdmin) then
 	                closeDialog 0;
 					execVM "client\systems\generalStore\loadGenStore.sqf";
 				};
-			    case 2: //Access Respawn Dialog
+				case 2: //Access Vehicle Store
+				{
+	                closeDialog 0;
+					execVM "client\systems\vehicleStore\loadVehicleStore.sqf";
+				};
+			    case 3: //Access Respawn Dialog
 			    {
 	                closeDialog 0;
 					true spawn client_respawnDialog;
 			    };
-			    case 3: //Access Proving Grounds
+			    case 4: //Access Proving Grounds
 			    {
 	                closeDialog 0;      
 					createDialog "balca_debug_main";
 			    };
-	            case 4: //Show server FPS function
+	            case 5: //Show server FPS function
 			    {      
 					hint format["Server FPS: %1",serverFPS];
 			    };
-	            case 5: //Test Function
+	            case 6: //Test Function
 			    {
                     _group = createGroup civilian;
 					_leader = _group createunit ["C_man_polo_1_F", getPos player, [], 0.5, "Form"];

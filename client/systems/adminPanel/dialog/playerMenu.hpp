@@ -255,4 +255,5 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 	};
-};
+};
+

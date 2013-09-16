@@ -1,4 +1,3 @@
-
 //	@file Version: 1.0
 //	@file Name: weaponInfo.sqf
 //	@file Author: [404] Deadbeat
@@ -7,6 +6,8 @@
 
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
+
+private["_weap_type","_picture","_price","_dialog","_itemlist","_itemlisttext","_selectedItem","_itemInfo","_itemText"];
 
 //Initialize Values
 _weap_type = "";
@@ -17,8 +18,6 @@ _price = 0;
 _dialog = findDisplay genstore_DIALOG;
 _itemlist = _dialog displayCtrl genstore_item_list;
 _itemlisttext = _dialog displayCtrl genstore_item_TEXT;
-_picture = _dialog displayCtrl genstore_item_pic;
-_buysell = _dialog displayCtrl genstore_buysell;
 _itemInfo = _dialog displayCtrl genstore_item_Info;
 
 //Get Selected Item
@@ -26,26 +25,43 @@ _selectedItem = lbCurSel _itemlist;
 _itemText = _itemlist lbText _selectedItem;
 
 //Check which state we want to be in.
-_switchText = Ctrltext _buysell;
-if(_switchText == "Buy") then
-{
-	{
-	    if(_itemText == _x select 0) then{
-			_price = _x select 4;
-            _picLink = _x select 3;
-            _picture ctrlSetText _picLink;
-            _itemInfo ctrlSetStructuredText parseText ((_x select 2));
-			_itemlisttext ctrlSetText format ["Price: $%1", _price];	
-		}
-	}forEach (call generalStore);
-} else {	
-	{
-	    if(_itemText == _x select 0) then{
-			_price = _x select 5;
-            _picLink = _x select 3;
-            _picture ctrlSetText _picLink;
-            _itemInfo ctrlSetStructuredText parseText ((_x select 2));
-			_itemlisttext ctrlSetText format ["Price: $%1", _price];	
-		}
-	}forEach (call generalStore);
-};
+{if(_itemText == _x select 0) then{
+	_price = _x select 2;
+	
+	_itemlisttext ctrlSetText format ["Price: $%1", _price];
+	breakTo "main"	
+}}forEach (call headArray);
+
+{if(_itemText == _x select 0) then{
+	_price = _x select 2;
+	
+	_itemlisttext ctrlSetText format ["Price: $%1", _price];	
+	breakTo "main"
+}}forEach (call uniformArray);
+
+{if(_itemText == _x select 0) then{
+	_price = _x select 2;
+	
+	_itemlisttext ctrlSetText format ["Price: $%1", _price];
+	breakTo "main"	
+}}forEach (call genItemArray);
+
+{if(_itemText == _x select 0) then{
+	_price = _x select 2;
+	
+	_itemlisttext ctrlSetText format ["Price: $%1", _price];	
+	breakTo "main"	
+}}forEach (call backpackArray);
+
+{if(_itemText == _x select 0) then{
+	_price = _x select 4;
+	
+	_itemlisttext ctrlSetText format ["Price: $%1", _price];
+	breakTo "main"	
+}}forEach (call generalStore);
+
+{if(_itemText == _x select 0)then{
+	_price = _x select 2;
+	_itemlisttext ctrlSetText format ["Price: $%1", _price];
+	breakTo "main"
+}} forEach (call genObjectsArray);

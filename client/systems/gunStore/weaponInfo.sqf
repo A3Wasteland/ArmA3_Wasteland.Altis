@@ -1,14 +1,14 @@
 
 //	@file Version: 1.0
 //	@file Name: weaponInfo.sqf
-//	@file Author: [404] Deadbeat, AgentRev
+//	@file Author: [404] Deadbeat
 //	@file Created: 20/11/2012 05:13
 //	@file Args:
 
 #include "dialog\gunstoreDefines.sqf";
 
 disableSerialization;
-
+private["_weap_type","_picture","_price","_dialog","_gunlist","_ammolist","_gunlisttext","_ammoText","_selectedItem","_itemText","_weapon","_compatible","_name","_conf","_ammolistIndex"];
 //Initialize Values
 _weap_type = "";
 _picture = "";
@@ -17,239 +17,175 @@ _price = 0;
 // Grab access to the controls
 _dialog = findDisplay gunshop_DIALOG;
 _gunlist = _dialog displayCtrl gunshop_gun_list;
-_gunpicture = _dialog displayCtrl gunshop_gun_pic;
-_itempicture = _dialog displayCtrl gunshop_item_pic;
+_ammolist = _dialog displayCtrl gunshop_ammo_list;
 _gunlisttext = _dialog displayCtrl gunshop_gun_TEXT;
-_gunInfo = _dialog displayCtrl gunshop_gun_Info;
+_ammoText = _dialog displayCtrl gunshop_ammo_TEXT;
 
 //Get Selected Item
 _selectedItem = lbCurSel _gunlist;
 _itemText = _gunlist lbText _selectedItem;
-
-_gunpicture ctrlSettext "";
-_itempicture ctrlSettext "";
 _gunlisttext ctrlSetText format [""];
 
-_descCapacity =
-{
-	private ["_item", "_type", "_text", "_containerClass", "_defaultCapacity", "_newCapacity", "_diff"];
-	_item = _this select 0;
-	_type = _this select 1;
-	_text = "";
-	_defaultCapacity = 0;
-	_newCapacity = 0;
-	
-	switch (_type) do
-	{
-		case "vest":
-		{
-			switch (playerSide) do
-			{
-				case BLUFOR: { _containerClass = getText (configFile >> "CfgWeapons" >> "V_PlateCarrierGL_rgr" >> "ItemInfo" >> "containerClass") };
-				case OPFOR:  { _containerClass = getText (configFile >> "CfgWeapons" >> "V_HarnessO_brn" >> "ItemInfo" >> "containerClass") };
-				default      { _containerClass = getText (configFile >> "CfgWeapons" >> "V_PlateCarrierIA2_dgtl" >> "ItemInfo" >> "containerClass") };
-			};
-			
-			_defaultCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
-			
-			_containerClass = getText (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "containerClass");
-			_newCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
-			
-			_text = "vest";
-		};
-		case "bpack":
-		{
-			_defaultCapacity = getNumber (configFile >> "CfgVehicles" >> "B_Kitbag_Base" >> "maximumLoad");
-			_newCapacity = getNumber (configFile >> "CfgVehicles" >> _item >> "maximumLoad");
-			
-			_text = "backpack";
-		};
-	};
-	
-	_diff = round (((_newCapacity / _defaultCapacity) - 1) * 100);
-	
-	if (_diff > 0) then
-	{
-		_text = (str abs _diff) + "% more capacity than default " + _text;
-	};
-	if (_diff < 0) then
-	{
-		_text = (str abs _diff) + "% less capacity than default " + _text;
-	};
-	if (_diff == 0) then
-	{
-		_text = "Same capacity as default " + _text;
-	};
-	
-	_text
-};
-
 //Check Items Price
-{if(_itemText == _x select 0) then{
+{
+if(_itemText == _x select 0) then
+{
 	_weap_type = _x select 1; 
 	_price = _x select 2;
     
 	_weapon = (configFile >> "CfgWeapons" >> _weap_type);
-    _gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", getText(_weapon >> "displayName"), getText(_weapon >> "descriptionShort")]);
-    
-	_itempicture ctrlSettext "";
 	
-	_picture = getText(_weapon >> "picture");
+	_compatible = [];
+	lbClear _ammolist;
 	
-	// Show scope on gunstore's sniper pictures
-	if ([_weap_type, (count toArray _weap_type) - 6] call BIS_fnc_trimString == "_SOS_F") then
+	_compatible = [];
 	{
-		private ["_picArr", "_picLen"];
-		_picArr = toArray _picture;
-		_picLen = count _picArr;
-		
-		if (toString [_picArr select (_picLen - 8)] == "X") then
-		{
-			_picArr set [(_picLen - 8), (toArray "T") select 0];
-			_picture = toString _picArr;
-		};
-	};
+		_compatible = _compatible + getArray( (if ( _x == "this" ) then { _weapon } else { _weapon >> _x }) >> "magazines")
+    } forEach getArray(_weapon >> "muzzles");
 	
-	_gunpicture ctrlSettext _picture;
+	{
+		_name = getText(configFile >> "CfgMagazines" >> _x >> "displayname");
+		_conf = (configFile >>  "CfgMagazines" >> _x);
+		_picture = getText(_conf >> "picture");
+		_ammolistIndex = _ammolist lbAdd format["%1",_name];
+		_ammolist lbSetPicture [_ammolistIndex,_picture];
+	}foreach _compatible;
     
 	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
-}} forEach (call weaponsArray);
+}}forEach (call pistolArray);
 
-{if(_itemText == _x select 0) then{
+{if(_itemText == _x select 0) then
+{
 	_weap_type = _x select 1; 
 	_price = _x select 2;
     
-    _weapon = (configFile >> "CfgMagazines" >> _weap_type);
-    _gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", getText(_weapon >> "displayName"), getText(_weapon >> "descriptionShort")]);
-    
-	_gunpicture ctrlSettext "";
-	
-    _picture = getText(_weapon >> "picture");
-	_itempicture ctrlSettext _picture;
-	
-	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
-}} forEach (call ammoArray);
-
-{if(_itemText == _x select 0) then{
-	_weap_type = _x select 1; 
-	_price = _x select 2;
-	
 	_weapon = (configFile >> "CfgWeapons" >> _weap_type);
 	
-	if (_x select 3 == "mag") then
+	_compatible = [];
+	lbClear _ammolist;
+	
+	_compatible = [];
 	{
-		_weapon = (configFile >> "CfgMagazines" >> _weap_type);
-	};
+		_compatible = _compatible + getArray( (if ( _x == "this" ) then { _weapon } else { _weapon >> _x }) >> "magazines")
+    } forEach getArray(_weapon >> "muzzles");
 	
-	_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", getText(_weapon >> "displayName"), getText(_weapon >> "descriptionShort")]);
-    
-	_gunpicture ctrlSettext "";
-	
-    _picture = getText(_weapon >> "picture");
-	_itempicture ctrlSettext _picture;
+	{
+		_name = getText(configFile >> "CfgMagazines" >> _x >> "displayname");
+		_conf = (configFile >>  "CfgMagazines" >> _x);
+		_picture = getText(_conf >> "picture");
+		_ammolistIndex = _ammolist lbAdd format["%1",_name];
+		_ammolist lbSetPicture [_ammolistIndex,_picture];
+	}foreach _compatible;
     
 	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
-}} forEach (call accessoriesArray);
+}}forEach (call smgArray);
 
-{if(_itemText == _x select 0) then{
+{if(_itemText == _x select 0) then
+{
+	_weap_type = _x select 1; 
+	_price = _x select 2;
+    
+	_weapon = (configFile >> "CfgWeapons" >> _weap_type);
+	
+	_compatible = [];
+	lbClear _ammolist;
+	
+	_compatible = [];
+	{
+		_compatible = _compatible + getArray( (if ( _x == "this" ) then { _weapon } else { _weapon >> _x }) >> "magazines")
+    } forEach getArray(_weapon >> "muzzles");
+	
+	{
+		_name = getText(configFile >> "CfgMagazines" >> _x >> "displayname");
+		_conf = (configFile >>  "CfgMagazines" >> _x);
+		_picture = getText(_conf >> "picture");
+		_ammolistIndex = _ammolist lbAdd format["%1",_name];
+		_ammolist lbSetPicture [_ammolistIndex,_picture];
+	}foreach _compatible;
+    
+	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
+}}forEach (call rifleArray);
+
+{if(_itemText == _x select 0) then
+{
+	_weap_type = _x select 1; 
+	_price = _x select 2;
+    
+	_weapon = (configFile >> "CfgWeapons" >> _weap_type);
+	
+	_compatible = [];
+	lbClear _ammolist;
+	
+	_compatible = [];
+	{
+		_compatible = _compatible + getArray( (if ( _x == "this" ) then { _weapon } else { _weapon >> _x }) >> "magazines")
+    } forEach getArray(_weapon >> "muzzles");
+	
+	{
+		_name = getText(configFile >> "CfgMagazines" >> _x >> "displayname");
+		_conf = (configFile >>  "CfgMagazines" >> _x);
+		_picture = getText(_conf >> "picture");
+		_ammolistIndex = _ammolist lbAdd format["%1",_name];
+		_ammolist lbSetPicture [_ammolistIndex,_picture];
+	}foreach _compatible;
+    
+	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
+}}forEach (call shotgunArray);
+
+{if(_itemText == _x select 0) then
+{
+	_weap_type = _x select 1; 
+	_price = _x select 2;
+	_weapon = (configFile >> "CfgWeapons" >> _weap_type);
+	_compatible = [];
+	lbClear _ammolist;
+
+	_compatible = [];
+	{
+		_compatible = _compatible + getArray( (if ( _x == "this" ) then { _weapon } else { _weapon >> _x }) >> "magazines")
+    } forEach getArray(_weapon >> "muzzles");
+
+	{
+		if(_x != "RPG32_AA_F") then
+		{
+			_name = getText(configFile >> "CfgMagazines" >> _x >> "displayname");
+			_conf = (configFile >>  "CfgMagazines" >> _x);
+			_picture = getText(_conf >> "picture");
+			_ammolistIndex = _ammolist lbAdd format["%1",_name];
+			_ammolist lbSetPicture [_ammolistIndex,_picture];
+		};
+	}foreach _compatible;
+    
+	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
+}}forEach (call launcherArray);
+
+{if(_itemText == _x select 0) then
+{
 	_weap_type = _x select 1; 
 	_price = _x select 2;
 	
-	_weapon = (configFile >> "CfgWeapons" >> _weap_type);
-	_name = "";
-	_description = "";
-	
-	switch (_x select 3) do
-	{
-		case "bpack":
-		{
-			_weapon = (configFile >> "CfgVehicles" >> _weap_type);
-			
-			switch (_itemText) do 
-			{
-				case "Parachute":
-				{
-					_name = getText (_weapon >> "displayName");
-					_description = "Safely jump from above";
-				};
-				case "Quadrotor UAV":
-				{
-					private "_uavType";
-					
-					switch (faction player) do
-					{
-						case "BLU_F": { _uavType = "B_UAV_01_F" };
-						case "OPF_F": { _uavType = "O_UAV_01_F" };
-						default       { _uavType = "I_UAV_01_F" };
-					};
-					
-					_weapon = configFile >> "CfgVehicles" >> _uavType;
-					_itempicture = _gunpicture;
-					
-					_name = getText (_weapon >> "displayName") + " UAV";
-					_description = "Remote-controlled quadcopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
-				};
-				default
-				{
-					_name = _itemText;
-					_description = [_weap_type, "bpack"] call _descCapacity;
-				};
-			};
-			
-			_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", _name, _description]);
-		};
-		case "vest":
-		{
-			if (["Rebreather", _weap_type] call BIS_fnc_inString) then
-			{
-				_description = "Underwater oxygen supply";
-			}
-			else
-			{
-				_description = [_weap_type, "vest"] call _descCapacity;
-			};
-			
-			_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", _itemText, _description]);
-		};
-		case "gogg":
-		{
-			_weapon = (configFile >> "CfgGlasses" >> _weap_type);
-			_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", _itemText, "Increases underwater visibility"]);
-		};
-		default
-		{
-			switch (_itemText) do
-			{
-				case "Default Uniform":
-				{
-					_name = _itemText;
-					_description = "In case you lost your clothes";
-				};
-				case "Ghillie Suit": 
-				{
-					_name = _itemText;
-					_description = "Disguise as a swamp monster";
-				};
-				case "Wetsuit": 
-				{
-					_name = _itemText;
-					_description = "Allows faster swimming";
-				};
-				default
-				{
-					_name = getText (_weapon >> "displayName");
-					_description = getText( _weapon >> "descriptionShort");
-				};
-			};
-			
-			_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", _name, _description]);
-		};
-	};
-	
-	_picture = getText(_weapon >> "picture");
-    
-	_gunpicture ctrlSettext "";
-	_itempicture ctrlSettext _picture;
+	lbClear _ammolist;
     
 	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
-}} forEach (call gearArray);
+}}forEach (call throwputArray);
+
+{if(_itemText == _x select 0) then{
+	_price = _x select 2;
+	
+	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
+}}forEach (call accessoriesArray);
+
+{if(_itemText == _x select 0) then{
+	_price = _x select 2;    
+	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
+}}forEach (call backpackArray);
+
+{if(_itemText == _x select 0) then{
+	_price = _x select 2;
+	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
+}}forEach (call apparelArray);
+
+{if(_itemText == _x select 0) then{
+	_price = _x select 2;
+	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
+}}forEach (call staticGunsArray);

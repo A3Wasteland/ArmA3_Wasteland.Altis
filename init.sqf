@@ -33,6 +33,7 @@ if (isNull player) then { X_JIP = true };
 
 //init Wasteland Core
 [] execVM "config.sqf";
+[] execVM "storeConfig.sqf"; // Separated as its now v large
 [] execVM "briefing.sqf";
 
 if (!isDedicated) then
