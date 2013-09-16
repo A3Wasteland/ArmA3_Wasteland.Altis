@@ -51,10 +51,7 @@ if (isNil "ahSetupDone") then
 	_scriptHandle = [_packetKey, _assignPacketKey, _checksum, _assignChecksum] execVM "server\antihack\createUnit.sqf";
 	waitUntil {scriptDone _scriptHandle};
 	
-	if (loadFile "antihack\serverSide.sqf" != "") then
-	{
-		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "antihack\serverSide.sqf"));
-	};
+	[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\serverSide.sqf"));
 	
 	LystoAntiAntiHack = compileFinal "false";
 	AntiAntiAntiAntiHack = compileFinal "false";
