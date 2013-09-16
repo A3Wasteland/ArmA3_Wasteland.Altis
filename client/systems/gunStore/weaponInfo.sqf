@@ -135,27 +135,6 @@ _descCapacity =
 	_price = _x select 2;
 	
 	_weapon = (configFile >> "CfgWeapons" >> _weap_type);
-	
-	if (_x select 3 == "mag") then
-	{
-		_weapon = (configFile >> "CfgMagazines" >> _weap_type);
-	};
-	
-	_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", getText(_weapon >> "displayName"), getText(_weapon >> "descriptionShort")]);
-    
-	_gunpicture ctrlSettext "";
-	
-    _picture = getText(_weapon >> "picture");
-	_itempicture ctrlSettext _picture;
-    
-	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
-}} forEach (call accessoriesArray);
-
-{if(_itemText == _x select 0) then{
-	_weap_type = _x select 1; 
-	_price = _x select 2;
-	
-	_weapon = (configFile >> "CfgWeapons" >> _weap_type);
 	_name = "";
 	_description = "";
 	
@@ -187,7 +166,7 @@ _descCapacity =
 					_itempicture = _gunpicture;
 					
 					_name = getText (_weapon >> "displayName") + " UAV";
-					_description = "Remote-controlled quadcopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
+					_description = "Remote-controled quadcopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
 				};
 				default
 				{
@@ -216,6 +195,13 @@ _descCapacity =
 			_weapon = (configFile >> "CfgGlasses" >> _weap_type);
 			_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", _itemText, "Increases underwater visibility"]);
 		};
+		case "mag":
+		{
+			_weapon = (configFile >> "CfgMagazines" >> _weap_type);
+			_name = getText (_weapon >> "displayName");
+			_description = getText( _weapon >> "descriptionShort");
+			_gunInfo ctrlSetStructuredText parseText (format ["%1<br/>%2", getText(_weapon >> "displayName"), getText(_weapon >> "descriptionShort")]);
+		};
 		default
 		{
 			switch (_itemText) do
@@ -235,6 +221,11 @@ _descCapacity =
 					_name = _itemText;
 					_description = "Allows faster swimming";
 				};
+				case "UAV Terminal": 
+				{
+					_name = getText (_weapon >> "displayName");
+					_description = getText( _weapon >> "descriptionShort") + "<br/>Assign to GPS slot.";
+				};
 				default
 				{
 					_name = getText (_weapon >> "displayName");
@@ -252,4 +243,4 @@ _descCapacity =
 	_itempicture ctrlSettext _picture;
     
 	_gunlisttext ctrlSetText format ["Price: $%1", _price];	
-}} forEach (call gearArray);
+}} forEach ((call accessoriesArray) + (call gearArray));

@@ -137,3 +137,5 @@ if (_playerWasMoved == 0) then {
 		_x call removeNegativeScore;
 	};
 } forEach playableUnits;
+
+[] execVM "client\systems\fpsFix\init.sqf";

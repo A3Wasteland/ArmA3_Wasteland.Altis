@@ -1,7 +1,7 @@
 /**
- * Recherche périodiquement les nouveaux objets pour leur ajouter les fonctionnalités d'artillerie et de logistique si besoin
- * Script à faire tourner dans un fil d'exécution dédié
- * Version allégée pour un serveur dédié uniquement
+ * Recherche pÃ©riodiquement les nouveaux objets pour leur ajouter les fonctionnalitÃ©s d'artillerie et de logistique si besoin
+ * Script Ã  faire tourner dans un fil d'exÃ©cution dÃ©diÃ©
+ * Version allÃ©gÃ©e pour un serveur dÃ©diÃ© uniquement
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -12,7 +12,7 @@
 
 #include "R3F_ARTY_disable_enable.sqf"
 
-// A l'heure actuelle ce fil d'exécution n'est utile que si l'artillerie est activée
+// A l'heure actuelle ce fil d'exÃ©cution n'est utile que si l'artillerie est activÃ©e
 #ifdef R3F_ARTY_enable
 
 // Attente fin briefing
@@ -20,24 +20,24 @@ sleep 0.1;
 
 private ["_liste_vehicules_connus", "_liste_vehicules", "_count_liste_vehicules", "_i", "_objet"];
 
-// Contiendra la liste des véhicules (et objets) déjà initialisés
+// Contiendra la liste des vÃ©hicules (et objets) dÃ©jÃ  initialisÃ©s
 _liste_vehicules_connus = [];
 
 while {true} do
 {
-	// Récupération des tout les nouveaux véhicules de la carte SAUF les objets dérivant de "Static" non récupérable par "vehicles"
+	// RÃ©cupÃ©ration des tout les nouveaux vÃ©hicules de la carte SAUF les objets dÃ©rivant de "Static" non rÃ©cupÃ©rable par "vehicles"
 	_liste_vehicules = vehicles - _liste_vehicules_connus;
 	_count_liste_vehicules = count _liste_vehicules;
 	
 	if (_count_liste_vehicules > 0) then
 	{
-		// On parcoure tout les véhicules présents dans le jeu en 18 secondes
+		// On parcoure tout les vÃ©hicules prÃ©sents dans le jeu en 18 secondes
 		for [{_i = 0}, {_i < _count_liste_vehicules}, {_i = _i + 1}] do
 		{
 			_objet = _liste_vehicules select _i;
 			
-			//#ifdef R3F_ARTY_enable // Déjà présent plus haut dans la version actuelle
-			// Si l'objet est un pièce d'artillerie d'un type à gérer
+			//#ifdef R3F_ARTY_enable // DÃ©jÃ  prÃ©sent plus haut dans la version actuelle
+			// Si l'objet est un piÃ¨ce d'artillerie d'un type Ã  gÃ©rer
 			if ({_objet isKindOf _x} count R3F_ARTY_CFG_pieces_artillerie > 0) then
 			{
 				[_objet] spawn R3F_ARTY_FNCT_piece_init_dedie;
@@ -47,7 +47,7 @@ while {true} do
 			sleep (18/_count_liste_vehicules);
 		};
 		
-		// Les objets ont été initialisés, on les mémorise pour ne plus les ré-initialiser
+		// Les objets ont Ã©tÃ© initialisÃ©s, on les mÃ©morise pour ne plus les rÃ©-initialiser
 		_liste_vehicules_connus = _liste_vehicules_connus + _liste_vehicules;
 	}
 	else
