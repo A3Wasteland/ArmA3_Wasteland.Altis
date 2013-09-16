@@ -1,6 +1,6 @@
 /**
- * Recherche périodiquement les nouveaux objets pour leur ajouter les fonctionnalités d'artillerie et de logistique si besoin
- * Script à faire tourner dans un fil d'exécution dédié
+ * Recherche pÃ©riodiquement les nouveaux objets pour leur ajouter les fonctionnalitÃ©s d'artillerie et de logistique si besoin
+ * Script Ã  faire tourner dans un fil d'exÃ©cution dÃ©diÃ©
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -23,46 +23,46 @@ _liste_objets_depl_heli_remorq_transp = R3F_LOG_CFG_objets_deplacables + R3F_LOG
 	R3F_LOG_CFG_objets_remorquables + R3F_LOG_classes_objets_transportables;
 #endif
 
-// Contiendra la liste des véhicules (et objets) déjà initialisés
+// Contiendra la liste des vÃ©hicules (et objets) dÃ©jÃ  initialisÃ©s
 //_liste_vehicules_connus = [];
 
 while {true} do
 {
 	if !(isNull player) then
 	{
-		// Récupération des tout les nouveaux véhicules de la carte et des nouveaux objets dérivant de "Static" (caisse de mun, drapeau, ...) proches du joueur
+		// RÃ©cupÃ©ration des tout les nouveaux vÃ©hicules de la carte et des nouveaux objets dÃ©rivant de "Static" (caisse de mun, drapeau, ...) proches du joueur
 		_liste_vehicules = nearestObjects [player, ["LandVehicle", "Ship", "Air", "ReammoBox_F", "Static"], 80]; // (vehicles + // - _liste_vehicules_connus;
 		
 		_count_liste_vehicules = count _liste_vehicules;
 		
 		if (_count_liste_vehicules > 0) then
 		{
-			// On parcoure tout les véhicules présents dans le jeu en 18 secondes
+			// On parcoure tout les vÃ©hicules prÃ©sents dans le jeu en 18 secondes
 			{
 				_objet = _x;
 				
 				if !(_objet getVariable ["R3F_LOG_init_done", false]) then
 				{
 					#ifdef R3F_LOG_enable
-					// Si l'objet est un objet déplaçable/héliportable/remorquable/transportable
+					// Si l'objet est un objet dÃ©plaÃ§able/hÃ©liportable/remorquable/transportable
 					if ({_objet isKindOf _x} count _liste_objets_depl_heli_remorq_transp > 0) then
 					{
 						[_objet] spawn R3F_LOG_FNCT_objet_init;
 					};
 					
-					// Si l'objet est un véhicule héliporteur
+					// Si l'objet est un vÃ©hicule hÃ©liporteur
 					if ({_objet isKindOf _x} count R3F_LOG_CFG_heliporteurs > 0) then
 					{
 						[_objet] spawn R3F_LOG_FNCT_heliporteur_init;
 					};
 
-					// Si l'objet est un véhicule transporteurs whatever
+					// Si l'objet est un vÃ©hicule transporteurs whatever
 					if ({_objet isKindOf _x} count R3F_LOG_classes_transporteurs > 0) then
 					{
 						[_objet] spawn R3F_LOG_FNCT_transporteur_init;
 					};
 					
-					// Si l'objet est un véhicule remorqueur
+					// Si l'objet est un vÃ©hicule remorqueur
 					if ({_objet isKindOf _x} count R3F_LOG_CFG_remorqueurs > 0) then
 					{
 						[_objet] spawn R3F_LOG_FNCT_remorqueur_init;
@@ -78,7 +78,7 @@ while {true} do
 			} forEach _liste_vehicules;
 			
 			/*
-			// Les objets ont été initialisés, on les mémorise pour ne plus les ré-initialiser
+			// Les objets ont Ã©tÃ© initialisÃ©s, on les mÃ©morise pour ne plus les rÃ©-initialiser
 			{
 				_liste_vehicules_connus set [count _liste_vehicules_connus, _x];
 			} forEach _liste_vehicules;*/
