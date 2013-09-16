@@ -1,3 +1,13 @@
+/**
+ * Interface d'affichage du contenu du véhicule
+ * 
+ * Copyright (C) 2010 madbull ~R3F~
+ * 
+ * This program is free software under the terms of the GNU General Public License version 3.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "dlg_constantes.h"
 
 class R3F_LOG_dlg_contenu_vehicule
@@ -20,7 +30,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		R3F_LOG_dlg_CV_btn_fermer
 	};
 	
-	// D�finition des classes de base
+	// Définition des classes de base
 	class R3F_LOG_dlg_CV_texte
 	{
 		idc = -1;
@@ -31,7 +41,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		sizeEx = 0.023;
 		colorBackground[] = {0.5, 0.5, 0.5, 0};
 		colorText[] = {0.85, 0.85, 0.85, 1};
-		font = "TahomaB";
+		font = "PuristaMedium";
 		text = "";
 	};
 	
@@ -89,11 +99,11 @@ class R3F_LOG_dlg_contenu_vehicule
 		animTextureNormal = "client\ui\ui_button_normal_ca.paa";
 		animTextureDisabled = "client\ui\ui_button_disabled_ca.paa";
 		animTextureOver = "client\ui\ui_button_over_ca.paa";
-		animTextureFocused = "client\ui\ui_button_down_ca.paa";
+		animTextureFocused = "client\ui\ui_button_focus_ca.paa";
 		animTexturePressed = "client\ui\ui_button_down_ca.paa";
 		animTextureDefault = "client\ui\ui_button_default_ca.paa";
 		period = 0.4;
-		font = "TahomaB";
+		font = "PuristaMedium";
 		
 		soundEnter[] = {"\A3\ui_f\data\Sound\MOUSE2", 0.09, 1};
 		soundPush[] = {"\A3\ui_f\data\Sound\NEW1", 0.09, 1};
@@ -102,7 +112,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		
 		class Attributes 
 		{
-			font = "TahomaB";
+			font = "PuristaMedium";
 			color = "#E5E5E5";
 			align = "left";
 			shadow = "true";
@@ -110,7 +120,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		
 		class AttributesImage 
 		{
-			font = "TahomaB";
+			font = "PuristaMedium";
 			color = "#E5E5E5";
 			align = "left";
 			shadow = "true";
@@ -137,7 +147,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		color[] = {0.8, 0.8, 0.8, 1};
 		colorActive[] = {0,0,0,1};
 		colorDisabled[] = {0,0,0,0.3};
-		font = "TahomaB";
+		font = "PuristaMedium";
 		sizeEx = 0.035;
 		soundSelect[] = {"",0.1,1};
 		soundExpand[] = {"",0.1,1};
@@ -158,21 +168,29 @@ class R3F_LOG_dlg_contenu_vehicule
 			border = "client\ui\ui_border_scroll_ca.paa";
 		};
 	};
-	// FIN D�finition des classes de base
+	// FIN Définition des classes de base
 	
 	
 	class R3F_LOG_dlg_CV_arriere_plan
 	{
-		idc = -1;
+		/*idc = -1;
 		type = CT_STATIC;
-		style = ST_PICTURE;
-		x = 0.25; w = 0.5;
-		y = 0.1; h = 0.8;
-		colorText[] = {1, 1, 1, 1};
+		style = ST_PICTURE;*/
+		x = 0.2375; w = 0.5;
+		y = 0.1; h = 0.68;
+		/*colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
-		text = "";
-		font = "TahomaB";
-		sizeEx = 0.032;
+		text = "\ca\ui\data\ui_gameoptions_background_ca.paa";
+		font = "PuristaMedium";
+		sizeEx = 0.032;*/
+		colorBackground[] = {0, 0, 0, 0.6};
+		text              = "";
+		type              = CT_STATIC;
+		idc               = -1;
+		style             = ST_LEFT;
+		font              = "";
+		colorText[]       = {1, 1, 1, 1};
+		sizeEx            = 0.04;
 	};
 	
 	class R3F_LOG_dlg_CV_titre : R3F_LOG_dlg_CV_texte

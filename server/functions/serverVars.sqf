@@ -210,8 +210,6 @@ vehicleAddition =
 	"optic_aco_smg",
 	"optic_Holosight",
 	"optic_Holosight_smg",
-	"optic_Nightstalker",
-	"optic_NVS",
 	"acc_flashlight",
 	"acc_pointer_IR",
 	"Medikit",

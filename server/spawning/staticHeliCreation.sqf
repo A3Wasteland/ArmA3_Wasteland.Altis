@@ -7,27 +7,34 @@
 
 if (!isServer) exitWith {};
 
-private["_spawnPos", "_spawnType", "_currHeli"];
+private ["_isWreck", "_spawnPos", "_spawnType", "_finalPos", "_currHeli"];
 
 _isWreck = _this select 0;
 _spawnPos = _this select 1;
 
-if (_isWreck == 0) then {
-	//diag_log "Spawning heli complete...";
+if (_isWreck == 0) then
+{
+	//diag_log "Spawning heli...";
 	_spawnType = staticHeliList call BIS_fnc_selectRandom;
-	_currHeli = createVehicle [_spawnType,_spawnPos,[], 50,"None"]; 
+	_finalPos = _spawnPos findEmptyPosition [0, 50, _spawnType];
 	
-	_currHeli setpos [getpos _currHeli select 0,getpos _currHeli select 1,0];
+	if (count _finalPos == 0) then { _finalPos = _spawnPos };
+	
+	_currHeli = createVehicle [_spawnType, _finalPos, [], 0, "None"]; 
+	_currHeli setVariable [call vChecksum, true, false]; 
+	
+	_currHeli setPos [_spawnPos select 0, _spawnPos select 1, 0.01];
+	_currHeli setVelocity [0,0,0.01];
 	
 	clearMagazineCargoGlobal _currHeli;
 	clearWeaponCargoGlobal _currHeli;
+	clearItemCargoGlobal _currHeli;
 	
 	_currHeli spawn vehicleRepair;
 	_currHeli spawn cleanVehicleWreck;
-	
-	//Set original status to stop ner-do-wells
-	_currHeli setVariable [call vChecksum, true, false]; 
-} else {
+}
+else 
+{
 	//diag_log "Spawning heli wreck...";
     /*
 	_spawnType = staticHeliList call BIS_fnc_selectRandom;
