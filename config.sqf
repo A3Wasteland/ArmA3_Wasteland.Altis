@@ -162,9 +162,9 @@ accessoriesArray = compileFinal str
 	["ARCO Sight","optic_Arco", 100,"item"],
 	["SOS Sight","optic_SOS", 200,"item"],
 	["Nightvision Sight","optic_NVS", 300,"item"],
-	["Nightstalker Sight","optic_Nightstalker", 350,"item"],
 	["Thermal Sight","optic_tws", 400,"item"],
-	["Thermal Sight LMG","optic_tws_mg", 400,"item"]
+	["Thermal Sight LMG","optic_tws_mg", 400,"item"],
+	["Nightstalker Sight","optic_Nightstalker", 500,"item"],
 ];
 
 //Gun Store Gear List
