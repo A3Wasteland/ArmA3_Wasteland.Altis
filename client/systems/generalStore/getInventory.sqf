@@ -8,24 +8,16 @@
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
 
+private["_dialog","_itemlisttext","_itemlist","_amount","_index","_listIndex","_name"];
+
 // Grab access to the controls
 _dialog = findDisplay genstore_DIALOG;
 _itemlisttext = _dialog displayCtrl genstore_item_TEXT;
-_totalText = _dialog displayCtrl genstore_total;
-_itempicture = _dialog displayCtrl genstore_item_pic;
-_itemlist = _dialog displayCtrl genstore_item_list;
-_cartlist = _dialog displayCtrl genstore_cart;
-_itemInfo = _dialog displayCtrl genstore_item_Info;
+_itemlist = _dialog displayCtrl genstore_sell_list;
 
 //Clear the list
-genStoreCart = 0;
 lbClear _itemlist;
-lbClear _cartlist;
 _itemlist lbSetCurSel -1;
-_itempicture ctrlSettext "";
-_itemlisttext ctrlSettext "";
-_totalText CtrlsetText format["Total: $%1", genStoreCart];
-_itemInfo ctrlSetStructuredText parseText "";
 
 playerInventory = [];
 
@@ -103,10 +95,17 @@ for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 _amount = MF_ITEMS_WARCHEST call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Jerry Can (Empty)"];
+	playerInventory set [_index, "Warchest"];
 	_index = _index + 1;
 };
 
 {
-	_itemlistIndex = _itemlist lbAdd format["%1",_x];
+	_name = _x;
+	{
+		if(_name == _x select 0) then
+		{
+			_listIndex = _itemlist lbAdd format["%1",_x select 0];
+			_itemlist lbSetPicture [_listIndex,_x select 3];
+		};
+	} forEach (call generalStore);
 } forEach playerInventory;
