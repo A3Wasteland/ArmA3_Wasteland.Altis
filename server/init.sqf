@@ -20,6 +20,7 @@ _serverCompiledScripts = [] execVM "server\functions\serverCompile.sqf";
 [] execVM "server\functions\broadcaster.sqf";
 [] execVM "server\functions\relations.sqf";
 [] execVM "server\functions\serverTimeSync.sqf";
+[] execVM "server\functions\initStoreOwners.sqf";
 [] execVM (externalConfigFolder + "\init.sqf");
 waitUntil {scriptDone _serverCompiledScripts};
 

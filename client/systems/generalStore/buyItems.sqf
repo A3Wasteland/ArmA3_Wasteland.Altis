@@ -6,6 +6,10 @@
 //	@file Args: [int (0 = buy to player 1 = buy to crate)]
 
 #include "dialog\genstoreDefines.sqf";
+
+#define PURCHASED_CRATE_TYPE_AMMO 60
+#define PURCHASED_CRATE_TYPE_WEAPON 61
+
 disableSerialization;
 
 private["_playerMoney","_size", "_price","_dialog","_itemlist","_totalText","_playerMoneyText","_handleMoney","_itemText", "_class",

@@ -77,6 +77,8 @@ fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile
 getBallMagazine = [_path, "getBallMagazine.sqf"] call mf_compile;
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
 vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
+// Initialises a store with the relevant furniture
+createStoreFurniture = [_path, "createStoreFurniture.sqf"] call mf_compile;
 
 //Player Management
 server_playerDied = [_path, "serverPlayerDied.sqf"] call mf_compile;

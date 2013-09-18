@@ -89,8 +89,9 @@ _createAndApplyapplyVehProperties =
 	
 	if(_texturePath != "") then
 	{
-		serverRelaySystem = [MESSAGE_VEHICLE_PROPERTIES_APPLY, _vehicle, _texturePath];
-		publicVariable "serverRelaySystem";
+		// NOT YET IMPLEMENTED! Needs to become BIS_fnc_MP aware
+		//serverRelaySystem = [MESSAGE_VEHICLE_PROPERTIES_APPLY, _vehicle, _texturePath];
+		//publicVariable "serverRelaySystem";
 	};
 
 	//if this a remote controlled type we have to do some special stuff

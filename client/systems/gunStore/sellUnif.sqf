@@ -3,8 +3,6 @@
 //	@file Name: sellUnif.sqf
 //	@file Author: [GoT] JoSchaap
 
-#include "defines.hpp"
-
 //Initialize Values
 private["_uniform","_clothes_value","_total"];
 _total = 0;
@@ -23,4 +21,5 @@ if(_total != 0) then {
 	hint format["You sold your uniform for $%1", _total];
 } else {
 	hint format["You do not wear anything worth selling"];
-};
+};
+

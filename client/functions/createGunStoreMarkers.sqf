@@ -5,21 +5,20 @@
 
 _radius = 70;
 _status = [];
-_gunStores = ["gunstore1", "gunstore2", "gunstore3", "gunstore4"];
+_gunStores = ["move_GunStore1", "move_GunStore2", "move_GunStore3", "move_GunStore4"];
 _col_empty = "ColorBlue";
 _col_enemy = "ColorRed";
 _col_friendly = "ColorGreen";
 _col_mixed = "ColorOrange";
 
 //Creates the markers around gunstores.
-waitUntil {{!isNull(missionNamespace getVariable _x) && ((getPos(missionNamespace getVariable _x) distance [0,0,0]) > 100)} count _gunStores == count _gunStores};
 {
-	_unit = missionNamespace getVariable _x;
+	_markerPos = (getMarkerPos _x);
 
 	// Circle zone   
     _markerName = format["marker_shop_zone_%1",_x];
     deleteMarkerLocal _markerName;
-	_marker = createMarkerLocal [_markerName, getPos _unit];
+	_marker = createMarkerLocal [_markerName, _markerPos];
 	_markerName setMarkerShapeLocal "ELLIPSE";
     _markerName setMarkerColorLocal _col_empty;
 	_markerName setMarkerSizeLocal [_radius, _radius];
@@ -29,7 +28,7 @@ waitUntil {{!isNull(missionNamespace getVariable _x) && ((getPos(missionNamespac
 	// Gun store title    
     _markerName = format["marker_shop_title_%1",_x];
     deleteMarkerLocal _markerName;
-	_marker = createMarkerLocal [_markerName, getPos _unit];
+	_marker = createMarkerLocal [_markerName, _markerPos];
 	_markerName setMarkerShapeLocal "ICON";
     _markerName setMarkerTypeLocal "mil_dot";
     _markerName setMarkerColorLocal "ColorRed";
@@ -39,8 +38,8 @@ waitUntil {{!isNull(missionNamespace getVariable _x) && ((getPos(missionNamespac
 	// Gun store description    
     _markerName = format["marker_shop_desc_%1",_x];
     deleteMarkerLocal _markerName;
-    _pos = getPos _unit; _pos set [1, (_pos select 1) - 100];
-	_marker = createMarkerLocal [_markerName, _pos];
+    _markerPos set [1, (_markerPos select 1) - 100];
+	_marker = createMarkerLocal [_markerName, _markerPos];
 	_markerName setMarkerShapeLocal "ICON";
     _markerName setMarkerTypeLocal "mil_dot";
     _markerName setMarkerColorLocal _col_empty;
@@ -91,11 +90,11 @@ _setStatus = {
 showmarkers = true;
 while {showmarkers} do {
     {
-    	_unit = missionNamespace getVariable (_gunStores select _forEachIndex);
+    	_markerPos = (getMarkerPos _x);
 		_friendlyCount = 0;
 		_enemyCount = 0;
 		{
-			if((_x distance _unit < _radius) && (player != _x)) then {
+			if((_x distance _markerPos < _radius) && (player != _x)) then {
 				if(playerSide in [west,east] && playerSide == side _x) then {
 					_friendlyCount = _friendlyCount + 1;
 				} else {
@@ -104,7 +103,7 @@ while {showmarkers} do {
 			};
 		} forEach playableUnits;
 
-		if(player distance _unit < _radius) then {
+		if(player distance _markerPos < _radius) then {
 			if(_enemyCount > 0) then {
 				if(_friendlyCount > 0) then {
 					[_forEachIndex, "MIXED", true] call _setStatus;

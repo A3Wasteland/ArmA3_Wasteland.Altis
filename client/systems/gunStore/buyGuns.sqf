@@ -5,9 +5,11 @@
 //	@file Created: 20/11/2012 05:13
 //	@file Args: [int (0 = buy to player 1 = buy to crate)]
 
-#include "defines.hpp"
 #include "dialog\gunstoreDefines.sqf";
-//#include "addons\proving_ground\defs.hpp"
+
+#define PURCHASED_CRATE_TYPE_AMMO 60
+#define PURCHASED_CRATE_TYPE_WEAPON 61
+
 #define GET_DISPLAY (findDisplay balca_debug_VC_IDD)
 #define GET_CTRL(a) (GET_DISPLAY displayCtrl ##a)
 #define GET_SELECTED_DATA(a) ([##a] call {_idc = _this select 0;_selection = (lbSelection GET_CTRL(_idc) select 0);if (isNil {_selection}) then {_selection = 0};(GET_CTRL(_idc) lbData _selection)})

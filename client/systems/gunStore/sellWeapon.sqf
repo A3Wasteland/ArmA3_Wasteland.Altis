@@ -5,8 +5,6 @@
 //	@file Created: 20/11/2012 05:13
 //	@file Args:
 
-#include "defines.hpp"
-
 //Initialize Values
 private["_primary","_magazine","_weapon_value","_magSell"];
 _magSell = 0;
@@ -35,4 +33,5 @@ player removeWeapon _primary;
 player removeMagazines _magazine;
 
 player setVariable [cmoney, (player getVariable [cmoney, 0]) + _weapon_value, true];
-hint format["You sold your gun for $%1", _weapon_value];
+hint format["You sold your gun for $%1", _weapon_value];
+

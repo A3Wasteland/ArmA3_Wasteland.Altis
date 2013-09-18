@@ -2229,7 +2229,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=107;
+		items=112;
 		class Item0
 		{
 			position[]={3485.074,8.067543,12969.054};
@@ -2913,50 +2913,80 @@ class Mission
 		};
 		class Item99
 		{
-			position[]={4226.6143,166.18733,10786.004};
-			name="VehStore1_Land_Spawn";
+			position[]={26704.168,19.928308,24611.047};
+			name="VehStore1_Spawn_Land";
 			type="Empty";
 		};
 		class Item100
 		{
-			position[]={4245.9829,165.74255,10783.911};
-			name="VehStore1_Air_Spawn_1";
+			position[]={26786.656,23.534189,24568.219};
+			name="VehStore1_Spawn_Heli";
 			type="Empty";
 		};
 		class Item101
 		{
-			position[]={4233.4199,163.86694,10762.447};
-			name="VehStore1_Land_Spawn_1";
+			position[]={26813.092,24.694225,24509.99};
+			name="VehStore1_Land_Spawn_Air";
 			type="Empty";
 		};
 		class Item102
 		{
-			position[]={4252.7886,163.57146,10760.354};
-			name="VehStore1_Air_Spawn_1_1";
+			position[]={26476.125,-12.751504,24720.545};
+			name="VehStore1_Spawn_Sea";
 			type="Empty";
 		};
 		class Item103
 		{
-			position[]={4236.0371,159.70248,10738.367};
-			name="VehStore1_Land_Spawn_2";
+			position[]={22954.973,4.9896584,18865.762};
+			name="VehStore2_Spawn_Land";
 			type="Empty";
 		};
 		class Item104
 		{
-			position[]={4255.4058,159.53673,10736.274};
-			name="VehStore1_Air_Spawn_1_2";
+			position[]={22991.154,4.3340039,18868.256};
+			name="VehStore2_Spawn_Heli";
 			type="Empty";
 		};
 		class Item105
 		{
-			position[]={4239.7012,154.91121,10714.289};
-			name="VehStore1_Land_Spawn_3";
+			position[]={23150.178,3.1900001,18958.715};
+			name="VehStore2_Spawn_Air";
 			type="Empty";
 		};
 		class Item106
 		{
-			position[]={4259.0698,155.00037,10712.196};
-			name="VehStore1_Air_Spawn_1_3";
+			position[]={20784.043,28.160273,7259.2485};
+			name="VehStore3_Spawn_Land";
+			type="Empty";
+		};
+		class Item107
+		{
+			position[]={20797.982,29.13678,7224.0732};
+			name="VehStore3_Spawn_Heli";
+			type="Empty";
+		};
+		class Item108
+		{
+			position[]={21075.668,26.276394,7099.0078};
+			name="VehStore3_Spawn_Air";
+			type="Empty";
+		};
+		class Item109
+		{
+			position[]={14497.983,18.816771,16307.891};
+			name="VehStore4_Spawn_Land";
+			type="Empty";
+		};
+		class Item110
+		{
+			position[]={14498.163,18.571356,16288.963};
+			name="VehStore4_Spawn_Heli";
+			type="Empty";
+		};
+		class Item111
+		{
+			position[]={14611.373,17.996483,16165.987};
+			name="VehStore4_Spawn_Air";
 			type="Empty";
 		};
 	};
