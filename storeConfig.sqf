@@ -2,7 +2,7 @@
 # @@ScriptName: storeConfig.sqf
 # @@Author: His_Shadow
 # @@Create Date: 2013-09-16 20:40:58
-# @@Modify Date: 2013-09-16 20:42:57
+# @@Modify Date: 2013-09-18 22:14:35
 # @@Function:
 #*********************************************************/
 
@@ -824,19 +824,27 @@ generalStore = compileFinal str [
     ["Warchest","warchest",localize "STR_WL_ShopDescriptions_Warchest","client\icons\briefcase.paa",1000,500]
 ];
 
-//Name, Building Position, Desk Direction Modifier, Excluded Buttons, gun and general stores have position of spawned crate Veh stores have an extra air spawn direction
+
+// Notes: Gun and general stores have position of spawned crate, vehicle stores have an extra air spawn direction
+//
+// Array contents are as follows:
+//
+// Name
+// Building Position
+// Desk Direction Modifier
+// Excluded Buttons
 storeOwners = compileFinal str
 [
-	["GS1", 1, 180, [],[3362.89,13205.5,2.9902]],
-	["GS2", 1, -90, [],[16707.1,12783.8,19.0095]],
-	["GS3", 6, -30, [],[25786.9,21364.7,24.1738]],
-	["GS4", 4, 280, [],[9438.15,20269.8,126.081]],
-	["Gen1", 6, 60, [],[11532.4,9426.95,23.7564]],
-	["Gen2", 6, 75, [],[20785.1,6800.53,39.3656]],
-	["Gen3", 6, 220, [],[18081.5,15243.8,28.7699]],
-	["Gen4", 0, 90, [],[9266.39,15867.5,121.293]],
-	["Veh1", 1, 230, [], 50],
-	["Veh2", 6, 210, ["Boats", "Submarines"],185],
-	["Veh3", 4, 60, ["Boats","Submarines"],20],
-	["Veh4", 5, 0, ["Boats","Submarines"], 30]
+	["GunStore1", 1, 180, [],[3362.89,13205.5,2.9902]],
+	["GunStore2", 1, -90, [],[16707.1,12783.8,19.0095]],
+	["GunStore3", 6, -30, [],[25786.9,21364.7,24.1738]],
+	["GunStore4", 4, 280, [],[9438.15,20269.8,126.081]],
+	["GenStore1", 6, 60, [],[11532.4,9426.95,23.7564]],
+	["GenStore2", 6, 75, [],[20785.1,6800.53,39.3656]],
+	["GenStore3", 6, 220, [],[18081.5,15243.8,28.7699]],
+	["GenStore4", 0, 90, [],[9266.39,15867.5,121.293]],
+	["VehStore1", 1, 230, [], 50],
+	["VehStore2", 6, 210, ["Boats", "Submarines"],185],
+	["VehStore3", 4, 60, ["Boats","Submarines"],20],
+	["VehStore4", 5, 0, ["Boats","Submarines"], 30]
 ];
