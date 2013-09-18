@@ -2159,7 +2159,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="VehStore1";
-					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addAction [""Speak with Vehicle Store Owner"",""client\systems\vehStore\loadVehStore.sqf""]; this setIdentity ""VehStore1"";";
+					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addAction [""Speak with Vehicle Store Owner"",""client\systems\vehStore\loadVehicleStore.sqf""]; this setIdentity ""VehStore1"";";
 				};
 			};
 		};
@@ -2180,7 +2180,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="VehStore2";
-					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addAction [""Speak with Vehicle Store Owner"",""client\systems\vehStore\loadVehStore.sqf""]; this setIdentity ""VehStore2"";";
+					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addAction [""Speak with Vehicle Store Owner"",""client\systems\vehStore\loadVehicleStore.sqf""]; this setIdentity ""VehStore2"";";
 				};
 			};
 		};
@@ -2201,7 +2201,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="VehStore3";
-					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addAction [""Speak with Vehicle Store Owner"",""client\systems\vehStore\loadVehStore.sqf""]; this setIdentity ""VehStore3"";";
+					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addAction [""Speak with Vehicle Store Owner"",""client\systems\vehStore\loadVehicleStore.sqf""]; this setIdentity ""VehStore3"";";
 				};
 			};
 		};
@@ -2222,7 +2222,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="VehStore4";
-					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addAction [""Speak with Vehicle Store Owner"",""client\systems\vehStore\loadVehStore.sqf""]; this setIdentity ""VehStore4"";";
+					init="this addEventHandler['handledamage', {false}]; removeAllWeapons this; this addAction [""Speak with Vehicle Store Owner"",""client\systems\vehStore\loadVehicleStore.sqf""]; this setIdentity ""VehStore4"";";
 				};
 			};
 		};
