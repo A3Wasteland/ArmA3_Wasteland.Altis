@@ -4,7 +4,7 @@
 //	@file Author: His_Shadow
 //	@file Created: 06/14/2013 05:13
 
-#include "dialog\vehstoreDefines.sqf";
+#include "dialog\vehiclestoreDefines.hpp";
 
 #define _DELIVERY_METHOD_SPAWN 1
 #define _DELIVERY_METHOD_AIRDROP 2

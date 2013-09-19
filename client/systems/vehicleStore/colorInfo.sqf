@@ -4,7 +4,7 @@
 //	@file Created: 20/11/2012 05:13
 //	@file Args:
 
-#include "dialog\vehstoreDefines.sqf";
+#include "dialog\vehiclestoreDefines.hpp";
 
 disableSerialization;
 
