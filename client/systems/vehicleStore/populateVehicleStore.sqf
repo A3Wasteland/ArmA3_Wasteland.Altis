@@ -5,7 +5,7 @@
 //	@file Created: 1/09/2013 05:13
 //	@file Args: [vehicle_type]
 
-#include "dialog\vehstoreDefines.sqf";
+#include "dialog\vehiclestoreDefines.hpp";
 disableSerialization;
 private ["_switch","_dialog","_vehlisttext","_vehlist","_colorlist","_vehicles","_picture","_vehlistIndex"];
 _switch = _this select 0;
@@ -129,4 +129,5 @@ switch(_switch) do
 			_vehlist lbSetPicture [_vehlistIndex,_picture];
 		} forEach (call submarinesArray);	
 	};
-};
+};
+

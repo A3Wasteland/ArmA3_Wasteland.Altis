@@ -5,7 +5,7 @@
 //	@file Created: 1/09/2013 05:13
 //	@file Args: [vehicle_type]
 
-#include "dialog\vehstoreDefines.sqf";
+#include "dialog\vehiclestoreDefines.hpp";
 
 disableSerialization;
 private ["_veh_type","_price","_dialog","_vehlist","_vehText","_picture","_colorlist","_selectedItem","_itemText","_weap_type","_NoColorVehs","_RGBVehicles","_isRGB","_isDumb","_colorlistIndex"];

@@ -1,10 +1,10 @@
 //	@file Version: 1.0
-//	@file Name: loadVehStore.sqf
+//	@file Name: loadVehicleStore.sqf
 //	@file Author: His_Shadow
 //	@file Created: 06/15/2012 05:13
 //	@file Args:
 
-#include "dialog\vehstoreDefines.sqf";
+#include "dialog\vehiclestoreDefines.hpp";
 disableSerialization;
 
 private ["_vehshopDialog","_Dialog","_playerMoney","_money","_owner", "_fName", "_boatBut", "_subBut"];
@@ -39,4 +39,5 @@ currentOwnerID = _owner;
 			};
 		}foreach (_x select 3)
 	};
-} foreach (call storeOwners)
+} foreach (call storeOwners)
+

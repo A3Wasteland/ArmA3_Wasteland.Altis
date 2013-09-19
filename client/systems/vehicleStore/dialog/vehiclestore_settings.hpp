@@ -205,4 +205,5 @@ class vehshopd {
 			h = 0.040 * safezoneH;
 		};
 	};
-};
+};
+
