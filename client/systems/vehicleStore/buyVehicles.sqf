@@ -25,6 +25,8 @@ if (_deliveryMethod == _DELIVERY_METHOD_AIRDROP && currentOwnerID getVariable "i
   player say "FD_CP_Not_Clear_F";
 };
 
+_textureDir = "client\images\vehicleTextures";
+
 _playerMoney = player getVariable "cmoney";
 _price = 0;
 
@@ -51,7 +53,7 @@ _showInsufficientFundsError =
 
 _createAndApplyapplyVehProperties = 
 {
-    private ["_vehicle", "_colorText","_group","_texturePath", "_type", "_pos","_uavIsInInventory","_playerItems" ,"_playerSide" ,"_allUAV"];
+    private ["_vehicle", "_colorText","_group","_textureFilename", "_rgbString", "_texture", "_type", "_pos","_uavIsInInventory","_playerItems" ,"_playerSide" ,"_allUAV"];
 	_pos = _this select 0;
 	_type = _this select 1;
 	_colorText = _this select 2;
@@ -67,32 +69,35 @@ _createAndApplyapplyVehProperties =
 	//_veh setDir _dir;
 	_vehicle setVariable ["newVehicle",1,true];
 	
-	_texturePath = "";
+	_textureFilename = "";
+	_rgbString = "";
 
 	//if they chose a color set the color
-	if(_colorText == "Orange") then { _texturePath = '#(argb,8,8,3)color(0.82,0.2,0,1)';};
-	if(_colorText == "Red") then { _texturePath = '#(argb,8,8,3)color(0.79,0.03,0,1)';};
-	if(_colorText == "Pink") then { _texturePath = '#(argb,8,8,3)color(0.91,0.53,0.57,1)';};
-	if(_colorText == "Yellow") then { _texturePath = '#(argb,8,8,3)color(1,0.97,0.17,1)';};
-	if(_colorText == "Purple") then { _texturePath = '#(argb,8,8,3)color(0.43,0.18,0.67,1)';};
-	if(_colorText == "Blue") then { _texturePath = '#(argb,8,8,3)color(0,0.1,0.8,1)';};
-	if(_colorText == "Dark Blue") then { _texturePath = '#(argb,8,8,3)color(0.03,0.02,0.35,1)';};
-	if(_colorText == "Green") then { _texturePath = '#(argb,8,8,3)color(0.01,0.64,0,1)';};
-	if(_colorText == "Black") then { _texturePath = '#(argb,8,8,3)color(0,0,0,1)';};
-	if(_colorText == "White") then { _texturePath = '#(argb,8,8,3)color(1,1,1,1)';};
-	if(_colorText == "Teal") then { _texturePath = '#(argb,8,8,3)color(0,0.93,0.86,1)';};
-	if(_colorText == "Orange Camo") then {_texturePath ="client\images\camo_fack.jpg";};
-	if(_colorText == "Red Camo") then {_texturePath = "client\images\camo_deser.jpg";};
-	if(_colorText == "Yellow Camo") then {_texturePath = "client\images\camo_fuel.jpg";};
-	if(_colorText == "Pink Camo") then {_texturePath = "client\images\camo_pank.jpg";};
-	_vehicle setVariable ["textureName", _texturePath];
-	
-	if(_texturePath != "") then
-	{
-		// NOT YET IMPLEMENTED! Needs to become BIS_fnc_MP aware
-		//serverRelaySystem = [MESSAGE_VEHICLE_PROPERTIES_APPLY, _vehicle, _texturePath];
-		//publicVariable "serverRelaySystem";
-	};
+	if(_colorText == "Orange") then { _rgbString = '#(argb,8,8,3)color(0.82,0.2,0,1)';};
+	if(_colorText == "Red") then { _rgbString = '#(argb,8,8,3)color(0.79,0.03,0,1)';};
+	if(_colorText == "Pink") then { _rgbString = '#(argb,8,8,3)color(0.91,0.53,0.57,1)';};
+	if(_colorText == "Yellow") then { _rgbString = '#(argb,8,8,3)color(1,0.97,0.17,1)';};
+	if(_colorText == "Purple") then { _rgbString = '#(argb,8,8,3)color(0.43,0.18,0.67,1)';};
+	if(_colorText == "Blue") then { _rgbString = '#(argb,8,8,3)color(0,0.1,0.8,1)';};
+	if(_colorText == "Dark Blue") then { _rgbString = '#(argb,8,8,3)color(0.03,0.02,0.35,1)';};
+	if(_colorText == "Green") then { _rgbString = '#(argb,8,8,3)color(0.01,0.64,0,1)';};
+	if(_colorText == "Black") then { _rgbString = '#(argb,8,8,3)color(0,0,0,1)';};
+	if(_colorText == "White") then { _rgbString = '#(argb,8,8,3)color(1,1,1,1)';};
+	if(_colorText == "Teal") then { _rgbString = '#(argb,8,8,3)color(0,0.93,0.86,1)';};
+	if(_colorText == "Orange Camo") then {_textureFilename = "camo_fack.jpg";};
+	if(_colorText == "Red Camo") then {_textureFilename = "camo_deser.jpg";};
+	if(_colorText == "Yellow Camo") then {_textureFilename = "camo_fuel.jpg";};
+	if(_colorText == "Pink Camo") then {_textureFilename = "camo_pank.jpg";};
+
+	// If its a texture, get the right directory
+	if(_textureFilename != "") then { _texture = format["%1\%2", _textureDir, _textureFilename]; };
+
+	// If its a straight RGBA string, we can apply it directly
+	if(_rgbString != "") then { _texture = _rgbString; };
+
+	_vehicle setVariable ["textureName", _texture];
+	// TODO: This should also handle JIP clients who join later
+    [[_vehicle, _texture], "applyVehicleTexture", true, false] call TPG_fnc_MP;
 
 	//if this a remote controlled type we have to do some special stuff
 	if(_type in (call uavArray)) then
@@ -144,7 +149,7 @@ switch(_switch) do
 					_price = _x select 2;
 					if ( _price > parseNumber str(_playerMoney)) then {[_itemText] call _showInsufficientFundsError; breakTo "main"};
 					_vehType = _x select 1;
-					_deliverPos = (getMarkerPos format ["land_spawn_%1", currentOwnerID]);
+					_deliverPos = (getMarkerPos format ["%1_Spawn_Land", currentOwnerID]);
 					_spawnType = "land";
 
 					if (_deliveryMethod == _DELIVERY_METHOD_SPAWN) then {
@@ -166,7 +171,7 @@ switch(_switch) do
 					_price = _x select 2;
 					if ( _price > parseNumber str(_playerMoney)) then {[_itemText] call _showInsufficientFundsError;;breakTo "main"};				
 					_vehType = _x select 1;
-					_deliverPos = (getMarkerPos format ["sea_spawn_%1", currentOwnerID]);
+					_deliverPos = (getMarkerPos format ["%1_Spawn_Sea", currentOwnerID]);
 					_spawnType = "sea";
 
 					if (_deliveryMethod == _DELIVERY_METHOD_SPAWN) then {
@@ -185,7 +190,7 @@ switch(_switch) do
 				_price = _x select 2;
 				if ( _price > parseNumber str(_playerMoney)) then {[_itemText] call _showInsufficientFundsError;;breakTo "main"};				
 				_vehType = _x select 1;
-				_deliverPos = (getMarkerPos format ["heli_spawn_%1", currentOwnerID]);
+					_deliverPos = (getMarkerPos format ["%1_Spawn_Heli", currentOwnerID]);
 				_spawnType = "land";
 
 				if (_deliveryMethod == _DELIVERY_METHOD_SPAWN) then {
@@ -204,7 +209,7 @@ switch(_switch) do
 				_price = _x select 2;
 				if ( _price > parseNumber str(_playerMoney)) then {[_itemText] call _showInsufficientFundsError;;breakTo "main"};				
 				_vehType = _x select 1;
-				_deliverPos = (getMarkerPos format ["air_spawn_%1", currentOwnerID]);
+					_deliverPos = (getMarkerPos format ["%1_Spawn_Air", currentOwnerID]);
 				_spawnType = "land";
 
 				if (_deliveryMethod == _DELIVERY_METHOD_SPAWN) then {
