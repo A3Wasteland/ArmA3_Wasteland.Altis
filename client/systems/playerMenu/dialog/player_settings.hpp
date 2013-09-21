@@ -96,7 +96,7 @@ class playerSettings {
 
 		class uptimeText : w_RscText {	
 			idc = uptime_text;
-			text = "TESTING TESTING";
+			text = "";
 			sizeEx = 0.030;
 			x = 0.52; y = 0.69;
 			w = 0.225; h = 0.03;
@@ -188,4 +188,5 @@ class playerSettings {
 			w = 0.125; h = 0.033 * safezoneH;
 		};
 	};
-};
+};
+

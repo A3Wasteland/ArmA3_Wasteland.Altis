@@ -76,7 +76,7 @@ class vehshopd {
 		class SelectionList: w_RscList
 		{
 			idc = vehshop_veh_list;
-			onLBSelChanged = "[] execvm 'client\systems\vehStore\vehicleInfo.sqf'";
+			onLBSelChanged = "[] execvm 'client\systems\vehicleStore\vehicleInfo.sqf'";
 			font = "PuristaMedium";
 			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			x = 0.3025 * safezoneW + safezoneX;
@@ -88,7 +88,7 @@ class vehshopd {
 		class ColorList: w_RscList
 		{
 			idc = vehshop_color_list;
-			onLBSelChanged = "[] execvm 'client\systems\vehStore\colorInfo.sqf'";
+			onLBSelChanged = "[] execvm 'client\systems\vehicleStore\colorInfo.sqf'";
 			font = "PuristaMedium";
 			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			x = 0.520 * safezoneW + safezoneX;

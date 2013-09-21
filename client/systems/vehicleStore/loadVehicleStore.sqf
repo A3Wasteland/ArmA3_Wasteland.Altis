@@ -7,7 +7,7 @@
 #include "dialog\vehiclestoreDefines.hpp";
 disableSerialization;
 
-private ["_vehshopDialog","_Dialog","_playerMoney","_money","_owner", "_fName", "_boatBut", "_subBut"];
+private ["_vehshopDialog","_Dialog","_playerMoney","_money","_owner", "_fName", "_boatBut", "_subBut", "_disabledButtons"];
 _vehshopDialog = createDialog "vehshopd";
 gunStoreCart = 0;
 
@@ -25,6 +25,8 @@ currentOwnerID = _owner;
 	_fName = _x select 0;
 	if(_fName == currentOwnerName) then
 	{
+		// The array of which vehicle types are unvailable at this store 
+		_disabledButtons = _x select 3;
 		{
 			switch(_x) do 
 			{
@@ -37,7 +39,7 @@ currentOwnerID = _owner;
 					_subBut	ctrlShow false;
 				};
 			};
-		}foreach (_x select 3)
+		}foreach _disabledButtons;
 	};
 } foreach (call storeOwners)
 

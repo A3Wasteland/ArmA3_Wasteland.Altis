@@ -2926,7 +2926,7 @@ class Mission
 		class Item101
 		{
 			position[]={26813.092,24.694225,24509.99};
-			name="VehStore1_Land_Spawn_Air";
+			name="VehStore1_Spawn_Air";
 			type="Empty";
 		};
 		class Item102

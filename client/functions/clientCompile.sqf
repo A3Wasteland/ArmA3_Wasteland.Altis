@@ -45,6 +45,9 @@ client_respawnDialog = "client\functions\loadRespawnDialog.sqf" call mf_compile;
 loadGeneralStore = "client\systems\generalStore\loadGenStore.sqf" call mf_compile;
 loadGunStore = "client\systems\gunStore\loadGunStore.sqf" call mf_compile;
 
+// Custom paint/textures on vehicles
+applyVehicleTexture = "client\systems\vehicleStore\applyVehicleTexture.sqf" call mf_compile;
+
 player groupChat "Wasteland - Client Compile Complete";
 sleep 1;
 playerCompiledScripts = true;
