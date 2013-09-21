@@ -62,7 +62,7 @@ class gunshopd {
 			idc = -1;
 			text = "Gun Store Menu";
 			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.155 * safezoneH + safezoneY;
 			w = 0.0844792 * safezoneW;
@@ -74,7 +74,7 @@ class gunshopd {
 			idc = gunshop_money;
 			text = "Cash:";
 			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			x = 0.640 * safezoneW + safezoneX;
 			y = 0.155 * safezoneH + safezoneY;
 			w = 0.0844792 * safezoneW;
@@ -89,11 +89,23 @@ class gunshopd {
 			idc = gunshop_gun_list;
 			onLBSelChanged = "[] execvm 'client\systems\gunStore\weaponInfo.sqf'";
 			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			x = 0.3025 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.207 * safezoneW;
-			h = 0.422222 * safezoneH;
+			h = 0.338222 * safezoneH;
+		};
+
+		class GunDescription: w_RscStructuredTextLeft
+		{
+			idc = gunshop_gun_desc;
+			text = "Desc here...";
+			sizeEx = 0.02;
+			colorBackground[] = { 0, 0, 0, 0.1 };
+			x = 0.3025 * safezoneW + safezoneX;
+			y = 0.567 * safezoneH + safezoneY;
+			w = 0.207 * safezoneW;
+			h = 0.08 * safezoneH;
 		};
 		
 		class AmmoList: w_RscList
@@ -101,7 +113,7 @@ class gunshopd {
 			idc = gunshop_ammo_list;
 			onLBSelChanged = "[] execvm 'client\systems\gunStore\ammoInfo.sqf'";
 			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			x = 0.520 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.207 * safezoneW;
@@ -113,7 +125,6 @@ class gunshopd {
 			idc = -1;
 			onButtonClick = "[] execVM 'client\systems\gunStore\sellUnif.sqf'";
 			text = "Sell Uniform";
-
 			x = 0.546 * safezoneW + safezoneX;
 			y = 0.740 * safezoneH + safezoneY;
 			w = 0.088 * safezoneW;
