@@ -7,4 +7,5 @@
 #define gunshop_cart 2007
 #define gunshop_buysell 2020
 #define gunshop_gun_Info 2021
+#define gunshop_gun_desc 2022
 #define gunshop_but_butammo 2023
