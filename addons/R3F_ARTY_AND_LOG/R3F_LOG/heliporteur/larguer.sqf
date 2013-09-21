@@ -34,10 +34,10 @@ else
 	
 	sleep 0.1;
 	
-	if ([0,0,0] distance velocity _heliporteur < 15 && getPos _heliporteur select 2 < 40) then
+	if ((velocity _heliporteur) call BIS_fnc_magnitude < 15 && getPos _heliporteur select 2 < 40) then
 	{
 		_objet setPos [getPos _objet select 0, getPos _objet select 1, 1];
-		_objet setVelocity [0, 0, 0.1];
+		_objet setVelocity [0,0,0.01];
 	}
 	else
 	{

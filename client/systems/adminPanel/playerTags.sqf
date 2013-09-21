@@ -33,7 +33,7 @@ if (_uid call isAdmin) then
 					case BLUFOR:      { _groupIcon = "b_inf"; _iconColor = [0, 0, 1, 1] };
 					case OPFOR:       { _groupIcon = "o_inf"; _iconColor = [1, 0, 0, 1] };
 					case INDEPENDENT: { _groupIcon = "n_inf"; _iconColor = [1, 1, 0, 1] };
-					default:          { _groupIcon = "c_unknown"; _iconColor = [1, 1, 1, 1] };
+					default           { _groupIcon = "c_unknown"; _iconColor = [1, 1, 1, 1] };
 				};
 				
 				clearGroupIcons group _x;

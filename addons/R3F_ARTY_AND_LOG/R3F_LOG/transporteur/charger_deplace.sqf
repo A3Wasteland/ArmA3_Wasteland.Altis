@@ -28,7 +28,7 @@ else
 	{
 		_transporteur = _transporteur select 0;
 		
-		if (alive _transporteur && ([0,0,0] distance velocity _transporteur < 6) && (getPos _transporteur select 2 < 2) && !(_transporteur getVariable "R3F_LOG_disabled")) then
+		if (alive _transporteur && ((velocity _transporteur) call BIS_fnc_magnitude < 6) && (getPos _transporteur select 2 < 2) && !(_transporteur getVariable "R3F_LOG_disabled")) then
 		{
 			private ["_objets_charges", "_chargement_actuel", "_cout_capacite_objet", "_chargement_maxi"];
 			

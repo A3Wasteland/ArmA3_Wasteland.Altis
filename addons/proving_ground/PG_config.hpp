@@ -259,7 +259,7 @@ class balca_debug_veh_creator
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
-		font = "Zeppelin32";
+		font = "PuristaMedium";
 		sizeEx = 0.032;
 	};
 
@@ -452,7 +452,7 @@ class balca_debug_weap_creator
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
-		font = "Zeppelin32";
+		font = "PuristaMedium";
 		sizeEx = 0.032;
 	};
 
@@ -667,7 +667,7 @@ class balca_debug_console
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
-		font = "Zeppelin32";
+		font = "PuristaMedium";
 		sizeEx = 0.032;
 	};
 
@@ -792,7 +792,7 @@ class balca_target_display
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
-		font = "Zeppelin32";
+		font = "PuristaMedium";
 		sizeEx = 0.032;
 	};
 
@@ -1285,7 +1285,7 @@ class balca_sound_player
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
-		font = "Zeppelin32";
+		font = "PuristaMedium";
 		sizeEx = 0.032;
 	};
 
@@ -1349,7 +1349,7 @@ class balca_statistics
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
-		font = "Zeppelin32";
+		font = "PuristaMedium";
 		sizeEx = 0.032;
 	};
 
@@ -1420,7 +1420,7 @@ class balca_environment
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
-		font = "Zeppelin32";
+		font = "PuristaMedium";
 		sizeEx = 0.032;
 	};
 

@@ -231,7 +231,7 @@ if (!isDedicated) then
 
 if (!isServer) then {
     "drn_DynamicWeatherEventArgs" addPublicVariableEventHandler {
-        drn_DynamicWeatherEventArgs call drn_fnc_DynamicWeather_SetWeatherLocal;
+        drn_DynamicWeatherEventArgs spawn drn_fnc_DynamicWeather_SetWeatherLocal;
     };
 
     waitUntil {!isNil "drn_var_DynamicWeather_ServerInitialized"};
@@ -254,11 +254,11 @@ if (isServer) then {
         
         drn_DynamicWeatherEventArgs = [overcast, fog, drn_var_DynamicWeather_Rain, _currentWeatherChange, drn_DynamicWeather_WeatherTargetValue, _timeUntilCompletion, drn_DynamicWeather_WindX, drn_DynamicWeather_WindZ];
         publicVariable "drn_DynamicWeatherEventArgs";
-        drn_DynamicWeatherEventArgs call drn_fnc_DynamicWeather_SetWeatherLocal;
+        drn_DynamicWeatherEventArgs spawn drn_fnc_DynamicWeather_SetWeatherLocal;
     };
     
     "drn_AskServerDynamicWeatherEventArgs" addPublicVariableEventHandler {
-        call drn_fnc_DynamicWeather_SetWeatherAllClients;
+        [] spawn drn_fnc_DynamicWeather_SetWeatherAllClients;
     };
     
     drn_DynamicWeather_CurrentWeatherChange = "";

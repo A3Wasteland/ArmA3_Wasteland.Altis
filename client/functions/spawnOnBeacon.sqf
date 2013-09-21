@@ -11,29 +11,21 @@
 #define respawn_Town_Button4 3407
 disableSerialization;
 
-private ["_respawnPosition", "_switch", "_display", "_buttonZero", "_buttonOne", "_buttonTwo", "_buttonThree", "_buttonFour"];
-_switch = _this select 0;
+private ["_display", "_beaconName"];
 
 _display = uiNamespace getVariable "RespawnSelectionDialog";
-_name = "";
-switch(_switch) do {
-    case 0:{_name = ctrlText (_display displayCtrl respawn_Town_Button0)};
-    case 1:{_name = ctrlText (_display displayCtrl respawn_Town_Button1)};
-    case 2:{_name = ctrlText (_display displayCtrl respawn_Town_Button2)};
-    case 3:{_name = ctrlText (_display displayCtrl respawn_Town_Button3)};
-    case 4:{_name = ctrlText (_display displayCtrl respawn_Town_Button4)};
-};
+_beaconName = ctrlText (_display displayCtrl (respawn_Town_Button0 + (_this select 0)));
 
 {
-	if(_name == _x getVariable ["ownerName", ""]) then {
-        _respawnPosition = [getPos _x,1,25,1,0,0,0] call BIS_fnc_findSafePos;
+	if (_name == _x getVariable ["ownerName", ""]) exitWith
+	{
+        player setPos ([getPos _x,1,25,1,0,0,0] call findSafePos);
     };
 } forEach pvar_spawn_beacons;
 
-player setPos _respawnPosition; // Stop the player appearing on the ground for a split second before the HALO   
 respawnDialogActive = false;
 closeDialog 0;
-[format["You have Spawned on %1's beacon", _name], 5] call mf_notify_client;
+[format ["You have spawned on %1's beacon", _name], 5] call mf_notify_client;
 
 sleep 5;
 

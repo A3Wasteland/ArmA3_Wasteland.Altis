@@ -8,7 +8,7 @@
 // This is NOT a default persistantdb script!
 // changes by: JoSchaap & Bewilderbeest @ http://a3wasteland.com/
 
-#define __DEBUG_INIDB_CALLS__ 1
+#define __DEBUG_INIDB_CALLS__ 0
 
 if(!isServer) exitWith {};
 
