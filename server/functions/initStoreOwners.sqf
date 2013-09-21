@@ -13,10 +13,10 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
 	_objects =  nearestObjects [_mPos, ["Building"], 10];
 	_building = _objects select 0;
 
-	_markerName setMarkerShape "ICON";
-	_markerName setMarkerType "mil_dot";
-	_markerName setMarkerColor "ColorRed";
-	_markerName setMarkerText "BLOODY STORE OWNER";
+	//_markerName setMarkerShape "ICON";
+	//_markerName setMarkerType "mil_dot";
+	//_markerName setMarkerColor "ColorRed";
+	//_markerName setMarkerText "BLOODY STORE OWNER";
 	
 	//if we grabbed more than just the owning building then make damn sure they don't take damage
 	{
@@ -32,7 +32,7 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
 	//find the owner himself
 	_men = nearestObjects[_mPos, ["Man"], 50];
 
-	diag_log format["initStoreOwners found vendor %1", _men];
+	//diag_log format["initStoreOwners found vendor %1", _men];
 
 	{
 		_xName = name _x;
