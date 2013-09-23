@@ -13,11 +13,6 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
 	_objects =  nearestObjects [_mPos, ["Building"], 10];
 	_building = _objects select 0;
 
-	//_markerName setMarkerShape "ICON";
-	//_markerName setMarkerType "mil_dot";
-	//_markerName setMarkerColor "ColorRed";
-	//_markerName setMarkerText "BLOODY STORE OWNER";
-	
 	//if we grabbed more than just the owning building then make damn sure they don't take damage
 	{
 		_x removeAllEventHandlers "hit";
@@ -30,14 +25,23 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
 	}foreach _objects;
 
 	//find the owner himself
-	_men = nearestObjects[_mPos, ["Man"], 50];
+	_men = nearestObjects[_mPos, ["Man"], 10];
 
 	//diag_log format["initStoreOwners found vendor %1", _men];
 
 	{
 		_xName = name _x;
-		_pDir = (getDir _x);
 
+		// Set the appearance according to the config array
+		_storeOwnerAppearance = [(call storeOwnerConfigAppearance), { _x select 0 == _name }] call BIS_fnc_conditionalSelect;
+		{
+			switch (_x select 0) do {
+				case 'weapon': { if (_x select 1 ) != '') then { _x addWeapon (_x select 1); }; };
+				case 'uniform': { if (_x select 1 ) != '') then { _x addUniform (_x select 1); }; };
+			};
+		} forEach (_storeOwnerAppearance select 1); 
+
+		_pDir = (getDir _x);
 		_bPos = (_building buildingPos _spotNum);
 		/*_chair =*/ [_x, _bPos, _pDir, _deskDirMod, _name] call createStoreFurniture;
 		_x setPos [(_bPos select 0), (_bPos select 1), (_bPos select 2)];
@@ -52,4 +56,5 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
 
 	_markerName setMarkerPos (getpos (_men select 0));
 
-}foreach (call storeOwners);
+}foreach (call storeOwnerConfig);
+
