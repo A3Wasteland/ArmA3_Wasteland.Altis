@@ -2,13 +2,16 @@
 # @@ScriptName: storeConfig.sqf
 # @@Author: His_Shadow
 # @@Create Date: 2013-09-16 20:40:58
-# @@Modify Date: 2013-09-18 22:14:35
+# @@Modify Date: 2013-09-23 22:43:18
 # @@Function:
 #*********************************************************/
 
 //
 //Gunstore Weapon List - Gun Store Base List
 // Text name, classname, buy cost, sell amount
+
+
+// This tracks which store owner the client is interacting with
 currentOwnerName = "";
 
 pistolArray = compileFinal str
@@ -833,7 +836,7 @@ generalStore = compileFinal str [
 // Building Position
 // Desk Direction Modifier
 // Excluded Buttons
-storeOwners = compileFinal str
+storeOwnerConfig = compileFinal str
 [
 	["GunStore1", 1, 180, [],[3362.89,13205.5,2.9902]],
 	["GunStore2", 1, -90, [],[16707.1,12783.8,19.0095]],
@@ -847,4 +850,21 @@ storeOwners = compileFinal str
 	["VehStore2", 6, 210, ["Boats", "Submarines"],185],
 	["VehStore3", 4, 60, ["Boats","Submarines"],20],
 	["VehStore4", 5, 0, ["Boats","Submarines"], 30]
-];
+];
+
+// Outfits for store owners
+storeOwnerConfigAppearance = compileFinal str
+[
+	['GunStore1', ['weapon', 'LMG_Mk200_MRCO_F'], ['uniform', 'U_I_Ghilliesuit']],
+	['GunStore2', ['weapon', 'LMG_Zafir_pointer_F'], ['uniform', 'U_I_HeliPilotCoveralls']],
+	['GunStore3', ['weapon', 'srifle_GM6_SOS_F'], ['uniform', 'U_I_CombatUniform_tshirt']],
+	['GunStore4', ['weapon', 'arifle_Mk20_GL_MRCO_pointer_F'], ['uniform', 'U_I_Wetsuit']],
+	['GenStore1', ['weapon', ''], ['uniform', 'U_B_SpecopsUniform_sgg']],
+	['GenStore2', ['weapon', ''], ['uniform', 'U_I_OfficerUniform']],
+	['GenStore3', ['weapon', ''], ['uniform', 'U_O_SpecopsUniform_ocamo']],
+	['GenStore4', ['weapon', ''], ['uniform', 'C_Orestes']],
+	['VehStore1', ['weapon', ''], ['uniform', '']],
+	['VehStore2', ['weapon', ''], ['uniform', '']],
+	['VehStore3', ['weapon', ''], ['uniform', '']],
+	['VehStore4', ['weapon', ''], ['uniform', '']]
+];

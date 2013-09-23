@@ -37,8 +37,9 @@ _createThisFuckingCrate =
 		{
 			_sbox setPosASL (_x select 4);
 		};
-	}foreach (call storeOwners);
+	}foreach (call storeOwnerConfig);
 };
 
 if(_crateType == PURCHASED_CRATE_TYPE_AMMO) then {[_ammoClasses, _storeOwnerID, _storeOwnerName] call _createThisFuckingCrate;};
-//if(_crateType == PURCHASED_CRATE_TYPE_WEAPON) then {[_weaponClasses, _storeOwnerID, _storeOwnerName] call _createThisFuckingCrate;};
+//if(_crateType == PURCHASED_CRATE_TYPE_WEAPON) then {[_weaponClasses, _storeOwnerID, _storeOwnerName] call _createThisFuckingCrate;};
+
