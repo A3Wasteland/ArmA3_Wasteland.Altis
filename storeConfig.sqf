@@ -2,7 +2,7 @@
 # @@ScriptName: storeConfig.sqf
 # @@Author: His_Shadow
 # @@Create Date: 2013-09-16 20:40:58
-# @@Modify Date: 2013-09-23 22:43:18
+# @@Modify Date: 2013-09-23 23:13:42
 # @@Function:
 #*********************************************************/
 
@@ -17,51 +17,52 @@ currentOwnerName = "";
 pistolArray = compileFinal str
 [
 	//Handgun
-    ["P07 9 mm","hgun_P07_F",40,20],
-	["Rook-40 9 mm","hgun_Rook40_F",40,20],
-	["ACP-C2 9 mm","hgun_ACPC2_F",40,20]
+    ["P07 9 mm","hgun_P07_F",50,25],
+	["Rook-40 9 mm","hgun_Rook40_F",50,25],
+	["ACP-C2 9 mm","hgun_ACPC2_F",75,25]
 ]; 
 
 rifleArray = compileFinal str
 [
     //Underwater Gun
-	["SDAR 5.56 mm","arifle_SDAR_F",50,25],
+	["SDAR UW Rifle","arifle_SDAR_F",100,50],
 
 	//Assault Rifle
-	["MX 6.5 mm","arifle_MX_F",150,75],
-	["MX 3GL 6.5 mm","arifle_MX_GL_F",250,125],
-	["MXC 6.5 mm","arifle_MXC_F",150,75],
-	["MXM 6.5 mm","arifle_MXM_F",700,350],
+	["MX Carbine","arifle_MXC_F",150,75],
+	["MX Rifle","arifle_MX_F",200,100],
+	["MX 3GL Rifle","arifle_MX_GL_F",250,125],
+	["MXM Marksman Rifle","arifle_MXM_F",300,150],
 
 	//Light Machine Gun
-	["MX SW 6.5 mm","arifle_MX_SW_F",200,100],
-	["Mk200 6.5 mm","LMG_Mk200_F",300,150],
-	["Zafir 7.62 mm","LMG_Zafir_F",400,200],
+	["MX SW LMG","arifle_MX_SW_F",300,150],
+	["Mk200 LMG","LMG_Mk200_F",350,175],
+	["Zafir LMG","LMG_Zafir_F",400,200],
 
 	//Assault Rifle
-	["Mk20C 5.56 mm","arifle_Mk20C_F",150,75],
-	["Mk20 5.56 mm","arifle_Mk20_F",150,75],	
-	["Mk20 EGLM 5.56 mm","arifle_Mk20_GL_F",150,75],
+	["Mk20C Carbine","arifle_Mk20C_F",150,75],
+	["Mk20 Rifle","arifle_Mk20_F",200,100],	
+	["Mk20 EGLM Rifle","arifle_Mk20_GL_F",250,125],
 
-	["TRG-20 5.56 mm","arifle_TRG20_F",150,75],	
-	["TRG-21 5.56 mm","arifle_TRG21_F",150,75],
-	["TRG-21 EGLM 5.56 mm","arifle_TRG21_GL_F",250,125],
+	["TRG-20 Carbine","arifle_TRG20_F",150,75],	
+	["TRG-21 Rifle ","arifle_TRG21_F",200,100],
+	["TRG-21 EGLM Rifle","arifle_TRG21_GL_F",250,125],
 
-	["Katiba 6.5 mm","arifle_Katiba_F",150,75],
-	["Katiba Carabine 6.5 mm","arifle_Katiba_C_F",150,75],
-	["Katiba GL 6.5 mm","arifle_Katiba_GL_F",250,125],
+	["Katiba Carbine","arifle_Katiba_C_F",150,75],
+	["Katiba Rifle","arifle_Katiba_F",200,100],
+	["Katiba GL Rifle","arifle_Katiba_GL_F",250,125],
 
 	//Sniper
-	["Mk18 ABR 7.62 mm","srifle_EBR_F",1000,500],
-	["M320 LRR .408","srifle_LRR_F",3000,1500],
-	["GM6 Lynx 12.7 mm","srifle_GM6_F",3000,1500]
+	["Mk18 ABR 7.62 mm","srifle_EBR_F",400,200],
+	["M320 LRR .408","srifle_LRR_F",1000,500],
+	["GM6 Lynx 12.7 mm","srifle_GM6_F",1000,500]
 ];
+
 
 smgArray = compileFinal str
 [
-	["Vermin SBR 9mm", "SMG_01_F", 60, 30],
-	["Scorpion EVO-4 9mm", "SMG_02_F", 60, 30],
-	["PDW 2000 (9mm)","hgun_PDW2000_F",60,30]
+	["Vermin SBR 9mm", "SMG_01_F", 125, 75],
+	["Sting SMG", "SMG_02_F", 125, 75],
+	["PDW 2000 (9mm)","hgun_PDW2000_F",100,50]
 ];
 
 shotgunArray = compileFinal str
@@ -71,10 +72,10 @@ shotgunArray = compileFinal str
 launcherArray = compileFinal str
 [
     //Rocket
-	["PCML","launch_NLAW_F",800,400],
-	["RPG-42 Alamut","launch_RPG32_F",800,400],
-	["Titan MPRL Compact","launch_Titan_short_F",900,500],
-	["Titan MPRL","launch_Titan_F",1000,500]
+	["PCML","launch_NLAW_F",400,200],
+	["RPG-42 Alamut","launch_RPG32_F",500,200],
+	["Titan MPRL Compact","launch_Titan_short_F",600,530000],
+	["Titan MPRL","launch_Titan_F",600,300]
 ];
 
 staticGunsArray = compileFinal str
@@ -111,7 +112,7 @@ staticGunsArray = compileFinal str
 
 throwputArray = compileFinal str
 [
-	["RGO Frag Grenade","HandGrenade",50,0],
+	["RGO Frag Grenade","HandGrenade",100,0],
 	["Stone","HandGrenade_Stone",30,0],
 	["Mini Grenade","MiniGrenade",25,0],
 	["Smoke Grenade (White)", "SmokeShell", 50,0],
@@ -121,10 +122,10 @@ throwputArray = compileFinal str
 	["Smoke Grenade (Purple)", "SmokeShellPurple", 50,0],
 	["Smoke Grenade (Orange)", "SmokeShellPurple", 50,0],
 	["Smoke Grenade (Blue)", "SmokeShellBlue", 50,0],
-	["Chemlight (Green)", "Chemlight_green", 10,0],
-	["Chemlight (Red)", "Chemlight_red", 10,0],
-	["Chemlight (Yellow)", "Chemlight_yellow", 10,0],
-	["Chemlight (Blue)", "Chemlight_blue", 10,0],
+	["Chemlight (Green)", "Chemlight_green", 25,0],
+	["Chemlight (Red)", "Chemlight_red", 25,0],
+	["Chemlight (Yellow)", "Chemlight_yellow", 25,0],
+	["Chemlight (Blue)", "Chemlight_blue", 25,0],
 	["Explosive Charge","DemoCharge_Remote_Mag",500,0],
 	["Explosive Satchel","SatchelCharge_Remote_Mag",600,0],
 	["AT Mine","ATMine_Range_Mag",500,0],
@@ -188,37 +189,37 @@ ammoArray = compileFinal str
 	["3Rnd 3GL Smoke Rounds (Purple)","3Rnd_SmokePurple_Grenade_shell",75],
 	["3Rnd 3GL Smoke Rounds (Blue)","3Rnd_SmokeBlue_Grenade_shell",75],
 	["3Rnd 3GL Smoke Rounds (Orange)","3Rnd_SmokeOrange_Grenade_shell",75],
-	["PCML Missile","NLAW_F",800],
-	["RPG-42 Missile","RPG32_F",550],
-	["RPG-42 HE Missile","RPG32_F",550],
-	["Titan AA Missile","Titan_AA",1000],
-	["Titan AT Missile","Titan_AT",800],
-	["Titan AP Missile","Titan_AP",550]
+	["PCML Missile","NLAW_F",250],
+	["RPG-42 Missile","RPG32_F",300],
+	["RPG-42 HE Missile","RPG32_F",300],
+	["Titan AA Missile","Titan_AA",350],
+	["Titan AT Missile","Titan_AT",350],
+	["Titan AP Missile","Titan_AP",350]
 ];
 
 //Gun Store item List
 //Text name, classname, buy cost, item class
 accessoriesArray = compileFinal str
 [
-	["Suppressor 9mm","muzzle_snds_L", 120, "item"],
-	["Suppressor ACP", "muzzle_snds_acp", 120, "item"],
-	["Suppressor 5.56mm", "muzzle_snds_M", 250, "item"],
-	["Suppressor 6.5mm","muzzle_snds_H", 250,"item"],
-	["LMG Suppressor 6.5mm","muzzle_snds_H_MG", 250,"item"],
-	["Suppressor 7.62mm","muzzle_snds_B", 250,"item"],
-	["Flash Light","acc_flashlight", 100,"item"],
-	["IR Light","acc_pointer_IR", 100,"item"],
-	["Holosight","optic_Holosight", 100,"item"],
-	["ACO Sight","optic_Aco", 100,"item"],
-	["ACO Sight Green","optic_Aco_grn", 100,"item"],
-	["RCO Sight","optic_Hamr", 500,"item"],
-	["ARCO Sight","optic_Arco", 500,"item"],
-	["MRCO Sight","optic_MRCO", 500,"item"],
-	["SOS Sight","optic_SOS", 2000,"item"],
-	["Nightstalker","optic_Nightstalker", 2500,"item"],
-	["NVS","optic_NVS", 3000,"item"],
-	["TWS","optic_tws", 3000,"item"],
-	["TWS MG","optic_tws_mg", 3000,"item"],
+	["Suppressor 9mm","muzzle_snds_L", 50, "item"],
+	["Suppressor ACP", "muzzle_snds_acp", 75, "item"],
+	["Suppressor 5.56mm", "muzzle_snds_M", 100, "item"],
+	["Suppressor 6.5mm","muzzle_snds_H", 100,"item"],
+	["LMG Suppressor 6.5mm","muzzle_snds_H_MG", 125,"item"],
+	["Suppressor 7.62mm","muzzle_snds_B", 125,"item"],
+	["Flash Light","acc_flashlight", 50,"item"],
+	["IR Light","acc_pointer_IR", 50,"item"],
+	["Holosight","optic_Holosight", 75,"item"],
+	["ACO Sight","optic_Aco", 75,"item"],
+	["ACO Sight Green","optic_Aco_grn", 75,"item"],
+	["RCO Sight","optic_Hamr", 100,"item"],
+	["ARCO Sight","optic_Arco", 100,"item"],
+	["MRCO Sight","optic_MRCO", 200,"item"],
+	["SOS Sight","optic_SOS", 200,"item"],
+	["Nightstalker","optic_Nightstalker", 500,"item"],
+	["NVS","optic_NVS", 300,"item"],
+	["TWS","optic_tws", 400,"item"],
+	["TWS MG","optic_tws_mg", 400,"item"],
 	["UAV Terminal Blue","b_uavterminal", 250,"item"],
 	["UAV Terminal Red","o_uavterminal", 250,"item"],
 	["UAV Terminal Green","i_uavterminal", 250,"item"],
@@ -228,66 +229,66 @@ accessoriesArray = compileFinal str
 
 backpackArray = compileFinal str
 [
-	["Small (Green)","B_AssaultPack_Base",350,"backpack"],
-	["Small (Black)","B_AssaultPack_blk",350,"backpack"],
-	["Small (Brown)","B_AssaultPack_cbr",350,"backpack"],
-	["Small (Digi)","B_AssaultPack_dgtl",350,"backpack"],
-	["Small (Green)","B_AssaultPack_khk",350,"backpack"],
-	["Small Guerilla","B_AssaultPack_khk",350,"backpack"],
-	["Small (Camo)","B_AssaultPack_mcamo",350,"backpack"],
-	["Small Green","B_AssaultPack_ocamo",0,"backpack"],
-	["Small (Dark Brown)","B_AssaultPack_rgr",350,"backpack"],
-	["Small (White)","B_AssaultPack_sgg",350,"backpack"],	
-	["Small Diver (Black)","B_AssaultPack_blk_DiverExp",2400,"backpack"],
-	["Small Medic Drk Brn","B_AssaultPack_rgr_Medic",750,"backpack"],
-	["Small Repair Drk Brn","B_AssaultPack_rgr_Repair",1200,"backpack"],
+	["Small (Green)","B_AssaultPack_Base",200,"backpack"],
+	["Small (Black)","B_AssaultPack_blk",200,"backpack"],
+	["Small (Brown)","B_AssaultPack_cbr",200,"backpack"],
+	["Small (Digi)","B_AssaultPack_dgtl",200,"backpack"],
+	["Small (Green)","B_AssaultPack_khk",200,"backpack"],
+	["Small Guerilla","B_AssaultPack_khk",200,"backpack"],
+	["Small (Camo)","B_AssaultPack_mcamo",200,"backpack"],
+	["Small Green","B_AssaultPack_ocamo",200,"backpack"],
+	["Small (Dark Brown)","B_AssaultPack_rgr",200,"backpack"],
+	["Small (White)","B_AssaultPack_sgg",200,"backpack"],	
+	["Small Diver (Black)","B_AssaultPack_blk_DiverExp",800,"backpack"],
+	["Small Medic Drk Brn","B_AssaultPack_rgr_Medic",600,"backpack"],
+	["Small Repair Drk Brn","B_AssaultPack_rgr_Repair",600,"backpack"],
 
-	["Medium (Brown)","B_FieldPack_Base",700,"backpack"],
-	["Medium (Black)","B_FieldPack_blk",700,"backpack"],
-	["Medium (Camo)","B_FieldPack_ocamo",700,"backpack"],
-	["Medium (Coyote)","B_FieldPack_cbr",700,"backpack"],
-	["Medium (Khaki)","B_FieldPack_khk",700,"backpack"],
-	["Medium (Hex)","B_FieldPack_ocamo",700,"backpack"],
-	["Medium (Olive)","B_FieldPack_oli",700,"backpack"],
-	["Medium (Urban)","B_FieldPack_oucamo",700,"backpack"],
-	["Medium (Hunting)","B_HuntingBackpack",700,"backpack"],
-	["Medium Diver (Black)","B_FieldPack_blk_DiverExp",4300,"backpack"],
-	["Medium Medic Camo","B_FieldPack_ocamo_Medic",1300,"backpack"],
-	["Medium Repair Brn","B_FieldPack_cbr_Repair",2000,"backpack"],
+	["Medium (Brown)","B_FieldPack_Base",350,"backpack"],
+	["Medium (Black)","B_FieldPack_blk",350,"backpack"],
+	["Medium (Camo)","B_FieldPack_ocamo",350,"backpack"],
+	["Medium (Coyote)","B_FieldPack_cbr",350,"backpack"],
+	["Medium (Khaki)","B_FieldPack_khk",350,"backpack"],
+	["Medium (Hex)","B_FieldPack_ocamo",350,"backpack"],
+	["Medium (Olive)","B_FieldPack_oli",350,"backpack"],
+	["Medium (Urban)","B_FieldPack_oucamo",350,"backpack"],
+	["Medium (Hunting)","B_HuntingBackpack",350,"backpack"],
+	["Medium Diver (Black)","B_FieldPack_blk_DiverExp",1000,"backpack"],
+	["Medium Medic Camo","B_FieldPack_ocamo_Medic",800,"backpack"],
+	["Medium Repair Brn","B_FieldPack_cbr_Repair",800,"backpack"],
 
-	["Large (Brown)","B_Bergen_Base",2000,"backpack"],
-	["Large (Brown 2)","B_Kitbag_Base",2000,"backpack"],
-	["Large (Coyote)","B_Kitbag_cbr",2000,"backpack"],
-	["Large (MTP)","B_Kitbag_mcamo",2000,"backpack"],
-	["Large (Sage)","B_Kitbag_sgg",2000,"backpack"],
+	["Large (Brown)","B_Bergen_Base",500,"backpack"],
+	["Large (Brown 2)","B_Kitbag_Base",500,"backpack"],
+	["Large (Coyote)","B_Kitbag_cbr",500,"backpack"],
+	["Large (MTP)","B_Kitbag_mcamo",500,"backpack"],
+	["Large (Sage)","B_Kitbag_sgg",500,"backpack"],
 
-	["Bergen (Black)","B_Bergen_blk",2500,"backpack"],
-	["Bergen (MTP)","B_Bergen_mcamo",2500,"backpack"],
-	["Bergen (Green)","B_Bergen_rgr",2500,"backpack"],
-	["Bergen (Sage)","B_Bergen_sgg",2500,"backpack"],
-	["Bergen (Blue)","B_BergenC_blu",2500,"backpack"],
-	["Bergen (Green)","B_BergenC_grn",2500,"backpack"],
-	["Bergen (Red)","B_BergenC_red",2500,"backpack"],
-	["Bergen (Guerilla)","B_BergenG",2500,"backpack"],
+	["Bergen (Black)","B_Bergen_blk",600,"backpack"],
+	["Bergen (MTP)","B_Bergen_mcamo",600,"backpack"],
+	["Bergen (Green)","B_Bergen_rgr",600,"backpack"],
+	["Bergen (Sage)","B_Bergen_sgg",600,"backpack"],
+	["Bergen (Blue)","B_BergenC_blu",600,"backpack"],
+	["Bergen (Green)","B_BergenC_grn",600,"backpack"],
+	["Bergen (Red)","B_BergenC_red",600,"backpack"],
+	["Bergen (Guerilla)","B_BergenG",600,"backpack"],
 
-	["Outdoor Pack (Black)","B_OutdoorPack_blk",3000,"backpack"],
-	["Outdoor Pack (Blue)","B_OutdoorPack_blu",3000,"backpack"],
-	["Outdoor Pack (Tan)","B_OutdoorPack_tan",3000,"backpack"],
+	["Outdoor Pack (Black)","B_OutdoorPack_blk",650,"backpack"],
+	["Outdoor Pack (Blue)","B_OutdoorPack_blu",650,"backpack"],
+	["Outdoor Pack (Tan)","B_OutdoorPack_tan",650,"backpack"],
 
-	["3 Day Tactical (Black)","B_TacticalPack_blk",3000,"backpack"],
-	["3 Day Tactical (MTP)","B_TacticalPack_mcamo",3000,"backpack"],
-	["3 Day Tactical (Hex)","B_TacticalPack_ocamo",3000,"backpack"],
-	["3 Day Tactical (Olive)","B_TacticalPack_oli",3000,"backpack"],
-	["3 Day Tactical (Green)","B_TacticalPack_rgr",3000,"backpack"],
+	["3 Day Tactical (Black)","B_TacticalPack_blk",650,"backpack"],
+	["3 Day Tactical (MTP)","B_TacticalPack_mcamo",650,"backpack"],
+	["3 Day Tactical (Hex)","B_TacticalPack_ocamo",650,"backpack"],
+	["3 Day Tactical (Olive)","B_TacticalPack_oli",650,"backpack"],
+	["3 Day Tactical (Green)","B_TacticalPack_rgr",650,"backpack"],
 
-	["Ex Large Brn","B_Carryall_Base",4000,"backpack"],
-	["Ex Large Camo (Hex)","B_Carryall_ocamo",4000,"backpack"],
-	["Ex Large Camo (Coyote)","B_Carryall_cbr",4000,"backpack"],
-	["Ex Large Camo (Khaki)","B_Carryall_khk",4000,"backpack"],
-	["Ex Large Camo (MTP)","B_Carryall_mcamo",4000,"backpack"],
-	["Ex Large Camo (Olive)","B_Carryall_oli",4000,"backpack"],
-	["Ex Large Camo (Urban)","B_Carryall_oucamo",4000,"backpack"],
-	["Steerable parachute","B_Parachute",1000,"backpack"]
+	["Ex Large Brn","B_Carryall_Base",800,"backpack"],
+	["Ex Large Camo (Hex)","B_Carryall_ocamo",800,"backpack"],
+	["Ex Large Camo (Coyote)","B_Carryall_cbr",800,"backpack"],
+	["Ex Large Camo (Khaki)","B_Carryall_khk",800,"backpack"],
+	["Ex Large Camo (MTP)","B_Carryall_mcamo",800,"backpack"],
+	["Ex Large Camo (Olive)","B_Carryall_oli",800,"backpack"],
+	["Ex Large Camo (Urban)","B_Carryall_oucamo",800,"backpack"],
+	["Steerable parachute","B_Parachute",250,"backpack"]
 ];
 
 //Gun Store Apparel List
@@ -523,20 +524,20 @@ vestArray= compileFinal str
 genItemArray= compileFinal str
 [
 	["GPS","ItemGPS", 100,"item"],
-	["Binoculars","Binocular",100,"binoc"],
+	["Binoculars","Binocular",50,"binoc"],
 	["NV Goggles","NVGoggles",100,"binoc"],
 	["Diving Goggles","G_Diving",100,"gogg"],
-	["Rangefinder","Rangefinder",300,"binoc"],   
-	["Laser Designator","Laserdesignator",3000,"binoc"],
+	["Rangefinder","Rangefinder",150,"binoc"],   
+	["Laser Designator","Laserdesignator",200,"binoc"],
 	//["Laser Batteries","Laserbatteries",20,"item"],
-	["Mine Detector","MineDetector",200,"item"],
-	["First Aid","FirstAidKit", 100,"item"],
-	["Medkit","Medikit", 550,"item"],
-	["Toolkit","ToolKit", 550,"item"],
-	["UAV Terminal Blue","b_uavterminal", 250,"item"],
-	["UAV Terminal Red","o_uavterminal", 250,"item"],
-	["UAV Terminal Green","i_uavterminal", 250,"item"],
-	["Empty Crate","Box_NATO_Ammo_F", 250,"ammocrate"]
+	["Mine Detector","MineDetector",100,"item"],
+	["First Aid","FirstAidKit", 50,"item"],
+	["Medkit","Medikit", 150,"item"],
+	["Toolkit","ToolKit", 150,"item"],
+	["UAV Terminal Blue","b_uavterminal", 150,"item"],
+	["UAV Terminal Red","o_uavterminal", 150,"item"],
+	["UAV Terminal Green","i_uavterminal", 150,"item"],
+	["Empty Crate","Box_NATO_Ammo_F", 150,"ammocrate"]
 	//["Empty Weapon Crate","Box_NATO_Wps_F", 250,"weaponcrate"]
 ];
 
