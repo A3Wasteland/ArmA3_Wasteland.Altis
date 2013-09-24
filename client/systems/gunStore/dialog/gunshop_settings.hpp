@@ -99,7 +99,7 @@ class gunshopd {
 		class GunDescription: w_RscStructuredTextLeft
 		{
 			idc = gunshop_gun_desc;
-			text = "Desc here...";
+			text = "";
 			sizeEx = 0.02;
 			colorBackground[] = { 0, 0, 0, 0.1 };
 			x = 0.3025 * safezoneW + safezoneX;
