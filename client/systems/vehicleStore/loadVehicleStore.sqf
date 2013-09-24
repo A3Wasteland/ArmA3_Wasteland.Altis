@@ -41,5 +41,5 @@ currentOwnerID = _owner;
 			};
 		}foreach _disabledButtons;
 	};
-} foreach (call storeOwners)
+} foreach (call storeOwnerConfig)
 

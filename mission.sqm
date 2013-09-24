@@ -2071,7 +2071,7 @@ class Mission
 				class Item0
 				{
 					position[]={3366.886,2.6602368,13206.772};
-					azimut=25;
+					azimut=10;
 					id=117;
 					side="CIV";
 					vehicle="C_man_polo_1_F_asia";
@@ -2131,7 +2131,7 @@ class Mission
 				class Item0
 				{
 					position[]={9435.292,125.51097,20267.016};
-					azimut=95;
+					azimut=50;
 					id=120;
 					side="CIV";
 					vehicle="C_man_polo_1_F_asia";

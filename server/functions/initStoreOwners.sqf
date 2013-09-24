@@ -13,6 +13,12 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
 	_objects =  nearestObjects [_mPos, ["Building"], 10];
 	_building = _objects select 0;
 
+
+   //_markerName setMarkerShape "ICON";
+   //_markerName setMarkerType "mil_dot";
+   //_markerName setMarkerColor "ColorRed";
+   //_markerName setMarkerText "THE STORE OWNER";
+
 	//if we grabbed more than just the owning building then make damn sure they don't take damage
 	{
 		_x removeAllEventHandlers "hit";
@@ -30,28 +36,36 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
 	//diag_log format["initStoreOwners found vendor %1", _men];
 
 	{
-		_xName = name _x;
+		_man = _x;
+		_xName = name _man;	
+
 
 		// Set the appearance according to the config array
-		_storeOwnerAppearance = [(call storeOwnerConfigAppearance), { _x select 0 == _name }] call BIS_fnc_conditionalSelect;
+		_storeOwnerAppearances = [(call storeOwnerConfigAppearance), { (_x select 0) == _name }] call BIS_fnc_conditionalSelect;
+		_storeOwnerAppearance = _storeOwnerAppearances select 0;
+
 		{
-			switch (_x select 0) do {
-				case 'weapon': { if (_x select 1 ) != '') then { _x addWeapon (_x select 1); }; };
-				case 'uniform': { if (_x select 1 ) != '') then { _x addUniform (_x select 1); }; };
+			_type = _x select 0;
+			_classname = _x select 1;
+
+			switch (_type) do {
+				case 'weapon': { if (_classname != '') then { diag_log format["applying %1 as weapon for %2", _classname, _name]; _man addWeapon _classname; }; };
+				case 'uniform': { if (_classname != '') then { diag_log format["applying %1 as uniform for %2", _classname, _name];  _man addUniform _classname; }; };
+				case 'switchMove': { if (_classname != '') then { diag_log format["applying %1 as switchMove for %2", _classname, _name];  _man switchMove _classname; }; };
 			};
 		} forEach (_storeOwnerAppearance select 1); 
 
-		_pDir = (getDir _x);
+		_pDir = (getDir _man);
 		_bPos = (_building buildingPos _spotNum);
-		/*_chair =*/ [_x, _bPos, _pDir, _deskDirMod, _name] call createStoreFurniture;
-		_x setPos [(_bPos select 0), (_bPos select 1), (_bPos select 2)];
+		/*_chair =*/ [_man, _bPos, _pDir, _deskDirMod, _name] call createStoreFurniture;
+		_man setPos [(_bPos select 0), (_bPos select 1), (_bPos select 2)];
 		
-		_x setVelocity [0,0,0];
-		_x disableAI "MOVE"; _x disableAI "ANIM"; _x disableAI "TARGET";
-		//_x setDir 45;
-		//if(!isNil "_foundChair") then {_x attachTo [_foundChair select 0,[0,-.3,0]];};
-		//_x attachTo [_chair select 0,[0,-.3,.25]];};
-		//_x switchMove "passenger_flatground_leanright";
+		_man setVelocity [0,0,0];
+		_man disableAI "MOVE"; _man disableAI "ANIM"; _man disableAI "TARGET";
+		//_man setDir 45;
+		//if(!isNil "_foundChair") then {_man attachTo [_foundChair select 0,[0,-.3,0]];};
+		//_man attachTo [_chair select 0,[0,-.3,.25]];};
+		//_man switchMove "passenger_flatground_leanright";
 	}foreach _men;
 
 	_markerName setMarkerPos (getpos (_men select 0));
