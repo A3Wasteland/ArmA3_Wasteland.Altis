@@ -17,7 +17,7 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
    //_markerName setMarkerShape "ICON";
    //_markerName setMarkerType "mil_dot";
    //_markerName setMarkerColor "ColorRed";
-   //_markerName setMarkerText "THE STORE OWNER";
+   //_markerName setMarkerText format["------------------ %1", _name];
 
 	//if we grabbed more than just the owning building then make damn sure they don't take damage
 	{
@@ -49,9 +49,9 @@ private ["_pos","_spotNum", "_name", "_men", "_run", "_fName","_bPos", "_markerN
 			_classname = _x select 1;
 
 			switch (_type) do {
-				case 'weapon': { if (_classname != '') then { diag_log format["applying %1 as weapon for %2", _classname, _name]; _man addWeapon _classname; }; };
-				case 'uniform': { if (_classname != '') then { diag_log format["applying %1 as uniform for %2", _classname, _name];  _man addUniform _classname; }; };
-				case 'switchMove': { if (_classname != '') then { diag_log format["applying %1 as switchMove for %2", _classname, _name];  _man switchMove _classname; }; };
+				case 'weapon': { if (_classname != '') then { diag_log format["Applying %1 as weapon for %2", _classname, _name]; _man addWeapon _classname; }; };
+				case 'uniform': { if (_classname != '') then { diag_log format["Applying %1 as uniform for %2", _classname, _name];  _man addUniform _classname; }; };
+				case 'switchMove': { if (_classname != '') then { diag_log format["Applying %1 as switchMove for %2", _classname, _name];  _man switchMove _classname; }; };
 			};
 		} forEach (_storeOwnerAppearance select 1); 
 
