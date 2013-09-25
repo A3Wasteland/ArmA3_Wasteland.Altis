@@ -2090,7 +2090,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={16704.938,18.67252,12780.142};
+					position[]={16708.83,18.712267,12779.239};
 					azimut=90;
 					id=118;
 					side="CIV";
@@ -2131,7 +2131,7 @@ class Mission
 				class Item0
 				{
 					position[]={9435.292,125.51097,20267.016};
-					azimut=50;
+					azimut=35;
 					id=120;
 					side="CIV";
 					vehicle="C_man_polo_1_F_asia";
@@ -2872,7 +2872,7 @@ class Mission
 		class Item92
 		{
 			position[]={9435.0898,0.30144197,20267};
-			name="move_GunStore2";
+			name="move_GunStore4";
 			type="Empty";
 		};
 		class Item93
@@ -2883,8 +2883,8 @@ class Mission
 		};
 		class Item94
 		{
-			position[]={16704.947,18.672642,12780.338};
-			name="move_GunStore4";
+			position[]={16708.84,18.715523,12779.436};
+			name="move_GunStore2";
 			type="Empty";
 		};
 		class Item95
