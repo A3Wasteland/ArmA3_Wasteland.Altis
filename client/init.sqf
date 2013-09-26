@@ -134,8 +134,8 @@ if (_playerWasMoved == 0) then {
 {
 	if (isPlayer _x && {!isNil ("addScore_" + (getPlayerUID _x))}) then
 	{
-		_x call removeNegativeScore;
+		_x spawn removeNegativeScore;
 	};
 } forEach playableUnits;
 
-[] execVM "client\systems\fpsFix\init.sqf";
+[] execVM "addons\fpsFix\vehicleManager.sqf";
