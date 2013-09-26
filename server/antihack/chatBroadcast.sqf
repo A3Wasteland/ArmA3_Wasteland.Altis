@@ -4,7 +4,11 @@
 //	@file Author: AgentRev
 //	@file Created: 02/06/2013 16:23
 
-if (typeName _this == "ARRAY" && {count _this > 2} && {_this select 2 == _flagChecksum} && {_this select 1 != getPlayerUID player}) then
+private ["_playerUID", "_sentChecksum"];
+_playerUID = [_this, 1, "", [""]] call BIS_fnc_param;
+_sentChecksum = [_this, 2, "", [""]] call BIS_fnc_param;
+
+if (_sentChecksum == _flagChecksum && {_playerUID != getPlayerUID player}) then
 {
 	player commandChat format ["%1", _this select 0];
 };
