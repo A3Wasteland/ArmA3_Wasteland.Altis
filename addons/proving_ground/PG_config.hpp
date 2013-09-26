@@ -103,7 +103,7 @@ class balca_debug_main
 				x = column_weight; w = column_weight-column_div;
 				y = btn_height*1;
 				text = "Autoheal";
-				action = "player setDamage 0"; 
+				action = "player setDamage 0; (vehicle player) setDamage 0;"; 
 			};
 
 			class balca_booster_btn : balca_debug_btn
