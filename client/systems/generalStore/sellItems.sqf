@@ -21,8 +21,8 @@ _size = lbSize _cartlist;
 for [{_x=0},{_x<=_size},{_x=_x+1}] do
 {
 	_itemText = _cartlist lbText _x;
-	if(_itemText == "Bottled Water") then {[MF_ITEMS_WATER, 1] call mf_inventory_remove;};
-	if(_itemText == "Canned Food") then {[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_remove;};
+	if(_itemText == "Drinking Water") then {[MF_ITEMS_WATER, 1] call mf_inventory_remove;};
+	if(_itemText == "Snack Food") then {[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_remove;};
 	if(_itemText == "Medical Kit") then {[MF_ITEMS_MEDKIT, 1] call mf_inventory_remove;};
 	if(_itemText == "Repair Kit") then {[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_remove;};
     if(_itemText == "Jerry Can (Full)") then {[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_remove;};
