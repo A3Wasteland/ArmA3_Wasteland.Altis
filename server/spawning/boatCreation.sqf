@@ -18,16 +18,11 @@ _pos = _markerPos;
 //Car Initialization
 _boat = createVehicle [_boatType, _pos, [], 0, "None"];
 
-_boat setVariable [call vChecksum, true, false];
+[_boat] call vehicleSetup;
 _boat setPosASL [_pos select 0, _pos select 1, 0];
 _boat setVelocity [0,0,0];
 
 [_boat, 600, 1200, 1800, 1000, 0, false, _markerPos] execVM "server\functions\vehicle.sqf";
-
-//Clear Vehicle Inventory
-clearMagazineCargoGlobal _boat;
-clearWeaponCargoGlobal _boat;
-clearItemCargoGlobal _boat;
 
 //Set Vehicle Attributes
 _boat setFuel (random 0.5 + 0.25);
@@ -84,4 +79,3 @@ if (_boatType isKindOf "Boat_Armed_01_base_F") then
 };
 
 _boat setDir (random 360);
-_boat disableTIEquipment true;
