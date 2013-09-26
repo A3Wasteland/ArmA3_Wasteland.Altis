@@ -55,8 +55,8 @@ STR_R3F_LOG_action_decharger_deja_fait = "The object has already been unloaded."
 STR_R3F_LOG_transport_en_cours = "This vehicle is being transported.";
 STR_R3F_LOG_mutex_action_en_cours = "The current operation isn't finished.";
 
-STR_R3F_LOG_dlg_CV_titre = "Content of vehicle";
-STR_R3F_LOG_dlg_CV_capacite_vehicule = "Loading : %1/%2";
+STR_R3F_LOG_dlg_CV_titre = "Contents of vehicle";
+STR_R3F_LOG_dlg_CV_capacite_vehicule = "Load : %1/%2";
 STR_R3F_LOG_dlg_CV_btn_decharger = "Unload";
 STR_R3F_LOG_dlg_CV_btn_fermer = "Cancel";
 
