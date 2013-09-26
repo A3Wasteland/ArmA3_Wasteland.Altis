@@ -47,6 +47,6 @@ _success = [DURATION, ANIMATION, _checks, [_vehicle]] call mf_util_playUntil;
 
 if (_success) then {
 	_vehicle setDamage 0;
-	["Repairing Completed!", 5] call mf_notify_client;
+	["Repairing complete!", 5] call mf_notify_client;
 };
 _success;

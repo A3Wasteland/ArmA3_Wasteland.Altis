@@ -41,6 +41,6 @@ if (_success) then {
 	[[netId _vehicle], "mf_remote_syphon",_vehicle] spawn TPG_fnc_MP;
 	[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_remove;
 	[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_add;
-    ["Syphoning Completed", 5] call mf_notify_client;
+    ["Syphoning complete!", 5] call mf_notify_client;
 };
 false;
