@@ -222,9 +222,9 @@ allGunStoreItems = compileFinal str ((call weaponsArray) + (call ammoArray) + (c
 //Display Name, Class Name, Description, Picture, Buy Price, Sell Price.
 generalStore = compileFinal str
 [
-	["Bottled Water","water",localize "STR_WL_ShopDescriptions_Water","client\icons\water.paa",30,15],
-	["Canned Food","canfood",localize "STR_WL_ShopDescriptions_CanFood","client\icons\cannedfood.paa",30,15],
-	["Repair Kit","repairkits",localize "STR_WL_ShopDescriptions_RepairKit","client\icons\briefcase.paa",500,250],
+	["Drinking Water","water",localize "STR_WL_ShopDescriptions_Water","client\icons\water.paa",30,15],
+	["Snack Food","canfood",localize "STR_WL_ShopDescriptions_CanFood","client\icons\cannedfood.paa",30,15],
+	["Repair Kit","repairkits",localize "STR_WL_ShopDescriptions_RepairKit","client\icons\briefcase.paa",250,125],
 	["Jerry Can (Full)","fuelfull",localize "STR_WL_ShopDescriptions_fuelFull","client\icons\jerrycan.paa",150,75],
 	["Jerry Can (Empty)","fuelempty",localize "STR_WL_ShopDescriptions_fuelEmpty","client\icons\jerrycan.paa",50,25],
 	["Spawn Beacon","spawnbeacon",localize "STR_WL_ShopDescriptions_spawnBeacon","client\icons\briefcase.paa",1500,750],
@@ -234,8 +234,8 @@ generalStore = compileFinal str
 	["Warchest","warchest",localize "STR_WL_ShopDescriptions_Warchest","client\icons\briefcase.paa",1000,500]
 ];
 
-// Stratis town and city array
-//Marker Name, Radius, City Name
+// Towns and cities array
+// Marker Name, Diameter, City Name
 cityList = compileFinal str
 [
 	["Town_1",400,"Kavala"],
