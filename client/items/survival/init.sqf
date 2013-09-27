@@ -39,9 +39,9 @@ MF_ITEMS_ENERGY_DRINK = "energydrink";
             	sleep 2;
             	deleteVehicle _this;
         	};
-            hint "You have taken some Snack Food\nNo more food left on the table";
+            hint "You have taken some Snack Food\nNo more food left in sacks";
         } else {
-            hint format["You have taken some Snack Food\n(Table still has %1)", (_nobj getVariable "food")];
+            hint format["You have taken some Snack Food\n(Sacks still have %1)", (_nobj getVariable "food")];
         };
     };
     _condition = 'player distance (nearestobjects [player, ["Land_Sacks_goods_F"],  5] select 0) < 5 and not(MF_ITEMS_CANNED_FOOD call mf_inventory_is_full) and (nearestobjects [player, ["Land_Sacks_goods_F"],  5] select 0) getVariable "food" > 0';
