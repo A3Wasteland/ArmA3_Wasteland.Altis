@@ -75,7 +75,6 @@ fn_refillTruck = [_path, "fn_refilltruck.sqf"] call mf_compile;
 fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;
 fn_replaceWeapons = [_path, "fn_replaceWeapons.sqf"] call mf_compile;
 fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile;
-getBallMagazine = [_path, "getBallMagazine.sqf"] call mf_compile;
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
 vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
 vehicleSetup = [_path, "vehicleSetup.sqf"] call mf_compile;

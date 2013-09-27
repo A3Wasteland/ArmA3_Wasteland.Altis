@@ -50,6 +50,7 @@ detachTowedObject = [_path, "detachTowedObject.sqf"] call mf_compile;
 findSafePos = [_path, "findSafePos.sqf"] call mf_compile;
 fn_vehicleInit = [_path, "fn_vehicleInit.sqf"] call mf_compile;
 generateKey = [_path, "network\generateKey.sqf"] call mf_compile;
+getBallMagazine = [_path, "getBallMagazine.sqf"] call mf_compile;
 getPublicVar = [_path, "getPublicVar.sqf"] call mf_compile;
 removeNegativeScore = [_path, "removeNegativeScore.sqf"] call mf_compile;
 
