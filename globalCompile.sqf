@@ -5,7 +5,7 @@
 
 // The purpose of this script is to compile certain functions both on client and server.
 
-private "_DEBUG";
+private ["_DEBUG", "_path"];
 _DEBUG = _this select 0;
 
 // Compile a function from a file.
@@ -25,7 +25,7 @@ mf_compile = compileFinal
 	};
 	
 	if (' + str _DEBUG + ') then {
-		compile format["call compile preProcessFileLineNumbers ""%1""", _path];
+		compile format["_this call compile preProcessFileLineNumbers ""%1""", _path];
 	} else {
 		compileFinal preProcessFileLineNumbers _path;
 	};
@@ -33,7 +33,6 @@ mf_compile = compileFinal
 
 // Simple command I use to make initialization scripts clean and simple.
 // uses mf_ namespace to avoid any issues.
-// TODO compilefinal this shit.
 mf_init = compileFinal
 '
 	private "_path";
@@ -46,14 +45,16 @@ mf_init = compileFinal
 	_path call compile preProcessFileLineNumbers format["%1\init.sqf", _path];
 ';
 
-detachTowedObject = "server\functions\detachTowedObject.sqf" call mf_compile;
-findSafePos = "server\functions\findSafePos.sqf" call mf_compile;
-fn_vehicleInit = "server\functions\fn_vehicleInit.sqf" call mf_compile;
-generateKey = "server\functions\network\generateKey.sqf" call mf_compile;
-getPublicVar = "server\functions\getPublicVar.sqf" call mf_compile;
-removeNegativeScore = "server\functions\removeNegativeScore.sqf" call mf_compile;
+_path = "server\functions";
+detachTowedObject = [_path, "detachTowedObject.sqf"] call mf_compile;
+findSafePos = [_path, "findSafePos.sqf"] call mf_compile;
+fn_vehicleInit = [_path, "fn_vehicleInit.sqf"] call mf_compile;
+generateKey = [_path, "network\generateKey.sqf"] call mf_compile;
+getBallMagazine = [_path, "getBallMagazine.sqf"] call mf_compile;
+getPublicVar = [_path, "getPublicVar.sqf"] call mf_compile;
+removeNegativeScore = [_path, "removeNegativeScore.sqf"] call mf_compile;
 
-if (isNil "fn_findString") then { fn_findString = "server\functions\fn_findString.sqf" call mf_compile };
-if (isNil "fn_filterString") then { fn_filterString = "server\functions\fn_filterString.sqf" call mf_compile };
+if (isNil "fn_findString") then { fn_findString = [_path, "fn_findString.sqf"] call mf_compile };
+if (isNil "fn_filterString") then { fn_filterString = [_path, "fn_filterString.sqf"] call mf_compile };
 
-"requestDetachTowedObject" addPublicVariableEventHandler { [_this select 1] call detachTowedObject };
+"requestDetachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };

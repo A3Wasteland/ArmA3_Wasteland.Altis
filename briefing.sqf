@@ -1,6 +1,6 @@
 waitUntil {!isNull player && isPlayer player};
 
-player createDiarySubject ["info", "Mission Info"];
+player createDiarySubject ["credits", "Credits"];
 player createDiarySubject ["changelog", "Changelog"];
 player createDiarySubject ["Wasteland", "How to play"];
 
@@ -15,20 +15,23 @@ player createDiaryRecord["changelog",
 ];
 
 
-player createDiaryRecord["info",
+player createDiaryRecord["credits",
 [
 "Credits",
 "
 <br/>
-	First things first: <br/>
-	The idea of Wasteland and the first originals in ArmA 2:<br/> 
+	<font size='16'>Original ArmA 2 Wasteland missions by:</font><br/> 
 	* Tonic<br/>
 	* Sa-Matra<br/>
 	* Marker<br/>
 	<br/>
-	Originally re-developed and released for ArmA 3 by 404Games<br/>
-	<br/><br/>
-	Development of this version by:<br/>
+	<font size='16'>Ported to ArmA 3 by 404Games:</font><br/>
+	* Deadbeat<br/>
+	* Costlyy<br/>
+	* Pulse<br/>
+	* Domuk<br/>
+	<br/>
+	<font size='16'>Development of this version by:</font><br/>
 	* JoSchaap (GoT/Tweakers.net)<br/>
 	* AgentRev (TeamPlayerGaming)<br/>
 	* MercyFulfate<br/>
@@ -36,24 +39,23 @@ player createDiaryRecord["info",
 	* Bewilderbeest (KoS/KillonSight)<br/>
 	* Del1te (404Games)<br/>
 	<br/>
-	<br/>
-	Others that contributed:<br/>
+	<font size='16'>Others that contributed:</font><br/>
 	* afroVoodo (Armaholic)<br/>
 	* Sanjo (GitHub)<br/>
 	* Ed! (404Games forums)<br/>
 	* SPJESTER (404Games forums)<br/>
 	* Hub (TeamPlayerGaming)<br/>
 	* Tonic (BIS forums)<br/>
-	* spunFIN (BIS forums)<br/><br/>
+	* spunFIN (BIS forums)<br/>
 	* AWA (OpenDayZ.net)<br/>
-	* Sa-Matra (BIS forums)</br>
+	* Sa-Matra (BIS forums)<br/>
 	* SicSemperTyrannis (iniDB)<br/>
-	* {ZAG}Ed!<br/>
 	* Na-Palm (BIS forums)<br/>
 	* SCETheFuzz (GitHub)<br/>
 	* s3kShUn61 (GitHub)<br/>
 	* RockHound (BierAG)<br/>
-	* * Thanks ALOT for the help/inspiration!<br/>
+	<br/>
+	<font size='16'>Thanks A LOT to everyone involved for the help and inspiration!</font><br/>
 	<br/>
 "
 ]
@@ -62,9 +64,10 @@ player createDiaryRecord["info",
 
 player createDiaryRecord["wasteland",
 [
-"Hints/Tips",
+"Hints and Tips",
 "
-Wasteland<br/>
+<br/>
+<font size='16'>Wasteland</font><br/>
 <br/>
 * At the start of the game, spread out and find supplies before worrying about where to establish a meeting place or a base, supplies are important and very valuable.<br/><br/>
 * When picking a base location, it is best advised to pick a place that is out of the way and not so obvious such as airports, cities, map-bound bases, etc. remember, players randomly spawn in and around towns and could even spawn inside your base should you set it up in a town.<br/><br/>
@@ -95,10 +98,10 @@ Q. What are the grey circles on the map?<br/>
 A. The circles represent town limits. If friendly soldiers are in a town, you can spawn there from the re-spawn menu; however if there is an enemy presence, you will not be able to spawn there.
 <br/><br/>
 Q. Why is it so dark, I cant see.<br/>
-A. The server has a day/night cycle just like in the real world, and as such, night time is a factor in your survival. It is recommended that you find sources of light or use your Night Vision Goggles as the darkness sets in.
+A. The server has a day/night cycle just like in the real world, and as such, night time is a factor in your survival. It is recommended that you find sources of light or use your Nightvision Goggles as the darkness sets in.
 <br/><br/>
 Q. Is it ok for me to shoot my team mates?<br/>
-A. If you are member of BLUFOR or OPFOR teams, then you are NOT allowed to shoot or steam items and vehicles from other players. If you play as Independent, you are free to engage anyone as well as team up with anyone you want.
+A. If you are member of BLUFOR or OPFOR teams, then you are NOT allowed to shoot or steal items and vehicles from other players. If you play as Independent, you are free to engage anyone as well as team up with anyone you want.
 <br/><br/>
 Q. Whats with the buckets, baskets and big bags?<br/>
 A. This game has a food and water system that you must stay on top of if you hope to survive. You can collect food and water from water Plastic cannisters, food sacks, wells, or the buckets/baskets near dead players bodies. Food and water will randomly spawn around the map.

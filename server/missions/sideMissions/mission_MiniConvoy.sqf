@@ -7,7 +7,7 @@
 if (!isServer) exitwith {};
 #include "sideMissionDefines.sqf";
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_convoyVeh","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader"];
 
 _missionMarkerName = "MiniConvoy_Marker";
 _missionType = "Truck Convoy";
@@ -17,9 +17,17 @@ diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionTy
 diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the convoy (veh2 is the 'convoyed' vehicle
-_veh1 = ["B_Quadbike_01_F","C_Offroad_01_F","I_G_Offroad_01_F","I_G_Offroad_01_armed_F","C_SUV_01_F","O_Quadbike_01_F","C_Offroad_01_F","I_Quadbike_01_F","C_Quadbike_01_F"] call BIS_fnc_selectRandom;
-_veh2 = ["C_Van_01_box_F", "O_Truck_02_transport_F", "I_Truck_02_transport_F"] call BIS_fnc_selectRandom;
-_veh3 = ["B_Quadbike_01_F","C_Offroad_01_F","I_G_Offroad_01_F","I_G_Offroad_01_armed_F","C_SUV_01_F","O_Quadbike_01_F","C_Offroad_01_F","I_Quadbike_01_F","C_Quadbike_01_F"] call BIS_fnc_selectRandom;
+_convoyVeh = 
+[
+	["B_Quadbike_01_F", "C_Van_01_box_F", "B_Quadbike_01_F"],
+	["I_G_Offroad_01_F", "I_Truck_02_transport_F", "I_G_Offroad_01_F"],
+	["I_G_Offroad_01_armed_F", "O_Truck_02_transport_F", "I_G_Offroad_01_F"]
+]
+call BIS_fnc_selectRandom;
+
+_veh1 = _convoyVeh select 0;
+_veh2 = _convoyVeh select 1;
+_veh3 = _convoyVeh select 2;
 
 // available routes to add a route. If you add more routes append ,4 to the array and so on
 _routes = [1,2,3];
@@ -172,10 +180,8 @@ _createVehicle = {
     _groupsm = _this select 3;
     
     _vehicle = _type createVehicle _position;
+	[_vehicle] call vehicleSetup;
     _vehicle setDir _direction;
-    clearMagazineCargoGlobal _vehicle;
-    clearWeaponCargoGlobal _vehicle;
-	_vehicle setVariable [call vChecksum, true, false];
     _groupsm addVehicle _vehicle;
     
     _soldier = [_groupsm, _position] call createRandomSoldier; 

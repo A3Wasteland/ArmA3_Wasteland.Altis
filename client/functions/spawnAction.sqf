@@ -20,6 +20,7 @@ if (call config_player_donations_enabled == 1) then {
 
 [MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
 [MF_ITEMS_WATER, 1] call mf_inventory_add;
+[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_add;
 
 // Remove unrealistic blur effects
 ppEffectDestroy BIS_fnc_feedback_fatigueBlur;

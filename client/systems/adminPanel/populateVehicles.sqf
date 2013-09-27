@@ -120,6 +120,8 @@ if (_uid call isAdmin) then
 			private ["_hackedVehicles", "_hackedVehicle", "_vehicleOwner", "_ownerInfo"];
 			_hackedVehicles = call findHackedVehicles;
 			
+			lbClear _vehicleListBox;
+			
 			{
 				_hackedVehicle = _x select 0;
 				_vehicleOwner = _x select 1;

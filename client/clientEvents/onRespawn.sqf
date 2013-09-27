@@ -4,35 +4,38 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-private["_player","_corpse","_town","_spawn","_temp"];
-playerSetupComplete = false;
-
-_player = (_this select 0) select 0;
-_corpse = (_this select 0) select 1;
-//diag_log (unitBackpack _corpse);
-//clearMagazineCargoGlobal (unitBackpack _corpse);
-//removeBackpack _corpse;
-_corpse removeAction playerMenuId;
+_this spawn
 {
-	_corpse removeAction _x;
-} forEach aActionsIDs;
-// The actions from mf_player_actions are removed in onKilled.
+	private ["_player", "_corpse", "_town", "_spawn", "_temp"];
+	playerSetupComplete = false;
 
-player call playerSetup;
-waitUntil {playerSetupComplete};
+	_player = (_this select 0) select 0;
+	_corpse = (_this select 0) select 1;
+	//diag_log (unitBackpack _corpse);
+	//clearMagazineCargoGlobal (unitBackpack _corpse);
+	//removeBackpack _corpse;
+	_corpse removeAction playerMenuId;
+	{
+		_corpse removeAction _x;
+	} forEach aActionsIDs;
+	// The actions from mf_player_actions are removed in onKilled.
 
-[] execVM "client\clientEvents\onMouseWheel.sqf";
+	player call playerSetup;
+	waitUntil {playerSetupComplete};
 
-true spawn playerSpawn;
+	[] execVM "client\clientEvents\onMouseWheel.sqf";
 
-[] spawn {
-	waitUntil{respawnDialogActive};
-	waitUntil{sleep 0.1; !respawnDialogActive};
+	true spawn playerSpawn;
 
-	if(!isNull pvar_PlayerTeamKiller) then {
-		pDialogTeamkiller = pvar_PlayerTeamKiller;
-		pvar_PlayerTeamKiller = objNull;
+	[] spawn {
+		waitUntil{respawnDialogActive};
+		waitUntil{sleep 0.1; !respawnDialogActive};
 
-		[] execVM "client\functions\createTeamKillDialog.sqf";
+		if(!isNull pvar_PlayerTeamKiller) then {
+			pDialogTeamkiller = pvar_PlayerTeamKiller;
+			pvar_PlayerTeamKiller = objNull;
+
+			[] execVM "client\functions\createTeamKillDialog.sqf";
+		};
 	};
 };

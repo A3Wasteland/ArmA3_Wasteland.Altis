@@ -36,8 +36,8 @@ _createVehicle = {
     _direction = _this select 2;
     _groupsm = _this select 3;
     _vehicle = _type createVehicle _position;
+	[_vehicle] call vehicleSetup;
     _vehicle setDir _direction;
-	_vehicle setVariable [call vChecksum, true, false];
     _groupsm addVehicle _vehicle;
     // create units
 	// driver/pilot
@@ -120,6 +120,13 @@ _marker setMarkerText "Hostile Helicopter";
 
 _picture = getText (configFile >> "CfgVehicles" >> _helipick >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _helipick >> "displayName");
+
+// Remove " (Camo)" from vehicle name when applicable
+if ([_vehicleName, (count toArray _vehicleName) - 7] call BIS_fnc_trimString == " (Camo)") then
+{
+	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 8] call BIS_fnc_trimString;
+};
+
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>An armed <t color='%4'>%3</t> is patrolling the island. Intercept it and recover its cargo!</t>", _missionType, _picture, _vehicleName, sideMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 

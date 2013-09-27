@@ -7,7 +7,7 @@ if (!isServer) exitWith {};
 
 if (isNil "ahSetupDone") then
 {
-	private ["_packetKey", "_assignPacketKey", "_packetKeyArray", "_checksum", "_assignChecksum", "_checksumArray", "_scriptHandle"];
+	private ["_packetKey", "_assignPacketKey", "_packetKeyArray", "_checksum", "_assignChecksum", "_checksumArray"];
 	
 	_packetKey = call generateKey;
 	
@@ -37,19 +37,9 @@ if (isNil "ahSetupDone") then
 	} forEach toArray _checksum;
 	_assignChecksum = _assignChecksum + (str toArray _checksumArray) + "; ";
 	
-	TPG_fnc_MPexec = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MPexec.sqf"));
-	TPG_fnc_MP = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MP.sqf"));
-	call compile (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_initMultiplayer.sqf"));
+	[_packetKey, _assignPacketKey, _checksum, _assignChecksum] execVM "server\antihack\createUnit.sqf";
 	
-	if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
-	{
-		[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call BIS_fnc_MP;
-	};
-	
-	flagHandler = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\flagHandler.sqf"));
-	
-	_scriptHandle = [_packetKey, _assignPacketKey, _checksum, _assignChecksum] execVM "server\antihack\createUnit.sqf";
-	waitUntil {scriptDone _scriptHandle};
+	waitUntil {!isNil _checksum};
 	
 	[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\serverSide.sqf"));
 	

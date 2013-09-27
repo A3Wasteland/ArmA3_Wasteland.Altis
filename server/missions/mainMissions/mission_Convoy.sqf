@@ -7,7 +7,7 @@
 if (!isServer) exitwith {};
 #include "mainMissionDefines.sqf";
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_convoyVeh","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader"];
 
 _missionMarkerName = "Convoy_Marker";
 _missionType = "Convoy";
@@ -17,9 +17,17 @@ diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionTy
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the convoy (veh2 is the 'convoyed' vehicle
-_veh1 = ["O_MRAP_02_gmg_F","B_MRAP_01_gmg_F","I_MRAP_03_gmg_F"] call BIS_fnc_selectRandom;
-_veh2 = ["B_MRAP_01_F","O_MRAP_02_F","I_MRAP_03_F","B_Truck_01_Transport_F","I_G_Offroad_01_armed_F","C_SUV_01_F","C_Van_01_transport_F","I_G_Van_01_transport_F","C_Van_01_box_F","B_Truck_01_Covered_F"] call BIS_fnc_selectRandom;
-_veh3 = ["B_MRAP_01_hmg_F","O_MRAP_02_hmg_F","I_MRAP_03_hmg_F"] call BIS_fnc_selectRandom;
+_convoyVeh = 
+[
+	["B_MRAP_01_hmg_F", "B_Truck_01_covered_F", "B_MRAP_01_hmg_F"],
+	["O_MRAP_02_hmg_F", "O_Truck_02_covered_F", "O_MRAP_02_hmg_F"],
+	["I_MRAP_03_hmg_F", "I_Truck_02_covered_F", "I_MRAP_03_hmg_F"]
+]
+call BIS_fnc_selectRandom;
+
+_veh1 = _convoyVeh select 0;
+_veh2 = _convoyVeh select 1;
+_veh3 = _convoyVeh select 2;
 
 // available routes to add a route. If you add more routes append ,4 to the array and so on
 _routes = [1,2,3];
@@ -172,10 +180,8 @@ _createVehicle = {
     _group = _this select 3;
     
     _vehicle = _type createVehicle _position;
+	[_vehicle] call vehicleSetup;
     _vehicle setDir _direction;
-    clearMagazineCargoGlobal _vehicle;
-    clearWeaponCargoGlobal _vehicle;
-	_vehicle setVariable [call vChecksum, true, false];
     _group addVehicle _vehicle;
     
     _soldier = [_group, _position] call createRandomSoldier; 
@@ -228,6 +234,13 @@ _marker setMarkerText "Armed Convoy";
 
 _picture = getText (configFile >> "CfgVehicles" >> _veh2 >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _veh2 >> "displayName");
+
+// Remove " (Covered)" from vehicle name when applicable
+if ([_vehicleName, (count toArray _vehicleName) - 10] call BIS_fnc_trimString == " (Covered)") then
+{
+	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 11] call BIS_fnc_trimString;
+};
+
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> transporting 2 weapon crates, is convoyed by two armored vehicles. Stop them!</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 

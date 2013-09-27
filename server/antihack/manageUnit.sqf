@@ -3,47 +3,51 @@
 //	@file Author: AgentRev
 //	@file Created: 04/07/2013 20:46
 
-private ["_unit", "_packetKey", "_assignPacketKey", "_checksum", "_assignChecksum", "_varPayload", "_fastVarPayload"];
+private ["_unit", "_keyArray", "_packetKey", "_assignPacketKey", "_checksum", "_assignChecksum"];
 
 _unit = _this select 0;
-_packetKey = _this select 1;
-_assignPacketKey = _this select 2;
-_checksum = _this select 3;
-_assignChecksum = _this select 4;
-_varPayload = _this select 5;
-_fastVarPayload = _this select 6;
+_keyArray = _this select 1;
 
-_unit allowDamage false;
-_unit disableAI "MOVE";
-_unit disableAI "FSM";
+_packetKey = _keyArray select 0;
+_assignPacketKey = _keyArray select 1;
+_checksum = _keyArray select 2;
+_assignChecksum = _keyArray select 3;
 
 if (isServer) then
 {
+	_unit allowDamage false;
+	_unit disableAI "MOVE";
+	_unit disableAI "FSM";
+
 	removeAllWeapons _unit;
 	removeBackpack _unit;
 	removeVest _unit;
 	removeUniform _unit;
 	removeGoggles _unit;
-	_unit addVest "V_RebreatherIR";
-	_unit addUniform "U_O_Wetsuit";
+	
+	_unit addVest "V_RebreatherB";
+	_unit addUniform "U_B_Wetsuit";
 	_unit addGoggles "G_Diving";
 	_unit setPosATL [1,1,1];
 	_unit switchMove "";
 		
-	[_unit, _packetKey, _assignPacketKey, _checksum, _assignChecksum] spawn
+	_this spawn
 	{
-		private ["_unit"];
+		private ["_unit", "_grp"];
 		_unit = _this select 0;
+		_grp = group _unit;
 		
-		while { alive _unit } do { sleep 1 };
+		while {alive _unit} do { sleep 1 };
 		
-		if (!isNull _unit) then
-		{
-			deleteVehicle _unit;
-		};
+		deleteVehicle _unit;
+		deleteGroup _grp;
 		
-		[_this select 1, _this select 2, _this select 3, _this select 4] execVM "server\antihack\createUnit.sqf";
+		(_this select 1) execVM "server\antihack\createUnit.sqf";
 	};
+}
+else
+{
+	_unit enableSimulation false;
 };
 
 if (isNil _checksum) then
@@ -51,28 +55,21 @@ if (isNil _checksum) then
 	if (isNil "fn_findString") then { fn_findString = compileFinal preprocessFileLineNumbers "server\functions\fn_findString.sqf" };
 	if (isNil "fn_filterString") then { fn_filterString = compileFinal preprocessFileLineNumbers "server\functions\fn_filterString.sqf" };
 	
-	if (!isDedicated) then
+	TPG_fnc_MPexec = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MPexec.sqf"));
+	TPG_fnc_MP = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MP.sqf"));
+	call compile (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_initMultiplayer.sqf"));
+	
+	if (isServer) then
 	{
-		if (!isServer) then
-		{
-			TPG_fnc_MPexec = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MPexec.sqf"));
-			TPG_fnc_MP = compileFinal (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_MP.sqf"));
-			call compile (_assignPacketKey + (preprocessFileLineNumbers "server\functions\network\fn_initMultiplayer.sqf"));
-		};
-		
+		flagHandler = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\flagHandler.sqf"));
+		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\serverSide.sqf"));
+	};
+	
+	if (!isDedicated) then	
+	{
 		clientFlagHandler = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\clientFlagHandler.sqf"));
 		chatBroadcast = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\chatBroadcast.sqf"));
 		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\payload.sqf"));
-		
-		if (_varPayload != "") then
-		{
-			[] spawn compile (_assignChecksum + _varPayload);
-		};
-		
-		if (_fastVarPayload != "") then
-		{
-			[] spawn compile (_assignChecksum + _fastVarPayload);
-		};
 	};
 	
 	call compile format ["%1 = compileFinal 'true'", _checksum];
