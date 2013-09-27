@@ -42,8 +42,8 @@ _createVehicle = {
     _direction = _this select 2;
     _grouphf = _this select 3;
     _vehicle = _type createVehicle _position;
+	[_vehicle] call vehicleSetup;
     _vehicle setDir _direction;
-	_vehicle setVariable [call vChecksum, true, false];
     _grouphf addVehicle _vehicle;
     // create units
 	// driver/pilot
@@ -130,6 +130,25 @@ _picture = getText (configFile >> "CfgVehicles" >> _heli1 >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _heli1 >> "displayName");
 _vehicleName2 = getText (configFile >> "cfgVehicles" >> _heli2 >> "displayName");
 _vehicleName3 = getText (configFile >> "cfgVehicles" >> _heli3 >> "displayName");
+
+// Remove " (Camo)" from vehicle name when applicable
+if ([_vehicleName, (count toArray _vehicleName) - 7] call BIS_fnc_trimString == " (Camo)") then
+{
+	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 8] call BIS_fnc_trimString;
+};
+
+// Remove " (Camo)" from vehicle name when applicable
+if ([_vehicleName2, (count toArray _vehicleName2) - 7] call BIS_fnc_trimString == " (Camo)") then
+{
+	_vehicleName2 = [_vehicleName2, 0, (count toArray _vehicleName2) - 8] call BIS_fnc_trimString;
+};
+
+// Remove " (Camo)" from vehicle name when applicable
+if ([_vehicleName3, (count toArray _vehicleName3) - 7] call BIS_fnc_trimString == " (Camo)") then
+{
+	_vehicleName3 = [_vehicleName3, 0, (count toArray _vehicleName3) - 8] call BIS_fnc_trimString;
+};
+
 _hint = parseText format 
 [
 	"<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/>" +

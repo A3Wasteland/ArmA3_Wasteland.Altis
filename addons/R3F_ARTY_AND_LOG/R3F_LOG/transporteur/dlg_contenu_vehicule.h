@@ -137,7 +137,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		h = 0.04;
 		colorSelect[] = {1, 1, 1, 1};
 		colorText[] = {1, 1, 1, 1};
-		colorBackground[] = {0.8,0.8,0.8,1};
+		colorBackground[] = {0.5,0.5,0.5,1};
 		colorSelectBackground[] = {0, 0, 0, 1};
 		colorScrollbar[] = {0.2, 0.2, 0.2, 1};
 		arrowEmpty = "client\ui\ui_arrow_combo_ca.paa";
@@ -188,7 +188,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		type              = CT_STATIC;
 		idc               = -1;
 		style             = ST_LEFT;
-		font              = "";
+		font              = "PuristaMedium";
 		colorText[]       = {1, 1, 1, 1};
 		sizeEx            = 0.04;
 	};

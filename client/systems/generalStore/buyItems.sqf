@@ -35,22 +35,22 @@ else
 		{
 			_itemText = _cartlist lbText _x;
 			switch (_itemText) do {
-				case "Bottled Water": {
+				case "Drinking Water": {
 					if not(MF_ITEMS_WATER call mf_inventory_is_full) then {
 						[MF_ITEMS_WATER, 1] call mf_inventory_add;
 					} else {
 						_price = 0;
-						{if(_x select 0 == "Bottled Water") then{_price = _x select 4;};}forEach (call generalStore);
+						{if(_x select 0 == "Drinking Water") then{_price = _x select 4;};}forEach (call generalStore);
 						genStoreCart = genStoreCart - _price;    
 					};
 				};
 				
-				case "Canned Food":	{
+				case "Snack Food":	{
 					if not(MF_ITEMS_CANNED_FOOD call mf_inventory_is_full) then {
 						[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
 					} else {
 						_price = 0;
-						{if(_x select 0 == "Canned Food") then{_price = _x select 4;};}forEach (call generalStore);
+						{if(_x select 0 == "Snack Food") then{_price = _x select 4;};}forEach (call generalStore);
 						genStoreCart = genStoreCart - _price;    
 					};
 				};

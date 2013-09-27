@@ -5,7 +5,10 @@
 
 if (!isServer) exitWith {};
 
-private "_cheatFlag";
+private ["_serverID", "_cheatFlag", "_unit"];
+
+waitUntil {!isNil "bis_functions_mainscope"};
+_serverID = owner bis_functions_mainscope;
 
 "BIS_fnc_MP_packet" addPublicVariableEventHandler compileFinal "_this execVM 'server\antihack\badExecAttempt.sqf'";
 
@@ -20,17 +23,26 @@ while { true } do
 	if (isNil "_cheatFlag") then 
 	{
 		{
-			if ((isDedicated && owner _x > 1) || owner _x > 2) then
+			_unit = _x;
+			
+			if (owner _unit > _serverID) then
 			{
-				if (alive _x && {!isPlayer _x} && {["_UAV_AI", typeOf _x] call fn_findString == -1}) then
+				if (alive _unit && {!isPlayer _unit} && {["_UAV_AI", typeOf _unit] call fn_findString == -1}) then
 				{
 					if (isNil "_cheatFlag") then
 					{
 						_cheatFlag = [];
 					};
 					
-					_cheatFlag set [count _cheatFlag, ["hacked unit", typeOf _x, [owner _x] call findClientPlayer]];
-					deleteVehicle _x;
+					_cheatFlag set [count _cheatFlag, ["hacked unit", typeOf _unit, [owner _unit] call findClientPlayer]];
+					
+					for [{_i = 0}, {_i < 10 && vehicle _unit != _unit}, {_i = _i + 1}] do
+					{
+						moveOut _unit;
+						sleep 0.01;
+					};
+					
+					deleteVehicle _unit;
 				};
 			};
 		} forEach (allUnits - playableUnits);

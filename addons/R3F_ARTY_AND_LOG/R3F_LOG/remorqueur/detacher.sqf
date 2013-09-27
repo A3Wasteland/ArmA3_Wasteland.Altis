@@ -58,22 +58,14 @@ else
 		// On mémorise aussi sur le réseau que le objet est attaché en remorque
 		_objet setVariable ["R3F_LOG_est_transporte_par", objNull, true];
 		
-		if (_objet isKindOf "Car") then
+		if (local _objet) then
 		{
-			detach _objet;
-			_objet setVelocity [0,0,0.01];
+			[netId _objet] execVM "server\functions\detachTowedObject.sqf";
 		}
 		else
 		{
-			if (local _objet) then
-			{
-				[netId _objet] execVM "server\functions\detachTowedObject.sqf";
-			}
-			else
-			{
-				requestDetachTowedObject = netId _objet;
-				publicVariable "requestDetachTowedObject";
-			};
+			requestDetachTowedObject = netId _objet;
+			publicVariable "requestDetachTowedObject";
 		};
 		
 		sleep 4;

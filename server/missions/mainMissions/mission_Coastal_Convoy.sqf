@@ -214,8 +214,8 @@ _createVehicle = {
     _direction = _this select 2;
     _groupcc = _this select 3;
     _vehicle = _type createVehicle _position;
+	[_vehicle] call vehicleSetup;
     _vehicle setDir _direction;
-	_vehicle setVariable [call vChecksum, true, false];
     _groupcc addVehicle _vehicle;
 	// add a driver/pilot/captain to the vehicle
 	// the little-bird and Orca do not require gunners and should not have any passengers
@@ -299,6 +299,13 @@ _picture = getText (configFile >> "CfgVehicles" >> _veh1 >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _veh2 >> "displayName");
 _vehicleName2 = getText (configFile >> "cfgVehicles" >> _veh1 >> "displayName");
 _vehicleName3 = getText (configFile >> "cfgVehicles" >> _veh3 >> "displayName");
+
+// Remove " (Camo)" from vehicle name when applicable
+if ([_vehicleName2, (count toArray _vehicleName2) - 7] call BIS_fnc_trimString == " (Camo)") then
+{
+	_vehicleName2 = [_vehicleName2, 0, (count toArray _vehicleName2) - 8] call BIS_fnc_trimString;
+};
+
 _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Main Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> is patrolling the coasts with a <t color='%4'>%6</t> and a <t color='%4'>%7</t>.<br/>Intercept them and recover their cargo!</t>", _missionType, _picture, _vehicleName, mainMissionColor, subTextColor, _vehicleName2, _vehicleName3];
 [_hint] call hintBroadcast;
 

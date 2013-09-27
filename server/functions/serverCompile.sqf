@@ -8,6 +8,8 @@ if (!isServer) exitWith {};
 
 diag_log "WASTELAND SERVER - Initializing Server Compile";
 
+// Do not add missions here, put their name directly in the mission controllers
+
 /*
 //Main Mission Compiles
 
@@ -54,7 +56,6 @@ createMidGroup = [_path, "createUnits\midGroup.sqf"] call mf_compile;
 createMissionLocation = [_path, "createMissionLocation.sqf"] call mf_compile;
 createMissionVehicle = [_path, "createMissionVehicle.sqf"] call mf_compile;
 createMissionVehicle2 = [_path, "createMissionVehicle2.sqf"] call mf_compile;
-createMissionVehicleWL = [_path, "createMissionVehicleWithLog.sqf"] call mf_compile;
 createRandomSoldier = [_path, "createUnits\createRandomSoldier.sqf"] call mf_compile;
 createRandomSoldierC = [_path, "createUnits\createRandomSoldierC.sqf"] call mf_compile;
 createSmallDivers = [_path, "createUnits\smallDivers.sqf"] call mf_compile;
@@ -74,9 +75,9 @@ fn_refillTruck = [_path, "fn_refilltruck.sqf"] call mf_compile;
 fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;
 fn_replaceWeapons = [_path, "fn_replaceWeapons.sqf"] call mf_compile;
 fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile;
-getBallMagazine = [_path, "getBallMagazine.sqf"] call mf_compile;
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
 vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
+vehicleSetup = [_path, "vehicleSetup.sqf"] call mf_compile;
 
 //Player Management
 server_playerDied = [_path, "serverPlayerDied.sqf"] call mf_compile;
@@ -85,6 +86,7 @@ server_playerDied = [_path, "serverPlayerDied.sqf"] call mf_compile;
 _path = "server\spawning";
 boatCreation = [_path, "boatCreation.sqf"] call mf_compile;
 objectCreation = [_path, "objectCreation.sqf"] call mf_compile;
+planeCreation = [_path, "planeCreation.sqf"] call mf_compile;
 randomWeapons = [_path, "randomWeapon.sqf"] call mf_compile;
 // staticGunCreation = [_path, "staticGunCreation.sqf"] call mf_compile;
 staticHeliCreation = [_path, "staticHeliCreation.sqf"] call mf_compile;

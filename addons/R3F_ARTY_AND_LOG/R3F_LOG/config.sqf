@@ -35,7 +35,8 @@ R3F_LOG_CFG_objets_remorquables =
 	"MRAP_03_base_F",
 	"Boat_Civil_01_base_F",
 	"Boat_Armed_01_base_F",
-	"Helicopter_Base_F"
+	"Helicopter_Base_F",
+	"Plane_Base_F"
 ];
 
 /****** LIFT WITH VEHICLE  ******/

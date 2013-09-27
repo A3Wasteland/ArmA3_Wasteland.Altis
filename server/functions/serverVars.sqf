@@ -40,7 +40,7 @@ currentStaticHelis = []; // Storage for the heli marker numbers so that we don't
 civilianVehicles =
 [
 	"C_Hatchback_01_F",
-	"C_Hatchback_01_sport_F",
+//	"C_Hatchback_01_sport_F", // Too easy to break
 	"C_SUV_01_F",
 	"C_Offroad_01_F",
 	"I_G_Offroad_01_F",

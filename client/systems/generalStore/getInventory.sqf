@@ -35,14 +35,14 @@ _index = 0;
 _amount = MF_ITEMS_CANNED_FOOD call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Canned Food"];
+	playerInventory set [_index, "Snack Food"];
 	_index = _index + 1;
 };
 
 _amount = MF_ITEMS_WATER call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Bottled Water"];
+	playerInventory set [_index, "Drinking Water"];
 	_index = _index + 1;
 };
 

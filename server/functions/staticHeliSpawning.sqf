@@ -1,34 +1,35 @@
 //	@file Version: 1.0
 //	@file Name: staticHeliSpawning.sqf
-//	@file Author: [404] Costlyy
+//	@file Author: [404] Costlyy, AgentRev
 //	@file Created: 20/12/2012 21:00
 //	@file Description: Random static helis
 //	@file Args:
 
 if (!isServer) exitWith {};
 
-private ["_counter","_position","_markerName","_marker","_hint","_newPos","_countActual", "_i", "_doSpawnWreck"];
-_counter = 0;
+private ["_countActual", "_heliSpawns", "_position", "_selectedMarker", "_markerName", "_marker", "_newPos", "_i", "_doSpawnWreck"];
 _countActual = 0;
-_i = 0;
 
-while {_counter < 15} do // 15 helis spawn at the beginning
+_heliSpawns = [];
 {
-	_selectedMarker = floor (random 24);
-   
-	if (!(_selectedMarker in currentStaticHelis)) then
+	if (["heliSpawn_", _x] call fn_findString == 0) then
+	{
+		_heliSpawns set [count _heliSpawns, _x];
+	};
+} forEach allMapMarkers;
+
+{
+	_selectedMarker = _x;
+	if (!(_selectedMarker in currentStaticHelis) && {random 1 < 0.50}) then // 50% chance spawning
     {
-        _position = getMarkerPos format ["heliSpawn_%1", _selectedMarker];
-    	//_newPos = [_position, 25, 50, 1, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;
-		//[0, _newPos] call staticHeliCreation;
+        _position = getMarkerPos _selectedMarker;
 		[0, _position] call staticHeliCreation;
 	    
 		currentStaticHelis set [count currentStaticHelis, _selectedMarker];
 	    
-        _counter = _counter + 1;
 	    _countActual = _countActual + 1;
     };
-};
+} forEach _heliSpawns;
 
 diag_log format["WASTELAND SERVER - %1 Static helis Spawned",_countActual];
 

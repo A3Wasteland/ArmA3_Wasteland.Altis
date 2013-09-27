@@ -34,6 +34,7 @@ if (isnil _mpPacketKey) then {
 
 		_mpPacketKey addPublicVariableEventHandler compileFinal "_this call TPG_fnc_MPexec";
 
+		/*
 		//--- Execute persistent functions
 		waituntil {!isnil "bis_functions_mainscope"};
 		_queue = bis_functions_mainscope getvariable ["BIS_fnc_MP_queue",[]];
@@ -76,6 +77,7 @@ if (isnil _mpPacketKey) then {
 				};
 			} foreach _queue;
 		};
+		*/
 		
 		// ["BIS_fnc_initMultiplayer"] call bis_fnc_endLoadingScreen;
 	};

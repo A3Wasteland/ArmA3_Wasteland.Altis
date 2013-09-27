@@ -89,7 +89,7 @@ class Mission
 	randomSeed=14957468;
 	class Intel
 	{
-		briefingName="A3Wasteland Altis v0.9 Beta";
+		briefingName="A3Wasteland Altis v0.9b";
 		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3Wasteland.com for more details";
 		resistanceWest=0;
 		startWeather=0.10000001;
@@ -2141,10 +2141,10 @@ class Mission
 	};
 	class Markers
 	{
-		items=95;
+		items=107;
 		class Item0
 		{
-			position[]={3485.074,8.067543,12969.054};
+			position[]={3612.1487,12.11851,13020.892};
 			name="Town_1";
 			type="Empty";
 			colorName="ColorRed";
@@ -2326,7 +2326,7 @@ class Mission
 		};
 		class Item26
 		{
-			position[]={14415.034,38.228863,18987.818};
+			position[]={14428.164,38.275105,18984.73};
 			name="heliSpawn_6";
 			type="Empty";
 			colorName="ColorGreen";
@@ -2361,7 +2361,7 @@ class Mission
 		};
 		class Item31
 		{
-			position[]={17412.98,13.844053,13186.057};
+			position[]={17411.523,14.13992,13175.231};
 			name="heliSpawn_11";
 			type="Empty";
 			colorName="ColorGreen";
@@ -2375,7 +2375,7 @@ class Mission
 		};
 		class Item33
 		{
-			position[]={9247.7344,15.182286,11955.975};
+			position[]={9247.4893,15.199592,11962.815};
 			name="heliSpawn_13";
 			type="Empty";
 			colorName="ColorGreen";
@@ -2564,7 +2564,7 @@ class Mission
 		};
 		class Item61
 		{
-			position[]={3762.9583,15.128849,13771.925};
+			position[]={3805.4927,15.651279,13676.223};
 			name="Town_13";
 			type="Empty";
 			colorName="ColorRed";
@@ -2627,14 +2627,14 @@ class Mission
 		};
 		class Item70
 		{
-			position[]={23150.945,3.1900001,18958.885};
+			position[]={23109.014,3.1900001,18957.438};
 			name="heliSpawn_20";
 			type="Empty";
 			colorName="ColorGreen";
 		};
 		class Item71
 		{
-			position[]={23145.785,3.1900001,18394.602};
+			position[]={23107.654,3.1900001,18402.283};
 			name="heliSpawn_21";
 			type="Empty";
 			colorName="ColorGreen";
@@ -2648,7 +2648,7 @@ class Mission
 		};
 		class Item73
 		{
-			position[]={27147.402,24.713514,24893.961};
+			position[]={27108.734,24.523888,24922.395};
 			name="heliSpawn_23";
 			type="Empty";
 			colorName="ColorGreen";
@@ -2691,7 +2691,7 @@ class Mission
 		class Item79
 		{
 			position[]={3523.8828,-5.7158845e-006,13714.704};
-			name="boatSpawn_17";
+			name="boatSpawn_15";
 			type="Empty";
 			colorName="ColorBlue";
 		};
@@ -2798,6 +2798,94 @@ class Mission
 			position[]={9268.2002,0.30144197,15870.6};
 			name="Store_Gen_4";
 			type="Empty";
+		};
+		class Item95
+		{
+			position[]={27638.926,-0.015435035,24535.307};
+			name="boatSpawn_16";
+			type="Empty";
+			colorName="ColorBlue";
+		};
+		class Item96
+		{
+			position[]={20620.508,-4.2066345e-006,19465.514};
+			name="boatSpawn_17";
+			type="Empty";
+			colorName="ColorBlue";
+		};
+		class Item97
+		{
+			position[]={20653.291,-0.00034511639,19496.777};
+			name="boatSpawn_18";
+			type="Empty";
+			colorName="ColorBlue";
+		};
+		class Item98
+		{
+			position[]={15313.724,7.6848111e-005,15805.473};
+			name="boatSpawn_19";
+			type="Empty";
+			colorName="ColorBlue";
+		};
+		class Item99
+		{
+			position[]={15358.271,0.0016034088,15814.451};
+			name="boatSpawn_20";
+			type="Empty";
+			colorName="ColorBlue";
+		};
+		class Item100
+		{
+			position[]={15461.659,2.0609285e-005,15824.374};
+			name="boatSpawn_22";
+			type="Empty";
+			colorName="ColorBlue";
+		};
+		class Item101
+		{
+			position[]={15407.742,-0.0050302646,15821.843};
+			name="boatSpawn_21";
+			type="Empty";
+			colorName="ColorBlue";
+		};
+		class Item102
+		{
+			position[]={14293.118,17.827518,15828.741};
+			name="planeSpawn_1";
+			type="Empty";
+			colorName="ColorIndependent";
+			angle=43;
+		};
+		class Item103
+		{
+			position[]={11686.105,23.226604,11935.91};
+			name="planeSpawn_2";
+			type="Empty";
+			colorName="ColorIndependent";
+			angle=213;
+		};
+		class Item104
+		{
+			position[]={21071.609,26.485487,7087.4146};
+			name="planeSpawn_3";
+			type="Empty";
+			colorName="ColorIndependent";
+			angle=11;
+		};
+		class Item105
+		{
+			position[]={23142.338,3.1900001,18400.391};
+			name="planeSpawn_4";
+			type="Empty";
+			colorName="ColorIndependent";
+		};
+		class Item106
+		{
+			position[]={26821.646,24.548574,24520.619};
+			name="planeSpawn_5";
+			type="Empty";
+			colorName="ColorIndependent";
+			angle=38;
 		};
 	};
 };

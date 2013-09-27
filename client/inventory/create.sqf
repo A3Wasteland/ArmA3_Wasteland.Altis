@@ -30,7 +30,7 @@ _item set [ICON, _this select 4];
 _item set [MAX, _this select 5];
 _item call mf_inventory_set;
 
-_label = format ['<img image="%1" width="32" height="32" /> Take %2', _item select 5, _item select 2];
+_label = format ['<img image="%1" /> Take %2', _item select 5, _item select 2];
 _condition = format['not isNull ("%1" call mf_inventory_takeable);', _item select 0];
 _action = [_label, mf_inventory_take, _item select 0, 1, false, false, "", _condition];
 [format["take-%1", _this select 0], _action] call mf_player_actions_set;

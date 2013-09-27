@@ -8,7 +8,7 @@ if (!isNil "storeSellingHandle" && {!scriptDone storeSellingHandle}) exitWith {h
 
 if (currentWeapon player == "") then
 {
-	hint "You currently don't have a weapon in your hand to sell!";
+	hint "You currently don't have a weapon in your hands to sell!";
 }
 else
 {

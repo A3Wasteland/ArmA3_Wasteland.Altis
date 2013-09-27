@@ -96,8 +96,6 @@ for "_i" from 0 to (count _hitPoints - 1) do
 	};
 };
 
-_unit spawn vehicleRepair;
-
 // Start monitoring the vehicle
 while {_run} do 
 {	
