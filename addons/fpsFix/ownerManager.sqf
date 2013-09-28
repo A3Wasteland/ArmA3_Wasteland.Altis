@@ -20,7 +20,7 @@ _this addEventHandler ["GetOut",
 		if !(_veh getVariable ["fpsFix_getOutEvent", false]) then
 		{
 			_veh setVariable ["fpsFix_getOutEvent", true];
-			sleep 5;
+			sleep 1; // 5;
 			
 			if (!local _veh && {isNull driver _veh}) then
 			{
@@ -33,8 +33,12 @@ _this addEventHandler ["GetOut",
 					vehicle _unit == _veh
 				};
 				
-				_unit leaveVehicle _veh;
-				moveOut _unit;
+				waitUntil 
+				{
+					moveOut _unit;
+					vehicle _unit != _veh
+				};
+				
 				deleteVehicle _unit;
 				deleteGroup _grp;
 			};
