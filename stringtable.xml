@@ -130,19 +130,19 @@
 	</Package>
 	<Package name="Errors">
 		<Key ID="STR_WL_Errors_InProgress">
-			<English>YOU ARE ALREADY PERFORMING ANOTHER ACTION!</English>
+			<English>You are already performing another action!</English>
 		</Key>
 		<Key ID="STR_WL_Errors_InVehicle">
-			<English>YOU ARE CURRENTLY BUSY!</English>
+			<English>You are currently busy!</English>
 		</Key>
 		<Key ID="STR_WL_Errors_BeaconActive">
-			<English>YOU ALREADY HAVE AN ACTIVE SPAWN BEACON!</English>
+			<English>You already have an active spawn beacon!</English>
 		</Key>
 		<Key ID="STR_WL_Errors_BeaconInVehicle">
-			<English>YOU CANNOT ENTER A VEHICLE WHILE PLACING A SPAWN BEACON!</English>
+			<English>You cannot enter a vehicle while placing a spawn beacon!</English>
 		</Key>		
 		<Key ID="STR_WL_Errors_BeaconTooMany">
-			<English>YOU ARE ALREADY HAVE TOO MANY OF THAT OBJECT!</English>
+			<English>You cannot take more spawn beacons!</English>
 		</Key>						
 	</Package>
 </Project>
