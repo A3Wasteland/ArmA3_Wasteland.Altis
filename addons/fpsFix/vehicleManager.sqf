@@ -3,10 +3,12 @@
 //	@file Author: AgentRev
 //	@file Created: 14/09/2013 19:19
 
-// This script must be spawned or execVM'd once on every client.
-// For A3Wasteland, it is execVM'd at the end of "client\init.sqf"
+// This script will increase client FPS by 30 to 50% for missions with a lot of vehicles spread throughout the map.
+// It must be spawned or execVM'd once on every client. For A3Wasteland, it is execVM'd at the end of "client\init.sqf"
 
-// If you decide to use this script in another mission, a little mention in the credits would be appreciated :) - AgentRev
+// If you decide to use this in another mission, a little mention in the credits would be appreciated :) - AgentRev
+
+if (isServer) exitWith {};
 
 private ["_vehicleManager", "_lastPos"];
 
@@ -23,7 +25,8 @@ _vehicleManager =
 	{
 		_vehicle = _x;
 		
-		if (_vehicle distance player > 2000 && 
+		if (!local _vehicle &&
+		   {_vehicle distance player > 2000} && 
 		   {count crew _vehicle == 0} && 
 		   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < time} &&
 		   {(velocity _vehicle) call BIS_fnc_magnitude < 0.1} &&
