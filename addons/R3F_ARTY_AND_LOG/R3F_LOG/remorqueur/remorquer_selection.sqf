@@ -44,16 +44,16 @@ else
 					// On mémorise aussi sur le réseau que le canon est attaché en remorque
 					_objet setVariable ["R3F_LOG_est_transporte_par", _remorqueur, true];
 					
-					player playMove "AinvPknlMstpSlayWrflDnon_medic";
+					player switchMove "AinvPknlMstpSlayWrflDnon_medic";
 					
-					player addEventHandler ["AnimDone", 
+					/*player addEventHandler ["AnimDone", 
 					{
 						if (_this select 1 == "AinvPknlMstpSlayWrflDnon_medic") then
 						{
 							player switchMove "";
 							player removeAllEventHandlers "AnimDone";
 						};
-					}];
+					}];*/
 					
 					if ((getPosASL player) select 2 > 0) then
 					{
@@ -146,6 +146,8 @@ else
 					};
 					
 					sleep 5;
+					
+					player switchMove "";
                 }
 				else {
                 	player globalChat "You can't tow more than one vehicle.";    

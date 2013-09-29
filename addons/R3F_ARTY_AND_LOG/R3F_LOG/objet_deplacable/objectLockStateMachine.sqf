@@ -29,13 +29,8 @@ switch (_lockState) do {
 		
 		for "_iteration" from 1 to _lockDuration do {
 		    
-            if(player distance _currObject > 5) exitWith { // If the player dies, revert state.
+            if (player distance _currObject > 5 || !alive player) exitWith { // If the player is too far or dies, revert state.
 		        2 cutText ["Object lock interrupted...", "PLAIN DOWN", 1];
-                R3F_LOG_mutex_local_verrou = false;
-			};
-            
-            if (!(alive player)) exitWith {// If the player dies, revert state.
-				2 cutText ["Object lock interrupted...", "PLAIN DOWN", 1];
                 R3F_LOG_mutex_local_verrou = false;
 			};
             
@@ -57,7 +52,7 @@ switch (_lockState) do {
 		    }; 
 		};
 		
-		player SwitchMove "amovpknlmstpslowwrfldnon_amovpercmstpsraswrfldnon"; // Redundant reset of animation state to avoid getting locked in animation.       
+		player switchMove ""; // Redundant reset of animation state to avoid getting locked in animation.       
     };
     case 1:{ // UNLOCK
         
@@ -70,13 +65,8 @@ switch (_lockState) do {
 		
 		for "_iteration" from 1 to _unlockDuration do {
 		    
-            if(player distance _currObject > 5) exitWith { // If the player dies, revert state.
+            if (player distance _currObject > 5 || !alive player) exitWith { // If the player is too far or dies, revert state.
 		        2 cutText ["Object unlock interrupted...", "PLAIN DOWN", 1];
-                R3F_LOG_mutex_local_verrou = false;
-			};
-            
-            if (!(alive player)) exitWith {// If the player dies, revert state.
-				2 cutText ["Object unlock interrupted...", "PLAIN DOWN", 1];
                 R3F_LOG_mutex_local_verrou = false;
 			};
             
@@ -98,7 +88,7 @@ switch (_lockState) do {
 		    }; 
 		};
 		
-		player SwitchMove "amovpknlmstpslowwrfldnon_amovpercmstpsraswrfldnon"; // Redundant reset of animation state to avoid getting locked in animation.     
+		player switchMove ""; // Redundant reset of animation state to avoid getting locked in animation.     
     };
     default{  // This should not happen... 
         diag_log format["WASTELAND DEBUG: An error has occured in LockStateMachine.sqf. _lockState was unknown. _lockState actual: %1", _lockState];
