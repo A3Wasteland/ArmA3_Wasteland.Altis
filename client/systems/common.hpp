@@ -192,9 +192,9 @@ class w_RscListBox
     };
 };
 
-class w_Rsclist
+class w_Rsclist : w_RscListBox
 {
-        type = CT_LISTBOX;
+    /*    type = CT_LISTBOX;
         style = 69;
         idc = -1;
         text = "";
@@ -231,7 +231,7 @@ class w_Rsclist
                 arrowFull = "client\ui\ui_arrow_top_active_ca.paa";
                 arrowEmpty = "client\ui\ui_arrow_top_ca.paa";
                 border = "client\ui\ui_border_scroll_ca.paa";
-        };
+        };*/
 };
 
 class w_RscPicture 
