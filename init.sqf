@@ -19,7 +19,8 @@ if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
 if (isNull player) then { X_JIP = true };
 
-[DEBUG] call compile preprocessFileLineNumbers "globalCompile.sqf";
+_globalCompile = [DEBUG] execVM "globalCompile.sqf";
+waitUntil {scriptDone _globalCompile};
 
 [] spawn
 {
