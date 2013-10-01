@@ -28,7 +28,7 @@ _grp = _this select 0;
 _pos = _this select 1;
 _vehicleType = if (count _this > 2) then { _this select 2 } else { "StaticWeapon" };
 
-_grp setBehaviour "SAFE";
+_grp setBehaviour "AWARE";
 _grp allowFleeing 0;
 
 // Static weapons

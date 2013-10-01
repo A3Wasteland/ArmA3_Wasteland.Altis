@@ -1,4 +1,3 @@
-
 //	@file Version: 1.0
 //	@file Name: sellWeapon.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy
@@ -34,4 +33,3 @@ player removeMagazines _magazine;
 
 player setVariable [cmoney, (player getVariable [cmoney, 0]) + _weapon_value, true];
 hint format["You sold your gun for $%1", _weapon_value];
-

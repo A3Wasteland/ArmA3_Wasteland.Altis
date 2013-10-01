@@ -46,13 +46,13 @@ _minimumFog = 0;
 
 // Fog intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumFog
 // (0 = no fog, 1 = pea soup). (Suggested value: 0.8).
-_maximumFog = 0.2;
+_maximumFog = 0.15;
 
 // New ArmA3 facilities added by Bewilderbeest
-_minimumFogDecay = 0.01;
-_maximumFogDecay = 0.03;
-_minimumFogBase = 0;
-_maximumFogBase = 100;
+_minimumFogDecay = 0.001;
+_maximumFogDecay = 0.001;
+_minimumFogBase = 1000;
+_maximumFogBase = 1000;
 
 // Overcast intensity never falls below this value. Must be between 0 and 1 and less than or equal to _maximumOvercast
 // (0 = no overcast, 1 = maximum overcast). (Suggested value: 0).
@@ -68,7 +68,7 @@ _minimumRain = 0;
 
 // When raining, rain intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumRain
 // (0 = no rain, 1 = maximum rain intensity). (Suggested value: 0.8);
-_maximumRain = 0.8;
+_maximumRain = 1;
 
 // Wind vector strength never falls below this value. Must be greater or equal to 0 and less than or equal to _maximumWind.
 // (Suggested value: 0);
@@ -93,7 +93,7 @@ _rainIntervalRainProbability = 20;
 
 // Minimum time in minutes for rain intervals. Must be greater or equal to 0 and less than or equal to _maxRainIntervalTimeMin.
 // (Suggested value: 0).
-_minRainIntervalTimeMin = 0;
+_minRainIntervalTimeMin = 1;
 
 // Maximum time in minutes for rain intervals. Must be greater than or equal to _minRainIntervalTimeMin. (Suggested value:
 // (_maxWeatherChangeTimeMin + _maxTimeBetweenWeatherChangesMin) / 2).
@@ -184,6 +184,13 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
     _timeUntilCompletion = _this select 5;
     _currentWindX = _this select 6;
     _currentWindZ = _this select 7;
+	
+	if (typeName _currentFog == "ARRAY") then {
+		_currentFog set [0, (_currentFog select 0) max (_currentRain / 4)];
+	}
+	else {
+		_currentFog = _currentFog max (_currentRain / 4);
+	};
     
 	// Set current weather values
 	if (date select 2 > 4 && date select 2 < 19) then
@@ -194,7 +201,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 	{
 		0 setOvercast (0.1 max _currentOvercast);
 	};
-    0 setFog _currentFog;
+	0 setFog [_currentFog max (_currentRain / 4), 0.001, 1000];
     drn_var_DynamicWeather_Rain = _currentRain;
     setWind [_currentWindX, _currentWindZ, true];
 	
@@ -217,10 +224,17 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 		{
 			_timeUntilCompletion setOvercast (0.1 max (_targetWeatherValue call drn_fnc_overcastOdds));
 		};
-		5 setFog 0; // Quick hack to ensure fog goes away regularly
+		5 setFog [_currentRain / 4, 0.001, 1000]; // Quick hack to ensure fog goes away regularly
+		_currentFog
     };
     if (_currentWeatherChange == "FOG") then {
-        _timeUntilCompletion setFog _targetWeatherValue;
+		if (typeName _targetWeatherValue == "ARRAY") then {
+			_targetWeatherValue set [0, (_targetWeatherValue select 0) max (_currentRain / 4)];
+		}
+		else {
+			_targetWeatherValue = _targetWeatherValue max (_currentRain / 4);
+		};
+		_timeUntilCompletion setFog _targetWeatherValue;
     };
 };
 
@@ -280,7 +294,7 @@ if (isServer) then {
         };
     };
 	
-    0 setFog (((_initialFog / _maximumFog) call drn_fnc_fogOdds) * _maximumFog);
+	0 setFog [(((_initialFog / _maximumFog) call drn_fnc_fogOdds) * _maximumFog) max (rain / 4), 0.001, 1000];
 	
     if (_initialOvercast == -1) then {
         _initialOvercast = (_minimumOvercast + random (_maximumOvercast - _minimumOvercast));
@@ -315,6 +329,8 @@ if (isServer) then {
     
     drn_var_DynamicWeather_Rain = _initialRain;
     0 setRain drn_var_DynamicWeather_Rain;
+	0 setFog [drn_var_DynamicWeather_Rain / 4, 0.001, 1000];
+    
     
     _maxWind = _minimumWind + random (_maximumWind - _minimumWind);
     
@@ -615,6 +631,7 @@ if (isServer) then {
     };
     
     0 setRain _rain;
+	0 setFog [fog max (_rain / 4), 0.001, 1000];
     sleep 0.1;
     
     while {true} do {
@@ -633,6 +650,7 @@ if (isServer) then {
         };
         
         3 setRain _rain;
+		3 setFog [fog max (_rain / 4), 0.001, 1000];
         
         sleep 10;
     };

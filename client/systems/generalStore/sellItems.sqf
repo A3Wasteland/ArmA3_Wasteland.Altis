@@ -40,4 +40,4 @@ if(_itemText == "Warchest") then {[MF_ITEMS_ENERGY_DRINK, 1] call mf_inventory_r
 
 player setVariable["cmoney",_playerMoney + _price,true];
 _playerMoneyText CtrlsetText format["Cash: $%1", player getVariable "cmoney"];
-[] execVM "client\systems\generalStore\getInventory.sqf";
+[] execVM "client\systems\generalStore\getInventory.sqf";

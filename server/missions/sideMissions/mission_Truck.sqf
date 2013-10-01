@@ -28,7 +28,7 @@ diag_log format["WASTELAND SERVER - Side Mission Resumed: %1",_missionType];
 
 [_missionMarkerName,_randomPos,_missionType] call createClientMarker;
 
-_vehicleClass = ["B_Truck_01_covered_F", "B_Truck_01_fuel_F", "B_Truck_01_medical_F", "B_Truck_01_repair_F", "O_Truck_02_covered_F", "O_Truck_02_fuel_F", "O_Truck_02_medical_F", "O_Truck_02_repair_F", "I_Truck_02_covered_F", "I_Truck_02_fuel_F", "I_Truck_02_medical_F", "I_Truck_02_repair_F"] call BIS_fnc_selectRandom;
+_vehicleClass = ["B_Truck_01_covered_F", "B_Truck_01_fuel_F", "B_Truck_01_medical_F", "B_Truck_01_Repair_F", "O_Truck_02_covered_F", "O_Truck_02_fuel_F", "O_Truck_02_medical_F", "O_Truck_02_box_F", "I_Truck_02_covered_F", "I_Truck_02_fuel_F", "I_Truck_02_medical_F", "I_Truck_02_box_F"] call BIS_fnc_selectRandom;
 
 //Vehicle Class, Posistion, Fuel, Ammo, Damage
 _vehicle = [_vehicleClass,_randomPos,1,1,0,"NONE"] call createMissionVehicle;
@@ -38,6 +38,7 @@ _vehicle call fn_refilltruck;
 _picture = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "displayName");
 
+// Remove " (Covered)" from vehicle name when applicable
 if ([_vehicleName, (count toArray _vehicleName) - 10] call BIS_fnc_trimString == " (Covered)") then
 {
 	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 11] call BIS_fnc_trimString;

@@ -39,7 +39,6 @@ _vehicleClass = ["B_Boat_Armed_01_minigun_F", "O_Boat_Armed_01_hmg_F", "I_Boat_A
 
 //Vehicle Class, Posistion, Fuel, Ammo, Damage
 _vehicle = [_vehicleClass,_randomPos,0,1,0,"NONE"] call createMissionVehicle2;
-_vehicle setVariable [call vChecksum, true, false];
 
 _slbox = createVehicle ["Box_IND_WpsSpecial_F",[(_randomPos select 0), (_randomPos select 1),0],[], 0, "NONE"];
 [_slbox,"mission_Main_A3snipers"] call fn_refillbox;

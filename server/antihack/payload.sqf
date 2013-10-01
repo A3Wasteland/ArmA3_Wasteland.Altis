@@ -25,20 +25,7 @@ for "_i" from 0 to (count _cfgPatches - 1) do
     };
 };
 
-/*
-{
-	if (loadFile _x != "") exitWith
-	{
-		// diag_log "ANTI-HACK 0.8.0: Found a hack menu!";
-
-		_cheatFlag = ["hack menu", _x];
-	};
-} forEach ["used for hacking", "wuat\screen.sqf", "menu\exec.sqf", "scripts\fazeddays.sqf", "vet@folder\vet@start.sqf", "WookieMenuV5.sqf", "menu\initmenu.sqf", "scripts\WookieMenuFinal.sqf", "LystoArma3\start.sqf", "fazeddays.sqf", "ShadowyFaze\exec.sqf", "WookieMenuFinal.sqf", "wuat\exec.sqf", "crinkly\keymenu.sqf", "scripts\ajmenu.sqf", "Wookie_Beta\start.sqf", "jestersMENU\exec.sqf", "scripts\WookieMenuV5.sqf", "scripts\WookieMenu.sqf", "scr\start.sqf", "WookieMenu.sqf", "wookie_wuat\startup.sqf", "scripts\defaultmenu.sqf"];
-*/
-
 // diag_log "ANTI-HACK 0.8.0: Starting loop!";
-
-// diag_log "ANTI-HACK 0.8.0: Detection of hack variables started!";
 
 while { true } do
 {			
@@ -75,13 +62,8 @@ while { true } do
 		
 		[[profileName, getPlayerUID player, _cheatFlag select 0, _cheatFlag select 1, _flagChecksum], "flagHandler", false, false] call TPG_fnc_MP;
 		
-		endMission "LOSER";
-		
-		for "_i" from 0 to 99 do
-		{
-			(findDisplay _i) closeDisplay 0;
-		};
+		[getPlayerUID player, _flagChecksum] call clientFlagHandler;
 	};
 	
-	sleep 30;
+	sleep 5;
 };

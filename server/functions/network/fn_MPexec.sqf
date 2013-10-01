@@ -109,7 +109,7 @@ if (ismultiplayer && _mode == 0) then {
 		_blockedParam = [["createMine","createUnit","createVehicle","money","toString","publicVariableClient","AAN","3dCredits","spawnCrew","spawnEnemy","spawnGroup","spawnVehicle","BIS_fnc_MP_packet","vChecksum"], [str _params] call fn_filterString] call fn_findString;
 		_blockedFunction = [["creat","spawning","AAN","3dCredits","spawnCrew","spawnEnemy","spawnGroup","spawnVehicle"], [_functionName] call fn_filterString] call fn_findString;
 		
-		_defineServerRules = (_functionName == "BIS_fnc_execVM" && {typeName _params == typeName []} && {count _params > 1} && {typeName (_params select 1) == typeName ""} && {_params select 1 == "client\functions\defineServerRules.sqf"});
+		_defineServerRules = (_functionName == "BIS_fnc_execVM" && {[_params, 1, "", [""]] call BIS_fnc_param == "client\functions\defineServerRules.sqf"});
 		
 		if (_functionName in _allowedFunctions || {_defineServerRules} || {_blockedParam == -1 && _blockedFunction == -1}) then
 		{
@@ -129,7 +129,7 @@ if (ismultiplayer && _mode == 0) then {
 		{
 			if (isServer) then
 			{
-				diag_log format ["TPG_fnc_MPexec: An unknown player attempted to execute: function=%2 parameters=[%1]", _function, _params];
+				diag_log format ["TPG_fnc_MPexec: An unknown player attempted to execute: function=%2 parameters=[%1]", _functionName, _params];
 			};
 		};
 	};

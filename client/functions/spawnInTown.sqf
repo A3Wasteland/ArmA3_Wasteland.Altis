@@ -33,6 +33,4 @@ closeDialog 0;
 sleep 5;
 
 _mins = date select 4;
-[
-	"Wasteland", _townName, format ["%1:%3%2", date select 3, _mins, if (_mins < 10) then {"0"} else {""}]
-] spawn BIS_fnc_infoText;
+["Wasteland", _townName, format ["%1:%3%2", date select 3, _mins, if (_mins < 10) then {"0"} else {""}]] spawn BIS_fnc_infoText;

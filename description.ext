@@ -9,13 +9,13 @@ class Header
 {
 	gameType=Sandbox;
 	minPlayers=1;
-	maxPlayers=113;
+	maxPlayers=108;
 };
-author="Team Wasteland (A3Wasteland.com)";
+author="Team Wasteland - A3Wasteland.com";
 onLoadName = "A3Wasteland Altis";
-onLoadMission = "Wasteland is a harsh survival sandbox where two teams, and independent players fight for survival.";
-overviewText = "Wasteland is a harsh survival sandbox where two teams, and independent players fight for survival.";
-overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams, and independent players fight for survival.";
+onLoadMission = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
+overviewText = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
+overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewPicture = "Loading.jpg";
 
 //Dialog includes

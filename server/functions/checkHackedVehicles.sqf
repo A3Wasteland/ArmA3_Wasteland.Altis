@@ -23,8 +23,8 @@ _hackedVehicles = [];
 			_name = ""
 		};
 		
-		_hackedVehicles set [count _hackedVehicles, [netId _x, _name]];
+		_hackedVehicles set [count _hackedVehicles, [netId _x, toArray _name]];
 	};
 } forEach vehicles;
 
-[compile format ["hackedVehicles = [%1, '%2']", _hackedVehicles, _checksum], "BIS_fnc_spawn", _client, false] call TPG_fnc_MP;
+[[[_hackedVehicles, _checksum], {hackedVehicles = _this}], "BIS_fnc_spawn", _client, false] call TPG_fnc_MP;

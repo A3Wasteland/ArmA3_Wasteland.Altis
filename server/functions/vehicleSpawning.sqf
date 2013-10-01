@@ -1,6 +1,6 @@
 //	@file Version: 2
 //	@file Name: vehicleSpawning.sqf
-//	@file Author: JoSchaap
+//	@file Author: [GoT] JoSchaap, AgentRev
 //  new one, no longer requires Spawn_ markers but uses the town's radius in config.sqf to pick the ammount of vehicles
 
 if (!isServer) exitWith {};
@@ -43,13 +43,11 @@ _createRandomVehicle =
 	//diag_log format ["Vehicle spawn #%1 done", _counter];
 };
 
-_vehammount = ceil (_tradius / 30);
-
 {
 	_pos = getMarkerPos (_x select 0);
 	_tradius = _x select 1;
 	_townname = _x select 2;
-	_vehammount = ceil (_tradius / 30);  // spawns a vehicle for every 30m radius the townmarker has, this might need tweaking! 
+	_vehammount = ceil (_tradius / 20);  // spawns a vehicle for every 20m radius the townmarker has, this might need tweaking! 
 	_angleIncr = 360 / _vehammount;
 	_langle = random _angleIncr;
 	//_minrad = 15;
@@ -59,7 +57,7 @@ _vehammount = ceil (_tradius / 30);
 	
 	while {_lcounter < _vehammount} do
 	{
-		_lpos = [_pos, [[_tradius / 2, 0, 0], _langle] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
+		_lpos = [_pos, [[_maxrad, 0, 0], _langle] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 		_spawnedVehicles set [count _spawnedVehicles, [_lpos, _minrad, _maxrad, _counter] spawn _createRandomVehicle];
 		//_minrad = _minrad + 15;
 		//_maxrad = _maxrad + 15;

@@ -13,7 +13,7 @@ X_Server = false;
 X_Client = false;
 X_JIP = false;
 hitStateVar = false;
-versionName = "Beta v0.9";
+versionName = "v0.9b";
 
 if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };

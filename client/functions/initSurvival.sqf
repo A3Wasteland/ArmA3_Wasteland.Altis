@@ -5,9 +5,9 @@
 //	@file Args:
 
 #define TIME_DELTA 1 //seconds between each "check"
-#define HEALTH_TIME (180*3) //seconds till death
-#define HUNGER_TIME (1800*3) //seconds till starving
-#define THIRST_TIME (1500*3) //seconds till dehydrated
+#define HEALTH_TIME (60*5) //seconds till death
+#define HUNGER_TIME (60*60) //seconds till starving
+#define THIRST_TIME (60*50) //seconds till dehydrated
 #define HEALTH_DELTA TIME_DELTA*(100/HEALTH_TIME)/100
 #define HUNGER_DELTA TIME_DELTA*(100/HUNGER_TIME)
 #define THIRST_DELTA TIME_DELTA*(100/THIRST_TIME)

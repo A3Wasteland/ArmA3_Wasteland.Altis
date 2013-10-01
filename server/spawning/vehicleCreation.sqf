@@ -34,16 +34,11 @@ _pos = _markerPos;
 //Car Initialization
 _vehicle = createVehicle [_vehicleType, _pos, [], 0, "None"];
 
-_vehicle setVariable [call vChecksum, true, false];
+[_vehicle] call vehicleSetup;
 _vehicle setPosATL [_pos select 0, _pos select 1, 1.5];
 _vehicle setVelocity [0,0,0.01];
 
 [_vehicle, 900, 1800, 2700, 1000, 0, false, _markerPos] execVM "server\functions\vehicle.sqf";
-
-//Clear Vehicle Inventory
-clearMagazineCargoGlobal _vehicle;
-clearWeaponCargoGlobal _vehicle;
-clearItemCargoGlobal _vehicle;
 
 //Set Vehicle Attributes
 _vehicle setFuel (random 0.5 + 0.25);
@@ -70,5 +65,4 @@ if (_vehicleType isKindOf "Offroad_01_armed_base_F") then
 if (_type > 1) then { _vehicle setVehicleAmmo (random 1.0) };
 
 _vehicle setDir (random 360);
-_vehicle disableTIEquipment true;
 [_vehicle] call randomWeapons;

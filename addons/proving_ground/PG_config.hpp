@@ -29,7 +29,7 @@ class balca_debug_main
 				x = 0; w = column_weight-column_div;
 				y = 0;
 				text = "Create vehicle";
-				action = "if (isServer) then { closeDialog 0; createDialog ""balca_debug_veh_creator""; [0] call c_proving_ground_fnc_create_vehicle } else { closeDialog 0; createDialog ""balca_debug_veh_creator""; [0] call c_proving_ground_fnc_create_vehicle; ['WARNING! battleye will kick you if createvehicle is monitored!.','Notice'] spawn BIS_fnc_guiMessage }"; 
+				action = "if (isServer) then { closeDialog 0; createDialog ""balca_debug_veh_creator""; [0] call c_proving_ground_fnc_create_vehicle } else { closeDialog 0; createDialog ""balca_debug_veh_creator""; [0] call c_proving_ground_fnc_create_vehicle; ['You may get kicked if BattlEye is monitoring createVehicle.','WARNING'] spawn BIS_fnc_guiMessage }"; 
 			};
 
 			class balca_cWeap_btn : balca_debug_btn
@@ -103,7 +103,7 @@ class balca_debug_main
 				x = column_weight; w = column_weight-column_div;
 				y = btn_height*1;
 				text = "Autoheal";
-				action = "player setDamage 0"; 
+				action = "player setDamage 0; (vehicle player) setDamage 0;"; 
 			};
 
 			class balca_booster_btn : balca_debug_btn
@@ -159,7 +159,7 @@ class balca_debug_main
 				x = column_weight; w = column_weight-column_div;
 				y = btn_height*8;
 				text = "Console";
-				action = "closeDialog 0;createDialog ""balca_debug_console"";[0] call c_proving_ground_fnc_exec_console; if (!isServer) then { ['Using this may get you kicked by BattlEye.','WARNING'] spawn BIS_fnc_guiMessage }";
+				action = "closeDialog 0;createDialog ""balca_debug_console"";[0] call c_proving_ground_fnc_exec_console; if (!isServer) then { ['Some commands can get you kicked by BattlEye.','WARNING'] spawn BIS_fnc_guiMessage }";
 			};
 		//column 3
 			class balca_sound_btn : balca_debug_btn

@@ -1,4 +1,3 @@
-
 //	@file Version: 1.0
 //	@file Name: buyGuns.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy
