@@ -1999,22 +1999,7 @@ class Mission
 				};
 			};
 		};
-<<<<<<< HEAD
 		class Item60
-=======
-	};
-	class Markers
-	{
-		items=107;
-		class Item0
-		{
-			position[]={3612.1487,12.11851,13020.892};
-			name="Town_1";
-			type="Empty";
-			colorName="ColorRed";
-		};
-		class Item1
->>>>>>> origin/Development_main
 		{
 			side="CIV";
 			class Vehicles
@@ -2244,10 +2229,10 @@ class Mission
 	};
 	class Markers
 	{
-		items=112;
+		items=124;
 		class Item0
 		{
-			position[]={3485.074,8.067543,12969.054};
+			position[]={3612.1487,12.11851,13020.892};
 			name="Town_1";
 			type="Empty";
 			colorName="ColorRed";
@@ -3004,56 +2989,56 @@ class Mission
 			name="VehStore4_Spawn_Air";
 			type="Empty";
 		};
-		class Item95
+		class Item112
 		{
 			position[]={27638.926,-0.015435035,24535.307};
 			name="boatSpawn_16";
 			type="Empty";
 			colorName="ColorBlue";
 		};
-		class Item96
+		class Item113
 		{
 			position[]={20620.508,-4.2066345e-006,19465.514};
 			name="boatSpawn_17";
 			type="Empty";
 			colorName="ColorBlue";
 		};
-		class Item97
+		class Item114
 		{
 			position[]={20653.291,-0.00034511639,19496.777};
 			name="boatSpawn_18";
 			type="Empty";
 			colorName="ColorBlue";
 		};
-		class Item98
+		class Item115
 		{
 			position[]={15313.724,7.6848111e-005,15805.473};
 			name="boatSpawn_19";
 			type="Empty";
 			colorName="ColorBlue";
 		};
-		class Item99
+		class Item116
 		{
 			position[]={15358.271,0.0016034088,15814.451};
 			name="boatSpawn_20";
 			type="Empty";
 			colorName="ColorBlue";
 		};
-		class Item100
+		class Item117
 		{
 			position[]={15461.659,2.0609285e-005,15824.374};
 			name="boatSpawn_22";
 			type="Empty";
 			colorName="ColorBlue";
 		};
-		class Item101
+		class Item118
 		{
 			position[]={15407.742,-0.0050302646,15821.843};
 			name="boatSpawn_21";
 			type="Empty";
 			colorName="ColorBlue";
 		};
-		class Item102
+		class Item119
 		{
 			position[]={14293.118,17.827518,15828.741};
 			name="planeSpawn_1";
@@ -3061,7 +3046,7 @@ class Mission
 			colorName="ColorIndependent";
 			angle=43;
 		};
-		class Item103
+		class Item120
 		{
 			position[]={11686.105,23.226604,11935.91};
 			name="planeSpawn_2";
@@ -3069,7 +3054,7 @@ class Mission
 			colorName="ColorIndependent";
 			angle=213;
 		};
-		class Item104
+		class Item121
 		{
 			position[]={21071.609,26.485487,7087.4146};
 			name="planeSpawn_3";
@@ -3077,14 +3062,14 @@ class Mission
 			colorName="ColorIndependent";
 			angle=11;
 		};
-		class Item105
+		class Item122
 		{
 			position[]={23142.338,3.1900001,18400.391};
 			name="planeSpawn_4";
 			type="Empty";
 			colorName="ColorIndependent";
 		};
-		class Item106
+		class Item123
 		{
 			position[]={26821.646,24.548574,24520.619};
 			name="planeSpawn_5";
