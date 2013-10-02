@@ -12,75 +12,42 @@ if (mutexScriptInProgress) exitWith
 
 mutexScriptInProgress = true;
 
-private ["_bagDistance", "_lockDuration", "_originalState", "_moneyBags", "_moneyBag", "_money"];
+private ["_pickDistance", "_moneyObjects", "_moneyObj", "_money"];
 
-_bagDistance = 5;
-_lockDuration = 3;
-_originalState = animationState player;
+_pickDistance = 5;
 
-_moneyBags = nearestObjects [player, ["Land_Money_F"], _bagDistance];
+_moneyObjects = nearestObjects [player, ["Land_Money_F"], _pickDistance];
 
-if (count _moneyBags > 0) then
+if (count _moneyObjects > 0) then
 {
-	_moneyBag = _moneyBags select 0;
+	_moneyObj = _moneyObjects select 0;
 };
 
-if (isNil "_moneyBag") exitWith
+if (isNil "_moneyObj" || {player distance _moneyObj > _pickDistance}) exitWith
 {
-	player globalChat "You are too far to pick the money up.";
+	titleText ["You are too far to pick the money up.", "PLAIN DOWN", 5];
 	mutexScriptInProgress = false;
 };
 
-if (!((toLower (_moneyBag getVariable ["owner", ""])) in ["world", getPlayerUID player])) exitWith
+if (vehicle player != player) exitWith
 {
-	player globalChat "This bag is empty or already in use.";
+	titleText ["You can't pick up money while in a vehicle", "PLAIN DOWN", 5];
+	player action ["Eject", vehicle player];
 	mutexScriptInProgress = false;
 };
 
-_moneyBag setVariable ["owner", getPlayerUID player, true];
+_money = _moneyObj getVariable ["money", 0];
+deleteVehicle _moneyObj;
+if (_money < 0) then { _money = 0 };
+player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
 
-for "_i" from 1 to _lockDuration do 
+if (_money > 0) then
 {
-	if (vehicle player != player) exitWith
-	{
-		player globalChat "You can't pick up money while in a vehicle.";
-		player action ["eject", vehicle player];
-		sleep 1;
-		_moneyBag setVariable ["owner", "world", true];
-		mutexScriptInProgress = false;
-	};
-	
-	if (animationState player != "AinvPknlMstpSlayWrflDnon_medic") then 
-	{
-		player switchMove "AinvPknlMstpSlayWrflDnon_medic";
-	};
-	
-	sleep 1;
-	
-	if (player distance _moneyBag > _bagDistance) exitWith
-	{
-		_moneyBag setVariable ["owner", "world", true];
-		player switchMove _originalState;
-		mutexScriptInProgress = false;
-		player globalChat "You are too far to pick the money up.";
-	};
-	
-	if (_i >= _lockDuration) exitWith
-	{
-		_money = _moneyBag getVariable ["money", 0];
-		deleteVehicle _moneyBag;
-		if (_money < 0) then { _money = 0 };
-		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
-		player switchMove _originalState;
-		mutexScriptInProgress = false;
-		
-		if (_money > 0) then
-		{
-			player globalChat format ["You have picked up $%1", _money];
-		}
-		else
-		{
-			player globalChat "The money was counterfeit!";
-		};
-	};
+	titleText [format ["You have picked up $%1", _money], "PLAIN DOWN", 5];
+}
+else
+{
+	titleText ["The money was counterfeit!", "PLAIN DOWN", 5];
 };
+
+mutexScriptInProgress = false;
