@@ -10,28 +10,27 @@
 
 if (isServer) exitWith {};
 
-private ["_vehicleManager", "_lastPos"];
+private ["_vehicleManager", "_lastPos", "_camPos"];
 
 _vehicleManager = 
 {
-	private ["_eventCode", "_vehicle"];
+	private ["_eventCode", "_vehicle", "_camPos"];
 	
 	_eventCode = 
 	{
 		(_this select 0) enableSimulation true;
-		(_this select 0) setVariable ["fpsFix_simulationCooloff", time + 10];
+		(_this select 0) setVariable ["fpsFix_simulationCooloff", time + 15];
 	};
 
 	{
 		_vehicle = _x;
+		_camPos = positionCameraToWorld [0,0,0];
 		
 		if (!local _vehicle &&
-		   {_vehicle distance player > 2000} && 
+		   {_vehicle distance _camPos > 1500} && 
 		   {count crew _vehicle == 0} && 
 		   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < time} &&
-		   {(velocity _vehicle) call BIS_fnc_magnitude < 0.1} &&
-		   {isNull (_vehicle getVariable ["R3F_LOG_est_transporte_par", objNull])} && 
-		   {isNull (_vehicle getVariable ["R3F_LOG_est_deplace_par", objNull])}) then
+		   {(velocity _vehicle) call BIS_fnc_magnitude < 0.1}) then
 		{
 			if (simulationEnabled _vehicle) then
 			{
@@ -64,10 +63,12 @@ _lastPos = [0,0,0];
 
 while {true} do
 {
-	if (_lastPos distance player > 100) then
+	_camPos = positionCameraToWorld [0,0,0];
+	
+	if (_lastPos distance _camPos > 150) then
 	{
+		_lastPos = _camPos;
 		call _vehicleManager;
-		_lastPos = getPos player;
 	};
 	
 	sleep 5;
