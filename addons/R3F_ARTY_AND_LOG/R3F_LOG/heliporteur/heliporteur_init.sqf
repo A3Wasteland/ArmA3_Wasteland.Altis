@@ -1,7 +1,7 @@
 /**
- * Initialise un véhicule héliporteur
+ * Initialise un vÃ©hicule hÃ©liporteur
  * 
- * @param 0 l'héliporteur
+ * @param 0 l'hÃ©liporteur
  */
 
 private ["_heliporteur", "_est_desactive", "_heliporte"];
@@ -14,13 +14,13 @@ if (isNil "_est_desactive") then
 	_heliporteur setVariable ["R3F_LOG_disabled", false];
 };
 
-// Définition locale de la variable si elle n'est pas définie sur le réseau
+// DÃ©finition locale de la variable si elle n'est pas dÃ©finie sur le rÃ©seau
 _heliporte = _heliporteur getVariable "R3F_LOG_heliporte";
 if (isNil "_heliporte") then
 {
 	_heliporteur setVariable ["R3F_LOG_heliporte", objNull, false];
 };
 
-_heliporteur addAction [("<img image=""client\icons\r3f_lift.paa""/> <t color=""#ffff00"">" + STR_R3F_LOG_action_heliporter + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\heliporteur\heliporter.sqf", nil, 6, true, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_heliporter_valide"];
+_heliporteur addAction [("<img image='client\icons\r3f_tow.paa' color='#ffff00'/> <t color='#ffff00'>" + STR_R3F_LOG_action_heliporter + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\heliporteur\heliporter.sqf", nil, 6, true, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_heliporter_valide"];
 
-_heliporteur addAction [("<img image=""client\icons\r3f_drop.paa""/> <t color=""#06ef00"">" + STR_R3F_LOG_action_heliport_larguer + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\heliporteur\larguer.sqf", nil, 6, true, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_heliport_larguer_valide"];
+_heliporteur addAction [("<img image='client\icons\r3f_release.paa' color='#06ef00'/> <t color='#06ef00'>" + STR_R3F_LOG_action_heliport_larguer + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\heliporteur\larguer.sqf", nil, 6, true, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_heliport_larguer_valide"];

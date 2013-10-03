@@ -111,7 +111,7 @@ while {true} do
     _str = format["%1<br/>%2 <img size='0.7' image='client\icons\money.paa'/>", _str, player getVariable "cmoney"];
     _str = format["%1<br/>%2 <img size='0.7' image='client\icons\water.paa'/>", _str, round thirstLevel];
     _str = format["%1<br/>%2 <img size='0.7' image='client\icons\food.paa'/>", _str, round hungerLevel];
-    _str = format["%1<br/><t color='%2'>%3</t> <img size='0.7' image='client\icons\1.paa'/>", _str, _healthTextColor, _health];
+    _str = format["%1<br/><t color='%2'>%3</t> <img size='0.7' image='client\icons\health.paa'/>", _str, _healthTextColor, _health];
 
 	_vitals ctrlSetStructuredText parseText _str;
     _vitals ctrlCommit 0;
@@ -158,7 +158,6 @@ while {true} do
     } else {
 		_tempString = "";
         _yOffset = 0.26;
-		//_tempString = format ["<img image='client\icons\logo.paa'/>"];
 		_hudVehicle ctrlSetStructuredText parseText _tempString;
         _x = safeZoneX + (safeZoneW * (1 - (0.42 / SafeZoneW)));
         _y = safeZoneY + (safeZoneH * (1 - (_yOffset / SafeZoneH)));

@@ -6,23 +6,18 @@
 
 if (!isServer) exitWith {};
 
-private ["_planeSpawns", "_counter"];
+private "_counter";
+_counter = 0;
 
-_planeSpawns = [];
 {
 	if (["planeSpawn_", _x] call fn_findString == 0) then
 	{
-		_planeSpawns set [count _planeSpawns, _x];
+		if (random 1 < 0.75) then // 75% chance spawning
+		{
+			[markerPos _x, markerDir _x] call planeCreation;
+			_counter = _counter + 1;
+		};
 	};
 } forEach allMapMarkers;
-
-_counter = 0;
-{
-	if (random 1 < 0.5) then // 50% chance spawning
-	{
-		[getMarkerPos _x, markerDir _x] call planeCreation;
-		_counter = _counter + 1;
-	};
-} forEach _planeSpawns;
 
 diag_log format["WASTELAND SERVER - %1 Planes Spawned",_counter];

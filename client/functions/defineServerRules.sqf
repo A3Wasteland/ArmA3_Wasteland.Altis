@@ -3,11 +3,11 @@
 //	@file Author: AgentRev
 //	@file Created: 13/07/2013 21:23
 
-if (isDedicated) exitWith {};
+if (!hasInterface) exitWith {};
 
-if (!(player diarySubjectExists "rules")) then
+if !(player diarySubjectExists "rules") then
 {
-	waitUntil {player diarySubjectExists "changelog"};
+	waitUntil {player diarySubjectExists "credits"};
 	player createDiarySubject ["rules", "Server Rules"];
 	player createDiaryRecord ["rules", ["Rules", _this select 0]];
 };

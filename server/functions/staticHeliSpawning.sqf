@@ -7,31 +7,27 @@
 
 if (!isServer) exitWith {};
 
-private ["_countActual", "_heliSpawns", "_position", "_selectedMarker", "_markerName", "_marker", "_newPos", "_i", "_doSpawnWreck"];
-_countActual = 0;
+private ["_count", "_position", "_markerName", "_marker", "_newPos", "_i", "_doSpawnWreck"];
+_count = 0;
 
-_heliSpawns = [];
 {
-	if (["heliSpawn_", _x] call fn_findString == 0) then
+	_marker = _x;
+	
+	if (["heliSpawn_", _marker] call fn_findString == 0) then
 	{
-		_heliSpawns set [count _heliSpawns, _x];
+		if (!(_marker in currentStaticHelis) && {random 1 < 0.75}) then // 75% chance spawning
+		{
+			_position = markerPos _marker;
+			[0, _position] call staticHeliCreation;
+			
+			currentStaticHelis set [count currentStaticHelis, _marker];
+			
+			_count = _count + 1;
+		};
 	};
 } forEach allMapMarkers;
 
-{
-	_selectedMarker = _x;
-	if (!(_selectedMarker in currentStaticHelis) && {random 1 < 0.50}) then // 50% chance spawning
-    {
-        _position = getMarkerPos _selectedMarker;
-		[0, _position] call staticHeliCreation;
-	    
-		currentStaticHelis set [count currentStaticHelis, _selectedMarker];
-	    
-	    _countActual = _countActual + 1;
-    };
-} forEach _heliSpawns;
-
-diag_log format["WASTELAND SERVER - %1 Static helis Spawned",_countActual];
+diag_log format["WASTELAND SERVER - %1 Static helis Spawned",_count];
 
 /*
 {diag_log format["Heli %1 = %2",_forEachIndex, _x];} forEach currentStaticHelis;

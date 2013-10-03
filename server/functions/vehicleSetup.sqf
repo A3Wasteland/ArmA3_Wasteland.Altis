@@ -11,7 +11,6 @@ _vehicle = _this select 0;
 _vehicle setVariable [call vChecksum, true];
 _vehicle disableTIEquipment true;
 _vehicle spawn vehicleRepair;
-_vehicle execVM "addons\fpsFix\ownerManager.sqf";
 
 clearMagazineCargoGlobal _vehicle;
 clearWeaponCargoGlobal _vehicle;

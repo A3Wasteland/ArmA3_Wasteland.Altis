@@ -68,7 +68,7 @@ _minimumRain = 0;
 
 // When raining, rain intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumRain
 // (0 = no rain, 1 = maximum rain intensity). (Suggested value: 0.8);
-_maximumRain = 1;
+_maximumRain = 0.5;
 
 // Wind vector strength never falls below this value. Must be greater or equal to 0 and less than or equal to _maximumWind.
 // (Suggested value: 0);
