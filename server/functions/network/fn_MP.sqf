@@ -18,7 +18,7 @@
 		3 (Optional): BOOL - true for persistent call (will be called now and for every JIP client) [default: false]
 	
 	Returns:
-	ARRAY - sent packet
+	Nothing (Previously ARRAY - sent packet)
 */
 
 with missionnamespace do {
@@ -39,5 +39,5 @@ with missionnamespace do {
 		[_mpPacketKey, call compile _mpPacketKey] spawn TPG_fnc_MPexec;
 	};
 
-	call compile _mpPacketKey
+	// call compile _mpPacketKey
 };

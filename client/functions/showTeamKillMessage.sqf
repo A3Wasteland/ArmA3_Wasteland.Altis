@@ -25,4 +25,4 @@ waitUntil {ctrlCommitted _control};
 _control ctrlShow false;
 _control ctrlCommit 0;
 
-20 cutrsc["Default", "PLAIN"];
+20 cutrsc ["RscEmpty", "PLAIN"];

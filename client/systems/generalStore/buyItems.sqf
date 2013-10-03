@@ -4,9 +4,9 @@
 //	@file Created: 20/11/2012 05:13
 //	@file Args: [int (0 = buy to player 1 = buy to crate)]
 
-#include "dialog\genstoreDefines.sqf";
+if (!isNil "storePurchaseHandle" && {typeName storePurchaseHandle == "SCRIPT"} && {!scriptDone storePurchaseHandle}) exitWith {hint "Please wait, your previous purchase is being processed"};
 
-if (!isNil "storePurchaseHandle" && {!scriptDone storePurchaseHandle}) exitWith {hint "Please wait, your previous purchase is being processed"};
+#include "dialog\genstoreDefines.sqf";
 
 if (genStoreCart > player getVariable ["cmoney", 0]) then
 {
@@ -150,6 +150,7 @@ else
 		lbClear _cartlist;
 	};
 	
+	private "_storePurchaseHandle";
 	_storePurchaseHandle = storePurchaseHandle;
 	waitUntil {scriptDone _storePurchaseHandle};
 	
