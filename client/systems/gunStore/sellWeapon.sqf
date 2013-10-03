@@ -32,10 +32,12 @@ else
 		_weaponMags = getArray (configFile >> "CfgWeapons" >> _primary >> "magazines");
 		_magazines = magazinesAmmo player;
 		_currMag = currentMagazine player;
+		
+		if (isNil "_currMag") then { _currMag = "" };
 
 		// If a magazine is loaded in the weapon, add its value to sell value based on ammo count, and add value of each identical magazine in inventory to sell value, also based on ammo count
 		// TODO: Add value of magazine loaded in other muzzle if present (e.g. grenade in grenade launcher)
-		if (!isNil "_currMag" && {_currMag != ""}) then
+		if (_currMag != "") then
 		{
 			_currMag = _currMag call getBallMagazine;
 			_currMagAmmo = player ammo _primary;
@@ -123,7 +125,7 @@ else
 		} forEach _magsToSell;
 
 		// Add note about removing weapon mag if the player doesn't want to sell inventory mags
-		if (!isNil "_currMag" && {_currMag != ""}) then
+		if (_currMag != "") then
 		{
 			_confirmMsg = _confirmMsg + "<br/><br/>If you don't want to sell your ammo, simply remove the magazine from your weapon.";
 		};
@@ -135,7 +137,12 @@ else
 			player removeWeapon _primary;
 			
 			// Remove magazines identical to loaded mag from inventory
-			{ player removeMagazines _x } forEach _weaponMags;
+			{
+				if (_x call getBallMagazine == _currMag) then
+				{
+					player removeMagazines _x;
+				};
+			} forEach _weaponMags;
 
 			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
 			hint format ["You sold your gun for $%1", _sellValue];
