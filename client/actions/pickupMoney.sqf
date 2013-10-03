@@ -25,13 +25,13 @@ if (count _moneyObjects > 0) then
 
 if (isNil "_moneyObj" || {player distance _moneyObj > _pickDistance}) exitWith
 {
-	titleText ["You are too far to pick the money up.", "PLAIN DOWN", 5];
+	titleText ["You are too far to pick the money up.", "PLAIN DOWN", 0.5];
 	mutexScriptInProgress = false;
 };
 
 if (vehicle player != player) exitWith
 {
-	titleText ["You can't pick up money while in a vehicle", "PLAIN DOWN", 5];
+	titleText ["You can't pick up money while in a vehicle", "PLAIN DOWN", 0.5];
 	player action ["Eject", vehicle player];
 	mutexScriptInProgress = false;
 };
@@ -43,11 +43,11 @@ player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true]
 
 if (_money > 0) then
 {
-	titleText [format ["You have picked up $%1", _money], "PLAIN DOWN", 5];
+	titleText [format ["You have picked up $%1", _money], "PLAIN DOWN", 0.5];
 }
 else
 {
-	titleText ["The money was counterfeit!", "PLAIN DOWN", 5];
+	titleText ["The money was counterfeit!", "PLAIN DOWN", 0.5];
 };
 
 mutexScriptInProgress = false;
