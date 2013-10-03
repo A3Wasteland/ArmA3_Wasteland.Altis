@@ -2,7 +2,7 @@
 # @@ScriptName: updateMarkers.sqf
 # @@Author: Nick 'Bewilderbeest' Ludlam <bewilder@recoil.org>
 # @@Create Date: 2013-09-15 16:26:30
-# @@Modify Date: 2013-09-15 17:45:32
+# @@Modify Date: 2013-09-21 23:45:39
 # @@Function: 
 #*********************************************************/
 
@@ -29,12 +29,12 @@ _markerColorForSide = {
 
 {
 	private ['_markerName', '_markerOwnerSide', '_color'];
-	diag_log format["OPC marker setup loop %1", _x];
+	//diag_log format["OPC marker setup loop %1", _x];
     _markerName = _x select 0;
     _markerOwnerSide = _x select 3;
     if (_markerOwnerSide != "") then {
 	    _color = [_markerOwnerSide] call _markerColorForSide;
    	 	_markerName setMarkerColor _color;
-    	diag_log format ["OPC setting %1 to %2", _markerName, _color];
+    	//diag_log format ["OPC setting %1 to %2", _markerName, _color];
     };
 } forEach lastCapturePointDetails;

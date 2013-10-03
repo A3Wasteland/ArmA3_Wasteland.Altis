@@ -8,23 +8,117 @@
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
 
+private["_switch","_dialog","_itemlist","_weapon","_picture","_listIndex"];
+
+_switch = _this select 0;
+
+if (isNil "_switch") then {
+	_switch = 0;
+};
+
 // Grab access to the controls
 _dialog = findDisplay genstore_DIALOG;
-_itemlisttext = _dialog displayCtrl genstore_item_TEXT;
-_itempicture = _dialog displayCtrl genstore_item_pic;
 _itemlist = _dialog displayCtrl genstore_item_list;
-_cartlist = _dialog displayCtrl genstore_cart;
-_itemInfo = _dialog displayCtrl genstore_item_Info;
 
 //Clear the list
-lbClear _itemlist;
-lbClear _cartlist;
-_itemlist lbSetCurSel -1;
-_itempicture ctrlSettext "";
-_itemlisttext ctrlSettext "";
-_itemInfo ctrlSetStructuredText parseText "";
 
-// Populate the gun shop weapon list
+[] execVM "client\systems\generalStore\getInventory.sqf";
+switch(_switch) do 
 {
-	_itemlistIndex = _itemlist lbAdd format["%1",_x select 0];
-} forEach (call generalStore);		
+	case 0: 
+	{
+		//Clear the list
+		lbClear _itemlist;
+		_itemlist lbSetCurSel -1;
+
+		{
+			_weapon = (configFile >> "CfgWeapons" >> _x select 1);
+			_picture = getText (_weapon >> "picture");
+			_listIndex = _itemlist lbAdd format["%1",_x select 0];
+			_itemlist lbSetPicture [_listIndex,_picture];
+		} forEach (call headArray);
+	};
+	
+	case 1: 
+	{
+		//Clear the list
+		lbClear _itemlist;
+		_itemlist lbSetCurSel -1;
+
+		{
+			_weapon = (configFile >> "CfgWeapons" >> _x select 1);
+			_picture = getText (_weapon >> "picture");
+			_listIndex = _itemlist lbAdd format["%1",_x select 0];
+			_itemlist lbSetPicture [_listIndex,_picture];
+		} forEach (call uniformArray);
+	};
+	
+	case 2: 
+	{
+		//Clear the list
+		lbClear _itemlist;
+		_itemlist lbSetCurSel -1;
+
+		{
+			_weapon = (configFile >> "CfgWeapons" >> _x select 1);
+			_picture = getText (_weapon >> "picture");
+			_listIndex = _itemlist lbAdd format["%1",_x select 0];
+			_itemlist lbSetPicture [_listIndex,_picture];
+		} forEach (call vestArray);
+	};
+	
+	case 3: 
+	{
+		//Clear the list
+		lbClear _itemlist;
+		_itemlist lbSetCurSel -1;
+
+		// Populate the gun shop weapon list
+		{
+			_weapon = (configFile >> "CfgVehicles" >> _x select 1);
+			_picture = getText (_weapon >> "picture");
+			_gunlistIndex = _itemlist lbAdd format["%1",_x select 0];
+			_itemlist lbSetPicture [_gunlistIndex,_picture];
+		} forEach (call backpackArray);	
+	};
+	
+	case 4: 
+	{
+		//Clear the list
+		lbClear _itemlist;
+		_itemlist lbSetCurSel -1;
+
+		{
+			_weapon = (configFile >> "CfgWeapons" >> _x select 1);
+			_picture = getText (_weapon >> "picture");
+			_listIndex = _itemlist lbAdd format["%1",_x select 0];
+			_itemlist lbSetPicture [_listIndex,_picture];
+		} forEach (call genItemArray);
+	};
+	
+	case 5: 
+	{
+		//Clear the list
+		lbClear _itemlist;
+		_itemlist lbSetCurSel -1;
+
+		{
+			_listIndex = _itemlist lbAdd format["%1",_x select 0];
+			_itemlist lbSetPicture [_listIndex,_x select 3];
+		} forEach (call generalStore);
+	};
+
+	case 6: 
+	{
+		//Clear the list
+		lbClear _itemlist;
+		_itemlist lbSetCurSel -1;
+
+		{
+			_weapon = (configFile >> "CfgVehicles" >> _x select 1);
+			_picture = getText (_weapon >> "picture");
+			_listIndex = _itemlist lbAdd format["%1",_x select 0];
+			_itemlist lbSetPicture [_listIndex,_x select 3];
+		} forEach (call genObjectsArray);
+	};
+};

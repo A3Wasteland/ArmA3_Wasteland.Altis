@@ -54,7 +54,7 @@ if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 }
 else
 {
-	diag_log "[WARNING] A3W configuration file '" + externalConfigFolder + "\main_config.sqf' was not found. Using default settings!";
+	diag_log format["[WARNING] A3W configuration file '%1\main_config.sqf' was not found. Using default settings!", externalConfigFolder];
 	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 };
 
@@ -142,6 +142,9 @@ if (["A3W_serverSpawning", 0] call getPublicVar > 0) then
 		waitUntil {sleep 0.1; scriptDone _boxSpawn};
 	};
 };
+
+// Set up our store owner dudes
+[] execVM "server\functions\initStoreOwners.sqf";
 
 // Hooks for new players connecting, in case we need to manually update state
 onPlayerConnected "[_id, _name] execVM ""server\functions\onPlayerConnected.sqf""";

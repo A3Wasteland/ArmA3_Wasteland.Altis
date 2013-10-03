@@ -7,7 +7,7 @@
 
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
-
+private["_dialog","_switch","_switchText","_buysell","_iteminv","_cartlist","_itemlist","_totalText","_itemInfo"];
 _dialog = findDisplay genstore_DIALOG;
 _switch = _dialog displayCtrl genstore_switch;
 _buysell = _dialog displayCtrl genstore_buysell;
@@ -37,4 +37,4 @@ if(_switchText == "Sell Items") then
 	_buysell ctrlSetText "Buy";
 	_iteminv ctrlSetText "Items";
 	[] execVM "client\systems\generalStore\populateGenStore.sqf";
-};
+};
