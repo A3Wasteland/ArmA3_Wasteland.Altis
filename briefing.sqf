@@ -43,7 +43,7 @@ player createDiaryRecord ["credits",
 <br/>	* Pulse
 <br/>	* Domuk
 <br/>
-<br/><font size='16'>Development of A3Wasteland by:</font>
+<br/><font size='16'>Development of this version by:</font>
 <br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* AgentRev (TeamPlayerGaming)
 <br/>	* MercyfulFate
