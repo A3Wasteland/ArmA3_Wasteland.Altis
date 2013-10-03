@@ -8,21 +8,22 @@ player createDiarySubject ["infos", "Informations"];
 player createDiarySubject ["changelog", "Changelog"];
 player createDiarySubject ["credits", "Credits"];
 
+player createDiaryRecord ["changelog",
+[
+"0.9c",
+"
+<br/> [Changed] - Instant money pickup and drop
+<br/> [Changed] - Increased plane and heli spawning odds
+<br/> [Fixed] - FPS fix improvements
+<br/> [Fixed] - Vehicles disappearing when untowed or airdropped
+"
+]];
 
 player createDiaryRecord ["changelog",
 [
 "0.9b",
 "
 <br/> [Initial release] - Welcome to Altis!
-"
-]];
-
-player createDiaryRecord ["changelog",
-[
-"0.9c",
-"
-<br/> [Fixed] - Vehicles disappearing when untowed
-<br/> [Fixed] - FPS fix improvements
 "
 ]];
 
@@ -34,7 +35,7 @@ player createDiaryRecord ["credits",
 <br/><font size='16'>Original ArmA 2 Wasteland missions by:</font>
 <br/>	* Tonic
 <br/>	* Sa-Matra
-<br/>	* Marker
+<br/>	* MarKeR
 <br/>
 <br/><font size='16'>Ported to ArmA 3 by 404Games:</font>
 <br/>	* Deadbeat
@@ -42,29 +43,34 @@ player createDiaryRecord ["credits",
 <br/>	* Pulse
 <br/>	* Domuk
 <br/>
-<br/><font size='16'>Development of this version by:</font>
+<br/><font size='16'>Development of A3Wasteland by:</font>
 <br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* AgentRev (TeamPlayerGaming)
-<br/>	* MercyFulfate
+<br/>	* MercyfulFate
 <br/>	* His_Shadow (KoS/KillonSight)
 <br/>	* Bewilderbeest (KoS/KillonSight)
 <br/>	* Del1te (404Games)
 <br/>
-<br/><font size='16'>Others that contributed:</font>
+<br/><font size='16'>Other contributors:</font>
 <br/>	* afroVoodo (Armaholic)
-<br/>	* Sanjo (GitHub)
-<br/>	* Ed! (404Games forums)
-<br/>	* SPJESTER (404Games forums)
-<br/>	* Hub (TeamPlayerGaming)
-<br/>	* Tonic (BIS forums)
-<br/>	* spunFIN (BIS forums)
 <br/>	* AWA (OpenDayZ)
-<br/>	* Sa-Matra (BIS forums)
-<br/>	* SicSemperTyrannis (iniDB)
+<br/>	* Ed! (404Games forums)
+<br/>	* HatchetHarry (GitHub)
+<br/>	* Hub (TeamPlayerGaming)
+<br/>	* k4n30 (GitHub)
+<br/>	* Krunch (GitHub)
+<br/>	* Mainfrezzer (Magnon)
+<br/>	* meat147 (GitHub)
 <br/>	* Na-Palm (BIS forums)
-<br/>	* SCETheFuzz (GitHub)
-<br/>	* s3kShUn61 (GitHub)
 <br/>	* RockHound (BierAG)
+<br/>	* s3kShUn61 (GitHub)
+<br/>	* Sa-Matra (BIS forums)
+<br/>	* Sanjo (GitHub)
+<br/>	* SCETheFuzz (GitHub)
+<br/>	* SicSemperTyrannis (iniDB)
+<br/>	* SPJESTER (404Games forums)
+<br/>	* spunFIN (BIS forums)
+<br/>	* Tonic (BIS forums)
 <br/>
 <br/><font size='16'>Thanks A LOT to everyone involved for the help and inspiration!</font>
 "
