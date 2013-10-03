@@ -439,4 +439,5 @@ class w_RscCombo {
 		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
 		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
 	};	
-};
+};
+

@@ -26,16 +26,16 @@ else
 	// Ne pas permettre de décrocher un objet s'il est porté héliporté
 	if ({_remorqueur isKindOf _x} count R3F_LOG_CFG_remorqueurs > 0) then
 	{
-		player playMove "AinvPknlMstpSlayWrflDnon_medic";
+		player switchMove "AinvPknlMstpSlayWrflDnon_medic";
 		
-		player addEventHandler ["AnimDone", 
+		/*player addEventHandler ["AnimDone", 
 		{
 			if (_this select 1 == "AinvPknlMstpSlayWrflDnon_medic") then
 			{
 				player switchMove "";
 				player removeAllEventHandlers "AnimDone";
 			};
-		}];
+		}];*/
 		
 		if ((getPosASL player) select 2 > 0) then
 		{
@@ -69,6 +69,8 @@ else
 		};
 		
 		sleep 4;
+		
+		player switchMove "";
 		
 		if ({_objet isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 		{

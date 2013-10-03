@@ -45,4 +45,11 @@ class TeamKillWarningMessage {
 			};
 		};
 	};
-};
+};
+
+class RscEmpty {
+	idd = -1;
+	duration = 1;
+	name= "RscEmpty";
+	onLoad = "";
+};

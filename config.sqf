@@ -28,17 +28,17 @@ _getCapacity =
 weaponsArray = compileFinal str
 [
 		// Handguns
-	["P07 Pistol","hgun_P07_F",50,25],
-	["Rook-40 Pistol","hgun_Rook40_F",50,25],
-	["ACP-C2 Pistol","hgun_ACPC2_F",75,25],
+	["P07 Handgun","hgun_P07_F",50,25],
+	["Rook-40 Handgun","hgun_Rook40_F",50,25],
+	["ACP-C2 Handgun","hgun_ACPC2_F",75,25],
 	
 		// Underwater Gun
 	["SDAR UW Rifle","arifle_SDAR_F",100,50],
 	
 		// Submachine Guns
-	["PDW 2000 SMG","hgun_PDW2000_F",100,50],
+	["PDW2000 SMG","hgun_PDW2000_F",100,50],
 	["Sting SMG","SMG_02_F",125,75],
-	["Vermin SBR SMG","SMG_01_F",125,75],
+	["Vermin SMG","SMG_01_F",125,75],
 	
 		// Assault Rifles
 	["TRG-20 Carabine","arifle_TRG20_F",150,50],
@@ -68,8 +68,8 @@ weaponsArray = compileFinal str
 	["GM6 Lynx Sniper","srifle_GM6_SOS_F",1000,500],
 	
 		//Rocket Launchers
-	["PCML Rocket Launcher","launch_NLAW_F",400,200],
 	["RPG-42 Alamut Launcher","launch_RPG32_F",500,250],
+	["PCML Rocket Launcher","launch_NLAW_F",500,250],
 	["Titan MPRL Compact","launch_Titan_short_F",600,300],
 	["Titan MPRL AA Launcher","launch_Titan_F",600,300]
 ];
@@ -99,8 +99,8 @@ ammoArray = compileFinal str
 	["40mm HE Grenade","1Rnd_HE_Grenade_shell",125],
 	["Frag Grenade","HandGrenade",100],
 	
-	["PCML Missile","NLAW_F",250],      	// Direct damage: high   | Splash damage: low  | Guidance: none
-	["RPG-42 Missile","RPG32_HE_F",300],	// Direct damage: high   | Splash damage: high | Guidance: none
+	["RPG-42 HE Missile","RPG32_HE_F",300],	// Direct damage: high   | Splash damage: high | Guidance: none
+	["PCML Missile","NLAW_F",350],      	// Direct damage: high   | Splash damage: low  | Guidance: laser, ground vehicles
 	["Titan AT Missile","Titan_AT",350],	// Direct damage: high   | Splash damage: low  | Guidance: mouse, laser, ground vehicles
 	["Titan AP Missile","Titan_AP",350],	// Direct damage: medium | Splash damage: high | Guidance: mouse, laser
 	["Titan AA Missile","Titan_AA",350],	// Direct damage: medium | Splash damage: high | Guidance: aircraft
@@ -198,9 +198,9 @@ gearArray = compileFinal str
 	["GA Carrier Rig (Digi)","V_PlateCarrierIA2_dgtl", ["V_PlateCarrierIA2_dgtl"] call _getCapacity, "vest"],
 	
 	["Booniehat (MTP)","H_Booniehat_mcamo", 10,"hat"],
-	["Booniehat (Hex)","H_Booniehat_ocamo", 10,"hat"],
+	["Booniehat (Hex)","H_Booniehat_khk", 10,"hat"],
 	["Booniehat (Digital)","H_Booniehat_dgtl", 10,"hat"],
-	["Booniehat (Khaki)","H_Booniehat_khk", 10,"hat"],
+	["Booniehat (Khaki)","H_Booniehat_indp", 10,"hat"],
 	["Booniehat (Green)","H_Booniehat_grn", 10,"hat"],
 	["Cap (Blue)","H_Cap_blu", 10,"hat"],
 	["Cap (Red)","H_Cap_red", 10,"hat"],

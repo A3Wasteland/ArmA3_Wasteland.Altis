@@ -13,26 +13,26 @@ switch (playerSide) do {
 	case BLUFOR: { 
 		_teamrules = "STR_WL_YouAreInTeam";
 		_teamicon = "client\icons\igui_side_blufor_ca.paa";
-		_teamcol = "#3333ff";
+		_teamcol = "#0066ff";
 	};
 	case OPFOR: {
 		_teamrules = "STR_WL_YouAreInTeam";
 		_teamicon = "client\icons\igui_side_opfor_ca.paa";
-		_teamcol = "#cc0000";
+		_teamcol = "#ff1111";
 	};
 	case INDEPENDENT: {
-     _teamrules = "STR_WL_YouAreInFFA";
-     _teamicon = "client\icons\igui_side_indep_ca.paa";
-     _teamcol = "#00cc00";
+		_teamrules = "STR_WL_YouAreInFFA";
+		_teamicon = "client\icons\igui_side_indep_ca.paa";
+		_teamcol = "#00ff00";
 	};
 	case sideEnemy: { 
 		_teamrules = "STR_WL_YouAreInFFA";
 		_teamicon = "client\icons\igui_side_indep_ca.paa";
-		_teamcol = "#00cc00";
+		_teamcol = "#00ff00";
 	};
 };
 
-_message = format ["<t shadow=""1""><t size=""2"">%1</t> (%2)<br/>%4<br/>%3<br/></t>",
+_message = format ["<t shadow=""1""><t size=""2"">%1</t> %2<br/>%4<br/>%3<br/></t>",
 	localize "STR_WL_WelcomeToWasteland",
 	versionName,
 	format [localize _teamrules, 
