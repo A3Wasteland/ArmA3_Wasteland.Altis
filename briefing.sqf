@@ -4,7 +4,7 @@ if (!hasInterface) exitWith {};
 
 waitUntil {!isNull player};
 
-player createDiarySubject ["infos", "Informations"];
+player createDiarySubject ["infos", "Infos and Help"];
 player createDiarySubject ["changelog", "Changelog"];
 player createDiarySubject ["credits", "Credits"];
 
