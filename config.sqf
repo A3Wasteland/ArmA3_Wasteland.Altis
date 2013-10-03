@@ -68,8 +68,8 @@ weaponsArray = compileFinal str
 	["GM6 Lynx Sniper","srifle_GM6_SOS_F",1000,500],
 	
 		//Rocket Launchers
-	["PCML Rocket Launcher","launch_NLAW_F",400,200],
 	["RPG-42 Alamut Launcher","launch_RPG32_F",500,250],
+	["PCML Rocket Launcher","launch_NLAW_F",500,250],
 	["Titan MPRL Compact","launch_Titan_short_F",600,300],
 	["Titan MPRL AA Launcher","launch_Titan_F",600,300]
 ];
@@ -99,8 +99,8 @@ ammoArray = compileFinal str
 	["40mm HE Grenade","1Rnd_HE_Grenade_shell",125],
 	["Frag Grenade","HandGrenade",100],
 	
-	["PCML Missile","NLAW_F",250],      	// Direct damage: high   | Splash damage: low  | Guidance: none
-	["RPG-42 Missile","RPG32_HE_F",300],	// Direct damage: high   | Splash damage: high | Guidance: none
+	["RPG-42 HE Missile","RPG32_HE_F",300],	// Direct damage: high   | Splash damage: high | Guidance: none
+	["PCML Missile","NLAW_F",350],      	// Direct damage: high   | Splash damage: low  | Guidance: laser, ground vehicles
 	["Titan AT Missile","Titan_AT",350],	// Direct damage: high   | Splash damage: low  | Guidance: mouse, laser, ground vehicles
 	["Titan AP Missile","Titan_AP",350],	// Direct damage: medium | Splash damage: high | Guidance: mouse, laser
 	["Titan AA Missile","Titan_AA",350],	// Direct damage: medium | Splash damage: high | Guidance: aircraft
