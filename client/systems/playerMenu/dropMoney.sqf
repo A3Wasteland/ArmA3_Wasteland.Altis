@@ -19,11 +19,8 @@ if((player getVariable "cmoney" < _money) OR (player getVariable "cmoney" < 0)) 
 
 mutexScriptInProgress = true;
 _pos = getPosATL player;
-player playmove "AinvPknlMstpSlayWrflDnon";
 _cash = "Land_Money_F" createVehicle (position player); _cash setPos _pos;
 _cash setVariable["money",_money,true];
 _cash setVariable["owner","world",true];
 player setVariable["cmoney",(player getVariable "cmoney") - _money,true];
-sleep 3;
 mutexScriptInProgress = false;
-player SwitchMove "amovpknlmstpslowwrfldnon_amovpercmstpsraswrfldnon"; // Redundant reset of animation state to avoid getting locked in animation. 
