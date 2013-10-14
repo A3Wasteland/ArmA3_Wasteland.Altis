@@ -2234,7 +2234,7 @@ class Mission
 			azimut=133.80367;
 			id=129;
 			side="EMPTY";
-			vehicle="Land_Slum_House01_F";
+			vehicle="Land_Slum_House03_F";
 			skill=0.60000002;
 		};
 		class Item8
@@ -2243,7 +2243,7 @@ class Mission
 			azimut=133.80367;
 			id=130;
 			side="EMPTY";
-			vehicle="Land_Slum_House01_F";
+			vehicle="Land_Slum_House02_F";
 			skill=0.60000002;
 		};
 		class Item9
@@ -2252,7 +2252,7 @@ class Mission
 			azimut=133.80367;
 			id=131;
 			side="EMPTY";
-			vehicle="Land_Slum_House01_F";
+			vehicle="Land_Slum_House03_F";
 			skill=0.60000002;
 		};
 		class Item10
@@ -2270,7 +2270,7 @@ class Mission
 			azimut=133.80367;
 			id=133;
 			side="EMPTY";
-			vehicle="Land_Slum_House01_F";
+			vehicle="Land_Slum_House03_F";
 			skill=0.60000002;
 		};
 		class Item12
@@ -2288,7 +2288,7 @@ class Mission
 			azimut=-46.636852;
 			id=135;
 			side="EMPTY";
-			vehicle="Land_Slum_House01_F";
+			vehicle="Land_Slum_House02_F";
 			skill=0.60000002;
 		};
 		class Item14
@@ -2306,7 +2306,7 @@ class Mission
 			azimut=-46.636852;
 			id=137;
 			side="EMPTY";
-			vehicle="Land_Slum_House01_F";
+			vehicle="Land_Slum_House03_F";
 			skill=0.60000002;
 		};
 	};
