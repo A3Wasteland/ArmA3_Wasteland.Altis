@@ -253,7 +253,10 @@ cityList = compileFinal str
 	["Town_13",200,"Aggelochori"],
 	["Town_14",200,"Panochori"],
 	["Town_15",200,"Charkia"],
-	["Town_16",150,"Chalkeia"]
+	["Town_16",150,"Chalkeia"],
+	["Town_17",200,"Oreokastro"],
+	["Town_18",100,"Dump"],
+	["Town_19",75,"Fotia"]
 ];
 
 militarylist = compileFinal str
