@@ -88,6 +88,8 @@ class Mission
 		"A3_Structures_F_Households_House_Small02",
 		"A3_Structures_F_Mil_Cargo",
 		"A3_Structures_F_Households_Slum",
+		"A3_Structures_F_Civ_Market",
+		"A3_Structures_F_Civ_Camping",
 		"a3_map_altis"
 	};
 	randomSeed=14957468;
@@ -2165,7 +2167,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=16;
+		items=24;
 		class Item0
 		{
 			position[]={5892.3325,225.05762,20124.521};
@@ -2230,8 +2232,8 @@ class Mission
 		};
 		class Item7
 		{
-			position[]={5830.5742,217.45082,20177.789};
-			azimut=133.80367;
+			position[]={5853.6426,218.96228,20175.209};
+			azimut=85.118469;
 			id=129;
 			side="EMPTY";
 			vehicle="Land_Slum_House03_F";
@@ -2239,8 +2241,8 @@ class Mission
 		};
 		class Item8
 		{
-			position[]={5826.585,217.76196,20173.33};
-			azimut=133.80367;
+			position[]={5851.854,221.32671,20162.656};
+			azimut=124.47146;
 			id=130;
 			side="EMPTY";
 			vehicle="Land_Slum_House02_F";
@@ -2248,7 +2250,7 @@ class Mission
 		};
 		class Item9
 		{
-			position[]={5823.2993,218.15974,20169.574};
+			position[]={5847.7378,222.46086,20154.539};
 			azimut=133.80367;
 			id=131;
 			side="EMPTY";
@@ -2257,8 +2259,8 @@ class Mission
 		};
 		class Item10
 		{
-			position[]={5819.5454,218.55136,20165.586};
-			azimut=133.80367;
+			position[]={5840.5811,223.07314,20150.303};
+			azimut=153.61746;
 			id=132;
 			side="EMPTY";
 			vehicle="Land_Slum_House01_F";
@@ -2266,8 +2268,8 @@ class Mission
 		};
 		class Item11
 		{
-			position[]={5815.7905,219.06163,20161.365};
-			azimut=133.80367;
+			position[]={5830.8071,222.7514,20148.615};
+			azimut=177.95645;
 			id=133;
 			side="EMPTY";
 			vehicle="Land_Slum_House03_F";
@@ -2275,8 +2277,8 @@ class Mission
 		};
 		class Item12
 		{
-			position[]={5837.6138,218.39699,20170.982};
-			azimut=-46.636852;
+			position[]={5838.062,217.12964,20181.893};
+			azimut=-37.911983;
 			id=134;
 			side="EMPTY";
 			vehicle="Land_Slum_House01_F";
@@ -2284,7 +2286,7 @@ class Mission
 		};
 		class Item13
 		{
-			position[]={5834.0942,218.54962,20167.229};
+			position[]={5832.1758,217.55113,20175.316};
 			azimut=-46.636852;
 			id=135;
 			side="EMPTY";
@@ -2293,7 +2295,7 @@ class Mission
 		};
 		class Item14
 		{
-			position[]={5830.105,219.63138,20163.004};
+			position[]={5826.5269,218.02791,20169.475};
 			azimut=-46.636852;
 			id=136;
 			side="EMPTY";
@@ -2302,11 +2304,82 @@ class Mission
 		};
 		class Item15
 		{
-			position[]={5826.585,220.0302,20159.25};
-			azimut=-46.636852;
+			position[]={5819.561,219.2971,20159.201};
+			azimut=-90.399368;
 			id=137;
 			side="EMPTY";
 			vehicle="Land_Slum_House03_F";
+			skill=0.60000002;
+		};
+		class Item16
+		{
+			position[]={5841.7822,222.42061,20158.293};
+			azimut=-44.915901;
+			id=138;
+			side="EMPTY";
+			vehicle="Land_StallWater_F";
+			skill=0.60000002;
+		};
+		class Item17
+		{
+			position[]={5833.0811,221.07756,20159.025};
+			azimut=-66.432838;
+			id=139;
+			side="EMPTY";
+			vehicle="Land_Cages_F";
+			skill=0.60000002;
+		};
+		class Item18
+		{
+			position[]={5843.8735,219.25572,20169.4};
+			id=140;
+			side="EMPTY";
+			vehicle="Land_CratesShabby_F";
+			skill=0.60000002;
+		};
+		class Item19
+		{
+			position[]={5837.647,220.00575,20164.465};
+			azimut=-44.915901;
+			id=141;
+			side="EMPTY";
+			vehicle="Land_MarketShelter_F";
+			skill=0.60000002;
+		};
+		class Item20
+		{
+			position[]={5836.4023,222.51828,20154.047};
+			azimut=-174.08286;
+			id=142;
+			side="EMPTY";
+			vehicle="Land_Sacks_heap_F";
+			skill=0.60000002;
+		};
+		class Item21
+		{
+			position[]={5841.7148,217.69827,20176.627};
+			azimut=-123.43818;
+			id=143;
+			side="EMPTY";
+			vehicle="Land_WoodenCart_F";
+			skill=0.60000002;
+		};
+		class Item22
+		{
+			position[]={5838.0376,219.93082,20164.814};
+			azimut=163.54198;
+			id=144;
+			side="EMPTY";
+			vehicle="Campfire_burning_F";
+			skill=0.60000002;
+		};
+		class Item23
+		{
+			position[]={5846.2808,218.43889,20175.215};
+			azimut=-44.915901;
+			id=145;
+			side="EMPTY";
+			vehicle="Campfire_burning_F";
 			skill=0.60000002;
 		};
 	};
