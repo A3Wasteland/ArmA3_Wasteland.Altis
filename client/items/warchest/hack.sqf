@@ -51,7 +51,7 @@ if (_success) then {
 		};
 	};
 	_money = (player getVariable ["cmoney", 0]) + _amount;
-	player setVariable ["cmoney", _money];
+	player setVariable ["cmoney", _money, true];
 	[format["Hacking Warchest Complete! You Stole $%1", _amount], 5] call mf_notify_client;
 };
 _success;
