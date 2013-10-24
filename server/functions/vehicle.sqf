@@ -90,7 +90,7 @@ _hitPoints = configFile >> "CfgVehicles" >> (typeOf _unit) >> "HitPoints";
 for "_i" from 0 to (count _hitPoints - 1) do
 {
 	_hitPoint = configName (_hitPoints select _i);
-	if ([["Wheel","Track"], _hitPoint] call fn_findString == count toArray _hitPoint - 5) then
+	if ([["Wheel","Track"], _hitPoint] call fn_findString != -1) then
 	{
 		_wheels set [count _wheels, _hitPoint];
 	};
@@ -112,11 +112,11 @@ while {_run} do
 		if (_delay > 0) then
 		{
 			if (_brokenTimeout == 0) then {
-				_brokenTimeout = time + _delay;
+				_brokenTimeout = diag_tickTime + _delay;
 			}
 			else
 			{
-				if (_brokenTimeout <= time) then {
+				if (_brokenTimeout <= diag_tickTime) then {
 					_dead = true;
 				};
 			};
@@ -143,7 +143,7 @@ while {_run} do
 	   {isNull (_unit getVariable ["R3F_LOG_est_deplace_par", objNull])}) then 
 	{
 		if (_desertedTimeout == 0) then {
-			_desertedTimeout = time + _deserted;
+			_desertedTimeout = diag_tickTime + _deserted;
 		};
 		
 		if (_proxyExtra > 0 && {owner _unit > 1}) then
@@ -164,7 +164,7 @@ while {_run} do
 			};
 		};
 	
-		if (_desertedTimeout + _desertedExtra <= time) then {
+		if (_desertedTimeout + _desertedExtra <= diag_tickTime) then {
 			_dead = true;
 		};
 	}
