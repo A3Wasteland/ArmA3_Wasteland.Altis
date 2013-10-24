@@ -173,7 +173,7 @@ class vehshopd {
 		{
 			idc = vehshop_button4;
 			onButtonClick = "[4] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
-			text = "Jets";
+			text = "Planes";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.425 * safezoneH + safezoneY;
@@ -193,6 +193,8 @@ class vehshopd {
 			h = 0.040 * safezoneH;
 		};
 
+		// Submarines transferred in Boats
+		/*
 		class StoreButton6: w_RscButton
 		{
 			idc = vehshop_button6;
@@ -204,6 +206,7 @@ class vehshopd {
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
 		};
+		*/
 	};
 };
 
