@@ -5,7 +5,7 @@
 
 _radius = 70;
 _status = [];
-_gunStores = ["move_GunStore1", "move_GunStore2", "move_GunStore3", "move_GunStore4"];
+_gunStores = [];
 _col_empty = "ColorBlue";
 _col_enemy = "ColorRed";
 _col_friendly = "ColorGreen";
@@ -13,45 +13,51 @@ _col_mixed = "ColorOrange";
 
 //Creates the markers around gunstores.
 {
-	_markerPos = (getMarkerPos _x);
+	if (["GunStore", str _x] call fn_findString == 0) then
+	{
+		_npcPos = getPos _x;
 
-	// Circle zone   
-    _markerName = format["marker_shop_zone_%1",_x];
-    deleteMarkerLocal _markerName;
-	_marker = createMarkerLocal [_markerName, _markerPos];
-	_markerName setMarkerShapeLocal "ELLIPSE";
-    _markerName setMarkerColorLocal _col_empty;
-	_markerName setMarkerSizeLocal [_radius, _radius];
-	_markerName setMarkerBrushLocal "Grid";
-	_markerName setMarkerAlphaLocal 0.5;
+		// Circle zone   
+		_markerName = format["marker_shop_zone_%1",_x];
+		deleteMarkerLocal _markerName;
+		_marker = createMarkerLocal [_markerName, _npcPos];
+		_markerName setMarkerShapeLocal "ELLIPSE";
+		_markerName setMarkerColorLocal _col_empty;
+		_markerName setMarkerSizeLocal [_radius, _radius];
+		_markerName setMarkerBrushLocal "Grid";
+		_markerName setMarkerAlphaLocal 0.5;
 
-	// Gun store title    
-    _markerName = format["marker_shop_title_%1",_x];
-    deleteMarkerLocal _markerName;
-	_marker = createMarkerLocal [_markerName, _markerPos];
-	_markerName setMarkerShapeLocal "ICON";
-    _markerName setMarkerTypeLocal "mil_dot";
-    _markerName setMarkerColorLocal "ColorRed";
-	_markerName setMarkerSizeLocal [1,1];
-	_markerName setMarkerTextLocal "GUN STORE";
+		// Gun store title    
+		_markerName = format["marker_shop_title_%1",_x];
+		deleteMarkerLocal _markerName;
+		_marker = createMarkerLocal [_markerName, _npcPos];
+		_markerName setMarkerShapeLocal "ICON";
+		_markerName setMarkerTypeLocal "mil_dot";
+		_markerName setMarkerColorLocal "ColorRed";
+		_markerName setMarkerSizeLocal [1,1];
+		_markerName setMarkerTextLocal "GUN STORE";
 
-	// Gun store description    
-    _markerName = format["marker_shop_desc_%1",_x];
-    deleteMarkerLocal _markerName;
-    _markerPos set [1, (_markerPos select 1) - 100];
-	_marker = createMarkerLocal [_markerName, _markerPos];
-	_markerName setMarkerShapeLocal "ICON";
-    _markerName setMarkerTypeLocal "mil_dot";
-    _markerName setMarkerColorLocal _col_empty;
-	_markerName setMarkerSizeLocal [1,1];
-	_markerName setMarkerTextLocal "GUN STORE is Empty";
-    _markerName setMarkerAlphaLocal 0.5;
+		// Gun store description    
+		_markerName = format["marker_shop_desc_%1",_x];
+		deleteMarkerLocal _markerName;
+		_npcPos set [1, (_npcPos select 1) - 100];
+		_marker = createMarkerLocal [_markerName, _npcPos];
+		_markerName setMarkerShapeLocal "ICON";
+		_markerName setMarkerTypeLocal "mil_dot";
+		_markerName setMarkerColorLocal _col_empty;
+		_markerName setMarkerSizeLocal [1,1];
+		_markerName setMarkerTextLocal "GUN STORE is Empty";
+		_markerName setMarkerAlphaLocal 0.5;
 
-	_status set [count _status, "EMPTY"];
-} forEach _gunStores;
+		_status set [count _status, "EMPTY"];
+		
+		_gunStores set [count _gunStores, _x];
+	};
+} forEach entities "CAManBase";
 
 //Used to set the status of each store.
-_setStatus = {
+_setStatus =
+{
 	if(_status select (_this select 0) == (_this select 1)) exitWith {};
 
 	_markerNameZone = format ["marker_shop_zone_%1", _gunStores select (_this select 0)];
@@ -88,13 +94,14 @@ _setStatus = {
 
 //Check each store to see if their state has changed and then calls the update function to make the display the correct state.
 showmarkers = true;
-while {showmarkers} do {
+while {showmarkers} do
+{
     {
-    	_markerPos = (getMarkerPos _x);
+    	_npcPos = getPos _x;
 		_friendlyCount = 0;
 		_enemyCount = 0;
 		{
-			if((_x distance _markerPos < _radius) && (player != _x)) then {
+			if((_x distance _npcPos < _radius) && (player != _x)) then {
 				if(playerSide in [west,east] && playerSide == side _x) then {
 					_friendlyCount = _friendlyCount + 1;
 				} else {
@@ -103,7 +110,7 @@ while {showmarkers} do {
 			};
 		} forEach playableUnits;
 
-		if(player distance _markerPos < _radius) then {
+		if(player distance _npcPos < _radius) then {
 			if(_enemyCount > 0) then {
 				if(_friendlyCount > 0) then {
 					[_forEachIndex, "MIXED", true] call _setStatus;
@@ -128,6 +135,6 @@ while {showmarkers} do {
 				};
 			};
 		};    
-    }forEach _gunStores;
+    } forEach _gunStores;
 	sleep 1;
 };

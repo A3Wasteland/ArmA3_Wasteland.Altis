@@ -4,20 +4,20 @@
 //	@file Created: 28/11/2012 05:19
 //	@file Args:
 
-_vehicleStores = ["move_VehStore1","move_VehStore2","move_VehStore3","move_VehStore4"];
-
 //Creates the markers around vehicle stores.
 {
-	_unit = (getMarkerPos _x);
-	// Vehicle store title    
-    _markerName = format["marker_shop_title_%1",_x];
-    deleteMarkerLocal _markerName;
-	_marker = createMarkerLocal [_markerName, _unit];
-	_markerName setMarkerShapeLocal "ICON";
-    _markerName setMarkerTypeLocal "mil_dot";
-    _markerName setMarkerColorLocal "ColorOrange";
-	_markerName setMarkerSizeLocal [1,1];
-	_markerName setMarkerTextLocal "Vehicle Store";
-
-} forEach _vehicleStores;
-
+	if (["VehStore", str _x] call fn_findString == 0) then
+	{
+		_npcPos = getPos _x;
+		
+		// Vehicle store title    
+		_markerName = format["marker_shop_title_%1",_x];
+		deleteMarkerLocal _markerName;
+		_marker = createMarkerLocal [_markerName, _npcPos];
+		_markerName setMarkerShapeLocal "ICON";
+		_markerName setMarkerTypeLocal "mil_dot";
+		_markerName setMarkerColorLocal "ColorOrange";
+		_markerName setMarkerSizeLocal [1,1];
+		_markerName setMarkerTextLocal "Vehicle Store";
+	};
+} forEach entities "CAManBase";
