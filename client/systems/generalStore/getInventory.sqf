@@ -8,7 +8,7 @@
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
 
-private["_dialog","_itemlisttext","_itemlist","_amount","_index","_listIndex","_name"];
+private ["_dialog", "_itemlisttext", "_itemlist", "_amount", "_index", "_listIndex", "_class"];
 
 // Grab access to the controls
 _dialog = findDisplay genstore_DIALOG;
@@ -27,85 +27,87 @@ _index = 0;
 _amount = MF_ITEMS_CANNED_FOOD call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Snack Food"];
+	playerInventory set [_index, "cannedfood"];
 	_index = _index + 1;
 };
 
 _amount = MF_ITEMS_WATER call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Drinking Water"];
+	playerInventory set [_index, "water"];
 	_index = _index + 1;
 };
 
 //_amount = MF_ITEMS_MEDKIT call mf_inventory_count;
 //for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 //{//
-//	playerInventory set [_index, "Medical Kit"];
+//	playerInventory set [_index, "medkit"];
 //	_index = _index + 1;
 //};
 
 _amount = MF_ITEMS_REPAIR_KIT call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Repair Kit"];
+	playerInventory set [_index, "repairkit"];
 	_index = _index + 1;
 };
 
 _amount = MF_ITEMS_JERRYCAN_FULL call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Jerry Can (Full)"];
+	playerInventory set [_index, "jerrycanfull"];
 	_index = _index + 1;
 };
 
 _amount = MF_ITEMS_JERRYCAN_EMPTY call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Jerry Can (Empty)"];
+	playerInventory set [_index, "jerrycanempty"];
 	_index = _index + 1;
 };
 
 _amount = MF_ITEMS_SPAWN_BEACON call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Spawn Beacon"];
+	playerInventory set [_index, "spawnbeacon"];
 	_index = _index + 1;
 };
 _amount = MF_ITEMS_CAMO_NET call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Camo Net"];
+	playerInventory set [_index, "camonet"];
 	_index = _index + 1;
 };
 _amount = MF_ITEMS_SYPHON_HOSE call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Syphon Hose"];
+	playerInventory set [_index, "syphonhose"];
 	_index = _index + 1;
 };
 
 _amount = MF_ITEMS_ENERGY_DRINK call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Energy Drink"];
+	playerInventory set [_index, "energydrink"];
 	_index = _index + 1;
 };
 
 _amount = MF_ITEMS_WARCHEST call mf_inventory_count;
 for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 {
-	playerInventory set [_index, "Warchest"];
+	playerInventory set [_index, "warchest"];
 	_index = _index + 1;
 };
 
 {
-	_name = _x;
+	_class = _x;
+	
 	{
-		if(_name == _x select 0) then
+		if (_class == _x select 1) exitWith
 		{
-			_listIndex = _itemlist lbAdd format["%1",_x select 0];
-			_itemlist lbSetPicture [_listIndex,_x select 3];
+			_listIndex = _itemlist lbAdd format ["%1", _x select 0];
+			_itemlist lbSetPicture [_listIndex, _x select 3];
+			_itemlist lbSetData [_listIndex, _x select 1];
 		};
-	} forEach (call generalStore);
+	} forEach (call customPlayerItems);
 } forEach playerInventory;
