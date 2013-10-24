@@ -1,6 +1,6 @@
 //	@file Version: 1.0
-//	@file Name: buyGuns.sqf
-//	@file Author: [404] Deadbeat, [404] Costlyy, MercyfulFate, AgentRev
+//	@file Name: buyItems.sqf
+//	@file Author: [404] Deadbeat, [404] Costlyy
 //	@file Created: 20/11/2012 05:13
 //	@file Args: [int (0 = buy to player 1 = buy to crate)]
 
@@ -8,151 +8,439 @@ if (!isNil "storePurchaseHandle" && {typeName storePurchaseHandle == "SCRIPT"} &
 
 #include "dialog\genstoreDefines.sqf";
 
-if (genStoreCart > player getVariable ["cmoney", 0]) then
+#define PURCHASED_CRATE_TYPE_AMMO 60
+#define PURCHASED_CRATE_TYPE_WEAPON 61
+
+storePurchaseHandle = _this spawn
 {
-	hint "You do not have enough money";
-}
-else
-{
-	storePurchaseHandle = _this spawn
+	disableSerialization;
+
+	private ["_playerMoney", "_size", "_price", "_dialog", "_itemlist", "_totalText", "_playerMoneyText", "_itemText", "_class", "_uniformClass", "_vestClass", "_backpackClass", "_itemClass", "_markerPos", "_obj", "_currentBinoc", "_confirmResult", "_successHint", "_hasNVG"];
+
+	//Initialize Values
+	_playerMoney = player getVariable ["cmoney", 0];
+	_successHint = true;
+
+	// Grab access to the controls
+	_dialog = findDisplay genstore_DIALOG;
+	_itemlist = _dialog displayCtrl genstore_item_list;
+	_totalText = _dialog displayCtrl genstore_total;
+	_playerMoneyText = _Dialog displayCtrl genstore_money;
+
+	_itemIndex = lbCurSel genstore_item_list;
+	_itemText = _itemlist lbText _itemIndex;
+	_itemData = _itemlist lbData _itemIndex;
+
+	_showInsufficientFundsError = 
 	{
-		disableSerialization;
+		_itemText = _this select 0;
+		hint format ["You don't have enought money for ""%1""", _itemText];
+		player say "FD_CP_Not_Clear_F";
+		_price = -1;
+	};
 
-		//Initialize Values
-		_playerMoney = player getVariable ["cmoney", 0];
-		_size = 0;
-
-		// Grab access to the controls
-		_dialog = findDisplay genstore_DIALOG;
-		_cartlist = _dialog displayCtrl genstore_cart;
-		_totalText = _dialog displayCtrl genstore_total;
-		_playerMoneyText = _Dialog displayCtrl genstore_money;
-		_size = lbSize _cartlist;
-
-		if(_size <= 0) exitWith {hint "You have no items in the cart"};
-
-		for [{_x=0},{_x<=_size},{_x=_x+1}] do
-		{
-			_itemText = _cartlist lbText _x;
-			switch (_itemText) do {
-				case "Drinking Water": {
-					if not(MF_ITEMS_WATER call mf_inventory_is_full) then {
-						[MF_ITEMS_WATER, 1] call mf_inventory_add;
-					} else {
-						_price = 0;
-						{if(_x select 0 == "Drinking Water") then{_price = _x select 4;};}forEach (call generalStore);
-						genStoreCart = genStoreCart - _price;    
-					};
-				};
-				
-				case "Snack Food":	{
-					if not(MF_ITEMS_CANNED_FOOD call mf_inventory_is_full) then {
-						[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
-					} else {
-						_price = 0;
-						{if(_x select 0 == "Snack Food") then{_price = _x select 4;};}forEach (call generalStore);
-						genStoreCart = genStoreCart - _price;    
-					};
-				};
-				
-				case "Medical Kit": {
-					if not(MF_ITEMS_MEDKIT call mf_inventory_is_full) then {
-						[MF_ITEMS_MEDKIT, 1] call mf_inventory_add;
-					} else {
-						_price = 0;
-						{if(_x select 0 == "Medical Kit") then{_price = _x select 4;};}forEach (call generalStore);
-						genStoreCart = genStoreCart - _price;    
-					};
-				};
-				
-				case "Repair Kit": {
-					if not(MF_ITEMS_REPAIR_KIT call mf_inventory_is_full) then {
-						[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_add;
-					} else {
-						_price = 0;
-						{if(_x select 0 == "Repair Kit") then{_price = _x select 4;};}forEach (call generalStore);
-						genStoreCart = genStoreCart - _price;    
-					};
-				};
-				
-				case "Jerry Can (Full)": {
-					if not(MF_ITEMS_JERRYCAN_FULL call mf_inventory_is_full) then {
-						[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_add;
-					} else {
-						_price = 0;
-						{if(_x select 0 == "Jerry Can (Full)") then{_price = _x select 4;};}forEach (call generalStore);
-						genStoreCart = genStoreCart - _price;
-					};
-				};
-				
-				case "Jerry Can (Empty)": {
-					if not(MF_ITEMS_JERRYCAN_EMPTY call mf_inventory_is_full) then {
-						[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_add;
-					} else {
-						_price = 0;
-						{if(_x select 0 == "Jerry Can (Empty)") then{_price = _x select 4;};}forEach (call generalStore);
-						genStoreCart = genStoreCart - _price;
-					};
-				};
-				case "Spawn Beacon": {
-					if not(MF_ITEMS_SPAWN_BEACON call mf_inventory_is_full) then {
-						[MF_ITEMS_SPAWN_BEACON, 1] call mf_inventory_add;
-					} else {
-						_price = 0;
-						{if(_x select 0 == "Spawn Beacon") then{_price = _x select 4;};}forEach (call generalStore);
-						genStoreCart = genStoreCart - _price;    
-					};
-				};
-				case "Camo Net": {
-					if not(MF_ITEMS_CAMO_NET call mf_inventory_is_full) then {
-						[MF_ITEMS_CAMO_NET, 1] call mf_inventory_add;
-					} else {
-						_price = 0;
-						{if(_x select 0 == "Camo Net") then{_price = _x select 4;};}forEach (call generalStore);
-						genStoreCart = genStoreCart - _price;    
-					};
-				};
-				case "Syphon Hose": {
-					if not(MF_ITEMS_SYPHON_HOSE call mf_inventory_is_full) then {
-						[MF_ITEMS_SYPHON_HOSE, 1] call mf_inventory_add;
-		            } else {
-		            	_price = 0;
-		                {if(_x select 0 == "Syphon Hose") then{_price = _x select 4;};}forEach (call generalStore);
-		            	genStoreCart = genStoreCart - _price;    
-		            };
-				};
-		        case "Energy Drink": {
-		            if not(MF_ITEMS_ENERGY_DRINK call mf_inventory_is_full) then {
-		                [MF_ITEMS_ENERGY_DRINK, 1] call mf_inventory_add;
-		            } else {
-		                _price = 0;
-		                {if(_x select 0 == "Energy Drink") then{_price = _x select 4;};}forEach (call generalStore);
-		                genStoreCart = genStoreCart - _price;    
-		            };
-		        };
-		        case "Warchest": {
-		            if not(MF_ITEMS_WARCHEST call mf_inventory_is_full) then {
-		                [MF_ITEMS_WARCHEST, 1] call mf_inventory_add;
-		            } else {
-		                _price = 0;
-		                {if(_x select 0 == "Warchest") then{_price = _x select 4;};}forEach (call generalStore);
-		                genStoreCart = genStoreCart - _price;    
-		            };
-		        };
-			};
-		};
-
-		player setVariable["cmoney",_playerMoney - genStoreCart,true];
-		_playerMoneyText CtrlsetText format["Cash: $%1", player getVariable "cmoney"];
-
-		genStoreCart = 0;
-		_totalText CtrlsetText format["Total: $%1", genStoreCart];
-		lbClear _cartlist;
+	_showInsufficientSpaceError = 
+	{
+		_itemText = _this select 0;
+		hint format ["You don't have enough space for ""%1""", _itemText];
+		player say "FD_CP_Not_Clear_F";
+		_price = -1;
 	};
 	
-	private "_storePurchaseHandle";
-	_storePurchaseHandle = storePurchaseHandle;
-	waitUntil {scriptDone _storePurchaseHandle};
+	_showItemSpawnTimeoutError = 
+	{
+		_itemText = _this select 0;
+		hint parseText format ["<t color='#ffff00'>An unknown error occurred.</t><br/>The purchase of ""%1"" has been cancelled.", _itemText];
+		player say "FD_CP_Not_Clear_F";
+		_price = -1;
+	};
+
+	_showItemSpawnedOutsideMessage = 
+	{
+		_itemText = _this select 0;
+		hint format ["""%1"" has been spawned outside infront of the store.", _itemText];
+		player say "FD_CP_Not_Clear_F";
+		_successHint = false;
+	};
 	
-	storePurchaseHandle = nil;
+	_showReplaceConfirmMessage = 
+	{
+		_itemText = _this select 0;
+		
+		if ([_this, 1, false, [false]] call BIS_fnc_param) then
+		{
+			_itemText = format ["Purchasing these %1 will replace your current ones.", _itemText];
+		}
+		else
+		{
+			_itemText = format ["Purchasing this %1 will replace your current one, and its contents if applicable.", _itemText];
+		};
+		
+		_confirmResult = [parseText _itemText, "Confirm", "Buy", true] call BIS_fnc_guiMessage;
+		 
+		if (!_confirmResult) then
+		{
+			player say "FD_CP_Not_Clear_F";
+			_price = -1;
+		};
+		
+		_confirmResult
+	};
+
+	_showAlreadyHaveItemMessage = 
+	{
+		_itemText = _this select 0;
+		
+		if ([_this, 1, false, [false]] call BIS_fnc_param) then
+		{
+			_itemText = format ["You already have these %1.", _itemText];
+		}
+		else
+		{
+			_itemText = format ["You already have this %1.", _itemText];
+		};
+		
+		player say "FD_CP_Not_Clear_F";
+		_price = -1;
+		
+		[parseText _itemText, "Error"] call BIS_fnc_guiMessage
+	};
+
+	if (isNil "_price") then
+	{
+		{
+			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			{
+				_class = _x select 1;
+				
+				if (_x select 3 == "vest") then
+				{
+					_price = [_class] call getCapacity;
+				}
+				else
+				{
+					_price = _x select 2;
+				};
+				
+				// Ensure the player has enough money
+				if (_price > _playerMoney) exitWith
+				{
+					[_itemText] call _showInsufficientFundsError;
+				};
+				
+				switch (_x select 3) do
+				{
+					case "binoc":
+					{
+						_currentBinoc = player call getCurrentBinoculars;
+						
+						if (_currentBinoc == "") then
+						{
+							player addWeapon _class;
+						}
+						else
+						{
+							if ([player, _class, "backpack"] call fn_fitsInventory) then
+							{
+								(unitBackpack player) addWeaponCargoGlobal [_class, 1];
+							}
+							else
+							{
+								[_itemText] call _showInsufficientSpaceError;
+							};
+						};
+					};
+					case "item":
+					{
+						if ([player, _class] call fn_fitsInventory) then
+						{
+							player addItem _class;
+						}
+						else
+						{
+							[_itemText] call _showInsufficientSpaceError;
+						};
+					};
+					case "backpack":
+					{
+						if (backpack player == _class) exitWith
+						{
+							["backpack"] call _showAlreadyHaveItemMessage;
+						};
+						
+						// Confirm replace
+						if (backpack player != "" && {!(["backpack"] call _showReplaceConfirmMessage)}) exitWith {};
+						
+						removeBackpack player;
+						player addBackpack _class;
+					};
+					case "gogg":
+					{
+						if (goggles player == _class) exitWith
+						{
+							["goggles", true] call _showAlreadyHaveItemMessage;
+						};
+						
+						// Confirm replace
+						if (goggles player != "" && {!(["goggles", true] call _showReplaceConfirmMessage)}) exitWith {};
+						
+						removeGoggles player;
+						player addGoggles _class;
+					};
+					case "nvg":
+					{
+						switch (playerSide) do
+						{
+							case OPFOR:       { _itemClass = "NVGoggles_OPFOR" };
+							case INDEPENDENT: { _itemClass = "NVGoggles_INDEP" };
+							default           { _itemClass = "NVGoggles" };
+						};
+						
+						if ({["NVGoggles", _x] call fn_findString != -1} count assignedItems player == 0) then
+						{
+							_player linkItem _itemClass;
+						}
+						else
+						{
+							if ([player, _itemClass] call fn_fitsInventory) then
+							{
+								player addItem _itemClass;
+							}
+							else
+							{
+								[_itemText] call _showInsufficientSpaceError;
+							};
+						};
+					};
+					// Crates transferred to genObjectsArray below
+					/*case "ammocrate":
+					{
+						[currentOwnerID, currentOwnerName, PURCHASED_CRATE_TYPE_AMMO] execVM "client\functions\placePurchasedCrate.sqf";
+						//_playerPos = getPos player;
+						//_ammoTypes = ["Box_NATO_Ammo_F","Box_NATO_Grenades_F","Box_NATO_AmmoOrd_F","Box_IND_Ammo_F","Box_IND_Grenades_F","Box_IND_AmmoOrd_F","Box_EAST_Ammo_F","Box_EAST_Grenades_F","Box_EAST_AmmoOrd_F"];
+						//_sbox = createVehicle [_ammoTypes call BIS_fnc_selectRandom,[(_playerPos select 0), (_playerPos select 1),0],[], 0, "NONE"];
+						//clearMagazineCargoGlobal _sbox;
+						//clearWeaponCargoGlobal _sbox;
+						//clearItemCargoGlobal _sbox;
+					};
+					case "weaponcrate":
+					{
+						[currentOwnerID, currentOwnerName, PURCHASED_CRATE_TYPE_WEAPON] execVM "client\functions\placePurchasedCrate.sqf";
+						//_playerPos = getPos player;
+						//_weaponTypes = ["Box_NATO_Wps_F","Box_NATO_WpsLaunch_F","Box_NATO_WpsSpecial_F","B_supplyCrate_F","Box_NATO_Support_F","Box_IND_Wps_F","Box_IND_WpsLaunch_F","Box_IND_WpsSpecial_F","I_supplyCrate_F","Box_IND_Support_F", "Box_EAST_Wps_F","Box_EAST_WpsLaunch_F","Box_EAST_WpsSpecial_F","O_supplyCrate_F","Box_EAST_Support_F"];
+						//_sbox = createVehicle [_weaponTypes call BIS_fnc_selectRandom,[(_playerPos select 0), (_playerPos select 1),0],[], 0, "NONE"];
+						//clearMagazineCargoGlobal _sbox;
+						//clearWeaponCargoGlobal _sbox;
+						//clearItemCargoGlobal _sbox;
+					};*/
+				};
+			};
+		} forEach (call genItemArray);
+	};
+	
+	if (isNil "_price") then
+	{
+		{
+			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			{
+				_class = _x select 1;
+				_price = _x select 2;
+				
+				// Ensure the player has enough money
+				if (_price > _playerMoney) exitWith
+				{
+					[_itemText] call _showInsufficientFundsError;
+				};
+				
+				private ["_requestKey", "_requestTime"];
+				_requestKey = call generateKey;
+				
+				[[player, _class, currentOwnerName, _requestKey], "spawnStoreObject", false, false] call TPG_fnc_MP;
+				
+				_requestTime = time;
+				hint "Please wait...";
+				waitUntil {!isNil _requestKey || {time >= _requestTime + 15}}; // 15s timeout
+				
+				if (isNil _requestKey || {isNull objectFromNetId (missionNamespace getVariable _requestKey)}) then
+				{
+					_requestKey spawn // If the object somehow spawns after the timeout, delete it
+					{
+						private ["_requestKey", "_postTimeout", "_object"];
+						_requestKey = _this;
+						_postTimeout = time;
+						
+						waitUntil {!isNil _requestKey || {time >= _postTimeout + 60}}; // 60s post-timeout
+						
+						if (!isNil _requestKey) then
+						{
+							_object = objectFromNetId (missionNamespace getVariable _requestKey);
+							if (!isNull _object) then { deleteVehicle _object };
+							
+							missionNamespace setVariable [_requestKey, nil];
+						};
+					};
+					
+					[_itemText] call _showItemSpawnTimeoutError;
+				}
+				else
+				{
+					missionNamespace setVariable [_requestKey, nil];
+					[_itemText] call _showItemSpawnedOutsideMessage;
+				};
+			};
+		} forEach (call genObjectsArray);
+	};
+
+	if (isNil "_price") then
+	{
+		{
+			if (_itemData == _x select 1) exitWith
+			{
+				_price = _x select 4;
+				
+				// Ensure the player has enough money
+				if (_price > _playerMoney) exitWith
+				{
+					[_itemText] call _showInsufficientFundsError;
+				};
+				
+				if !(_itemData call mf_inventory_is_full) then
+				{
+					[_itemData, 1] call mf_inventory_add;
+				}
+				else
+				{
+					[_itemText] call _showInsufficientSpaceError;
+				};
+				
+				//populate the inventory items
+				[] execVM "client\systems\generalStore\getInventory.sqf";
+			};
+		} forEach (call customPlayerItems);
+	};
+	
+	if (isNil "_price") then
+	{
+		{
+			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			{
+				_class = _x select 1;
+				_price = _x select 2;
+				
+				if (headgear player == _class) exitWith
+				{
+					["headgear"] call _showAlreadyHaveItemMessage;
+				};
+					
+				// Ensure the player has enough money
+				if (_price > _playerMoney) exitWith
+				{
+					[_itemText] call _showInsufficientFundsError;
+				};
+				
+				// Confirm replace
+				if (headgear player != "" && {!(["headgear"] call _showReplaceConfirmMessage)}) exitWith {};
+				
+				removeHeadgear player;
+				player addHeadgear _class;
+			};
+		} forEach (call headArray);
+	};
+
+	if (isNil "_price") then
+	{
+		{
+			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			{
+				_class = _x select 1;
+				_price = _x select 2;
+				
+				if (uniform player == _class) exitWith
+				{
+					["uniform"] call _showAlreadyHaveItemMessage;
+				};
+				
+				// Ensure the player has enough money
+				if (_price > _playerMoney) exitWith
+				{
+					[_itemText] call _showInsufficientFundsError;
+				};
+				
+				// Confirm replace
+				if (uniform player != "" && {!(["uniform"] call _showReplaceConfirmMessage)}) exitWith {};
+				
+				removeUniform player;
+				player addUniform _class;
+			};
+		} forEach (call uniformArray);
+	};
+
+	if (isNil "_price") then
+	{
+		{
+			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			{
+				_class = _x select 1;
+				_price = _x select 2;
+				
+				if (vest player == _class) exitWith
+				{
+					["vest"] call _showAlreadyHaveItemMessage;
+				};
+				
+				// Ensure the player has enough money
+				if (_price > _playerMoney) exitWith
+				{
+					[_itemText] call _showInsufficientFundsError;
+				};
+				
+				// Confirm replace
+				if (vest player != "" && {!(["vest"] call _showReplaceConfirmMessage)}) exitWith {};
+				
+				removeVest player;
+				player addVest _class;
+			};
+		} forEach (call vestArray);
+	};
+
+	if (isNil "_price") then
+	{
+		{
+			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			{
+				_class = _x select 1;
+				_price = _x select 2;
+				
+				if (backpack player == _class) exitWith
+				{
+					["backpack"] call _showAlreadyHaveItemMessage;
+				};
+				
+				// Ensure the player has enough money
+				if (_price > _playerMoney) exitWith
+				{
+					[_itemText] call _showInsufficientFundsError;
+				};
+				
+				// Confirm replace
+				if (backpack player != "" && {!(["backpack"] call _showReplaceConfirmMessage)}) exitWith {};
+				
+				removeBackpack player;
+				player addBackpack _class;
+			};
+		} forEach (call backpackArray);
+	};
+
+	if (!isNil "_price" && {_price > -1}) then
+	{
+		player setVariable ["cmoney", _playerMoney - _price, true];
+		_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+		if (_successHint) then { hint "Purchase successful!" };
+	};
 };
+
+private "_storePurchaseHandle";
+_storePurchaseHandle = storePurchaseHandle;
+waitUntil {scriptDone _storePurchaseHandle};
+
+storePurchaseHandle = nil;
