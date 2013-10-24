@@ -38,7 +38,7 @@ _vehicle = createVehicle [_vehicleType, _pos, [], 0, "None"];
 _vehicle setPosATL [_pos select 0, _pos select 1, 1.5];
 _vehicle setVelocity [0,0,0.01];
 
-[_vehicle, 900, 1800, 2700, 1000, 0, false, _markerPos] execVM "server\functions\vehicle.sqf";
+[_vehicle, 15*60, 30*60, 45*60, 1000, 0, false, _markerPos] execVM "server\functions\vehicle.sqf";
 
 //Set Vehicle Attributes
 _vehicle setFuel (random 0.5 + 0.25);

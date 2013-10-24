@@ -22,7 +22,7 @@ _boat = createVehicle [_boatType, _pos, [], 0, "None"];
 _boat setPosASL [_pos select 0, _pos select 1, 0];
 _boat setVelocity [0,0,0];
 
-[_boat, 600, 1200, 1800, 1000, 0, false, _markerPos] execVM "server\functions\vehicle.sqf";
+[_boat, 10*60, 20*60, 30*60, 1000, 0, false, _markerPos] execVM "server\functions\vehicle.sqf";
 
 //Set Vehicle Attributes
 _boat setFuel (random 0.5 + 0.25);
