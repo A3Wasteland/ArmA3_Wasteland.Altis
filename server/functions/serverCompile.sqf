@@ -66,6 +66,7 @@ deleteClientMarker = [_path, "deleteClientMarker.sqf"] call mf_compile;
 
 //Function Compiles
 _path = "server\functions";
+addMilCap = [_path, "addMilCap.sqf"] call mf_compile;
 checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
 cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
@@ -76,6 +77,9 @@ fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;
 fn_replaceWeapons = [_path, "fn_replaceWeapons.sqf"] call mf_compile;
 fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile;
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
+refillPrimaryAmmo = [_path, "refillPrimaryAmmo.sqf"] call mf_compile;
+setMissionSkill = [_path, "setMissionSkill.sqf"] call mf_compile;
+spawnStoreObject = [_path, "spawnStoreObject.sqf"] call mf_compile;
 vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
 vehicleSetup = [_path, "vehicleSetup.sqf"] call mf_compile;
 
@@ -92,5 +96,5 @@ randomWeapons = [_path, "randomWeapon.sqf"] call mf_compile;
 staticHeliCreation = [_path, "staticHeliCreation.sqf"] call mf_compile;
 vehicleCreation = [_path, "vehicleCreation.sqf"] call mf_compile;
 
-if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = "A3\functions_f\MP\fn_MP.sqf" call mf_compile };
-if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = "A3\functions_f\MP\fn_MPexec.sqf" call mf_compile };
+if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = "\A3\functions_f\MP\fn_MP.sqf" call mf_compile };
+if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = "\A3\functions_f\MP\fn_MPexec.sqf" call mf_compile };
