@@ -76,6 +76,7 @@ else
 				player globalChat STR_R3F_LOG_action_charger_deplace_en_cours;
 				
 				// Faire relacher l'objet au joueur (si il l'a dans "les mains")
+				_objet disableCollisionWith _transporteur;
 				R3F_LOG_joueur_deplace_objet = objNull;
 				sleep 2;
 				
@@ -90,6 +91,7 @@ else
 				};
 				
 				_objet attachTo [R3F_LOG_PUBVAR_point_attache, _position_attache];
+				_objet enableCollisionWith _transporteur;
 				
 				player globalChat format [STR_R3F_LOG_action_charger_deplace_fait, getText (configFile >> "CfgVehicles" >> (typeOf _transporteur) >> "displayName")];
 			}
