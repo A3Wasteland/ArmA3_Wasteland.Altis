@@ -20,7 +20,7 @@ while {true} do
 	if !(isNull _objet_pointe) then
 	{
 		//if (player distance _objet_pointe < 13) then
-		if (player distance _objet_pointe < 12 && {!isMultiplayer || {!local _objet_pointe} || {[":-", netId _objet_pointe] call fn_findString == -1}}) then
+		if (player distance _objet_pointe < 14 && {!isMultiplayer || {!local _objet_pointe} || {[":-", netId _objet_pointe] call fn_findString == -1}}) then
 		{
 			R3F_LOG_objet_addAction = _objet_pointe;
 			
