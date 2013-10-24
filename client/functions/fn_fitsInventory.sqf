@@ -11,7 +11,6 @@ _item = _this select 1;
 
 if (count _this > 2) then { _allowedContainers = _this select 2 };
 
-
 if (isClass (configFile >> "CfgWeapons" >> _item >> "WeaponSlotsInfo")) then
 {
 	if (isArray (configFile >> "CfgWeapons" >> _item >> "WeaponSlotsInfo" >> "allowedSlots")) then
@@ -23,40 +22,23 @@ if (isClass (configFile >> "CfgWeapons" >> _item >> "WeaponSlotsInfo")) then
 	{
 		_allSlots = true;
 	};
-
-	if (!isClass (configFile >> "CfgWeapons" >> _item >> "ItemInfo") && {_allSlots || {901 in _allowedSlots}}) then
-	{
-		_allowedSlots = [901];
-	};
 };
 
 if (!isNil "_allowedContainers") then
 {
-	if (typeName _allowedContainers != typeName []) then
+	if (typeName _allowedContainers != "ARRAY") then
 	{
 		_allowedContainers = [_allowedContainers];
 	};
 	
 	{
-		if (typeName _x == typeName "") then
+		if (typeName _x == "STRING") then
 		{
 			switch (toLower _x) do
 			{
-				case "uniform":
-				{
-					_x = 701;
-					_allowedContainers set [_forEachIndex, _x];
-				};
-				case "vest":
-				{
-					_x = 801;
-					_allowedContainers set [_forEachIndex, _x];
-				};
-				case "backpack":
-				{
-					_x = 901;
-					_allowedContainers set [_forEachIndex, _x];
-				};
+				case "uniform":  { _allowedContainers set [_forEachIndex, 701] };
+				case "vest":     { _allowedContainers set [_forEachIndex, 801] };
+				case "backpack": { _allowedContainers set [_forEachIndex, 901] };
 			};
 		};
 	} forEach _allowedContainers;
@@ -67,16 +49,16 @@ if (!isNil "_allowedContainers") then
 	};
 	
 	{
-		if (!(_x in _allowedContainers)) then
+		if !(_x in _allowedContainers) then
 		{
 			_allowedSlots = _allowedSlots - [_x];
 		};
-	} forEach _allowedSlots;
+	} forEach (+ _allowedSlots);
 	
 	if (_allSlots) then
 	{
 		{
-			if (!(_x in _allowedSlots)) then
+			if !(_x in _allowedSlots) then
 			{
 				_allowedSlots set [count _allowedSlots, _x];
 			};
