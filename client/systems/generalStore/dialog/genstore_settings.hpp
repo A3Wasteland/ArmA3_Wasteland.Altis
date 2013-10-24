@@ -5,17 +5,17 @@ class genstored {
 	idd = genstore_DIALOG;
 	movingEnable = true;
 	enableSimulation = true;
-	onLoad = "[] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+	onLoad = "[0] execVM 'client\systems\generalStore\populateGenStore.sqf'";
 
 	class controlsBackground {
 		
 		class MainBackground: w_RscPicture
 		{
 			idc = -1;
-					colorText[] = {1, 1, 1, 1};
-		        colorBackground[] = {0,0,0,0};
-		text = "#(argb,8,8,3)color(0,0,0,0.6)";
-
+			colorText[] = {1, 1, 1, 1};
+		    colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
+			moving = true;
 			x = 0.1875 * safezoneW + safezoneX;
 			y = 0.15 * safezoneH + safezoneY;
 			w = 0.55 * safezoneW;
@@ -40,7 +40,7 @@ class genstored {
 			idc = -1;
 			text = "General Store Menu";
 			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.155 * safezoneH + safezoneY;
 			w = 0.19 * safezoneW;
@@ -52,7 +52,7 @@ class genstored {
 			idc = genstore_money;
 			text = "Cash:";
 			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 			x = 0.640 * safezoneW + safezoneX;
 			y = 0.155 * safezoneH + safezoneY;
 			w = 0.0844792 * safezoneW;
@@ -80,7 +80,6 @@ class genstored {
 			w = 0.0891667 * safezoneW;
 			h = 0.068889 * safezoneH;
 		};
-		
 	};
 	
 	class controls {
@@ -90,11 +89,23 @@ class genstored {
 			idc = genstore_item_list;
 			onLBSelChanged = "[] execvm 'client\systems\generalStore\itemInfo.sqf'";
 			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 			x = 0.3025 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.207 * safezoneW;
-			h = 0.422222 * safezoneH;
+			h = 0.338222 * safezoneH;
+		};
+		
+		class ItemDescription: w_RscStructuredTextLeft
+		{
+			idc = genstore_item_desc;
+			text = "";
+			sizeEx = 0.02;
+			colorBackground[] = { 0, 0, 0, 0.1 };
+			x = 0.3025 * safezoneW + safezoneX;
+			y = 0.567 * safezoneH + safezoneY;
+			w = 0.207 * safezoneW;
+			h = 0.088 * safezoneH;
 		};
 		
 		class SellList: w_RscList
@@ -102,20 +113,31 @@ class genstored {
 			idc = genstore_sell_list;
 			onLBSelChanged = "[] execvm 'client\systems\generalStore\sellInfo.sqf'";
 			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 			x = 0.520 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.207 * safezoneW;
 			h = 0.422222 * safezoneH;
 		};
 		
+		class SellWeapon: w_RscButton
+		{
+			idc = -1;
+			onButtonClick = "[] execVM 'client\systems\selling\sellWeapon.sqf'";
+			text = "Sell Weapon";
+
+			x = 0.360 * safezoneW + safezoneX;
+			y = 0.740 * safezoneH + safezoneY;
+			w = 0.088 * safezoneW;
+			h = 0.040 * safezoneH;
+		};
+		
 		class SellUniform: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\generalStore\sellUnif.sqf'";
+			onButtonClick = "[] execVM 'client\systems\selling\sellUniform.sqf'";
 			text = "Sell Uniform";
-
-			x = 0.546 * safezoneW + safezoneX;
+			x = 0.453 * safezoneW + safezoneX;
 			y = 0.740 * safezoneH + safezoneY;
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
@@ -124,8 +146,20 @@ class genstored {
         class SellVest: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\generalStore\sellVest.sqf'";
+			onButtonClick = "[] execVM 'client\systems\selling\sellVest.sqf'";
 			text = "Sell Vest";
+
+			x = 0.546 * safezoneW + safezoneX;
+			y = 0.740 * safezoneH + safezoneY;
+			w = 0.088 * safezoneW;
+			h = 0.040 * safezoneH;
+		};
+		
+		class SellBackpack: w_RscButton
+		{
+			idc = -1;
+			onButtonClick = "[] execVM 'client\systems\selling\sellBackpack.sqf'";
+			text = "Sell Backpack";
 
 			x = 0.639 * safezoneW + safezoneX;
 			y = 0.740 * safezoneH + safezoneY;
@@ -148,7 +182,7 @@ class genstored {
 		class SellItem: w_RscButton
 		{
 			idc = genstore_sell;
-			onButtonClick = "[0] execVM 'client\systems\generalStore\sellItem.sqf'";
+			onButtonClick = "[0] execVM 'client\systems\generalStore\sellItems.sqf'";
 			text = "Sell";
 
 			x = 0.655 * safezoneW + safezoneX;
@@ -173,7 +207,7 @@ class genstored {
 		{
 			idc = -1;
 			onButtonClick = "[0] execVM 'client\systems\generalStore\populateGenStore.sqf'";
-			text = "Head";
+			text = "Headgear";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
@@ -223,7 +257,7 @@ class genstored {
 		{
 			idc = -1;
 			onButtonClick = "[4] execVM 'client\systems\generalStore\populateGenStore.sqf'";
-			text = "Items";
+			text = "Equipment";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.425 * safezoneH + safezoneY;
@@ -235,7 +269,7 @@ class genstored {
 		{
 			idc = -1;
 			onButtonClick = "[5] execVM 'client\systems\generalStore\populateGenStore.sqf'";
-			text = "Survival";
+			text = "Items";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.475 * safezoneH + safezoneY;
@@ -255,4 +289,5 @@ class genstored {
 			h = 0.040 * safezoneH;
 		};
 	};
-};
+};
+
