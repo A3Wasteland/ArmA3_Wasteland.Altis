@@ -20,8 +20,9 @@ diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
 _convoyVeh = 
 [
 	["B_Quadbike_01_F", "C_Van_01_box_F", "B_Quadbike_01_F"],
+	["B_Quadbike_01_F", "C_Van_01_box_F", "B_Quadbike_01_F"],
 	["I_G_Offroad_01_F", "I_Truck_02_transport_F", "I_G_Offroad_01_F"],
-	["I_G_Offroad_01_armed_F", "O_Truck_02_transport_F", "I_G_Offroad_01_F"]
+	["I_G_Offroad_01_F", "O_Truck_02_transport_F", "I_G_Offroad_01_F"]
 ]
 call BIS_fnc_selectRandom;
 
@@ -33,7 +34,7 @@ _veh3 = _convoyVeh select 2;
 _routes = [1,2,3];
 
 // pick one of the routes
-_rn = _routes select (floor(random(count _routes)));
+_rn = _routes call BIS_fnc_selectRandom;
 
 // set starts and waypoints depending on above (random) choice
 switch (_rn) do 
