@@ -6,7 +6,8 @@
 
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
-private["_weap_type","_price","_dialog","_itemlist","_itemlisttext","_buysell","_itemInfo","_selectedItem","_itemText"];
+private ["_weap_type", "_price", "_dialog", "_itemlist", "_itemlisttext", "_buysell", "_itemInfo", "_itemIndex", "_itemText", "_itemData"];
+
 //Initialize Values
 _weap_type = "";
 _price = 0;
@@ -18,12 +19,14 @@ _itemlisttext = _dialog displayCtrl genstore_sell_TEXT;
 _itemInfo = _dialog displayCtrl genstore_item_Info;
 
 //Get Selected Item
-_selectedItem = lbCurSel _itemlist;
-_itemText = _itemlist lbText _selectedItem;
+_itemIndex = lbCurSel _itemlist;
+_itemText = _itemlist lbText _itemIndex;
+_itemData = _itemlist lbData _itemIndex;
 
-{if(_itemText == _x select 0) then{
-	_price = _x select 5;
-	
-	_itemlisttext ctrlSetText format ["Price: $%1", _price];
-	breakTo "main"	
-}}forEach (call generalStore);
+{
+	if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+	{
+		_price = _x select 5;
+		_itemlisttext ctrlSetText format ["Value: $%1", _price];
+	}
+} forEach (call customPlayerItems);
