@@ -29,7 +29,7 @@ _veh3 = ["O_Boat_Armed_01_hmg_F","B_Boat_Armed_01_minigun_F","I_Boat_Armed_01_mi
 _routes = [1,2,3];
 
 // pick one of the routes
-_rn = _routes select (floor(random(count _routes)));
+_rn = _routes call BIS_fnc_selectRandom;
 
 // set starts and waypoints depending on above (random) choice
 switch (_rn) do 
