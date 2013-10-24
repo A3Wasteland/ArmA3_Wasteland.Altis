@@ -18,6 +18,7 @@ titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
 isAdmin = "client\systems\adminPanel\isAdmin.sqf" call mf_compile;
 isWeaponType = "client\functions\isWeaponType.sqf" call mf_compile;
 isAssignableBinocular = "client\functions\isAssignableBinocular.sqf" call mf_compile;
+getCurrentBinoculars = "client\functions\getCurrentBinoculars.sqf" call mf_compile;
 
 // Player details and actions
 loadPlayerMenu = "client\systems\playerMenu\init.sqf" call mf_compile;
@@ -44,9 +45,15 @@ teamkillMessage = "client\functions\showTeamKillMessage.sqf" call mf_compile;
 client_respawnDialog = "client\functions\loadRespawnDialog.sqf" call mf_compile;
 loadGeneralStore = "client\systems\generalStore\loadGenStore.sqf" call mf_compile;
 loadGunStore = "client\systems\gunStore\loadGunStore.sqf" call mf_compile;
+gearProperties = "client\functions\gearProperties.sqf" call mf_compile;
+getCapacity = "client\functions\getCapacity.sqf" call mf_compile;
+getItemInfo = "client\functions\getItemInfo.sqf" call mf_compile;
 
-if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = "A3\functions_f\MP\fn_MP.sqf" call mf_compile };
-if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = "A3\functions_f\MP\fn_MPexec.sqf" call mf_compile };
+// Custom paint/textures on vehicles
+applyVehicleTexture = "client\systems\vehicleStore\applyVehicleTexture.sqf" call mf_compile;
+
+if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = "\A3\functions_f\MP\fn_MP.sqf" call mf_compile };
+if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = "\A3\functions_f\MP\fn_MPexec.sqf" call mf_compile };
 
 player groupChat "Wasteland - Client Compile Complete";
 sleep 1;
