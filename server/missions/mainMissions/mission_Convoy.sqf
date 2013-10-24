@@ -33,7 +33,7 @@ _veh3 = _convoyVeh select 2;
 _routes = [1,2,3];
 
 // pick one of the routes
-_rn = _routes select (floor(random(count _routes)));
+_rn = _routes call BIS_fnc_selectRandom;
 
 // set starts and waypoints depending on above (random) choice
 switch (_rn) do 
