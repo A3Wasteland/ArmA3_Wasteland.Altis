@@ -39,7 +39,7 @@ FZF_IC_Icons =
 			
 			_unit = _x;
 			_pos = getPos _unit;
-			_distance = _pos distance player;
+			_distance = _pos distance positionCameraToWorld [0,0,0];
 			
 			if (_distance < ICON_limitDistance) then // rules out the player and players too far away.
 			{
