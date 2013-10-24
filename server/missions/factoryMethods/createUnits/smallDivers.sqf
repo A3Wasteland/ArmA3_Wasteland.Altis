@@ -4,11 +4,10 @@
 
 if (!isServer) exitWith {};
 
-private ["_group", "_pos", "_skill", "_leader", "_man2", "_man3"];
+private ["_group", "_pos", "_leader", "_man2", "_man3"];
 
 _group = _this select 0;
 _pos = _this select 1;
-_skill = if (["A3W_missionsDifficulty", 0] call getPublicVar > 0) then { 0.5 } else { 0.25 };
 
 // Leader
 _leader = _group createUnit ["C_man_polo_1_F", [(_pos select 0) + 10, _pos select 1, 0], [], 1, "Form"];
@@ -43,12 +42,13 @@ _man3 addWeapon "arifle_SDAR_F";
 _man3 addMagazine "20Rnd_556x45_UW_Mag";
 _man3 addMagazine "20Rnd_556x45_UW_Mag";
 
+_leader = leader _group;
+
 {
-	_x setSkill _skill;
-	_x allowFleeing 0;
+	_x spawn refillPrimaryAmmo;
+	_x call setMissionSkill;
 	_x addRating 9999999;
 	_x addEventHandler ["Killed", {_this call server_playerDied; (_this select 1) call removeNegativeScore}];
 } forEach units _group;
 
-_leader = leader _group;
-[_group, _pos, "Boat_F"] call defendArea;
+[_group, _pos, "Ship"] call defendArea;

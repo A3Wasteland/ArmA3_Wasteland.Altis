@@ -12,7 +12,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_soldierTypes","_uniformTypes","_vestTypes","_weaponTypes","_group","_position","_soldier"];
+private ["_soldierTypes", "_uniformTypes", "_vestTypes", "_weaponTypes", "_group", "_position", "_soldier"];
 
 _soldierTypes = ["C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F"];
 _uniformTypes = ["U_B_CombatUniform_mcam_vest","U_B_CombatUniform_mcam_tshirt","U_B_CombatUniform_mcam"];
@@ -27,10 +27,9 @@ _soldier addUniform (_uniformTypes call BIS_fnc_selectRandom);
 _soldier addVest (_vestTypes call BIS_fnc_selectRandom);
 [_soldier, _weaponTypes call BIS_fnc_selectRandom, 3] call BIS_fnc_addWeapon;
 
-sleep 0.1; // Without this delay, headgear doesn't get removed properly
-
-removeAllAssignedItems _soldier;
-_soldier addHeadgear "H_MilCap_mcamo";
+_soldier spawn refillPrimaryAmmo;
+_soldier spawn addMilCap;
+_soldier call setMissionSkill;
 
 _soldier addEventHandler ["Killed", {_this call server_playerDied; (_this select 1) call removeNegativeScore}];
 
