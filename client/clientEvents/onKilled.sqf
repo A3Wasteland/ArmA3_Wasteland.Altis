@@ -4,23 +4,21 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-_player = (_this select 0) select 0;
-_killer = (_this select 0) select 1;
-if(isnil {_player getVariable "cmoney"}) then {_player setVariable["cmoney",0,true];};
+_player = _this select 0;
+_killer = _this select 1;
+
+if (isNil {_player getVariable "cmoney"}) then { _player setVariable["cmoney", 0, true] };
+
 //diag_log (unitBackpack _player);
-clearMagazineCargoGlobal (unitBackpack _player);
-removebackpack _player;
-PlayerCDeath = [_player];
-publicVariable "PlayerCDeath";
-if (isServer) then {
-	_id = PlayerCDeath spawn serverPlayerDied; 
-};
+//removeBackpack _player;
 
-if(!local _player) exitwith {
-	closeDialog 0;
-};
+if (goggles _player != "G_Diving") then { removeGoggles _player };
 
-if((_player != _killer) && (vehicle _player != vehicle _killer) && (playerSide == side _killer) && (str(playerSide) in ["WEST", "EAST"])) then {
+closeDialog 2001; // Close Gunstore
+closeDialog 2009; // Close Genstore
+closeDialog 5285; // Close Vehstore
+
+if((_player != _killer) && (vehicle _player != vehicle _killer) && (playerSide == side _killer) && (playerSide in [BLUFOR, OPFOR])) then {
 	pvar_PlayerTeamKiller = objNull;
 	if(_killer isKindOf "CAManBase") then {
 		pvar_PlayerTeamKiller = _killer;
@@ -65,10 +63,10 @@ if(!isNull(pvar_PlayerTeamKiller)) then {
 };
 
 if (side _killer == INDEPENDENT && {side _player == INDEPENDENT} && {_killer != _player} && {vehicle _killer != vehicle _player}) then
-	{
-		requestCompensateNegativeScore = _killer;
-		publicVariableServer "requestCompensateNegativeScore";
-	}; 
+{
+	requestCompensateNegativeScore = _killer;
+	publicVariableServer "requestCompensateNegativeScore";
+}; 
 
 private["_a","_b","_c","_d","_e","_f","_m","_player","_killer", "_to_delete"];
 
@@ -76,11 +74,12 @@ _to_delete = [];
 _to_delete_quick = [];
 [_player, objNull] call mf_player_actions_refresh;
 
-if((_player getVariable "cmoney") > 0) then {
+if (_player getVariable "cmoney" > 0) then
+{
 	_m = "Land_Money_F" createVehicle (position _player);
-	_m setVariable["money", (_player getVariable "cmoney"), true];
+	_m setVariable ["cmoney", _player getVariable "cmoney", true];
 	_m setVariable ["owner", "world", true];
-	_player setVariable["cmoney",0,true];
+	_player setVariable ["cmoney", 0, true];
 	_to_delete = _to_delete + [_m];
 };
 
@@ -90,7 +89,12 @@ if((_player getVariable "cmoney") > 0) then {
 	};
 } forEach call mf_inventory_all;
 
-true spawn {
-	waitUntil {playerRespawnTime < 2};
-//	titleText ["", "BLACK OUT", 1];
+if (isServer) then
+{
+	[_player] spawn server_PlayerDied; 
+}
+else
+{
+	PlayerCDeath = _player;
+	publicVariableServer "PlayerCDeath";
 };
