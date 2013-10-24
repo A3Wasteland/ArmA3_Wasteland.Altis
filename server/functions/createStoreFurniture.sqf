@@ -3,6 +3,8 @@
 //	@file Author: His_Shadow
 //	@file Args:
 
+if (!isServer) exitWith {};
+
 private ["_storeOwner", "_bPos", "_pDir", "_pDDirMod", "_fName", "_chair", "_desk", "_base", "_deskPos"];
 
 //grab our arguments
@@ -27,19 +29,19 @@ _base = getPos _storeOwner;
 //_chair allowDamage false;
 //_chair enableSimulation false;
 
+_pDir = _pDir + 180; // desk model is inverted
+
 //create the cashier station
 _desk = "Land_CashDesk_F" createVehicle _base;
-_deskPos = [(_bPos select 0)+1.2*sin(_pDir),(_bPos select 1)+1.2*cos(_pDir),(_bPos select 2)];
-_desk setPos [(_deskPos select 0), (_deskPos select 1), (_deskPos select 2)-.2];
-_desk setVelocity [0,0,0];
-_desk setDir _pDDirMod;
-_desk removeAllEventHandlers "hit";
-_desk removeAllEventHandlers "dammaged";
-_desk removeAllEventHandlers "handleDamage";
-_desk addeventhandler ["hit", {(_this select 0) setdamage 0;}];
-_desk addeventhandler ["dammaged", {(_this select 0) setdamage 0;}];
-_desk addEventHandler["handledamage", {false}];
+//_deskPos = [(_bPos select 0) + 1.2 * sin _pDir, (_bPos select 1) + 1.2 * cos _pDir, _bPos select 2];
+_deskPos = [_bPos, [[0, -0.8, 0], -_pDir] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
+_desk setPosATL _deskPos;
+_desk setDir _pDir;
+_desk setVariable ["R3F_LOG_disabled", true, true];
 _desk allowDamage false;
+_desk disableCollisionWith _storeOwner;
 
 //_chair disableCollisionWith _desk;
 //_chair
+
+_desk
