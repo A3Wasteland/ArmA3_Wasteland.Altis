@@ -7,6 +7,8 @@ _player setskill 0;
 _player setVariable ["BIS_noCoreConversations", true];
 _player allowDamage false;
 
+enableSentences false;
+
 removeAllWeapons _player;
 removeUniform _player;
 removeVest _player;
@@ -23,7 +25,7 @@ switch (playerSide) do
 			case (_player isKindOf "B_sniper_F"):
 			{ 
 				_player addUniform "U_B_Ghilliesuit"; 
-				_player addVest "V_PlateCarrierGL_rgr"; 
+				_player addVest "V_PlateCarrier1_rgr"; 
 			};
 			case (_player isKindOf "B_diver_F"):
 			{ 
@@ -34,7 +36,7 @@ switch (playerSide) do
 			default
 			{ 
 				_player addUniform "U_B_CombatUniform_mcam";
-				_player addVest "V_PlateCarrierGL_rgr";
+				_player addVest "V_PlateCarrier1_rgr";
 				_player addHeadgear "H_HelmetB";
 			};
 		};
@@ -79,7 +81,7 @@ switch (playerSide) do
 			};
 			default
 			{ 
-				_player addUniform "U_O_CombatUniform_ocamo";
+				_player addUniform "U_I_CombatUniform";
 				_player addVest "V_PlateCarrierIA2_dgtl";
 				_player addHeadgear "H_HelmetIA";
 			};
@@ -91,25 +93,32 @@ switch (playerSide) do
 sleep 0.1;
 //_player unAssignItem "ItemRadio";
 //_player removeItem "ItemRadio";
-_player unAssignItem "ItemGPS";
+_player unassignItem "ItemGPS";
 _player removeItem "ItemGPS";
 
-_hasNVGoggles = false;
-
+private "_nvgClass";
+switch (side _player) do
 {
-    if (["NVGoggles", _x] call fn_findString == 0) exitWith
-    {
-        _hasNVGoggles = true;
-    };
-} forEach assignedItems _player;
-
-if (!_hasNVGoggles) then
-{
-	_player addItem "NVGoggles";
-	_player assignItem "NVGoggles";
+	// case OPFOR:       { _nvgClass = "NVGoggles_OPFOR" };
+	// case INDEPENDENT: { _nvgClass = "NVGoggles_INDEP" };
+	default           { _nvgClass = "NVGoggles" };
 };
 
-_player addBackpack "B_Kitbag_Base";  //make this configurable for serveradmins!
+// # Remove NVGs #########
+{
+	if (["NVGoggles", _x] call fn_findString != -1) then
+	{
+		_player unassignItem _x;
+		_player removeItem _x;
+	};
+} forEach assignedItems _player;
+// #######################
+
+// # Add NVGs ############
+// _player linkItem _nvgClass;
+// #######################
+
+_player addBackpack "B_AssaultPack_rgr";  // TODO: make this configurable for server admins!
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addWeapon "hgun_ACPC2_F";
 _player addMagazine "9Rnd_45ACP_Mag";
