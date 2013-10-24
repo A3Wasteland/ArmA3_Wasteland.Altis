@@ -6,10 +6,14 @@
 
 if (!isNil "spawnActionHandle" && {typeName spawnActionHandle == "SCRIPT"} && {!scriptDone spawnActionHandle}) exitWith {};
 
+disableSerialization;
+_ctrlButton = (_this select 0) select 0;
+
 spawnActionHandle = _this spawn
 {
-	_switch = _this select 0;
-	_button = _this select 1;
+	private ["_switch", "_button", "_scriptHandle"];
+	_switch = _this select 1;
+	if (count _this > 2) then { _button = _this select 2 };
 
 	player allowDamage true;
 
@@ -35,9 +39,11 @@ spawnActionHandle = _this spawn
 		case 0:{execVM "client\functions\spawnRandom.sqf"};
 		case 1:{
 			if(showBeacons) then { 	
-				[_button] execVM "client\functions\spawnOnBeacon.sqf"
+				_scriptHandle = [_button] execVM "client\functions\spawnOnBeacon.sqf";
+				waitUntil {scriptDone _scriptHandle};
 			} else {
-				[_button] execVM "client\functions\spawnInTown.sqf"
+				_scriptHandle = [_button] execVM "client\functions\spawnInTown.sqf";
+				waitUntil {scriptDone _scriptHandle};
 			}; 
 		};
 	};
@@ -94,8 +100,23 @@ spawnActionHandle = _this spawn
 	};
 };
 
-private "_spawnActionHandle";
+disableSerialization;
+
+private ["_ctrlButton", "_btnText", "_spawnActionHandle"];
+_ctrlButton = (_this select 0) select 0;
+
+if (!isNull _ctrlButton) then
+{
+	_btnText = ctrlText _ctrlButton;
+	_ctrlButton ctrlSetText "Please wait...";
+};
+
 _spawnActionHandle = spawnActionHandle;
 waitUntil {scriptDone _spawnActionHandle};
-
 spawnActionHandle = nil;
+
+if (!isNull _ctrlButton) then
+{
+	_ctrlButton ctrlSetText _btnText;
+	_ctrlButton ctrlEnable true;
+};

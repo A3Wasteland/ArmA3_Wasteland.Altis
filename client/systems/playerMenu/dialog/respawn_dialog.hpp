@@ -175,7 +175,7 @@
 		class RandomSpawnButton: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[0] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = "(_this select 0) ctrlEnable false; [_this, 0] execVM 'client\functions\spawnAction.sqf'";
 			text = "Random";
 
 			x = 0.460* safezoneW + safezoneX;
@@ -211,7 +211,7 @@
 		class TownButton0: w_RscButton
 		{
 			idc = respawn_Town_Button0;
-			onButtonClick = "[1,0] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,0] execVM 'client\functions\spawnAction.sqf'";
 			text = "";
 
 			x = 0.343 * safezoneW + safezoneX;
@@ -223,7 +223,7 @@
 		class TownButton1: w_RscButton
 		{
 			idc = respawn_Town_Button1;
-			onButtonClick = "[1,1] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,1] execVM 'client\functions\spawnAction.sqf'";
 			text = "";
 
 			x = 0.343 * safezoneW + safezoneX;
@@ -235,7 +235,7 @@
 		class TownButton2: w_RscButton
 		{
 			idc = respawn_Town_Button2;
-			onButtonClick = "[1,2] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,2] execVM 'client\functions\spawnAction.sqf'";
 			text = "";
 
 			x = 0.343 * safezoneW + safezoneX;
@@ -247,7 +247,7 @@
 		class TownButton3: w_RscButton
 		{
 			idc = respawn_Town_Button3;
-			onButtonClick = "[1,3] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,3] execVM 'client\functions\spawnAction.sqf'";
 			text = "";
 
 			x = 0.343 * safezoneW + safezoneX;
@@ -259,7 +259,7 @@
 		class TownButton4: w_RscButton
 		{
 			idc = respawn_Town_Button4;
-			onButtonClick = "[1,4] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,4] execVM 'client\functions\spawnAction.sqf'";
 			text = "";
 
 			x = 0.343 * safezoneW + safezoneX;
