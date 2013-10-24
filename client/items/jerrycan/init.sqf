@@ -43,14 +43,13 @@ mf_jerrycan_nearest_vehicle = {
 };
 
 mf_jerrycan_fuel_amount = {
-	private ["_vehicle", "_fuel_amount", "_current", "_config", "_type"];
+	private ["_vehicle", "_fuel_amount", "_config", "_type"];
 	_vehicle = _this select 0;
 	_fuel_amount = (call config_refuel_amount_default);
-	_current = "All";
 	{
 		_type = _x select 0;
-		if (_vehicle isKindOf _type and _type isKindOf _current) then {
-			_current = _type;
+		if (_vehicle isKindOf _type ) exitWith
+		{
 			_fuel_amount = _x select 1;
 		};
 	} forEach (call config_refuel_amounts);
