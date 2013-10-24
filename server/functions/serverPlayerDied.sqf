@@ -5,11 +5,24 @@
 
 if (!isServer) exitWith {};
 
-private["_newPlayerObject"];
-_newPlayerObject = _this select 0;
-_newPlayerObject setVariable["processedDeath",time];
+private ["_corpse", "_backpack"];
+_corpse = _this select 0;
+_corpse setVariable ["processedDeath", diag_tickTime];
+_backpack = unitBackpack _corpse;
+
+if (!isNull _backpack) then
+{
+	_backpack setVariable ["processedDeath", diag_tickTime];
+};
+
+{
+	if (owner _x == owner _corpse && {!isNil {_x getVariable "mf_item_id"}}) then
+	{
+		_x setVariable ["processedDeath", diag_tickTime];
+	};
+} forEach (_corpse nearEntities ["All", 20]);
 
 // Remove any persistent info about the player on death
 if ((call config_player_saving_enabled) == 1) then {
-	getPlayerUID _newPlayerObject call iniDB_delete;
+	(getPlayerUID _corpse) call iniDB_delete;
 };
