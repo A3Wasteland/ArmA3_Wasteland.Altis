@@ -3,23 +3,15 @@
 //	@file Author: AgentRev
 //	@file Created: 09/06/2013 16:56
 
-private ["_queryChecksum", "_hackedVehicles"];
-_queryChecksum = call generateKey;
+private ["_requestKey", "_hackedVehicles"];
+_requestKey = call generateKey;
 
-hackedVehicles = nil;
-
-while {isNil "hackedVehicles" || {[hackedVehicles, 1, "", [""]] call BIS_fnc_param != _queryChecksum}} do
-{
-	hackedVehicles = nil;
-	"hackedVehicles" addPublicVariableEventHandler {};	
+[[player, _requestKey], "checkHackedVehicles", false, false] call TPG_fnc_MP;
 	
-	[[player, _queryChecksum], "checkHackedVehicles", false, false] call TPG_fnc_MP;
-	
-	waitUntil {!isNil "hackedVehicles"};
-};
+waitUntil {!isNil _requestKey};
 
-_hackedVehicles = + (hackedVehicles select 0);
-hackedVehicles = nil;
+_hackedVehicles = missionNamespace getVariable [_requestKey, []];
+missionNamespace setVariable [_requestKey, nil];
 
 {
 	_hackedVehicles set [_forEachIndex, [objectFromNetId (_x select 0), toString (_x select 1)]];
