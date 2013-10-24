@@ -27,7 +27,7 @@ _vehicleManager =
 		_camPos = positionCameraToWorld [0,0,0];
 		
 		if (!local _vehicle &&
-		   {_vehicle distance _camPos > 1500} && 
+		   {_vehicle distance _camPos > 1000} && 
 		   {count crew _vehicle == 0} && 
 		   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < time} &&
 		   {(velocity _vehicle) call BIS_fnc_magnitude < 0.1}) then
@@ -65,7 +65,7 @@ while {true} do
 {
 	_camPos = positionCameraToWorld [0,0,0];
 	
-	if (_lastPos distance _camPos > 150) then
+	if (_lastPos distance _camPos > 100) then
 	{
 		_lastPos = _camPos;
 		call _vehicleManager;
