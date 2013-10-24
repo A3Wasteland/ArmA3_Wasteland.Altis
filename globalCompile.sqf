@@ -25,7 +25,7 @@ mf_compile = compileFinal
 	};
 	
 	if (' + str _DEBUG + ') then {
-		compile format["_this call compile preProcessFileLineNumbers ""%1""", _path];
+		compile format ["call compile preProcessFileLineNumbers ""%1""", _path];
 	} else {
 		compileFinal preProcessFileLineNumbers _path;
 	};
@@ -51,6 +51,7 @@ findSafePos = [_path, "findSafePos.sqf"] call mf_compile;
 fn_vehicleInit = [_path, "fn_vehicleInit.sqf"] call mf_compile;
 generateKey = [_path, "network\generateKey.sqf"] call mf_compile;
 getBallMagazine = [_path, "getBallMagazine.sqf"] call mf_compile;
+getHitPoints = [_path, "getHitPoints.sqf"] call mf_compile;
 getPublicVar = [_path, "getPublicVar.sqf"] call mf_compile;
 removeNegativeScore = [_path, "removeNegativeScore.sqf"] call mf_compile;
 
