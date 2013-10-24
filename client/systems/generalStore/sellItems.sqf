@@ -4,39 +4,56 @@
 //	@file Created: 20/11/2012 05:13
 //	@file Args:
 
+if (!isNil "storeSellingHandle" && {typeName storeSellingHandle == "SCRIPT"} && {!scriptDone storeSellingHandle}) exitWith {hint "Please wait, your previous sale is being processed"};
+
 #include "dialog\genstoreDefines.sqf";
-disableSerialization;
 
-//Initialize Values
-_playerMoney = player getVariable "cmoney";
-_size = 0;
-
-// Grab access to the controls
-_dialog = findDisplay genstore_DIALOG;
-_cartlist = _dialog displayCtrl genstore_cart;
-_totalText = _dialog displayCtrl genstore_total;
-_playerMoneyText = _Dialog displayCtrl genstore_money;
-_size = lbSize _cartlist;
-
-for [{_x=0},{_x<=_size},{_x=_x+1}] do
+storeSellingHandle = [] spawn
 {
-	_itemText = _cartlist lbText _x;
-	if(_itemText == "Drinking Water") then {[MF_ITEMS_WATER, 1] call mf_inventory_remove;};
-	if(_itemText == "Snack Food") then {[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_remove;};
-	if(_itemText == "Medical Kit") then {[MF_ITEMS_MEDKIT, 1] call mf_inventory_remove;};
-	if(_itemText == "Repair Kit") then {[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_remove;};
-    if(_itemText == "Jerry Can (Full)") then {[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_remove;};
-    if(_itemText == "Jerry Can (Empty)") then {[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_remove;};
-    if(_itemText == "Spawn Beacon") then {[MF_ITEMS_SPAWN_BEACON, 1] call mf_inventory_remove;};
-	if(_itemText == "Camo Net") then {[MF_ITEMS_CAMO_NET, 1] call mf_inventory_remove;};
-	if(_itemText == "Syphon Hose") then {[MF_ITEMS_SYPHON_HOSE, 1] call mf_inventory_remove;};
-	if(_itemText == "Energy Drink") then {[MF_ITEMS_ENERGY_DRINK, 1] call mf_inventory_remove;};
-	if(_itemText == "Warchest") then {[MF_ITEMS_ENERGY_DRINK, 1] call mf_inventory_remove;};
+	disableSerialization;
+	private ["_getHalfPrice", "_playerMoney", "_size", "_dialog", "_itemlist", "_totalText", "_playerMoneyText", "_itemIndex", "_itemText", "_itemData", "_price"];
+	
+	_getHalfPrice = 
+	{
+		((ceil ((_this / 2) / 5)) * 5) // Ceil half the value to the nearest multiple of 5
+	};
+	
+	//Initialize Values
+	_playerMoney = player getVariable "cmoney";
+	_size = 0;
+
+	// Grab access to the controls
+	_dialog = findDisplay genstore_DIALOG;
+	_itemlist = _dialog displayCtrl genstore_sell_list;
+	_totalText = _dialog displayCtrl genstore_total;
+	_playerMoneyText = _Dialog displayCtrl genstore_money;
+
+	//Get Selected Item
+	_itemIndex = lbCurSel _itemlist;
+	_itemText = _itemlist lbText _itemIndex;
+	_itemData = _itemlist lbData _itemIndex;
+
+	_price = 0;
+
+	{
+		if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+		{
+			_price = (_x select 5) call _getHalfPrice;
+		};
+	} forEach (call customPlayerItems);
+
+	if (!isNil "_price") then
+	{
+		[_itemData, 1] call mf_inventory_remove;
+
+		player setVariable ["cmoney", _playerMoney + _price, true];
+		_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+		[] execVM "client\systems\generalStore\getInventory.sqf";
+	};
 };
 
-player setVariable["cmoney",_playerMoney + genStoreCart,true];
-_playerMoneyText CtrlsetText format["Cash: $%1", player getVariable "cmoney"];
+private "_storeSellingHandle";
+_storeSellingHandle = storeSellingHandle;
+waitUntil {scriptDone _storeSellingHandle};
 
-genStoreCart = 0;
-_totalText CtrlsetText format["Total: $%1", genStoreCart];
-lbClear _cartlist;
+storeSellingHandle = nil;
