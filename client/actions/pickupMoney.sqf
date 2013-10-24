@@ -36,7 +36,7 @@ if (vehicle player != player) exitWith
 	mutexScriptInProgress = false;
 };
 
-_money = _moneyObj getVariable ["money", 0];
+_money = _moneyObj getVariable ["cmoney", 0];
 deleteVehicle _moneyObj;
 if (_money < 0) then { _money = 0 };
 player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
