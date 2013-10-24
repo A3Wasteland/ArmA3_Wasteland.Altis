@@ -15,7 +15,7 @@ class gunshopd {
 			colorText[] = {1, 1, 1, 1};
 			colorBackground[] = {0,0,0,0};
 			text = "#(argb,8,8,3)color(0,0,0,0.6)";
-
+			moving = true;
 			x = 0.1875 * safezoneW + safezoneX;
 			y = 0.15 * safezoneH + safezoneY;
 			w = 0.55 * safezoneW;
@@ -105,7 +105,7 @@ class gunshopd {
 			x = 0.3025 * safezoneW + safezoneX;
 			y = 0.567 * safezoneH + safezoneY;
 			w = 0.207 * safezoneW;
-			h = 0.08 * safezoneH;
+			h = 0.088 * safezoneH;
 		};
 		
 		class AmmoList: w_RscList
@@ -120,12 +120,24 @@ class gunshopd {
 			h = 0.422222 * safezoneH;
 		};
 
+		class SellWeapon: w_RscButton
+		{
+			idc = -1;
+			onButtonClick = "[] execVM 'client\systems\selling\sellWeapon.sqf'";
+			text = "Sell Weapon";
+
+			x = 0.360 * safezoneW + safezoneX;
+			y = 0.740 * safezoneH + safezoneY;
+			w = 0.088 * safezoneW;
+			h = 0.040 * safezoneH;
+		};
+		
 		class SellUniform: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\gunStore\sellUnif.sqf'";
+			onButtonClick = "[] execVM 'client\systems\selling\sellUniform.sqf'";
 			text = "Sell Uniform";
-			x = 0.546 * safezoneW + safezoneX;
+			x = 0.453 * safezoneW + safezoneX;
 			y = 0.740 * safezoneH + safezoneY;
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
@@ -134,8 +146,20 @@ class gunshopd {
         class SellVest: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\gunStore\sellVest.sqf'";
+			onButtonClick = "[] execVM 'client\systems\selling\sellVest.sqf'";
 			text = "Sell Vest";
+
+			x = 0.546 * safezoneW + safezoneX;
+			y = 0.740 * safezoneH + safezoneY;
+			w = 0.088 * safezoneW;
+			h = 0.040 * safezoneH;
+		};
+		
+		class SellBackpack: w_RscButton
+		{
+			idc = -1;
+			onButtonClick = "[] execVM 'client\systems\selling\sellBackpack.sqf'";
+			text = "Sell Backpack";
 
 			x = 0.639 * safezoneW + safezoneX;
 			y = 0.740 * safezoneH + safezoneY;
@@ -167,30 +191,6 @@ class gunshopd {
 			h = 0.040 * safezoneH;
 		};
 
-		class SellWeapon: w_RscButton
-		{
-			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\gunStore\sellWeapon.sqf'";
-			text = "Sell Weapon";
-
-			x = 0.453 * safezoneW + safezoneX;
-			y = 0.740 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
-		};
-
-		class CancelButton: w_RscButton
-		{
-			idc = -1;
-			onButtonClick = "closeDialog 0;";
-			text = "Cancel";
-
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.740 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
-		};
-
 		class StoreButton0: w_RscButton
 		{
 			idc = -1;
@@ -202,24 +202,24 @@ class gunshopd {
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;	
 		};
-
+		
 		class StoreButton1: w_RscButton
 		{
 			idc = -1;
 			onButtonClick = "[1] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "Rifles";
+			text = "SMGs";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.275 * safezoneH + safezoneY;
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
 		};
-		
+
 		class StoreButton2: w_RscButton
 		{
 			idc = -1;
 			onButtonClick = "[2] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "SMGs";
+			text = "Rifles";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.325 * safezoneH + safezoneY;
@@ -227,68 +227,68 @@ class gunshopd {
 			h = 0.040 * safezoneH;
 		};
 		
-		//when BI releases shotguns we can uncomment this line
-		/*class StoreButton3: w_RscButton
+		class StoreButton3: w_RscButton
 		{
 			idc = -1;
 			onButtonClick = "[3] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "Shotguns";
+			text = "LMGs";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.375 * safezoneH + safezoneY;
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
-		};*/
+		};
 		
-		class StoreButton4: w_RscButton
+		//when BI releases shotguns we can uncomment this line
+		/*class StoreButton4: w_RscButton
 		{
 			idc = -1;
 			onButtonClick = "[4] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "Launchers";
+			text = "Shotguns";
 
 			x = 0.20 * safezoneW + safezoneX;
-			y = 0.375 * safezoneH + safezoneY;//425
+			y = 0.425 * safezoneH + safezoneY;
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
-		};
+		};*/
 		
 		class StoreButton5: w_RscButton
 		{
 			idc = -1;
 			onButtonClick = "[5] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "Throw/Put";
+			text = "Launchers";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.425 * safezoneH + safezoneY;//475
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
 		};
-
+		
 		class StoreButton6: w_RscButton
 		{
 			idc = -1;
 			onButtonClick = "[6] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "Items";
+			text = "Ordnance";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.475 * safezoneH + safezoneY;//525
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
-
 		};
-		
+
 		class StoreButton7: w_RscButton
 		{
 			idc = -1;
 			onButtonClick = "[7] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "Backpacks";
+			text = "Accessories";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.525 * safezoneH + safezoneY;//575
 			w = 0.088 * safezoneW;
 			h = 0.040 * safezoneH;
-		};
 
+		};
+		
 		class StoreButton8: w_RscButton
 		{
 			idc = -1;
