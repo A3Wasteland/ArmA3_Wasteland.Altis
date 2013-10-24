@@ -50,46 +50,10 @@ class RscTitles
 
 class CfgIdentities
 {
-	class GunStore1
-    {
-        name = "GunStore1";
-        face = "PersianHead_A3_01";
-        glasses = "None";
-        speaker = "Male01ENG";
-        pitch = 1.1;
-    };
-	
-	class GunStore2
-    {
-        name = "GunStore2";
-        face = "PersianHead_A3_01";
-        glasses = "None";
-        speaker = "Male01ENG";
-        pitch = 1.1;
-    };
-	
-	class GunStore3
-    {
-        name = "GunStore3";
-        face = "PersianHead_A3_01";
-        glasses = "None";
-        speaker = "Male01ENG";
-        pitch = 1.1;
-    };
-	
-	class GunStore4
-    {
-        name = "GunStore4";
-        face = "PersianHead_A3_01";
-        glasses = "None";
-        speaker = "Male01ENG";
-        pitch = 1.1;
-    };
-	
 	class GenStore1
     {
         name = "GenStore1";
-        face = "PersianHead_A3_01";
+        face = "GreekHead_A3_09";
         glasses = "None";
         speaker = "Male01ENG";
         pitch = 1.1;
@@ -98,7 +62,7 @@ class CfgIdentities
 	class GenStore2
     {
         name = "GenStore2";
-        face = "PersianHead_A3_01";
+        face = "AfricanHead_01";
         glasses = "None";
         speaker = "Male01ENG";
         pitch = 1.1;
@@ -107,7 +71,7 @@ class CfgIdentities
 	class GenStore3
     {
         name = "GenStore3";
-        face = "PersianHead_A3_01";
+        face = "WhiteHead_05";
         glasses = "None";
         speaker = "Male01ENG";
         pitch = 1.1;
@@ -116,7 +80,52 @@ class CfgIdentities
 	class GenStore4
     {
         name = "GenStore4";
-        face = "PersianHead_A3_01";
+        face = "GreekHead_A3_03";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GenStore5
+    {
+        name = "GenStore5";
+        face = "GreekHead_A3_07";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GunStore1
+    {
+        name = "GunStore1";
+        face = "GreekHead_A3_04";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GunStore2
+    {
+        name = "GunStore2";
+        face = "WhiteHead_02";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GunStore3
+    {
+        name = "GunStore3";
+        face = "WhiteHead_11";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GunStore4
+    {
+        name = "GunStore4";
+        face = "PersianHead_A3_02";
         glasses = "None";
         speaker = "Male01ENG";
         pitch = 1.1;
@@ -125,7 +134,7 @@ class CfgIdentities
 	class VehStore1
     {
         name = "VehStore1";
-        face = "PersianHead_A3_01";
+        face = "GreekHead_A3_06";
         glasses = "None";
         speaker = "Male01ENG";
         pitch = 1.1;
@@ -134,7 +143,7 @@ class CfgIdentities
 	class VehStore2
     {
         name = "VehStore2";
-        face = "PersianHead_A3_01";
+        face = "WhiteHead_08";
         glasses = "None";
         speaker = "Male01ENG";
         pitch = 1.1;
@@ -143,7 +152,7 @@ class CfgIdentities
 	class VehStore3
     {
         name = "VehStore3";
-        face = "PersianHead_A3_01";
+        face = "AfricanHead_03";
         glasses = "None";
         speaker = "Male01ENG";
         pitch = 1.1;
@@ -152,7 +161,7 @@ class CfgIdentities
 	class VehStore4
     {
         name = "VehStore4";
-        face = "PersianHead_A3_01";
+        face = "GreekHead_A3_08";
         glasses = "None";
         speaker = "Male01ENG";
         pitch = 1.1;
