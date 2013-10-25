@@ -3,26 +3,26 @@
 //	@file Author: AgentRev
 //	@file Created: 22/08/2013 21:54
 
-private ["_player", "_item", "_slotEmpty"];
+private ["_player", "_item", "_isAssignable"];
 
 _player = _this select 0;
 _item = _this select 1;
-_slotEmpty = true;
+_isAssignable = true;
 
-if (getNumber (configFile >> "CfgWeapons" >> _item >> "type") == 4096 &&
+if ([_item, 4096] call isWeaponType &&
    {getNumber (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "type") != 616}) then
 {
 	{
-		if (getNumber (configFile >> "CfgWeapons" >> _x >> "type") == 4096 &&
+		if ([_x, 4096] call isWeaponType && 
 		   {getNumber (configFile >> "CfgWeapons" >> _x >> "ItemInfo" >> "type") != 616}) exitWith
 		{
-			_slotEmpty = false;
+			_isAssignable = false;
 		};
-	} forEach assignedItems player;
+	} forEach assignedItems _player;
 }
 else
 {
-	_slotEmpty = false;
+	_isAssignable = false;
 };
 
-_slotEmpty
+_isAssignable

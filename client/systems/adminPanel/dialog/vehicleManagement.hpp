@@ -23,20 +23,37 @@ class VehicleManagement {
 		class MainBackground: w_RscPicture
 		{
 			idc = -1;
-			text = "client\ui\ui_background_controlers_ca.paa";
+			colorText[] = {1, 1, 1, 1};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
 			x = 0.295 * safezoneW + safezoneX;
 			y = 0.228 * safezoneH + safezoneY;
-			w = 0.550 * safezoneW;
+			w = 0.35 * safezoneW;
 			h = 0.543 * safezoneH;
+		};
+
+		class TopBar: w_RscPicture
+		{
+			idc = -1;
+			colorText[] = {1, 1, 1, 1};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.25,0.51,0.96,0.8)";
+
+			x = 0.295 * safezoneW + safezoneX;
+			y = 0.228 * safezoneH + safezoneY;
+			w = 0.35 * safezoneW;
+			h = 0.05 * safezoneH;
 		};
 
 		class menuTitle: w_RscText
 		{
 			idc = -1;
 			text = "Vehicle Management";
-			x = 0.453 * safezoneW + safezoneX;
-			y = 0.248 * safezoneH + safezoneY;
-			w = 0.091 * safezoneW;
+			font = "PuristaMedium";
+			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			x = 0.305 * safezoneW + safezoneX;
+			y = 0.240 * safezoneH + safezoneY;
+			w = 0.15 * safezoneW;
 			h = 0.030 * safezoneH;
 		};
 
@@ -44,8 +61,8 @@ class VehicleManagement {
 		{
 			idc = vehicleManagementVehicleCount;
 			text = "";
-			x = 0.335 * safezoneW + safezoneX;
-			y = 0.292 * safezoneH + safezoneY;
+			x = 0.305 * safezoneW + safezoneX;
+			y = 0.288 * safezoneH + safezoneY;
 			w = 0.121 * safezoneW;
 			h = 0.031 * safezoneH;
 		};
@@ -55,8 +72,8 @@ class VehicleManagement {
 			idc = vehicleWeaponsText;
 			text = "Weapons:";
 			sizeEx = 0.030;
-			x = 0.335 * safezoneW + safezoneX;
-			y = 0.600 * safezoneH + safezoneY;
+			x = 0.305 * safezoneW + safezoneX;
+			y = 0.575 * safezoneH + safezoneY;
 			w = 0.2 * safezoneW;
 			h = 0.030 * safezoneH;
 		};
@@ -66,8 +83,8 @@ class VehicleManagement {
 			idc = vehicleSpeedText;
 			text = "Speed:";
 			sizeEx = 0.030;
-			x = 0.335 * safezoneW + safezoneX;
-			y = 0.620 * safezoneH + safezoneY;
+			x = 0.305 * safezoneW + safezoneX;
+			y = 0.595 * safezoneH + safezoneY;
 			w = 0.2 * safezoneW;
 			h = 0.030 * safezoneH;
 		};
@@ -77,8 +94,8 @@ class VehicleManagement {
 			idc = vehicleUsersText;
 			text = "Users:";
 			sizeEx = 0.030;
-			x = 0.335 * safezoneW + safezoneX;
-			y = 0.640 * safezoneH + safezoneY;
+			x = 0.305 * safezoneW + safezoneX;
+			y = 0.615 * safezoneH + safezoneY;
 			w = 0.2 * safezoneW;
 			h = 0.030 * safezoneH;
 		};
@@ -88,8 +105,8 @@ class VehicleManagement {
 			idc = vehicleDamageText;
 			text = "Damage:";
 			sizeEx = 0.030;
-			x = 0.335 * safezoneW + safezoneX;
-			y = 0.660 * safezoneH + safezoneY;
+			x = 0.305 * safezoneW + safezoneX;
+			y = 0.635 * safezoneH + safezoneY;
 			w = 0.2 * safezoneW;
 			h = 0.030 * safezoneH;
 		};
@@ -97,12 +114,12 @@ class VehicleManagement {
 	
 	class controls {
 		
-		class vehicleListBox: w_RscListbox
+		class vehicleListBox: w_RscList
 		{
 			idc = vehicleManagementListBox;
 			onLBSelChanged="[1,_this select 1] execVM ""client\systems\adminPanel\importvalues.sqf"";";
-			x = 0.335938 * safezoneW + safezoneX;
-			y = 0.337963 * safezoneH + safezoneY;
+			x = 0.305 * safezoneW + safezoneX;
+			y = 0.324 * safezoneH + safezoneY;
 			w = 0.32875 * safezoneW;
 			h = 0.250 * safezoneH;
 		};
@@ -111,10 +128,10 @@ class VehicleManagement {
 		{
 			idc = vehicleManagementCivButton;
 			onButtonClick = "[0] execVM 'client\systems\adminPanel\populateVehicles.sqf'";
-			text = "Cars+Trucks";
+			text = "Cars/Trucks";
 			x = 0.305 * safezoneW + safezoneX;
-			y = 0.700 * safezoneH + safezoneY;
-			w = 0.065 * safezoneW;
+			y = 0.67 * safezoneH + safezoneY;
+			w = 0.075 * safezoneW;
 			h = 0.040 * safezoneH;
 		};
 
@@ -123,9 +140,9 @@ class VehicleManagement {
 			idc = vehicleManagementHeliButton;
 			onButtonClick = "[1] execVM 'client\systems\adminPanel\populateVehicles.sqf'";
 			text = "Helicopters";
-			x = 0.38 * safezoneW + safezoneX;
-			y = 0.700 * safezoneH + safezoneY;
-			w = 0.065 * safezoneW;
+			x = 0.384 * safezoneW + safezoneX;
+			y = 0.67 * safezoneH + safezoneY;
+			w = 0.075 * safezoneW;
 			h = 0.040 * safezoneH;
 		};
 
@@ -135,8 +152,8 @@ class VehicleManagement {
 			onButtonClick = "[2] execVM 'client\systems\adminPanel\populateVehicles.sqf'";
 			text = "Planes";
 			x = 0.305 * safezoneW + safezoneX;
-			y = 0.730 * safezoneH + safezoneY;
-			w = 0.065 * safezoneW;
+			y = 0.715 * safezoneH + safezoneY;
+			w = 0.075 * safezoneW;
 			h = 0.040 * safezoneH;
 		};
 
@@ -145,9 +162,9 @@ class VehicleManagement {
 			idc = vehicleManagementTankButton;
 			onButtonClick = "[3] execVM 'client\systems\adminPanel\populateVehicles.sqf'";
 			text = "Tanks";
-			x = 0.38 * safezoneW + safezoneX;
-			y = 0.730 * safezoneH + safezoneY;
-			w = 0.065 * safezoneW;
+			x = 0.384 * safezoneW + safezoneX;
+			y = 0.715 * safezoneH + safezoneY;
+			w = 0.075 * safezoneW;
 			h = 0.040 * safezoneH;
 		};
 
@@ -156,9 +173,9 @@ class VehicleManagement {
 			idc = -1;
 			onButtonClick = "[4] execVM 'client\systems\adminPanel\populateVehicles.sqf'";
 			text = "Hacked Vehicles";
-			x = 0.455 * safezoneW + safezoneX;
-			y = 0.72 * safezoneH + safezoneY;
-			w = 0.065 * safezoneW;
+			x = 0.462 * safezoneW + safezoneX;
+			y = 0.715 * safezoneH + safezoneY;
+			w = 0.085 * safezoneW;
 			h = 0.040 * safezoneH;
 		};
 
@@ -167,9 +184,9 @@ class VehicleManagement {
 			idc = -1;
 			onButtonClick = "execVM 'client\systems\adminPanel\deleteVehicle.sqf'";
 			text = "Delete Vehicle";
-			x = 0.62 * safezoneW + safezoneX;
-			y = 0.72 * safezoneH + safezoneY;
-			w = 0.065 * safezoneW;
+			x = 0.554 * safezoneW + safezoneX;
+			y = 0.67 * safezoneH + safezoneY;
+			w = 0.075 * safezoneW;
 			h = 0.040 * safezoneH;
 			color[] = {0.95,0.1,0.1,1};
 		};
@@ -179,11 +196,11 @@ class VehicleManagement {
 			idc = -1;
 			onButtonClick = "execVM 'client\systems\adminPanel\deleteAllHackedVehicles.sqf'";
 			text = "Delete All";
-			x = 0.545 * safezoneW + safezoneX;
-			y = 0.72 * safezoneH + safezoneY;
-			w = 0.065 * safezoneW;
+			x = 0.554 * safezoneW + safezoneX;
+			y = 0.715 * safezoneH + safezoneY;
+			w = 0.075 * safezoneW;
 			h = 0.040 * safezoneH;
 			color[] = {0.95,0.1,0.1,1};
 		};
 	};
-};
+};

@@ -10,7 +10,7 @@ _path = _this;
 MF_ITEMS_CAMO_NET = "camonet";
 MF_ITEMS_CAMO_NET_TYPE = "CamoNet_INDP_open_F";
 _ground_type = "CamoNet_INDP_open_F";
-_icon = "client\icons\gunner.paa";
+_icon = "client\icons\take.paa";
 
 _pack = [_path, "pack.sqf"] call mf_compile;
 _unpack = [_path, "unpack.sqf"] call mf_compile;
@@ -27,7 +27,7 @@ mf_items_camo_net_nearest = {
 [MF_ITEMS_CAMO_NET, "Camo Net", _unpack, _ground_type, _icon, 1] call mf_inventory_create;
 
 private ["_label", "_condition", "_action"];
-_label = format["<img image='%1' /> Packup Camouflage Netting", _icon];
+_label = format["<img image='%1' /> Pack up Camouflage Netting", _icon];
 _condition = "'' == [] call mf_items_camo_net_can_pack;";
 _action = [_label, _pack, [], 1, true, false, "", _condition];
 ["camonet-pack", _action] call mf_player_actions_set;

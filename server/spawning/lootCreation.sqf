@@ -83,18 +83,12 @@ _buildCIV =
 _buildMIL = 
 [
 	"Land_MilOffices_V1_F",
-	"Land_i_Barracks_V2_F",
-	"Land_i_Barracks_V2_F",
-	"Land_Cargo_HQ_V1_F",
-	"Land_Cargo_HQ_V2_F",
-	"Land_Cargo_HQ_V3_F",
-	"Land_Cargo_Patrol_V1_F",
-	"Land_Cargo_Patrol_V2_F",
-	"Land_Cargo_Patrol_V3_F"
+	"Land_i_Barracks_V1_F",
+	"Cargo_House_base_F",
+	"Cargo_Patrol_base_F",
+	"Cargo_HQ_base_F"
 	//"Land_Hangar_F",
-	//"Land_Cargo_Tower_V1_F",
-	//"Land_Cargo_Tower_V2_F",
-	//"Land_Cargo_Tower_V3_F",
+	//"Cargo_Tower_base_F",
 	//"Land_Dome_Big_F",
 	//"Land_Dome_Small_F"
 ];

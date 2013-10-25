@@ -9,9 +9,11 @@
 #define ERR_NO_VEHICLE "No vehicle close enough."
 #define ERR_IN_VEHICLE "You can't do this while in a vehicle."
 #define ERR_FULL_HEALTH "The vehicle is already fully repaired"
+#define ERR_DESTROYED "The vehicle is too damaged to repair"
 #define ERR_NO_REPAIR_KITS "You have no repair kits"
 #define ITEM_COUNT(ITEMID) ITEMID call mf_inventory_count
-private ["_vehicle", "_error"];
+
+private ["_vehicle", "_hitPoints", "_error"];
 _vehicle = objNull;
 if (count _this == 0) then { // if array empty
     _vehicle = call mf_repair_nearest_vehicle;
@@ -19,11 +21,14 @@ if (count _this == 0) then { // if array empty
     _vehicle = _this select 0;
 };
 
+_hitPoints = (typeOf _vehicle) call getHitPoints;
+
 _error = "";
 switch (true) do {
     case (vehicle player != player):{_error = ERR_IN_VEHICLE};
 	case (isNull _vehicle): {_error = ERR_NO_VEHICLE};
-	case (damage _vehicle < 0.05): {_error = ERR_FULL_HEALTH};
+	case (!alive _vehicle): {_error = ERR_DESTROYED};
+	case (damage _vehicle < 0.05 && {{_vehicle getHitPointDamage (configName _x) < 0.2} count _hitPoints == 0}): {_error = ERR_FULL_HEALTH}; // 0.2 is the threshold at which wheel damage causes slower movement
 	case (ITEM_COUNT(MF_ITEMS_REPAIR_KIT) <= 0): {_error = ERR_NO_REPAIR_KITS};
     default {};
 };

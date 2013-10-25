@@ -13,7 +13,7 @@ X_Server = false;
 X_Client = false;
 X_JIP = false;
 hitStateVar = false;
-versionName = "v0.9c";
+versionName = "v0.9d";
 
 if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
@@ -34,6 +34,7 @@ waitUntil {scriptDone _globalCompile};
 
 //init Wasteland Core
 [] execVM "config.sqf";
+[] execVM "storeConfig.sqf"; // Separated as its now v large
 [] execVM "briefing.sqf";
 
 if (!isDedicated) then

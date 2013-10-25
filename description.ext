@@ -28,6 +28,7 @@ overviewPicture = "Loading.jpg";
 #include "client\systems\groups\dialog\groupManagement.hpp"
 #include "client\systems\gunStore\dialog\gunshop_settings.hpp"
 #include "client\systems\generalStore\dialog\genstore_settings.hpp"
+#include "client\systems\vehicleStore\dialog\vehiclestore_settings.hpp"
 #include "client\systems\adminPanel\dialog\adminMenu.hpp"
 #include "client\systems\adminPanel\dialog\modMenu.hpp"
 #include "client\systems\adminPanel\dialog\serverAdminMenu.hpp"
@@ -45,4 +46,124 @@ class RscTitles
  	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
 	#include "client\systems\newicons.hpp"
+};
+
+class CfgIdentities
+{
+	class GenStore1
+    {
+        name = "GenStore1";
+        face = "GreekHead_A3_09";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GenStore2
+    {
+        name = "GenStore2";
+        face = "AfricanHead_01";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GenStore3
+    {
+        name = "GenStore3";
+        face = "WhiteHead_05";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GenStore4
+    {
+        name = "GenStore4";
+        face = "GreekHead_A3_03";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GenStore5
+    {
+        name = "GenStore5";
+        face = "GreekHead_A3_07";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GunStore1
+    {
+        name = "GunStore1";
+        face = "GreekHead_A3_04";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GunStore2
+    {
+        name = "GunStore2";
+        face = "WhiteHead_02";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GunStore3
+    {
+        name = "GunStore3";
+        face = "WhiteHead_11";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class GunStore4
+    {
+        name = "GunStore4";
+        face = "PersianHead_A3_02";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class VehStore1
+    {
+        name = "VehStore1";
+        face = "GreekHead_A3_06";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class VehStore2
+    {
+        name = "VehStore2";
+        face = "WhiteHead_08";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class VehStore3
+    {
+        name = "VehStore3";
+        face = "AfricanHead_03";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
+	
+	class VehStore4
+    {
+        name = "VehStore4";
+        face = "GreekHead_A3_08";
+        glasses = "None";
+        speaker = "Male01ENG";
+        pitch = 1.1;
+    };
 };

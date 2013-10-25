@@ -7,10 +7,12 @@
 #include "dialog\gunstoreDefines.sqf";
 disableSerialization;
 
+private ["_gunshopDialog", "_Dialog", "_playerMoney", "_owner"];
 _gunshopDialog = createDialog "gunshopd";
-gunStoreCart = 0;
 
 _Dialog = findDisplay gunshop_DIALOG;
 _playerMoney = _Dialog displayCtrl gunshop_money;
-_money = player getVariable "cmoney";
-_playerMoney CtrlsetText format["Cash: $%1", _money];
+_playerMoney ctrlSetText format["Cash: $%1", player getVariable "cmoney"];
+if(!isNil "_this") then {_owner = _this select 0;};
+if(!isNil "_owner") then {currentOwnerName = name _owner;};
+if(!isNil "_owner") then {currentOwnerID = _owner;};

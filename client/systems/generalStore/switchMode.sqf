@@ -7,7 +7,7 @@
 
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
-
+private ["_dialog", "_switch", "_switchText", "_buysell", "_iteminv", "_cartlist", "_itemlist", "_totalText", "_itemInfo"];
 _dialog = findDisplay genstore_DIALOG;
 _switch = _dialog displayCtrl genstore_switch;
 _buysell = _dialog displayCtrl genstore_buysell;
@@ -21,11 +21,11 @@ _itemInfo = _dialog displayCtrl genstore_item_Info;
 genStoreCart = 0;
 lbClear _cartlist;
 lbClear _itemlist;
-_totalText CtrlsetText format["Total: $%1", genStoreCart];
+_totalText ctrlSetText format["Total: $%1", genStoreCart];
 _itemInfo ctrlSetStructuredText parseText "";
 
 //Check which state we want to be in.
-_switchText = Ctrltext _switch;
+_switchText = ctrlText _switch;
 if(_switchText == "Sell Items") then
 {
 	_switch ctrlSetText "Buy Items";
@@ -36,5 +36,5 @@ if(_switchText == "Sell Items") then
 	_switch ctrlSetText "Sell Items";
 	_buysell ctrlSetText "Buy";
 	_iteminv ctrlSetText "Items";
-	[] execVM "client\systems\generalStore\populateGenStore.sqf";
-};
+	[0] execVM "client\systems\generalStore\populateGenStore.sqf";
+};

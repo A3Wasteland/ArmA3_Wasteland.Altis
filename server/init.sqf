@@ -54,7 +54,7 @@ if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 }
 else
 {
-	diag_log "[WARNING] A3W configuration file '" + externalConfigFolder + "\main_config.sqf' was not found. Using default settings!";
+	diag_log format["[WARNING] A3W configuration file '%1\main_config.sqf' was not found. Using default settings!", externalConfigFolder];
 	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 };
 
@@ -94,7 +94,7 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 	private ["_monthDay", "_startHour"];
 	_monthDay = if (["A3W_moonLight", 0] call getPublicVar > 0) then { 10 } else { 25 };
 	_startHour = ["A3W_startHour", date select 2] call getPublicVar;
-	setDate [date select 0, date select 1, _monthDay, _startHour, 0];
+	setDate [2035, 6, _monthDay, _startHour, 0];
 };
 
 if (["A3W_buildingLoot", 0] call getPublicVar > 0) then 
@@ -144,7 +144,7 @@ if (["A3W_serverSpawning", 0] call getPublicVar > 0) then
 };
 
 // Hooks for new players connecting, in case we need to manually update state
-onPlayerConnected "[_id, _name] execVM ""server\functions\onPlayerConnected.sqf""";
+onPlayerConnected "[_id, _name] execVM 'server\functions\onPlayerConnected.sqf'";
 
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {

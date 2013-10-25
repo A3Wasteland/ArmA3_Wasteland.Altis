@@ -89,8 +89,8 @@ _playerWasMoved = player getVariable ["playerWasMoved", 0];
 
 //Setup player events.
 if(!isNil "client_initEH") then {player removeEventHandler ["Respawn", client_initEH];};
-player addEventHandler ["Respawn", {[_this] call onRespawn;}];
-player addEventHandler ["Killed", {[_this] call onKilled;}];
+player addEventHandler ["Respawn", { _this spawn onRespawn }];
+player addEventHandler ["Killed", { _this spawn onKilled }];
 
 //Setup player menu scroll action.
 [] execVM "client\clientEvents\onMouseWheel.sqf";
@@ -113,6 +113,7 @@ waituntil {!(IsNull (findDisplay 46))};
 [] execVM "client\functions\createTownMarkers.sqf";
 [] execVM "client\functions\createGunStoreMarkers.sqf";
 [] execVM "client\functions\createGeneralStoreMarkers.sqf";
+[] execVM "client\functions\createVehicleStoreMarkers.sqf";
 [] execVM "client\functions\playerTags.sqf";
 [] execVM "client\functions\groupTags.sqf";
 [] call updateMissionsMarkers;

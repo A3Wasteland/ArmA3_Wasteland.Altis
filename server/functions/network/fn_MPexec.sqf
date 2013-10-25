@@ -104,9 +104,39 @@ if (ismultiplayer && _mode == 0) then {
 	{
 		private ["_allowedFunctions", "_blockedParams", "_blockedFunction", "_defineServerRules"];
 		
-		_allowedFunctions = ["chatBroadcast", "checkHackedVehicles", "flagHandler", "clientFlagHandler", "titleTextMessage", "territoryActivityHandler"];
+		_allowedFunctions =
+		[
+			"chatBroadcast",
+			"checkHackedVehicles",
+			"flagHandler",
+			"clientFlagHandler",
+			"titleTextMessage",
+			"territoryActivityHandler",
+			"applyVehicleTexture",
+			"spawnStoreObject"
+		];
 		
-		_blockedParam = [["createMine","createUnit","createVehicle","money","toString","publicVariableClient","AAN","3dCredits","spawnCrew","spawnEnemy","spawnGroup","spawnVehicle","BIS_fnc_MP_packet","vChecksum"], [str _params] call fn_filterString] call fn_findString;
+		_blockedParam = 
+		[
+			[
+				"createMine",
+				"createUnit",
+				"createVehicle",
+				"money",
+				"toString",
+				"publicVariableClient",
+				"AAN",
+				"3dCredits",
+				"spawnCrew",
+				"spawnEnemy",
+				"spawnGroup",
+				"spawnVehicle",
+				"BIS_fnc_MP_packet",
+				"vChecksum"
+			],
+			[str _params] call fn_filterString
+		] call fn_findString;
+		
 		_blockedFunction = [["creat","spawning","AAN","3dCredits","spawnCrew","spawnEnemy","spawnGroup","spawnVehicle"], [_functionName] call fn_filterString] call fn_findString;
 		
 		_defineServerRules = (_functionName == "BIS_fnc_execVM" && {[_params, 1, "", [""]] call BIS_fnc_param == "client\functions\defineServerRules.sqf"});

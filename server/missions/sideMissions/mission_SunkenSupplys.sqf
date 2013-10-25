@@ -65,14 +65,14 @@ if(_result == 1) then
     deleteVehicle _sbox;
 	{if (vehicle _x != _x) then { deleteVehicle vehicle _x; }; deleteVehicle _x;}forEach units _CivGrpS;
     deleteGroup _CivGrpS;
-    _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%2' size='1.25'>%1</t><br/><t align='center' color='%3'>FAIL! The sunken supplies disapeared!</t>", _missionType, failMissionColor, subTextColor];
+    _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%2' size='1.25'>%1</t><br/><t align='center' color='%3'>Objective failed, better luck next time.</t>", _missionType, failMissionColor, subTextColor];
 	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
 } else {
 	//Mission Complete.
 	// check if the vehicle is broken, if so delete it and the units
 	deleteGroup _CivGrpS;
-    _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>The sunken supplies have been collected well done team</t>", _missionType, successMissionColor, subTextColor];
+    _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>The sunken supplies have been collected, well done.</t>", _missionType, successMissionColor, subTextColor];
 	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Side Mission Success: %1",_missionType];
 };

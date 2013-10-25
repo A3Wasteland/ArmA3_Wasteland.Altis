@@ -10,6 +10,14 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"0.9d",
+"
+<br/> [Changed] - New UI by KoS
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "0.9c",
 "
 <br/> [Changed] - Instant money pickup and drop

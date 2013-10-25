@@ -7,16 +7,16 @@
 
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
-
+private ["_dialog", "_buysell", "_switchText"];
 _dialog = findDisplay genstore_DIALOG;
 _buysell = _dialog displayCtrl genstore_buysell;
 
 //Check which state we want to be in.
-_switchText = Ctrltext _buysell;
+_switchText = ctrlText _buysell;
 if(_switchText == "Buy") then
 {
 	[] execVM "client\systems\generalStore\buyItems.sqf";
 	
 } else {	
 	[] execVM "client\systems\generalStore\sellItems.sqf";
-};
+};

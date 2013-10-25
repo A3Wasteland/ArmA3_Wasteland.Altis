@@ -14,20 +14,25 @@ else
 {
 	storeSellingHandle = [] spawn
 	{
-		private ["_primary", "_primaryType", "_sellValue", "_weaponMags", "_magazines", "_currMag", "_currMagAmmo", "_mag", "_magAmmo", "_magFullAmmo", "_magValue", "_magAdded", "_magsToSell", "_confirmMsg", "_wepItems", "_wepItem", "_itemName", "_itemValue", "_magQty"];
+		private ["_primary", "_primaryType", "_sellValue", "_getHalfPrice", "_weaponMags", "_magazines", "_currMag", "_currMagAmmo", "_mag", "_magAmmo", "_magFullAmmo", "_magValue", "_magAdded", "_magsToSell", "_confirmMsg", "_wepItems", "_wepItem", "_itemName", "_itemValue", "_magQty"];
 
 		_primary = currentWeapon player;
 		_primaryType = getNumber (configFile >> "CfgWeapons" >> _primary >> "type");
 		_sellValue = 50; // This is the default value for items that aren't listed in the store
 		_magsToSell = [];
 		
+		_getHalfPrice = 
+		{
+			((ceil ((_this / 2) / 5)) * 5) // Ceil half the value to the nearest multiple of 5
+		};
+		
 		// Calculating weapon sell value
 		{
 			if (_x select 1 == _primary) exitWith
 			{
-				_sellValue = _x select 3;
+				_sellValue = (_x select 2) call _getHalfPrice;
 			};
-		} forEach (call weaponsArray);
+		} forEach (call allGunStoreFirearms);
 
 		_weaponMags = getArray (configFile >> "CfgWeapons" >> _primary >> "magazines");
 		_magazines = magazinesAmmo player;
@@ -39,20 +44,21 @@ else
 		// TODO: Add value of magazine loaded in other muzzle if present (e.g. grenade in grenade launcher)
 		if (_currMag != "") then
 		{
-			_currMag = _currMag call getBallMagazine;
 			_currMagAmmo = player ammo _primary;
 			
 			_magazines set [count _magazines, [_currMag, _currMagAmmo]];
 			
 			_magFullAmmo = getNumber (configFile >> "CfgMagazines" >> _currMag >> "count");
 			_magValue = 10;
-					
+			
 			{
 				if (_x select 1 == _currMag) exitWith
 				{
 					_magValue = _x select 2;
 				};
 			} forEach (call ammoArray);
+			
+			_currMag = _currMag call getBallMagazine;
 
 			{
 				_mag = _x select 0;
@@ -60,7 +66,7 @@ else
 				
 				if (_mag call getBallMagazine == _currMag) then
 				{
-					_sellValue = _sellValue + ((ceil (((_magValue * (_magAmmo / _magFullAmmo)) / 2) / 5)) * 5); // Ceil half the value to the nearest factor of 5, relative to ammo count
+					_sellValue = _sellValue + ((_magValue * (_magAmmo / _magFullAmmo)) call _getHalfPrice); // Get selling price relative to ammo count
 					
 					_magAdded = false;
 					
@@ -91,7 +97,7 @@ else
 			case ([_primary, 1] call isWeaponType): { _wepItems = primaryWeaponItems player };
 			case ([_primary, 2] call isWeaponType): { _wepItems = handgunItems player };
 			case ([_primary, 4] call isWeaponType): { _wepItems = secondaryWeaponItems player };
-			default { _wepItems = [] };
+			default                                 { _wepItems = [] };
 		};
 
 		// Add weapon attachment names to confirm message
@@ -106,7 +112,7 @@ else
 					if (_x select 1 == _wepItem) exitWith
 					{
 						_itemName = _x select 0;
-						_itemValue = (ceil (((_x select 2) / 2) / 5)) * 5;
+						_itemValue = (_x select 2) call _getHalfPrice;
 					};
 				} forEach (call accessoriesArray);
 				
@@ -149,9 +155,12 @@ else
 		};
 	};
 	
-	private "_storeSellingHandle";
-	_storeSellingHandle = storeSellingHandle;
-	waitUntil {scriptDone _storeSellingHandle};
+	if (typeName storeSellingHandle == "SCRIPT") then
+	{
+		private "_storeSellingHandle";
+		_storeSellingHandle = storeSellingHandle;
+		waitUntil {scriptDone _storeSellingHandle};
+	};
 	
 	storeSellingHandle = nil;
 };

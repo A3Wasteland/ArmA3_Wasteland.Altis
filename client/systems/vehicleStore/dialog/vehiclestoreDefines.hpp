@@ -1,0 +1,12 @@
+#define vehshop_DIALOG 5285
+#define vehshop_veh_TEXT 5286
+#define vehshop_veh_list 5287
+#define vehshop_color_list 5288
+#define vehshop_money 5289
+#define vehshop_button0 5290
+#define vehshop_button1 5291
+#define vehshop_button2 5292
+#define vehshop_button3 5293
+#define vehshop_button4 5294
+#define vehshop_button5 5295
+#define vehshop_button6 5296

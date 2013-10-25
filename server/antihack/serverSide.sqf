@@ -10,7 +10,7 @@ private ["_serverID", "_cheatFlag", "_unit"];
 waitUntil {!isNil "bis_functions_mainscope"};
 _serverID = owner bis_functions_mainscope;
 
-"BIS_fnc_MP_packet" addPublicVariableEventHandler compileFinal "_this execVM 'server\antihack\badExecAttempt.sqf'";
+"BIS_fnc_MP_packet" addPublicVariableEventHandler compileFinal "_this execVM 'server\antihack\filterExecAttempt.sqf'";
 
 // diag_log "ANTI-HACK 0.8.0: Starting loop!";
 

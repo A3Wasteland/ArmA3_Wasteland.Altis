@@ -1,5 +1,5 @@
 //	@file Version: 1.0
-//	@file Name: badExecAttempt.sqf
+//	@file Name: filterExecAttempt.sqf
 //	@file Author: AgentRev
 //	@file Created: 14/07/2013 13:10
 
