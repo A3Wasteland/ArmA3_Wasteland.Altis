@@ -217,10 +217,10 @@ accessoriesArray = compileFinal str
 	["ARCO", "optic_Arco", 125, "item"],
 	["RCO", "optic_Hamr", 150, "item"],
 	["SOS", "optic_SOS", 200, "item"],
-	["NVS", "optic_NVS", 300, "item"],
-	["TWS", "optic_tws", 400, "item"],
-	["TWS MG", "optic_tws_mg", 400, "item"],
-	["Nightstalker", "optic_Nightstalker", 500, "item"]
+	["NVS", "optic_NVS", 500, "item"],
+	["TWS", "optic_tws", 700, "item"],
+	["TWS MG", "optic_tws_mg", 800, "item"],
+	["Nightstalker", "optic_Nightstalker", 900, "item"]
 ];
 
 // If commented, means the color/camo doesn't work
@@ -437,8 +437,12 @@ backpackArray = compileFinal str
 
 genItemArray = compileFinal str
 [
-	["Quadrotor UAV", "B_UAV_01_backpack_F", 500, "backpack"],
-	["UAV Terminal", "B_UavTerminal", 150, "item"],
+	["Quadrotor UAV (NATO)", "B_UAV_01_backpack_F", 500, "backpack"],
+	["Quadrotor UAV (CSAT)", "O_UAV_01_backpack_F", 500, "backpack"],
+	["Quadrotor UAV (AAF)", "I_UAV_01_backpack_F", 500, "backpack"],
+	["UAV Terminal (NATO)", "B_UavTerminal", 150, "item"],
+	["UAV Terminal (CSAT)", "O_UavTerminal", 150, "item"],
+	["UAV Terminal (AAF)", "I_UavTerminal", 150, "item"],
 	["GPS", "ItemGPS", 100, "item"],
 	["First Aid Kit", "FirstAidKit", 25, "item"],
 	["Medikit", "Medikit", 150, "item"],
