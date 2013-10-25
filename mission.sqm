@@ -2014,7 +2014,7 @@ class Mission
 				class Item0
 				{
 					position[]={20786.578,35.678844,6807.8887};
-					azimut=75;
+					azimut=250;
 					special="NONE";
 					id=114;
 					side="LOGIC";
