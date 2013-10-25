@@ -29,14 +29,16 @@ _base = getPos _storeOwner;
 //_chair allowDamage false;
 //_chair enableSimulation false;
 
-_pDir = _pDir + 180; // desk model is inverted
+_pDDirMod = _pDDirMod + 180; // desk model is inverted
+
+_bPos set [2, (_bPos select 2) + 0.05];
 
 //create the cashier station
 _desk = "Land_CashDesk_F" createVehicle _base;
 //_deskPos = [(_bPos select 0) + 1.2 * sin _pDir, (_bPos select 1) + 1.2 * cos _pDir, _bPos select 2];
-_deskPos = [_bPos, [[0, -0.8, 0], -_pDir] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
+_deskPos = [_bPos, [[0, -0.8, 0], -_pDDirMod] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 _desk setPosATL _deskPos;
-_desk setDir _pDir;
+_desk setDir _pDDirMod;
 _desk setVariable ["R3F_LOG_disabled", true, true];
 _desk allowDamage false;
 _desk disableCollisionWith _storeOwner;

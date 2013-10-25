@@ -49,7 +49,7 @@ if (isServer) then
 		if (_x select 0 == _identity) exitWith
 		{
 			//collect our arguments
-			_spotNum = _x select 1;
+			_npcPos = _x select 1;
 			_deskDirMod = _x select 2;
 			
 			//find the building closes to this gun store owner
@@ -99,7 +99,21 @@ if (isServer) then
 			} forEach (_storeOwnerAppearance select 1); 
 
 			_pDir = getDir _npc;
-			_bPos = _building buildingPos _spotNum;
+			
+			private "_bPos";
+			switch (toUpper typeName _npcPos) do
+			{
+				case "SCALAR":
+				{
+					_bPos = _building buildingPos _npcPos;
+				};
+				case "ARRAY":
+				{
+					_bPos = _npcPos;
+				};
+			};
+			
+			_bPos = _building buildingPos _npcPos;
 			_npc setPosATL _bPos;
 			
 			_desk = [_npc, _bPos, _pDir, _deskDirMod, _identity] call compile preprocessFileLineNumbers "server\functions\createStoreFurniture.sqf";
