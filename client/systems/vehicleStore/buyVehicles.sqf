@@ -277,10 +277,15 @@ storePurchaseHandle = _this spawn
 		player setVariable["cmoney",_playerMoney - _price,true];
 		_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
 	};
+	
+	sleep 0.5; // double-click protection
 };
 
-private "_storePurchaseHandle";
-_storePurchaseHandle = storePurchaseHandle;
-waitUntil {scriptDone _storePurchaseHandle};
+if (typeName storePurchaseHandle == "SCRIPT") then
+{
+	private "_storePurchaseHandle";
+	_storePurchaseHandle = storePurchaseHandle;
+	waitUntil {scriptDone _storePurchaseHandle};
+};
 
 storePurchaseHandle = nil;
