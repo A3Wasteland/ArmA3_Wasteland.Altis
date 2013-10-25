@@ -20,7 +20,7 @@ storePurchaseHandle = _this spawn
 {
 	disableSerialization;
 
-	private ["_name", "_switch", "_price", "_dialog", "_ammoList", "_playerMoneyText", "_playerMoney", "_itemIndex", "_itemText", "_itemData", "_class", "_name", "_mag", "_type", "_backpack", "_gunsList", "_weapon", "_successHint"];
+	private ["_name", "_switch", "_price", "_dialog", "_ammoList", "_playerMoneyText", "_playerMoney", "_itemIndex", "_itemText", "_itemData", "_class", "_name", "_mag", "_type", "_backpack", "_gunsList", "_weapon", "_successHint", "_requestKey"];
 
 	//Initialize Values
 	_switch = _this select 0;
@@ -223,41 +223,8 @@ storePurchaseHandle = _this spawn
 							[_itemText] call _showInsufficientFundsError;
 						};
 						
-						private ["_requestKey", "_requestTime"];
 						_requestKey = call generateKey;
-						
-						[[player, _class, currentOwnerName, _requestKey], "spawnStoreObject", false, false] call TPG_fnc_MP;
-						
-						_requestTime = time;
-						hint "Please wait...";
-						waitUntil {!isNil _requestKey || {time >= _requestTime + 15}}; // 15s timeout
-						
-						if (isNil _requestKey || {isNull objectFromNetId (missionNamespace getVariable _requestKey)}) then
-						{
-							_requestKey spawn // If the object somehow spawns after the timeout, delete it
-							{
-								private ["_requestKey", "_postTimeout", "_object"];
-								_requestKey = _this;
-								_postTimeout = time;
-								
-								waitUntil {!isNil _requestKey || {time >= _postTimeout + 60}}; // 60s post-timeout
-								
-								if (!isNil _requestKey) then
-								{
-									_object = objectFromNetId (missionNamespace getVariable _requestKey);
-									if (!isNull _object) then { deleteVehicle _object };
-									
-									missionNamespace setVariable [_requestKey, nil];
-								};
-							};
-							
-							[_itemText] call _showItemSpawnTimeoutError;
-						}
-						else
-						{
-							missionNamespace setVariable [_requestKey, nil];
-							[_itemText] call _showItemSpawnedOutsideMessage;
-						};
+						call requestStoreObject;
 					};
 				} forEach (call staticGunsArray);
 			};
@@ -266,14 +233,39 @@ storePurchaseHandle = _this spawn
 
 	if (!isNil "_price" && {_price > -1}) then
 	{
-		player setVariable ["cmoney", _playerMoney - _price, true];
-		_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
-		if (_successHint) then { hint "Purchase successful!" };
+		_playerMoney = player getVariable ["cmoney", 0];
+		
+		// Re-check for money after purchase
+		if (_price > _playerMoney) then
+		{
+			if (!isNil "_requestKey" && {!isNil _requestKey}) then
+			{
+				deleteVehicle objectFromNetId (missionNamespace getVariable _requestKey);
+			};
+			
+			[_itemText] call _showInsufficientFundsError;
+		}
+		else
+		{
+			player setVariable ["cmoney", _playerMoney - _price, true];
+			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+			if (_successHint) then { hint "Purchase successful!" };
+		};
 	};
+	
+	if (!isNil "_requestKey" && {!isNil _requestKey}) then
+	{
+		missionNamespace setVariable [_requestKey, nil];
+	};
+	
+	sleep 0.5; // double-click protection
 };
 
-private "_storePurchaseHandle";
-_storePurchaseHandle = storePurchaseHandle;
-waitUntil {scriptDone _storePurchaseHandle};
+if (typeName storePurchaseHandle == "SCRIPT") then
+{
+	private "_storePurchaseHandle";
+	_storePurchaseHandle = storePurchaseHandle;
+	waitUntil {scriptDone _storePurchaseHandle};
+};
 
 storePurchaseHandle = nil;

@@ -52,13 +52,17 @@ if (_key != "" && {isPlayer _player} && {_isGeneralStore || _isGunStore} && {{_x
 			
 			if (_player getVariable ["cmoney", 0] >= _itemPrice) then
 			{
-				_objectSize = sizeOf _class;
-				if (_objectSize == 0) then { _objectSize = 2 };
+				//_objectSize = sizeOf _class;
+				//if (_objectSize == 0) then { _objectSize = 2 };
+				//_safePos = [markerPos _marker, 0, 5, _objectSize, 0, 60*(pi/180), 0] call findSafePos;
 				
-				_safePos = [markerPos _marker, 0, 5, _objectSize, 0, 60*(pi/180), 0] call findSafePos;
+				_safePos = (markerPos _marker) findEmptyPosition [0, 20, _class];
+				if (count _safePos == 0) then { _safePos = markerPos _marker };
+				
 				_object = createVehicle [_class, _safePos, [], 0, "None"];
+				
 				[_object, false] call vehicleSetup;
-				if (!_isDamageable) then { _object allowDamage false };
+				_object allowDamage _isDamageable;
 				
 				_objectID = netId _object;			
 			};
