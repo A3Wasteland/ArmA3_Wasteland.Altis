@@ -30,7 +30,8 @@ _vehicleManager =
 		   {_vehicle distance _camPos > 1000} && 
 		   {count crew _vehicle == 0} && 
 		   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < time} &&
-		   {(velocity _vehicle) call BIS_fnc_magnitude < 0.1}) then
+		   {(velocity _vehicle) call BIS_fnc_magnitude < 0.1} &&
+		   {!(_vehicle isKindOf "Man")}) then
 		{
 			if (simulationEnabled _vehicle) then
 			{
@@ -56,7 +57,7 @@ _vehicleManager =
 		};
 		
 		sleep 0.01;
-	} forEach vehicles;
+	} forEach entities "All";
 };
 
 _lastPos = [0,0,0];
