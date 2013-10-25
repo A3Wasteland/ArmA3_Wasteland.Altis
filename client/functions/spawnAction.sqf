@@ -34,14 +34,22 @@ spawnActionHandle = _this spawn
 	ppEffectDestroy BIS_fnc_feedback_fatigueBlur;
 	ppEffectDestroy BIS_fnc_feedback_damageBlur; 
 
-	switch(_switch) do 
+	switch (_switch) do 
 	{
-		case 0:{execVM "client\functions\spawnRandom.sqf"};
-		case 1:{
-			if(showBeacons) then { 	
+		case 0:
+		{
+			_scriptHandle = [] execVM "client\functions\spawnRandom.sqf";
+			waitUntil {scriptDone _scriptHandle};
+		};
+		case 1:
+		{
+			if (showBeacons) then
+			{ 	
 				_scriptHandle = [_button] execVM "client\functions\spawnOnBeacon.sqf";
 				waitUntil {scriptDone _scriptHandle};
-			} else {
+			}
+			else
+			{
 				_scriptHandle = [_button] execVM "client\functions\spawnInTown.sqf";
 				waitUntil {scriptDone _scriptHandle};
 			}; 
@@ -111,9 +119,12 @@ if (!isNull _ctrlButton) then
 	_ctrlButton ctrlSetText "Please wait...";
 };
 
-_spawnActionHandle = spawnActionHandle;
-waitUntil {scriptDone _spawnActionHandle};
-spawnActionHandle = nil;
+if (typeName spawnActionHandle == "SCRIPT") then
+{
+	_spawnActionHandle = spawnActionHandle;
+	waitUntil {scriptDone _spawnActionHandle};
+	spawnActionHandle = nil;
+};
 
 if (!isNull _ctrlButton) then
 {
