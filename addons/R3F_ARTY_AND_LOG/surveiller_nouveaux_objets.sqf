@@ -19,8 +19,7 @@ private ["_liste_objets_depl_heli_remorq_transp", "_liste_vehicules_connus", "_l
 
 #ifdef R3F_LOG_enable
 // Union des tableaux de types d'objets servant dans un isKindOf
-_liste_objets_depl_heli_remorq_transp = R3F_LOG_CFG_objets_deplacables + R3F_LOG_CFG_objets_heliportables +
-	R3F_LOG_CFG_objets_remorquables + R3F_LOG_classes_objets_transportables;
+_liste_objets_depl_heli_remorq_transp = R3F_LOG_CFG_objets_deplacables + R3F_LOG_CFG_objets_heliportables + R3F_LOG_CFG_objets_remorquables + R3F_LOG_classes_objets_transportables;
 #endif
 
 // Contiendra la liste des véhicules (et objets) déjà initialisés
@@ -31,12 +30,14 @@ while {true} do
 	if !(isNull player) then
 	{
 		// Récupération des tout les nouveaux véhicules de la carte et des nouveaux objets dérivant de "Static" (caisse de mun, drapeau, ...) proches du joueur
-		_liste_vehicules = nearestObjects [player, ["LandVehicle", "Ship", "Air", "ReammoBox_F", "Static"], 80]; // (vehicles + // - _liste_vehicules_connus;
+		_liste_vehicules = nearestObjects [player, ["LandVehicle", "Ship", "Air", "Thing", "Static"], 75];
 		
 		_count_liste_vehicules = count _liste_vehicules;
 		
 		if (_count_liste_vehicules > 0) then
 		{
+			_sleepDelay = 10 / _count_liste_vehicules;
+			
 			// On parcoure tout les véhicules présents dans le jeu en 18 secondes
 			{
 				_objet = _x;
@@ -44,36 +45,38 @@ while {true} do
 				if !(_objet getVariable ["R3F_LOG_init_done", false]) then
 				{
 					#ifdef R3F_LOG_enable
-					// Si l'objet est un objet déplaçable/héliportable/remorquable/transportable
-					if ({_objet isKindOf _x} count _liste_objets_depl_heli_remorq_transp > 0) then
+					switch (true) do
 					{
-						[_objet] spawn R3F_LOG_FNCT_objet_init;
-					};
-					
-					// Si l'objet est un véhicule héliporteur
-					if ({_objet isKindOf _x} count R3F_LOG_CFG_heliporteurs > 0) then
-					{
-						[_objet] spawn R3F_LOG_FNCT_heliporteur_init;
-					};
+						// If object can be moved / airlifted / towed / loaded in
+						case ({_objet isKindOf _x} count _liste_objets_depl_heli_remorq_transp > 0):
+						{
+							[_objet] spawn R3F_LOG_FNCT_objet_init;
+						};
+						
+						// If vehicle can airlift
+						case ({_objet isKindOf _x} count R3F_LOG_CFG_heliporteurs > 0):
+						{
+							[_objet] spawn R3F_LOG_FNCT_heliporteur_init;
+						};
 
-					// Si l'objet est un véhicule transporteurs whatever
-					if ({_objet isKindOf _x} count R3F_LOG_classes_transporteurs > 0) then
-					{
-						[_objet] spawn R3F_LOG_FNCT_transporteur_init;
-					};
-					
-					// Si l'objet est un véhicule remorqueur
-					if ({_objet isKindOf _x} count R3F_LOG_CFG_remorqueurs > 0) then
-					{
-						[_objet] spawn R3F_LOG_FNCT_remorqueur_init;
+						// If vehicle can transport contents
+						case ({_objet isKindOf _x} count R3F_LOG_classes_transporteurs > 0):
+						{
+							[_objet] spawn R3F_LOG_FNCT_transporteur_init;
+						};
+						
+						// If vehicle can tow
+						case ({_objet isKindOf _x} count R3F_LOG_CFG_remorqueurs > 0):
+						{
+							[_objet] spawn R3F_LOG_FNCT_remorqueur_init;
+						};
 					};
 					
 					_objet setVariable ["R3F_LOG_init_done", true]; 
-					
 					#endif
 				};
 				
-				sleep (10/_count_liste_vehicules);
+				sleep _sleepDelay;
 				
 			} forEach _liste_vehicules;
 			
