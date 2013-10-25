@@ -10,7 +10,7 @@
 
 private "_requestTime";
 _requestTime = time;
-hint "Please wait...";
+hint "Awaiting server response...";
 
 [] spawn
 {
