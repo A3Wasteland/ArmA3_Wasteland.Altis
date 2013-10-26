@@ -32,16 +32,15 @@ switch (playerSide) do {
 	};
 };
 
-_message = format ["<t shadow=""1""><t size=""2"">%1</t> %2<br/>%4<br/>%3<br/></t>",
+_message = format ["<t shadow=""1"">%1<br/>%2<br/>%3<br/></t>",
 	localize "STR_WL_WelcomeToWasteland",
-	versionName,
+	localize "STR_WL_MapMoreInfo",
 	format [localize _teamrules, 
 		_teamicon,
 		_teamcol,
 		localize format ["STR_WL_Gen_Team%1", str playerSide],
 		localize format ["STR_WL_Gen_Team%1_2", str playerSide] 
-	],
-	localize "STR_WL_MapMoreInfo"
+	]
 ];
 
 _control ctrlSetStructuredText (parseText _message);
