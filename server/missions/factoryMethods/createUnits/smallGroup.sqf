@@ -54,6 +54,33 @@ _man4 addWeapon "arifle_TRG20_F";
 _man4 addMagazine "30Rnd_556x45_Stanag";
 _man4 addMagazine "30Rnd_556x45_Stanag";
 
+_ranman = floor (random 100);
+
+if (_ranman < 67) then {
+    //Support
+    _man5 = _group createunit ["C_man_polo_2_F", [(_pos select 0) - 30, (_pos select 1) - 30, 0], [], 0.5, "Form"];
+    removeAllAssignedItems _man5;
+    _man5 addUniform "U_B_CombatUniform_mcam_vest";
+    _man5 addVest "V_PlateCarrier1_rgr";
+    _man5 addMagazine "20Rnd_762x51_Mag";
+    _man5 addMagazine "20Rnd_762x51_Mag";
+    _man5 addWeapon "srifle_EBR_F";
+};
+
+
+if (_ranman < 33) then {
+    //Support
+    _man6 = _group createunit ["C_man_polo_2_F", [(_pos select 0) - 30, (_pos select 1) + 30, 0], [], 0.5, "Form"];
+    removeAllAssignedItems _man6;
+    _man6 addUniform "U_B_CombatUniform_mcam_vest";
+    _man6 addVest "V_PlateCarrier1_rgr";
+    _man6 addMagazine "30Rnd_556x45_Stanag";
+    _man6 addWeapon "arifle_TRG20_F";
+    _man6 addMagazine "30Rnd_556x45_Stanag";
+    _man6 addMagazine "30Rnd_556x45_Stanag";
+};
+
+
 _leader = leader _group;
 
 {

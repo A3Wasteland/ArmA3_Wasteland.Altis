@@ -4,7 +4,7 @@
 //  new one, no longer requires static routes, can use all helicopters now
 
 if (!isServer) exitwith {};
-#include "mainMissionDefines.sqf";
+#include "\A3Wasteland_settings\mainMissionDefines.sqf"
 
 private ["_heli1","_heli2","_heli3","_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_waypoints","_grouphf","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_ammobox3","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
 

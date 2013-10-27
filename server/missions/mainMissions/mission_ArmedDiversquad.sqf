@@ -3,7 +3,7 @@
 // @file Author: JoSchaap 
 
 if (!isServer) exitwith {};
-#include "mainMissionDefines.sqf";
+#include "\A3Wasteland_settings\mainMissionDefines.sqf"
 
 private ["_result","_missionMarkerName","_missionType","_startTime","_randomPos","_vehicleClass","_vehicle","_slbox","_slbox2","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive","_positions"];
 

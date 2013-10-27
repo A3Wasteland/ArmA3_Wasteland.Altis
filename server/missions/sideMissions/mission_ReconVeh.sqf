@@ -3,7 +3,7 @@
 //	@file Author: [404] Deadbeat, [404] Costlyy
 //	@file Created: 08/12/2012 15:19
 //	@file Args:
-#include "sideMissionDefines.sqf";
+#include "\A3Wasteland_settings\sideMissionDefines.sqf"
 
 if(!isServer) exitwith {};
 
