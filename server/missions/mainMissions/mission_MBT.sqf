@@ -17,7 +17,7 @@ _randomIndex = _returnData select 1;
 //Mission Initialization.
 _missionMarkerName = "MBT_Marker";
 _missionType = "Main Battle Tank";
-_noSquads = 2;
+_noSquads = 3;
 _vehicleClass = ["B_MBT_01_cannon_F", "O_MBT_02_cannon_F"] call BIS_fnc_selectRandom;
 
 

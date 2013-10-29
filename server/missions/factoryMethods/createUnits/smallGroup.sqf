@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_group", "_pos", "_leader", "_man2", "_man3", "_man4"];
+private ["_group", "_pos", "_leader", "_man2", "_man3", "_man4", "_man5", "_man6"];
 
 _group = _this select 0;
 _pos = _this select 1;

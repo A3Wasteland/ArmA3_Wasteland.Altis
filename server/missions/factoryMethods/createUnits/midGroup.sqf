@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_group", "_pos", "_leader", "_man2", "_man3", "_man4", "_man5", "_man6", "_man7"];
+private ["_group", "_pos", "_leader", "_man2", "_man3", "_man4", "_man5", "_man6", "_man7", "_man8", "_man9", "_man10"];
 
 _group = _this select 0;
 _pos = _this select 1;
@@ -95,9 +95,9 @@ if (_ranman < 75) then {
     removeAllAssignedItems _man8;
     _man8 addUniform "U_B_CombatUniform_mcam_tshirt";
     _man8 addVest "V_PlateCarrier1_rgr";
-    _man9 addMagazine "20Rnd_762x51_Mag";
-    _man9 addMagazine "20Rnd_762x51_Mag";
-    _man9 addMagazine "20Rnd_762x51_Mag";
+    _man8 addMagazine "20Rnd_762x51_Mag";
+    _man8 addMagazine "20Rnd_762x51_Mag";
+    _man8 addMagazine "20Rnd_762x51_Mag";
 };
 
 
