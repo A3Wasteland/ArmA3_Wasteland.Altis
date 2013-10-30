@@ -10,9 +10,9 @@ _col_empty = "ColorBlue";
 _col_enemy = "ColorRed";
 _col_friendly = "ColorGreen";
 _col_mixed = "ColorOrange";
-#include "\A3Wasteland_settings\playerInit.sqf"
+
 showmarkers = false;
-if ( showgsmarkers == "true") then {showmarkers = true;};
+if ( showgunsstoremarkers == "true") then {showmarkers = true;};
 
 //Creates the markers around gunstores.
 {
