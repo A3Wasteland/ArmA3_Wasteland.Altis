@@ -7,6 +7,17 @@
 
 if (!isServer) exitWith {};
 
+#include "\A3Wasteland_settings\playerInit.sqf"
+
+mainMissionHeliPatrol = false;
+sideMissionHeliPatrol = false;
+mainMissionUW = false;
+sideMissionUW = false;
+showlocationmarker = locationmarker;
+showgunstoremarkers = showgsmarkers;
+publicVariable "showlocationmarker";
+publicVariable "showgunstoremarkers";
+
 externalConfigFolder = "A3Wasteland_settings";
 
 vChecksum = compileFinal format ["'%1'", call generateKey];

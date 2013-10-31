@@ -4,7 +4,7 @@
 //	@file Created: 08/12/2012 15:19
 
 if (!isServer) exitWith {};
-#include "sideMissions\sideMissionDefines.sqf";
+#include "\A3Wasteland_settings\sideMissionDefines.sqf"
 
 private ["_SideMissions", "_SideMissionsOdds", "_missionType", "_nextMission", "_missionRunning", "_hint"];
 // private ["_mission", "_notPlayedSideMissions", "_nextMissionIndex"];

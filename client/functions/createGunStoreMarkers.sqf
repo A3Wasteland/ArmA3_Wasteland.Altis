@@ -11,21 +11,15 @@ _col_enemy = "ColorRed";
 _col_friendly = "ColorGreen";
 _col_mixed = "ColorOrange";
 
+showmarkers = false;
+if ( showgunstoremarkers == "true") then {showmarkers = true;};
+
 //Creates the markers around gunstores.
 {
 	if (["GunStore", str _x] call fn_findString == 0) then
 	{
 		_npcPos = getPos _x;
 
-		// Circle zone   
-		_markerName = format["marker_shop_zone_%1",_x];
-		deleteMarkerLocal _markerName;
-		_marker = createMarkerLocal [_markerName, _npcPos];
-		_markerName setMarkerShapeLocal "ELLIPSE";
-		_markerName setMarkerColorLocal _col_empty;
-		_markerName setMarkerSizeLocal [_radius, _radius];
-		_markerName setMarkerBrushLocal "Grid";
-		_markerName setMarkerAlphaLocal 0.5;
 
 		// Gun store title    
 		_markerName = format["marker_shop_title_%1",_x];
@@ -36,19 +30,31 @@ _col_mixed = "ColorOrange";
 		_markerName setMarkerColorLocal "ColorRed";
 		_markerName setMarkerSizeLocal [1,1];
 		_markerName setMarkerTextLocal "GUN STORE";
-
-		// Gun store description    
-		_markerName = format["marker_shop_desc_%1",_x];
-		deleteMarkerLocal _markerName;
-		_npcPos set [1, (_npcPos select 1) - 100];
-		_marker = createMarkerLocal [_markerName, _npcPos];
-		_markerName setMarkerShapeLocal "ICON";
-		_markerName setMarkerTypeLocal "mil_dot";
-		_markerName setMarkerColorLocal _col_empty;
-		_markerName setMarkerSizeLocal [1,1];
-		_markerName setMarkerTextLocal "GUN STORE is Empty";
-		_markerName setMarkerAlphaLocal 0.5;
-
+        
+        if ( showmarkers ) then
+        {
+            // Circle zone   
+            _markerName = format["marker_shop_zone_%1",_x];
+            deleteMarkerLocal _markerName;
+            _marker = createMarkerLocal [_markerName, _npcPos];
+            _markerName setMarkerShapeLocal "ELLIPSE";
+            _markerName setMarkerColorLocal _col_empty;
+            _markerName setMarkerSizeLocal [_radius, _radius];
+            _markerName setMarkerBrushLocal "Grid";
+            _markerName setMarkerAlphaLocal 0.5;
+        
+            // Gun store description    
+            _markerName = format["marker_shop_desc_%1",_x];
+            deleteMarkerLocal _markerName;
+            _npcPos set [1, (_npcPos select 1) - 100];
+            _marker = createMarkerLocal [_markerName, _npcPos];
+            _markerName setMarkerShapeLocal "ICON";
+            _markerName setMarkerTypeLocal "mil_dot";
+            _markerName setMarkerColorLocal _col_empty;
+            _markerName setMarkerSizeLocal [1,1];
+            _markerName setMarkerTextLocal "GUN STORE is Empty";
+            _markerName setMarkerAlphaLocal 0.5;
+        };
 		_status set [count _status, "EMPTY"];
 		
 		_gunStores set [count _gunStores, _x];
@@ -93,7 +99,7 @@ _setStatus =
 };
 
 //Check each store to see if their state has changed and then calls the update function to make the display the correct state.
-showmarkers = true;
+
 while {showmarkers} do
 {
     {

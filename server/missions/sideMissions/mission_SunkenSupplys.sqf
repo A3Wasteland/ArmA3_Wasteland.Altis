@@ -1,7 +1,7 @@
 //	@file Name: mission_SunkenSupplys.sqf
 
 if (!isServer) exitwith {};
-#include "sideMissionDefines.sqf";
+#include "\A3Wasteland_settings\sideMissionDefines.sqf"
 
 private ["_result","_missionMarkerName","_missionType","_startTime","_randomPos","_vehicleClass","_sbox","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive","_positions"];
 

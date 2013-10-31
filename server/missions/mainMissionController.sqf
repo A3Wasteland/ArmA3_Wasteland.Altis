@@ -3,9 +3,10 @@
 //	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, Sanjo, AgentRev
 //	@file Created: 08/12/2012 15:19
 
-if (!isServer) exitWith {};
-#include "mainMissions\mainMissionDefines.sqf";
 
+
+if (!isServer) exitWith {};
+#include "\A3Wasteland_settings\mainMissionDefines.sqf"
 private ["_MainMissions", "_MainMissionsOdds", "_missionType", "_nextMission", "_missionRunning", "_hint"];
 // private ["_mission", "_notPlayedMainMissions", "_nextMissionIndex"];
 

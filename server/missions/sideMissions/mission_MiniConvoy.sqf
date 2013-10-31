@@ -5,7 +5,7 @@
 //	@file Args: none
 
 if (!isServer) exitwith {};
-#include "sideMissionDefines.sqf";
+#include "\A3Wasteland_settings\sideMissionDefines.sqf"
 
 private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_convoyVeh","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader"];
 
