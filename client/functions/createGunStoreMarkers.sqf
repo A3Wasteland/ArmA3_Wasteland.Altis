@@ -12,7 +12,7 @@ _col_friendly = "ColorGreen";
 _col_mixed = "ColorOrange";
 
 showmarkers = false;
-if ( showgunsstoremarkers == "true") then {showmarkers = true;};
+if ( showgunstoremarkers == "true") then {showmarkers = true;};
 
 //Creates the markers around gunstores.
 {
