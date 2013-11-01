@@ -2,23 +2,15 @@
 //	@file Name: spawnInTown.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, AgentRev
 //	@file Created: 20/11/2012 05:19
-//	@file Args: [int(which button)]
+//	@file Args: 
 
-#define respawn_Town_Button0 3403
-#define respawn_Town_Button1 3404
-#define respawn_Town_Button2 3405
-#define respawn_Town_Button3 3406
-#define respawn_Town_Button4 3407
-disableSerialization;
-
-private ["_display", "_selectedButton", "_townName"];
-
-_display = uiNamespace getVariable "RespawnSelectionDialog";
-_selectedButton = _display displayCtrl (respawn_Town_Button0 + (_this select 0));
+private ["_buttonText", "_townName"];
+_buttonText = _this select 0;
+_townName = "[ERROR]";
 
 {
 	_name = _x select 2;
-	if (ctrlText _selectedButton == _name) exitWith
+	if (_buttonText == _name) exitWith
 	{
 		_townName = _name;
 		_pos = getMarkerPos (_x select 0);
@@ -32,5 +24,6 @@ closeDialog 0;
 
 sleep 5;
 
+_hour = date select 3;
 _mins = date select 4;
-["Wasteland", _townName, format ["%1:%3%2", date select 3, _mins, if (_mins < 10) then {"0"} else {""}]] spawn BIS_fnc_infoText;
+["Wasteland", _townName, format ["%1:%3%2", _hour, _mins, if (_mins < 10) then {"0"} else {""}]] spawn BIS_fnc_infoText;
