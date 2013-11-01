@@ -9,11 +9,14 @@ if (!isNil "spawnActionHandle" && {typeName spawnActionHandle == "SCRIPT"} && {!
 disableSerialization;
 _ctrlButton = (_this select 0) select 0;
 
-spawnActionHandle = _this spawn
+_params = +_this;
+_params set [0, ctrlText _ctrlButton];
+
+spawnActionHandle = _params spawn
 {
-	private ["_switch", "_button", "_scriptHandle"];
+	private ["_buttonText", "_switch", "_scriptHandle"];
+	_buttonText = _this select 0;
 	_switch = _this select 1;
-	if (count _this > 2) then { _button = _this select 2 };
 
 	player allowDamage true;
 
@@ -45,12 +48,12 @@ spawnActionHandle = _this spawn
 		{
 			if (showBeacons) then
 			{ 	
-				_scriptHandle = [_button] execVM "client\functions\spawnOnBeacon.sqf";
+				_scriptHandle = [_buttonText] execVM "client\functions\spawnOnBeacon.sqf";
 				waitUntil {scriptDone _scriptHandle};
 			}
 			else
 			{
-				_scriptHandle = [_button] execVM "client\functions\spawnInTown.sqf";
+				_scriptHandle = [_buttonText] execVM "client\functions\spawnInTown.sqf";
 				waitUntil {scriptDone _scriptHandle};
 			}; 
 		};
