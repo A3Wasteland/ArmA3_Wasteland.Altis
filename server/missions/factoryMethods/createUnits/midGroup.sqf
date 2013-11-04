@@ -95,6 +95,7 @@ if (_ranman < 75) then {
     removeAllAssignedItems _man8;
     _man8 addUniform "U_B_CombatUniform_mcam_tshirt";
     _man8 addVest "V_PlateCarrier1_rgr";
+    _man8 addWeapon "arifle_MK20C_F";
     _man8 addMagazine "20Rnd_762x51_Mag";
     _man8 addMagazine "20Rnd_762x51_Mag";
     _man8 addMagazine "20Rnd_762x51_Mag";
