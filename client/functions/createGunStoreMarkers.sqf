@@ -12,7 +12,7 @@ _col_friendly = "ColorGreen";
 _col_mixed = "ColorOrange";
 
 showmarkers = false;
-if ( showgunstoremarkers == "true") then {showmarkers = true;};
+if ( A3W_showgunstorestatus) then {showmarkers = true;};
 
 //Creates the markers around gunstores.
 {

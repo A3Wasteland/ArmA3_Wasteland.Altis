@@ -5,7 +5,7 @@
 //	@file Args: none
 
 if (!isServer) exitwith {};
-#include "\A3Wasteland_settings\mainMissionDefines.sqf"
+#include "mainMissionDefines.sqf"
 
 private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_convoyVeh","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader"];
 
@@ -13,7 +13,7 @@ _missionMarkerName = "Convoy_Marker";
 _missionType = "Convoy";
 diag_log format["WASTELAND SERVER - Main Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the convoy (veh2 is the 'convoyed' vehicle
@@ -257,7 +257,7 @@ waitUntil
     
     _marker setMarkerPos (position leader _group);
     
-    if ((floor time) - _startTime >= mainMissionTimeout) then { _failed = true };
+    if ((floor time) - _startTime >= A3W_mainMissionTimeout) then { _failed = true };
     if (currentWaypoint _group >= _numWaypoints) then { _failed = true }; // Convoy got successfully to the target location
     _unitsAlive = { alive _x } count units _group;
     

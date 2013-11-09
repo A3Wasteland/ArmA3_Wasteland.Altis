@@ -4,7 +4,7 @@
 //  new one, no longer requires static routes, can use all helicopters now
 
 if (!isServer) exitwith {};
-#include "\A3Wasteland_settings\sideMissionDefines.sqf"
+#include "sideMissionDefines.sqf"
 
 private ["_helipick","_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_waypoints","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
 
@@ -17,7 +17,7 @@ _waypoints = [];
 
 diag_log format["WASTELAND SERVER - Side Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionType];
-[sideMissionDelayTime] call createWaitCondition;
+[A3W_sideMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
 
 // helicopters available for this mission (if mission is in hard difficulty also chance on a mi48)
@@ -143,7 +143,7 @@ waitUntil
     
     _marker setMarkerPos (position leader _groupsm);
     
-    if ((floor time) - _startTime >= sideMissionTimeout) then { _failed = true };
+    if ((floor time) - _startTime >= A3W_sideMissionTimeout) then { _failed = true };
     if (currentWaypoint _groupsm >= _numWaypoints) then { _failed = true }; // Convoy got successfully to the target location
     _unitsAlive = { alive _x } count units _groupsm;
     _unitsAlive == 0 || _failed
@@ -158,7 +158,7 @@ if(_failed) then
 	deleteGroup _groupsm; 
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The patrol ended, the enemy has survived and escaped with the ammo crates.</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
     [_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
+    diag_log format["WASTELAND SERVER - Side Mission Failed: %1 ",_missionType];
 } else {
 	// Mission completed
 	// unlock the vehicles incase the player cleared the mission without destroying them

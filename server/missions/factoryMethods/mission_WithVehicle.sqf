@@ -5,7 +5,7 @@
 //	@file Args:[_noSquads, _missionMarkerName, _missionType, _vehicleClass,_randomPos]
 
 if(!isServer) exitwith {};
-#include "\A3Wasteland_settings\mainMissionDefines.sqf"
+#include "mainMissionDefines.sqf"
 private ["_result","_missionMarkerName","_missionType","_startTime","_returnData","_randomPos1","_randomIndex","_vehicleClass","_hintVehClass","_vehicle","_vehAmmo","_vehDeterminer","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive","_squads","_CivGrpM1","_CivGrpM2","_randomPos2","_CivGrpM3","_randomPos3","_CivGrpM4","_randomPos4","_CivGrpM5","_randomPos5","_randomPos"];
 
 //Mission Initialization.
@@ -35,7 +35,7 @@ switch (_missionType) do
 };
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1",_missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1",_missionType];
 
 [_missionMarkerName,_randomPos1,_missionType] call createClientMarker;
@@ -184,8 +184,8 @@ waitUntil
     sleep 1; 
 	_playerPresent = false;
 	_currTime = floor(time);
-    if(_currTime - _startTime >= mainMissionTimeout) then {_result = 1;};
-    {if((isPlayer _x) AND (_x distance _vehicle <= missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
+    if(_currTime - _startTime >= A3W_mainMissionTimeout) then {_result = 1;};
+    {if((isPlayer _x) AND (_x distance _vehicle <= A3W_missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
     _unitsAlive = 0;
     for [{_i=0}, {_i < count _squads}, {_i=_i+1}] do
     {

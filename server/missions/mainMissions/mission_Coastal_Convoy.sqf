@@ -5,7 +5,7 @@
 //	@file Args: none
 
 if (!isServer) exitwith {};
-#include "\A3Wasteland_settings\mainMissionDefines.sqf"
+#include "mainMissionDefines.sqf"
 
 private ["_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupcc","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader"];
 
@@ -13,7 +13,7 @@ _missionMarkerName = "CoastalConvoy_Marker";
 _missionType = "Coastal Patrol";
 diag_log format["WASTELAND SERVER - Main Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the patrol (in hard difficulty also allows chance of mi48)
@@ -322,7 +322,7 @@ waitUntil
     
     _marker setMarkerPos (position leader _groupcc);
     
-    if ((floor time) - _startTime >= mainMissionTimeout) then { _failed = true };
+    if ((floor time) - _startTime >= A3W_mainMissionTimeout) then { _failed = true };
     if (currentWaypoint _groupcc >= _numWaypoints) then { _failed = true }; // patrol finished its route
     _unitsAlive = { alive _x } count units _groupcc;
     

@@ -6,7 +6,7 @@
 
 
 if(!isServer) exitwith {};
-#include "\A3Wasteland_settings\mainMissionDefines.sqf"
+#include "mainMissionDefines.sqf"
 
 private ["_missionMarkerName","_missionType","_vehicleClass","_missionRunning","_noSquads","_randomPos","_randomIndex"];
 

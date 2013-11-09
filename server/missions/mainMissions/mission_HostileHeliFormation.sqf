@@ -4,7 +4,7 @@
 //  new one, no longer requires static routes, can use all helicopters now
 
 if (!isServer) exitwith {};
-#include "\A3Wasteland_settings\mainMissionDefines.sqf"
+#include "mainMissionDefines.sqf"
 
 private ["_heli1","_heli2","_heli3","_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_waypoints","_grouphf","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_ammobox3","_createVehicle","_leader","_routepoints","_travels","_travelcount"];
 
@@ -17,7 +17,7 @@ _waypoints = [];
 
 diag_log format["WASTELAND SERVER - Main Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 
 // helicopters available for this mission (if missions set to diffucult also allows chance of mi48 helicopters)
@@ -173,7 +173,7 @@ waitUntil
     
     _marker setMarkerPos (position leader _grouphf);
     
-    if ((floor time) - _startTime >= mainMissionTimeout) then { _failed = true };
+    if ((floor time) - _startTime >= A3W_mainMissionTimeout) then { _failed = true };
     if (currentWaypoint _grouphf >= _numWaypoints) then { _failed = true }; // Convoy got successfully to the target location
     _unitsAlive = { alive _x } count units _grouphf;
     _unitsAlive == 0 || _failed

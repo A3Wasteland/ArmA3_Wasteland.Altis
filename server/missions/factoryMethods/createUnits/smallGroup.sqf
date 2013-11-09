@@ -91,4 +91,7 @@ _leader = leader _group;
 	_x addEventHandler ["Killed", {_this call server_playerDied; (_this select 1) call removeNegativeScore}];
 } forEach units _group;
 
+_unitsAlivesp = ({alive _x} count units _group);
+diag_log format["WASTELAND SERVER - Mission spawned: %1 enemy", _unitsAlivesp];
+
 [_group, _pos] call defendArea;

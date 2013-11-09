@@ -20,6 +20,8 @@ if (!isDedicated) then { X_Client = true };
 if (isNull player) then { X_JIP = true };
 
 _globalCompile = [DEBUG] execVM "globalCompile.sqf";
+
+
 waitUntil {scriptDone _globalCompile};
 
 [] spawn
@@ -47,7 +49,7 @@ if (!isDedicated) then
 		diag_log "Player Group Wiped";
 		[player] join grpNull;
 	};
-
+    
 	[] execVM "client\init.sqf";
 };
 
