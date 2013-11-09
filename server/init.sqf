@@ -55,6 +55,7 @@ A3W_heliSpawning = 1;               // If serverSpawning = 1, also spawn helicop
 A3W_planeSpawning = 1;              // If serverSpawning = 1, also spawn planes at some airfields (0 = no, 1 = yes)
 A3W_baseBuilding = 1;               // If serverSpawning = 1, also spawn basebuilding parts in towns (0 = no, 1 = yes)
 A3W_baseSaving = 0;                 // Save base objects between restarts (0 = no, 1 = yes) - requires iniDB mod 
+A3W_vehicleloot = "low";            // Controls the amount of loot that spawns in vehicles "low", "medium", or "high"
 A3W_sideMissionTimeout = (45*60);    // Time in seconds that a Side Mission will run for, unless completed
 A3W_sideMissionDelayTime = (5*60);  // Time in seconds between Side Missions, once one is over
 A3W_mainMissionTimeout = (60*60);    // Time in seconds that a Main Mission will run for, unless completed
