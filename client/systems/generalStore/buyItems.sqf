@@ -198,7 +198,7 @@ storePurchaseHandle = _this spawn
 						
 						if ({["NVGoggles", _x] call fn_findString != -1} count assignedItems player == 0) then
 						{
-							_player linkItem _itemClass;
+							player linkItem _itemClass;
 						}
 						else
 						{

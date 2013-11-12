@@ -50,10 +50,6 @@ _boxList =
 			// Give scope to snipers
 			[_boxInstance, "srifle_LRR_F", "srifle_LRR_SOS_F"] call fn_replaceWeapons;
 			[_boxInstance, "srifle_GM6_F", "srifle_GM6_SOS_F"] call fn_replaceWeapons;
-			
-			// Replace the SDAR's shitty 5.56mm 20Rnd UW mags by normal 5.56mm 30Rnd STANAG mags (inflicts twice more damage)
-			[_boxInstance, "20Rnd_556x45_UW_mag", "30Rnd_556x45_Stanag"] call fn_replaceMagazines;
-			_boxInstance addMagazineCargoGlobal ["30Rnd_556x45_Stanag", 2];
 		};
 		
 		// Replace tracer mags by ball mags for more stealth
