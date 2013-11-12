@@ -68,6 +68,6 @@ if (_key != "" && {isPlayer _player} && {_isGeneralStore || _isGunStore} && {{_x
 			};
 		};
 	};
-	
-	[compile format ["%1 = '%2'", _key, _objectID], "BIS_fnc_spawn", _player, false] call TPG_fnc_MP;
+	// [compile format ["%1 = '%2'", _key, _objectID], "BIS_fnc_spawn", _player, false] call TPG_fnc_MP;
+    _player setVariable [_key, _objectID, true];
 };
