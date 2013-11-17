@@ -1,42 +1,60 @@
-// WARNING! This is a modified version for use with the GoT Wasteland v2 missionfile!
-// This is NOT a default persistantdb script!
-// changes by: JoSchaap (GoT2DayZ.nl)
+//	@file Version: 1.2
+//	@file Name: oSave.sqf
+//	@file Author: [GoT] JoSchaap, AgentRev
+//	@file Description: Basesaving script
 
-sleep 60;
-while {true} do {
-	//player groupchat "hey";
-	PersistentDB_ObjCount = 0;
+if (!isServer) exitWith {};
+
+// Copy objectList array
+_saveableObjects = +objectList;
+
+// Add general store objects
+{
+	_genObject = _x select 1;
+	
+	if ({_genObject == _x} count _saveableObjects == 0) then
 	{
-		_var = _x getVariable "objectLocked";
-		if(!isNil "_var" && (alive _x)) then {
-			_classname = typeOf _x;
+		_saveableObjects set [count _saveableObjects, _genObject];
+	};
+} forEach (call genObjectsArray);
+
+while {true} do
+{
+	sleep 60;
+	_PersistentDB_ObjCount = 0;
+	
+	{
+		_object = _x;
+		
+		if (_object getVariable ["objectLocked", false] && {alive _object}) then
+		{
+			_classname = typeOf _object;
+			
 			// addition to check if the classname matches the building parts
-			if(_classname in objectList) then {
-				_pos = getPosASL _x;
-				_dir = [vectorDir _x] + [vectorUp _x];
+			if (!(_object isKindOf "ReammoBox_F") && {{_classname == _x} count _saveableObjects > 0}) then
+			{
+				_pos = getPosASL _object;
+				_dir = [vectorDir _object] + [vectorUp _object];
 
 				_supplyleft = 0;
 
-				if(_x isKindOf "Land_Sacks_goods_F") then {
-					_supplyleft = _x getVariable "food";
-					if(isNil "_supplyleft") then
+				switch (true) do
+				{
+					case (_object isKindOf "Land_Sacks_goods_F"):
 					{
-						_supplyleft = 20;
+						_supplyleft = _object getVariable ["food", 20];
+					};
+					case (_object isKindOf "Land_WaterBarrel_F"):
+					{ 
+						_supplyleft = _object getVariable ["water", 20];
 					};
 				};
 
-				if(_x isKindOf "Land_WaterBarrel_F") then { 
-					_supplyleft = _x getVariable "water";
-					if(isNil "_supplyleft") then
-					{
-						_supplyleft = 20;
-					};
-				};
-
-				// i dont want to save weapons/ammo just bases themselves so this is off
-				// _weapons = getWeaponCargo _x;
-				// _magazines = getMagazineCargo _x;
-				_objSaveName = format["obj%1", PersistentDB_ObjCount];
+				// Save weapons & ammo
+				// _weapons = getWeaponCargo _object;
+				// _magazines = getMagazineCargo _object;
+				
+				_objSaveName = format["obj%1", _PersistentDB_ObjCount];
 
 				["Objects" call PDB_databaseNameCompiler, _objSaveName, "classname", _classname] call iniDB_write;
 				["Objects" call PDB_databaseNameCompiler, _objSaveName, "pos", _pos] call iniDB_write;
@@ -45,11 +63,13 @@ while {true} do {
 				// ["Objects" call PDB_databaseNameCompiler, _objSaveName, "weapons", _weapons] call iniDB_write;
 				// ["Objects" call PDB_databaseNameCompiler, _objSaveName, "magazines", _magazines] call iniDB_write;
 
-				PersistentDB_ObjCount = PersistentDB_ObjCount + 1;
-				};
+				_PersistentDB_ObjCount = _PersistentDB_ObjCount + 1;
 			};
+		};
 	} forEach allMissionObjects "All";
-	["Objects" call PDB_databaseNameCompiler, "Count", "Count", PersistentDB_ObjCount] call iniDB_write;
-	diag_log format["A3W - Base saving has saved %1 parts to iniDB", PersistentDB_ObjCount];
-	sleep 120;
-};
+	
+	["Objects" call PDB_databaseNameCompiler, "Count", "Count", _PersistentDB_ObjCount] call iniDB_write;
+	
+	diag_log format["A3W - %1 parts have been saved with iniDB", _PersistentDB_ObjCount];
+	sleep 60;
+};
