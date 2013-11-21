@@ -30,7 +30,7 @@ for "_i" from 0 to (_objectscount - 1) do
 			_obj setVariable["food",_supplyleft,true];
 		};
 
-		if (_class == "Land_WaterBarrel_F") then 
+		if (_class == "Land_BarrelWater_F") then 
 		{
 			_obj setVariable["water",_supplyleft,true];
 		};

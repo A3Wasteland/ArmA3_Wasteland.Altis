@@ -137,7 +137,7 @@ objectList =
 	"Land_RampConcreteHigh_F",
 	"Land_Sacks_goods_F",
 	"Land_Shoot_House_Wall_F",
-	"Land_WaterBarrel_F"
+	"Land_BarrelWater_F"
 ];
 
 //Object List - Random Spawns.
