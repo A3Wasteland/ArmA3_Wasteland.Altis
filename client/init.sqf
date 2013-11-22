@@ -141,3 +141,21 @@ if (_playerWasMoved == 0) then {
 } forEach playableUnits;
 
 [] execVM "addons\fpsFix\vehicleManager.sqf";
+
+while {isnil "A3W_baseSaving"} do
+{
+    sleep 10;
+};
+if (A3W_baseSaving != 0) then
+{
+    if (A3W_boxSaving == 0) then
+    {
+        player createDiaryRecord["infos", ["Base Saving", format ["Base parts will be relocked and saved for %1 day(s). Ammo boxes are not saved. Contents other than Food and Water (in the original containers) are not saved.", A3W_baseSaveTime]]];
+    }
+    else
+    {
+        player createDiaryRecord["infos", ["Base Saving", format ["Base parts will be relocked and saved for %1 day(s), Purchased Ammo Boxes for %2 day(s) and Captured boxes for 1 restart after being locked. Weapons and items are only saved in Ammo Boxes - Food and Water is saved in the original containers.", A3W_baseSaveTime, A3W_ammoboxSaveTime]]];
+    };
+};
+
+    

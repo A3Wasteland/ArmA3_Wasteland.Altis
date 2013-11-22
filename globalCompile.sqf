@@ -55,6 +55,7 @@ getHitPoints = [_path, "getHitPoints.sqf"] call mf_compile;
 getPublicVar = [_path, "getPublicVar.sqf"] call mf_compile;
 removeNegativeScore = [_path, "removeNegativeScore.sqf"] call mf_compile;
 
+
 if (isNil "fn_findString") then { fn_findString = [_path, "fn_findString.sqf"] call mf_compile };
 if (isNil "fn_filterString") then { fn_filterString = [_path, "fn_filterString.sqf"] call mf_compile };
 

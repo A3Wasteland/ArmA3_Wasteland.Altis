@@ -10,7 +10,7 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
-"0.9d",
+"0.9d82nd",
 "
 <br/> [Changed] - New UI by KoS
 "

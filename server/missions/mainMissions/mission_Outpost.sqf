@@ -63,6 +63,8 @@ if(_result == 1) then
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
 	//Mission Complete.
+    _baseToEnable = nearestObjects [_randomPos, ["All"], 25];
+    { _x setVariable ["R3F_LOG_disabled", false, true] } forEach _baseToEnable;
     deleteGroup _CivGrpM;
     _hint = parseText format ["<t align='center' color='%3' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%3'>------------------------------</t><br/><t align='center' color='%4' size='1.25'>%1</t><br/><t align='center' color='%4'>The outpost has been captured, good work.</t>", _missionType, _vehicleName, successMissionColor, subTextColor];
 	[_hint] call hintBroadcast;

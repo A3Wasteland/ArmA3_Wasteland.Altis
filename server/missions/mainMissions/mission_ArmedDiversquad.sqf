@@ -81,7 +81,6 @@ waitUntil
 
 _vehicle setFuel 1;
 _vehicle setVehicleLock "UNLOCKED";
-_vehicle setVariable ["R3F_LOG_disabled", false, true];
 _slbox setVariable ["R3F_LOG_disabled", false, true];
 _slbox2 setVariable ["R3F_LOG_disabled", false, true];
 

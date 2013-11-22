@@ -15,7 +15,9 @@ pistolArray = compileFinal str
 	//Handgun
     ["P07 Handgun", "hgun_P07_F", 50],
 	["Rook-40 Handgun", "hgun_Rook40_F", 50],
-	["ACP-C2 Handgun", "hgun_ACPC2_F", 75]
+	["ACP-C2 Handgun", "hgun_ACPC2_F", 75],
+    ["4-Five .45 handgun", "hgun_Pistol_heavy_01_F", 75],
+    ["Zubr .45 handgun", "hgun_Pistol_heavy_02_F", 75]
 ];
 
 smgArray = compileFinal str
@@ -50,6 +52,7 @@ rifleArray = compileFinal str
 	// Markman Rifles
 	["MXM Rifle", "arifle_MXM_F", 300],
 	["Mk18 ABR Rifle", "srifle_EBR_F", 400],
+    ["Rahim 7.62 mm", "srifle_DMR_01_F", 400],
 
 	// Sniper Rifles
 	["M320 LRR Sniper", "srifle_LRR_SOS_F", 1000],
@@ -141,7 +144,9 @@ ammoArray = compileFinal str
 [
 	["9mm 16Rnd Mag", "16Rnd_9x21_Mag", 10],
 	["9mm 30Rnd Mag", "30Rnd_9x21_Mag", 20],
+    [".45 6Rnd cylinder", "6Rnd_45ACP_Cylinder", 10],
 	[".45 ACP 9Rnd Mag", "9Rnd_45ACP_Mag", 10],
+    [".45 ACP 11Rnd Mag", "11Rnd_45ACP_Mag", 10],
 	[".45 ACP 30Rnd Vermin Mag", "30Rnd_45ACP_MAG_SMG_01", 20],
 	[".45 ACP 30Rnd Tracer (Green) Mag", "30Rnd_45ACP_Mag_SMG_01_tracer_green", 15],
 	["5.56mm 20Rnd Underwater Mag", "20Rnd_556x45_UW_mag", 10],
@@ -157,6 +162,7 @@ ammoArray = compileFinal str
 	["6.5mm 100Rnd Tracer (Red) Belt Case", "100Rnd_65x39_caseless_mag_Tracer", 50],
 	["6.5mm 200Rnd Belt Case", "200Rnd_65x39_cased_Box", 150],
 	["6.5mm 200Rnd Tracer (Green) Belt Case", "200Rnd_65x39_cased_Box_Tracer", 125],
+    ["7.62mm 10Rnd Mag", "10Rnd_762x51_Mag", 12],
 	["7.62mm 20Rnd Mag", "20Rnd_762x51_Mag", 25],
 	["7.62mm 150Rnd Box", "150Rnd_762x51_Box", 150],
 	["7.62mm 150Rnd Tracer (Green) Box", "150Rnd_762x51_Box_Tracer", 125],
@@ -213,8 +219,11 @@ accessoriesArray = compileFinal str
 	["ACO (Red)", "optic_Aco", 75, "item"],
 	["ACO (Green)", "optic_Aco_grn", 75, "item"],
 	["Holosight", "optic_Holosight", 75, "item"],
+    ["Yorris J2", "optic_Yorris", 75, "item"],
+    ["MRD", "optic_MRD", 75, "item"],
 	["MRCO", "optic_MRCO", 100, "item"],
-	["ARCO", "optic_Arco", 125, "item"],
+	["DMS", "optic_DMS", 125, "item"],
+    ["ARCO", "optic_Arco", 125, "item"],
 	["RCO", "optic_Hamr", 150, "item"],
 	["SOS", "optic_SOS", 200, "item"],
 	["NVS", "optic_NVS", 500, "item"],

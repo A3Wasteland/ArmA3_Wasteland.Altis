@@ -287,10 +287,12 @@ if(_failed) then
 	_ammobox = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
     [_ammobox,"mission_USSpecial2"] call fn_refillbox;
 	_ammobox allowDamage false;
+    _ammobox setVariable ["R3F_LOG_disabled", false, true];
 	
     _ammobox2 = "Box_East_WpsSpecial_F" createVehicle getMarkerPos _marker;
     [_ammobox2,"mission_USLaunchers"] call fn_refillbox;
 	_ammobox2 allowDamage false;
+    _ammobox2 setVariable ["R3F_LOG_disabled", false, true];
 	
 	deleteGroup _group; 	
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The convoy has been stopped. The weapon crates and vehicles are yours to take.</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
