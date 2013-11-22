@@ -6,11 +6,11 @@ diag_log "Starting load of Base Saving objects";
 private ["_currentdatetime", "_obj"];
 sleep 10;
 _check = ("Objects" call PDB_databaseNameCompiler) call iniDB_exists;
-if(!_check) then {savedobjectsloaddone = true;};
-if(!_check) exitWith {};
+if (!_check) then {savedobjectsloaddone = true;};
+if (!_check) exitWith {};
 _objectscount = ["Objects" call PDB_databaseNameCompiler, "Count", "Count", "NUMBER"] call iniDB_read;
-if(isNil "_objectscount") then {savedobjectsloaddone = true;};
-if(isNil "_objectscount") exitWith {};
+if (isNil "_objectscount") then {savedobjectsloaddone = true;};
+if (isNil "_objectscount") exitWith {};
 // datetimelocked="["date", 07, 11, 2013, 18, 50, 10]"
 
 if (A3W_baseSaveTime > 30) then {A3W_baseSaveTime = 30;};
@@ -47,7 +47,7 @@ _deleteAmmoboxDOY = (_deleteAmmoboxTime select 1) + ((_deleteAmmoboxTime select 
 _deleteAmmoboxMOD = (_deleteAmmoboxTime select 5) + ((_deleteAmmoboxTime select 4) * 60);
 diag_log format["Delete Ammobox if Locked Before %1 on %2", _deleteAmmoboxMOD, _deleteAmmoboxDOY];
 
-for[{_i = 0}, {_i < _objectscount}, {_i = _i + 1}] do 
+for "_i" from 0 to (_objectscount - 1) do 
 {
 	_objSaveName = format["obj%1", _i];
 	_class = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "classname", "STRING"] call iniDB_read;
@@ -59,18 +59,18 @@ for[{_i = 0}, {_i < _objectscount}, {_i = _i + 1}] do
     _items = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "items", "ARRAY"] call iniDB_read;
     _datetimelocked =  ["Objects" call PDB_databaseNameCompiler, _objSaveName, "datetimelocked", "ARRAY"] call iniDB_read;
     
-	if(!isNil "_objSaveName" && !isNil "_class" && !isNil "_pos" && !isNil "_dir" && !isNil "_supplyleft") then 
+	if (!isNil "_objSaveName" && !isNil "_class" && !isNil "_pos" && !isNil "_dir" && !isNil "_supplyleft") then 
 	{
         _obj = createVehicle [_class,_pos, [], 0, "CAN COLLIDE"];
 		_obj setPosASL _pos;
 		_obj setVectorDirAndUp _dir;
 
-		if(_class == "Land_Sacks_goods_F") then 
+		if (_class == "Land_Sacks_goods_F") then 
 		{
 			_obj setVariable["food",_supplyleft,true];
 		};
 
-		if(_class == "Land_BarrelWater_F") then 
+		if (_class == "Land_BarrelWater_F") then 
 		{
 			_obj setVariable["water",_supplyleft,true];
 		};
@@ -83,17 +83,17 @@ for[{_i = 0}, {_i < _objectscount}, {_i = _i + 1}] do
         _relock = true;       
         if (_obj isKindOf "ReammoBox_F") then
         {
-            for[{_ii = 0}, {_ii < (count (_weapons select 0))}, {_ii = _ii + 1}] do 
+            for [{_ii = 0}, {_ii < (count (_weapons select 0))}, {_ii = _ii + 1}] do 
             {
                 _obj addWeaponCargoGlobal [(_weapons select 0) select _ii, (_weapons select 1) select _ii];
             };
 
-            for[{_ii = 0}, {_ii < (count (_magazines select 0))}, {_ii = _ii + 1}] do 
+            for [{_ii = 0}, {_ii < (count (_magazines select 0))}, {_ii = _ii + 1}] do 
             {
                 _obj addMagazineCargoGlobal [(_magazines select 0) select _ii, (_magazines select 1) select _ii];
             };
         
-            for[{_ii = 0}, {_ii < (count (_items select 0))}, {_ii = _ii + 1}] do 
+            for [{_ii = 0}, {_ii < (count (_items select 0))}, {_ii = _ii + 1}] do 
             {
                 _obj addItemCargoGlobal [(_items select 0) select _ii, (_items select 1) select _ii];
             };
