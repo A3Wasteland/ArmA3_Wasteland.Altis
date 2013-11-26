@@ -11,6 +11,6 @@ if not(isNull _old ) then {
 if not(isNull _new) then {
 	{
 		_action = _new addAction (_x select 1);
-		mf_player_actions = mf_player_actions + [_action];
+		mf_player_actions set [count mf_player_actions, _action];
 	} forEach mf_player_actions_definitions;
 };
