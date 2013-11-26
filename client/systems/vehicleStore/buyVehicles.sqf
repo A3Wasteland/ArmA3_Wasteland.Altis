@@ -95,8 +95,6 @@ storePurchaseHandle = _this spawn
 		if(_colorText == "Red Camo") then {_textureFilename = "camo_deser.jpg";};
 		if(_colorText == "Yellow Camo") then {_textureFilename = "camo_fuel.jpg";};
 		if(_colorText == "Pink Camo") then {_textureFilename = "camo_pank.jpg";};
-		
-		systemChat _rgbString;
 
 		// If its a texture, get the right directory
 		if(_textureFilename != "") then { _texture = format ["%1\%2", _textureDir, _textureFilename]; };
