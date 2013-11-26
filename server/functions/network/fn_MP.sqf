@@ -22,22 +22,26 @@
 */
 
 with missionnamespace do {
-	private ["_params","_functionName","_target","_isPersistent","_isCall","_ownerID"];
+	private ["_params","_functionName","_target","_isPersistent","_isCall","_packet"];
 
 	_params = 	[_this,0,[]] call bis_fnc_param;
 	_functionName =	[_this,1,"",[""]] call bis_fnc_param;
 	_target =	[_this,2,true,[objnull,true,0,[],sideUnknown,grpnull]] call bis_fnc_param;
 	_isPersistent =	[_this,3,false,[false]] call bis_fnc_param;
 	_isCall =	[_this,4,false,[false]] call bis_fnc_param;
-
-	//--- Send to server
-	[0,_params,_functionName,_target,_isPersistent,_isCall] call compile format ["%1 = _this", _mpPacketKey];
-	publicVariableServer _mpPacketKey;
+	
+	_packet = [0,_params,_functionName,_target,_isPersistent,_isCall];
 
 	//--- Local execution
-	if !(ismultiplayer) then {
-		[_mpPacketKey, call compile _mpPacketKey] spawn TPG_fnc_MPexec;
-	};
+	if (isServer || !isMultiplayer) then
+	{
+		[_mpPacketKey, _packet] spawn TPG_fnc_MPexec;
+	}
+	else //--- Send to server
+	{
+		missionNamespace setVariable [_mpPacketKey, _packet];
+		publicVariableServer _mpPacketKey;
+	}
 
 	// call compile _mpPacketKey
 };
