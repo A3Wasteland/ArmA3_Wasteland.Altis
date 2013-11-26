@@ -39,7 +39,7 @@ storePurchaseHandle = _this spawn
 	_showInsufficientFundsError = 
 	{
 		_itemText = _this select 0;
-		hint format ["You don't have enough money for ""%1""", _itemText];
+		hint parseText format ["Not enough money for<br/>""%1""", _itemText];
 		player say "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
@@ -47,7 +47,7 @@ storePurchaseHandle = _this spawn
 	_showInsufficientSpaceError = 
 	{
 		_itemText = _this select 0;
-		hint format ["You don't have enough space for ""%1""", _itemText];
+		hint parseText format ["Not enough space for<br/>""%1""", _itemText];
 		player say "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
@@ -63,7 +63,7 @@ storePurchaseHandle = _this spawn
 	_showItemSpawnedOutsideMessage = 
 	{
 		_itemText = _this select 0;
-		hint format ["""%1"" has been spawned outside infront of the store.", _itemText];
+		hint format ["""%1"" has been spawned outside, in front of the store.", _itemText];
 		player say "FD_CP_Not_Clear_F";
 		_successHint = false;
 	};
@@ -71,7 +71,7 @@ storePurchaseHandle = _this spawn
 	_showAlreadyHaveTypeMessage = 
 	{
 		_itemText = _this select 0;
-		hint format ["You already have a weapon of this type. Please unequip it before purchasing ""%1""", _itemText];
+		hint format ["Your inventory is full, or you already have a weapon of this type. Please unequip it before purchasing ""%1""", _itemText];
 		player say "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
@@ -104,13 +104,9 @@ storePurchaseHandle = _this spawn
 						}
 						else
 						{
-							if ([player, _class, "backpack"] call fn_fitsInventory) then
+							if !([player, _class] call addWeaponInventory) then
 							{
-								(unitBackpack player) addWeaponCargoGlobal [_class, 1];
-							}
-							else
-							{
-								[_itemText] call _showAlreadyHaveTypeMessage;
+								[_itemText] call _showInsufficientSpaceError;
 							};
 						};
 					};
@@ -196,14 +192,8 @@ storePurchaseHandle = _this spawn
 							[_itemText] call _showInsufficientFundsError;
 						};
 						
-						switch (_x select 3) do
-						{
-							case "backpack":
-							{
-								removeBackpack player;
-								player addBackpack _class;
-							};
-						};
+						removeBackpack player;
+						player addBackpack _class;
 					};
 				} forEach (call backpackArray);
 			};
