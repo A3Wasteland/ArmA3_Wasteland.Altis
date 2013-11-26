@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_player", "_class", "_marker", "_key", "_isGeneralStore", "_isGunStore", "_objectID", "_objectsArray", "_itemEntry", "_itemPrice", "_isDamageable", "_safePos", "_safePos"];
+private ["_player", "_class", "_marker", "_key", "_isGeneralStore", "_isGunStore", "_objectID", "_objectsArray", "_itemEntry", "_itemPrice", "_isDamageable", "_safePos", "_object"];
 
 _player = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _class = [_this, 1, "", [""]] call BIS_fnc_param;
@@ -52,9 +52,6 @@ if (_key != "" && {isPlayer _player} && {_isGeneralStore || _isGunStore} && {{_x
 			
 			if (_player getVariable ["cmoney", 0] >= _itemPrice) then
 			{
-				//_objectSize = sizeOf _class;
-				//if (_objectSize == 0) then { _objectSize = 2 };
-				//_safePos = [markerPos _marker, 0, 5, _objectSize, 0, 60*(pi/180), 0] call findSafePos;
 				
 				_safePos = (markerPos _marker) findEmptyPosition [0, 20, _class];
 				if (count _safePos == 0) then { _safePos = markerPos _marker };
@@ -68,6 +65,15 @@ if (_key != "" && {isPlayer _player} && {_isGeneralStore || _isGunStore} && {{_x
 			};
 		};
 	};
+	
 	// [compile format ["%1 = '%2'", _key, _objectID], "BIS_fnc_spawn", _player, false] call TPG_fnc_MP;
-    _player setVariable [_key, _objectID, true];
+	
+	if (isPlayer _player) then
+	{
+		_player setVariable [_key, _objectID, true];
+	}
+	else
+	{
+		deleteVehicle _object;
+	};
 };
