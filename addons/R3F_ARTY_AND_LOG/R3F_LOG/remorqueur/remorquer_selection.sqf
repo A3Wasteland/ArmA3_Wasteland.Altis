@@ -87,7 +87,7 @@ else
 					if (_objet isKindOf "Heli_Light_01_base_F") then
 					{
 						_compensateY = _compensateY - 1.25;
-						_compensateZ = _compensateZ - 2.2;
+						_compensateZ = _compensateZ - 0.9;
 					};
 					if (_objet isKindOf "Heli_Light_02_base_F") then
 					{
