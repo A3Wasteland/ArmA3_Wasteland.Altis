@@ -13,7 +13,12 @@ _minMags = 3;
 
 if (local _unit && !isPlayer _unit) then
 {
-	_magType = [primaryWeaponMagazine _unit, 0, "", [""]] call BIS_fnc_param;
+	waitUntil
+	{
+		sleep 1;
+		_magType = [primaryWeaponMagazine _unit, 0, "", [""]] call BIS_fnc_param;
+		_magType != "" || !alive _unit
+	};
 
 	if (_magType != "") then
 	{
