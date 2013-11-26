@@ -81,6 +81,26 @@ config_initial_spawn_money = compileFinal "100";
 // 4 - Territory category, currently unused. See territory/README.md for details.
 config_territory_markers = compileFinal str
 [
-	//["TERRITORY_AIRPORT_TEST", "Main Airport", 500, "AIRFIELD"] // Also add to the map to test
+	["TERRITORY_THRONOS_CASTLE", "Thronos Castle", 300, "CASTLE"],
+	["TERRITORY_KASTRO_CASTLE", "Kastro Castle", 300, "CASTLE"],
+	["TERRITORY_SW_AIRFIELD", "Southwest Airfield", 300, "AIRFIELD"],
+	["TERRITORY_MAIN_AIRBASE_SW", "Main Airbase (SW)", 200, "AIRBASE"],
+	["TERRITORY_MAIN_AIRBASE_CENTER", "Main Airbase (Center)", 200, "AIRBASE"],
+	["TERRITORY_MAIN_AIRBASE_NE", "Main Airbase (NE)", 200, "AIRBASE"],
+	["TERRITORY_NE_AIRFIELD", "Northeast Airfield", 300, "AIRFIELD"],
+	["TERRITORY_SE_AIRFIELD", "Southeast Airfield", 300, "AIRFIELD"],
+	["TERRITORY_NW_AIRFIELD", "Northwest Airfield", 300, "AIRFIELD"],
+	["TERRITORY_SALTFLATS_AIRFIELD", "Saltflats TERRITORY_SW_AIRFIELD", 300, "AIRFIELD"],
+	["TERRITORY_WEST_POWER_PLANT", "West Power Plant", 300, "POWER"],
+	["TERRITORY_CENTER_POWER_PLANT", "Center Power Plant", 300, "POWER"],
+	["TERRITORY_EAST_POWER_PLANT", "East Power Plant", 300, "POWER"],
+	["TERRITORY_IRAKLIA_RUINS", "Iraklia Ruins", 300, "RUINS"],
+	["TERRITORY_ARTINARKI_RUINS", "Artinarki Ruins", 300, "RUINS"],
+	["TERRITORY_MOLOS_TRANSMITTER", "Molos Transmitter", 300, "TRANSMITTER"],
+	["TERRITORY_DIDYMOS_TRANSMITTER_1", "Didymos Transmitter One", 300, "TRANSMITTER"],
+	["TERRITORY_DIDYMOS_TRANSMITTER_2", "Didymos Transmitter Two", 300, "TRANSMITTER"],
+	["TERRITORY_MAGOS_TRANSMITTER", "Magos Transmitter", 300, "TRANSMITTER"],
+	["TERRITORY_PYRSOS_TRANSMITTER", "Pyrsos Transmitter", 300, "TRANSMITTER"],
+	["TERRITORY_MILITARY_RESEARCH", "Telos Research Facility", 300, "MILITARY"]
 ];
 

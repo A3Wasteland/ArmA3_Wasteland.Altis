@@ -68,7 +68,7 @@ currentTerritoryDetails = [];
 {
     _markerName = _x select 0;
     //diag_log format ["Adding %1 to lastCapturePointDetails", _markerName];
-    currentTerritoryDetails = currentTerritoryDetails + [[_markerName, [], 0, ""]];
+    currentTerritoryDetails set [count currentTerritoryDetails, [_markerName, [], 0, ""]];
 } forEach (call config_territory_markers);
 
 // This will track how long each loop takes, to monitor how long it really ends up taking when
@@ -144,9 +144,9 @@ _nameForSideStr = {
 
     _sideName = "";
     switch (_side) do {
-        case "WEST": { _sideName = "Blufor"; };
-        case "EAST": { _sideName = "Opfor"; };
-        case "GUER": { _sideName = "Gfor"; };
+        case "WEST": { _sideName = "BLUFOR"; };
+        case "EAST": { _sideName = "OPFOR"; };
+        case "GUER": { _sideName = "Independent"; };
         default { _sideName = ""; };
     };
 
@@ -494,7 +494,7 @@ while{true} do
                 // Make the entry
                 //diag_log format["%1 has TERRITORY_OCCUPATION for %2", name _x, _curCapPoint];
                 //diag_log format["CAP PLAYER LOOP: Adding %1 to _territoryOccupiersMapSingle at %2", _x, _curCapPoint];
-                _territoryOccupiersMapSingle = _territoryOccupiersMapSingle + [[_curCapPoint, _x]];
+                _territoryOccupiersMapSingle set [count _territoryOccupiersMapSingle, [_curCapPoint, _x]];
             };
         };
 
@@ -535,20 +535,20 @@ while{true} do
                     // Make sure we dont make a dummy first entry
                     //_currentTerritoryOccupiers = [_currentTerritoryOccupiers, [], {getPlayerUID  _x}, "ASCEND"] call BIS_fnc_SortBy;
                     //diag_log format["CONSOLIDATION: Adding _territoryOccupiersMapConsolidated entry for %1 containing %2", _currentTerritoryName, _currentTerritoryOccupiers];
-                    _territoryOccupiersMapConsolidated = _territoryOccupiersMapConsolidated + [ [_currentTerritoryName, _currentTerritoryOccupiers] ];
+                    _territoryOccupiersMapConsolidated set [count _territoryOccupiersMapConsolidated, [_currentTerritoryName, _currentTerritoryOccupiers]];
                 };
 
                 _currentTerritoryName = _territoryName;
                 _currentTerritoryOccupiers = [_player];
             } else {
                 //diag_log format["CONSOLIDATION: Accumulating %2 at %1", _currentTerritoryName, _currentTerritoryOccupiers];
-                _currentTerritoryOccupiers = _currentTerritoryOccupiers + [_player];
+                _currentTerritoryOccupiers set [count _currentTerritoryOccupiers, _player];
             };
 
         } forEach _territoryOccupiersMapSingle;
 
         //diag_log format["LAST ENTRY: Adding _territoryOccupiersMapConsolidated entry for %1 containing %2", _currentTerritoryName, _currentTerritoryOccupiers];
-        _territoryOccupiersMapConsolidated = _territoryOccupiersMapConsolidated + [ [_currentTerritoryName, _currentTerritoryOccupiers] ];
+        _territoryOccupiersMapConsolidated set [count _territoryOccupiersMapConsolidated, [_currentTerritoryName, _currentTerritoryOccupiers]];
     };
 
 
