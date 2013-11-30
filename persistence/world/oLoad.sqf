@@ -2,8 +2,8 @@
 // This is NOT a default persistantdb script!
 // changes by: JoSchaap (GoT2DayZ.nl)
 if (!isServer) exitWith {};
-diag_log "Starting load of Base Saving objects";
-private ["_currentdatetime", "_obj"];
+diag_log "A3W - Starting load of Base Saving objects";
+private ["_deleteBaseTime", "_deleteAmmoboxTime", "_obj"];
 sleep 10;
 _check = ("Objects" call PDB_databaseNameCompiler) call iniDB_exists;
 if (!_check) then {savedobjectsloaddone = true;};
@@ -13,28 +13,21 @@ if (isNil "_objectscount") then {savedobjectsloaddone = true;};
 if (isNil "_objectscount") exitWith {};
 // datetimelocked="["date", 07, 11, 2013, 18, 50, 10]"
 
+
 if (A3W_baseSaveTime > 30) then {A3W_baseSaveTime = 30;};
 if (A3W_baseSaveTime < 1) then {A3W_baseSaveTime = 1;};
 if (A3W_ammoboxSaveTime > 30) then {A3W_ammoboxSaveTime = 30;};
 if (A3W_ammoboxSaveTime < 0) then {A3W_ammoboxSaveTime = 0;};
 if (A3W_restarts < 1) then {A3W_restarts = 1;};
 
-_currentdateandtime = call compile ("blend-time" callExtension "date");
-_currentDOY = (_currentdateandtime select 1) + ((_currentdateandtime select 2) * 100) + (((_currentdateandtime select 3)-2000) * 10000);
-_currentMOD = (_currentdateandtime select 5) + ((_currentdateandtime select 4) * 60);
+_deleteCapturedtime = call compile ("subtracthours" callExtension format ["%1", (24/A3W_restarts)]);
+_deleteCapturedDOY = (_deleteCapturedtime select 1) + ((_deleteCapturedtime select 2) * 100) + (((_deleteCapturedtime select 3)-2000) * 10000);
+_deleteCapturedMOD = (_deleteCapturedtime select 5) + ((_deleteCapturedtime select 4) * 60);
 
-_deleteCapturedMOD = _currentMOD - (60 * 24/A3W_restarts);
-_deleteCapturedDOY = _currentDOY;
-if (_deleteCapturedMOD < 0) then 
-{
-    _deleteCapturedMOD = _deleteCapturedMOD + (24*60);
-    _deleteCapturedDOY = _deleteCapturedDOY - 1;
-};
-diag_log format["Delete Ammobox if Locked Before %1 on %2", _deleteCapturedMOD, _deleteCapturedDOY];
+diag_log format["Delete Captured Ammobox if Locked Before %1 on %2", _deleteCapturedMOD, _deleteCapturedDOY];
 
-subtractDays = compile preprocessFile "persistence\world\subtractdays.sqf";
-_deleteBaseTime =  [ _currentdateandtime, A3W_baseSaveTime] call subtractdays;
-_deleteAmmoboxTime = [ _currentdateandtime, A3W_ammoboxSaveTime] call subtractdays;
+_deleteBaseTime =  call compile ("subtracthours" callExtension format ["%1", (24 * A3W_baseSaveTime)]);
+_deleteAmmoboxTime = call compile ("subtracthours" callExtension format ["%1", (24 * A3W_AmmoboxSaveTime)]);
 
 diag_log format["_deleteBaseTime is %1", _deleteBaseTime];
 diag_log format["_deleteAmmoboxTime is %1", _deleteAmmoboxTime];
@@ -129,8 +122,15 @@ for "_i" from 0 to (_objectscount - 1) do
             
         };
             
-        diag_log format["GoT Wasteland - baseSaving locked %1 a %2 %3 at %4", _objSaveName, _relock, _class, _dateTimelocked];
+        diag_log format["A3W - baseSaving locked %1 a %2 %3 at %4", _objSaveName, _relock, _class, _dateTimelocked];
         _obj setVariable ["objectLocked", _relock, true]; //force lock
+        
+        if (count _datetimelocked == 7) then
+        {
+            _t = _datetimelocked;
+            _datetimelocked = ["0", _t select 1, _t select 2, _t select 3, _t select 4, _t select 5];
+        };
+        
         if (_relock) then { _obj setVariable ["datetimelocked", _dateTimelocked, true];};
 	};
 };

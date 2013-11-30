@@ -41,7 +41,7 @@ while {true} do
 {
 	sleep 60;
 	_PersistentDB_ObjCount = 0;
-    _currentdatetime = call compile ("blend-time" callExtension "date");
+    _currentdatetime = call compile ("subtracthours" callExtension "0");
 	{
 		_object = _x;
 		
@@ -103,7 +103,7 @@ while {true} do
                         case (typename _datetimelocked == "ARRAY"):
                         {
                             diag_log format["A3W - Base saving has found Array date for obj%1 which is a %2", _PersistentDB_ObjCount, _classname];
-                            if (count _datetimelocked != 7) then
+                            if (count _datetimelocked != 6) then
                             {
                                 _datetimelocked = _currentdatetime;
                                 diag_log format["A3W - Base saving has found invalid Array date for obj%1 which is a %2", _PersistentDB_ObjCount, _classname];
