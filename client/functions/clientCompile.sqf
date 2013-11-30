@@ -11,6 +11,7 @@ onKilled = "client\clientEvents\onKilled.sqf" call mf_compile;
 onKeyPress = "client\clientEvents\onKeyPress.sqf" call mf_compile;
 
 // Functions
+addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
 serverMessage = "client\functions\serverMessage.sqf" call mf_compile;

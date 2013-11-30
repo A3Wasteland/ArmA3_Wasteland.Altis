@@ -95,7 +95,7 @@ class Mission
 	randomSeed=14957468;
 	class Intel
 	{
-		briefingName="A3Wasteland Altis v0.9d82nd";
+		briefingName="A3Wasteland Altis v0.9d";
 		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3Wasteland.com for more details";
 		resistanceWest=0;
 		startWeather=0.10000001;
@@ -2389,7 +2389,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=128;
+		items=149;
 		class Item0
 		{
 			position[]={3612.1487,12.11851,13020.892};
@@ -3295,6 +3295,259 @@ class Mission
 			name="Town_20";
 			type="Empty";
 			colorName="ColorRed";
+		};
+		class Item128
+		{
+			position[]={11477.15,23.233107,11740.481};
+			name="TERRITORY_SW_AIRFIELD";
+			text="AAC Airfield";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=340;
+			b=100;
+			angle=-55.682098;
+		};
+		class Item129
+		{
+			position[]={14387.867,18.944099,16220.769};
+			name="TERRITORY_MAIN_AIRBASE_SW";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=300;
+			b=300;
+			angle=43.968033;
+		};
+		class Item130
+		{
+			position[]={14806.477,17.91,16653.357};
+			name="TERRITORY_MAIN_AIRBASE_CENTER";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=300;
+			b=300;
+			angle=43.967999;
+		};
+		class Item131
+		{
+			position[]={15225.079,17.516605,17085.578};
+			name="TERRITORY_MAIN_AIRBASE_NE";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=300;
+			b=300;
+			angle=43.967999;
+		};
+		class Item132
+		{
+			position[]={9085.6289,15.733569,21518.648};
+			name="TERRITORY_NW_AIRFIELD";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=200;
+			b=100;
+			angle=-36.669201;
+		};
+		class Item133
+		{
+			position[]={26922.594,19.302885,24761.859};
+			name="TERRITORY_NE_AIRFIELD";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=120;
+			b=280;
+			angle=40.578899;
+		};
+		class Item134
+		{
+			position[]={20993.303,24.525772,7254.6567};
+			name="TERRITORY_SE_AIRFIELD";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=240;
+			b=200;
+			angle=318.40302;
+		};
+		class Item135
+		{
+			position[]={4228.3794,18.116827,15052.348};
+			name="TERRITORY_WEST_POWER_PLANT";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=50;
+			b=80;
+			angle=-268.34515;
+		};
+		class Item136
+		{
+			position[]={25411.078,9.7536478,20339.311};
+			name="TERRITORY_EAST_POWER_PLANT_1";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=50;
+			b=70;
+			angle=-210.868;
+		};
+		class Item137
+		{
+			position[]={23058.23,3.1900001,18680.213};
+			name="TERRITORY_SALTFLATS_AIRFIELD";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=300;
+			b=120;
+			angle=-90.074898;
+		};
+		class Item138
+		{
+			position[]={4837.5459,337.90045,21931.078};
+			name="TERRITORY_THRONOS_CASTLE";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=100;
+			b=100;
+			angle=181.465;
+		};
+		class Item139
+		{
+			position[]={3081.7656,47.866707,13189.091};
+			name="TERRITORY_KASTRO_CASTLE";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=80;
+			b=80;
+			angle=-0.70509499;
+		};
+		class Item140
+		{
+			position[]={15502.717,12.702961,16301.681};
+			name="TERRITORY_CENTER_POWER_PLANT";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=50;
+			b=80;
+			angle=-276.67899;
+		};
+		class Item141
+		{
+			position[]={21592.693,19.400345,21265.885};
+			name="TERRITORY_IRAKLIA_RUINS";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=40;
+			b=30;
+			angle=89.166702;
+		};
+		class Item142
+		{
+			position[]={21489.9,12.001317,10836.646};
+			name="TERRITORY_ARTINARKI_RUINS";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=70;
+			b=140;
+			angle=40.578899;
+		};
+		class Item143
+		{
+			position[]={26363.574,61.489994,22177.205};
+			name="TERRITORY_NE_TRANSMITTER";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=120;
+			b=80;
+			angle=8.0148973;
+		};
+		class Item144
+		{
+			position[]={18708.938,209.01988,10222.169};
+			name="TERRITORY_SE_TRANSMITTER_1";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=40;
+			b=40;
+			angle=88.898048;
+		};
+		class Item145
+		{
+			position[]={19348.99,195.47195,9679.5342};
+			name="TERRITORY_SE_TRANSMITTER_2";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=60;
+			b=50;
+			angle=-92.447281;
+		};
+		class Item146
+		{
+			position[]={4556.8101,262.84003,15408.569};
+			name="TERRITORY_MAGOS_TRANSMITTER";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=60;
+			b=50;
+			angle=-246.429;
+		};
+		class Item147
+		{
+			position[]={9328.2363,267.96201,19306.725};
+			name="TERRITORY_PYRSOS_TRANSMITTER";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=80;
+			b=200;
+			angle=-100.668;
+		};
+		class Item148
+		{
+			position[]={16083.663,15.841451,17001.398};
+			name="TERRITORY_MILITARY_RESEARCH";
+			markerType="ELLIPSE";
+			type="Empty";
+			colorName="ColorYellow";
+			fillName="DiagGrid";
+			a=100;
+			b=100;
+			angle=-92.447304;
 		};
 	};
 };

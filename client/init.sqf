@@ -97,7 +97,7 @@ player addEventHandler ["Killed", { _this spawn onKilled }];
 
 //Setup Key Handler
 waituntil {!(IsNull (findDisplay 46))};
-(findDisplay 46) displaySetEventHandler ["KeyDown", "_this call onKeyPress"];
+(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call onKeyPress"];
 
 "currentDate" addPublicVariableEventHandler {[] call timeSync};
 "messageSystem" addPublicVariableEventHandler {[] call serverMessage};

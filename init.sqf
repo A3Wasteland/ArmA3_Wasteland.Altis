@@ -6,13 +6,12 @@
 
 #define DEBUG false
 
-StartProgress = false;
 enableSaving [false, false];
 
 X_Server = false;
 X_Client = false;
 X_JIP = false;
-hitStateVar = false;
+
 // versionName = ""; // Set in STR_WL_WelcomeToWasteland in stringtable.xml
 
 if (isServer) then { X_Server = true };
@@ -24,9 +23,9 @@ _globalCompile = [DEBUG] execVM "globalCompile.sqf";
 
 waitUntil {scriptDone _globalCompile};
 
-[] spawn
+if (!isDedicated) then
 {
-	if (!isDedicated) then
+	[] spawn
 	{
 		titleText ["Welcome to A3Wasteland, please wait for your client to initialize", "BLACK", 0];
 		waitUntil {!isNull player};
@@ -64,3 +63,5 @@ if (isServer) then
 [] execVM "addons\R3F_ARTY_AND_LOG\init.sqf";
 [] execVM "addons\proving_Ground\init.sqf";
 [] execVM "addons\scripts\DynamicWeatherEffects.sqf";
+[] execVM "addons\JumpMF\init.sqf";
+

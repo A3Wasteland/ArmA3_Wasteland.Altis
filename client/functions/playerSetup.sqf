@@ -71,7 +71,7 @@ switch (playerSide) do
 			case (_player isKindOf "I_sniper_F"):
 			{ 
 				_player addUniform "U_I_Ghilliesuit"; 
-				_player addVest "V_PlateCarrierIA2_dgtl";
+				_player addVest "V_PlateCarrierIA1_dgtl";
 			};
 			case (_player isKindOf "I_diver_F"):
 			{ 
@@ -82,7 +82,7 @@ switch (playerSide) do
 			default
 			{ 
 				_player addUniform "U_I_CombatUniform";
-				_player addVest "V_PlateCarrierIA2_dgtl";
+				_player addVest "V_PlateCarrierIA1_dgtl";
 				_player addHeadgear "H_HelmetIA";
 			};
 		};
@@ -99,8 +99,8 @@ _player removeItem "ItemGPS";
 private "_nvgClass";
 switch (side _player) do
 {
-	// case OPFOR:       { _nvgClass = "NVGoggles_OPFOR" };
-	// case INDEPENDENT: { _nvgClass = "NVGoggles_INDEP" };
+	case OPFOR:       { _nvgClass = "NVGoggles_OPFOR" };
+	case INDEPENDENT: { _nvgClass = "NVGoggles_INDEP" };
 	default           { _nvgClass = "NVGoggles" };
 };
 
@@ -118,7 +118,7 @@ switch (side _player) do
 // _player linkItem _nvgClass;
 // #######################
 
-_player addBackpack "B_AssaultPack_rgr";  // TODO: make this configurable for server admins!
+_player addBackpack "B_AssaultPack_rgr";
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addWeapon "hgun_ACPC2_F";
 _player addMagazine "9Rnd_45ACP_Mag";

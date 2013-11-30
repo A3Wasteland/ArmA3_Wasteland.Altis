@@ -1,115 +1,39 @@
-//	@file Version: 1.0
+//	@file Version: 2.0
 //	@file Name: fn_fitsInventory.sqf
 //	@file Author: AgentRev
 //	@file Created: 05/05/2013 00:22
 //	@file Args: _player, _item
 
-private ["_player", "_item", "_allowedContainers", "_allowedSlots", "_allSlots", "_uniformFree", "_vestFree", "_backpackFree", "_uniform", "_vest", "_backpack", "_containerClass", "_uniformCapacity", "_vestCapacity", "_backpackCapacity", "_itemSize"];
+private ["_player", "_item", "_return", "_allowedContainers"];
 
 _player = _this select 0;
 _item = _this select 1;
+_return = false;
 
-if (count _this > 2) then { _allowedContainers = _this select 2 };
-
-if (isClass (configFile >> "CfgWeapons" >> _item >> "WeaponSlotsInfo")) then
+if (count _this > 2) then
 {
-	if (isArray (configFile >> "CfgWeapons" >> _item >> "WeaponSlotsInfo" >> "allowedSlots")) then
-	{
-		_allowedSlots = getArray (configFile >> "CfgWeapons" >> _item >> "WeaponSlotsInfo" >> "allowedSlots");
-		_allSlots = false;
-	}
-	else
-	{
-		_allSlots = true;
-	};
+	_allowedContainers = _this select 2;
+}
+else
+{
+	_allowedContainers = ["uniform", "vest", "backpack"];
 };
 
-if (!isNil "_allowedContainers") then
+if (typeName _allowedContainers != "ARRAY") then
 {
-	if (typeName _allowedContainers != "ARRAY") then
+	_allowedContainers = [_allowedContainers];
+};
+
+{
+	if (typeName _x == "STRING") then
 	{
-		_allowedContainers = [_allowedContainers];
-	};
-	
-	{
-		if (typeName _x == "STRING") then
+		switch (toLower _x) do
 		{
-			switch (toLower _x) do
-			{
-				case "uniform":  { _allowedContainers set [_forEachIndex, 701] };
-				case "vest":     { _allowedContainers set [_forEachIndex, 801] };
-				case "backpack": { _allowedContainers set [_forEachIndex, 901] };
-			};
+			case "uniform":  { _return = _return || {_player canAddItemToUniform _item} };
+			case "vest":     { _return = _return || {_player canAddItemToVest _item} };
+			case "backpack": { _return = _return || {_player canAddItemToBackpack _item} };
 		};
-	} forEach _allowedContainers;
-	
-	if (isNil "_allowedSlots") then
-	{
-		_allowedSlots = [];
 	};
-	
-	{
-		if !(_x in _allowedContainers) then
-		{
-			_allowedSlots = _allowedSlots - [_x];
-		};
-	} forEach (+ _allowedSlots);
-	
-	if (_allSlots) then
-	{
-		{
-			if !(_x in _allowedSlots) then
-			{
-				_allowedSlots set [count _allowedSlots, _x];
-			};
-		} forEach _allowedContainers;
-	};
-};
+} forEach _allowedContainers;
 
-_uniformFree = 0;
-_vestFree = 0;
-_backpackFree = 0;
-
-_uniform = uniform _player;
-_vest = vest _player;
-_backpack = backpack _player;
-
-if (_uniform != "" && {isNil "_allowedSlots" || {701 in _allowedSlots}}) then
-{
-	_containerClass = getText (configFile >> "CfgWeapons" >> _uniform >> "ItemInfo" >> "containerClass");
-	_uniformCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
-	_uniformFree = _uniformCapacity - ((loadUniform _player) * _uniformCapacity);
-};
-
-if (_vest != "" && {isNil "_allowedSlots" || {801 in _allowedSlots}}) then
-{
-	_containerClass = getText (configFile >> "CfgWeapons" >> _vest >> "ItemInfo" >> "containerClass");
-	_vestCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
-	_vestFree = _vestCapacity - ((loadVest _player) * _vestCapacity);
-};
-
-if (_backpack != "" && {isNil "_allowedSlots" || {901 in _allowedSlots}}) then
-{
-	_backpackCapacity = getNumber (configFile >> "CfgVehicles" >> _backpack >> "maximumLoad");
-	_backpackFree = _backpackCapacity - ((loadBackpack _player) * _backpackCapacity);
-};
-
-_itemSize = getNumber (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "mass");
-if (_itemSize == 0) then { _itemSize = getNumber (configFile >> "CfgMagazines" >> _item >> "mass") };
-if (_itemSize == 0) then { _itemSize = getNumber (configFile >> "CfgWeapons" >> _item >> "WeaponSlotsInfo" >> "mass") };
-
-if (isClass (configFile >> "CfgWeapons" >> _item >> "LinkedItems")) then
-{
-	private ["_cfgItems", "_cfgItem"];
-	_cfgItems = configFile >> "CfgWeapons" >> _item >> "LinkedItems";
-	
-	for "_i" from 0 to (count _cfgItems - 1) do
-	{
-		_cfgItem = getText ((_cfgItems select _i) >> "item");
-		_itemSize = _itemSize + getNumber (configFile >> "CfgWeapons" >> _cfgItem >> "ItemInfo" >> "mass");	
-	};
-};
-
-// Return boolean
-
-(_itemSize > 0 && {_itemSize <= _uniformFree || _itemSize <= _vestFree || _itemSize <= _backpackFree})
+_return

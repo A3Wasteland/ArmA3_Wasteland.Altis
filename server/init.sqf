@@ -60,7 +60,6 @@ A3W_boxSaving = 0;                      // Save Ammo boxes as well as base objec
 A3W_ammoboxSaveTime = 1;
 A3W_vehicleloot = "low";            // Controls the amount of loot that spawns in vehicles "low", "medium", or "high"
 A3W_restarts = 2;
-A3W_fooddrink = "small";
 A3W_sideMissionTimeout = (45*60);    // Time in seconds that a Side Mission will run for, unless completed
 A3W_sideMissionDelayTime = (5*60);  // Time in seconds between Side Missions, once one is over
 A3W_mainMissionTimeout = (60*60);    // Time in seconds that a Main Mission will run for, unless completed
@@ -81,18 +80,6 @@ else
 	diag_log format["[WARNING] A3W configuration file '%1\main_config.sqf' was not found. Using default settings!", externalConfigFolder];
 	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 };
-
-If (A3W_fooddrink == "small") then
-{
-    A3W_foodObject = "Land_CerealsBox_F";
-    A3W_drinkObject = "Land_Canteen_F";
-}
-else
-{
-    A3W_foodObject = "Land_Basket_F";
-    A3W_drinkObject = "Land_CanisterPlastic_F";
-};
-    
 
 
 // Public variables for clients
