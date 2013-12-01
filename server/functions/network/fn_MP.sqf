@@ -30,18 +30,18 @@ with missionnamespace do {
 	_isPersistent =	[_this,3,false,[false]] call bis_fnc_param;
 	_isCall =	[_this,4,false,[false]] call bis_fnc_param;
 
-    _packet = [0,_params,_functionName,_target,_isPersistent,_isCall];
+	_packet = [0,_params,_functionName,_target,_isPersistent,_isCall];
 
 	//--- Local execution
-    if (isServer || !isMultiplayer) then
-    {
-           [_mpPacketKey, _packet] spawn TPG_fnc_MPexec;
-    }
-    else //--- Send to server
-    {
-            missionNamespace setVariable [_mpPacketKey, _packet];
-            publicVariableServer _mpPacketKey;
-    }
+	if (isServer || !isMultiplayer) then
+	{
+		[_mpPacketKey, _packet] spawn TPG_fnc_MPexec;
+	}
+	else //--- Send to server
+	{
+		missionNamespace setVariable [_mpPacketKey, _packet];
+		publicVariableServer _mpPacketKey;
+	}
 
 	// call compile _mpPacketKey
 };

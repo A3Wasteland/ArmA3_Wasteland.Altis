@@ -23,8 +23,8 @@ hint "Awaiting server response...";
 
 while {isNil "_object" && {time < _requestTimeout}} do
 {
-    sleep 0.1;
-    _object = player getVariable _requestKey;
+	sleep 0.1;
+	_object = player getVariable _requestKey;
 };
 
 if (isNil "_object" || {isNull objectFromNetId _object}) then
@@ -33,18 +33,18 @@ if (isNil "_object" || {isNull objectFromNetId _object}) then
 	{
 		private ["_requestKey", "_postTimeout", "_object"];
 		_requestKey = _this;
-        _postTimeout = time + OBJECT_PURCHASE_POST_TIMEOUT;
-        
-        while {isNil "_object" && {time < _postTimeout}} do
-        {
-            sleep 0.1;
-            _object = player getVariable _requestKey;
-        };
+		_postTimeout = time + OBJECT_PURCHASE_POST_TIMEOUT;
+		
+		while {isNil "_object" && {time < _postTimeout}} do
+		{
+			sleep 0.1;
+			_object = player getVariable _requestKey;
+		};
 		
 		if (!isNil _object) then
 		{
 			deleteVehicle objectFromNetId _object;
-            _player setVariable [_requestKey, nil, true];
+			_player setVariable [_requestKey, nil, true];
 		};
 	};
 	
@@ -53,5 +53,5 @@ if (isNil "_object" || {isNull objectFromNetId _object}) then
 else
 {
 	[_itemText] call _showItemSpawnedOutsideMessage;
-    player setVariable [_requestKey, nil, true];
+	player setVariable [_requestKey, nil, true];
 };

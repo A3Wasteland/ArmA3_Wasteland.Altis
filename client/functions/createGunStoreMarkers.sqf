@@ -31,7 +31,7 @@ if ( A3W_showgunstorestatus) then {showmarkers = true;};
 		_markerName setMarkerAlphaLocal 0.5;
 
 		/*
-		// Gun store title    
+		// Gun store title	
 		_markerName = format["marker_shop_title_%1",_x];
 		deleteMarkerLocal _markerName;
 		_marker = createMarkerLocal [_markerName, _npcPos];
@@ -42,7 +42,7 @@ if ( A3W_showgunstorestatus) then {showmarkers = true;};
 		_markerName setMarkerTextLocal "GUN STORE";
 		*/
 
-		// Gun store description    
+		// Gun store description	
 		_markerName = format["marker_shop_desc_%1",_x];
 		deleteMarkerLocal _markerName;
 		// _npcPos set [1, (_npcPos select 1) - 100];
@@ -86,7 +86,7 @@ _setStatus =
 		case "MIXED": {
 			_markerNameZone setmarkerColorLocal _col_mixed;
 			_markerNameDescription setmarkerColorLocal _col_mixed;
-			_markerNameDescription setMarkerTextLocal "GUN STORE (Enemies and Allies";
+			_markerNameDescription setMarkerTextLocal "GUN STORE (Enemies and Allies)";
 		};
 	};
 
@@ -101,8 +101,8 @@ _setStatus =
 
 while {showmarkers} do
 {
-    {
-    	_npcPos = getPos _x;
+	{
+		_npcPos = getPos _x;
 		_friendlyCount = 0;
 		_enemyCount = 0;
 		{
@@ -139,7 +139,7 @@ while {showmarkers} do
 					[_forEachIndex, "EMPTY", false] call _setStatus;
 				};
 			};
-		};    
-    } forEach _gunStores;
+		};	
+	} forEach _gunStores;
 	sleep 1;
 };

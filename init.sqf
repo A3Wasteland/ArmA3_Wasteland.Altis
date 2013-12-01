@@ -48,7 +48,7 @@ if (!isDedicated) then
 		diag_log "Player Group Wiped";
 		[player] join grpNull;
 	};
-    
+	
 	[] execVM "client\init.sqf";
 };
 

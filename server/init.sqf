@@ -73,7 +73,7 @@ A3W_showgunstorestatus = true;     // If true shows friendly/enemy state of gun 
 // load external config
 if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 {
-    call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
+	call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
 }
 else
 {
@@ -142,7 +142,7 @@ if (["A3W_buildingLoot", 0] call getPublicVar > 0) then
 
 if (["A3W_serverSpawning", 0] call getPublicVar > 0) then
 {
-    diag_log "WASTELAND SERVER - Initializing Server Spawning";
+	diag_log "WASTELAND SERVER - Initializing Server Spawning";
 	
 	if (["A3W_heliSpawning", 0] call getPublicVar > 0) then
 	{
@@ -191,9 +191,9 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 if (["A3W_serverMissions", 0] call getPublicVar > 0) then
 {
 	diag_log "WASTELAND SERVER - Initializing Missions";
-    [] execVM "server\missions\sideMissionController.sqf";
-    sleep 5;
-    [] execVM "server\missions\mainMissionController.sqf";
+	[] execVM "server\missions\sideMissionController.sqf";
+	sleep 5;
+	[] execVM "server\missions\mainMissionController.sqf";
 };
 
 // Start clean-up loop

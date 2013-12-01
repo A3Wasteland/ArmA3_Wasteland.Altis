@@ -99,9 +99,9 @@ _player removeItem "ItemGPS";
 private "_nvgClass";
 switch (side _player) do
 {
-	case OPFOR:       { _nvgClass = "NVGoggles_OPFOR" };
+	case OPFOR: { _nvgClass = "NVGoggles_OPFOR" };
 	case INDEPENDENT: { _nvgClass = "NVGoggles_INDEP" };
-	default           { _nvgClass = "NVGoggles" };
+	default { _nvgClass = "NVGoggles" };
 };
 
 // # Remove NVGs #########

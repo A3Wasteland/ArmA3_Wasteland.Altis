@@ -150,7 +150,7 @@ randomweapon_itemlist =
 
 //-------------------------------------------------------------------------------------
 
-    randomweaponspawnweapon = 
+	randomweaponspawnweapon = 
 	{
 		_position = _this;
 		_selectedgroup = (floor(random(count randomweapon_weaponlist)));
@@ -165,7 +165,7 @@ randomweapon_itemlist =
 			};
 		//};
 		_weaponholder setPos _position;
-    };
+	};
 	
 	randomweaponspawnweaponitem = 
 	{
@@ -180,7 +180,7 @@ randomweapon_itemlist =
 			_weaponholder addMagazineCargoGlobal [_mag, 1]; 
 		};
 		_weaponholder setPos _position;
-    };
+	};
 	
 	randomweaponspawnmilweapon = 
 	{
@@ -197,10 +197,10 @@ randomweapon_itemlist =
 			};
 		//};
 		_weaponholder setPos _position;
-    };
+	};
 
 	
-    randomweaponspawnitem = 
+	randomweaponspawnitem = 
 	{
 		_position = _this;
 		_numf = 0;
@@ -234,15 +234,15 @@ randomweapon_itemlist =
 			_item setVariable["mf_item_id", "repairkit", true];
 		};
 		_item setPos _position;
-    };
+	};
 
 //-------------------------------------------------------------------------------------
 	
 	spawnlootintown =
 	{
-    _pos = _this;
-    randomweapon_buildings = nearestObjects [_pos, _buildCIV, _dospawnradius];
-    sleep 10;
+	_pos = _this;
+	randomweapon_buildings = nearestObjects [_pos, _buildCIV, _dospawnradius];
+	sleep 10;
 	{
 		_building = _x;
 		_buildingpos = [];
@@ -293,9 +293,9 @@ randomweapon_itemlist =
 						};
 					};
 				};
-			};    
+			};	
 		};
-    }foreach randomweapon_buildings;
+	}foreach randomweapon_buildings;
 	randomweapon_milbuildings = nearestObjects [_pos, _buildMIL, _dospawnradius];
 	sleep 10;
 	{
@@ -338,9 +338,9 @@ randomweapon_itemlist =
 						_posnew call randomweaponspawnmilweapon;
 					};
 				};
-			};    
+			};	
 		};
-    }foreach randomweapon_milbuildings;
+	}foreach randomweapon_milbuildings;
 	};
 
 //-------------------------------------------------------------------------------------

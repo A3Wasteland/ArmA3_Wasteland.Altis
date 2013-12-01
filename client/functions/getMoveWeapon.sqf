@@ -9,9 +9,9 @@ _weapon = "non";
 
 switch (true) do
 {
-        case (currentWeapon _unit == primaryWeapon _unit): { _weapon = "rfl" };
-        case (currentWeapon _unit == secondaryWeapon _unit): { _weapon = "lnr" };
-        case (currentWeapon _unit == handgunWeapon _unit): { _weapon = "pst" };
+	case (currentWeapon _unit == primaryWeapon _unit): { _weapon = "rfl" };
+	case (currentWeapon _unit == secondaryWeapon _unit): { _weapon = "lnr" };
+	case (currentWeapon _unit == handgunWeapon _unit): { _weapon = "pst" };
 };
 
 _weapon
