@@ -65,4 +65,6 @@ waitUntil {!isNil "handgunLoaded"};
 //END
 statsLoaded = 1;
 titleText ["","BLACK IN",4];
+//fixes the issue with saved player being GOD when they log back on the server!
+player allowDamage true;
 player globalchat "Player account loaded!";
