@@ -27,6 +27,7 @@ _col_mixed = "ColorOrange";
 		_markerName setMarkerBrushLocal "Grid";
 		_markerName setMarkerAlphaLocal 0.5;
 
+		/*
 		// Gun store title    
 		_markerName = format["marker_shop_title_%1",_x];
 		deleteMarkerLocal _markerName;
@@ -36,18 +37,19 @@ _col_mixed = "ColorOrange";
 		_markerName setMarkerColorLocal "ColorRed";
 		_markerName setMarkerSizeLocal [1,1];
 		_markerName setMarkerTextLocal "GUN STORE";
+		*/
 
 		// Gun store description    
 		_markerName = format["marker_shop_desc_%1",_x];
 		deleteMarkerLocal _markerName;
-		_npcPos set [1, (_npcPos select 1) - 100];
+		// _npcPos set [1, (_npcPos select 1) - 100];
 		_marker = createMarkerLocal [_markerName, _npcPos];
 		_markerName setMarkerShapeLocal "ICON";
 		_markerName setMarkerTypeLocal "mil_dot";
 		_markerName setMarkerColorLocal _col_empty;
 		_markerName setMarkerSizeLocal [1,1];
-		_markerName setMarkerTextLocal "GUN STORE is Empty";
-		_markerName setMarkerAlphaLocal 0.5;
+		_markerName setMarkerTextLocal "GUN STORE";
+		// _markerName setMarkerAlphaLocal 0.5;
 
 		_status set [count _status, "EMPTY"];
 		
@@ -66,22 +68,22 @@ _setStatus =
 		case "EMPTY": {
 			_markerNameZone setmarkerColorLocal _col_empty;
 			_markerNameDescription setmarkerColorLocal _col_empty;
-			_markerNameDescription setMarkerTextLocal "GUN STORE is Empty";
+			_markerNameDescription setMarkerTextLocal "GUN STORE";
 		};
 		case "ENEMY": {
 			_markerNameZone setmarkerColorLocal _col_enemy;
 			_markerNameDescription setmarkerColorLocal _col_enemy;
-			_markerNameDescription setMarkerTextLocal "GUN STORE has Enemy Players";
+			_markerNameDescription setMarkerTextLocal "GUN STORE (Enemies)";
 		};
 		case "FRIENDLY": {
 			_markerNameZone setmarkerColorLocal _col_friendly;
 			_markerNameDescription setmarkerColorLocal _col_friendly;
-			_markerNameDescription setMarkerTextLocal "GUN STORE has Friendly Players";
+			_markerNameDescription setMarkerTextLocal "GUN STORE (Allies)";
 		};
 		case "MIXED": {
 			_markerNameZone setmarkerColorLocal _col_mixed;
 			_markerNameDescription setmarkerColorLocal _col_mixed;
-			_markerNameDescription setMarkerTextLocal "GUN STORE has Enemy and Friendly Players";
+			_markerNameDescription setMarkerTextLocal "GUN STORE (Enemies and Allies)";
 		};
 	};
 

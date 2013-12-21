@@ -29,11 +29,13 @@ if (_success) then
 	[] spawn
 	{
 		player enableFatigue false;
+		player setVariable ["energy_drink_active", true];
 		["You have unlimited stamina for 5 minutes", 5] call mf_notify_client;
 		
 		sleep (5*60);
 		
 		player enableFatigue true;
+		player setVariable ["energy_drink_active", false];
         ["The effects of the energy drink are wearing off", 5] call mf_notify_client;
     };
 };

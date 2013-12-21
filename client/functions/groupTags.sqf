@@ -5,8 +5,6 @@
 
 private["_inGroup","_isLeader","_refresh","_distance","_myGroup","_tempArray","_icon"];
 
-_tempArray = [];
-
 while {true} do
 {
     if(count units group player > 1) then 
@@ -58,37 +56,8 @@ while {true} do
 				};				
 			};
 		}; 	
+		sleep 0.1;
 	} else {
-		_tempArray = [];
         sleep 1;        
-    };
-        
-    private ["_storeInteractionBuffer","_storeInteractionZone","_currPos","_store","_relativeDir","_absoluteDir"];
-          
-    _storeInteractionBuffer = 10;
-    _storeInteractionZone = 3; // The furthest away the player can be from a store to interact with it. Higher = further.
-    _currPos = getPosATL player;
-        
-    _gunStore = nearestObjects [_currPos, ["C_man_1_1_F"], _storeInteractionZone];    
-    _genStore = nearestObjects [_currPos, ["C_man_polo_6_F"], _storeInteractionZone];  
-     
-    if (!isNull (_gunStore select 0)) then {  
-        _relativeDir = [player, _gunStore select 0] call BIS_fnc_relativeDirTo;
-       	_absoluteDir = abs _relativeDir;      
-        
-        if (_absoluteDir < _storeInteractionBuffer OR _absoluteDir > (360 - _storeInteractionBuffer)) then {
-        	_nameString = "<t size='0.5' shadow='2' color='#FFFFFF'>" + "Gun Store (Press E)" + "</t>";
-       		[_nameString,0,0.8,0.5,0,0,3] spawn bis_fnc_dynamicText;
-        };
-    }; 
-    
-    if (!isNull (_genStore select 0)) then {
-        _relativeDir = [player, _genStore select 0] call BIS_fnc_relativeDirTo;
-       	_absoluteDir = abs _relativeDir;      
-        
-        if (_absoluteDir < _storeInteractionBuffer OR _absoluteDir > (360 - _storeInteractionBuffer)) then {
-        	_nameString = "<t size='0.5' shadow='2' color='#FFFFFF'>" + "General Store (Press E)" + "</t>";
-       		[_nameString,0,0.8,0.5,0,0,3] spawn bis_fnc_dynamicText;
-        };
-    };         
+    };     
 };

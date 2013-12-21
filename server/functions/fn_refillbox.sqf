@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_box", "_boxType", "_box", "_boxItems", "_mag"];
+private ["_box", "_boxType", "_boxItems", "_item", "_qty", "_mag"];
 _box = _this select 0;
 _boxType = _this select 1;
 
@@ -40,6 +40,8 @@ switch (_boxType) do
 			["wep", "Binocular", 5],
 			["itm", "Medikit", 4],
 			["itm", "Toolkit", 2],
+			["itm", "optic_MRD", 2],
+			["wep", "hgun_Pistol_heavy_01_F", 2, 5],
 			["wep", "arifle_MXM_F", 2, 5],
 			["wep", "srifle_EBR_F", 2, 5],
 			["wep", "arifle_MX_SW_F", 2, 4],
@@ -56,6 +58,8 @@ switch (_boxType) do
     	_boxItems =
 		[
 			// Item type, Item class, # of items, # of magazines per weapon
+			["itm", "optic_Yorris", 2],
+			["wep", "hgun_Pistol_heavy_02_F", 3, 5],
 			["wep", "arifle_TRG21_GL_F", 3, 5],
 			["wep", "arifle_Katiba_GL_F", 3, 5],
 			["wep", "arifle_MX_GL_F", 3, 5],
@@ -81,33 +85,38 @@ switch (_boxType) do
 			// Item type, Item class, # of items, # of magazines per weapon
 			["wep", "srifle_LRR_SOS_F", 1, 5],
 			["wep", "srifle_GM6_SOS_F", 1, 5],
-			["wep", "srifle_EBR_F", 2, 6],
-			["wep", "Rangefinder", 2]
+			["wep", "srifle_EBR_F", 1, 5],
+			["wep", "srifle_DMR_01_F", 1, 5],
+			["wep", "Rangefinder", 2],
+			["itm", "optic_DMS", 1]
 		];
     };
 };
 
 // Add items
 {
+	_item = if (typename (_x select 1) == "ARRAY") then { (_x select 1) call BIS_fnc_selectRandom } else { _x select 1 };
+	_qty = _x select 2;
+	
 	switch (_x select 0) do
 	{
 		case "wep":
 		{
-			_box addWeaponCargoGlobal [_x select 1, _x select 2];
+			_box addWeaponCargoGlobal [_item, _qty];
 			
 			if (count _x > 3 && {_x select 3 > 0}) then
 			{
-				_mag = ((getArray (configFile >> "CfgWeapons" >> (_x select 1) >> "magazines")) select 0) call getBallMagazine;
-				_box addMagazineCargoGlobal [_mag, (_x select 2) * (_x select 3)];
+				_mag = ((getArray (configFile >> "CfgWeapons" >> _item >> "magazines")) select 0) call getBallMagazine;
+				_box addMagazineCargoGlobal [_mag, _qty * (_x select 3)];
 			};
 		};
 		case "mag":
 		{
-			_box addMagazineCargoGlobal [_x select 1, _x select 2];
+			_box addMagazineCargoGlobal [_item, _qty];
 		};
 		case "itm":
 		{
-			_box addItemCargoGlobal [_x select 1, _x select 2];
+			_box addItemCargoGlobal [_item, _qty];
 		};
 	};
 } forEach _boxItems;

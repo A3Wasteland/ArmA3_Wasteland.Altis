@@ -6,10 +6,13 @@
 
 // Must only be called in buyItems.sqf or buyGuns.sqf
 
+#define OBJECT_PURCHASE_TIMEOUT 15
+#define OBJECT_PURCHASE_POST_TIMEOUT 60
+
 [[player, _class, currentOwnerName, _requestKey], "spawnStoreObject", false, false] call TPG_fnc_MP;
 
-private ["_requestTime", "_object"];
-_requestTime = time;
+private ["_requestTimeout", "_object"];
+_requestTimeout = time + OBJECT_PURCHASE_TIMEOUT;
 hint "Awaiting server response...";
 
 [] spawn
@@ -18,44 +21,30 @@ hint "Awaiting server response...";
 	storePurchaseHandle = nil; // To allow purchasing more stuff in the meanwhile
 };
 
-waitUntil 
+while {isNil "_object" && {time < _requestTimeout}} do
 {
-    sleep 0.5;
-    if (time >= _requestTime + 15) exitWith {true}; // 15s timeout
-    _object = player getVariable _requestKey;
-    if (!isNil "_object") exitWith {true};
-    false
+	sleep 0.1;
+	_object = player getVariable _requestKey;
 };
 
-if (isNil "_object") then
-{
-    hint "_object is nil";
-};
-sleep 5;
-
-
-
-if (isNil "_object" || {isNull objectFromNetId (_object)}) then
+if (isNil "_object" || {isNull objectFromNetId _object}) then
 {
 	_requestKey spawn // If the object somehow spawns after the timeout, delete it
 	{
 		private ["_requestKey", "_postTimeout", "_object"];
 		_requestKey = _this;
-		_postTimeout = time;
-        
-        waitUntil 
-        {
-            sleep 0.5;
-            if (time >= _postTimeout + 60) exitWith {true}; // 15s timeout
-            _object = player getVariable _requestKey;
-            if (!isNil "_object") exitWith {true};
-            false
-        };
+		_postTimeout = time + OBJECT_PURCHASE_POST_TIMEOUT;
+		
+		while {isNil "_object" && {time < _postTimeout}} do
+		{
+			sleep 0.1;
+			_object = player getVariable _requestKey;
+		};
 		
 		if (!isNil _object) then
 		{
-			deleteVehicle objectFromNetId (_object);
-            _player setVariable [_requestKey, nil, true];
+			deleteVehicle objectFromNetId _object;
+			player setVariable [_requestKey, nil, true];
 		};
 	};
 	
@@ -64,5 +53,5 @@ if (isNil "_object" || {isNull objectFromNetId (_object)}) then
 else
 {
 	[_itemText] call _showItemSpawnedOutsideMessage;
-    player setVariable [_requestKey, nil, true];
+	player setVariable [_requestKey, nil, true];
 };

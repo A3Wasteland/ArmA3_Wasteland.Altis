@@ -5,8 +5,8 @@
 
 // The purpose of this script is to compile certain functions both on client and server.
 
-private ["_DEBUG", "_path"];
-_DEBUG = _this select 0;
+private ["_DEBUG", "_clientFunc", "_serverFunc"];
+_DEBUG = format ["%1", _this select 0];
 
 // Compile a function from a file.
 // if in debug mode, the function will be dyncamically compiled every call.
@@ -24,7 +24,7 @@ mf_compile = compileFinal
 		_path = format["%1\%2", _this select 0, _this select 1];
 	};
 	
-	if (' + str _DEBUG + ') then {
+	if (' + _DEBUG + ') then {
 		compile format ["call compile preProcessFileLineNumbers ""%1""", _path];
 	} else {
 		compileFinal preProcessFileLineNumbers _path;
@@ -45,17 +45,20 @@ mf_init = compileFinal
 	_path call compile preProcessFileLineNumbers format["%1\init.sqf", _path];
 ';
 
-_path = "server\functions";
-detachTowedObject = [_path, "detachTowedObject.sqf"] call mf_compile;
-findSafePos = [_path, "findSafePos.sqf"] call mf_compile;
-fn_vehicleInit = [_path, "fn_vehicleInit.sqf"] call mf_compile;
-generateKey = [_path, "network\generateKey.sqf"] call mf_compile;
-getBallMagazine = [_path, "getBallMagazine.sqf"] call mf_compile;
-getHitPoints = [_path, "getHitPoints.sqf"] call mf_compile;
-getPublicVar = [_path, "getPublicVar.sqf"] call mf_compile;
-removeNegativeScore = [_path, "removeNegativeScore.sqf"] call mf_compile;
+_clientFunc = "client\functions";
+_serverFunc = "server\functions";
 
-if (isNil "fn_findString") then { fn_findString = [_path, "fn_findString.sqf"] call mf_compile };
-if (isNil "fn_filterString") then { fn_filterString = [_path, "fn_filterString.sqf"] call mf_compile };
+detachTowedObject = [_serverFunc, "detachTowedObject.sqf"] call mf_compile;
+findSafePos = [_serverFunc, "findSafePos.sqf"] call mf_compile;
+fn_vehicleInit = [_serverFunc, "fn_vehicleInit.sqf"] call mf_compile;
+generateKey = [_serverFunc, "network\generateKey.sqf"] call mf_compile;
+getBallMagazine = [_serverFunc, "getBallMagazine.sqf"] call mf_compile;
+getHitPoints = [_serverFunc, "getHitPoints.sqf"] call mf_compile;
+getMoveWeapon = [_clientFunc, "getMoveWeapon.sqf"] call mf_compile;
+getPublicVar = [_serverFunc, "getPublicVar.sqf"] call mf_compile;
+removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
+
+if (isNil "fn_findString") then { fn_findString = [_serverFunc, "fn_findString.sqf"] call mf_compile };
+if (isNil "fn_filterString") then { fn_filterString = [_serverFunc, "fn_filterString.sqf"] call mf_compile };
 
 "requestDetachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };

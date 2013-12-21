@@ -34,7 +34,7 @@ storePurchaseHandle = _this spawn
 	_showInsufficientFundsError = 
 	{
 		_itemText = _this select 0;
-		hint format ["You don't have enought money for ""%1""", _itemText];
+		hint parseText format ["Not enough money for<br/>""%1""", _itemText];
 		player say "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
@@ -42,7 +42,7 @@ storePurchaseHandle = _this spawn
 	_showInsufficientSpaceError = 
 	{
 		_itemText = _this select 0;
-		hint format ["You don't have enough space for ""%1""", _itemText];
+		hint parseText format ["Not enough space for<br/>""%1""", _itemText];
 		player say "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
@@ -58,7 +58,7 @@ storePurchaseHandle = _this spawn
 	_showItemSpawnedOutsideMessage = 
 	{
 		_itemText = _this select 0;
-		hint format ["""%1"" has been spawned outside infront of the store.", _itemText];
+		hint format ["""%1"" has been spawned outside, in front of the store.", _itemText];
 		player say "FD_CP_Not_Clear_F";
 		_successHint = false;
 	};
@@ -73,7 +73,14 @@ storePurchaseHandle = _this spawn
 		}
 		else
 		{
-			_itemText = format ["Purchasing this %1 will replace your current one, and its contents if applicable.", _itemText];
+			if ([_this, 2, false, [false]] call BIS_fnc_param) then
+			{
+				_itemText = format ["Purchasing this %1 will replace your current one.", _itemText];
+			}
+			else
+			{
+				_itemText = format ["Purchasing this %1 will replace your current one, and its contents will be lost.", _itemText];
+			};
 		};
 		
 		_confirmResult = [parseText _itemText, "Confirm", "Buy", true] call BIS_fnc_guiMessage;
@@ -140,11 +147,7 @@ storePurchaseHandle = _this spawn
 						}
 						else
 						{
-							if ([player, _class, "backpack"] call fn_fitsInventory) then
-							{
-								(unitBackpack player) addWeaponCargoGlobal [_class, 1];
-							}
-							else
+							if !([player, _class] call addWeaponInventory) then
 							{
 								[_itemText] call _showInsufficientSpaceError;
 							};
@@ -306,7 +309,7 @@ storePurchaseHandle = _this spawn
 				};
 				
 				// Confirm replace
-				if (headgear player != "" && {!(["headgear"] call _showReplaceConfirmMessage)}) exitWith {};
+				if (headgear player != "" && {!(["headgear", false, true] call _showReplaceConfirmMessage)}) exitWith {};
 				
 				removeHeadgear player;
 				player addHeadgear _class;
