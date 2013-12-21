@@ -10,6 +10,7 @@ private ["_heli1","_heli2","_heli3","_missionMarkerName","_missionType","_pictur
 
 _missionMarkerName = "HostileHelis_Marker";
 _missionType = "Hostile Helicopters";
+_hardDifficulty = (["A3W_missionsDifficulty"] call isConfigOn);
 
 _travels = 20; 						// the ammount of towns the helicopter should visit before the mission ends
 _travelcount = 0;
@@ -23,14 +24,17 @@ diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 // helicopters available for this mission (if missions set to diffucult also allows chance of mi48 helicopters)
 // incase mission difficulty is set to easy (0) the choppers will also fly at half speed
 
-if (A3W_missionsDifficulty == 1) then {
-	_heli1 = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
-	_heli2 = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
-	_heli3 = ["O_Heli_Attack_02_black_F","O_Heli_Attack_02_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
-} else {
-	_heli1 = ["O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
-	_heli2 = ["O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
-	_heli3 = ["O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
+if (_hardDifficulty) then
+{
+	_heli1 = ["B_Heli_Light_01_armed_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Light_02_F","O_Heli_Attack_02_black_F","O_Heli_Attack_02_F"] call BIS_fnc_selectRandom;
+	_heli2 = ["B_Heli_Light_01_armed_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Light_02_F","O_Heli_Attack_02_black_F","O_Heli_Attack_02_F"] call BIS_fnc_selectRandom;
+	_heli3 = ["B_Heli_Light_01_armed_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Light_02_F","O_Heli_Attack_02_black_F","O_Heli_Attack_02_F"] call BIS_fnc_selectRandom;
+}
+else
+{
+	_heli1 = ["B_Heli_Light_01_armed_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Light_02_F"] call BIS_fnc_selectRandom;
+	_heli2 = ["B_Heli_Light_01_armed_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Light_02_F"] call BIS_fnc_selectRandom;
+	_heli3 = ["B_Heli_Light_01_armed_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Light_02_F"] call BIS_fnc_selectRandom;
 };
 
 _grouphf = createGroup civilian;
@@ -94,14 +98,19 @@ _leader setRank "LIEUTENANT";
 _grouphf setCombatMode "WHITE";
 _grouphf setBehaviour "AWARE";
 _grouphf setFormation "STAG COLUMN";
-if (A3W_missionsDifficulty == 1) then {
+
+if (_hardDifficulty) then
+{
 	_grouphf setSpeedMode "NORMAL";
-} else {
+}
+else
+{
 	_grouphf setSpeedMode "LIMITED";
 };
 
-									// pick random townmarkers from the citylist and use their location as waypoints
-while {_travelcount < _travels} do {
+// pick random townmarkers from the citylist and use their location as waypoints
+while {_travelcount < _travels} do
+{
 	_travelcount = (_travelcount + 1);
 	_waypoints set [count _waypoints, getMarkerPos (((call citylist) call BIS_fnc_selectRandom) select 0)];
 };
@@ -113,9 +122,13 @@ while {_travelcount < _travels} do {
     _waypoint setWaypointCombatMode "WHITE"; // Defensiv behaviour
     _waypoint setWaypointBehaviour "AWARE"; // Force convoy to normaly drive on the street.
     _waypoint setWaypointFormation "STAG COLUMN";
-	if (A3W_missionsDifficulty == 1) then {
+	
+	if (_hardDifficulty) then
+	{
 		_waypoint setWaypointSpeed "NORMAL";
-	} else {
+	}
+	else
+	{
 		_waypoint setWaypointSpeed "LIMITED";
 	};
 } forEach _waypoints;

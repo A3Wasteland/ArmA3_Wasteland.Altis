@@ -48,7 +48,7 @@ player call compile preprocessFileLineNumbers "client\functions\clientCompile.sq
 player call playerSetup;
 
 // Player saving - Load from iniDB
-if (["config_player_saving_enabled", 0] call getPublicVar == 1) then
+if (["config_player_saving_enabled"] call isConfigOn) then
 {
 	positionLoaded = 0;
 	donationMoneyLoaded = 0; // used only if config_player_donations_enabled is set
@@ -59,7 +59,7 @@ if (["config_player_saving_enabled", 0] call getPublicVar == 1) then
 	
 	_loadHandle = [] execVM "persistence\players\c_loadAccount.sqf";
 
-	if (["config_player_donations_enabled", 0] call getPublicVar == 1) then
+	if (["config_player_donations_enabled"] call isConfigOn) then
 	{
 		// If the server has configured donation money, load that from the DB
 		waitUntil {donationMoneyLoaded == 1};
@@ -71,7 +71,7 @@ if (["config_player_saving_enabled", 0] call getPublicVar == 1) then
 	// If there are server donations, bump up the amount players spawn with
 	_baseMoney = ["config_initial_spawn_money", 0] call getPublicVar;
 	
-	if (["config_player_donations_enabled", 0] call getPublicVar == 1) then
+	if (["config_player_donations_enabled"] call isConfigOn) then
 	{
 		_donationMoney = player getVariable ["donationMoney", 0];
 		diag_log format["Player starting with $%1 (%2 + %3)", _baseMoney + _donationMoney, _baseMoney, _donationMoney];

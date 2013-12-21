@@ -23,7 +23,7 @@ spawnActionHandle = _params spawn
 	// If there are server donations, bump up the amount players spawn with
 	_baseMoney = ["config_initial_spawn_money", 0] call getPublicVar;
 	
-	if (["config_player_donations_enabled", 0] call getPublicVar == 1) then
+	if (["config_player_donations_enabled"] call isConfigOn) then
 	{
 		_donationMoney = player getVariable ["donationMoney", 0];
 		player setVariable["cmoney",_baseMoney + _donationMoney,true];

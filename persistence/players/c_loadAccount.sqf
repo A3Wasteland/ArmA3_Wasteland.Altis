@@ -5,7 +5,7 @@ player globalchat "Loading player account...";
 //Requests info from server in order to download stats
 _UID = getPlayerUID player;
 
-if (["config_player_donations_enabled", 0] call getPublicVar == 1) then
+if (["config_player_donations_enabled"] call isConfigOn) then
 {
 	// Get any donation info they might have made
 	_donation = _UID + "_donation";
