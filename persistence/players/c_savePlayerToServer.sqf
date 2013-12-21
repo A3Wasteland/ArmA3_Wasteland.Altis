@@ -1,5 +1,5 @@
 private["_uid"];
-if(playerSetupComplete) then
+if (playerSetupComplete) then
 {	
 	_uid = getPlayerUID player;
 	[_uid, _uid, "Health", damage player] call fn_SaveToServer;
@@ -40,13 +40,27 @@ if(playerSetupComplete) then
 	[_uid, _uid, "Items", items player] call fn_SaveToServer;
 	[_uid, _uid, "AssignedItems", assignedItems player] call fn_SaveToServer;
 	
-	magsWithAmmoCounts = [];
+	_magsAmmo = [];
 	{
-		_class = _x select 0;
-		_count = _x select 1;
-		_elem = [_class, _count];
-		magsWithAmmoCounts set [count magsWithAmmoCounts, _elem];
-	} forEach (magazinesAmmoFull player);
+		private "_magCounts";
+		_mag = _x;
+		
+		{
+			if (_x select 0 == _mag) then
+			{
+				_magCounts = _x select 1;
+			};
+		} forEach _magsAmmo;
+		
+		if (!isNil "_magCounts") then
+		{
+			_magCounts set [count _magCounts, _x select 1];
+		}
+		else
+		{
+			_magsAmmo set [count _magsAmmo, [_x select 0, [_x select 1]]];
+		};
+	} forEach (magazinesAmmo player);
 
 	[_uid, _uid, "MagazinesWithAmmoCount", magsWithAmmoCounts] call fn_SaveToServer;
 	//[_uid, _uid, "Weapons", Weapons player] call fn_SaveToServer;

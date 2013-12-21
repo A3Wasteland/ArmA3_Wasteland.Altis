@@ -23,6 +23,6 @@ if (!isNull _backpack) then
 } forEach (_corpse nearEntities ["All", 20]);
 
 // Remove any persistent info about the player on death
-if ((call config_player_saving_enabled) == 1) then {
+if (["config_player_saving_enabled", 0] call getPublicVar == 1) then {
 	(getPlayerUID _corpse) call iniDB_delete;
 };

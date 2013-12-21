@@ -21,11 +21,15 @@ spawnActionHandle = _params spawn
 	player allowDamage true;
 
 	// If there are server donations, bump up the amount players spawn with
-	_baseMoney = call config_initial_spawn_money;
-	if (call config_player_donations_enabled == 1) then {
+	_baseMoney = ["config_initial_spawn_money", 0] call getPublicVar;
+	
+	if (["config_player_donations_enabled", 0] call getPublicVar == 1) then
+	{
 		_donationMoney = player getVariable ["donationMoney", 0];
 		player setVariable["cmoney",_baseMoney + _donationMoney,true];
-	} else {
+	}
+	else
+	{
 		player setVariable["cmoney",_baseMoney,true];
 	};
 
@@ -59,7 +63,8 @@ spawnActionHandle = _params spawn
 		};
 	};
 
-	if(isNil{client_firstSpawn}) then {
+	if (isNil {client_firstSpawn}) then
+	{
 		client_firstSpawn = true;
 		[] execVM "client\functions\welcomeMessage.sqf";
 		
@@ -74,33 +79,45 @@ spawnActionHandle = _params spawn
 			};
 		}];
 		
-		true spawn {      
+		true spawn
+		{      
 			_startTime = floor(time);
 			_result = 0;
+			
 			waitUntil
 			{ 
 				_currTime = floor(time);
-				if(_currTime - _startTime >= 180) then 
+				
+				if (_currTime - _startTime >= 180) then 
 				{
 					_result = 1;    
 				};
+				
 				(_result == 1)
 			};
-			if(playerSide in [west, east]) then {
+			
+			if (playerSide in [west, east]) then
+			{
 				_found = false;
+				
 				{
-					if(_x select 0 == playerUID) then {_found = true;};
+					if (_x select 0 == playerUID) then {_found = true};
 				} forEach pvar_teamSwitchList;
-				if(!_found) then {
+				
+				if (!_found) then
+				{
 					pvar_teamSwitchList set [count pvar_teamSwitchList, [playerUID, playerSide]];
 					publicVariable "pvar_teamSwitchList";
 					
 					_side = "";
-					if (playerSide == BLUFOR) then {
+					
+					if (playerSide == BLUFOR) then
+					{
 						_side = "BLUFOR"; 
 					};
 			   
-					if (playerSide == OPFOR) then {
+					if (playerSide == OPFOR) then
+					{
 						_side = "OPFOR"; 
 					};
 					

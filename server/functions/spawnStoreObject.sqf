@@ -60,6 +60,7 @@ if (_key != "" && {isPlayer _player} && {_isGeneralStore || _isGunStore} && {{_x
 				
 				[_object, false] call vehicleSetup;
 				_object allowDamage _isDamageable;
+				_object setVariable ["allowDamage", _isDamageable];
 				
 				_objectID = netId _object;			
 			};

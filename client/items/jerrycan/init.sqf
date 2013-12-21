@@ -8,8 +8,8 @@
 MF_ITEMS_JERRYCAN_EMPTY = "jerrycanempty";
 MF_ITEMS_JERRYCAN_FULL = "jerrycanfull";
 MF_ITEMS_SYPHON_HOSE = "syphonhose";
-MF_ITEMS_JERRYCAN_MAX = (call config_items_jerrycans_max);
-MF_ITEMS_SYHON_HOSE_MAX = (call config_items_syphon_hose_max);
+MF_ITEMS_JERRYCAN_MAX = ["config_items_jerrycans_max", 1] call getPublicVar;
+MF_ITEMS_SYHON_HOSE_MAX = ["config_items_syphon_hose_max", 1] call getPublicVar;
 #define build(file) format["%1\%2", _path, file] call mf_compile;
 
 private ["_path","_refill", "_refuel", "_icon"];
@@ -45,14 +45,14 @@ mf_jerrycan_nearest_vehicle = {
 mf_jerrycan_fuel_amount = {
 	private ["_vehicle", "_fuel_amount", "_config", "_type"];
 	_vehicle = _this select 0;
-	_fuel_amount = (call config_refuel_amount_default);
+	_fuel_amount = ["config_refuel_amount_default", 0.25] call getPublicVar;
 	{
 		_type = _x select 0;
 		if (_vehicle isKindOf _type ) exitWith
 		{
 			_fuel_amount = _x select 1;
 		};
-	} forEach (call config_refuel_amounts);
+	} forEach (["config_refuel_amounts", []] call getPublicVar);
 	_fuel_amount;
 };
 
