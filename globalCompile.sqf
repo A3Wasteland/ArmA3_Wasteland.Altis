@@ -71,6 +71,7 @@ fn_vehicleInit = [_serverFunc, "fn_vehicleInit.sqf"] call mf_compile;
 generateKey = [_serverFunc, "network\generateKey.sqf"] call mf_compile;
 getBallMagazine = [_serverFunc, "getBallMagazine.sqf"] call mf_compile;
 getHitPoints = [_serverFunc, "getHitPoints.sqf"] call mf_compile;
+getMagAmmoCount = [_serverFunc, "getMagAmmoCount.sqf"] call mf_compile;
 getMoveWeapon = [_clientFunc, "getMoveWeapon.sqf"] call mf_compile;
 getPublicVar = [_serverFunc, "getPublicVar.sqf"] call mf_compile;
 removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
