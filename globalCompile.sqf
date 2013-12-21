@@ -74,6 +74,7 @@ getHitPoints = [_serverFunc, "getHitPoints.sqf"] call mf_compile;
 getMagAmmoCount = [_serverFunc, "getMagAmmoCount.sqf"] call mf_compile;
 getMoveWeapon = [_clientFunc, "getMoveWeapon.sqf"] call mf_compile;
 getPublicVar = [_serverFunc, "getPublicVar.sqf"] call mf_compile;
+isConfigOn = [_serverFunc, "isConfigOn.sqf"] call mf_compile;
 removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
 
 "requestDetachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };
