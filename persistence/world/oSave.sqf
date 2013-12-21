@@ -1,7 +1,7 @@
 //	@file Version: 1.2
 //	@file Name: oSave.sqf
 //	@file Author: [GoT] JoSchaap, AgentRev
-//	@file Description: Basesaving script
+//	@file Description: Basesaving save script
 
 if (!isServer) exitWith {};
 
@@ -35,6 +35,9 @@ while {true} do
 			{
 				_pos = getPosASL _object;
 				_dir = [vectorDir _object] + [vectorUp _object];
+				_owner = _object getVariable ["ownerUID", ""];
+				_damage = damage _object;
+				_allowDamage = if (_object getVariable ["allowDamage", false]) then { 1 } else { 0 };
 
 				_supplyleft = 0;
 
@@ -51,8 +54,9 @@ while {true} do
 				};
 
 				// Save weapons & ammo
-				// _weapons = getWeaponCargo _object;
-				// _magazines = getMagazineCargo _object;
+				_weapons = getWeaponCargo _object;
+				_magazines = getMagazineCargo _object;
+				_items = getItemCargo _object;
 				
 				_objSaveName = format["obj%1", _PersistentDB_ObjCount];
 
@@ -60,8 +64,13 @@ while {true} do
 				["Objects" call PDB_databaseNameCompiler, _objSaveName, "pos", _pos] call iniDB_write;
 				["Objects" call PDB_databaseNameCompiler, _objSaveName, "dir", _dir] call iniDB_write;
 				["Objects" call PDB_databaseNameCompiler, _objSaveName, "supplyleft", _supplyleft] call iniDB_write;
-				// ["Objects" call PDB_databaseNameCompiler, _objSaveName, "weapons", _weapons] call iniDB_write;
-				// ["Objects" call PDB_databaseNameCompiler, _objSaveName, "magazines", _magazines] call iniDB_write;
+				
+				["Objects" call PDB_databaseNameCompiler, _objSaveName, "weapons", _weapons] call iniDB_write;
+				["Objects" call PDB_databaseNameCompiler, _objSaveName, "magazines", _magazines] call iniDB_write;
+				["Objects" call PDB_databaseNameCompiler, _objSaveName, "items", _items] call iniDB_write;
+				["Objects" call PDB_databaseNameCompiler, _objSaveName, "owner", _owner] call iniDB_write;
+				["Objects" call PDB_databaseNameCompiler, _objSaveName, "damage", _damage] call iniDB_write;
+				["Objects" call PDB_databaseNameCompiler, _objSaveName, "allowDamage", _allowDamage] call iniDB_write;
 
 				_PersistentDB_ObjCount = _PersistentDB_ObjCount + 1;
 			};

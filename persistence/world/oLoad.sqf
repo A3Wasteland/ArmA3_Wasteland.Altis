@@ -1,6 +1,7 @@
-// WARNING! This is a modified version for use with the GoT Wasteland v2 missionfile!
-// This is NOT a default persistantdb script!
-// changes by: JoSchaap (GoT2DayZ.nl)
+//	@file Version: 1.2
+//	@file Name: oLoad.sqf
+//	@file Author: JoSchaap, AgentRev, Austerror
+//	@file Description: Basesaving load script
 
 sleep 10;
 _check = ("Objects" call PDB_databaseNameCompiler) call iniDB_exists;
@@ -15,8 +16,12 @@ for "_i" from 0 to (_objectscount - 1) do
 	_pos = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "pos", "ARRAY"] call iniDB_read;
 	_dir = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "dir", "ARRAY"] call iniDB_read;
 	_supplyleft = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "supplyleft", "NUMBER"] call iniDB_read;
-	// _weapons = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "weapons", "ARRAY"] call iniDB_read;
-	// _magazines = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "magazines", "ARRAY"] call iniDB_read;
+	_weapons = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "weapons", "ARRAY"] call iniDB_read;
+	_magazines = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "magazines", "ARRAY"] call iniDB_read;
+	_items = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "items", "ARRAY"] call iniDB_read;
+	_owner = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "ownerUID", "STRING"] call iniDB_read;
+	_allowDamage = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "allowDamage", "NUMBER"] call iniDB_read;
+	_damageVal = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "damage", "NUMBER"] call iniDB_read;
 	
 	if (!isNil "_objSaveName" && !isNil "_class" && !isNil "_pos" && !isNil "_dir" && !isNil "_supplyleft") then 
 	{
@@ -24,49 +29,43 @@ for "_i" from 0 to (_objectscount - 1) do
 		_obj = createVehicle [_class,_pos, [], 0, "CAN COLLIDE"];
 		_obj setPosASL _pos;
 		_obj setVectorDirAndUp _dir;
-
+		
+		if (_allowDamage > 0) then
+		{
+			_obj setDamage _damageVal;
+			_obj setVariable ["allowDamage", true];
+		}
+		else
+		{
+			_obj allowDamage false;
+		}
+		
 		if (_class == "Land_Sacks_goods_F") then 
 		{
-			_obj setVariable["food",_supplyleft,true];
+			_obj setVariable ["food", _supplyleft, true];
 		};
 
 		if (_class == "Land_WaterBarrel_F") then 
 		{
-			_obj setVariable["water",_supplyleft,true];
+			_obj setVariable ["water", _supplyleft, true];
 		};
 		
-		// fix for rissen/sunken objects
-		// seems not to be needed here, so disabled again
-// 		_adjustPOS=-1;
-// 		switch(_class) do {
-// 			case "Land_Scaffolding_F":
-// 			{
-// 				_adjustPOS=-3; 
-// 			};
-// 			case "Land_Canal_WallSmall_10m_F":
-// 			{
-// 				_adjustPOS=3;
-// 			};
-// 			case "Land_Canal_Wall_Stairs_F":
-// 			{
-// 				_adjustPOS=3;
-// 			};
-//		};
-//		_obj setpos [getpos _obj select 0,getpos _obj select 1, (getposATL _obj select 2)+_adjustPOS];
-
 		clearWeaponCargoGlobal _obj;
 		clearMagazineCargoGlobal _obj;
+		
+		for "_ii" from 0 to (count (_weapons select 0) - 1) do
+		{
+			_obj addWeaponCargoGlobal [(_weapons select 0) select _ii, (_weapons select 1) select _ii];
+		};
 
-		// disabled because i dont want to load contents just base parts
-		// for [{_ii = 0}, {_ii < (count (_weapons select 0))}, {_ii = _ii + 1}] do {
-			// _obj addWeaponCargoGlobal [(_weapons select 0) select _ii, (_weapons select 1) select _ii];
-		// };
-
-		// for [{_ii = 0}, {_ii < (count (_magazines select 0))}, {_ii = _ii + 1}] do {
-		// _obj addMagazineCargoGlobal [(_magazines select 0) select _ii, (_magazines select 1) select _ii];
-		// };
-		// _obj setVariable ["objectLocked", true, true]; //force lock
+		for "_ii" from 0 to (count (_magazines select 0) - 1) do
+		{
+			_obj addMagazineCargoGlobal [(_magazines select 0) select _ii, (_magazines select 1) select _ii];
+		};
+			
+		_obj setVariable ["objectLocked", true, true]; //force lock
+		_obj setVariable ["ownerUID", _owner, true]; // Set owner id
 	};
 };
 
-diag_log format["GoT Wasteland - baseSaving loaded %1 parts from iniDB", _objectscount];
+diag_log format ["A3Wasteland - baseSaving loaded %1 parts from iniDB", _objectscount];
