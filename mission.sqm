@@ -95,7 +95,7 @@ class Mission
 	randomSeed=14957468;
 	class Intel
 	{
-		briefingName="A3Wasteland Altis v0.9e";
+		briefingName="A3Wasteland Altis v0.9f";
 		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3Wasteland.com for more details";
 		resistanceWest=0;
 		startWeather=0.10000001;
@@ -2389,7 +2389,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=149;
+		items=167;
 		class Item0
 		{
 			position[]={3612.1487,12.11851,13020.892};
@@ -3548,6 +3548,132 @@ class Mission
 			a=100;
 			b=100;
 			angle=-92.447304;
+		};
+		class Item149
+		{
+			position[]={18295.152,-6.7252245,8136.5732};
+			name="Treasure_0";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item150
+		{
+			position[]={16985.289,-0.27175087,13616.465};
+			name="Treasure_1";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item151
+		{
+			position[]={9866.0479,0.014741103,11111.971};
+			name="Treasure_2";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item152
+		{
+			position[]={4992.7637,-0.020654676,9908.2881};
+			name="Treasure_3";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item153
+		{
+			position[]={3505.4102,-0.023277842,11439.938};
+			name="Treasure_4";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item154
+		{
+			position[]={3849.9155,0.00057628582,15028.444};
+			name="Treasure_5";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item155
+		{
+			position[]={5281.2344,0.23328479,22658.328};
+			name="Treasure_6";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item156
+		{
+			position[]={21207.197,0.20755874,20124.484};
+			name="Treasure_7";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item157
+		{
+			position[]={24573.881,-0.0090859979,16154.248};
+			name="Treasure_8";
+			type="Empty";
+			colorName="ColorWhite";
+		};
+		class Item158
+		{
+			position[]={5480.8828,24.168821,15021.59};
+			name="MobM_0";
+			type="Empty";
+			colorName="ColorBlack";
+		};
+		class Item159
+		{
+			position[]={6077.1182,214.36562,20273.727};
+			name="MobM_1";
+			type="Empty";
+			colorName="ColorBlack";
+		};
+		class Item160
+		{
+			position[]={9963.5586,72.804558,21217.41};
+			name="MobM_2";
+			type="Empty";
+			colorName="ColorBlack";
+		};
+		class Item161
+		{
+			position[]={17998.617,18.05002,17625.465};
+			name="MobM_3";
+			type="Empty";
+			colorName="ColorBlack";
+		};
+		class Item162
+		{
+			position[]={21857.203,32.135509,21377.219};
+			name="MobM_4";
+			type="Empty";
+			colorName="ColorBlack";
+		};
+		class Item163
+		{
+			position[]={17250.881,24.751972,10105.477};
+			name="MobM_5";
+			type="Empty";
+			colorName="ColorBlack";
+		};
+		class Item164
+		{
+			position[]={18721.559,22.634792,6605.4863};
+			name="MobM_6";
+			type="Empty";
+			colorName="ColorBlack";
+		};
+		class Item165
+		{
+			position[]={8979.6455,62.476936,7555.2178};
+			name="MobM_7";
+			type="Empty";
+			colorName="ColorBlack";
+		};
+		class Item166
+		{
+			position[]={9037.5693,57.920536,13772.573};
+			name="MobM_8";
+			type="Empty";
+			colorName="ColorBlack";
 		};
 	};
 };

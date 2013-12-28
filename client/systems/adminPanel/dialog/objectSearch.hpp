@@ -1058,7 +1058,7 @@ class tw_RscButtonMenuOK
 		"0x00050000 + 0",
 		28,
 		57,
-		156;
+		156
 	};
 	default = 1;
 	text = "OK";

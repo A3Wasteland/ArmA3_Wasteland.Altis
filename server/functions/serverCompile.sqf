@@ -58,6 +58,7 @@ createMissionVehicle = [_path, "createMissionVehicle.sqf"] call mf_compile;
 createMissionVehicle2 = [_path, "createMissionVehicle2.sqf"] call mf_compile;
 createRandomSoldier = [_path, "createUnits\createRandomSoldier.sqf"] call mf_compile;
 createRandomSoldierC = [_path, "createUnits\createRandomSoldierC.sqf"] call mf_compile;
+createRandomAquaticSoldier = [_path, "createUnits\createRandomAquaticSoldier.sqf"] call mf_compile;
 createSmallDivers = [_path, "createUnits\smallDivers.sqf"] call mf_compile;
 createSmallGroup = [_path, "createUnits\smallGroup.sqf"] call mf_compile;
 createSupplyDrop = [_path, "createSupplyDrop.sqf"] call mf_compile;
