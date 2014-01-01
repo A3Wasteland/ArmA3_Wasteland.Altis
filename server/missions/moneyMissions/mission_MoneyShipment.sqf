@@ -5,19 +5,19 @@
 //	@file Args: none
 
 if (!isServer) exitwith {};
-#include "mainMissionDefines.sqf";
+#include "moneyMissionDefines.sqf";
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_Money ShipmentVeh","_veh1","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_MoneyShipmentVeh","_veh1","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader"];
 
-_missionMarkerName = "Money_Schipment";
+_missionMarkerName = "Money_Shipment";
 _missionType = "Money Shipment";
 diag_log format["WASTELAND SERVER - Money Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Money Mission Waiting to run: %1", _missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[moneyMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Money Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the Money Shipment 
-_Money ShipmentVeh = 
+_MoneyShipmentVeh = 
 [
 	["B_MRAP_01_hmg_F", "B_MRAP_01_gmg_F"],
 	["O_MRAP_02_hmg_F", "O_MRAP_02_gmg_F"],
@@ -25,8 +25,8 @@ _Money ShipmentVeh =
 ]
 call BIS_fnc_selectRandom;
 
-_veh1 = _Money ShipmentVeh select 0;
-_veh2 = _Money ShipmentVeh select 1;
+_veh1 = _MoneyShipmentVeh select 0;
+_veh2 = _MoneyShipmentVeh select 1;
 
 // available routes to add a route. If you add more routes append ,4 to the array and so on
 _routes = [1,2,3];

@@ -4,7 +4,6 @@
 //	@file Created: 08/12/2012 15:19
 //	@file Args:
 
-#include "defines.hpp"
 #include "moneyMissionDefines.sqf";
 
 if(!isServer) exitwith {};
@@ -152,10 +151,10 @@ if(_result == 1) then
 		clearMagazineCargoGlobal _ammobox;
 		clearWeaponCargoGlobal _ammobox; 
 		[_ammobox,"mission_USSpecial2"] call fn_refillbox;
-		_ammobox2 = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
+		_ammobox2 = "Box_East_Wps_F" createVehicle getMarkerPos _marker;
 		clearMagazineCargoGlobal _ammobox2;
 		clearWeaponCargoGlobal _ammobox2; 
-		[_ammobox2,"mission_USLaunchers2"] call fn_refillbox;
+		[_ammobox2,"mission_USLaunchers"] call fn_refillbox;
 	};
 	
 	{if(!alive _x) then {deleteVehicle _x;};}forEach _vehicles;

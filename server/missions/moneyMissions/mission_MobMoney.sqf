@@ -57,8 +57,8 @@ _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>M
 messageSystem = _hint;
 publicVariable "messageSystem";
 
-CivGrpS = createGroup civilian;
-[CivGrpS,_posRand] spawn createLargeGroup;
+_CivGrpM = createGroup civilian;
+[_CivGrpM,_posRand] spawn createMediumGroup;
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1",_missionType];
 _startTime = floor(time);
@@ -80,8 +80,8 @@ if(_result == 1) then
     deleteVehicle _cash0;
     deleteVehicle _cash1;
 	deleteVehicle _cash2;
-    {deleteVehicle _x;}forEach units CivGrps;
-    deleteGroup CivGrpS;
+    {deleteVehicle _x;}forEach units _CivGrpM;
+    deleteGroup _CivGrpM;
     _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%2' size='1.25'>%1</t><br/><t align='center' color='%3'>The hostile group collected al the money and took off. Better luck next time!</t>", _missionType, failMissionColor, subTextColor];
 	messageSystem = _hint;
     publicVariable "messageSystem";
@@ -91,8 +91,8 @@ if(_result == 1) then
     deleteVehicle _cash0;
     deleteVehicle _cash1;
 	deleteVehicle _cash2;
-	{deleteVehicle _x;}forEach units CivGrps;
-    deleteGroup CivGrpS;
+	{deleteVehicle _x;}forEach units _CivGrpM;
+    deleteGroup _CivGrpM;
     _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>Great work! The money is yours! This might also help out your team!</t>", _missionType, successMissionColor, subTextColor];
 	messageSystem = _hint;
     publicVariable "messageSystem";

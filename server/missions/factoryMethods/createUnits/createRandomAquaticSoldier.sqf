@@ -24,17 +24,12 @@ _position = _this select 1;
 _soldier = _group createUnit [_soldierTypes call BIS_fnc_selectRandom, _position, [], 0, "NONE"];
 _soldier addUniform (_uniformTypes call BIS_fnc_selectRandom);
 _soldier addVest (_vestTypes call BIS_fnc_selectRandom);
-_soldier setskill ["Endurance",1];
-_soldier setskill ["aimingAccuracy",1];
-_soldier setskill ["aimingShake",1];
-_soldier setskill ["aimingSpeed",1];
-_soldier setskill ["spotDistance",1];
-_soldier setskill ["courage",1];
-_soldier setskill ["reloadSpeed",1];
-_soldier setskill ["commanding",1];
-_soldier setskill ["general",1];
-player addWeapon "G_Diving";
+_soldier addGoggles "G_Diving";
 [_soldier, _weaponTypes call BIS_fnc_selectRandom, 3] call BIS_fnc_addWeapon;
-_soldier addEventHandler ["killed", "[_this select 0, _this select 1] execVM 'client\functions\aiKilled.sqf'"];
+
+_soldier spawn refillPrimaryAmmo;
+_soldier call setMissionSkill;
+
+_soldier addEventHandler ["Killed", {_this call server_playerDied; (_this select 1) call removeNegativeScore}];
 
 _soldier

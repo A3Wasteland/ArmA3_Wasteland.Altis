@@ -3,19 +3,8 @@
 //	@file Author: His_Shadow
 //	@file Created: 07/09/2013 15:19
 
-#include "defines.hpp"
-
-#ifdef __DEBUG__
-
-	#define moneyMissionTimeout 300
-	#define moneyMissionDelayTime 30
-
-#else
-
-	#define moneyMissionTimeout 1200
-	#define moneyMissionDelayTime 1200
-
-#endif
+#define moneyMissionTimeout (60*60)
+#define moneyMissionDelayTime (15*60)
 
 #define missionRadiusTrigger 50
 #define moneyMissionColor "#00de00"
