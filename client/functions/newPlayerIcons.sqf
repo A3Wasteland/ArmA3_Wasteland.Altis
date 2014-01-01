@@ -38,13 +38,14 @@ FZF_IC_Icons =
 			private ["_unit", "_pos", "_distance", "_pIcon"];
 			
 			_unit = _x;
-			_pos = getPos _unit;
+			//_pos = getPos _unit;
+			_pos = _unit modelToWorld [0,0,0];
 			_distance = _pos distance positionCameraToWorld [0,0,0];
 			
 			if (_distance < ICON_limitDistance) then // rules out the player and players too far away.
 			{
-				_pos set [2, (_pos select 2) + 1.5];
-				_screen = worldToScreen _pos;			
+				_pos set [2, (_pos select 2) + 1.35];
+				_screen = worldToScreen _pos;
 				
 				if (count _screen > 1) then // Dont calculate if they are not on the screen
 				{
