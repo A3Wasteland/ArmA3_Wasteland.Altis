@@ -90,7 +90,7 @@ config_territory_markers = compileFinal str
 	["TERRITORY_NE_AIRFIELD", "Northeast Airfield", 300, "AIRFIELD"],
 	["TERRITORY_SE_AIRFIELD", "Southeast Airfield", 300, "AIRFIELD"],
 	["TERRITORY_NW_AIRFIELD", "Northwest Airfield", 300, "AIRFIELD"],
-	["TERRITORY_SALTFLATS_AIRFIELD", "Saltflats TERRITORY_SW_AIRFIELD", 300, "AIRFIELD"],
+	["TERRITORY_SALTFLATS_AIRFIELD", "Saltflats", 300, "AIRFIELD"],
 	["TERRITORY_WEST_POWER_PLANT", "West Power Plant", 300, "POWER"],
 	["TERRITORY_CENTER_POWER_PLANT", "Center Power Plant", 300, "POWER"],
 	["TERRITORY_EAST_POWER_PLANT", "East Power Plant", 300, "POWER"],
