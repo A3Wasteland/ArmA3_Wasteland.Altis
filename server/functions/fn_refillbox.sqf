@@ -24,8 +24,8 @@ switch (_boxType) do
     	_boxItems =
 		[
 			// Item type, Item class, # of items, # of magazines per weapon
-			["wep", "launch_NLAW_F", 2, 2],
 			["wep", "launch_RPG32_F", 2, 2],
+			["wep", "launch_NLAW_F", 2, 2],
 			["wep", "launch_Titan_F", 2, 2],
 			["mag", "ClaymoreDirectionalMine_Remote_Mag", 3],
 			["mag", "DemoCharge_Remote_Mag", 3]
@@ -38,19 +38,19 @@ switch (_boxType) do
 			// Item type, Item class, # of items, # of magazines per weapon
 			//["itm", "NVGoggles", 5],
 			["wep", "Binocular", 5],
-			["itm", "Medikit", 4],
-			["itm", "Toolkit", 2],
-			["itm", "optic_MRD", 2],
-			["wep", "hgun_Pistol_heavy_01_F", 2, 5],
-			["wep", "arifle_MXM_F", 2, 5],
-			["wep", "srifle_EBR_F", 2, 5],
-			["wep", "arifle_MX_SW_F", 2, 4],
-			["wep", "LMG_Mk200_F", 2, 4],
+			["itm", "Medikit", 3],
+			["itm", "Toolkit", 1],
+			["wep", "hgun_Pistol_heavy_01_F", 1, 5],
+			["wep", "hgun_Pistol_heavy_01_MRD_F", 1, 5],
+			["wep", "arifle_MXM_F", 1, 5],
+			["wep", "srifle_DMR_01_F", 1, 5],
+			["wep", "srifle_EBR_F", 1, 5],
+			["wep", "LMG_Mk200_F", 1, 4],
 			["wep", "LMG_Zafir_F", 1, 4],
 			["mag", "30Rnd_556x45_Stanag", 10],
 			["mag", "30Rnd_65x39_caseless_mag", 10],
 			["mag", "30Rnd_65x39_caseless_green", 10],
-			["mag", "9Rnd_45ACP_Mag", 10]
+			["mag", "9Rnd_45ACP_Mag", 5]
 		];
     };
     case "mission_USSpecial2":
@@ -58,11 +58,11 @@ switch (_boxType) do
     	_boxItems =
 		[
 			// Item type, Item class, # of items, # of magazines per weapon
-			["itm", "optic_Yorris", 2],
-			["wep", "hgun_Pistol_heavy_02_F", 3, 5],
-			["wep", "arifle_TRG21_GL_F", 3, 5],
-			["wep", "arifle_Katiba_GL_F", 3, 5],
-			["wep", "arifle_MX_GL_F", 3, 5],
+			["wep", "hgun_Pistol_heavy_02_F", 1, 5],
+			["wep", "hgun_Pistol_heavy_02_Yorris_F", 1, 5],
+			["wep", "arifle_TRG21_GL_F", 2, 5],
+			["wep", "arifle_Katiba_GL_F", 2, 5],
+			["wep", "arifle_MX_GL_F", 2, 5],
 			["mag", "1Rnd_HE_Grenade_shell", 10],
 			["mag", "SmokeShell", 2],
 			["mag", "SmokeShellPurple", 2],
@@ -70,12 +70,7 @@ switch (_boxType) do
 			["mag", "SmokeShellGreen", 2],
 			["mag", "SmokeShellYellow", 2],
 			["mag", "SmokeShellOrange", 2],
-			["mag", "SmokeShellRed", 2],
-			["mag", "UGL_FlareWhite_F", 2],
-			["mag", "UGL_FlareGreen_F", 2],
-			["mag", "UGL_FlareYellow_F", 2],
-			["mag", "UGL_FlareRed_F", 2],
-			["mag", "UGL_FlareCIR_F", 2]
+			["mag", "SmokeShellRed", 2]
 		];
     };
 	case "mission_Main_A3snipers":
@@ -93,30 +88,4 @@ switch (_boxType) do
     };
 };
 
-// Add items
-{
-	_item = if (typename (_x select 1) == "ARRAY") then { (_x select 1) call BIS_fnc_selectRandom } else { _x select 1 };
-	_qty = _x select 2;
-	
-	switch (_x select 0) do
-	{
-		case "wep":
-		{
-			_box addWeaponCargoGlobal [_item, _qty];
-			
-			if (count _x > 3 && {_x select 3 > 0}) then
-			{
-				_mag = ((getArray (configFile >> "CfgWeapons" >> _item >> "magazines")) select 0) call getBallMagazine;
-				_box addMagazineCargoGlobal [_mag, _qty * (_x select 3)];
-			};
-		};
-		case "mag":
-		{
-			_box addMagazineCargoGlobal [_item, _qty];
-		};
-		case "itm":
-		{
-			_box addItemCargoGlobal [_item, _qty];
-		};
-	};
-} forEach _boxItems;
+[_box, _boxItems] call processItems;

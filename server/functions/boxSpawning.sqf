@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_counter","_pos","_markerName","_marker","_hint","_safePos","_boxes", "_boxList", "_currBox", "_boxInstance", "_oldMagName", "_magName"];
+private ["_counter","_pos","_markerName","_marker","_hint","_safePos","_boxes", "_boxList", "_boxClass", "_box", "_boxItems", "_magName"];
 
 _counter = 0;
 
@@ -24,78 +24,108 @@ _boxList =
 	if (random 1 < 0.50) then // 50% chance of box spawning at each town
 	{
 		_pos = getMarkerPos (_x select 0);
-		_currBox = _boxList call BIS_fnc_selectRandom;
+		_boxClass = _boxList call BIS_fnc_selectRandom;
 		_safePos = [_pos, 10, (_x select 1) / 2, 1, 0, 60 * (pi / 180), 0] call findSafePos; // spawns somewhere within half the town radius
-		_boxInstance = createVehicle [_currBox, _safePos, [], 0, "NONE"];
+		_box = createVehicle [_boxClass, _safePos, [], 0, "NONE"];
+		_box allowDamage false;
 		
-		_boxInstance allowDamage false;
+		// Clear prexisting cargo first
+		clearMagazineCargoGlobal _box;
+		clearWeaponCargoGlobal _box;
+		clearItemCargoGlobal _box;
 		
-		if (_currBox in ["Box_NATO_WpsSpecial_F", "Box_East_WpsSpecial_F", "Box_IND_WpsSpecial_F"]) then
+		switch (true) do
 		{
-			// Add couple extra mags
-			switch (_currBox) do
+			// Basic Weapons box contents
+			case (["_Wps_F", _boxClass] call fn_findString != -1):
 			{
-				case "Box_NATO_WpsSpecial_F":
+				switch (true) do
 				{
-					// That stupid bug again.
-					[_boxInstance, "20Rnd_762x51_Mag", "30Rnd_65x39_caseless_mag"] call fn_replaceMagazines;
-					_boxInstance addMagazineCargoGlobal ["30Rnd_65x39_caseless_mag", 5];
+					case (_box isKindOf "Box_NATO_Wps_F"):
+					{
+						_boxItems =
+						[
+							["wep", "arifle_MX_F", 5, 4],
+							["wep", "arifle_MX_SW_F", 2, 4],
+							["wep", "SMG_01_F", 1, 5] // Vermin
+						]
+					};
+					case (_box isKindOf "Box_East_Wps_F"):
+					{
+						_boxItems =
+						[
+							["wep", "arifle_Katiba_F", 5, 4],
+							["wep", "LMG_Zafir_F", 2, 4],
+							["wep", "SMG_02_F", 1, 5] // Sting
+						]
+					};
+					case (_box isKindOf "Box_IND_Wps_F"):
+					{
+						_boxItems =
+						[
+							["wep", "arifle_Mk20_F", 5, 4],
+							["wep", "LMG_Mk200_F", 2, 4],
+							["wep", "hgun_PDW2000_F", 1, 5]
+						]
+					};
+					default { _boxItems = [] };
 				};
-				default
-				{
-					_boxInstance addMagazineCargoGlobal ["20Rnd_762x51_Mag", 5];
-				};
+				
+				[_box, _boxItems] call processItems;
+				
+				// Extra loadout
+				_boxItems =
+				[
+					["wep", "hgun_Pistol_heavy_01_F", 1, 5],
+					["mag", "9Rnd_45ACP_Mag", 5]
+				]
+				
+				[_box, _boxItems] call processItems;
 			};
 			
-			// Give scope to snipers
-			[_boxInstance, "srifle_LRR_F", "srifle_LRR_SOS_F"] call fn_replaceWeapons;
-			[_boxInstance, "srifle_GM6_F", "srifle_GM6_SOS_F"] call fn_replaceWeapons;
-		};
-		
-		// Replace tracer mags by ball mags for more stealth
-		{
-			_magName = _x call getBallMagazine;
-			
-			if (_magName != _x) then
+			// Special Weapons box contents
+			case (["_WpsSpecial_F", _boxClass] call fn_findString != -1):
 			{
-				[_boxInstance, _x, _magName] call fn_replaceMagazines;
-			};		
-		} forEach ((getMagazineCargo _boxInstance) select 0);
-		
-		// Add more weapons and mags to counter beta's senseless nerfing
-		switch (_currBox) do
-		{
-			case "Box_NATO_Wps_F":
-			{
-				[_boxInstance, "hgun_P07_F", ""] call fn_replaceWeapons;
-				[_boxInstance, "16Rnd_9x21_Mag", "9Rnd_45ACP_Mag"] call fn_replaceMagazines;
-				_boxInstance addWeaponCargoGlobal ["SMG_01_F", 1];
-				// _boxInstance addWeaponCargoGlobal ["hgun_ACPC2_F", 1];
-				_boxInstance addMagazineCargoGlobal ["9Rnd_45ACP_Mag", 7];
-				_boxInstance addMagazineCargoGlobal ["30Rnd_45ACP_Mag_SMG_01", 9];
-				_boxInstance addMagazineCargoGlobal ["30Rnd_65x39_caseless_mag", 18];
-				_boxInstance addMagazineCargoGlobal ["100Rnd_65x39_caseless_mag", 4];
-			};
-			case "Box_East_Wps_F":
-			{
-				[_boxInstance, "hgun_Rook40_F", ""] call fn_replaceWeapons;
-				[_boxInstance, "16Rnd_9x21_Mag", "9Rnd_45ACP_Mag"] call fn_replaceMagazines;
-				[_boxInstance, "30Rnd_9x21_Mag", "30Rnd_45ACP_Mag_SMG_01"] call fn_replaceMagazines;
-				_boxInstance addWeaponCargoGlobal ["SMG_01_F", 2];
-				// _boxInstance addWeaponCargoGlobal ["hgun_ACPC2_F", 1];
-				_boxInstance addMagazineCargoGlobal ["9Rnd_45ACP_Mag", 7];
-				_boxInstance addMagazineCargoGlobal ["30Rnd_45ACP_Mag_SMG_01", 9];
-				_boxInstance addMagazineCargoGlobal ["30Rnd_65x39_caseless_green", 18];
-				_boxInstance addMagazineCargoGlobal ["150Rnd_762x51_Box", 4];
-			};
-			case "Box_IND_Wps_F":
-			{
-				_boxInstance addWeaponCargoGlobal ["SMG_02_F", 1];
-				// _boxInstance addWeaponCargoGlobal ["hgun_ACPC2_F", 1];
-				_boxInstance addMagazineCargoGlobal ["9Rnd_45ACP_Mag", 7];
-				_boxInstance addMagazineCargoGlobal ["30Rnd_9x21_Mag", 9];
-				_boxInstance addMagazineCargoGlobal ["30Rnd_556x45_Stanag", 18];
-				_boxInstance addMagazineCargoGlobal ["200Rnd_65x39_cased_Box", 4];
+				// Specific loadouts
+				switch (true) do
+				{
+					case (_box isKindOf "Box_NATO_WpsSpecial_F"):
+					{
+						_boxItems =
+						[
+							["wep", "arifle_MXM_DMS_F", 1, 8],
+							["wep", "srifle_LRR_SOS_F", 1, 8]
+						]
+					};
+					case (_box isKindOf "Box_East_WpsSpecial_F"):
+					{
+						_boxItems =
+						[
+							["wep", "srifle_DMR_01_DMS_F", 1, 8],
+							["wep", "srifle_GM6_SOS_F", 1, 8]
+						]
+					};
+					case (_box isKindOf "Box_IND_WpsSpecial_F"):
+					{
+						_boxItems =
+						[
+							["wep", "srifle_EBR_DMS_F", 1, 8],
+							["wep", "srifle_GM6_SOS_F", 1, 8]
+						]
+					};
+					default { _boxItems = [] };
+				};
+				
+				[_box, _boxItems] call processItems;
+				
+				// Extra loadout
+				_boxItems =
+				[
+					["wep", "arifle_SDAR_F", 1, 4], // SDAR + 4 underwater mags
+					["mag", "30Rnd_556x45_Stanag", 4] // 4 normal mags
+				]
+				
+				[_box, _boxItems] call processItems;
 			};
 		};
 		
