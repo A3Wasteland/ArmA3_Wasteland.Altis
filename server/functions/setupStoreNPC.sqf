@@ -28,6 +28,8 @@ switch (toLower _type) do
 	};
 };
 
+_npc addAction ["<img image='client\icons\money.paa'/> Sell Crate Items", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && {(missionNamespace getVariable ['R3F_LOG_joueur_deplace_objet', objNull]) isKindOf 'ReammoBox_F'}"];
+
 _identity = format ["%1%2", _type, _num];
 _npc setIdentity _identity;
 
