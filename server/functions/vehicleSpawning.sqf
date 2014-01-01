@@ -30,9 +30,9 @@ _createRandomVehicle =
 
 	switch (true) do
 	{
-		case (_num < 100): { _vehicleType = civilianVehicles call BIS_fnc_selectRandom; _type = 0 };
-		case (_num < 50):  { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom; _type = 1 };
-		case (_num < 15):  { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom; _type = 2 };
+		case (_num < 15): { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom; _type = 2 };
+		case (_num < 50): { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom; _type = 1 };
+		default           { _vehicleType = civilianVehicles call BIS_fnc_selectRandom; _type = 0 };
 	};
 	
 	if (_vehicleType isKindOf "Quadbike_01_base_F") then {
