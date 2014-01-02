@@ -65,6 +65,12 @@ waitUntil {!isNil "handgunLoaded"};
 //END
 statsLoaded = 1;
 titleText ["","BLACK IN",4];
+
 //fixes the issue with saved player being GOD when they log back on the server!
 player allowDamage true;
+
+// Remove unrealistic blur effects
+ppEffectDestroy BIS_fnc_feedback_fatigueBlur;
+ppEffectDestroy BIS_fnc_feedback_damageBlur;
+
 player globalchat "Player account loaded!";
