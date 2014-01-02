@@ -4,6 +4,8 @@
 //	@file Created: 31/12/2013 22:12
 //	@file Args:
 
+#define PRICE_DEBUGGING false
+
 if (!isNil "storeSellingHandle" && {typeName storeSellingHandle == "SCRIPT"} && {!scriptDone storeSellingHandle}) exitWith {hint "Please wait, your previous sale is being processed"};
 
 _crate = missionNamespace getVariable ["R3F_LOG_joueur_deplace_objet", objNull];
@@ -16,7 +18,7 @@ else
 {
 	storeSellingHandle = _crate spawn
 	{
-		private ["_getHalfPrice", "_cargoToPairs", "_crate", "_sellValue", "_crateItems", "_allStoreItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemName", "_confirmMsg"];
+		private ["_getHalfPrice", "_cargoToPairs", "_crate", "_sellValue", "_crateItems", "_allStoreItems", "_weaponEntry", "_weaponCfg", "_parentCfg", "_found", "_cfgItems", "_allCrateItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemName", "_confirmMsg"];
 
 		_getHalfPrice = 
 		{
@@ -42,17 +44,66 @@ else
 		_crate = _this;
 		_sellValue = 0;
 		
-		// Get all the items into a single array		
-		_crateItems = (getWeaponCargo _crate) call _cargoToPairs;
-		[_crateItems, (getMagazineCargo _crate) call _cargoToPairs] call BIS_fnc_arrayPushStack;
-		[_crateItems, (getItemCargo _crate) call _cargoToPairs] call BIS_fnc_arrayPushStack;
+		// Get all the items
+		_crateWeapons = (getWeaponCargo _crate) call _cargoToPairs;
+		_crateMags = (getMagazineCargo _crate) call _cargoToPairs;
+		_crateItems = (getItemCargo _crate) call _cargoToPairs;
 		
-		if (count _crateItems == 0) exitWith
+		_allStoreItems = [call allRegularStoreItems, call ammoArray] call BIS_fnc_arrayPushStack;
+		
+		// Find parent equivalents to weapons which aren't listed in the gunstore, and add possible attachments to crate items array
+		{
+			_weaponEntry = _x;
+			_weaponCfg = configFile >> "CfgWeapons" >> (_weaponEntry select 0);
+			_parentCfg = _weaponCfg;
+			_found = false;
+			
+			while {!_found && {isClass _parentCfg} && {getText (_weaponCfg >> "model") == getText (_parentCfg >> "model")}} do
+			{
+				{
+					if (_x select 1 == configName _parentCfg) exitWith
+					{
+						_found = true;
+					};
+				} forEach _allStoreItems;
+				
+				if (!_found) then
+				{
+					_parentCfg = inheritsFrom _parentCfg;
+				};
+			};
+			
+			if (_found && {isClass (_weaponCfg >> "LinkedItems")}) then
+			{
+				_cfgItems = _weaponCfg >> "LinkedItems";
+				
+				for "_i" from 0 to (count _cfgItems - 1) do
+				{
+					[_crateItems, getText ((_cfgItems select _i) >> "item"), 1] call BIS_fnc_addToPairs;
+				};
+			};
+			
+			if (_parentCfg != _weaponCfg) then
+			{
+				_crateWeapons set [_forEachIndex, [_weaponEntry select 0, 0]]; // I wanted to use BIS_fnc_removeFromPairs but is not implemented yet :(
+				
+				if (_found) then
+				{
+					[_crateWeapons, configName _parentCfg, _weaponEntry select 1] call BIS_fnc_addToPairs;
+				};
+			};
+		} forEach (+_crateWeapons);
+		
+		// Combine all items in new array
+		_allCrateItems = [];
+		[_allCrateItems, _crateWeapons] call BIS_fnc_arrayPushStack;
+		[_allCrateItems, _crateMags] call BIS_fnc_arrayPushStack;
+		[_allCrateItems, _crateItems] call BIS_fnc_arrayPushStack;
+		
+		if (count _allCrateItems == 0) exitWith
 		{
 			["This crate does not contain any valid items to sell.", "Error"] call BIS_fnc_guiMessage;
 		};
-		
-		_allStoreItems = [call allRegularStoreItems, call ammoArray] call BIS_fnc_arrayPushStack;
 		
 		// Add value of each item to sell value, and acquire item display name
 		{
@@ -61,28 +112,31 @@ else
 			_itemQty = _x select 1;
 			_itemValue = 10;
 			
+			if (_itemQty > 0) then
 			{
-				if (_x select 1 == _itemClass) exitWith
 				{
-					_itemValue = ((_x select 2) * _itemQty) call _getHalfPrice;
+					if (_x select 1 == _itemClass) exitWith
+					{
+						_itemValue = ((_x select 2) * _itemQty) call _getHalfPrice;
+					};
+				} forEach _allStoreItems;
+				
+				_sellValue = _sellValue + _itemValue;
+				
+				if (isClass (configFile >> "CfgWeapons" >> _itemClass)) then
+				{
+					_itemName = getText (configFile >> "CfgWeapons" >> _itemClass >> "displayName");
+				}
+				else
+				{
+					_itemName = getText (configFile >> "CfgMagazines" >> _itemClass >> "displayName");
 				};
-			} forEach _allStoreItems;
-			
-			_sellValue = _sellValue + _itemValue;
-			
-			if (isClass (configFile >> "CfgWeapons" >> _itemClass)) then
-			{
-				_itemName = getText (configFile >> "CfgWeapons" >> _itemClass >> "displayName");
-			}
-			else
-			{
-				_itemName = getText (configFile >> "CfgMagazines" >> _itemClass >> "displayName");
+				
+				_item set [2, _itemName];
+				if (PRICE_DEBUGGING) then { _item set [3, _itemValue] };
+				_allCrateItems set [_forEachIndex, _item];
 			};
-			
-			_item set [2, _itemName];
-			_crateItems set [_forEachIndex, _item];
-			
-		} forEach _crateItems;
+		} forEach _allCrateItems;
 		
 		// Add total sell value to confirm message
 		_confirmMsg = format ["You will obtain $%1 for:<br/>", _sellValue];
@@ -91,11 +145,15 @@ else
 		{
 			_item = _x select 0;
 			_itemQty = _x select 1;
-			_itemName = _x select 2;
 			
-			_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x %2", _itemQty, _itemName];
+			if (_itemQty > 0 && {count _x > 2}) then
+			{
+				_itemName = _x select 2;
 			
-		} forEach _crateItems;
+				_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", _x select 3] } else { "" }];
+			};
+			
+		} forEach _allCrateItems;
 
 		// Display confirmation
 		if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then
