@@ -221,6 +221,7 @@ accessoriesArray = compileFinal str
 	["ARCO", "optic_Arco", 125, "item"],
 	["RCO", "optic_Hamr", 150, "item"],
 	["DMS", "optic_DMS", 175, "item"],
+	["LRPS", "optic_LRPS", 175, "item"],
 	["SOS", "optic_SOS", 200, "item"],
 	["NVS", "optic_NVS", 400, "item"],
 	["TWS", "optic_tws", 600, "item"],
@@ -731,8 +732,8 @@ customPlayerItems = compileFinal str
     ["Spawn Beacon", "spawnbeacon", localize "STR_WL_ShopDescriptions_spawnBeacon", "client\icons\briefcase.paa", 1500, 750],
     ["Camo Net", "camonet", localize "STR_WL_ShopDescriptions_Camo", "client\icons\briefcase.paa", 200, 100],
     ["Syphon Hose", "syphonhose", localize "STR_WL_ShopDescriptions_SyphonHose", "client\icons\jerrycan.paa", 200, 100],
-    ["Energy Drink", "energydrink", localize "STR_WL_ShopDescriptions_Energy_Drink", "client\icons\water.paa", 100, 50],
-    ["Warchest", "warchest", localize "STR_WL_ShopDescriptions_Warchest", "client\icons\briefcase.paa", 1000, 500]
+    ["Energy Drink", "energydrink", localize "STR_WL_ShopDescriptions_Energy_Drink", "client\icons\water.paa", 100, 50]/*,
+    ["Warchest", "warchest", localize "STR_WL_ShopDescriptions_Warchest", "client\icons\briefcase.paa", 1000, 500]*/ // Removed until fixed
 ];
 
 

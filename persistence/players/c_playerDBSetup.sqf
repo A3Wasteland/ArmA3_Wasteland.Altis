@@ -86,19 +86,28 @@ applyPlayerDBValues =
 	if(_varName == 'PrimaryWeaponItems') then 
 	{
 		{
-			player addPrimaryWeaponItem _x;
+			if (_x != "") then
+			{
+				player addPrimaryWeaponItem _x;
+			};
 		}foreach _varValue;
 	};
 	if(_varName == 'SecondaryWeaponItems') then 
 	{
 		{
-			player addSecondaryWeaponItem _x;
+			if (_x != "") then
+			{
+				player addSecondaryWeaponItem _x;
+			};
 		}foreach _varValue;
 	};
 	if(_varName == 'HandgunItems') then 
 	{
 		{
-			player addHandgunItem _x;
+			if (_x != "") then
+			{
+				player addHandgunItem _x;
+			};
 		}foreach _varValue;
 	};
 

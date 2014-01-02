@@ -159,6 +159,8 @@ if (["A3W_serverMissions", 0] call getPublicVar > 0) then
     [] execVM "server\missions\sideMissionController.sqf";
     sleep 5;
     [] execVM "server\missions\mainMissionController.sqf";
+	sleep 5;
+	[] execVM "server\missions\moneyMissionController.sqf";
 };
 
 // Start clean-up loop

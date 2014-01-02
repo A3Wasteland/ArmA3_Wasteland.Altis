@@ -83,6 +83,7 @@ case 2: {//addweapon
 		PG_set(MAGS,[]);
 		[GET_SELECTED_DATA(balca_WC_weaplist_IDC)] call PG_get(FNC_ADD_WEAPON);
 		PG_set(WEAPONS,weapons player);
+		if (!isNil "notifyAdminMenu") then { GET_SELECTED_DATA(balca_WC_weaplist_IDC) call notifyAdminMenu };
 	};
 
 case 3: {//ammo info
@@ -119,6 +120,7 @@ case 4: {//addMagazine
 		_mag = GET_SELECTED_DATA(balca_WC_magazinelist_IDC);
 		player addMagazine _mag;
 		PG_set(MAGS,magazines player);
+		if (!isNil "notifyAdminMenu") then { _mag call notifyAdminMenu };
 	};
 
 case 5: {//weap to clipboard

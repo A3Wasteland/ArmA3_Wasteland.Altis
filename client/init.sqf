@@ -52,7 +52,8 @@ if ((call config_player_saving_enabled) == 1) then {
 	waitUntil {!isNil "fn_SaveToServer"};
 	[] execVM "persistence\players\c_playerDBSetup.sqf";
 	waitUntil {!isNil "statFunctionsLoaded"};
-	[] execVM "persistence\players\c_loadAccount.sqf";
+	
+	_loadHandle = [] execVM "persistence\players\c_loadAccount.sqf";
 
 	if ((call config_player_donations_enabled) == 1) then {
 		// If the server has configured donation money, load that from the DB
@@ -73,7 +74,7 @@ if ((call config_player_saving_enabled) == 1) then {
 		player setVariable["cmoney",_baseMoney,true];
 	};
 
-	waitUntil {positionLoaded == 1};
+	waitUntil {scriptDone _loadHandle && {positionLoaded == 1}};
 } else {
 	diag_log format["Client has no player save functionality"];
 };

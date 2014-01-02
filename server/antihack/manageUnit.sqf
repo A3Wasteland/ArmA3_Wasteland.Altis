@@ -69,6 +69,7 @@ if (isNil _checksum) then
 	{
 		clientFlagHandler = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\clientFlagHandler.sqf"));
 		chatBroadcast = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\chatBroadcast.sqf"));
+		notifyAdminMenu = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\notifyAdminMenu.sqf"));
 		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\payload.sqf"));
 	};
 	
