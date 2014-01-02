@@ -184,7 +184,7 @@ _createVehicle = {
     _soldier = [_group, _position] call createRandomSoldier; 
     _soldier moveInCargo [_vehicle, 0];
     _soldier = [_group, _position] call createRandomSoldier; 
-    _soldier moveInTurret [_vehicle, 0,0];
+    _soldier moveInTurret [_vehicle, [0,0]];
     _soldier = [_group, _position] call createRandomSoldier; 
     _vehicle setVehicleLock "LOCKED";  // prevents players from getting into the vehicle while the AI are still owning it
 	_vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
@@ -229,7 +229,7 @@ if ([_vehicleName, (count toArray _vehicleName) - 10] call BIS_fnc_trimString ==
 	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 11] call BIS_fnc_trimString;
 };
 
-_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> carying a unit of soldiers transporting $10 000, is on route with assistance. Stop them! Be aware that the money is divided among both units!</t>", _missionType, _picture, _vehicleName, moneyMissionColor, subTextColor];
+_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> carrying a unit of soldiers transporting $5,000 is on route with assistance. Stop them! Be aware that the money is divided among both units!</t>", _missionType, _picture, _vehicleName, moneyMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1", _missionType];
@@ -255,7 +255,7 @@ waitUntil
 if(_failed) then
 {
     // Mission failed
-    if not(isNil "_vehicle") then {deleteVehicle _vehicle;};
+    {deleteVehicle _x} forEach _vehicles;
 	{if (vehicle _x != _x) then { deleteVehicle vehicle _x; }; deleteVehicle _x;}forEach units _group;
 	{deleteVehicle _x;}forEach units _group;
 	deleteGroup _group; 
@@ -271,14 +271,16 @@ if(_failed) then
 			_x setVariable ["R3F_LOG_disabled", false, true];
 		}forEach _vehicles;
 	};
-	// give the rewards
-	_cash1 = "Land_Money_F" createVehicle getMarkerPos _marker; _cash1 setPos getMarkerPos _marker;
-    _cash1 setVariable["cmoney",5000,true];
-    _cash1 setVariable["owner","world",true];
 	
-    _cash2 = "Land_Money_F" createVehicle getMarkerPos _marker; _cash2 setPos getMarkerPos _marker;
-    _cash2 setVariable["cmoney",5000,true];
-    _cash2 setVariable["owner","world",true];
+	// give the rewards
+	for "_x" from 1 to 5 do
+	{
+		_cash = "Land_Money_F" createVehicle markerPos _marker;
+		_cash setPos ([markerPos _marker, [[2 + random 2,0,0], random 360] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd);
+		_cash setDir random 360;
+		_cash setVariable["cmoney",1000,true];
+		_cash setVariable["owner","world",true];
+	};
 	
 	deleteGroup _group; 	
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The Money Shipment has been stopped. The Money is now yours to take. Goodluck finding it!</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];

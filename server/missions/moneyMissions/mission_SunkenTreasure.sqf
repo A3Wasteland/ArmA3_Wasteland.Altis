@@ -113,8 +113,7 @@ _vehicles = [];
 _vehicles set [0, ["O_Boat_Armed_01_hmg_F", [(_posRand select 0), (_posRand select 1), 0], _fix, 110, _group] call _createVehicle];
 
 _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>$10,000 in sunken treasure has been located. Go get it!</t>", _missionType,  moneyMissionColor, subTextColor];
-messageSystem = _hint;
-publicVariable "messageSystem";
+[_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1",_missionType];
 _startTime = floor(time);
@@ -138,8 +137,7 @@ if(_result == 1) then
 	{deleteVehicle _x;}forEach units _group; 
 	deleteGroup _group; 
     _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%2' size='1.25'>%1</t><br/><t align='center' color='%3'>Objective failed, better luck next time</t>", _missionType, failMissionColor, subTextColor];
-	messageSystem = _hint;
-    publicVariable "messageSystem";
+	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Money Mission Failed: %1",_missionType];
 } else {
 	//Mission Complete.
@@ -163,8 +161,7 @@ if(_result == 1) then
     deleteVehicle _treas0;
 	
     _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>The money is yours! Help out your team!</t>", _missionType, successMissionColor, subTextColor];
-	messageSystem = _hint;
-    publicVariable "messageSystem";
+	[_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Money Mission Success: %1",_missionType];
 };
 
