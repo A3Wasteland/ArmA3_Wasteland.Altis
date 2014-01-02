@@ -78,7 +78,7 @@ _boxList =
 				[
 					["wep", "hgun_Pistol_heavy_01_F", 1, 5],
 					["mag", "9Rnd_45ACP_Mag", 5]
-				]
+				];
 				
 				[_box, _boxItems] call processItems;
 			};
@@ -95,7 +95,7 @@ _boxList =
 						[
 							["wep", "arifle_MXM_DMS_F", 1, 8],
 							["wep", "srifle_LRR_SOS_F", 1, 8]
-						]
+						];
 					};
 					case (_box isKindOf "Box_East_WpsSpecial_F"):
 					{
@@ -103,7 +103,7 @@ _boxList =
 						[
 							["wep", "srifle_DMR_01_DMS_F", 1, 8],
 							["wep", "srifle_GM6_SOS_F", 1, 8]
-						]
+						];
 					};
 					case (_box isKindOf "Box_IND_WpsSpecial_F"):
 					{
@@ -111,7 +111,7 @@ _boxList =
 						[
 							["wep", "srifle_EBR_DMS_F", 1, 8],
 							["wep", "srifle_GM6_SOS_F", 1, 8]
-						]
+						];
 					};
 					default { _boxItems = [] };
 				};
@@ -123,7 +123,7 @@ _boxList =
 				[
 					["wep", "arifle_SDAR_F", 1, 4], // SDAR + 4 underwater mags
 					["mag", "30Rnd_556x45_Stanag", 4] // 4 normal mags
-				]
+				];
 				
 				[_box, _boxItems] call processItems;
 			};
