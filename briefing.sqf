@@ -10,6 +10,20 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"0.9f",
+"
+<br/> [Added] - Money missions
+<br/> [Added] - Sell Crate Items option at stores when moving crate
+<br/> [Changed] - Reorganized loots for crates and trucks
+<br/> [Changed] - Disabled Warchest until fixed
+<br/> [Fixed] - Player icons position inside buildings
+<br/> [Fixed] - MRAPs and quadbikes not spawning
+<br/> [Fixed] - Broken money rewards for territories when player saving is enabled
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "0.9e",
 "
 <br/> [Added] - Territory system
@@ -86,6 +100,7 @@ player createDiaryRecord ["credits",
 <br/>	* Mainfrezzer (Magnon)
 <br/>	* meat147 (GitHub)
 <br/>	* Na-Palm (BIS forums)
+<br/>	* red281gt (GitHub)
 <br/>	* RockHound (BierAG)
 <br/>	* s3kShUn61 (GitHub)
 <br/>	* Sa-Matra (BIS forums)
