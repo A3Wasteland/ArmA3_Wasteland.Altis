@@ -71,9 +71,7 @@ fn_vehicleInit = [_serverFunc, "fn_vehicleInit.sqf"] call mf_compile;
 generateKey = [_serverFunc, "network\generateKey.sqf"] call mf_compile;
 getBallMagazine = [_serverFunc, "getBallMagazine.sqf"] call mf_compile;
 getHitPoints = [_serverFunc, "getHitPoints.sqf"] call mf_compile;
+getPublicVar = [_serverFunc, "getPublicVar.sqf"] call mf_compile;
 removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
-
-//getMoveWeapon is not ssed anywhere atm
-//getMoveWeapon = [_clientFunc, "getMoveWeapon.sqf"] call mf_compile;
 
 "requestDetachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };

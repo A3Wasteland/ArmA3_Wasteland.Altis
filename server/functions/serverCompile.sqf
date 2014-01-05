@@ -77,7 +77,6 @@ fn_refillTruck = [_path, "fn_refilltruck.sqf"] call mf_compile;
 fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;
 fn_replaceWeapons = [_path, "fn_replaceWeapons.sqf"] call mf_compile;
 fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile;
-getPublicVar = [_path, "getPublicVar.sqf"] call mf_compile;
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
 processItems = [_path, "processItems.sqf"] call mf_compile;
 refillPrimaryAmmo = [_path, "refillPrimaryAmmo.sqf"] call mf_compile;
