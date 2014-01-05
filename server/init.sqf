@@ -12,15 +12,15 @@ externalConfigFolder = "A3Wasteland_settings";
 vChecksum = compileFinal format ["'%1'", call generateKey];
 
 //Execute Server Side Scripts.
-_serverCompiledScripts = [] execVM "server\antihack\setup.sqf";
-waitUntil {scriptDone _serverCompiledScripts};
+call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
 [] execVM "server\admins.sqf";
 [] execVM "server\functions\serverVars.sqf";
-_serverCompiledScripts = [] execVM "server\functions\serverCompile.sqf";
+_serverCompileHandle = [] execVM "server\functions\serverCompile.sqf";
 [] execVM "server\functions\broadcaster.sqf";
 [] execVM "server\functions\relations.sqf";
 [] execVM (externalConfigFolder + "\init.sqf");
-waitUntil {scriptDone _serverCompiledScripts};
+
+waitUntil {scriptDone _serverCompileHandle};
 
 // Broadcast server rules
 if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then

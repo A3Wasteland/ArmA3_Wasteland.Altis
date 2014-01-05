@@ -6,6 +6,9 @@
 
 if (isDedicated) exitWith {};
 
+waitUntil {!isNil "A3W_network_compileFuncs"};
+call A3W_network_compileFuncs;
+
 [] execVM "client\functions\bannedNames.sqf";
 
 showPlayerIcons = true;
