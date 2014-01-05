@@ -20,7 +20,7 @@ mf_compile = compileFinal
 ('
 	private ["_path", "_code"];
 	_path = "";
-	
+
 	switch (toUpper typeName _this) do {
 		case "STRING": {
 			_path = _this;
@@ -34,7 +34,7 @@ mf_compile = compileFinal
 			_code set [count _code - 1, (toArray " ") select 0];
 		};
 	};
-	
+
 	if (isNil "_code") then {
 		if (' + _DEBUG + ') then {
 			compile format ["call compile preProcessFileLineNumbers ""%1""", _path]
@@ -71,8 +71,9 @@ fn_vehicleInit = [_serverFunc, "fn_vehicleInit.sqf"] call mf_compile;
 generateKey = [_serverFunc, "network\generateKey.sqf"] call mf_compile;
 getBallMagazine = [_serverFunc, "getBallMagazine.sqf"] call mf_compile;
 getHitPoints = [_serverFunc, "getHitPoints.sqf"] call mf_compile;
-getMoveWeapon = [_clientFunc, "getMoveWeapon.sqf"] call mf_compile;
-getPublicVar = [_serverFunc, "getPublicVar.sqf"] call mf_compile;
 removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
+
+//getMoveWeapon is not ssed anywhere atm
+//getMoveWeapon = [_clientFunc, "getMoveWeapon.sqf"] call mf_compile;
 
 "requestDetachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };
