@@ -103,7 +103,7 @@ player createDiaryRecord ["credits",
 <br/>	* Mainfrezzer (Magnon)
 <br/>	* meat147 (GitHub)
 <br/>	* Na-Palm (BIS forums)
-<br/>	* red281gt (GitHub)
+<br/>	* red281gt (fmfclandivision)
 <br/>	* RockHound (BierAG)
 <br/>	* s3kShUn61 (GitHub)
 <br/>	* Sa-Matra (BIS forums)
