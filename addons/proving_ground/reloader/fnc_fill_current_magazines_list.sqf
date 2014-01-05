@@ -1,8 +1,11 @@
 #include "defs.hpp"
+
+private ["_weapon","_compatible_magazines","_display_name","_index","_veh","_veh_type","_current_magazines","_cap"];
+
 _index = _this select 0 select 1;
 
 _veh = GET_SELECTED_VEHICLE;
-_veh_type = GET_SELECTED_DATA(balca_loader_vehicle_list_IDC);
+//_veh_type = GET_SELECTED_DATA(balca_loader_vehicle_list_IDC);
 _weapon = GET_CTRL(balca_loader_weapon_list_IDC) lbData _index;
 if (isNil "_index") then {
 _weapon = GET_SELECTED_DATA(balca_loader_weapon_list_IDC)};

@@ -1,8 +1,11 @@
 #include "defs.hpp"
+
 disableSerialization;
-_veh = GET_SELECTED_VEHICLE;
-_veh_type = GET_SELECTED_DATA(balca_loader_vehicle_list_IDC);
-_index_turret = GET_INDEX_TURRET;
+private ["_veh","_veh_type","_index_turret","_weapons"];
+
+//_veh = GET_SELECTED_VEHICLE;
+//_veh_type = GET_SELECTED_DATA(balca_loader_vehicle_list_IDC);
+//_index_turret = GET_INDEX_TURRET;
 _weapons = GET_WEAPONS_TURRET;
 
 lbClear GET_CTRL(balca_loader_weapon_list_IDC);
