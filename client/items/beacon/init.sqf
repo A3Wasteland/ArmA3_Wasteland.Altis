@@ -14,7 +14,7 @@ MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE = "Land_TentDome_F";
 MF_ITEMS_SPAWN_BEACON_STEAL_DURATION = 60;
 MF_ITEMS_SPAWN_BEACON_DURATION = 30;
 _deploy = build("deploy.sqf");
-[MF_ITEMS_SPAWN_BEACON, "Spawn Beacon", _deploy, "Land_TentDome_F", "client\icons\briefcase.paa", 1] call mf_inventory_create;
+[MF_ITEMS_SPAWN_BEACON, "Spawn Beacon", _deploy, "Land_SuitCase_F", "client\icons\briefcase.paa", 1] call mf_inventory_create;
 
 mf_items_spawn_beacon_nearest = {
     _beacon = objNull;
