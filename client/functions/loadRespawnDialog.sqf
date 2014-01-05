@@ -57,7 +57,6 @@ while {respawnDialogActive} do
 {
     _timeText = [time/60/60] call BIS_fnc_timeToString;
     _missionUptimeText ctrlSetText format["Mission uptime: %1", _timeText];
-       
     if(_side != "Independent") then
     {  
         if(!showBeacons) then {
@@ -174,10 +173,7 @@ while {respawnDialogActive} do
                 } forEach pvar_spawn_beacons;
 			};
         };
-    };
-    
-    if((count units group player > 1) AND (_side == "Independent")) then
-    {
+    } else {
         _tempArray = [];
         {
         	_tempArray set [count _tempArray,getPlayerUID _x];    
@@ -225,8 +221,32 @@ while {respawnDialogActive} do
                 };          
             }forEach _dynamicControlsArray;
             _friendlyTowns = [];    
-        } else { //Beacons
-            
+        } else { // Independant Spawn Beacons
+diag_log "==============starting spawn beacon check";
+            {
+                if([_x] call mf_items_spawn_beacon_can_use) then {
+diag_log format["checking beacon %1: %2, %3", _forEachIndex, _x getVariable "side", _x getVariable "groupOnly"];
+                    _button = _display displayCtrl (_dynamicControlsArray select _btn_number select 0);
+                    _enemyCount = 0;
+                    _centrePos = getPos _x;
+                    { 
+                        if(group player != group _x) then {
+                            if((_x distance _centrePos) < 100) then {
+                                _enemyCount = _enemyCount + 1; 
+diag_log "Enemy too close";
+                            }; 
+                        };  
+                    } forEach playableUnits;
+
+                    if({_enemyCount == 0} && {damage _x < 1}) then {
+diag_log "adding beacon";
+                        _button ctrlSetText format["%1",_x getVariable ["ownerName", ""]]; 
+                        _button ctrlShow true;
+                        _btn_number = _btn_number + 1;
+                    };
+                };
+                if (_btn_number >= _btn_max) exitWith {}; // no more buttons to display on
+            } forEach pvar_spawn_beacons;
         };	    
     };
     sleep 0.1;
