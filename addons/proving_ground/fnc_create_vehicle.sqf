@@ -4,6 +4,8 @@
 #define GET_SELECTED_DATA(a) ([##a] call {_idc = _this select 0;_selection = (lbSelection GET_CTRL(_idc) select 0);if (isNil {_selection}) then {_selection = 0};(GET_CTRL(_idc) lbData _selection)})
 #define KINDOF_ARRAY(a,b) [##a,##b] call {_veh = _this select 0;_types = _this select 1;_res = false; {if (_veh isKindOf _x) exitwith { _res = true };} forEach _types;_res}
 
+private ["_kindOf","_filter","_res","_veh","_types","_veh_type","_vehicle","_cfgvehicles","_selection","_idc","_turret","_weapons","_magazines","_subturrets","_displayName","_armor","_maxSpeed","_turrets","_lb","_text","_old_veh","_core","_dir","_pos","_mode"];
+
 _mode = _this select 0;
 _veh_type = _this select 1;
 switch (_mode) do {

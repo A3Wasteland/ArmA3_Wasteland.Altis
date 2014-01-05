@@ -1,6 +1,8 @@
 #include "macros.hpp"
+private ["_OutString","_TypeName","_inArray","_maxI"];
+
 disableSerialization;
-private ["_configRoot", "_currentPath", "_ValuesArray", "_debug", "_OutString", "_TypeName", "_inArray", "_maxI", "_i"];
+
 
 // ***
 // *** get parameter

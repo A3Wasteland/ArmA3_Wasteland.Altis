@@ -1,5 +1,8 @@
 #include "defs.hpp"
 //diag_log "get_current_magazines";
+
+private ["_current_magazines","_veh","_index_turret"];
+
 _veh = GET_SELECTED_VEHICLE;
 _current_magazines = [];
 _index_turret = GET_SELECTED_TURRET;

@@ -1,5 +1,8 @@
 #include "defs.hpp"
+
 disableSerialization;
+private ["_default_magazines","_turret","_weapons","_subturrets","_turrets","_display_name","_veh","_veh_type"];
+
 _veh = GET_SELECTED_VEHICLE;
 _veh_type = GET_SELECTED_DATA(balca_loader_vehicle_list_IDC);
 GET_CTRL(balca_loader_vehicle_shortcut_IDC) ctrlSetText (getText(configFile >> "CfgVehicles" >> typeOf(_veh) >> "picture"));

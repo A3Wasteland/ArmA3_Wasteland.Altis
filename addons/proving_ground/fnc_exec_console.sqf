@@ -2,6 +2,9 @@
 #define GET_DISPLAY (findDisplay balca_debug_console_IDD)
 #define GET_CTRL(a) (GET_DISPLAY displayCtrl ##a)
 #define GET_SELECTED_DATA(a) ([##a] call {_idc = _this select 0;_selection = (lbSelection GET_CTRL(_idc) select 0);if (isNil {_selection}) then {_selection = 0};(GET_CTRL(_idc) lbData _selection)})
+
+private ["_console_history","_command","_result","_selection","_idc","_code","_mode"];
+
 _mode = _this select 0;
 switch (_mode) do {
 	case 0: {//init
@@ -79,6 +82,7 @@ switch (_mode) do {
 		// processInitCommands;
 
 		[] spawn {
+            private ["_time","_res"];
 			_time = time+2;
 			waitUntil{
 				((count(player getVariable ['PG_result',[]])==1)||_time>time)

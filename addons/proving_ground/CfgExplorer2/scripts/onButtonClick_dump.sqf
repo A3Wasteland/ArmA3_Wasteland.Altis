@@ -1,6 +1,7 @@
 #include "macros.hpp"
+
 scriptname "onBC_dump.sqf";
-private ["_lbIDC", "_outputIDC", "_size", "_outText", "_crlf"];
+private ["_lbIDC","_outputIDC","_outText","_crlf","_Entry","_EntryName","_val","_text","_class","_curConfig","_tab","_parseEnrty","_size"];
 _curConfig = CurrentConfig;
 hint format ["%1",[_curConfig]];
 _lbIDC = 110;
@@ -12,7 +13,9 @@ _crlf = "
 ";
 
 _parseEnrty = {
-	_entry = _this select 0;
+    private ["_subEntry","_entry","_needClass","_return"];
+
+    _entry = _this select 0;
 	_needClass = _this select 1;
 	_return = [];
 	for "_i" from 0 to (count _entry)-1 do {

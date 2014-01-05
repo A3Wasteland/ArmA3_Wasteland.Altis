@@ -5,6 +5,8 @@
 #define __cfgWeap configFile >> "cfgWeapons"
 
 
+private ["_type","_weap_type","_cur_type","_display_name","_no_pack","_optics","_weapon","_cfgweapons","_selection","_idc","_magazines","_dispersion","_displayName","_picture","_library","_lb","_text","_mag","_count","_initSpeed","_shell","_hit","_indirectHit","_indirectHitRange","_ACE_damage","_timeToLive","_airFriction","_mode","_item_type"];
+
 _mode = _this select 0;
 _item_type = _this select 1;
 switch (_mode) do {

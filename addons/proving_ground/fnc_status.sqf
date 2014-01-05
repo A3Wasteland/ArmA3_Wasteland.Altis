@@ -7,8 +7,11 @@ if (PG_get(STATUS)) then {
 }else{
 	hint "Status display enabled";
 	PG_set(STATUS,true);
-	[] spawn {
-		while {PG_get(STATUS)} do {
+	[] spawn {		
+        private ["_crew_stat","_crew","_cursortarget"];
+
+        while {PG_get(STATUS)} do {
+
 			sleep 0.5;
 			_cursortarget = cursorTarget;
 			if ((alive _cursortarget)) then {

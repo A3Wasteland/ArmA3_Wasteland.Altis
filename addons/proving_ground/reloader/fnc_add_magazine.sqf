@@ -1,4 +1,7 @@
 #include "defs.hpp"
+
+private ["_magazine_not_compatible","_veh","_magazine","_cap","_index_turret"];
+
 _veh = GET_SELECTED_VEHICLE;
 _magazine = GET_SELECTED_DATA(balca_loader_compatible_magazines_IDC);
 _cap = [] call GFNC(get_capacity);

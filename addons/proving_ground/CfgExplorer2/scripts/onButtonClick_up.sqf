@@ -1,6 +1,7 @@
 #include "macros.hpp"
+
 disableSerialization;
-private ["_LastClassName", "_lbCount", "_i", "_notFound", "_text", "_debug"];
+private ["_LastClassName","_lbCount","_notFound","_text","_debug"];
 
 // ***
 // *** set debug output (arma.rpt)

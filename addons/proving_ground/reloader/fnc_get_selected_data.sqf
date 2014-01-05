@@ -1,4 +1,7 @@
 #include "defs.hpp"
+
+private ["_selection","_idc"];
+
 _idc = _this select 0;
 
 _selection = (lbSelection GET_CTRL(_idc) select 0);
