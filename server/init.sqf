@@ -111,35 +111,29 @@ if (["A3W_serverSpawning", 0] call getPublicVar > 0) then
 	
 	if (["A3W_heliSpawning", 0] call getPublicVar > 0) then
 	{
-		_heliSpawn = [] execVM "server\functions\staticHeliSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _heliSpawn};
+		call compile preprocessFileLineNumbers "server\functions\staticHeliSpawning.sqf";
 	};
-	
-	_vehSpawn = [] execVM "server\functions\vehicleSpawning.sqf";
-	waitUntil {sleep 0.1; scriptDone _vehSpawn};
-	
+
+	call compile preprocessFileLineNumbers "server\functions\vehicleSpawning.sqf";
+
 	if (["A3W_planeSpawning", 0] call getPublicVar > 0) then
 	{
-		_planeSpawn = [] execVM "server\functions\planeSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _planeSpawn};
+		call compile preprocessFileLineNumbers "server\functions\planeSpawning.sqf";
 	};
 	
 	if (["A3W_boatSpawning", 0] call getPublicVar > 0) then
 	{
-		_boatSpawn = [] execVM "server\functions\boatSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _boatSpawn};
+		call compile preprocessFileLineNumbers "server\functions\boatSpawning.sqf";
 	};
 	
 	if (["A3W_baseBuilding", 0] call getPublicVar > 0) then
 	{
-		_objSpawn = [] execVM "server\functions\objectsSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _objSpawn};
+		call compile preprocessFileLineNumbers "server\functions\objectsSpawning.sqf";
 	};
 	
 	if (["A3W_boxSpawning", 0] call getPublicVar > 0) then
 	{
-		_boxSpawn = [] execVM "server\functions\boxSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _boxSpawn};
+		call compile preprocessFileLineNumbers "server\functions\boxSpawning.sqf";
 	};
 };
 
