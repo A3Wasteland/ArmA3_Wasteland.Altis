@@ -37,11 +37,10 @@ if (isNil "ahSetupDone") then
 	} forEach toArray _checksum;
 	_assignChecksum = _assignChecksum + (str toArray _checksumArray) + "; ";
 	
-	A3W_network_compileFuncs = compileFinal ("['" + _assignChecksum + "','" + _assignPacketKey + "'] call compile preprocessFileLineNumbers 'server\antihack\compileFuncs.sqf'");
-	publicVariable "A3W_network_compileFuncs";
-	call A3W_network_compileFuncs;
+	[_packetKey, _assignPacketKey, _checksum, _assignChecksum] execVM "server\antihack\createUnit.sqf";
 	
-	flagHandler = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\flagHandler.sqf"));
+	waitUntil {!isNil _checksum};
+	
 	[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\serverSide.sqf"));
 	
 	LystoAntiAntiHack = compileFinal "false";

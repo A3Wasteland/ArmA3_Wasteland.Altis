@@ -47,8 +47,7 @@ if (_uid call isAdmin) then
 			    };
 	            case 4: //Money
 			    {      
-					player setVariable ["cmoney", (player getVariable "cmoney") + 1000, true];
-					if (!isNil "notifyAdminMenu") then { 1000 call notifyAdminMenu };
+					player setVariable["cmoney", (player getVariable "cmoney")+1000,true];
 			    };
 	            case 5: //Debug Menu
 			    {   
