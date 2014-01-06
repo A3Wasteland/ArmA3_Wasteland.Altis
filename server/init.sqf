@@ -17,7 +17,10 @@ sideMissionUW = false;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 moneyMissionUW = false;
+=======
+>>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 =======
 >>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 =======
@@ -47,7 +50,11 @@ _serverCompiledScripts = [] execVM "server\functions\serverCompile.sqf";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 waitUntil {scriptDone _serverCompileHandle};
+=======
+waitUntil {scriptDone _serverCompiledScripts};
+>>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 =======
 waitUntil {scriptDone _serverCompiledScripts};
 >>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
@@ -95,8 +102,11 @@ A3W_sideMissionDelayTime = (5*60);  // Time in seconds between Side Missions, on
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 A3W_moneyMissionTimeout = (52*60);    // Time in seconds that a Money Mission will run for, unless completed
 A3W_moneyMissionDelayTime = (7*60);  // Time in seconds between Money Missions, once one is over
+=======
+>>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 =======
 >>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 =======
@@ -239,11 +249,16 @@ if (["A3W_serverMissions", 0] call getPublicVar > 0) then
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sleep 5;
 	[] execVM "server\missions\mainMissionController.sqf";
 	sleep 5;
 	[] execVM "server\missions\moneyMissionController.sqf";
 
+=======
+	sleep 5;
+	[] execVM "server\missions\mainMissionController.sqf";
+>>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 =======
 	sleep 5;
 	[] execVM "server\missions\mainMissionController.sqf";

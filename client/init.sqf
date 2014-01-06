@@ -56,7 +56,11 @@ if ((call config_player_saving_enabled) == 1) then {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	_loadHandle = [] execVM "persistence\players\c_loadAccount.sqf";
+=======
+	[] execVM "persistence\players\c_loadAccount.sqf";
+>>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 =======
 	[] execVM "persistence\players\c_loadAccount.sqf";
 >>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
