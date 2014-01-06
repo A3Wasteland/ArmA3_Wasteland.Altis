@@ -17,6 +17,8 @@ A3W_baseBuilding = 1;        // If serverSpawning = 1, also spawn basebuilding p
 A3W_vehicleloot = "medium";
 A3W_sideMissionTimeout = (5*60);    // Time in seconds that a Side Mission will run for, unless completed
 A3W_sideMissionDelayTime = (1*60);  // Time in seconds between Side Missions, once one is over
+A3W_moneyMissionTimeout = (8*60);    // Time in seconds that a Money Mission will run for, unless completed
+A3W_moneyMissionDelayTime = (1.2*60);  // Time in seconds between Money Missions, once one is over
 A3W_mainMissionTimeout = (10*60);    // Time in seconds that a Main Mission will run for, unless completed
 A3W_mainMissionDelayTime = (1.5*60);// Time in seconds between Main Missions, once one is over
 A3W_missionRadiusTrigger = 99999;   // Player must be nearer to mission than this in order to complete the mission after killing all AI
