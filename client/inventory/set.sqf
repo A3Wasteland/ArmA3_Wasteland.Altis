@@ -23,7 +23,7 @@ _done = false;
 		_new set [count _new, _this];
 		_done = true;
 	} else {
-		_new set [count _new, _x];	
+		_new set [count _new, _x];
 	};
 } forEach mf_inventory;
 

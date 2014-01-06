@@ -74,13 +74,13 @@ storePurchaseHandle = _this spawn
 		else
 		{
 			if ([_this, 2, false, [false]] call BIS_fnc_param) then
-			{
-				_itemText = format ["Purchasing this %1 will replace your current one.", _itemText];
-			}
-			else
-			{
-				_itemText = format ["Purchasing this %1 will replace your current one, and its contents will be lost.", _itemText];
-			};
+            {
+                _itemText = format ["Purchasing this %1 will replace your current one.", _itemText];
+            }
+            else
+            {
+                _itemText = format ["Purchasing this %1 will replace your current one, and its contents will be lost.", _itemText];
+            };
 		};
 		
 		_confirmResult = [parseText _itemText, "Confirm", "Buy", true] call BIS_fnc_guiMessage;
@@ -201,7 +201,7 @@ storePurchaseHandle = _this spawn
 						
 						if ({["NVGoggles", _x] call fn_findString != -1} count assignedItems player == 0) then
 						{
-							player linkItem _itemClass;
+							_player linkItem _itemClass;
 						}
 						else
 						{

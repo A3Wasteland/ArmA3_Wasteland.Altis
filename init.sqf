@@ -18,7 +18,10 @@ if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
 if (isNull player) then { X_JIP = true };
 
-[DEBUG] call compile preprocessFileLineNumbers "globalCompile.sqf";
+_globalCompile = [DEBUG] execVM "globalCompile.sqf";
+
+
+waitUntil {scriptDone _globalCompile};
 
 if (!isDedicated) then
 {
@@ -45,7 +48,7 @@ if (!isDedicated) then
 		diag_log "Player Group Wiped";
 		[player] join grpNull;
 	};
-
+	
 	[] execVM "client\init.sqf";
 };
 
@@ -61,3 +64,4 @@ if (isServer) then
 [] execVM "addons\proving_Ground\init.sqf";
 [] execVM "addons\scripts\DynamicWeatherEffects.sqf";
 [] execVM "addons\JumpMF\init.sqf";
+

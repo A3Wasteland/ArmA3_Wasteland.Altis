@@ -195,7 +195,7 @@ class gunshopd {
 		{
 			idc = -1;
 			onButtonClick = "[0] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "Handguns";
+			text = "Pistols";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;

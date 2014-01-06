@@ -66,7 +66,7 @@ MF_ITEMS_ENERGY_DRINK = "energydrink";
                 deleteVehicle _this;
                 _veh = createVehicle ["Land_BarrelEmpty_F", _npos, [], 0, "CAN_COLLIDE"];
                 _veh setVectorDirAndUp [_vecd, _vecu];
-                _veh spawn {sleep 5; deleteVehicle _this};
+                _veh spawn {sleep 30; deleteVehicle _this};
             };
             hint "You have filled a water bottle.\nBarrel is empty";
         } else {
