@@ -13,22 +13,7 @@ mainMissionHeliPatrol = false;
 sideMissionHeliPatrol = false;
 mainMissionUW = false;
 sideMissionUW = false;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 moneyMissionUW = false;
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 
 // Used to check that all saved objects have been loaded before we attempt to save them
 savedobjectsloaddone = false;
@@ -38,35 +23,14 @@ externalConfigFolder = "A3Wasteland_settings";
 vChecksum = compileFinal format ["'%1'", call generateKey];
 
 //Execute Server Side Scripts.
-_serverCompiledScripts = [] execVM "server\antihack\setup.sqf";
-waitUntil {scriptDone _serverCompiledScripts};
+call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
 [] execVM "server\admins.sqf";
 [] execVM "server\functions\serverVars.sqf";
-_serverCompiledScripts = [] execVM "server\functions\serverCompile.sqf";
+_serverCompileHandle = [] execVM "server\functions\serverCompile.sqf";
 [] execVM "server\functions\broadcaster.sqf";
 [] execVM "server\functions\relations.sqf";
 [] execVM (externalConfigFolder + "\init.sqf");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 waitUntil {scriptDone _serverCompileHandle};
-=======
-waitUntil {scriptDone _serverCompiledScripts};
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-waitUntil {scriptDone _serverCompiledScripts};
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-waitUntil {scriptDone _serverCompiledScripts};
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-waitUntil {scriptDone _serverCompiledScripts};
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-waitUntil {scriptDone _serverCompiledScripts};
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 
 // Broadcast server rules
 if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
@@ -98,23 +62,8 @@ A3W_vehicleloot = "low";            // Controls the amount of loot that spawns i
 A3W_restarts = 2;
 A3W_sideMissionTimeout = (45*60);    // Time in seconds that a Side Mission will run for, unless completed
 A3W_sideMissionDelayTime = (5*60);  // Time in seconds between Side Missions, once one is over
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 A3W_moneyMissionTimeout = (52*60);    // Time in seconds that a Money Mission will run for, unless completed
 A3W_moneyMissionDelayTime = (7*60);  // Time in seconds between Money Missions, once one is over
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 A3W_mainMissionTimeout = (60*60);    // Time in seconds that a Main Mission will run for, unless completed
 A3W_mainMissionDelayTime = (10*60);// Time in seconds between Main Missions, once one is over
 A3W_missionRadiusTrigger = 99999;   // Player must be nearer to mission than this in order to complete the mission after killing all AI
@@ -245,36 +194,11 @@ if (["A3W_serverMissions", 0] call getPublicVar > 0) then
 {
 	diag_log "WASTELAND SERVER - Initializing Missions";
 	[] execVM "server\missions\sideMissionController.sqf";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	sleep 5;
 	[] execVM "server\missions\mainMissionController.sqf";
 	sleep 5;
 	[] execVM "server\missions\moneyMissionController.sqf";
 
-=======
-	sleep 5;
-	[] execVM "server\missions\mainMissionController.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-	sleep 5;
-	[] execVM "server\missions\mainMissionController.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-	sleep 5;
-	[] execVM "server\missions\mainMissionController.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-	sleep 5;
-	[] execVM "server\missions\mainMissionController.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-	sleep 5;
-	[] execVM "server\missions\mainMissionController.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 };
 
 // Start clean-up loop

@@ -18,13 +18,15 @@ if (count _this == 0) then {
     _beacon = _this select 0;
 };
 
+
 _error = "failed";
 switch (true) do {
 	case (isNull _beacon): {_error = ERR_NO_TARGET};
 	case not(alive player): {}; // player is dead so no error msg is needed
-	case not((_beacon getVariable "side") != side player): {_error = ERR_NOT_OPP_SIDE};
     case not(typeof _beacon == MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE): {_error = ERR_NOT_SPAWN_BEACON_TYPE};
 	case not(player distance _beacon < 5): {_error = ERR_TOO_FAR_AWAY};
+	case ([_beacon] call mf_items_spawn_beacon_can_use): {_error = ERR_NOT_OPP_SIDE};
     default {_error = ""};
 };
+
 _error;

@@ -52,6 +52,7 @@ _success = [DURATION, ANIMATION, _checks, [_vehicle]] call mf_util_playUntil;
 
 if (_success) then {
 	_vehicle setDamage 0;
+	if (_vehicle isKindOf "Boat_Armed_01_base_F") then { _vehicle setHitPointDamage ["HitTurret", 1] }; // disable front GMG on boats
 	["Repairing complete!", 5] call mf_notify_client;
 };
 _success;

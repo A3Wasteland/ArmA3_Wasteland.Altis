@@ -47,9 +47,9 @@ if (count clientTerritoryCaptureTriggers > 0) exitWith { diag_log "clientTerrito
             _trg = createTrigger["EmptyDetector", _markerPos];
             _trg setTriggerArea [_markerSize select 0, _markerSize select 1, _markerDir, true];
             _trg setTriggerActivation["ANY", "PRESENT", true];
-            _trg setTriggerStatements["player in thislist", _onEnter, _onExit]; 
+            _trg setTriggerStatements["(vehicle player) in thislist", _onEnter, _onExit]; 
 
-            clientTerritoryCaptureTriggers = clientTerritoryCaptureTriggers + [_trg];  
+            clientTerritoryCaptureTriggers set [count clientTerritoryCaptureTriggers, _trg];  
         };
     };
 } forEach allMapMarkers;

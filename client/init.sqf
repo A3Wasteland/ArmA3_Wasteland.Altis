@@ -6,6 +6,9 @@
 
 if (isDedicated) exitWith {};
 
+waitUntil {!isNil "A3W_network_compileFuncs"};
+call A3W_network_compileFuncs;
+
 [] execVM "client\functions\bannedNames.sqf";
 
 showPlayerIcons = true;
@@ -52,27 +55,7 @@ if ((call config_player_saving_enabled) == 1) then {
 	waitUntil {!isNil "fn_SaveToServer"};
 	[] execVM "persistence\players\c_playerDBSetup.sqf";
 	waitUntil {!isNil "statFunctionsLoaded"};
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	_loadHandle = [] execVM "persistence\players\c_loadAccount.sqf";
-=======
-	[] execVM "persistence\players\c_loadAccount.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-	[] execVM "persistence\players\c_loadAccount.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-	[] execVM "persistence\players\c_loadAccount.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-	[] execVM "persistence\players\c_loadAccount.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
-=======
-	[] execVM "persistence\players\c_loadAccount.sqf";
->>>>>>> 8b03a1805a5a726190c7e9b426d53249c232c6e2
 
 	if ((call config_player_donations_enabled) == 1) then {
 		// If the server has configured donation money, load that from the DB
@@ -93,7 +76,7 @@ if ((call config_player_saving_enabled) == 1) then {
 		player setVariable["cmoney",_baseMoney,true];
 	};
 
-	waitUntil {positionLoaded == 1};
+	waitUntil {scriptDone _loadHandle && {positionLoaded == 1}};
 } else {
 	diag_log format["Client has no player save functionality"];
 };

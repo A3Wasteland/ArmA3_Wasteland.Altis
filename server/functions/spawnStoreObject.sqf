@@ -52,7 +52,6 @@ if (_key != "" && {isPlayer _player} && {_isGeneralStore || _isGunStore} && {{_x
 			
 			if (_player getVariable ["cmoney", 0] >= _itemPrice) then
 			{
-
 				
 				_safePos = (markerPos _marker) findEmptyPosition [0, 20, _class];
 				if (count _safePos == 0) then { _safePos = markerPos _marker };
@@ -66,7 +65,9 @@ if (_key != "" && {isPlayer _player} && {_isGeneralStore || _isGunStore} && {{_x
 			};
 		};
 	};
+	
 	// [compile format ["%1 = '%2'", _key, _objectID], "BIS_fnc_spawn", _player, false] call TPG_fnc_MP;
+	
 	if (isPlayer _player) then
 	{
 		_player setVariable [_key, _objectID, true];

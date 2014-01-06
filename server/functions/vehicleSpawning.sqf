@@ -3,6 +3,8 @@
 //	@file Author: [GoT] JoSchaap, AgentRev
 //  new one, no longer requires Spawn_ markers but uses the town's radius in config.sqf to pick the ammount of vehicles
 
+#define A3W_TOWN_SPAWNING_METERS_PER_VEHICLE 20 // This defines a fraction of the town's radius for which to spawn a vehicle (ex.: 20 meters per vehicle in town with 100m radius = 5 vehicles in town)
+
 if (!isServer) exitWith {};
 
 private ["_counter","_townname","_tradius","_pos","_vehammount","_minrad","_maxrad","_lcounter","_spawnedVehicles","_createRandomVehicle","_angleIncr","_langle","_lpos"];
@@ -24,11 +26,14 @@ _createRandomVehicle =
 	_maxrad = _this select 2;
 	_counter = _this select 3;
 	
-	_num = floor (random 100);
+	_num = random 100;
 
-	if (_num < 100) then { _vehicleType = civilianVehicles call BIS_fnc_selectRandom };
-	if (_num < 50) then { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom };
-	if (_num < 15) then { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom };
+	switch (true) do
+	{
+		case (_num < 15): { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom };
+		case (_num < 50): { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom };
+		default           { _vehicleType = civilianVehicles call BIS_fnc_selectRandom };
+	};
 	
 	if (_vehicleType isKindOf "Quadbike_01_base_F") then {
 		_mindist = 1.5;
@@ -47,7 +52,7 @@ _createRandomVehicle =
 	_pos = getMarkerPos (_x select 0);
 	_tradius = _x select 1;
 	_townname = _x select 2;
-	_vehammount = ceil (_tradius / 20);  // spawns a vehicle for every 20m radius the townmarker has, this might need tweaking! 
+	_vehammount = ceil (_tradius / A3W_TOWN_SPAWNING_METERS_PER_VEHICLE); // Spawns a vehicle for each fraction of the town's radius
 	_angleIncr = 360 / _vehammount;
 	_langle = random _angleIncr;
 	//_minrad = 15;

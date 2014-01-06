@@ -1,6 +1,6 @@
-//        @file Version: 1.1
-//        @file Name: spawnRandom.sqf
-//        @file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, AgentRev
+//	@file Version: 1.1
+//	@file Name: spawnRandom.sqf
+//	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, AgentRev
 
 waituntil {!isnil "bis_fnc_init"};
 

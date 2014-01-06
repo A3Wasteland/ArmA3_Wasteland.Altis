@@ -29,7 +29,7 @@ with missionnamespace do {
 	_target =	[_this,2,true,[objnull,true,0,[],sideUnknown,grpnull]] call bis_fnc_param;
 	_isPersistent =	[_this,3,false,[false]] call bis_fnc_param;
 	_isCall =	[_this,4,false,[false]] call bis_fnc_param;
-
+	
 	_packet = [0,_params,_functionName,_target,_isPersistent,_isCall];
 
 	//--- Local execution

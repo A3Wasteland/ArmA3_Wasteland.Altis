@@ -60,12 +60,11 @@ if (_boatType isKindOf "Boat_Armed_01_base_F") then
 		case (_boatType isKindOf "Boat_Armed_01_minigun_base_F"):
 		{
 			_boat addMagazineTurret ["2000Rnd_65x39_Belt_Tracer_Red", [1]];
-			_boat setVehicleAmmo 0.25;
+			_boat setVehicleAmmo 0.50;
 		};
 		default
 		{
 			_boat addMagazineTurret ["200Rnd_127x99_mag_Tracer_Green", [1]];
-			_boat setVehicleAmmo 0.50;
 		};
 	};
 	
@@ -74,7 +73,9 @@ if (_boatType isKindOf "Boat_Armed_01_base_F") then
 		_boat addMagazineTurret ["SmokeLauncherMag_boat", [-1]];
 	};
 	
-	sleep 0.1;	
+	_boat setHitPointDamage ["HitTurret", 1]; // disable front GMG
+	
+	sleep 0.1;
 	reload _boat;
 };
 

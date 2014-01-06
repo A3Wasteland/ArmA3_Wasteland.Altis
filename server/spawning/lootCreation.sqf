@@ -150,7 +150,7 @@ randomweapon_itemlist =
 
 //-------------------------------------------------------------------------------------
 
-	randomweaponspawnweapon = 
+    randomweaponspawnweapon = 
 	{
 		_position = _this;
 		_selectedgroup = (floor(random(count randomweapon_weaponlist)));
@@ -165,7 +165,7 @@ randomweapon_itemlist =
 			};
 		//};
 		_weaponholder setPos _position;
-	};
+    };
 	
 	randomweaponspawnweaponitem = 
 	{
@@ -180,7 +180,7 @@ randomweapon_itemlist =
 			_weaponholder addMagazineCargoGlobal [_mag, 1]; 
 		};
 		_weaponholder setPos _position;
-	};
+    };
 	
 	randomweaponspawnmilweapon = 
 	{
@@ -197,10 +197,10 @@ randomweapon_itemlist =
 			};
 		//};
 		_weaponholder setPos _position;
-	};
+    };
 
 	
-	randomweaponspawnitem = 
+    randomweaponspawnitem = 
 	{
 		_position = _this;
 		_numf = 0;
@@ -234,15 +234,15 @@ randomweapon_itemlist =
 			_item setVariable["mf_item_id", "repairkit", true];
 		};
 		_item setPos _position;
-	};
+    };
 
 //-------------------------------------------------------------------------------------
 	
 	spawnlootintown =
 	{
-	_pos = _this;
-	randomweapon_buildings = nearestObjects [_pos, _buildCIV, _dospawnradius];
-	sleep 10;
+    _pos = _this;
+    randomweapon_buildings = nearestObjects [_pos, _buildCIV, _dospawnradius];
+    sleep 10;
 	{
 		_building = _x;
 		_buildingpos = [];
@@ -293,9 +293,9 @@ randomweapon_itemlist =
 						};
 					};
 				};
-			};	
+			};    
 		};
-	}foreach randomweapon_buildings;
+    }foreach randomweapon_buildings;
 	randomweapon_milbuildings = nearestObjects [_pos, _buildMIL, _dospawnradius];
 	sleep 10;
 	{
@@ -338,9 +338,9 @@ randomweapon_itemlist =
 						_posnew call randomweaponspawnmilweapon;
 					};
 				};
-			};	
+			};    
 		};
-	}foreach randomweapon_milbuildings;
+    }foreach randomweapon_milbuildings;
 	};
 
 //-------------------------------------------------------------------------------------
@@ -353,12 +353,12 @@ randomweapon_itemlist =
 	{
 		_pos = getMarkerPos (_x select 0);
 		_tradius = (_x select 1);
-		townarea_list set [count townarea_list, [_pos, _lastSpawned]];
+		townarea_list set [count townarea_list, [_pos, _lastSpawned, _tradius]];
 	}forEach (call citylist);
 	{
 		_pos = getMarkerPos (_x select 0);
 		_tradius = 200;
-		townarea_list set [count townarea_list, [_pos, _lastSpawned]];
+		townarea_list set [count townarea_list, [_pos, _lastSpawned, _tradius]];
 	}forEach (call militarylist);
 	while {true} do {
 		{
@@ -368,6 +368,7 @@ randomweapon_itemlist =
 				{
 					_posTown = (_x select 0);
 					_lastSpawned = (_x select 1);
+					_tradius = (_x select 2);
 					_dospawnradius = (_tradius + _spawnradius);
 					if (((_posTown distance _posPlayer) < _dospawnradius) && ((_interval < (time - _lastSpawned)) || (_lastSpawned == 0))) then {
 						_posTown call spawnlootintown;

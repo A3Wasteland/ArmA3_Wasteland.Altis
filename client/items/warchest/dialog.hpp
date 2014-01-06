@@ -69,6 +69,7 @@ class WarchestDialog {
 			colorBackground[] = {0,0,0,0.7};
 		};
 		class WithdrawButton: w_RscButton {
+			idc = -1;
 			text = "Withdraw"; //--- ToDo: Localize;
 			action = FNC_WITHDRAW;
 			x = 0.35;
@@ -77,6 +78,7 @@ class WarchestDialog {
 			h = 0.05;
 		};
 		class DepositButton: w_RscButton {
+			idc = -1;
 			text = "Deposit"; //--- ToDo: Localize;
 			action = FNC_DEPOSIT;
 			x = 0.525;
@@ -85,6 +87,7 @@ class WarchestDialog {
 			h = 0.05;
 		};
 		class DoneButton: w_RscButton {
+			idc = -1;
 			text = "Done";
 			action = FNC_CLOSE;
 			x = 0.60;

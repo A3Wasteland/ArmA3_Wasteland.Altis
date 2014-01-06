@@ -14,7 +14,7 @@ MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE = "Land_TentDome_F";
 MF_ITEMS_SPAWN_BEACON_STEAL_DURATION = 60;
 MF_ITEMS_SPAWN_BEACON_DURATION = 30;
 _deploy = build("deploy.sqf");
-[MF_ITEMS_SPAWN_BEACON, "Spawn Beacon", _deploy, "Land_TentDome_F", "client\icons\briefcase.paa", 1] call mf_inventory_create;
+[MF_ITEMS_SPAWN_BEACON, "Spawn Beacon", _deploy, "Land_SuitCase_F", "client\icons\briefcase.paa", 1] call mf_inventory_create;
 
 mf_items_spawn_beacon_nearest = {
     _beacon = objNull;
@@ -29,6 +29,7 @@ mf_items_spawn_beacon_nearest = {
 
 mf_items_spawn_beacon_can_pack = build("can_pack.sqf");
 mf_items_spawn_beacon_can_steal = build("can_steal.sqf");
+mf_items_spawn_beacon_can_use = build("can_use.sqf");
 
 private "_condition";
 _condition = "'' == [] call mf_items_spawn_beacon_can_pack;";
@@ -39,6 +40,6 @@ _condition = "'' == [] call mf_items_spawn_beacon_can_steal;";
 _steal = ["Steal Spawn Beacon", path("steal.sqf"), [], 1, true, false, "", _condition];
 ["beacon-steal", _steal] call mf_player_actions_set;
 
-_condition = "'' == [] call mf_items_spawn_beacon_can_pack;";
+_condition = "'' == [] call mf_items_spawn_beacon_can_pack and playerSide != indepenent;";
 _pack =["Change Spawn Permissions", path("toggle_spawn_permissions.sqf"), [], 1, true, false, "", _condition];
 ["beacon-spawn-toggle", _pack] call mf_player_actions_set;

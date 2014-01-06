@@ -192,8 +192,8 @@ storePurchaseHandle = _this spawn
 							[_itemText] call _showInsufficientFundsError;
 						};
 						
-                        removeBackpack player;
-                        player addBackpack _class;
+						removeBackpack player;
+						player addBackpack _class;
 					};
 				} forEach (call backpackArray);
 			};
