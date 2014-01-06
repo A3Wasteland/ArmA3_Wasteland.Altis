@@ -4,7 +4,7 @@
 //	@file Created: 08/12/2012 15:19
 
 
-#include "moneyMissionDefines.sqf";
+#include "moneyMissionDefines.sqf"
 
 if(!isServer) exitwith {};
 
@@ -23,7 +23,7 @@ _rand = floor (random 9);
 _posRand =	(getMarkerPos format ["mobM_%1", _rand]);
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to run: %1",_missionType];
-[moneyMissionDelayTime] call createWaitCondition;
+[A3W_moneyMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Money Mission Resumed: %1",_missionType];
 
 _cash0 = createVehicle ["Land_Money_F", _posRand, [], 0, "CAN_COLLIDE"]; 
@@ -67,7 +67,7 @@ waitUntil
     sleep 10; 
 	_playerPresent = false;
 	_currTime = floor(time);
-	if(_currTime - _startTime >= moneyMissionTimeout) then {_result = 1;};
+	if(_currTime - _startTime >= A3W_moneyMissionTimeout) then {_result = 1;};
 	//if(alive _cash0) then {_allMoneyUp = 0;}
 	if((alive _cash0) OR (alive _cash1) OR (alive _cash2)) then {_allMoneyUp = 0;}
 	else {_allMoneyUp = 1;};

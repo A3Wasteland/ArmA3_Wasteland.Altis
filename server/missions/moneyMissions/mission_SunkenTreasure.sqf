@@ -4,7 +4,7 @@
 //	@file Created: 08/12/2012 15:19
 //	@file Args:
 
-#include "moneyMissionDefines.sqf";
+#include "moneyMissionDefines.sqf"
 
 if(!isServer) exitwith {};
 
@@ -21,7 +21,7 @@ _rand = floor (random 9);
 _posRand =	(getMarkerPos format ["treasure_%1", _rand]);
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to run: %1",_missionType];
-[moneyMissionDelayTime] call createWaitCondition;
+[A3W_moneyMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Money Mission Resumed: %1",_missionType];
 
 //not finished yet. need to find out how to get correct values for these :)
@@ -122,7 +122,7 @@ waitUntil
     sleep 10; 
 	_playerPresent = false;
     _currTime = floor(time);
-    if(_currTime - _startTime >= moneyMissionTimeout) then {_result = 1;};
+    if(_currTime - _startTime >= A3W_moneyMissionTimeout) then {_result = 1;};
 	//if(alive _cash0) then {_allMoneyUp = 0;}
 	if(alive _treas0)then {_allMoneyUp = 0;}
 	else {_allMoneyUp = 1;};
