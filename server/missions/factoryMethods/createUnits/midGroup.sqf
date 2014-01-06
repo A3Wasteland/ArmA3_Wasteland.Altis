@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_group", "_pos", "_leader", "_man2", "_man3", "_man4", "_man5", "_man6", "_man7"];
+private ["_group", "_pos", "_leader", "_man2", "_man3", "_man4", "_man5", "_man6", "_man7", "_man8", "_man9", "_man10"];
 
 _group = _this select 0;
 _pos = _this select 1;
@@ -87,6 +87,46 @@ _man7 addMagazine "1Rnd_HE_Grenade_shell";
 _man7 addMagazine "1Rnd_HE_Grenade_shell";
 _man7 addMagazine "1Rnd_HE_Grenade_shell";
 
+_ranman = floor (random 100);
+
+if (_ranman < 75) then {
+    //Support
+    _man8 = _group createunit ["C_man_polo_2_F", [(_pos select 0) - 30, (_pos select 1) - 30, 0], [], 0.5, "Form"];
+    removeAllAssignedItems _man8;
+    _man8 addUniform "U_B_CombatUniform_mcam_tshirt";
+    _man8 addVest "V_PlateCarrier1_rgr";
+    _man8 addWeapon "arifle_MK20C_F";
+    _man8 addMagazine "20Rnd_762x51_Mag";
+    _man8 addMagazine "20Rnd_762x51_Mag";
+    _man8 addMagazine "20Rnd_762x51_Mag";
+};
+
+
+if (_ranman < 50) then {
+    //Support
+    _man9 = _group createunit ["C_man_polo_2_F", [(_pos select 0) - 30, (_pos select 1) + 30, 0], [], 0.5, "Form"];
+    removeAllAssignedItems _man9;
+    _man9 addUniform "U_B_CombatUniform_mcam_tshirt";
+    _man9 addVest "V_PlateCarrier1_rgr";
+    _man9 addMagazine "30Rnd_556x45_Stanag";
+    _man9 addMagazine "30Rnd_556x45_Stanag";
+    _man9 addMagazine "30Rnd_556x45_Stanag";
+    _man9 addMagazine "30Rnd_556x45_Stanag";
+    _man9 addWeapon "arifle_MK20C_F";
+};
+
+if (_ranman < 25) then {
+    //Support
+    _man10 = _group createunit ["C_man_polo_2_F", [(_pos select 0) + 30, (_pos select 1) + 30, 0], [], 0.5, "Form"];
+    removeAllAssignedItems _man10;
+    _man10 addUniform "U_B_CombatUniform_mcam_tshirt";
+    _man10 addVest "V_PlateCarrier1_rgr";
+    _man10 addMagazine "30Rnd_556x45_Stanag";
+    _man10 addMagazine "30Rnd_556x45_Stanag";
+    _man10 addMagazine "30Rnd_556x45_Stanag";
+    _man10 addMagazine "30Rnd_556x45_Stanag";
+    _man10 addWeapon "arifle_MK20C_F";
+};
 _leader = leader _group;
 
 {

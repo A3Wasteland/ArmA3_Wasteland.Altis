@@ -5,15 +5,15 @@
 //	@file Args: none
 
 if (!isServer) exitwith {};
-#include "sideMissionDefines.sqf";
+#include "sideMissionDefines.sqf"
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_convoyVeh","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_convoyVeh","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader", "_unitsAlive"];
 
 _missionMarkerName = "MiniConvoy_Marker";
 _missionType = "Truck Convoy";
 diag_log format["WASTELAND SERVER - Side Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionType];
-[sideMissionDelayTime] call createWaitCondition;
+[A3W_sideMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the convoy (veh2 is the 'convoyed' vehicle
@@ -236,13 +236,12 @@ _startTime = floor(time);
 _numWaypoints = count waypoints _groupsm;
 waitUntil
 {
-    private ["_unitsAlive"];
     
     sleep 10; 
     
     _marker setMarkerPos (position leader _groupsm);
     
-    if ((floor time) - _startTime >= sideMissionTimeout) then { _failed = true };
+    if ((floor time) - _startTime >= A3W_sideMissionTimeout) then { _failed = true };
     if (currentWaypoint _groupsm >= _numWaypoints) then { _failed = true }; // Convoy got successfully to the target location
     _unitsAlive = { alive _x } count units _groupsm;
     
@@ -258,7 +257,7 @@ if(_failed) then
 	deleteGroup _groupsm; 
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time.</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
     [_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
+    diag_log format["WASTELAND SERVER - Side Mission Failed: %1 - %2 enemy left",_missionType, _unitsAlive];
 } else {
 	// Mission completed
 	// unlock the vehicles incase the player cleared the mission without destroying them
@@ -272,6 +271,7 @@ if(_failed) then
 	_ammobox = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
     [_ammobox,"mission_USSpecial2"] call fn_refillbox;
 	_ammobox allowDamage false;
+    _ammobox setVariable ["R3F_LOG_disabled", false, true];
 	
 	deleteGroup _groupsm; 
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The convoy has been stopped, the ammo creates and vehicles are yours to take.</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];

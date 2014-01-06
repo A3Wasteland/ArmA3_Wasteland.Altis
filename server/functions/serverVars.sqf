@@ -136,10 +136,22 @@ objectList =
 	"Land_RampConcrete_F",
 	"Land_RampConcreteHigh_F",
 	"Land_Sacks_goods_F",
+    "Land_Sacks_goods_F",
 	"Land_Shoot_House_Wall_F",
-	"Land_WaterBarrel_F"
+	"Land_BarrelWater_F",
+    "Land_BarrelWater_F"
 ];
 
+weaponboxList =
+[
+    "Box_NATO_Wps_F",
+    "Box_NATO_WpsSpecial_F",
+    "Box_East_Wps_F",
+    "Box_East_WpsSpecial_F",
+    "Box_IND_Wps_F",
+    "Box_IND_WpsSpecial_F"
+];
+    
 //Object List - Random Spawns.
 staticWeaponsList = 
 [

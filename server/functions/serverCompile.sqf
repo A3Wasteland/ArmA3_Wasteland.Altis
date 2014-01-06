@@ -64,6 +64,7 @@ createSmallGroup = [_path, "createUnits\smallGroup.sqf"] call mf_compile;
 createSupplyDrop = [_path, "createSupplyDrop.sqf"] call mf_compile;
 createWaitCondition = [_path, "createWaitCondition.sqf"] call mf_compile;
 deleteClientMarker = [_path, "deleteClientMarker.sqf"] call mf_compile;
+mission_WithVehicle = [_path, "mission_WithVehicle.sqf"] call mf_compile;
 
 //Function Compiles
 _path = "server\functions";

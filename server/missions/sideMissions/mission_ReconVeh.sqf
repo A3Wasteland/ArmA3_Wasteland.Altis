@@ -3,7 +3,7 @@
 //	@file Author: [404] Deadbeat, [404] Costlyy
 //	@file Created: 08/12/2012 15:19
 //	@file Args:
-#include "sideMissionDefines.sqf";
+#include "sideMissionDefines.sqf"
 
 if(!isServer) exitwith {};
 
@@ -23,7 +23,7 @@ _randomPos = _returnData select 0;
 _randomIndex = _returnData select 1;
 
 diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1",_missionType];
-[sideMissionDelayTime] call createWaitCondition;
+[A3W_sideMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Side Mission Resumed: %1",_missionType];
 
 [_missionMarkerName,_randomPos,_missionType] call createClientMarker;
@@ -48,8 +48,8 @@ waitUntil
     sleep 1; 
 	_playerPresent = false;
     _currTime = floor(time);
-    if(_currTime - _startTime >= sideMissionTimeout) then {_result = 1;};
-    {if((isPlayer _x) AND (_x distance _vehicle <= missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
+    if(_currTime - _startTime >= A3W_sideMissionTimeout) then {_result = 1;};
+    {if((isPlayer _x) AND (_x distance _vehicle <= A3W_missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
     _unitsAlive = ({alive _x} count units _CivGrpS);
     (_result == 1) OR ((_playerPresent) AND (_unitsAlive < 1)) OR ((damage _vehicle) == 1)
 };
@@ -65,7 +65,7 @@ if(_result == 1) then
     deleteGroup _CivGrpS;
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
 	[_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
+    diag_log format["WASTELAND SERVER - Side Mission Failed: %1 - %2 enemy left - Player Present %3",_missionType, _unitsAlive, _playerPresent];
 } else {
 	//Mission Complete.
     deleteGroup _CivGrpS;

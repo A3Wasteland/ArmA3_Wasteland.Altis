@@ -4,7 +4,7 @@
 
 // Cargo drop script used by 404Games with permission from [OCUK] MarKeR.
 // Modifications made by [404] Costlyy
-#include "mainMissionDefines.sqf";
+#include "mainMissionDefines.sqf"
 
 if(!isServer) exitwith {};
 
@@ -23,7 +23,7 @@ _randomPos = _returnData select 0;
 _randomIndex = _returnData select 1;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1",_missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1",_missionType];
 
 [_missionMarkerName,_randomPos,_missionType] call createClientMarker;

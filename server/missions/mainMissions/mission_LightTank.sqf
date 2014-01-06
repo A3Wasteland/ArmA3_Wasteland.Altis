@@ -5,7 +5,7 @@
 //	@file Args:
 
 if (!isServer) exitwith {};
-#include "mainMissionDefines.sqf";
+#include "mainMissionDefines.sqf"
 
 private ["_result","_missionMarkerName","_missionType","_startTime","_returnData","_randomPos","_randomIndex","_vehicleClass","_vehicle","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive"];
 
@@ -23,7 +23,7 @@ _randomPos = _returnData select 0;
 _randomIndex = _returnData select 1;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1",_missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1",_missionType];
 
 [_missionMarkerName,_randomPos,_missionType] call createClientMarker;
@@ -49,8 +49,8 @@ waitUntil
     sleep 1; 
 	_playerPresent = false;
     _currTime = floor(time);
-    if(_currTime - _startTime >= mainMissionTimeout) then {_result = 1;};
-    {if((isPlayer _x) AND (_x distance _vehicle <= missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
+    if(_currTime - _startTime >= A3W_mainMissionTimeout) then {_result = 1;};
+    {if((isPlayer _x) AND (_x distance _vehicle <= A3W_missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
     _unitsAlive = ({alive _x} count units _CivGrpM);
     (_result == 1) OR ((_playerPresent) AND (_unitsAlive < 1)) OR ((damage _vehicle) == 1)
 };

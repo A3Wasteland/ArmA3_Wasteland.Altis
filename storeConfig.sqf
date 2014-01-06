@@ -12,12 +12,12 @@ currentOwnerName = "";
 
 pistolArray = compileFinal str
 [
-	// Handguns
-    ["P07 Pistol", "hgun_P07_F", 50],
-	["Rook-40 Pistol", "hgun_Rook40_F", 50],
-	["ACP-C2 Pistol", "hgun_ACPC2_F", 75],
-	["Zubr Revolver", "hgun_Pistol_heavy_02_F", 75],
-	["4-Five Pistol", "hgun_Pistol_heavy_01_F", 100]
+	//Handgun
+    ["P07 Handgun", "hgun_P07_F", 50],
+	["Rook-40 Handgun", "hgun_Rook40_F", 50],
+	["ACP-C2 Handgun", "hgun_ACPC2_F", 75],
+    ["4-Five .45 handgun", "hgun_Pistol_heavy_01_F", 100],
+    ["Zubr .45 handgun", "hgun_Pistol_heavy_02_F", 75]
 ];
 
 smgArray = compileFinal str
@@ -51,8 +51,8 @@ rifleArray = compileFinal str
 	
 	// Markman Rifles
 	["MXM Rifle", "arifle_MXM_F", 300],
-	["DMR Rifle", "srifle_DMR_01_F", 350],
 	["Mk18 ABR Rifle", "srifle_EBR_F", 400],
+    ["Rahim 7.62 mm", "srifle_DMR_01_F", 350],
 
 	// Sniper Rifles
 	["M320 LRR Sniper", "srifle_LRR_SOS_F", 1000],
@@ -132,6 +132,7 @@ throwputArray = compileFinal str
 	["Smoke Grenade (Yellow)", "SmokeShellYellow", 50],
 	["Smoke Grenade (Orange)", "SmokeShellPurple", 50],
 	["Smoke Grenade (Red)", "SmokeShellRed", 50]
+
 ];
 
 //Gun Store Ammo List
@@ -140,9 +141,9 @@ ammoArray = compileFinal str
 [
 	["9mm 16Rnd Mag", "16Rnd_9x21_Mag", 10],
 	["9mm 30Rnd Mag", "30Rnd_9x21_Mag", 20],
-	[".45 ACP 6Rnd Cylinder", "6Rnd_45ACP_Cylinder", 5],
+    [".45 6Rnd cylinder", "6Rnd_45ACP_Cylinder", 5],
 	[".45 ACP 9Rnd Mag", "9Rnd_45ACP_Mag", 10],
-	[".45 ACP 11Rnd Mag", "11Rnd_45ACP_Mag", 15],
+    [".45 ACP 11Rnd Mag", "11Rnd_45ACP_Mag", 15],
 	[".45 ACP 30Rnd Vermin Mag", "30Rnd_45ACP_MAG_SMG_01", 20],
 	[".45 ACP 30Rnd Tracer (Green) Mag", "30Rnd_45ACP_Mag_SMG_01_tracer_green", 15],
 	["5.56mm 20Rnd Underwater Mag", "20Rnd_556x45_UW_mag", 10],
@@ -158,7 +159,7 @@ ammoArray = compileFinal str
 	["6.5mm 100Rnd Tracer (Red) Belt Case", "100Rnd_65x39_caseless_mag_Tracer", 50],
 	["6.5mm 200Rnd Belt Case", "200Rnd_65x39_cased_Box", 150],
 	["6.5mm 200Rnd Tracer (Green) Belt Case", "200Rnd_65x39_cased_Box_Tracer", 125],
-	["7.62mm 10Rnd Mag", "10Rnd_762x51_Mag", 15],
+    ["7.62mm 10Rnd Mag", "10Rnd_762x51_Mag", 15],
 	["7.62mm 20Rnd Mag", "20Rnd_762x51_Mag", 25],
 	["7.62mm 150Rnd Box", "150Rnd_762x51_Box", 150],
 	["7.62mm 150Rnd Tracer (Green) Box", "150Rnd_762x51_Box_Tracer", 125],
@@ -210,18 +211,17 @@ accessoriesArray = compileFinal str
 	["Suppressor 7.62mm", "muzzle_snds_B", 125, "item"],
 	["Flashlight", "acc_flashlight", 25, "item"],
 	["IR Laser Pointer", "acc_pointer_IR", 25, "item"],
-	["Yorris Zubr Sight", "optic_Yorris", 50, "item"],
-	["MRD 4-Five Sight", "optic_MRD", 50, "item"],
 	["ACO (CQB)", "optic_aco_smg", 50, "item"],
 	["Holosight (CQB)", "optic_Holosight_smg", 50, "item"],
 	["ACO (Red)", "optic_Aco", 75, "item"],
 	["ACO (Green)", "optic_Aco_grn", 75, "item"],
 	["Holosight", "optic_Holosight", 75, "item"],
+    ["Yorris Zubr Sight", "optic_Yorris", 50, "item"],
+    ["MRD 4-Five Sight", "optic_MRD", 50, "item"],
 	["MRCO", "optic_MRCO", 100, "item"],
-	["ARCO", "optic_Arco", 125, "item"],
-	["RCO", "optic_Hamr", 150, "item"],
 	["DMS", "optic_DMS", 175, "item"],
-	["LRPS", "optic_LRPS", 175, "item"],
+    ["ARCO", "optic_Arco", 125, "item"],
+	["RCO", "optic_Hamr", 150, "item"],
 	["SOS", "optic_SOS", 200, "item"],
 	["NVS", "optic_NVS", 400, "item"],
 	["TWS", "optic_tws", 600, "item"],
@@ -453,7 +453,7 @@ genItemArray = compileFinal str
 	["First Aid Kit", "FirstAidKit", 25, "item"],
 	["Medikit", "Medikit", 150, "item"],
 	["Toolkit", "ToolKit", 150, "item"],
-	["Mine Detector", "MineDetector", 100, "item"],
+    ["Mine Detector", "MineDetector", 100, "item"],
 	["NV Goggles", "NVGoggles", 100, "nvg"],
 	["Diving Goggles", "G_Diving", 100, "gogg"],
 	["Binoculars", "Binocular", 50, "binoc"],
@@ -461,9 +461,9 @@ genItemArray = compileFinal str
 	["Laser Designator", "Laserdesignator", 200, "binoc"],
 	["Laser Batteries", "Laserbatteries", 20, "mag"],
 	["Chemlight (Blue)", "Chemlight_blue", 25, "mag"],
-	["Chemlight (Green)", "Chemlight_green", 25, "mag"],
-	["Chemlight (Yellow)", "Chemlight_yellow", 25, "mag"],
-	["Chemlight (Red)", "Chemlight_red", 25, "mag"]
+    ["Chemlight (Green)", "Chemlight_green", 25, "mag"],
+    ["Chemlight (Yellow)", "Chemlight_yellow", 25, "mag"],
+    ["Chemlight (Red)", "Chemlight_red", 25, "mag"]
 ];
 
 allRegularStoreItems = compileFinal str (call allGunStoreFirearms + call throwputArray + call ammoArray + call accessoriesArray + call genItemArray);

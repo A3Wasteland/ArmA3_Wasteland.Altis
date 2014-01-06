@@ -5,10 +5,10 @@
 // Cargo drop script used by 404Games with permission from [OCUK] MarKeR.
 // Modifications made by [404] Costlyy
 
-#include "mainMissionDefines.sqf";
+
 
 if(!isServer) exitwith {};
-
+#include "mainMissionDefines.sqf"
 private ["_randomPos","_plane","_cargoItem_1","_cargoItem_2","_cargoItem_3","_cargoItem_4","_parachute","_dropPosition","_picture","_vehicleName","_missionType","_hint","_startTime","_currTime"];
 
 _plane = _this select 0;

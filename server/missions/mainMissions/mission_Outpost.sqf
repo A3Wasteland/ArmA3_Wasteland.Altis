@@ -5,7 +5,7 @@
 //	@file Args:
 
 if (!isServer) exitwith {};
-#include "mainMissionDefines.sqf";
+#include "mainMissionDefines.sqf"
 
 private ["_result","_missionMarkerName","_missionType","_startTime","_returnData","_randomPos","_randomIndex","_vehicleClass","_base","_veh","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive","_basetodelete"];
 
@@ -23,7 +23,7 @@ _randomPos = _returnData select 0;
 _randomIndex = _returnData select 1;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1",_missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1",_missionType];
 
 [_missionMarkerName,_randomPos,_missionType] call createClientMarker;
@@ -46,7 +46,7 @@ waitUntil
     sleep 1; 
 	_playerPresent = false;
 	_currTime = floor(time);
-    if(_currTime - _startTime >= mainMissionTimeout) then {_result = 1;};
+    if(_currTime - _startTime >= A3W_mainMissionTimeout) then {_result = 1;};
     _unitsAlive = ({alive _x} count units _CivGrpM);
     (_result == 1) OR (_unitsAlive < 1)
 };
@@ -63,6 +63,8 @@ if(_result == 1) then
     diag_log format["WASTELAND SERVER - Main Mission Failed: %1",_missionType];
 } else {
 	//Mission Complete.
+    _baseToEnable = nearestObjects [_randomPos, ["All"], 25];
+    { _x setVariable ["R3F_LOG_disabled", false, true] } forEach _baseToEnable;
     deleteGroup _CivGrpM;
     _hint = parseText format ["<t align='center' color='%3' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%3'>------------------------------</t><br/><t align='center' color='%4' size='1.25'>%1</t><br/><t align='center' color='%4'>The outpost has been captured, good work.</t>", _missionType, _vehicleName, successMissionColor, subTextColor];
 	[_hint] call hintBroadcast;
