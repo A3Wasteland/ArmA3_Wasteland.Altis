@@ -15,13 +15,15 @@ _obj allowDamage false;
 
 switch (_Objtype) do
 {
-	case "Land_WaterBarrel_F":
+	case "Land_BarrelWater_F":
 	{
 		_obj setVariable["water",50,true];
+        diag_log ("Created Water object");
 	};
 	case "Land_Sacks_goods_F":
 	{
 		_obj setVariable["food",40,true];
+        diag_log ("Created Food object");
 	};
 	case "B_supplyCrate_F":
 	{
@@ -37,10 +39,9 @@ switch (_Objtype) do
 		_obj addItemCargoGlobal ["ItemGPS", 5];
 		_obj addItemCargoGlobal ["Medikit", 4];
 		_obj addItemCargoGlobal ["ToolKit", 2];
+        _obj setVariable["R3F_LOG_disabled", true, true];
 	};
 };
-
-_obj setVariable["R3F_LOG_disabled",false];
 
 // fix for sunken/rissen objects :)
 _adjustPOS=0;

@@ -5,7 +5,7 @@
 //	@file Args: none
 
 if (!isServer) exitwith {};
-#include "mainMissionDefines.sqf";
+#include "mainMissionDefines.sqf"
 
 private ["_missionMarkerName","_missionType","_picture","_vehicleName","_vehicleName2","_vehicleName3","_hint","_waypoint","_routes","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupcc","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_ammobox2","_createVehicle","_leader"];
 
@@ -13,7 +13,7 @@ _missionMarkerName = "CoastalConvoy_Marker";
 _missionType = "Coastal Patrol";
 diag_log format["WASTELAND SERVER - Main Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the patrol (in hard difficulty also allows chance of mi48)
@@ -322,7 +322,7 @@ waitUntil
     
     _marker setMarkerPos (position leader _groupcc);
     
-    if ((floor time) - _startTime >= mainMissionTimeout) then { _failed = true };
+    if ((floor time) - _startTime >= A3W_mainMissionTimeout) then { _failed = true };
     if (currentWaypoint _groupcc >= _numWaypoints) then { _failed = true }; // patrol finished its route
     _unitsAlive = { alive _x } count units _groupcc;
     
@@ -352,10 +352,12 @@ if(_failed) then
 	_ammobox = "Box_IND_WpsSpecial_F" createVehicle getMarkerPos _marker;
     [_ammobox,"mission_Main_A3snipers"] call fn_refillbox;
 	_ammobox allowDamage false;
+    _ammobox setVariable ["R3F_LOG_disabled", false, true];
 	
     _ammobox2 = "Box_East_WpsSpecial_F" createVehicle getMarkerPos _marker;
     [_ammobox2,"mission_USLaunchers"] call fn_refillbox;
 	_ammobox2 allowDamage false;
+    _ammobox2 setVariable ["R3F_LOG_disabled", false, true];
 	
 	deleteGroup _groupcc; 
     _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The patrol has been stopped, the ammo crates are yours to take. Find them near the wreck!</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];

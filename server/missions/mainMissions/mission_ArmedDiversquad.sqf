@@ -3,7 +3,7 @@
 // @file Author: JoSchaap 
 
 if (!isServer) exitwith {};
-#include "mainMissionDefines.sqf";
+#include "mainMissionDefines.sqf"
 
 private ["_result","_missionMarkerName","_missionType","_startTime","_randomPos","_vehicleClass","_vehicle","_slbox","_slbox2","_picture","_vehicleName","_hint","_currTime","_playerPresent","_unitsAlive","_positions"];
 
@@ -29,7 +29,7 @@ _positions =
 _randomPos = _positions call BIS_fnc_SelectRandom;
 
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1",_missionType];
-[mainMissionDelayTime] call createWaitCondition;
+[A3W_mainMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Main Mission Resumed: %1",_missionType];
 
 [_missionMarkerName,_randomPos,_missionType] call createClientMarker;
@@ -73,15 +73,14 @@ waitUntil
     sleep 1; 
 	_playerPresent = false;
 	_currTime = floor(time);
-    if(_currTime - _startTime >= mainMissionTimeout) then {_result = 1;};
-    {if((isPlayer _x) AND (_x distance _slbox <= missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
+    if(_currTime - _startTime >= A3W_mainMissionTimeout) then {_result = 1;};
+    {if((isPlayer _x) AND (_x distance _slbox <= A3W_missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
     _unitsAlive = ({alive _x} count units _CivGrpM);
     (_result == 1) OR ((_playerPresent) AND (_unitsAlive < 1)) OR ((damage _slbox) == 1)
 };
 
 _vehicle setFuel 1;
 _vehicle setVehicleLock "UNLOCKED";
-_vehicle setVariable ["R3F_LOG_disabled", false, true];
 _slbox setVariable ["R3F_LOG_disabled", false, true];
 _slbox2 setVariable ["R3F_LOG_disabled", false, true];
 

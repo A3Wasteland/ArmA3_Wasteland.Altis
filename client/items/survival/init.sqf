@@ -49,12 +49,12 @@ MF_ITEMS_ENERGY_DRINK = "energydrink";
 	["take-food-sack", [_label, _code, nil,0, false, false, "", _condition]] call mf_player_actions_set;
 };
 
-// Take Water from White water container
+// Take Water from Blue water container
 [] call {
     private["_label", "_code", "_condition"];
-    _label = "<img image='client\icons\water.paa'/> Fill Water Bottle";
+    _label = "<img image='client\icons\water.paa'/> Fill water Bottle";
     _code = {
-        _nobj = (nearestobjects [player, ["Land_WaterBarrel_F"],  5] select 0);
+        _nobj = (nearestobjects [player, ["Land_BarrelWater_F"],  5] select 0);
         _nobj setVariable["water",(_nobj getVariable "water")-1,true];
         [MF_ITEMS_WATER, 1] call mf_inventory_add;
         player playmove "AinvPknlMstpSlayWrflDnon";
@@ -64,7 +64,7 @@ MF_ITEMS_ENERGY_DRINK = "energydrink";
                 _vecu = vectorUp _this;
                 _vecd = vectorDir _this;
                 deleteVehicle _this;
-                _veh = createVehicle ["Land_Barrel_empty", _npos, [], 0, "CAN_COLLIDE"];
+                _veh = createVehicle ["Land_BarrelEmpty_F", _npos, [], 0, "CAN_COLLIDE"];
                 _veh setVectorDirAndUp [_vecd, _vecu];
                 _veh spawn {sleep 5; deleteVehicle _this};
             };
@@ -73,7 +73,7 @@ MF_ITEMS_ENERGY_DRINK = "energydrink";
             hint format["You have filled a water bottle.\n(Water left: %1)", (_nobj getVariable "water")];
         };
     };
-    _condition = 'player distance (nearestobjects [player, ["Land_WaterBarrel_F"],  5] select 0) < 5 and not(MF_ITEMS_WATER call mf_inventory_is_full) and (nearestobjects [player, ["Land_WaterBarrel_F"],  5] select 0) getVariable "water" > 0';
+    _condition = 'player distance (nearestobjects [player, ["Land_BarrelWater_F"],  5] select 0) < 5 and not(MF_ITEMS_WATER call mf_inventory_is_full) and (nearestobjects [player, ["Land_BarrelWater_F"],  5] select 0) getVariable "water" > 0';
 	["take-water-barrel", [_label, _code, nil,0, false, false, "", _condition]] call mf_player_actions_set;
 };
 

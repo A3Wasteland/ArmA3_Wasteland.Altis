@@ -11,6 +11,9 @@ _col_enemy = "ColorRed";
 _col_friendly = "ColorGreen";
 _col_mixed = "ColorOrange";
 
+showmarkers = false;
+if ( A3W_showgunstorestatus) then {showmarkers = true;};
+
 //Creates the markers around gunstores.
 {
 	if (["GunStore", str _x] call fn_findString == 0) then
@@ -28,7 +31,7 @@ _col_mixed = "ColorOrange";
 		_markerName setMarkerAlphaLocal 0.5;
 
 		/*
-		// Gun store title    
+		// Gun store title	
 		_markerName = format["marker_shop_title_%1",_x];
 		deleteMarkerLocal _markerName;
 		_marker = createMarkerLocal [_markerName, _npcPos];
@@ -39,7 +42,7 @@ _col_mixed = "ColorOrange";
 		_markerName setMarkerTextLocal "GUN STORE";
 		*/
 
-		// Gun store description    
+		// Gun store description	
 		_markerName = format["marker_shop_desc_%1",_x];
 		deleteMarkerLocal _markerName;
 		// _npcPos set [1, (_npcPos select 1) - 100];
@@ -95,11 +98,11 @@ _setStatus =
 };
 
 //Check each store to see if their state has changed and then calls the update function to make the display the correct state.
-showmarkers = true;
+
 while {showmarkers} do
 {
-    {
-    	_npcPos = getPos _x;
+	{
+		_npcPos = getPos _x;
 		_friendlyCount = 0;
 		_enemyCount = 0;
 		{
@@ -136,7 +139,7 @@ while {showmarkers} do
 					[_forEachIndex, "EMPTY", false] call _setStatus;
 				};
 			};
-		};    
-    } forEach _gunStores;
+		};	
+	} forEach _gunStores;
 	sleep 1;
 };

@@ -5,7 +5,7 @@
 //	@file Args: none
 
 if (!isServer) exitwith {};
-#include "moneyMissionDefines.sqf";
+#include "moneyMissionDefines.sqf"
 
 private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_MoneyShipmentVeh","_veh1","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader"];
 
@@ -13,7 +13,7 @@ _missionMarkerName = "Money_Shipment";
 _missionType = "Money Shipment";
 diag_log format["WASTELAND SERVER - Money Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Money Mission Waiting to run: %1", _missionType];
-[moneyMissionDelayTime] call createWaitCondition;
+[A3W_moneyMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Money Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the Money Shipment 
@@ -245,7 +245,7 @@ waitUntil
     
     _marker setMarkerPos (position leader _group);
     
-    if ((floor time) - _startTime >= moneyMissionTimeout) then { _failed = true };
+    if ((floor time) - _startTime >= A3W_moneyMissionTimeout) then { _failed = true };
     if (currentWaypoint _group >= _numWaypoints) then { _failed = true }; // Money Shipment got successfully to the target location
     _unitsAlive = { alive _x } count units _group;
     
