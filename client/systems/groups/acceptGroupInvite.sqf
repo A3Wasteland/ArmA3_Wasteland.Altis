@@ -3,10 +3,11 @@
 //	@file Author: [404] Deadbeat
 //	@file Created: 20/11/2012 05:19
 
-private["_inviterUID","_inviter"];
+private["_groupExists","_inviterUID","_inviter"];
 
 //Get the inviters UID
 _groupExists = false;
+_inviterUID = "";
 {
 	if(getPlayerUID player == _x select 1) then
 	{
@@ -18,7 +19,7 @@ _groupExists = false;
 }forEach currentInvites;
 
 //Get the inviter with their UID
-if (!isNil "_inviterUID") then {
+if (_inviterUID != "") then {
 	{
 		if(getPlayerUID _x == _inviterUID) then
 	    {
@@ -31,7 +32,7 @@ if (!isNil "_inviterUID") then {
 if(_groupExists) then
 {
 	[player] join (group _inviter);
-    player globalChat format["you have accepted the invite"];
+    player globalChat format["You have accepted the invite"];
 } else {
 	player globalChat format["The group no longer exists or the leader disconnected"];    
 }; 
