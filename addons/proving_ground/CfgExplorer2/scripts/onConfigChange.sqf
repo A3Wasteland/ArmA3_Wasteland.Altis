@@ -2,7 +2,7 @@
 disableSerialization;
 private ["_currentCtrl", "_selectedIndex"];
 
-_currentCtrl = _this select 0;    // not really used
+//_currentCtrl = _this select 0;    // not really used
 _selectedIndex = _this select 1;
 
 // ***

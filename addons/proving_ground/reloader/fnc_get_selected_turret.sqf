@@ -1,4 +1,7 @@
 #include "defs.hpp"
+
+private ["_selection","_i","_index_turret"];
+
 _selection = (lbSelection GET_CTRL(balca_loader_turret_list_IDC) select 0);
 if (isNil {_selection}) then {_selection = 0};
 _index_turret = [(GET_CTRL(balca_loader_turret_list_IDC) lbvalue _selection)];

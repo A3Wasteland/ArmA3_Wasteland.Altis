@@ -1,6 +1,7 @@
 #include "macros.hpp"
+
+private ["_curConfig","_valueNames","_parentLevel","_Entry","_EntryName","_Code","_confName","_newLine","_text","_index","_ArrayString"];
 disableSerialization;
-private ["_curConfig", "_valueNames", "_parentLevel", "_Entry", "_EntryName", "_Code", "_confName", "_newLine", "_y", "_text", "_index", "_ArrayString"];
 
 // ***
 // *** Get Parameters

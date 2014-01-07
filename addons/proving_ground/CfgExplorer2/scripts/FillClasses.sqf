@@ -1,6 +1,9 @@
 #include "macros.hpp"
+
+private ["_curConfig","_preIndex","_Entry","_cfgName","_index"];
+
 disableSerialization;
-private ["_curConfig", "_preIndex", "_i", "_Entry", "_cfgName", "_index"];
+
 
 // ***
 // *** Get Parameter

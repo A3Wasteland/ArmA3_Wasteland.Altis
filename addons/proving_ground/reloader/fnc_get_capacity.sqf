@@ -1,5 +1,7 @@
 #include "defs.hpp"
+
 disableSerialization;
+private ["_compatible_magazines","_magazines","_default_magazines","_current_magazines","_subturrets","_turret","_turrets","_capacity_current","_capacity_max","_veh","_veh_type","_index_turret","_weapon","_arr"];
 
 _veh = GET_SELECTED_VEHICLE;
 _veh_type = GET_SELECTED_DATA(balca_loader_vehicle_list_IDC);

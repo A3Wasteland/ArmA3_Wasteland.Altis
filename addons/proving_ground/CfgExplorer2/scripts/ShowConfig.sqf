@@ -1,12 +1,13 @@
 #include "macros.hpp"
+
 disableSerialization;
-private ["_configRoot", "_currentPath", "_ValuesArray", "_debug"];
+private ["_configRoot","_configPath","_currentConfig"];
 
 // ***
 // *** get parameter
 // ***
 
-_configRoot = _this select 0;
+//_configRoot = _this select 0;
 _configPath = _this select 1;
 _currentConfig = _configPath select (count(_configPath)-1);   // returns last element
 

@@ -1,5 +1,7 @@
 #include "defs.hpp"
 
+private ["_veh","_magazine","_index_turret"];
+
 _veh = GET_SELECTED_VEHICLE;
 _magazine = GET_SELECTED_DATA(balca_loader_current_magazines_IDC);
 _index_turret = GET_SELECTED_TURRET;

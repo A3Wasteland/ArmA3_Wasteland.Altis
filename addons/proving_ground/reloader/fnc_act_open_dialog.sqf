@@ -1,5 +1,7 @@
 #include "defs.hpp"
+
 disableSerialization;
+private ["_vehlist","_reloader"];
 
 _reloader = _this;
 

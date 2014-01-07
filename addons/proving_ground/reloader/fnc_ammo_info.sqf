@@ -1,4 +1,7 @@
 #include "defs.hpp"
+
+private ["_text","_ctrl","_index","_mag","_count","_displayName","_initSpeed","_shell","_hit","_indirectHit","_indirectHitRange","_ACE_damage","_timeToLive","_lb"];
+
 disableSerialization;
 _ctrl = _this select 0 select 0;
 _index = _this select 0 select 1;
@@ -9,7 +12,7 @@ _count = getNumber(configFile>>"CfgMagazines">>_mag>>"count");
 _displayName = getText (configFile >> "CfgMagazines" >> _mag >> "displayName");
 _initSpeed = getnumber(configFile >> "cfgMagazines" >> _mag >> "initSpeed");
 _shell = gettext(configFile >> "cfgMagazines" >> _mag >> "ammo");
-_displayName = getText (configFile >> "CfgAmmo" >> _shell >> "displayName");
+//_displayName = getText (configFile >> "CfgAmmo" >> _shell >> "displayName");
 _hit = getnumber(configFile >> "cfgAmmo" >> _shell >> "hit");
 _indirectHit = getnumber(configFile >> "cfgAmmo" >> _shell >> "indirectHit");
 _indirectHitRange = getnumber(configFile >> "cfgAmmo" >> _shell >> "indirectHitRange");

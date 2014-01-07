@@ -6,8 +6,12 @@
 
 //if (!isServer) exitWith {closeDialog 0};
 
-_addMarker = {
-	_name = _this select 0;
+private ["_unit","_props","_tdist","_tspeed","_tdir","_rprops","_rdist","_rspeed","_rdir","_air_wp_dist","_target_mode","_kindOf","_filter","_res","_veh","_types","_opt","_vehicle","_cfgvehicles","_selection","_idc","_turret","_weapons","_magazines","_subturrets","_displayName","_armor","_maxSpeed","_turrets","_lb","_text","_unit_type","_core","_dir","_pos","_wp","_grp","_reset_land","_map_enabled","_markerName","_count","_addMarker","_clearMarkers","_drawMarkers","_mode"];
+
+_addMarker = {	
+    private ["_name","_pos","_text"];
+
+    _name = _this select 0;
 	_pos = _this select 1;
 	_text = _this select 2;
 	createMarkerLocal [_name,_pos];
@@ -24,7 +28,9 @@ _clearMarkers = {
 };
 
 _drawMarkers = {
-	_grp = _this;
+	private ["_markerName","_forEachIndex","_pos","_text","_addMarker","_grp"];
+
+    _grp = _this;
 	{if ((waypointType _x)=="MOVE") then {
 		_markerName = format ["PG_WPMarker%1",str (_forEachIndex+1)];
 		_pos = waypointPosition _x;
@@ -222,6 +228,7 @@ case 5: {//clear targets
 	};
 case 6: {//apply
 		_reset_land = {
+			private ["_unit"];
 				{
 					_unit = _x select 0;
 					deleteVehicle _unit;
@@ -237,8 +244,9 @@ case 6: {//apply
 				GVAR(target_props) = [parseNumber ctrlText GET_CTRL(balca_target_distance_IDC),parseNumber ctrlText GET_CTRL(balca_target_speed_IDC),(parseNumber ctrlText GET_CTRL(balca_target_direction_IDC))%360];
 				call PG_get(FNC_MOVE_LAND_TARGETS);//reset position of targets
 				if ((PG_get(TARGET_PROPS) select 1)>0) then {//if speed>0 start moving
-					[] spawn {
-						_shift = 0;
+					[] spawn {						
+                        private ["_shift_inc","_shift","_delay","_speed"];
+                        _shift = 0;
 						_delay = 0.03;
 						_speed = (PG_get(TARGET_PROPS) select 1);
 						_shift_inc = (_speed*_delay);

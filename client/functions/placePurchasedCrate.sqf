@@ -5,7 +5,7 @@
 //	@file Args: [CrateType] (60 = ammo, 61 = weapon)
 
 #define PURCHASED_CRATE_TYPE_AMMO 60
-#define PURCHASED_CRATE_TYPE_WEAPON 61
+//#define PURCHASED_CRATE_TYPE_WEAPON 61
 
 private["_storeOwnerID", "_storeOwnerName", "_crateType","_ammoClasses","_createCrate"];
 

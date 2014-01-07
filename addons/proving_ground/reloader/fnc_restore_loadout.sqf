@@ -1,5 +1,8 @@
 #include "defs.hpp"
 //diag_log "restore_loadout";
+
+private ["_current_magazines","_default_magazines","_turret","_weapons","_subturrets","_veh","_veh_type","_default_magazines_hull","_turrets"];
+
 _veh = GET_SELECTED_VEHICLE;
 _veh_type = GET_SELECTED_DATA(balca_loader_vehicle_list_IDC);
 

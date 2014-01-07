@@ -1,6 +1,5 @@
 #include "defs.hpp"
-private ["_event","_keyCode","_shift","_control","_alt"];
-private["_handled","_ctrl", "_dikCode", "_shift", "_ctrlKey", "_alt"];
+private ["_shift","_alt","_handled","_ctrl","_dikCode","_ctrlKey","_newpos","_pitch","_dir","_balca_satcam","_cam","_keyhandler","_campos","_fov"];
 _ctrl = _this select 0;
 _dikCode = _this select 1;
 _shift = _this select 2;

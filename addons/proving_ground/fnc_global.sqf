@@ -1,5 +1,7 @@
 _fnc_create_land_target = {
-	private ["_index","_unit_type"];
+
+	private ["_index","_unit_type","_is_new","_unit","_offset","_core","_dir","_pos","_tdist","_tspeed","_tdir","_grp","_target"];
+
 	_index = _this select 0;
 	_unit_type = _this select 1;
 	_offset = if (count(_this) >2) then {_this select 2}else{0};
@@ -9,7 +11,9 @@ _fnc_create_land_target = {
 	_dir = getDir _core;
 	_pos = getPos _core;
 	_tdist = PG_get(target_props) select 0;
-	_tspeed = PG_get(target_props) select 1;
+
+	//_tspeed = PG_get(target_props) select 1;
+
 	_tdir = PG_get(target_props) select 2;
 	_grp = createGroup PG_get(opfor);
 	_grp copyWaypoints PG_get(target_grp);
@@ -82,7 +86,7 @@ _fnc_create_land_target = {
 };
 
 _fnc_create_crew = {
-	private["_unit","_crew","_grp","_veh"];
+	private ["_unit","_crew","_grp","_veh","_forEachIndex","_target_mode"];
 	_veh = _this select 0;
 	_grp = _this select 1;
 	_crew = getArray(configFile >> "cfgVehicles" >> (typeOf _veh) >> "typicalCargo");
@@ -118,7 +122,8 @@ _fnc_create_crew = {
 };
 
 _fnc_create_air_target = {
-	_index = _this select 0;
+    private ["_index","_veh_type","_count","_core","_tdist","_tspeed","_tdir","_dir","_pos","_veh","_grp","_target"];
+    _index = _this select 0;
 	_veh_type = _this select 1;
 	_count = count PG_get(air_targets);
 	if (_index == -1) then {_index = _count;};
@@ -126,8 +131,8 @@ _fnc_create_air_target = {
 		
 	_core = PG_get(core);
 	_tdist = PG_get(target_props) select 0;
-	_tspeed = PG_get(target_props) select 1;
-	_tdir = PG_get(target_props) select 2;
+	//_tspeed = PG_get(target_props) select 1;
+	//_tdir = PG_get(target_props) select 2;
 	_dir = getDir _core;
 	_pos = getPos _core;
 	_veh = createVehicle [_veh_type, [0,0,1000], [], 0, "FLY"];
@@ -151,11 +156,12 @@ _fnc_create_air_target = {
 };
 
 _fnc_move_land_targets = {
-	_shift = _this select 0;
+    private ["_target","_unit","_side_offset","_tpos","_shift","_move_only","_core","_tdist","_tspeed","_tdir","_dir","_pos","_land_targets"];
+    _shift = _this select 0;
 	_move_only = _this select 1;//change position only of selected unit index, -1 - change position of all units
 	_core = PG_get(core);
 	_tdist = PG_get(target_props) select 0;
-	_tspeed = PG_get(target_props) select 1;
+	//_tspeed = PG_get(target_props) select 1;
 	_tdir = PG_get(target_props) select 2;
 	_dir = getDir _core;
 	_pos = getPos _core;
@@ -172,15 +178,16 @@ _fnc_move_land_targets = {
 };
 
 _fnc_calc_offsets = {
-	_land_targets = PG_get(land_targets);
+    private ["_tdir","_unit","_type","_size","_between","_center_offset","_prev_size","_forEachIndex","_side_offset","_land_targets","_core","_dir","_pos","_betweenArray","_new_land_targets"];
+    _land_targets = PG_get(land_targets);
 	_core = PG_get(CORE);
 	_dir = getDir _core;
-	_pos = getPos _core;
+	//_pos = getPos _core;
 	_center_offset = 0;
 	_prev_size = 0;
 	_betweenArray = [];
 	{//calculate side offsets
-		_unit = _x select 0;
+		//_unit = _x select 0;
 		_type = _x select 1;
 		_size = switch true do {
 			case (_type isKindOf "man"): {1};
@@ -204,7 +211,8 @@ _fnc_calc_offsets = {
 };
 
 _fnc_move_rand_land = {
-	_unit = _this;
+	private ["_shift_inc","_shift","_tpos","_delay","_cdist","_cdir","_side_offset","_unit","_props","_tdist","_tdir","_core","_dir","_pos","_rprops","_rdist","_rspeed","_rdir","_PG_tdist"];
+    _unit = _this;
 	_props = PG_get(target_props);
 	_tdist = _props select 0;
 	_tdir = _props select 2;
@@ -251,20 +259,20 @@ PG_set(fnc_move_rand_land,_fnc_move_rand_land);
 
 _booster_keyhandler = 
 {
-	private["_handled","_ctrl", "_dikCode", "_shift", "_ctrlKey", "_alt"];
-	_ctrl = _this select 0;
+	private ["_handled","_ctrl","_dikCode","_shift","_ctrlKey","_alt","_veh","_vel","_pos","_dir","_pitch","_vel_new"];
+	//_ctrl = _this select 0;
 	_dikCode = _this select 1;
 	_shift = _this select 2;
 	_ctrlKey = _this select 3;
 	_alt = _this select 4;
 	_handled = false;
 	if (!_shift && !_ctrlKey && !_alt && (_dikCode == 18)&&(vehicle player != player)) then {
-			
-			_ctrl = nil;
+
+			//_ctrl = nil;
 			_handled = true;
 			_veh = vehicle player;
 			_vel = velocity _veh;
-			_pos = getPos _veh;
+			//_pos = getPos _veh;
 			_dir = getdir _veh;
 			_pitch = acos((vectorUp _veh) select 2);
 			_vel_new = [((_vel select 0) + 10*sin(_dir)),((_vel select 1) + 10*cos(_dir)),((_vel select 2) + 10*sin(_pitch))];
@@ -275,6 +283,8 @@ _booster_keyhandler =
 PG_set(booster_keyhandler,_booster_keyhandler);
 
 _fnc_add_weapon = {
+	private ["_cWepType","_current_magazines","_compatible_magazines","_magazines","_weapon","_weaponCfg","_type"];
+
 	_weapon = _this select 0;
 	_weaponCfg = (configFile >> "cfgWeapons" >> _weapon);
 	_type = getNumber(_weaponCfg >> "type");

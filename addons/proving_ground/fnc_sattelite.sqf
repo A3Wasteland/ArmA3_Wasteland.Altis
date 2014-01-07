@@ -1,4 +1,6 @@
 #include "defs.hpp"
+private ["_pos","_cam","_dir","_pitch","_fov","_keyhandler"];
+
 _pos = _this select 0;
 _pos = [_pos select 0,_pos select 1,-(_pos select 2)];
 disableSerialization;
@@ -18,7 +20,9 @@ _keyhandler = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call c_
 GVAR(balca_satcam) = [_cam,_keyhandler,[_pos select 0,_pos select 1,200],[_dir,_pitch,_fov]];
 GVAR(balca_satcam_mouseHandlerId) = (findDisplay 46) displayAddEventHandler ["MouseMoving", "_this call c_proving_ground_balca_satcam_MouseMovingHandler"];
 GVAR(balca_satcam_MouseMovingHandler) = {
-	_display = _this select 0;
+    private ["_display","_dx","_dy","_balca_satcam","_cam","_keyhandler","_campos","_dir","_pitch","_fov"];
+
+    //_display = _this select 0;
 	_dx = _this select 1;
 	_dy = _this select 2;
 

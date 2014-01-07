@@ -2,6 +2,8 @@
 #define GET_DISPLAY (findDisplay balca_stat_display_IDD)
 #define GET_CTRL(a) (GET_DISPLAY displayCtrl ##a)
 
+private ["_weapon","_hits","_kills","_shots","_props","_tdist","_tspeed","_tdir","_rprops","_rdist","_rspeed","_rdir","_lb","_displayName","_mode_text","_text","_stat","_killer","_mode","_opt"];
+
 _stat = PG_get(STAT);
 _mode = _this select 0;
 _opt = _this select 1;
@@ -14,11 +16,11 @@ case 0: {//init
 	_props = PG_get(TARGET_PROPS);
 	_tdist = _props select 0;
 	_tspeed = _props select 1;
-	_tdir = _props select 2;
+	//_tdir = _props select 2;
 	_rprops = PG_get(TARGET_PROPS_RAND);
 	_rdist = _rprops select 0;
 	_rspeed = _rprops select 1;
-	_rdir = _rprops select 2;
+	//_rdir = _rprops select 2;
 	_lb = parseText "<br/>";
 	_displayName = getText(configFile >> "cfgWeapons" >> _weapon >> "displayName");
 	_mode_text = switch PG_get(target_mode) do {
