@@ -34,7 +34,7 @@ _checks = {
 
 private ["_success", "amount", "_money"];
 MUTEX_LOCK_OR_FAIL;
-_success = [DURATION, ANIMATION, _checks, [_warchest]] call mf_util_playUntil;
+_success = [DURATION, ANIMATION, _checks, [_warchest]] call a3w_actions_start;
 MUTEX_UNLOCK;
 if (_success) then {
 	_amount = 0;

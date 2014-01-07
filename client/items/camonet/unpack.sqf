@@ -35,7 +35,7 @@ _hasFailed = {
     [_failed, _text];
 };
 
-_success =  [DURATION, ANIM, _hasFailed, []] call mf_util_playUntil;
+_success =  [DURATION, ANIM, _hasFailed, []] call a3w_actions_start;
     
 if (_success) then {
 	_pos = getPosATL player;

@@ -38,7 +38,7 @@ _checks = {
     [_failed, _text];
 };
 
-_success = [DURATION, ANIMATION, _checks, []] call mf_util_playUntil;
+_success = [DURATION, ANIMATION, _checks, []] call a3w_actions_start;
 
 if (_success) then {
 	player setDamage 0;

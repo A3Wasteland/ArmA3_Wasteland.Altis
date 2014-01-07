@@ -5,7 +5,6 @@
 //@file Description: Deploy a Spawn Beacon
 //@file Argument: [player, player, _action, []] the standard "called by an action" values
 
-#include "mutex.sqf"
 #define ANIM "AinvPknlMstpSlayWrflDnon_medic"
 #define ERR_CANCELLED "Action Cancelled"
 #define ERR_IN_VEHICLE "Action Failed! You can't do this in a vehicle"
@@ -25,7 +24,7 @@ _hasFailed = {
     };
     [_failed, _text];
 };
-_success = [MF_ITEMS_SPAWN_BEACON_DURATION, ANIM, _hasFailed, []] call mf_util_playUntil;
+_success = [MF_ITEMS_SPAWN_BEACON_DURATION, ANIM, _hasFailed, []] call a3w_actions_start;
 
 if (_success) then {
     _uid = getPlayerUID player;

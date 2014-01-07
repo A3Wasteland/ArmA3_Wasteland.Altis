@@ -23,7 +23,7 @@ _hasFailed = {
 	[_failed, _text];
 };
 
-_success = [5, ANIMATION, _hasFailed, []] call mf_util_playUntil;
+_success = [5, ANIMATION, _hasFailed, []] call a3w_actions_start;
 if (_success) then
 {
 	[] spawn

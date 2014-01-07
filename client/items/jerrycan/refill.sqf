@@ -36,7 +36,7 @@ _checks = {
     };
     [_failed, _text];
 };
-_success = [DURATION, ANIMATION, _checks, [_container]] call mf_util_playUntil;
+_success = [DURATION, ANIMATION, _checks, [_container]] call a3w_actions_start;
 if (_success) then {
 	[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_add;
 	[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_remove;

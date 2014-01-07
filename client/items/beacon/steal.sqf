@@ -5,7 +5,6 @@
 //@file Description: Steal the nearest Spawn Beacon
 //@file Argument: [player, player, _action, []] the standard "called by an action" values
 
-#include "mutex.sqf"
 #define ANIM "AinvPknlMstpSlayWrflDnon_medic"
 #define ERR_IN_VEHICLE "Stealing Spawn Beacon Failed! You can't do this in a vehicle"
 #define ERR_NOT_OPP_SIDE "Stealing Spawn Beacon Failed! Someone else finished stealing it first."
@@ -39,9 +38,7 @@ _hasFailed = {
 	};
 	[_failed, _text];
 };
-MUTEX_LOCK_OR_FAIL;
-_success =  [MF_ITEMS_SPAWN_BEACON_STEAL_DURATION, ANIM, _hasFailed, [_beacon]] call mf_util_playUntil;
-MUTEX_UNLOCK;
+_success =  [MF_ITEMS_SPAWN_BEACON_STEAL_DURATION, ANIM, _hasFailed, [_beacon]] call a3w_actions_start;
 
 if (_success) then {
     pvar_spawn_beacons = pvar_spawn_beacons - [_beacon];

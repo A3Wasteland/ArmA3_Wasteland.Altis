@@ -48,7 +48,7 @@ _checks = {
     [_failed, _text];
 };
 
-_success = [DURATION, ANIMATION, _checks, [_vehicle]] call mf_util_playUntil;
+_success = [DURATION, ANIMATION, _checks, [_vehicle]] call a3w_actions_start;
 
 if (_success) then {
 	_vehicle setDamage 0;

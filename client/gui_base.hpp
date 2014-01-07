@@ -95,6 +95,17 @@
 ///////////////////////////////////////////////////////////////////////////
 /// Base Classes
 ///////////////////////////////////////////////////////////////////////////
+
+class RscProgressBar {
+	access = 0;
+	type = CT_PROGRESS;
+	style = ST_HORIZONTAL;
+	colorFrame[] = {0,0,0,1};
+	colorBar[] = {0,0,0,0.5};
+	shadow = 2;
+	texture = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
+};
+
 class RscText
 {
 	access = 0;

@@ -39,7 +39,7 @@ _hasFailed = {
 };
 
 MUTEX_LOCK_OR_FAIL;
-_success =  [DURATION, ANIM, _hasFailed, [_netting]] call mf_util_playUntil;
+_success =  [DURATION, ANIM, _hasFailed, [_netting]] call a3w_actions_start;
 MUTEX_UNLOCK;
     
 if (_success) then {
