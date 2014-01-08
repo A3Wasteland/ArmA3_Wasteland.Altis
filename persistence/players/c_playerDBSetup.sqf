@@ -151,5 +151,3 @@ sendToServer = compile _sendToServer;
 	(_this select 1) spawn applyPlayerDBValues;
 };
 //===========================================================================
-
-statFunctionsLoaded = 1;
