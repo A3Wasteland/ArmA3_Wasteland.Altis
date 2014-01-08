@@ -27,14 +27,36 @@ currentOwnerID = _owner;
 		{
 			switch (_x) do 
 			{
+				case "Land":
+				{
+					(_Dialog displayCtrl vehshop_button0) ctrlShow false;
+				};
+				case "Armored":
+				{
+					(_Dialog displayCtrl vehshop_button1) ctrlShow false;
+				};
+				case "Tanks":
+				{
+					(_Dialog displayCtrl vehshop_button2) ctrlShow false;
+				};				
+				case "Helicopters": 
+				{
+					(_Dialog displayCtrl vehshop_button3) ctrlShow false;
+				};
+				case "Planes": 
+				{
+					(_Dialog displayCtrl vehshop_button4) ctrlShow false;
+				};
 				case "Boats": 
 				{
-					_boatButton ctrlShow false;
+					(_Dialog displayCtrl vehshop_button5) ctrlShow false;
 				};
+				/*
 				case "Submarines":
 				{
 					_subButton	ctrlShow false;
 				};
+				*/
 			};
 		} forEach (_x select 3);
 	};
