@@ -6,7 +6,7 @@
 
 // Check if mutex lock is active.
 if(R3F_LOG_mutex_local_verrou) exitWith {
-	player globalChat STR_R3F_LOG_mutex_action_en_cours;
+	player globalChat (localize "STR_R3F_LOG_mutex_action_en_cours");
 };
 
 private["_locking", "_currObject", "_lockState", "_lockDuration", "_stringEscapePercent", "_interation", "_unlockDuration", "_totalDuration"];
