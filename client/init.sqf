@@ -110,6 +110,7 @@ waituntil {!(IsNull (findDisplay 46))};
 "compensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 
 //client Executes
+[] execVM "client\systems\revive\revive_Init.sqf";
 [] execVM "client\functions\initSurvival.sqf";
 [] execVM "client\systems\hud\playerHud.sqf";
 [] execVM "client\functions\createTownMarkers.sqf";
