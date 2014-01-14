@@ -41,21 +41,18 @@ spawnActionHandle = _params spawn
 	{
 		case 0:
 		{
-			_scriptHandle = [] execVM "client\functions\spawnRandom.sqf";
-			waitUntil {scriptDone _scriptHandle};
+			call compile preprocessFileLineNumbers "client\functions\spawnRandom.sqf";
 		};
 		case 1:
 		{
 			if (showBeacons) then
-			{ 	
-				_scriptHandle = [_buttonText] execVM "client\functions\spawnOnBeacon.sqf";
-				waitUntil {scriptDone _scriptHandle};
+			{
+				call compile preprocessFileLineNumbers "client\functions\spawnOnBeacon.sqf";
 			}
 			else
 			{
-				_scriptHandle = [_buttonText] execVM "client\functions\spawnInTown.sqf";
-				waitUntil {scriptDone _scriptHandle};
-			}; 
+				call compile preprocessFileLineNumbers "client\functions\spawnInTown.sqf";
+			};
 		};
 	};
 

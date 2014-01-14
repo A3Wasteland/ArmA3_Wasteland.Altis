@@ -14,7 +14,7 @@ disableSerialization; // A cause des displayCtrl
 
 if (R3F_LOG_mutex_local_verrou) then
 {
-	player globalChat STR_R3F_LOG_mutex_action_en_cours;
+	player globalChat (localize "STR_R3F_LOG_mutex_action_en_cours");
 }
 else
 {
@@ -84,13 +84,13 @@ else
 	_dlg_contenu_vehicule = findDisplay R3F_LOG_IDD_dlg_contenu_vehicule;
 	
 	/**** DEBUT des traductions des labels ****/
-	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_titre) ctrlSetText STR_R3F_LOG_dlg_CV_titre;
-	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_credits) ctrlSetText STR_R3F_ARTY_LOG_nom_produit;
-	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_btn_decharger) ctrlSetText STR_R3F_LOG_dlg_CV_btn_decharger;
-	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_btn_fermer) ctrlSetText STR_R3F_LOG_dlg_CV_btn_fermer;
+	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_titre) ctrlSetText (localize "STR_R3F_LOG_dlg_CV_titre");
+	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_credits) ctrlSetText (localize "STR_R3F_ARTY_LOG_nom_produit");
+	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_btn_decharger) ctrlSetText (localize "STR_R3F_LOG_dlg_CV_btn_decharger");
+	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_btn_fermer) ctrlSetText (localize "STR_R3F_LOG_dlg_CV_btn_fermer");
 	/**** FIN des traductions des labels ****/
 	
-	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_capacite_vehicule) ctrlSetText (format [STR_R3F_LOG_dlg_CV_capacite_vehicule, _chargement_actuel, _chargement_maxi]);
+	(_dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_capacite_vehicule) ctrlSetText (format [(localize "STR_R3F_LOG_dlg_CV_capacite_vehicule"), _chargement_actuel, _chargement_maxi]);
 	
 	_ctrl_liste = _dlg_contenu_vehicule displayCtrl R3F_LOG_IDC_dlg_CV_liste_contenu;
 	
@@ -118,7 +118,7 @@ else
 				// Si le téléphone satellite est utilisé pour un PC d'artillerie
 				if (!(isNil "R3F_ARTY_active") && (_tab_objets select _i) == "SatPhone") then
 				{
-					_index = _ctrl_liste lbAdd ("     " + STR_R3F_LOG_nom_pc_arti + format [" (%1x)", _tab_quantite select _i]);
+					_index = _ctrl_liste lbAdd ("     " + (localize "STR_R3F_LOG_nom_pc_arti") + format [" (%1x)", _tab_quantite select _i]);
 				}
 				else
 				{

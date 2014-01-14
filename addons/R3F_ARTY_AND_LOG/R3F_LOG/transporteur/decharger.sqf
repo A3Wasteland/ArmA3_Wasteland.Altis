@@ -10,7 +10,7 @@
 
 if (R3F_LOG_mutex_local_verrou) then
 {
-	player globalChat STR_R3F_LOG_mutex_action_en_cours;
+	player globalChat (localize "STR_R3F_LOG_mutex_action_en_cours");
 }
 else
 {
@@ -53,7 +53,7 @@ else
 			private ["_dimension_max"];
 			_dimension_max = (((boundingBox _objet_a_decharger select 1 select 1) max (-(boundingBox _objet_a_decharger select 0 select 1))) max ((boundingBox _objet_a_decharger select 1 select 0) max (-(boundingBox _objet_a_decharger select 0 select 0))));
 			
-			player globalChat STR_R3F_LOG_action_decharger_en_cours;
+			player globalChat (localize "STR_R3F_LOG_action_decharger_en_cours");
 			
 			sleep 2;
 			
@@ -65,12 +65,12 @@ else
 			];
 			_objet_a_decharger setVelocity [0,0,0];
 			
-			player globalChat STR_R3F_LOG_action_decharger_fait;
+			player globalChat (localize "STR_R3F_LOG_action_decharger_fait");
 		};
 	}
 	else
 	{
-		player globalChat STR_R3F_LOG_action_decharger_deja_fait;
+		player globalChat (localize "STR_R3F_LOG_action_decharger_deja_fait");
 	};
 	
 	R3F_LOG_mutex_local_verrou = false;

@@ -10,7 +10,7 @@
 
 if (R3F_LOG_mutex_local_verrou) then
 {
-	player globalChat STR_R3F_LOG_mutex_action_en_cours;
+	player globalChat (localize "STR_R3F_LOG_mutex_action_en_cours");
 }
 else
 {
@@ -73,7 +73,7 @@ else
 				_objets_charges = _objets_charges + [_objet];
 				_transporteur setVariable ["R3F_LOG_objets_charges", _objets_charges, true];
 				
-				player globalChat STR_R3F_LOG_action_charger_deplace_en_cours;
+				player globalChat (localize "STR_R3F_LOG_action_charger_deplace_en_cours");
 				
 				// Faire relacher l'objet au joueur (si il l'a dans "les mains")
 				_objet disableCollisionWith _transporteur;
@@ -93,11 +93,11 @@ else
 				_objet attachTo [R3F_LOG_PUBVAR_point_attache, _position_attache];
 				_objet enableCollisionWith _transporteur;
 				
-				player globalChat format [STR_R3F_LOG_action_charger_deplace_fait, getText (configFile >> "CfgVehicles" >> (typeOf _transporteur) >> "displayName")];
+				player globalChat format [(localize "STR_R3F_LOG_action_charger_deplace_fait"), getText (configFile >> "CfgVehicles" >> (typeOf _transporteur) >> "displayName")];
 			}
 			else
 			{
-				player globalChat STR_R3F_LOG_action_charger_deplace_pas_assez_de_place;
+				player globalChat (localize "STR_R3F_LOG_action_charger_deplace_pas_assez_de_place");
 			};
 		};
 	};

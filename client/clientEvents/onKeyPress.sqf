@@ -70,8 +70,16 @@ switch _key do
 				//Great success! Player is actually looking at the store keeper and is close by.
             	[] spawn loadGeneralStore;
         	};   
-        };  
-        
+        };        
+    };
+	
+    //Escape
+    //Escape
+    case 1:
+    {
+        if (player getVariable ["revive_isUnconscious", false]) then {
+            createDialog "ReviveDialog";
+        };
     };
 };
 

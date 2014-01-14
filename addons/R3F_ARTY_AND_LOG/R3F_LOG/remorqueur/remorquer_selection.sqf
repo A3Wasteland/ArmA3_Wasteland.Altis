@@ -12,7 +12,7 @@
 
 if (R3F_LOG_mutex_local_verrou) then
 {
-	player globalChat STR_R3F_LOG_mutex_action_en_cours;
+	player globalChat (localize "STR_R3F_LOG_mutex_action_en_cours");
 }
 else
 {
@@ -155,12 +155,12 @@ else
 			}
 			else
 			{
-				player globalChat format [STR_R3F_LOG_action_remorquer_selection_trop_loin, getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];
+				player globalChat format [(localize "STR_R3F_LOG_action_remorquer_selection_trop_loin"), getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];
 			};
 		}
 		else
 		{
-			player globalChat format [STR_R3F_LOG_action_remorquer_selection_objet_transporte, getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];
+			player globalChat format [(localize "STR_R3F_LOG_action_remorquer_selection_objet_transporte"), getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];
 		};
 	};
 	

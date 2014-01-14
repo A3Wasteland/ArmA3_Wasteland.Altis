@@ -27,13 +27,9 @@
  */
 [] spawn
 {
-	#include "config.sqf"
 	#include "R3F_ARTY_disable_enable.sqf"
 	#include "R3F_LOG_disable_enable.sqf"
-	
-	// Chargement du fichier de langage
-	call compile preprocessFile format ["addons\R3F_ARTY_AND_LOG\%1_strings_lang.sqf", R3F_ARTY_AND_LOG_CFG_langage];
-	
+		
 	if (isServer) then
 	{
 		// Service offert par le serveur : orienter un objet (car setDir est à argument local)

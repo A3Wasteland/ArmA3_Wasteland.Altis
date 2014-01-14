@@ -38,7 +38,7 @@
 	</Package>
 	<Package name="WelcomeMessage">
 		<Key ID="STR_WL_WelcomeToWasteland">
-			<English>&lt;t color='#FF9E9E' size='2.5' &gt;A3Wasteland Altis v0.9f &lt;/t&gt;</English>
+			<English>&lt;t color='#FF9E9E' size='2.5' &gt;A3Wasteland Zargabad v0.9f &lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_YouAreInTeam">
 			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* Attacking or stealing from other %4 players is &lt;t color="#FF1111"&gt;FORBIDDEN&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;br/&gt;* You will be locked to your team after 3 minutes.&lt;/t&gt;</English>
@@ -144,5 +144,192 @@
 		<Key ID="STR_WL_Errors_BeaconTooMany">
 			<English>You cannot take more spawn beacons!</English>
 		</Key>						
+	</Package>
+	<Package name="R3F Artillery and Logistic">
+		<Key ID="STR_R3F_LOG_action_heliporter">
+			<English>Lift the object</English>
+			<French>Heliporter l'objet</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_heliporter_fait">
+			<English>Object "%1" attached.</English>
+			<French>Objet "%1" attaché.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_heliporter_deja_transporte">
+			<English>The object "%1" is already transported by a vehicle.</English>
+			<French>L'objet "%1" est déjà transporté un véhicule.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_heliporter_deplace_par_joueur">
+			<English>The object "%1" is being moved by a player.</English>
+			<French>L'objet "%1" est en train d'être déplacé par un joueur.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_heliporter_joueur_dans_objet">
+			<English>There is a player in the object "%1".</English>
+			<French>Un joueur se trouve dans l'objet "%1".</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_heliporter_objet_remorque">
+			<English>Can't lift the object "%1" because it's towing another object.</English>
+			<French>Impossible d'héliporter l'objet "%1" car il est en train de remorquer un autre objet.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_heliport_larguer">
+			<English>Drop the object</English>
+			<French>Larguer l'objet</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_heliport_larguer_fait">
+			<English>Object "%1" dropped.</English>
+			<French>Objet "%1" largué.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_deplacer_objet">
+			<English>Move this object</English>
+			<French>Prendre cet objet</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_relacher_objet">
+			<English>Release the object</English>
+			<French>Relacher l'objet</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_ne_pas_monter_dans_vehicule">
+			<English>You can't get in a vehicle while you're carrying this object !</English>
+			<French>Vous ne pouvez pas monter dans un véhicule tant que vous portez cet objet !</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_courir_trop_vite">
+			<English>Moving too fast! (Press C to slow down)</English>
+			<French>Vous marchez trop vite ! (Touche majuscule pour ralentir)</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_selectionner_objet_charge">
+			<English>Load in...</English>
+			<French>Charger dans...</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_selectionner_objet_charge_fait">
+			<English>Now select the vehicle in which to load the object "%1"...</English>
+			<French>Sélectionnez maintenant le véhicule dans lequel charger l'objet "%1"...</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_selection">
+			<English>... load the selected object in this vehicle</English>
+			<French>... charger l'objet sélectionné dans ce véhicule</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_selection_en_cours">
+			<English>Loading in progress...</English>
+			<French>Chargement en cours...</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_selection_fait">
+			<English>The object "%1" has been loaded in the vehicle.</English>
+			<French>L'objet "%1" a été chargé dans le véhicule.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_selection_trop_loin">
+			<English>The object "%1" is too far from the vehicle to be loaded.</English>
+			<French>L'objet "%1" est trop loin du véhicule pour être chargé.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_selection_pas_assez_de_place">
+			<English>There is not enough space in this vehicle. Space left: %1, Required: %2</English>
+			<French>Il n'y pas assez de place pour cet objet dans ce véhicule.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_selection_objet_transporte">
+			<English>The object "%1" is in transit.</English>
+			<French>L'objet "%1" est en cours de transport.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_deplace">
+			<English>Load in the vehicle</English>
+			<French>Charger dans le véhicule</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_deplace_en_cours">
+			<English>Loading in progress...</English>
+			<French>Chargement en cours...</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_deplace_fait">
+			<English>The object has been loaded in the vehicle "%1.</English>
+			<French>L'objet a été chargé dans le véhicule "%1".</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_charger_deplace_pas_assez_de_place">
+			<English>There is not enough space in this vehicle.</English>
+			<French>Il n'y pas assez de place pour cet objet dans ce véhicule.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_selectionner_objet_remorque">
+			<English>Tow to a vehicle</English>
+			<French>Remorquer à...</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_selectionner_objet_remorque_fait">
+			<English>Now select the vehicle in which to load the object "%1"...</English>
+			<French>Sélectionnez maintenant le véhicule dans lequel charger l'objet "%1"...</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_remorquer_selection">
+			<English>... tow the selected object to this vehicle</English>
+			<French>... remorquer l'objet sélectionné à ce véhicule</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_remorquer_selection_trop_loin">
+			<English>The object "%1" is too far from the vehicle to be towed.</English>
+			<French>L'objet "%1" est trop loin du véhicule pour être remorqué.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_remorquer_selection_objet_transporte">
+			<English>The object "%1" is in transit.</English>
+			<French>L'objet "%1" est en cours de transport.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_remorquer_deplace">
+			<English>Tow the object</English>
+			<French>Remorquer l'objet</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_detacher">
+			<English>Untow the object</English>
+			<French>Décrocher l'objet</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_detacher_fait">
+			<English>Object untowed.</English>
+			<French>Objet décroché.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_detacher_impossible_pour_ce_vehicule">
+			<English>Only the pilot can detach this object.</English>
+			<French>Seul le pilote peut décrocher cet objet.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_contenu_vehicule">
+			<English>View the vehicle content</English>
+			<French>Voir le contenu du véhicule</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_decharger_en_cours">
+			<English>Unloading in progress...</English>
+			<French>Déchargement en cours...</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_decharger_fait">
+			<English>The object has been unloaded from the vehicle.</English>
+			<French>L'objet a été déchargé du véhicule.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_action_decharger_deja_fait">
+			<English>The object has already been unloaded.</English>
+			<French>L'objet a déjà été déchargé.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_transport_en_cours">
+			<English>This vehicle is being transported.</English>
+			<French>Ce véhicule est en cours de transport.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_mutex_action_en_cours">
+			<English>The current operation isn't finished.</English>
+			<French>L'opération en cours n'est pas finie.</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_dlg_CV_titre">
+			<English>Contents of vehicle</English>
+			<French>Contenu du véhicule</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_dlg_CV_capacite_vehicule">
+			<English>Load : %1/%2</English>
+			<French>Chargement : %1/%2</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_dlg_CV_btn_decharger">
+			<English>Unload</English>
+			<French>Décharger</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_dlg_CV_btn_fermer">
+			<English>Cancel</English>
+			<French>Annuler</French>
+		</Key>
+		<Key ID="STR_R3F_LOG_nom_pc_arti">
+			<English>Artillery CQ</English>
+			<French>PC d'artillerie</French>
+		</Key>
+		<Key ID="STR_LOCK_OBJECT">
+			<English>Lock this object</English>
+		</Key>
+		<Key ID="STR_UNLOCK_OBJECT">
+			<English>Unlock this object</English>
+		</Key>
+		<Key ID="STR_RELEASE_HORIZONTAL">
+			<English>Release the object horizontally</English>
+		</Key>
 	</Package>
 </Project>

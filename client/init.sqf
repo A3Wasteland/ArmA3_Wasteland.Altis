@@ -51,11 +51,9 @@ if ((call config_player_saving_enabled) == 1) then {
 	positionLoaded = 0;
 	donationMoneyLoaded = 0; // used only if config_player_donations_enabled is set
 
-	[] execVM "persistence\players\c_serverSaveRelay.sqf";
-	waitUntil {!isNil "fn_SaveToServer"};
-	[] execVM "persistence\players\c_playerDBSetup.sqf";
-	waitUntil {!isNil "statFunctionsLoaded"};
-	
+	call compile preprocessFileLineNumbers "persistence\players\c_serverSaveRelay.sqf";
+	call compile preprocessFileLineNumbers "persistence\players\c_playerDBSetup.sqf";
+
 	_loadHandle = [] execVM "persistence\players\c_loadAccount.sqf";
 
 	if ((call config_player_donations_enabled) == 1) then {
@@ -112,6 +110,7 @@ waituntil {!(IsNull (findDisplay 46))};
 "compensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 
 //client Executes
+[] execVM "client\systems\revive\revive_Init.sqf";
 [] execVM "client\functions\initSurvival.sqf";
 [] execVM "client\systems\hud\playerHud.sqf";
 [] execVM "client\functions\createTownMarkers.sqf";
