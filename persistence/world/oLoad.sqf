@@ -4,8 +4,10 @@
 //	@file Description: Basesaving load script
 
 sleep 10;
+
 _check = ("Objects" call PDB_databaseNameCompiler) call iniDB_exists;
-if (!_check) exitWith {};
+if (isNil "_check" || {!_check}) exitWith {};
+
 _objectscount = ["Objects" call PDB_databaseNameCompiler, "Count", "Count", "NUMBER"] call iniDB_read;
 if (isNil "_objectscount") exitWith {};
 
@@ -25,8 +27,7 @@ for "_i" from 0 to (_objectscount - 1) do
 	
 	if (!isNil "_objSaveName" && !isNil "_class" && !isNil "_pos" && !isNil "_dir" && !isNil "_supplyleft") then 
 	{
-
-		_obj = createVehicle [_class,_pos, [], 0, "CAN COLLIDE"];
+		_obj = createVehicle [_class,_pos, [], 0, "CAN_COLLIDE"];
 		_obj setPosASL _pos;
 		_obj setVectorDirAndUp _dir;
 		
@@ -38,7 +39,7 @@ for "_i" from 0 to (_objectscount - 1) do
 		else
 		{
 			_obj allowDamage false;
-		}
+		};
 		
 		if (_class == "Land_Sacks_goods_F") then 
 		{
