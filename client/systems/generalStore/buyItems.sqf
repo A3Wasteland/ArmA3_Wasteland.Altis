@@ -353,6 +353,11 @@ storePurchaseHandle = _this spawn
 				_class = _x select 1;
 				_price = _x select 2;
 				
+				if (_price < 0) then
+				{
+					_price = [_class] call getCapacity;
+				};
+				
 				if (vest player == _class) exitWith
 				{
 					["vest"] call _showAlreadyHaveItemMessage;
