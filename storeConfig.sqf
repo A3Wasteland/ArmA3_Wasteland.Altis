@@ -532,7 +532,7 @@ landArray = compileFinal str
 	["Truck", "C_Van_01_transport_F", 500, "vehicle", 250],
 	["Truck Camo", "B_G_Van_01_transport_F", 500, "vehicle", 250],
 	["Truck Box", "C_Van_01_box_F", 500, "vehicle", 250],
-	["Fuel Truck", "C_Van_01_fuel_F", 2500, "vehicle", 500],
+	["Fuel Truck", "C_Van_01_fuel_F", 2000, "vehicle", 1000],
 
 	["HEMTT Tractor", "B_Truck_01_mover_F", 750, "vehicle", 375],
 	["HEMTT Transport", "B_Truck_01_transport_F", 1000, "vehicle", 500],
@@ -566,54 +566,55 @@ landArray = compileFinal str
 
 armoredArray = compileFinal str
 [
-	["Hunter", "B_MRAP_01_F", 2000, "vehicle", 1000],
-	["Hunter HMG", "B_MRAP_01_hmg_F", 8000, "vehicle", 4000],
-	["Hunter GMG", "B_MRAP_01_gmg_F", 9000, "vehicle", 4500],
-	["Ifrit", "O_MRAP_02_F", 3000, "vehicle", 1500],
-	["Ifrit HMG", "O_MRAP_02_hmg_F", 8000, "vehicle", 4000],
-	["Ifrit GMG", "O_MRAP_02_gmg_F", 9000, "vehicle", 4500],
-	["Strider", "I_MRAP_03_F", 3000, "vehicle", 1500],
-	["Strider HMG", "I_MRAP_03_hmg_F", 8000, "vehicle", 4000],
-	["Strider GMG", "I_MRAP_03_gmg_F", 9000, "vehicle", 4500],
-	["AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F", 12000, "vehicle", ""],
-	["MSE-3 Marid", "O_APC_Wheeled_02_rcws_F", 12000, "vehicle", ""],
-	["AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F", 12000, "vehicle", ""]
+	["Hunter", "B_MRAP_01_F", 2500, "vehicle", 1250],
+	["Hunter HMG", "B_MRAP_01_hmg_F", 6000, "vehicle", 3000],
+	["Hunter GMG", "B_MRAP_01_gmg_F", 7500, "vehicle", 3750],
+	["Ifrit", "O_MRAP_02_F", 2500, "vehicle", 1250],
+	["Ifrit HMG", "O_MRAP_02_hmg_F", 6000, "vehicle", 3000],
+	["Ifrit GMG", "O_MRAP_02_gmg_F", 7500, "vehicle", 3750],
+	["Strider", "I_MRAP_03_F", 2500, "vehicle", 1250],
+	["Strider HMG", "I_MRAP_03_hmg_F", 6000, "vehicle", 3000],
+	["Strider GMG", "I_MRAP_03_gmg_F", 7500, "vehicle", 3750],
+	["MSE-3 Marid", "O_APC_Wheeled_02_rcws_F", 10000, "vehicle", ""],
+	["AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F", 12500, "vehicle", ""],
+	["AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F", 12500, "vehicle", ""]
 ];
 
 tanksArray = compileFinal str
 [
 	["CRV-6e Bobcat", "B_APC_Tracked_01_CRV_F", 15000, "vehicle", ""],
-	["IFV-6c Panther", "B_APC_Tracked_01_rcws_F", 20000, "vehicle", ""],
-	["IFV-6a Cheetah", "B_APC_Tracked_01_AA_F", 20000, "vehicle", ""],
+	["IFV-6c Panther", "B_APC_Tracked_01_rcws_F", 17500, "vehicle", ""],
 	["BTR-K Kamysh", "O_APC_Tracked_02_cannon_F", 20000, "vehicle", ""],
-	["ZSU-39 Tigris", "O_APC_Tracked_02_AA_F", 20000, "vehicle", ""],
+	["FV-720 Mora", "I_APC_tracked_03_cannon_F", 20000, "vehicle", ""],
+	["IFV-6a Cheetah AA", "B_APC_Tracked_01_AA_F", 20000, "vehicle", ""],
+	["ZSU-39 Tigris AA", "O_APC_Tracked_02_AA_F", 20000, "vehicle", ""],
 	["M2A1 Slammer", "B_MBT_01_cannon_F", 25000, "vehicle", ""],
 	["T-100 Varsuk", "O_MBT_02_cannon_F", 25000, "vehicle", ""],
-	["M5 Sandstorm MLRS", "B_MBT_01_mlrs_F", 30000, "vehicle", ""],
-	["M4 Scorcher", "B_MBT_01_arty_F", 35000, "vehicle", ""],
-	["2S9 Sochor", "O_MBT_02_arty_F", 35000, "vehicle", ""]
+	["MBT-52 Kuma", "I_MBT_03_cannon_F", 25000, "vehicle", ""]
 ];
 
 
 helicoptersArray = compileFinal str
 [
-	["MH-9 Hummingbird", "B_Heli_Light_01_F", 5000, "vehicle", ""], //little bird
+	["MH-9 Hummingbird", "B_Heli_Light_01_F", 5000, "vehicle", ""], //mh-6
 	["PO-30 Orca (Black)", "O_Heli_Light_02_unarmed_F", 6000, "vehicle", ""], //ka-60
-	["CH-49 Mohawk", "I_Heli_Transport_02_F", 8000, "vehicle", ""], //big transport chopper
+	["WY-55 Hellcat (Green)", "I_Heli_light_03_unarmed_F", 6000, "vehicle", ""], //aw159
+	["CH-49 Mohawk", "I_Heli_Transport_02_F", 8000, "vehicle", ""], //aw101
 	
 	["UH-80 Ghosthawk", "B_Heli_Transport_01_F", 10000, "vehicle", ""], //stealth chopper 2 miniguns
 	["UH-80 Ghosthawk (Camo)", "B_Heli_Transport_01_camo_F", 10000, "vehicle", ""], //stealth chopper 2 miniguns (green camo)
-	["AH-9 Pawnee", "B_Heli_Light_01_armed_F", 12000, "vehicle", ""], //little bird with guns and missiles
-	["PO-30 Orca", "O_Heli_Light_02_F", 13000, "vehicle", ""], //armed ka-60
-	["AH-99 Blackfoot", "B_Heli_Attack_01_F", 20000, "vehicle", ""], //attack chopper
-	["Mi-48 Kajman", "O_Heli_Attack_02_F", 25000, "vehicle", ""], //attack chopper with gunner
-	["Mi-48 Kajman (Black)", "O_Heli_Attack_02_black_F", 25000, "vehicle", ""] //attack chopper with gunner
+	["AH-9 Pawnee", "B_Heli_Light_01_armed_F", 20000, "vehicle", ""], //armed mh-6
+	["PO-30 Orca", "O_Heli_Light_02_F", 20000, "vehicle", ""], //armed ka-60
+	["WY-55 Hellcat", "I_Heli_light_03_F", 22500, "vehicle", ""], //armed aw159
+	["AH-99 Blackfoot", "B_Heli_Attack_01_F", 25000, "vehicle", ""], //attack chopper with gunner
+	["Mi-48 Kajman", "O_Heli_Attack_02_F", 30000, "vehicle", ""], //attack chopper with gunner
+	["Mi-48 Kajman (Black)", "O_Heli_Attack_02_black_F", 30000, "vehicle", ""] //attack chopper with gunner
 ];
 
 planesArray = compileFinal str
 [
-	["A-143 Buzzard (AA)", "I_Plane_Fighter_03_AA_F", 20000, "vehicle", 10000],
-	["A-143 Buzzard (CAS)", "I_Plane_Fighter_03_CAS_F", 25000, "vehicle", 12500],
+	["A-143 Buzzard AA", "I_Plane_Fighter_03_AA_F", 20000, "vehicle", 10000],
+	["A-143 Buzzard CAS", "I_Plane_Fighter_03_CAS_F", 25000, "vehicle", 12500],
 	["MQ4A Greyhawk", "B_UAV_02_F", 10000, "vehicle", 5000],
 	["MQ4A Greyhawk CAS", "B_UAV_02_CAS_F", 10000, "vehicle", 5000],
 	["K40 Ababil-3 (CSAT)", "O_UAV_02_F", 10000, "vehicle", 5000],
@@ -624,22 +625,22 @@ planesArray = compileFinal str
 
 boatsArray = compileFinal str
 [
-	["Rescue Boat", "C_Rubberboat", 500, "boat", 500],
+	["Rescue Boat", "C_Rubberboat", 500, "boat", 250],
 	["Rescue Boat (NATO)", "B_Lifeboat", 500, "boat", 250],
 	["Rescue Boat (CSAT)", "O_Lifeboat", 500, "boat", 250],
-	["Assault Boat (NATO)", "B_Boat_Transport_01_F", 750, "boat", 500],
-	["Assault Boat (CSAT)", "O_Boat_Transport_01_F", 750, "boat", 500],
-	["Assault Boat (AAF)", "I_Boat_Transport_01_F", 750, "boat", 500],
-	["Assault Boat (FIA)", "B_G_Boat_Transport_01_F", 750, "boat", 500],
+	["Assault Boat (NATO)", "B_Boat_Transport_01_F", 750, "boat", 375],
+	["Assault Boat (CSAT)", "O_Boat_Transport_01_F", 750, "boat", 375],
+	["Assault Boat (AAF)", "I_Boat_Transport_01_F", 750, "boat", 375],
+	["Assault Boat (FIA)", "B_G_Boat_Transport_01_F", 750, "boat", 375],
 	["Motorboat", "C_Boat_Civil_01_F", 1000, "boat", 500],
 	["Motorboat Police", "C_Boat_Civil_police_01_F", 1000, "boat", 500],
 	["Motorboat Rescue", "C_Boat_Civil_rescue_01_F", 1000, "boat", 500],
 	["Speedboat HMG (CSAT)", "O_Boat_Armed_01_hmg_F", 5000, "boat", 2500],
 	["Speedboat Minigun (NATO)", "B_Boat_Armed_01_minigun_F", 5000, "boat", 2500],
 	["Speedboat Minigun (AAF)", "I_Boat_Armed_01_minigun_F", 5000, "boat", 2500],
-	["SDV Submersible (NATO)", "B_SDV_01_F", 1000, "submarine", 500],
-	["SDV Submersible (CSAT)", "O_SDV_01_F", 1000, "submarine", 500],
-	["SDV Submersible (AAF)", "I_SDV_01_F", 1000, "submarine", 500]
+	["SDV Submarine (NATO)", "B_SDV_01_F", 1000, "submarine", 500],
+	["SDV Submarine (CSAT)", "O_SDV_01_F", 1000, "submarine", 500],
+	["SDV Submarine (AAF)", "I_SDV_01_F", 1000, "submarine", 500]
 ];
 
 // Deprecated; Boats are used instead
