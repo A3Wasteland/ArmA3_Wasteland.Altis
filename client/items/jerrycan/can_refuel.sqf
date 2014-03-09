@@ -6,9 +6,9 @@
 //@file Argument: [_vehicle] the vehicle to test
 //@file Argument: [] automatically find the nearest vehicle
 
-#define ERR_NO_VEHICLE "No Vehicle close enough."
-#define ERR_IN_VEHICLE "You cant do this while in a vehicle."
-#define ERR_FULL "The Vehicle is already full of fuel"
+#define ERR_NO_VEHICLE "No vehicle within range."
+#define ERR_IN_VEHICLE "You can't do this while in a vehicle."
+#define ERR_FULL "This vehicle is already full"
 #define ERR_NO_FUEL "You have no full fuel cans"
 #define ITEM_COUNT(ITEMID) ITEMID call mf_inventory_count
 private ["_vehicle", "_error"];

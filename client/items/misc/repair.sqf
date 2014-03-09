@@ -8,9 +8,10 @@
 #define REPAIR_RANGE 6;
 #define ANIMATION "AinvPknlMstpSlayWrflDnon_medic"
 #define ERR_NO_VEHICLE "You are not close enough to a vehicle that needs repairing"
-#define ERR_IN_VEHICLE "Repairing Failed! You cant do that in a vehicle"
+#define ERR_IN_VEHICLE "Repairing Failed! You can't do that in a vehicle"
 #define ERR_FULL_HEALTH "Repairing Failed! The vehicle is already repaired"
 #define ERR_DESTROYED "The vehicle is too damaged to repair"
+#define ERR_TOO_FAR_AWAY "Repairing Failed! You moved too far away from the vehicle"
 #define ERR_CANCELLED "Repairing Cancelled!"
 
 private ["_vehicles", "_vehicle", "_hitPoints", "_checks", "_success"];

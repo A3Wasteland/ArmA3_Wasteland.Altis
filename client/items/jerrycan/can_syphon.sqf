@@ -7,10 +7,10 @@
 //@file Argument: [] automatically find the nearest vehicle
 
 #define ERR_NO_VEHICLE "No vehicle close enough."
-#define ERR_IN_VEHICLE "You cant do this while in a vehicle."
-#define ERR_EMPTY "The vehicle has no fuel left"
+#define ERR_IN_VEHICLE "You can't do this while in a vehicle."
+#define ERR_EMPTY "The vehicle is empty"
 #define ERR_NO_JERRYCAN "You have no empty fuel cans"
-#define ERR_NO_SYPHON "You do not have a syphon hose"
+#define ERR_NO_SYPHON "You don't have a syphon hose"
 #define ERR_VEHICLE_LOCKED "Vehicle is locked/disabled"
 #define ITEM_COUNT(ITEMID) ITEMID call mf_inventory_count
 private ["_vehicle", "_error"];
