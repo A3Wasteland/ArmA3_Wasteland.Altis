@@ -18,7 +18,7 @@ if (_pressedKey in actionKeys "GetOver") then
 	}
 	else
 	{
-		if (vehicle player == player && {stance player == "STAND"} && {getFatigue player < 0.6} && {isTouchingGround player} && {[["Mrun","Meva"], animationState player] call fn_findString != -1}) then
+		if (vehicle player == player && {stance player == "STAND"} && {getFatigue player < 0.6} && {isTouchingGround player} && {[["Mrun","Meva"], animationState player] call fn_findString == 8}) then
 		{
 			horde_jumpmf_var_jumping = true;
 			
@@ -26,22 +26,15 @@ if (_pressedKey in actionKeys "GetOver") then
 			{
 				private ["_prevMove", "_prevVel", "_fatigue", "_load"];
 				
-				if (isMultiplayer) then
-				{
-					horde_jumpmf_var_switchmove = player;
-					publicVariable "horde_jumpmf_var_switchmove";
-				};
-				
 				_prevMove = animationState player;
 				_prevVel = velocity player;
 				_fatigue = getFatigue player;
 				_load = loadAbs player;
 		
-				player call horde_jumpmf_fnc_switchmove;
+				player playMoveNow "AovrPercMrunSrasWrflDf";
 				
-				while {["AovrPercMrun", animationState player] call fn_findString == 0} do
+				waitUntil
 				{
-					sleep 0.01;
 					player setFatigue (_fatigue + 0.05 + (_load / 5000));
 					player setVelocity
 					[
@@ -49,9 +42,10 @@ if (_pressedKey in actionKeys "GetOver") then
 						(_prevVel select 1) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
 						(velocity player) select 2
 					];
+					(["AovrPercMrun", animationState player] call fn_findString == -1)
 				};
 				
-				player switchMove _prevMove;
+				[player, _prevMove] call switchMoveGlobal;
 				player setVelocity
 				[
 					_prevVel select 0,
