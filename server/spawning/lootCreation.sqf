@@ -12,8 +12,8 @@ _oddfuelcan = 35;				//Chance of a spawned fuelcan to be full instead of empty
 _spawnradius = 25;				//Distance added to the radius around city's original marker to spawn loot (expands the radius with this value)
 _interval = 5400;				//Time (in sec.) to pass before a city spawns new loot (5400 - 1,5 hr)
 randomweapontestint = 0.05;			//Sets the intervals in which weaponpositions are tested. (Lower = slower, but more accurate. Higher = faster, but less accurate.)
-									
-//Array of buildings that are eligeble to spawn loot in :)
+
+//Array of buildings that are eligible to spawn loot in :)
 _buildCIV = 
 [
 	"Land_Airport_center_F",
