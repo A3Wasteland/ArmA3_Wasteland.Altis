@@ -49,7 +49,7 @@
 
 
 // timings
-#define BASE_SLEEP_INTERVAL 5
+#define BASE_SLEEP_INTERVAL 10
 #define CAPTURE_PERIOD 300
 
 if(!isServer) exitWith {};
