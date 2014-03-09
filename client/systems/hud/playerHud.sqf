@@ -92,8 +92,16 @@ while {true} do
     _hudActivityTextbox = _ui displayCtrl hud_activity_textbox_idc;
 
     //Calculate Health 0 - 100
-    _health = 1 - damage player;
-    _health = round (_health * 100);
+    _health = (1 - damage player) * 100;
+	
+	if (_health > 1) then
+	{
+		_health = floor _health;
+	}
+	else
+	{
+		_health = ceil _health;
+	};
 
     // Flash the health colour on the HUD according to it going up, down or the same
     _healthTextColor = "#FFFFFF";
