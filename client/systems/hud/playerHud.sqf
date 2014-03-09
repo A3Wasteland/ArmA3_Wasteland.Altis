@@ -10,7 +10,7 @@
 #define hud_activity_textbox_idc 3603
 
 disableSerialization;
-private ["_lastHealthReading", "_lastTerritoryName", "_lastTerritoryDescriptiveName", "_territoryCaptureIcon"];
+private ["_lastHealthReading", "_lastTerritoryName", "_lastTerritoryDescriptiveName", "_territoryCaptureIcon", "_activityIconOrigPos", "_activityTextboxOrigPos", "_dispUnitInfo", "_topLeftBox", "_topLeftBoxPos"];
 
 _lastHealthReading = 100; // Used to flash the health reading when it changes
 
@@ -197,8 +197,8 @@ while {true} do
     _activityMessage = "";
     _activityBackgroundAlpha = 0;
 
-    // Activity does not show when the map is open
-    if (!visibleMap) then
+    // Activity does not show when the map or Esc menu is open
+    if (!visibleMap && {isNull findDisplay 49}) then
 	{
         // Determine activity. Currently this is territory cap only
         _territoryActivity = player getVariable ["TERRITORY_ACTIVITY", []];
@@ -211,13 +211,49 @@ while {true} do
             _activityIconStr = _activityDetails select 0;
             _activityMessage = _activityDetails select 1;
         };
-    };
 
-    // Show the UI if we have activity
-    if (_activityIconStr != "" && {_activityMessage != ""}) then
-	{
-        _activityBackgroundAlpha = 0.4;
-    };
+		// Show the UI if we have activity
+		if (_activityIconStr != "" && {_activityMessage != ""}) then
+		{
+			if (isNil "_activityIconOrigPos" && isNil "_activityTextboxOrigPos") then
+			{
+				_activityIconOrigPos = ctrlPosition _hudActivityIcon;
+				_activityTextboxOrigPos = ctrlPosition _hudActivityTextbox;
+			};
+			
+			_activityBackgroundAlpha = 0.4;
+			
+			_dispUnitInfo = uiNamespace getVariable ["RscUnitInfo", displayNull];
+			_topLeftBox = _dispUnitInfo displayCtrl 113;
+			
+			// If top left vehicle info box is displayed, move activity controls a bit to the right
+			if (ctrlShown _topLeftBox) then
+			{
+				_topLeftBoxPos = ctrlPosition _topLeftBox;
+				
+				_hudActivityIcon ctrlSetPosition
+				[
+					(_activityIconOrigPos select 0) + (_topLeftBoxPos select 2) + 0.01,
+					_activityIconOrigPos select 1,
+					_activityIconOrigPos select 2,
+					_activityIconOrigPos select 3
+				];
+				
+				_hudActivityTextbox ctrlSetPosition
+				[
+					(_activityTextboxOrigPos select 0) + (_topLeftBoxPos select 2) + 0.01,
+					_activityTextboxOrigPos select 1,
+					_activityTextboxOrigPos select 2,
+					_activityTextboxOrigPos select 3
+				];
+			}
+			else
+			{
+				_hudActivityIcon ctrlSetPosition _activityIconOrigPos;
+				_hudActivityTextbox ctrlSetPosition _activityTextboxOrigPos;
+			};
+		};
+	};
 
     _hudActivityIcon ctrlSetBackgroundColor [0, 0, 0, _activityBackgroundAlpha];
     _hudActivityIcon ctrlSetStructuredText parseText _activityIconStr;
