@@ -18,7 +18,7 @@ else
 {
 	_skill = 0.33;
 	_accuracy = 0.75;
-}
+};
 
 _unit allowFleeing 0;
 _unit setSkill _skill;
