@@ -2,9 +2,8 @@
 //	@file Name: requestStoreObject.sqf
 //	@file Author: AgentRev
 //	@file Created: 24/10/2012 18:32
-//	@file Args: 
 
-// Must only be called in buyItems.sqf or buyGuns.sqf
+// Must only be called in buyItems.sqf, buyGuns.sqf, or buyVehicles.sqf
 
 #define OBJECT_PURCHASE_TIMEOUT 15
 #define OBJECT_PURCHASE_POST_TIMEOUT 60
@@ -12,6 +11,7 @@
 [[player, _class, currentOwnerName, _requestKey], "spawnStoreObject", false, false] call TPG_fnc_MP;
 
 private ["_requestTimeout", "_object"];
+
 _requestTimeout = time + OBJECT_PURCHASE_TIMEOUT;
 hint "Awaiting server response...";
 
@@ -53,5 +53,6 @@ if (isNil "_object" || {isNull objectFromNetId _object}) then
 else
 {
 	[_itemText] call _showItemSpawnedOutsideMessage;
+	missionNamespace setVariable [_requestKey, _object];
 	player setVariable [_requestKey, nil, true];
 };

@@ -7,128 +7,113 @@ if (!isNil "storePurchaseHandle" && {typeName storePurchaseHandle == "SCRIPT"} &
 
 #include "dialog\vehiclestoreDefines.hpp";
 
-#define DELIVERY_METHOD_SPAWN 1
-#define DELIVERY_METHOD_AIRDROP 2
-
 storePurchaseHandle = _this spawn
 {
-	private ["_switch", "_deliveryMethod", "_playerMoney", "_price", "_dialog", "_playerMoneyText", "_colorText", "_itemText", "_handleMoney", "_applyVehProperties", "_car", "_vehType", "_vehPos", "_veh"];
-
 	disableSerialization;
+	
+	private ["_switch", "_playerMoney", "_price", "_dialog", "_playerMoneyText", "_itemlist", "_itemIndex", "_itemText", "_itemData", "_colorlist", "_colorIndex", "_colorText", "_applyVehProperties", "_class", "_price", "_requestKey", "_vehicle"];
 
 	//Initialize Values
 	_switch = _this select 0;
-
-	// CHANGE THIS TO SWAP BETWEEN SPAWNS AND AIRDROPS
-	_deliveryMethod = DELIVERY_METHOD_SPAWN;
-
-	if (_deliveryMethod == DELIVERY_METHOD_AIRDROP && currentOwnerID getVariable "isDeliveringVehicle" == 1) exitWith {
-	  // Nicer audible error effect
-	  hint format ["Please wait until the previous delivery is complete before ordering more vehicles"];
-	  player say "FD_CP_Not_Clear_F";
-	};
-
 	_textureDir = "client\images\vehicleTextures";
-
 	_playerMoney = player getVariable ["cmoney", 0];
-	_price = 0;
-
-	_vehicleSpawnPosAirdrop = [3786.45,7912.79,10000]; // Spawn it on debug island before moving to the chopper
 
 	// Grab access to the controls
 	_dialog = findDisplay vehshop_DIALOG;
-	_playerMoneyText = _Dialog displayCtrl vehshop_money;
-	_colorText = lbText [vehshop_color_list, (lbCurSel vehshop_color_list)];
-	_itemText = lbText  [vehshop_veh_list, (lbCurSel vehshop_veh_list)];
-	_handleMoney = 1;
-
-	// Our array of compileFinal'd arrays
-	_landVehicleArrays = [landArray, armoredArray, tanksArray];
-
+	_playerMoneyText = _dialog displayCtrl vehshop_money;
+	
+	_itemlist = _dialog displayCtrl vehshop_veh_list;
+	_itemIndex = lbCurSel vehshop_veh_list;
+	_itemText = _itemlist lbText _itemIndex;
+	_itemData = _itemlist lbData _itemIndex;
+	
+	_colorlist = _dialog displayCtrl vehshop_color_list;
+	_colorIndex = lbCurSel vehshop_color_list;
+	_colorText = _colorlist lbText _colorIndex;
+	
 	_showInsufficientFundsError = 
 	{
-	  _itemText = _this select 0;
-	  hint format ["You don't have enought money for %1", _itemText];
-	  player say "FD_CP_Not_Clear_F";
-	  _handleMoney = 0;
+		_itemText = _this select 0;
+		hint parseText format ["Not enough money for<br/>""%1""", _itemText];
+		playSound "FD_CP_Not_Clear_F";
+		_price = -1;
+	};
+	
+	_showItemSpawnTimeoutError = 
+	{
+		_itemText = _this select 0;
+		hint parseText format ["<t color='#ffff00'>An unknown error occurred.</t><br/>The purchase of ""%1"" has been cancelled.", _itemText];
+		playSound "FD_CP_Not_Clear_F";
+		_price = -1;
 	};
 
-	_createAndApplyapplyVehProperties = 
+	_showItemSpawnedOutsideMessage = 
 	{
-		private ["_vehicle", "_colorText", "_group", "_textureFilename", "_rgbString", "_texture", "_type", "_pos", "_playerItems", "_playerAssignedItems", "_playerSide", "_uavTerminal", "_allUAV"];
-		_pos = _this select 0;
-		_type = _this select 1;
-		_colorText = _this select 2;
+		_itemText = _this select 0;
+		hint format ["""%1"" has been spawned outside, in front of the store.", _itemText];
+		playSound "FD_Finish_F";
+	};
 
-		if (_deliveryMethod == DELIVERY_METHOD_AIRDROP) then {
-			_spawnType = "FLY";
-		} else {
-			_spawnType = "NONE";
-		};
-		
-		_vehicle = createVehicle [_type,_pos, [], 0, _spawnType];
-		_vehicle disableTIEquipment true; // Disable Thermal on bought vehicles.
-		//_veh setDir _dir;
-		_vehicle setVariable ["newVehicle",1,true];
-		
-		clearMagazineCargoGlobal _vehicle;
-		clearWeaponCargoGlobal _vehicle;
-		clearItemCargoGlobal _vehicle;
-		
-		_texture = "";
-		_textureFilename = "";
-		_rgbString = "";
+	_applyVehProperties = 
+	{
+		private ["_vehicle", "_colorText", "_rgbString", "_textureFilename", "_texture", "_playerItems", "_playerAssignedItems", "_uavTerminal", "_allUAV"];
+		_vehicle = _this select 0;
+		_colorText = _this select 1;
 
 		//if they chose a color set the color
-		if(_colorText == "Orange") then { _rgbString = '#(argb,8,8,3)color(0.82,0.2,0,1)';};
-		if(_colorText == "Red") then { _rgbString = '#(argb,8,8,3)color(0.79,0.03,0,1)';};
-		if(_colorText == "Pink") then { _rgbString = '#(argb,8,8,3)color(0.95,0.45,0.74,1)';};
-		if(_colorText == "Yellow") then { _rgbString = '#(argb,8,8,3)color(1,0.97,0.17,1)';};
-		if(_colorText == "Purple") then { _rgbString = '#(argb,8,8,3)color(0.43,0.18,0.67,1)';};
-		if(_colorText == "Blue") then { _rgbString = '#(argb,8,8,3)color(0,0.1,0.8,1)';};
-		if(_colorText == "Dark Blue") then { _rgbString = '#(argb,8,8,3)color(0,0.01,0.06,1)';};
-		if(_colorText == "Green") then { _rgbString = '#(argb,8,8,3)color(0.01,0.64,0,1)';};
-		if(_colorText == "Black") then { _rgbString = '#(argb,8,8,3)color(0,0,0,1)';};
-		if(_colorText == "White") then { _rgbString = '#(argb,8,8,3)color(1,1,1,1)';};
-		if(_colorText == "Teal") then { _rgbString = '#(argb,8,8,3)color(0,0.93,0.86,1)';};
-		if(_colorText == "Orange Camo") then {_textureFilename = "camo_fack.jpg";};
-		if(_colorText == "Red Camo") then {_textureFilename = "camo_deser.jpg";};
-		if(_colorText == "Yellow Camo") then {_textureFilename = "camo_fuel.jpg";};
-		if(_colorText == "Pink Camo") then {_textureFilename = "camo_pank.jpg";};
+		switch (toLower _colorText) do
+		{
+			case "black":       { _rgbString = "#(argb,8,8,3)color(0,0,0,1)" };
+			case "blue":        { _rgbString = "#(argb,8,8,3)color(0,0.1,0.8,1)" };
+			case "dark blue":   { _rgbString = "#(argb,8,8,3)color(0,0.01,0.06,1)" };
+			case "green":       { _rgbString = "#(argb,8,8,3)color(0.01,0.64,0,1)" };
+			case "orange":      { _rgbString = "#(argb,8,8,3)color(0.82,0.2,0,1)" };
+			case "pink":        { _rgbString = "#(argb,8,8,3)color(0.95,0.45,0.74,1)" };
+			case "purple":      { _rgbString = "#(argb,8,8,3)color(0.43,0.18,0.67,1)" };
+			case "red":         { _rgbString = "#(argb,8,8,3)color(0.79,0.03,0,1)" };
+			case "teal":        { _rgbString = "#(argb,8,8,3)color(0,0.93,0.86,1)" };
+			case "white":       { _rgbString = "#(argb,8,8,3)color(1,1,1,1)" };
+			case "yellow":      { _rgbString = "#(argb,8,8,3)color(1,0.97,0.17,1)" };		
+			
+			case "orange camo": { _textureFilename = "camo_fack.jpg" };
+			case "pink camo":   { _textureFilename = "camo_pank.jpg" };
+			case "red camo":    { _textureFilename = "camo_deser.jpg" };
+			case "yellow camo": { _textureFilename = "camo_fuel.jpg" };
+		};
 
 		// If its a texture, get the right directory
-		if(_textureFilename != "") then { _texture = format ["%1\%2", _textureDir, _textureFilename]; };
+		if (!isNil "_textureFilename") then
+		{
+			_texture = format ["%1\%2", _textureDir, _textureFilename];
+		};
 
 		// If its a straight RGBA string, we can apply it directly
-		if(_rgbString != "") then { _texture = _rgbString; };
+		if (!isNil "_rgbString") then
+		{
+			_texture = _rgbString;
+		};
 
-		if (_texture != "") then
+		if (!isNil "_texture") then
 		{
 			_vehicle setVariable ["textureName", _texture];
 			[[_vehicle, _texture], "applyVehicleTexture", true, true] call TPG_fnc_MP;
 		};
 
-		//if this a remote controlled type we have to do some special stuff
-		if ({_type isKindOf _x} count (call uavArray) > 0) then
+		// If UAV or UGV, fill vehicle with UAV AI, give UAV terminal to our player, and connect it to the vehicle
+		if ({_vehicle isKindOf _x} count (call uavArray) > 0) then
 		{
-			//collect arguments
-			_playerItems = items player;
-			_playerAssignedItems = assignedItems player;
-			_playerSide = side player;
-			
-			//decide which uav controller we should give the player
-			switch (_playerSide) do
+			switch (playerSide) do
 			{
 				case BLUFOR: { _uavTerminal = "B_UavTerminal" };
 				case OPFOR:	 { _uavTerminal = "O_UavTerminal" };
 				default	     { _uavTerminal = "I_UavTerminal" };
 			};
 
-			if !(_uavTerminal in _playerAssignedItems) then
+			if !(_uavTerminal in assignedItems player) then
 			{
 				{ player unassignItem _x } forEach ["ItemGPS", "B_UavTerminal", "O_UavTerminal", "I_UavTerminal"]; // Unassign any GPS slot item
 				
-				if (_uavTerminal in _playerItems) then
+				if (_uavTerminal in items player) then
 				{
 					player assignItem _uavTerminal;
 				}
@@ -138,142 +123,68 @@ storePurchaseHandle = _this spawn
 				};
 			};
 
-			//assign an AI to the vehicle so it can actually be used
+			//assign AI to the vehicle so it can actually be used
 			createVehicleCrew _vehicle;
 
-			//create a group that matches the player's side so it doesn't kill them on spawn!
-			_group = createGroup _playerSide;
-			[_vehicle] joinSilent _group;
+			//assign AI to player group to allow terminal connection
+			[_vehicle] joinSilent group player;
 			
-			player connectTerminalToUav _vehicle; 
+			if (isNull getConnectedUav player) then
+			{
+				player connectTerminalToUav _vehicle;
+			};
 		};
-
-		//tell the vehicle to delete itself after dying
-		_vehicle addEventHandler ["Killed",{(_this select 0) spawn {sleep 180; deleteVehicle _this}}];
 		
-		//enable vehicle locking (disabled because of missing script)
-		//_vehicle addAction ["Lock / Unlock", "server\functions\unlocklock.sqf", [], 7, true, true, "", "_target distance _this < 7"];
 		_vehicle
 	};
-
-	_deliverPos = nil;
-	_veh = nil;
-	_spawnType = "";
-
-	switch(_switch) do 
 	{
-		//Buy To Player
-		case 0: 
+		if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
 		{
-			// LAND VEHICLES
-			{
-				_vehicleArray = _x;
-				{
-					if (_itemText == _x select 0) exitWith
-					{
-						_price = _x select 2;
-						if ( _price > _playerMoney) then {[_itemText] call _showInsufficientFundsError; breakTo "main"};
-						_vehType = _x select 1;
-						_deliverPos = (getMarkerPos format ["%1_Spawn_Land", currentOwnerID]);
-						_spawnType = "land";
-
-						if (_deliveryMethod == DELIVERY_METHOD_SPAWN) then {
-							_veh = [_deliverPos, _vehType, _colorText] call _createAndApplyapplyVehProperties;
-						} else {
-							_veh = [_vehicleSpawnPosAirdrop, _vehType, _colorText] call _createAndApplyapplyVehProperties;
-						};
-
-					};
-				} forEach (call _vehicleArray);
-			} forEach _landVehicleArrays;
+			_class = _x select 1;
+			_price = _x select 2;
 			
-			// BOATS
+			// Ensure the player has enough money
+			if (_price > _playerMoney) exitWith
 			{
-				if (_itemText == _x select 0) exitWith
-				{
-					_price = _x select 2;
-					if ( _price > _playerMoney) then {[_itemText] call _showInsufficientFundsError;;breakTo "main"};				
-					_vehType = _x select 1;
-					_deliverPos = (getMarkerPos format ["%1_Spawn_Sea", currentOwnerID]);
-					_spawnType = "sea";
-
-					if (_deliveryMethod == DELIVERY_METHOD_SPAWN) then {
-						_veh = [_deliverPos, _vehType, _colorText] call _createAndApplyapplyVehProperties;
-					} else {
-						_veh = [_vehicleSpawnPosAirdrop, _vehType, _colorText] call _createAndApplyapplyVehProperties;
-					};
-				};
-			 } forEach (call boatsArray);
-
-			// HELIS
+				[_itemText] call _showInsufficientFundsError;
+			};
+			
+			_requestKey = call generateKey;
+			call requestStoreObject;
+			
+			_vehicle = objectFromNetId (missionNamespace getVariable _requestKey);
+			
+			if (!isNil "_vehicle" && {!isNull _vehicle}) then
 			{
-				if (_itemText == _x select 0) exitWith
-				{
-					_price = _x select 2;
-					if ( _price > _playerMoney) then {[_itemText] call _showInsufficientFundsError;;breakTo "main"};				
-					_vehType = _x select 1;
-						_deliverPos = (getMarkerPos format ["%1_Spawn_Heli", currentOwnerID]);
-					_spawnType = "land";
-
-					if (_deliveryMethod == DELIVERY_METHOD_SPAWN) then {
-						_veh = [_deliverPos, _vehType, _colorText] call _createAndApplyapplyVehProperties;
-					} else {
-						_veh = [_vehicleSpawnPosAirdrop, _vehType, _colorText] call _createAndApplyapplyVehProperties;
-					};
-				};
-
-			} forEach (call helicoptersArray);
-
-			// JETS
+				[_vehicle, _colorText] call _applyVehProperties;
+			};
+		};
+	} forEach (call allVehStoreVehicles);
+	
+	if (!isNil "_price" && {_price > -1}) then
+	{
+		_playerMoney = player getVariable ["cmoney", 0];
+		
+		// Re-check for money after purchase
+		if (_price > _playerMoney) then
+		{
+			if (!isNil "_requestKey" && {!isNil _requestKey}) then
 			{
-				if (_itemText == _x select 0) exitWith
-				{
-					_price = _x select 2;
-					if ( _price > _playerMoney) then {[_itemText] call _showInsufficientFundsError;;breakTo "main"};				
-					_vehType = _x select 1;
-						_deliverPos = (getMarkerPos format ["%1_Spawn_Air", currentOwnerID]);
-					_spawnType = "land";
-
-					if (_deliveryMethod == DELIVERY_METHOD_SPAWN) then {
-						_veh = [_deliverPos, _vehType, _colorText] call _createAndApplyapplyVehProperties;
-					} else {
-						_veh = [_vehicleSpawnPosAirdrop, _vehType, _colorText] call _createAndApplyapplyVehProperties;
-					};
-				};
-			} forEach (call planesArray);
+				deleteVehicle objectFromNetId (missionNamespace getVariable _requestKey);
+			};
+			
+			[_itemText] call _showInsufficientFundsError;
+		}
+		else
+		{
+			player setVariable ["cmoney", _playerMoney - _price, true];
+			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
 		};
 	};
-
-	// Pick a sound to play
-
-	if(_handleMoney == 1) then
+	
+	if (!isNil "_requestKey" && {!isNil _requestKey}) then
 	{
-
-		if (_deliveryMethod == DELIVERY_METHOD_AIRDROP) then {
-			diag_log "Calling airdrop script";
-			serverVehicleHeliDrop = [_veh, _deliverPos, player, _price, currentOwnerID];
-			publicVariableServer "serverVehicleHeliDrop";
-
-			_ambientRadioSound = ["RadioAmbient2", "RadioAmbient6", "RadioAmbient8"] call BIS_fnc_selectRandom;
-			currentOwnerID say _ambientRadioSound;
-
-			if (_veh isKindOf "Helicopter") then {
-					player globalChat format ["A transport helicopter is en route with your %1. It will be dropped in the shallows nearest the store.", _itemText];
-			} else {
-				if (_veh isKindOf "Ship") then {
-					player globalChat format ["A transport helicopter is en route with your %1. It will be dropped in the shallows nearest the store.", _itemText];
-				} else {
-					player globalChat format ["A transport helicopter is en route with your %1. Keep well clear of the LZ and stand by....", _itemText];
-				};
-			};
-
-			currentOwnerID setVariable['isDeliveringVehicle', 1, true];
-		} else {
-			player globalChat format ["Your %1 has spawned outside.", _itemText];
-		};
-
-		player setVariable["cmoney",_playerMoney - _price,true];
-		_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+		missionNamespace setVariable [_requestKey, nil];
 	};
 	
 	sleep 0.5; // double-click protection
