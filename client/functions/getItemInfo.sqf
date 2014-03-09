@@ -110,7 +110,7 @@ if (!isNil "_itemEntry") then
 					case (_itemType isKindOf "B_Parachute"):
 					{
 						//_name = getText (_weapon >> "displayName");
-						_description = "Safely jump from above<br/>One-time use";
+						_description = "The perfect companion for wanna-be pilots!<br/>One-time use.";
 					};
 					case (["_UAV_01_backpack_", _itemType] call fn_findString != -1):
 					{
@@ -126,7 +126,7 @@ if (!isNil "_itemEntry") then
 						_weapon = configFile >> "CfgVehicles" >> _uavType;
 						
 						//_name = getText (_weapon >> "displayName") + " UAV";
-						_description = "Remote-controled quadcopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
+						_description = "Remote-controlled quadcopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
 					};
 					default
 					{
