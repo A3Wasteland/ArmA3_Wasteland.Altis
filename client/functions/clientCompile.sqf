@@ -12,10 +12,16 @@ onKeyPress = "client\clientEvents\onKeyPress.sqf" call mf_compile;
 
 // Functions
 addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
+canWear = "client\functions\canWear.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
+getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;
+getFullMove = "client\functions\getFullMove.sqf" call mf_compile;
+getMoveParams = "client\functions\getMoveParams.sqf" call mf_compile;
+parseMove = "client\functions\parseMove.sqf" call mf_compile;
 serverMessage = "client\functions\serverMessage.sqf" call mf_compile;
 titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
+uniformConverter = "client\functions\uniformConverter.sqf" call mf_compile;
 isAdmin = "client\systems\adminPanel\isAdmin.sqf" call mf_compile;
 isWeaponType = "client\functions\isWeaponType.sqf" call mf_compile;
 isAssignableBinocular = "client\functions\isAssignableBinocular.sqf" call mf_compile;
