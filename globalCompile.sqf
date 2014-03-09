@@ -18,8 +18,9 @@ _DEBUG = format ["%1", _this select 0];
 // example: my_fnc_name = {diag_log "hey"} call mf_compile;
 mf_compile = compileFinal
 ('
-	private ["_path", "_code"];
+	private ["_path", "_isDebug", "_code"];
 	_path = "";
+	_isDebug = ' + _DEBUG + ';
 	
 	switch (toUpper typeName _this) do {
 		case "STRING": {
@@ -36,13 +37,17 @@ mf_compile = compileFinal
 	};
 	
 	if (isNil "_code") then {
-		if (' + _DEBUG + ') then {
+		if (_isDebug) then {
 			compile format ["call compile preProcessFileLineNumbers ""%1""", _path]
 		} else {
 			compileFinal preProcessFileLineNumbers _path
 		};
 	} else {
-		compileFinal toString _code
+		if (_isDebug) then {
+			compile toString _code
+		} else {
+			compileFinal toString _code
+		};
 	};
 ');
 
