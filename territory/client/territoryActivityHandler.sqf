@@ -19,5 +19,5 @@ if (typeName _this == "ARRAY" && {count _this >= 1}) then {
 		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
 	};
 
-	player say 'FD_Finish_F'; // Nice sound effect to draw players attention to the notification
+	playSound 'FD_Finish_F'; // Nice sound effect to draw players attention to the notification
 };

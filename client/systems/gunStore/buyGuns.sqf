@@ -40,7 +40,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint parseText format ["Not enough money for<br/>""%1""", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 
@@ -48,7 +48,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint parseText format ["Not enough space for<br/>""%1""", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 	
@@ -56,7 +56,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint parseText format ["<t color='#ffff00'>An unknown error occurred.</t><br/>The purchase of ""%1"" has been cancelled.", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 
@@ -64,7 +64,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint format ["""%1"" has been spawned outside, in front of the store.", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_Finish_F";
 		_successHint = false;
 	};
 
@@ -72,7 +72,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint format ["Your inventory is full, or you already have a weapon of this type. Please unequip it before purchasing ""%1""", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 
@@ -240,6 +240,7 @@ storePurchaseHandle = _this spawn
 			player setVariable ["cmoney", _playerMoney - _price, true];
 			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
 			if (_successHint) then { hint "Purchase successful!" };
+			playSound "FD_Finish_F";
 		};
 	};
 	
@@ -248,7 +249,7 @@ storePurchaseHandle = _this spawn
 		missionNamespace setVariable [_requestKey, nil];
 	};
 	
-	sleep 0.5; // double-click protection
+	sleep 0.25; // double-click protection
 };
 
 if (typeName storePurchaseHandle == "SCRIPT") then
