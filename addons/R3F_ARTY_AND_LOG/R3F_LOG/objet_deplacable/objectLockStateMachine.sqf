@@ -9,17 +9,18 @@ if(R3F_LOG_mutex_local_verrou) exitWith {
 	player globalChat STR_R3F_LOG_mutex_action_en_cours;
 };
 
-private["_locking", "_currObject", "_lockState", "_lockDuration", "_stringEscapePercent", "_interation", "_unlockDuration", "_totalDuration"];
+private["_locking", "_object", "_lockState", "_lockDuration", "_stringEscapePercent", "_interation", "_unlockDuration", "_totalDuration"];
 
-_currObject = _this select 0;
+_object = _this select 0;
 _lockState = _this select 3;
 
 _totalDuration = 0;
 _stringEscapePercent = "%";
 
-switch (_lockState) do {
-    case 0:{ // LOCK
-    
+switch (_lockState) do
+{
+    case 0: // LOCK
+	{
     	R3F_LOG_mutex_local_verrou = true;
 		_totalDuration = 5;
 		_lockDuration = _totalDuration;
@@ -27,14 +28,17 @@ switch (_lockState) do {
 		
 		player switchMove "AinvPknlMstpSlayWrflDnon_medic";
 		
-		for "_iteration" from 1 to _lockDuration do {
-		    
-            if (player distance _currObject > 14 || !alive player) exitWith { // If the player is too far or dies, revert state.
+		for "_iteration" from 1 to _lockDuration do
+		{
+			// If the player is too far or dies, revert state.
+            if (player distance _object > 14 || !alive player) exitWith
+			{
 		        2 cutText ["Object lock interrupted...", "PLAIN DOWN", 1];
                 R3F_LOG_mutex_local_verrou = false;
 			};
             
-            if (animationState player != "AinvPknlMstpSlayWrflDnon_medic") then { // Keep the player locked in medic animation for the full duration of the unlock.
+			// Keep the player locked in medic animation for the full duration of the unlock.
+            if (animationState player != "AinvPknlMstpSlayWrflDnon_medic") then {
                 player switchMove "AinvPknlMstpSlayWrflDnon_medic";
             };
             
@@ -44,9 +48,12 @@ switch (_lockState) do {
 			2 cutText [format["Object lock %1%2 complete", _iterationPercentage, _stringEscapePercent], "PLAIN DOWN", 1];
 		    sleep 1;
 		    
-			if (_iteration >= _totalDuration) exitWith { // Sleep a little extra to show that lock has completed.
+			// Sleep a little extra to show that lock has completed.
+			if (_iteration >= _totalDuration) exitWith
+			{
 		        sleep 1;
-                _currObject setVariable ["objectLocked", true, true];
+                _object setVariable ["objectLocked", true, true];
+				_object setVariable ["ownerUID", getPlayerUID player, true];
                 2 cutText ["", "PLAIN DOWN", 1];
                 R3F_LOG_mutex_local_verrou = false;
 		    }; 
@@ -54,23 +61,26 @@ switch (_lockState) do {
 		
 		player switchMove ""; // Redundant reset of animation state to avoid getting locked in animation.       
     };
-    case 1:{ // UNLOCK
-        
+    case 1: // UNLOCK
+	{
         R3F_LOG_mutex_local_verrou = true;
-		_totalDuration = 45;
+		_totalDuration = if (_object getVariable ["ownerUID", ""] == getPlayerUID player) then { 5 } else { 45 }; // Allow owner to unlock quickly
 		_unlockDuration = _totalDuration;
 		_iteration = 0;
 		
 		player switchMove "AinvPknlMstpSlayWrflDnon_medic";
 		
-		for "_iteration" from 1 to _unlockDuration do {
-		    
-            if (player distance _currObject > 5 || !alive player) exitWith { // If the player is too far or dies, revert state.
+		for "_iteration" from 1 to _unlockDuration do
+		{
+			// If the player is too far or dies, revert state.
+            if (player distance _object > 5 || !alive player) exitWith
+			{
 		        2 cutText ["Object unlock interrupted...", "PLAIN DOWN", 1];
                 R3F_LOG_mutex_local_verrou = false;
 			};
             
-            if (animationState player != "AinvPknlMstpSlayWrflDnon_medic") then { // Keep the player locked in medic animation for the full duration of the unlock.
+			// Keep the player locked in medic animation for the full duration of the unlock.
+            if (animationState player != "AinvPknlMstpSlayWrflDnon_medic") then {
                 player switchMove "AinvPknlMstpSlayWrflDnon_medic";
             };
             
@@ -80,9 +90,12 @@ switch (_lockState) do {
 			2 cutText [format["Object unlock %1%2 complete", _iterationPercentage, _stringEscapePercent], "PLAIN DOWN", 1];
 		    sleep 1;
 		    
-			if (_iteration >= _totalDuration) exitWith { // Sleep a little extra to show that lock has completed
+			// Sleep a little extra to show that lock has completed
+			if (_iteration >= _totalDuration) exitWith
+			{
 		        sleep 1;
-                _currObject setVariable ["objectLocked", false, true];
+                _object setVariable ["objectLocked", false, true];
+				_object setVariable ["ownerUID", nil, true];
                 2 cutText ["", "PLAIN DOWN", 1];
                 R3F_LOG_mutex_local_verrou = false;
 		    }; 
