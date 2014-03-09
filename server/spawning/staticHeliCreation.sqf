@@ -23,7 +23,7 @@ _spawnPos = _this select 1;
 	_currHeli = createVehicle [_spawnType, _finalPos, [], 0, "None"]; 
 	[_currHeli] call vehicleSetup;
 	
-	_currHeli setPos [_spawnPos select 0, _spawnPos select 1, 0.01];
+	_currHeli setPosATL [_spawnPos select 0, _spawnPos select 1, 0.01];
 	_currHeli setVelocity [0,0,0.01];
 	
 	_currHeli setVehicleAmmo 0.5;
