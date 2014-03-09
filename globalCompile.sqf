@@ -63,10 +63,12 @@ mf_init =
 _clientFunc = "client\functions";
 _serverFunc = "server\functions";
 
+cargoToPairs = [_serverFunc, "cargoToPairs.sqf"] call mf_compile;
 detachTowedObject = [_serverFunc, "detachTowedObject.sqf"] call mf_compile;
 findSafePos = [_serverFunc, "findSafePos.sqf"] call mf_compile;
 fn_filterString = [_serverFunc, "fn_filterString.sqf"] call mf_compile;
 fn_findString = [_serverFunc, "fn_findString.sqf"] call mf_compile;
+fn_splitString = [_serverFunc, "fn_splitString.sqf"] call mf_compile;
 fn_vehicleInit = [_serverFunc, "fn_vehicleInit.sqf"] call mf_compile;
 generateKey = [_serverFunc, "network\generateKey.sqf"] call mf_compile;
 getBallMagazine = [_serverFunc, "getBallMagazine.sqf"] call mf_compile;
@@ -75,6 +77,16 @@ getMagAmmoCount = [_serverFunc, "getMagAmmoCount.sqf"] call mf_compile;
 getMoveWeapon = [_clientFunc, "getMoveWeapon.sqf"] call mf_compile;
 getPublicVar = [_serverFunc, "getPublicVar.sqf"] call mf_compile;
 isConfigOn = [_serverFunc, "isConfigOn.sqf"] call mf_compile;
+relativePos = [_serverFunc, "relativePos.sqf"] call mf_compile;
 removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
+switchMoveGlobal = [_clientFunc, "switchMoveGlobal.sqf"] call mf_compile;
 
 "requestDetachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };
+
+"switchMoveGlobal_var" addPublicVariableEventHandler
+{
+	_array = _this select 1;
+	_player = _array select 0;
+	_move = _array select 1;
+	_player switchMove _move;
+};
