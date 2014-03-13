@@ -32,20 +32,8 @@ diag_log "WASTELAND SERVER - Server Compile Finished";
 
 "requestCompensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 
-// Default config
-A3W_buildingLoot = 1;        // Spawn and respawn Loot inside buildings in citys (0 = no, 1 = yes)
-A3W_startHour = 6;           // In-game hour at mission start (0 to 23)
-A3W_moonLight = 1;           // Moon light during night (0 = no, 1 = yes)
-A3W_missionsDifficulty = 0;  // Missions difficulty (0 = normal, 1 = hard)
-A3W_serverMissions = 1;      // Server main & side missions (0 = no, 1 = yes)
-A3W_serverSpawning = 1;      // Vehicle, object, and loot spawning (0 = no, 1 = yes)
-A3W_boxSpawning = 1;         // If serverSpawning = 1, also spawn ammo boxes in some towns (0 = no, 1 = yes)
-A3W_boatSpawning = 1;        // If serverSpawning = 1, also spawn boats at marked areas near coasts (0 = no, 1 = yes)
-A3W_heliSpawning = 1;        // If serverSpawning = 1, also spawn helicopters in some towns and airfields (0 = no, 1 = yes)
-A3W_planeSpawning = 1;       // If serverSpawning = 1, also spawn planes at some airfields (0 = no, 1 = yes)
-A3W_baseBuilding = 1;        // If serverSpawning = 1, also spawn basebuilding parts in towns (0 = no, 1 = yes)
-A3W_baseSaving = 0;          // Save base objects between restarts (0 = no, 1 = yes) - requires iniDB mod 
-PDB_ServerID = "any";        // iniDB saves prefix (change this in case you run multiple servers from the same folder)
+// load default config
+call compile preprocessFileLineNumbers "server\default_config.sqf";
 
 // load external config
 if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
@@ -59,33 +47,46 @@ else
 };
 
 // Do we need any persistence?
-if (["A3W_baseSaving"] call isConfigOn || {["config_player_saving_enabled"] call isConfigOn}) then
+if (["A3W_playerSaving"] call isConfigOn || {["A3W_baseSaving"] call isConfigOn} || {["A3W_boxSaving"] call isConfigOn}) then
 {
 	// Our custom iniDB methods which fixes some issues with the current iniDB addon release
-	call compile preProcessFile "persistence\fn_inidb_custom.sqf";
-	diag_log format["[INFO] A3W running with iniDB version %1", ([] call iniDB_version)];
+	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
+	diag_log format ["[INFO] A3W running with iniDB version %1", call iniDB_version];
 
 	// Have we got player persistence enabled?
-	if (["config_player_saving_enabled"] call isConfigOn) then {
+	if (["A3W_playerSaving"] call isConfigOn) then
+	{
 		diag_log "[INFO] A3W player saving is ENABLED";
-		execVM "persistence\players\s_serverGather.sqf";
-
-		if (["config_player_donations_enabled"] call isConfigOn) then {
-			diag_log "[INFO] A3W player donations are ENABLED. Players can spawn with additional money";
-		} else {
-			diag_log "[INFO] A3W player donations are DISABLED";
-		};
-	} else {
+		execVM "persistence\players\s_setupPlayerDB.sqf";
+	}
+	else
+	{
 		diag_log "[INFO] A3W player saving is DISABLED";
 	};
 
 	// Have we got base saving enabled?
+	
 	if (["A3W_baseSaving"] call isConfigOn) then
 	{
 		diag_log "[INFO] A3W base saving is ENABLED";
-		execVM "persistence\world\init.sqf";
-	} else {
+	}
+	else
+	{
 		diag_log "[INFO] A3W base saving is DISABLED";
+	};
+	
+	if (["A3W_boxSaving"] call isConfigOn) then
+	{
+		diag_log "[INFO] A3W box saving is ENABLED";
+	}
+	else
+	{
+		diag_log "[INFO] A3W box saving is DISABLED";
+	};
+	
+	if (["A3W_baseSaving"] call isConfigOn || {["A3W_boxSaving"] call isConfigOn}) then
+	{
+		execVM "persistence\world\oLoad.sqf";
 	};
 };
 
@@ -115,8 +116,11 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 		waitUntil {sleep 0.1; scriptDone _heliSpawn};
 	};
 	
-	_vehSpawn = [] execVM "server\functions\vehicleSpawning.sqf";
-	waitUntil {sleep 0.1; scriptDone _vehSpawn};
+	if (["A3W_vehicleSpawning"] call isConfigOn) then
+	{
+		_vehSpawn = [] execVM "server\functions\vehicleSpawning.sqf";
+		waitUntil {sleep 0.1; scriptDone _vehSpawn};
+	};
 	
 	if (["A3W_planeSpawning"] call isConfigOn) then
 	{
