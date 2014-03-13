@@ -32,8 +32,13 @@ if (_item select QTY <= 0) exitWith {
 
 private ["_obj"];
 MUTEX_LOCK_OR_FAIL;
-_obj = _type createVehicle getPosATL player;
+player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+sleep 0.5;
+
+_obj = _type createVehicle (position player);
+_obj setPos ([player, [0,1,0]] call relativePos);
 _obj setVariable ["mf_item_id", _id, true];
-_obj = _obj setPosATL (getPosATL player);
 [_id, 1] call mf_inventory_remove;
+
+sleep 0.5;
 MUTEX_UNLOCK;

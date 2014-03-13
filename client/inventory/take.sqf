@@ -22,13 +22,21 @@
  */
 
  #include "mutex.sqf"
+ #include "define.sqf";
+ 
 private ["_id", "_obj"];
 
 _id = _this select 3;
 _obj = _id call mf_inventory_takeable;
 if not(isNull _obj) then {
 	MUTEX_LOCK_OR_FAIL;
+	player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+	sleep 0.5;
+	
 	deleteVehicle _obj;
 	[_id,1] call mf_inventory_add;
+	titleText [format ['You have picked up "%1"', (_id call mf_inventory_get) select NAME], "PLAIN DOWN", 0.5];
+	
+	sleep 0.5;
 	MUTEX_UNLOCK;
 };
