@@ -6,7 +6,7 @@
 _radius = 70;
 _status = [];
 _gunStores = [];
-_col_empty = "ColorBlue";
+_col_empty = "ColorYellow";
 _col_enemy = "ColorRed";
 _col_friendly = "ColorGreen";
 _col_mixed = "ColorOrange";
@@ -17,18 +17,21 @@ _col_mixed = "ColorOrange";
 	{
 		_npcPos = getPos _x;
 
-		// Circle zone   
-		_markerName = format["marker_shop_zone_%1",_x];
-		deleteMarkerLocal _markerName;
-		_marker = createMarkerLocal [_markerName, _npcPos];
-		_markerName setMarkerShapeLocal "ELLIPSE";
-		_markerName setMarkerColorLocal _col_empty;
-		_markerName setMarkerSizeLocal [_radius, _radius];
-		_markerName setMarkerBrushLocal "Grid";
-		_markerName setMarkerAlphaLocal 0.5;
+		if (["A3W_showGunStoreStatus"] call isConfigOn) then
+		{
+			// Circle zone
+			_markerName = format["marker_shop_zone_%1",_x];
+			deleteMarkerLocal _markerName;
+			_marker = createMarkerLocal [_markerName, _npcPos];
+			_markerName setMarkerShapeLocal "ELLIPSE";
+			_markerName setMarkerColorLocal _col_empty;
+			_markerName setMarkerSizeLocal [_radius, _radius];
+			_markerName setMarkerBrushLocal "Grid";
+			_markerName setMarkerAlphaLocal 0.5;
+		};
 
 		/*
-		// Gun store title    
+		// Gun store title
 		_markerName = format["marker_shop_title_%1",_x];
 		deleteMarkerLocal _markerName;
 		_marker = createMarkerLocal [_markerName, _npcPos];
@@ -39,7 +42,7 @@ _col_mixed = "ColorOrange";
 		_markerName setMarkerTextLocal "GUN STORE";
 		*/
 
-		// Gun store description    
+		// Gun store description
 		_markerName = format["marker_shop_desc_%1",_x];
 		deleteMarkerLocal _markerName;
 		// _npcPos set [1, (_npcPos select 1) - 100];
@@ -52,7 +55,7 @@ _col_mixed = "ColorOrange";
 		// _markerName setMarkerAlphaLocal 0.5;
 
 		_status set [count _status, "EMPTY"];
-		
+
 		_gunStores set [count _gunStores, _x];
 	};
 } forEach entities "CAManBase";
@@ -94,49 +97,76 @@ _setStatus =
 	_status set [_this select 0, _this select 1];
 };
 
-//Check each store to see if their state has changed and then calls the update function to make the display the correct state.
-showmarkers = true;
-while {showmarkers} do
+if (["A3W_showGunStoreStatus"] call isConfigOn) then
 {
-    {
-    	_npcPos = getPos _x;
-		_friendlyCount = 0;
-		_enemyCount = 0;
+	//Check each store to see if their state has changed and then calls the update function to make the display the correct state.
+	showmarkers = true;
+	while {showmarkers} do
+	{
 		{
-			if((_x distance _npcPos < _radius) && (player != _x)) then {
-				if(playerSide in [west,east] && playerSide == side _x) then {
-					_friendlyCount = _friendlyCount + 1;
-				} else {
-					_enemyCount = _enemyCount + 1;
-				};
-			};
-		} forEach playableUnits;
+			_npcPos = getPos _x;
+			_friendlyCount = 0;
+			_enemyCount = 0;
 
-		if(player distance _npcPos < _radius) then {
-			if(_enemyCount > 0) then {
-				if(_friendlyCount > 0) then {
-					[_forEachIndex, "MIXED", true] call _setStatus;
-				} else {
-					[_forEachIndex, "ENEMY", true] call _setStatus;
+			{
+				if (_x distance _npcPos < _radius && {player != _x}) then
+				{
+					if (playerSide in [BLUFOR,OPFOR] && {side _x == playerSide} || {group _x == group player}) then
+					{
+						_friendlyCount = _friendlyCount + 1;
+					}
+					else
+					{
+						_enemyCount = _enemyCount + 1;
+					};
 				};
-			} else {
-				[_forEachIndex, "FRIENDLY", true] call _setStatus;
+			} forEach playableUnits;
+
+			if (player distance _npcPos < _radius) then
+			{
+				if(_enemyCount > 0) then
+				{
+					if (_friendlyCount > 0) then
+					{
+						[_forEachIndex, "MIXED", true] call _setStatus;
+					}
+					else
+					{
+						[_forEachIndex, "ENEMY", true] call _setStatus;
+					};
+				}
+				else
+				{
+					[_forEachIndex, "FRIENDLY", true] call _setStatus;
+				};
+			}
+			else
+			{
+				if (_enemyCount > 0) then
+				{
+					if (_friendlyCount > 0) then
+					{
+						[_forEachIndex, "MIXED", false] call _setStatus;
+					}
+					else
+					{
+						[_forEachIndex, "ENEMY", false] call _setStatus;
+					};
+				}
+				else
+				{
+					if (_friendlyCount > 0) then
+					{
+						[_forEachIndex, "FRIENDLY", false] call _setStatus;
+					}
+					else
+					{
+						[_forEachIndex, "EMPTY", false] call _setStatus;
+					};
+				};
 			};
-		} else {
-			if(_enemyCount > 0) then {
-				if(_friendlyCount > 0) then {
-					[_forEachIndex, "MIXED", false] call _setStatus;
-				} else {
-					[_forEachIndex, "ENEMY", false] call _setStatus;
-				};
-			} else {
-				if(_friendlyCount > 0) then {
-					[_forEachIndex, "FRIENDLY", false] call _setStatus;
-				} else {
-					[_forEachIndex, "EMPTY", false] call _setStatus;
-				};
-			};
-		};    
-    } forEach _gunStores;
-	sleep 1;
+		} forEach _gunStores;
+		
+		sleep 1;
+	};
 };
