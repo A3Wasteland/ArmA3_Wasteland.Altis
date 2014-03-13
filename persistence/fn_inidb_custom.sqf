@@ -1,4 +1,5 @@
 //Persistent Scripts by ZA-Gamers. www.za-gamers.co.za
+//Filename: fn_inidb_custom.sqf
 //Author: {ZAG}Ed!
 //Email: edwin(at)vodamail(dot)co(dot)za
 //Date: 26/03/2013
@@ -18,13 +19,15 @@ PDB_databaseNameCompiler = {
 	_prefix = PDB_ServerID;
 	_return = format["%1%2", _prefix, _name];
 	_return;
-};
+}
+call mf_compile;
 
 iniDB_version = {
 	private["_data"];
 	_data = "iniDB" callExtension "version";
 	_data
-};
+}
+call mf_compile;
 
 iniDB_HashFunction = {
 	private["_mode", "_data"];
@@ -43,27 +46,32 @@ iniDB_HashFunction = {
 	} else {
 		nil
 	};
-};
+}
+call mf_compile;
 
 iniDB_CRC32 = {
 	_this = ["crc", _this] call iniDB_HashFunction;
 	_this
-};
+}
+call mf_compile;
 
 iniDB_MD5 = {
 	_this = ["md5", _this] call iniDB_HashFunction;
 	_this
-};
+}
+call mf_compile;
 
 iniDB_Base64Encode = {
 	_this = ["b64_enc", _this] call iniDB_HashFunction;
 	_this
-};
+}
+call mf_compile;
 
 iniDB_Base64Decode = {
 	_this = ["b64_dec", _this] call iniDB_HashFunction;
 	_this
-};
+}
+call mf_compile;
 
 iniDB_exists = {
 	private["_data"];
@@ -77,7 +85,8 @@ iniDB_exists = {
 	} else {
 		false
 	};
-};
+}
+call mf_compile;
 
 
 iniDB_delete = {
@@ -89,7 +98,8 @@ iniDB_delete = {
 	} else {
 		false
 	};
-};
+}
+call mf_compile;
 
 // =======================================================================
 
@@ -112,7 +122,8 @@ iniDB_readRaw = {
 	} else {
 		""
 	};
-};
+}
+call mf_compile;
 
 iniDB_writeRaw = {
 	private["_file", "_sec", "_key", "_val", "_data"];
@@ -130,7 +141,8 @@ iniDB_writeRaw = {
 	} else {
 		false
 	};
-};
+}
+call mf_compile;
 
 // =======================================================================
 
@@ -151,7 +163,8 @@ iniDB_Datarizer = {
 	};
 	
 	_return
-};
+}
+call mf_compile;
 
 iniDB_read = {
 	private["_file", "_sec", "_key", "_type", "_data"];
@@ -162,13 +175,14 @@ iniDB_read = {
 	_key = _this select 2;
 	_data = [_file, _sec, _key] call iniDB_readRaw;
 	
-	if((count _this) > 2) then {
+	if (count _this > 3) then {
 		_type = _this select 3;
 		_data = [_data, _type] call iniDB_Datarizer;
 	};
 	
 	_data
-};
+}
+call mf_compile;
 
 iniDB_write = {
 	private["_file", "_sec", "_key", "_data"];
@@ -182,5 +196,5 @@ iniDB_write = {
 	_data = format['"%1"', _data];
 	_data = [_file, _sec, _key, _data] call iniDB_writeRaw;
 	_data
-};
-
+}
+call mf_compile;
