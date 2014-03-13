@@ -20,26 +20,13 @@ spawnActionHandle = _params spawn
 
 	player allowDamage true;
 
-	// If there are server donations, bump up the amount players spawn with
-	_baseMoney = ["config_initial_spawn_money", 0] call getPublicVar;
-	
-	if (["config_player_donations_enabled"] call isConfigOn) then
-	{
-		_donationMoney = player getVariable ["donationMoney", 0];
-		player setVariable["cmoney",_baseMoney + _donationMoney,true];
-	}
-	else
-	{
-		player setVariable["cmoney",_baseMoney,true];
-	};
+	// Deal with money here
+	_baseMoney = ["A3W_startingMoney", 100] call getPublicVar;
+	_player setVariable ["cmoney", _baseMoney, true];
 
 	[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
 	[MF_ITEMS_WATER, 1] call mf_inventory_add;
 	[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_add;
-
-	// Remove unrealistic blur effects
-	ppEffectDestroy BIS_fnc_feedback_fatigueBlur;
-	ppEffectDestroy BIS_fnc_feedback_damageBlur; 
 
 	switch (_switch) do 
 	{
@@ -63,68 +50,9 @@ spawnActionHandle = _params spawn
 		};
 	};
 
-	if (isNil {client_firstSpawn}) then
+	if (isNil "client_firstSpawn") then
 	{
-		client_firstSpawn = true;
-		[] execVM "client\functions\welcomeMessage.sqf";
-		
-		player addEventHandler ["Take",
-		{
-			private "_vehicle";
-			_vehicle = _this select 1;
-			
-			if (_vehicle isKindOf "Car" && {!(_vehicle getVariable ["itemTakenFromVehicle", false])}) then
-			{
-				_vehicle setVariable ["itemTakenFromVehicle", true, true];
-			};
-		}];
-		
-		true spawn
-		{      
-			_startTime = floor(time);
-			_result = 0;
-			
-			waitUntil
-			{ 
-				_currTime = floor(time);
-				
-				if (_currTime - _startTime >= 180) then 
-				{
-					_result = 1;    
-				};
-				
-				(_result == 1)
-			};
-			
-			if (playerSide in [west, east]) then
-			{
-				_found = false;
-				
-				{
-					if (_x select 0 == playerUID) then {_found = true};
-				} forEach pvar_teamSwitchList;
-				
-				if (!_found) then
-				{
-					pvar_teamSwitchList set [count pvar_teamSwitchList, [playerUID, playerSide]];
-					publicVariable "pvar_teamSwitchList";
-					
-					_side = "";
-					
-					if (playerSide == BLUFOR) then
-					{
-						_side = "BLUFOR"; 
-					};
-			   
-					if (playerSide == OPFOR) then
-					{
-						_side = "OPFOR"; 
-					};
-					
-					titleText [format["You have been locked to %1",_side],"PLAIN",0];
-				};
-			};
-		};
+		execVM "client\functions\firstSpawn.sqf";
 	};
 };
 

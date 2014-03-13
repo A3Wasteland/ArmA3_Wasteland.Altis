@@ -5,6 +5,7 @@ disableChannels[] = {}; // {0} to disable global
 joinUnassigned = 0;
 enableItemsDropping = 0;
 loadScreen = "Loading.jpg";
+onPauseScript = "client\clientEvents\onPause.sqf";
 class Header
 {
 	gameType=Sandbox;

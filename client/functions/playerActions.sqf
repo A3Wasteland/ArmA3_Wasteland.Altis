@@ -19,8 +19,3 @@ aActionsIDs = aActionsIDs + [player addAction[("<img image='\a3\Ui_f\data\GUI\Cf
 //stores (not sure if this works, needs testing tonight!)
 //aActionsIDs = aActionsIDs + [player addAction["<img image='client\icons\store.paa'/> Open gun store", "[] spawn loadGunStore;", [], 1, false, false, "", '(vehicle player == player) && player distance (nearestobjects [player, ["C_man_1_1_F"],  3] select 0) < 2']];
 //aActionsIDs = aActionsIDs + [player addAction["<img image='client\icons\store.paa'/> Open general store", "[] spawn loadGeneralStore;", [], 1, false, false, "", '(vehicle player == player) && player distance (nearestobjects [player, ["C_man_polo_6_F"],  3] select 0) < 2']];
-
-if (["config_player_saving_enabled"] call isConfigOn) then
-{
-	aActionsIDs = aActionsIDs + [player addAction["<img image='client\icons\save.paa'/> <t color='#0080ff'>Save Player</t>", "persistence\players\c_savePlayerToServer.sqf", [], 1, false, false, "", 'stance player == "PRONE"']];
-};

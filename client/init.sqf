@@ -8,6 +8,9 @@ if (isDedicated) exitWith {};
 
 waitUntil {!isNil "A3W_network_compileFuncs"};
 call A3W_network_compileFuncs;
+A3W_network_compileFuncs = nil;
+
+waitUntil {!isNil "A3W_serverSettingsSent"};
 
 [] execVM "client\functions\bannedNames.sqf";
 
@@ -45,50 +48,39 @@ if (!(playerSide in [BLUFOR, OPFOR, INDEPENDENT, sideEnemy])) then
 player call compile preprocessFileLineNumbers "client\functions\clientCompile.sqf";
 
 //Player setup
-player call playerSetup;
+player call playerSetupStart;
+
+// Deal with money here
+_baseMoney = ["A3W_startingMoney", 100] call getPublicVar;
+player setVariable ["cmoney", _baseMoney, true];
 
 // Player saving - Load from iniDB
-if (["config_player_saving_enabled"] call isConfigOn) then
+if (["A3W_playerSaving"] call isConfigOn) then
 {
-	positionLoaded = 0;
-	donationMoneyLoaded = 0; // used only if config_player_donations_enabled is set
-
-	_scriptHandle = [] execVM "persistence\players\c_playerDBSetup.sqf";
-	waitUntil {scriptDone _scriptHandle};
+	call compile preprocessFileLineNumbers "persistence\players\c_setupPlayerDB.sqf";
+	call fn_requestPlayerData;
 	
+	waitUntil {!isNil "playerData_loaded"};
 	
-	_loadHandle = [] execVM "persistence\players\c_loadAccount.sqf";
-
-	if (["config_player_donations_enabled"] call isConfigOn) then
+	[] spawn
 	{
-		// If the server has configured donation money, load that from the DB
-		waitUntil {donationMoneyLoaded == 1};
-		_donationMoney = player getVariable ["donationMoney", 0];
-		if (_donationMoney > 0) then {player globalChat format["Thank you for your donation. You will have $%1 extra cash on spawn", _donationMoney];};
+		// Save player every 60s
+		while {true} do
+		{
+			sleep 60;
+			call fn_savePlayerData;
+		};
 	};
-
-	// Deal with money here
-	// If there are server donations, bump up the amount players spawn with
-	_baseMoney = ["config_initial_spawn_money", 0] call getPublicVar;
-	
-	if (["config_player_donations_enabled"] call isConfigOn) then
-	{
-		_donationMoney = player getVariable ["donationMoney", 0];
-		diag_log format["Player starting with $%1 (%2 + %3)", _baseMoney + _donationMoney, _baseMoney, _donationMoney];
-		player setVariable["cmoney",_baseMoney + _donationMoney,true];
-	}
-	else
-	{
-		diag_log format["Player starting with $%1", _baseMoney];
-		player setVariable["cmoney",_baseMoney,true];
-	};
-
-	waitUntil {scriptDone _loadHandle && {positionLoaded == 1}};
-}
-else
-{
-	diag_log format["Client has no player save functionality"];
 };
+
+if (isNil "playerData_alive") then
+{
+	player call playerSetupGear;
+};
+
+player call playerSetupEnd;
+
+diag_log format ["Player starting with $%1", player getVariable ["cmoney", 0]];
 
 // Territory system enabled?
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
@@ -96,9 +88,6 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 	territoryActivityHandler = "territory\client\territoryActivityHandler.sqf" call mf_compile;
 	[] execVM "territory\client\createCaptureTriggers.sqf";
 };
-
-// Find out if the player has been moved by the persistence system
-_playerWasMoved = player getVariable ["playerWasMoved", 0];
 
 //Setup player events.
 if (!isNil "client_initEH") then {player removeEventHandler ["Respawn", client_initEH];};
@@ -115,7 +104,7 @@ waituntil {!(IsNull (findDisplay 46))};
 "currentDate" addPublicVariableEventHandler {[] call timeSync};
 "messageSystem" addPublicVariableEventHandler {[] call serverMessage};
 "clientMissionMarkers" addPublicVariableEventHandler {[] call updateMissionsMarkers};
-"clientRadarMarkers" addPublicVariableEventHandler {[] call updateRadarMarkers};
+// "clientRadarMarkers" addPublicVariableEventHandler {[] call updateRadarMarkers};
 "pvar_teamKillList" addPublicVariableEventHandler {[] call updateTeamKiller};
 "publicVar_teamkillMessage" addPublicVariableEventHandler {if (local (_this select 1)) then { [] spawn teamkillMessage }};
 "compensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
@@ -130,28 +119,36 @@ waituntil {!(IsNull (findDisplay 46))};
 [] execVM "client\functions\playerTags.sqf";
 [] execVM "client\functions\groupTags.sqf";
 [] call updateMissionsMarkers;
-[] call updateRadarMarkers;
+// [] call updateRadarMarkers;
+
 if (isNil "FZF_IC_INIT") then
 {
 	call compile preprocessFileLineNumbers "client\functions\newPlayerIcons.sqf";
 };
 
 // If we've got a position from the player save system, don't go through playerSpawn
-if (_playerWasMoved == 0) then
+if (["playerWasMoved", false] call getPublicVar) then
 {
-	true spawn playerSpawn;
+	player switchMove "AmovPpneMstpSnonWnonDnon";
 }
 else
 {
-	player switchMove "AmovPpneMstpSnonWnonDnon";
+	true spawn playerSpawn;
 };
 
 [] spawn FZF_IC_INIT;
 
+// Synchronize score compensation
 {
-	if (isPlayer _x && {!isNil ("addScore_" + (getPlayerUID _x))}) then
+	if (isPlayer _x) then
 	{
-		_x spawn removeNegativeScore;
+		_scoreVar = "addScore_" + getPlayerUID _x;
+		_scoreVal = missionNamespace getVariable _scoreVar;
+		
+		if (!isNil "_scoreVal" && {typeName _scoreVal == "SCALAR"}) then
+		{
+			_x addScore _scoreVal;
+		};
 	};
 } forEach playableUnits;
 
