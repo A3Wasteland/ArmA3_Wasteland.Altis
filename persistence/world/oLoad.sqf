@@ -5,35 +5,50 @@
 
 sleep 10;
 
-_check = ("Objects" call PDB_databaseNameCompiler) call iniDB_exists;
-if (isNil "_check" || {!_check}) exitWith {};
+_fileName = "Objects" call PDB_databaseNameCompiler;
+_exists = _fileName call iniDB_exists;
 
-_objectscount = ["Objects" call PDB_databaseNameCompiler, "Count", "Count", "NUMBER"] call iniDB_read;
-if (isNil "_objectscount") exitWith {};
+if (isNil "_exists" || {!_exists}) exitWith {};
 
-for "_i" from 0 to (_objectscount - 1) do
+_objectsCount = [_fileName, "Info", "Count", "NUMBER"] call iniDB_read;
+if (isNil "_objectsCount") exitWith {};
+
+for "_i" from 1 to _objectsCount do
 {
-	_objSaveName = format["obj%1", _i];
-	_class = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "classname", "STRING"] call iniDB_read;
-	_pos = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "pos", "ARRAY"] call iniDB_read;
-	_dir = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "dir", "ARRAY"] call iniDB_read;
-	_supplyleft = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "supplyleft", "NUMBER"] call iniDB_read;
-	_weapons = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "weapons", "ARRAY"] call iniDB_read;
-	_magazines = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "magazines", "ARRAY"] call iniDB_read;
-	_items = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "items", "ARRAY"] call iniDB_read;
-	_owner = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "ownerUID", "STRING"] call iniDB_read;
-	_allowDamage = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "allowDamage", "NUMBER"] call iniDB_read;
-	_damageVal = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "damage", "NUMBER"] call iniDB_read;
+	_objName = format ["Obj%1", _i];
 	
-	if (!isNil "_objSaveName" && !isNil "_class" && !isNil "_pos" && !isNil "_dir" && !isNil "_supplyleft") then 
+	_class = [_fileName, _objName, "Class", "STRING"] call iniDB_read;
+	_pos = [_fileName, _objName, "Position", "ARRAY"] call iniDB_read;
+	_dir = [_fileName, _objName, "Direction", "ARRAY"] call iniDB_read;
+	_hoursAlive = [_fileName, _objName, "HoursAlive", "NUMBER"] call iniDB_read;
+	_damage = [_fileName, _objName, "Damage", "NUMBER"] call iniDB_read;
+	_allowDamage = [_fileName, _objName, "AllowDamage", "NUMBER"] call iniDB_read;
+	_variables = [_fileName, _objName, "Variables", "ARRAY"] call iniDB_read;
+	
+	_weapons = [_fileName, _objName, "Weapons", "ARRAY"] call iniDB_read;
+	_magazines = [_fileName, _objName, "Magazines", "ARRAY"] call iniDB_read;
+	_items = [_fileName, _objName, "Items", "ARRAY"] call iniDB_read;
+	_backpacks = [_fileName, _objName, "Backpacks", "ARRAY"] call iniDB_read;
+	
+	_maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar; 
+	
+	if (!isNil "_class" && {!isNil "_pos"} && {_maxLifetime <= 0 || {_hoursAlive < _maxLifetime}}) then 
 	{
-		_obj = createVehicle [_class,_pos, [], 0, "CAN_COLLIDE"];
-		_obj setPosASL _pos;
-		_obj setVectorDirAndUp _dir;
+		_obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
+		_obj setPosATL _pos;
+		
+		if (!isNil "_dir") then
+		{
+			_obj setVectorDirAndUp _dir;
+		};
+		
+		_obj setVariable ["baseSaving_hoursAlive", _nbHours];
+		_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
+		_obj setVariable ["objectLocked", true, true]; // force lock
 		
 		if (_allowDamage > 0) then
 		{
-			_obj setDamage _damageVal;
+			_obj setDamage _damage;
 			_obj setVariable ["allowDamage", true];
 		}
 		else
@@ -41,32 +56,35 @@ for "_i" from 0 to (_objectscount - 1) do
 			_obj allowDamage false;
 		};
 		
-		if (_class == "Land_Sacks_goods_F") then 
-		{
-			_obj setVariable ["food", _supplyleft, true];
-		};
-
-		if (_class == "Land_WaterBarrel_F") then 
-		{
-			_obj setVariable ["water", _supplyleft, true];
-		};
+		{ _obj setVariable [_x select 0, _x select 1, true] } forEach _variables;
 		
 		clearWeaponCargoGlobal _obj;
 		clearMagazineCargoGlobal _obj;
+		clearItemCargoGlobal _obj;
+		clearBackpackCargoGlobal _obj;
 		
-		for "_ii" from 0 to (count (_weapons select 0) - 1) do
+		if (!isNil "_weapons") then
 		{
-			_obj addWeaponCargoGlobal [(_weapons select 0) select _ii, (_weapons select 1) select _ii];
+			{ _obj addWeaponCargoGlobal _x } forEach _weapons;
 		};
-
-		for "_ii" from 0 to (count (_magazines select 0) - 1) do
+		
+		if (!isNil "_magazines") then
 		{
-			_obj addMagazineCargoGlobal [(_magazines select 0) select _ii, (_magazines select 1) select _ii];
+			{ _obj addMagazineCargoGlobal _x } forEach _magazines;
 		};
-			
-		_obj setVariable ["objectLocked", true, true]; //force lock
-		_obj setVariable ["ownerUID", _owner, true]; // Set owner id
+		
+		if (!isNil "_items") then
+		{
+			{ _obj addItemCargoGlobal _x } forEach _items;
+		};
+		
+		if (!isNil "_backpacks") then
+		{
+			{ _obj addBackpackCargoGlobal _x } forEach _backpacks;
+		};
 	};
 };
 
-diag_log format ["A3Wasteland - baseSaving loaded %1 parts from iniDB", _objectscount];
+diag_log format ["A3Wasteland - baseSaving loaded %1 parts from iniDB", _objectsCount];
+
+execVM "persistence\world\oSave.sqf";

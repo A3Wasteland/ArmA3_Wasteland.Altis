@@ -5,80 +5,124 @@
 
 if (!isServer) exitWith {};
 
-// Copy objectList array
-_saveableObjects = +objectList;
+_baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
+_boxSavingOn = ["A3W_boxSaving"] call isConfigOn;
 
-// Add general store objects
+_saveableObjects = [];
+
+_isSaveable =
 {
-	_genObject = _x select 1;
+	_result = false;
+	{ if (_this == _x) exitWith { _result = true } } forEach _saveableObjects;
+	_result
+};
+
+// Add objectList & general store objects
+{
+	_obj = _x;
+	if (_forEachIndex > 0) then { _obj = _x select 1 };
 	
-	if ({_genObject == _x} count _saveableObjects == 0) then
+	if (!(_obj isKindOf "ReammoBox_F") && {!(_obj call _isSaveable)}) then
 	{
-		_saveableObjects set [count _saveableObjects, _genObject];
+		[_saveableObjects, _obj] call BIS_fnc_arrayPush;
 	};
-} forEach (call genObjectsArray);
+} forEach [objectList, call genObjectsArray];
+
+_fileName = "Objects" call PDB_databaseNameCompiler;
 
 while {true} do
 {
 	sleep 60;
-	_PersistentDB_ObjCount = 0;
+	
+	_oldObjCount = [_fileName, "Info", "Count", "NUMBER"] call iniDB_read;
+	_objCount = 0;
 	
 	{
-		_object = _x;
+		_obj = _x;
 		
-		if (_object getVariable ["objectLocked", false] && {alive _object}) then
+		if (_obj getVariable ["objectLocked", false] && {alive _obj}) then
 		{
-			_classname = typeOf _object;
+			_class = typeOf _obj;
 			
-			// addition to check if the classname matches the building parts
-			if (!(_object isKindOf "ReammoBox_F") && {{_classname == _x} count _saveableObjects > 0}) then
+			if ((_baseSavingOn && {_class call _isSaveable}) || {_boxSavingOn && {_obj isKindOf "ReammoBox_F"}}) then
 			{
-				_pos = getPosASL _object;
-				_dir = [vectorDir _object] + [vectorUp _object];
-				_owner = _object getVariable ["ownerUID", ""];
-				_damage = damage _object;
-				_allowDamage = if (_object getVariable ["allowDamage", false]) then { 1 } else { 0 };
+				_netId = netId _obj;
+				_pos = getPosATL _obj;
+				_dir = [vectorDir _obj, vectorUp _obj];
+				_damage = damage _obj;
+				_allowDamage = if (_obj getVariable ["allowDamage", false]) then { 1 } else { 0 };
+				
+				if (isNil {_obj getVariable "baseSaving_spawningTime"}) then
+				{
+					_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
+				};
+				
+				_hoursAlive = (_obj getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - (_obj getVariable "baseSaving_spawningTime")) / 3600);
 
-				_supplyleft = 0;
-
+				_variables = [];
+				
 				switch (true) do
 				{
-					case (_object isKindOf "Land_Sacks_goods_F"):
+					case (_obj isKindOf "Land_Sacks_goods_F"):
 					{
-						_supplyleft = _object getVariable ["food", 20];
+						[_variables, ["food", _obj getVariable ["food", 20]] call BIS_fnc_arrayPush;
 					};
-					case (_object isKindOf "Land_WaterBarrel_F"):
-					{ 
-						_supplyleft = _object getVariable ["water", 20];
+					case (_obj isKindOf "Land_WaterBarrel_F"):
+					{
+						[_variables, ["water", _obj getVariable ["water", 20]] call BIS_fnc_arrayPush;
 					};
 				};
-
-				// Save weapons & ammo
-				_weapons = getWeaponCargo _object;
-				_magazines = getMagazineCargo _object;
-				_items = getItemCargo _object;
 				
-				_objSaveName = format["obj%1", _PersistentDB_ObjCount];
-
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "classname", _classname] call iniDB_write;
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "pos", _pos] call iniDB_write;
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "dir", _dir] call iniDB_write;
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "supplyleft", _supplyleft] call iniDB_write;
+				_owner = _obj getVariable ["ownerUID", ""];
 				
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "weapons", _weapons] call iniDB_write;
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "magazines", _magazines] call iniDB_write;
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "items", _items] call iniDB_write;
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "owner", _owner] call iniDB_write;
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "damage", _damage] call iniDB_write;
-				["Objects" call PDB_databaseNameCompiler, _objSaveName, "allowDamage", _allowDamage] call iniDB_write;
+				if (_owner != "") then
+				{
+					[_variables, ["_owner", _owner] call BIS_fnc_arrayPush;
+				};
+				
+				_weapons = [];
+				_magazines = [];
+				_items = [];
+				_backpacks = [];
+				
+				if (getNumber (configFile >> "CfgVehicles" >> _class >> "maximumLoad") > 0) then
+				{
+					// Save weapons & ammo
+					_weapons = (getWeaponCargo _obj) call cargoToPairs;
+					_magazines = (getMagazineCargo _obj) call cargoToPairs;
+					_items = (getItemCargo _obj) call cargoToPairs;
+					_backpacks = (getBackpackCargo _obj) call cargoToPairs;
+				};
 
-				_PersistentDB_ObjCount = _PersistentDB_ObjCount + 1;
+				_objCount = _objCount + 1;
+				_objName = format ["Obj%1", _objCount];
+
+				[_fileName, _objName, "Class", _class] call iniDB_write;
+				[_fileName, _objName, "Position", _pos] call iniDB_write;
+				[_fileName, _objName, "Direction", _dir] call iniDB_write;
+				[_fileName, _objName, "HoursAlive", _hoursAlive] call iniDB_write;
+				[_fileName, _objName, "Damage", _damage] call iniDB_write;
+				[_fileName, _objName, "AllowDamage", _allowDamage] call iniDB_write;
+				[_fileName, _objName, "Variables", _variables] call iniDB_write;
+				
+				[_fileName, _objName, "Weapons", _weapons] call iniDB_write;
+				[_fileName, _objName, "Magazines", _magazines] call iniDB_write;
+				[_fileName, _objName, "Items", _items] call iniDB_write;
+				[_fileName, _objName, "Backpacks", _backpacks] call iniDB_write;
 			};
 		};
 	} forEach allMissionObjects "All";
 	
-	["Objects" call PDB_databaseNameCompiler, "Count", "Count", _PersistentDB_ObjCount] call iniDB_write;
+	[_fileName, "Info", "Count", _objCount] call iniDB_write;
 	
-	diag_log format["A3W - %1 parts have been saved with iniDB", _PersistentDB_ObjCount];
-	sleep 60;
+	diag_log format ["A3W - %1 baseparts have been saved with iniDB", _objCount];
+	
+	// Reverse-delete old objects
+	if (_oldObjCount > _objCount) then
+	{
+		for [{_i = _oldObjCount, {_i > _objCount}, {_i = _i - 1}] do
+		{
+			[_fileName, format ["Obj%1", _i]] call iniDB_deleteSection;
+		};
+	};
 };

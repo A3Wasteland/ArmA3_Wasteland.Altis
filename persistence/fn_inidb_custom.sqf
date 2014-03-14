@@ -101,6 +101,18 @@ iniDB_delete = {
 }
 call mf_compile;
 
+iniDB_deleteSection = {
+	_data = "iniDB" callExtension format["deletesection;%1;%2", _this select 0, _this select 1];
+	_cdata = call compile _data;
+	
+	if((_cdata select 0)) then {
+		true
+	} else {
+		false
+	};
+}
+call mf_compile;
+
 // =======================================================================
 
 iniDB_readRaw = {
