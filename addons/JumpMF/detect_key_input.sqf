@@ -31,7 +31,7 @@ if (_pressedKey in actionKeys "GetOver") then
 				_fatigue = getFatigue player;
 				_load = loadAbs player;
 		
-				player playMoveNow "AovrPercMrunSrasWrflDf";
+				[player, "AovrPercMrunSrasWrflDf"] call switchMoveGlobal;
 				
 				waitUntil
 				{
