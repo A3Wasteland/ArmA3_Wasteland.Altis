@@ -26,6 +26,8 @@ isAdmin = "client\systems\adminPanel\isAdmin.sqf" call mf_compile;
 isWeaponType = "client\functions\isWeaponType.sqf" call mf_compile;
 isAssignableBinocular = "client\functions\isAssignableBinocular.sqf" call mf_compile;
 getCurrentBinoculars = "client\functions\getCurrentBinoculars.sqf" call mf_compile;
+addPushPlaneAction = "client\functions\addPushPlaneAction.sqf" call mf_compile;
+canPushPlaneBack = "client\functions\canPushPlaneBack.sqf" call mf_compile;
 
 // Player details and actions
 loadPlayerMenu = "client\systems\playerMenu\init.sqf" call mf_compile;
