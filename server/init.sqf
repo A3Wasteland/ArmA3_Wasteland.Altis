@@ -101,7 +101,9 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 if (["A3W_buildingLoot"] call isConfigOn) then 
 {
 	diag_log "[INFO] A3W loot spawning is ENABLED";
-	execVM "server\spawning\lootCreation.sqf";
+	fn_getBuildingstospawnLoot = "addons\Lootspawner\fn_LSgetBuildingstospawnLoot.sqf" call mf_compile; 
+	LSdeleter = "addons\Lootspawner\LSdeleter.sqf" call mf_compile;
+	execVM "addons\Lootspawner\Lootspawner.sqf";
 };
 
 [] execVM "server\functions\serverTimeSync.sqf";
