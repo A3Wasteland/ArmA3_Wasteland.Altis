@@ -16,13 +16,14 @@ _leader = _group createUnit ["C_man_polo_1_F", [(_pos select 0) + 10, _pos selec
 removeAllAssignedItems _leader;
 _leader addUniform "U_B_CombatUniform_mcam";
 _leader addVest "V_PlateCarrier1_rgr";
+_leader addBackpack "B_AssaultPack_rgr";
 _leader addMagazine "30Rnd_556x45_Stanag";
 _leader addWeapon "arifle_TRG21_F";
 _leader addMagazine "30Rnd_556x45_Stanag";
 _leader addMagazine "30Rnd_556x45_Stanag";
-_leader addMagazine "RPG32_HE_F";
+_leader addMagazine "RPG32_F";
 _leader addWeapon "launch_RPG32_F";
-_leader addMagazine "RPG32_HE_F";
+_leader addMagazine "RPG32_F";
 
 // Rifleman
 _man2 = _group createUnit ["C_man_polo_2_F", [(_pos select 0) - 30, _pos select 1, 0], [], 1, "Form"];
@@ -64,15 +65,15 @@ _man5 addWeapon "arifle_TRG20_F";
 _man5 addMagazine "30Rnd_556x45_Stanag";
 _man5 addMagazine "30Rnd_556x45_Stanag";
 
-// Rifleman
+// Machine gunner
 _man6 = _group createUnit ["C_man_polo_4_F", [_pos select 0, (_pos select 1) - 30, 0], [], 1, "Form"];
 removeAllAssignedItems _man6;
 _man6 addUniform "U_B_CombatUniform_mcam_vest";
 _man6 addVest "V_PlateCarrier1_rgr";
-_man6 addMagazine "30Rnd_556x45_Stanag";
-_man6 addWeapon "arifle_TRG20_F";
-_man6 addMagazine "30Rnd_556x45_Stanag";
-_man6 addMagazine "30Rnd_556x45_Stanag";
+_man6 addMagazine "150Rnd_762x51_Box";
+_man6 addWeapon "LMG_Zafir_F";
+_man6 addMagazine "150Rnd_762x51_Box";
+_man6 addMagazine "150Rnd_762x51_Box";
 
 // Grenadier
 _man7 = _group createUnit ["C_man_polo_3_F", [_pos select 0, (_pos select 1) - 40, 0], [], 1, "Form"];
