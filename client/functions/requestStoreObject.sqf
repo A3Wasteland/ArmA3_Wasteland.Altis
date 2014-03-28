@@ -41,7 +41,7 @@ if (isNil "_object" || {isNull objectFromNetId _object}) then
 			_object = player getVariable _requestKey;
 		};
 		
-		if (!isNil _object) then
+		if (!isNil "_object") then
 		{
 			deleteVehicle objectFromNetId _object;
 			player setVariable [_requestKey, nil, true];
