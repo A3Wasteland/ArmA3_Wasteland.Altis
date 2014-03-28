@@ -201,7 +201,7 @@ class w_RscListBox
     autoScrollDelay = 5;
     autoScrollRewind = 0;
 
-	class ScrollBar { 
+	class ListScrollBar { 
 		color[] = {1, 1, 1, 0.6}; 
 		colorActive[] = {1, 1, 1, 1}; 
 		colorDisabled[] = {1, 1, 1, 0.3}; 
@@ -430,7 +430,7 @@ class w_RscCombo {
 	arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
 	border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
 
-	class ScrollBar { 
+	class ComboScrollBar { 
 		color[] = {1, 1, 1, 0.6}; 
 		colorActive[] = {1, 1, 1, 1}; 
 		colorDisabled[] = {1, 1, 1, 0.3}; 

@@ -203,7 +203,7 @@ class balca_loader_main
 		autoScrollDelay = 5;
 		autoScrollRewind = 0;
 
-		class ScrollBar
+		class ListScrollBar
 		{
 			color[] = {0.30, 0.32, 0.21, 0.6};
 			colorActive[] = {0.30, 0.32, 0.21, 1};

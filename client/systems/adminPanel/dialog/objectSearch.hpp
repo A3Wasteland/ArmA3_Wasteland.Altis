@@ -304,7 +304,7 @@ class tw_RscCombo
 		1
 	};
 	maxHistoryDelay = 1;
-	class ScrollBar
+	class ComboScrollBar
 	{
 		color[] = 
 		{
@@ -444,7 +444,7 @@ class tw_RscListBox
 	};
 	arrowEmpty = "#(argb,8,8,3)color(1,1,1,1)";
 	arrowFull = "#(argb,8,8,3)color(1,1,1,1)";
-	class ScrollBar
+	class ListScrollBar
 	{
 		color[] = 
 		{

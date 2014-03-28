@@ -50,7 +50,7 @@
 		rowHeight = 0.1;
 		wholeHeight = 0.4;
 
-		class ScrollBar
+		class ComboScrollBar
 		{
 			color[] = {1,1,1,0.6};
 			colorActive[] = {1,1,1,1};
@@ -145,8 +145,10 @@
 		
 		color[] = {0.8314, 0.8784, 0.6275, 1.0};
 		color2[] = {0.95, 0.95, 0.95, 1};
+		colorFocused[] = {0.8314, 0.8784, 0.6275, 1.0};
 		colorBackground[] = {1, 1, 1, 1};
 		colorbackground2[] = {1, 1, 1, 0.4};
+		colorBackgroundFocused[] = {1, 1, 1, 1};
 		colorDisabled[] = {1, 1, 1, 0.25};
 		periodFocus = 1.2;
 		periodOver = 0.8;
@@ -192,10 +194,10 @@
 		period = 0.4;
 		font = "PuristaBold";
 		
-		soundEnter[] = {"\A3\ui_f\data\Sound\MOUSE2", 0.09, 1};
-		soundPush[] = {"\A3\ui_f\data\Sound\NEW1", 0.09, 1};
-		soundClick[] = {"\A3\ui_f\data\Sound\MOUSE3", 0.07, 1};
-		soundEscape[] = {"\A3\ui_f\data\Sound\MOUSE1", 0.09, 1};
+		soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter", 0.09, 1};
+		soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush", 0.09, 1};
+		soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick", 0.07, 1};
+		soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape", 0.09, 1};
 		
 		class Attributes 
 		{
@@ -244,7 +246,7 @@
 		autoScrollDelay = 5;
 		autoScrollRewind = 0;
 
-		class ScrollBar
+		class ListScrollBar
 		{
 			color[] = {1, 1, 1, 1};
 			colorActive[] = {1, 1, 1, 1};
