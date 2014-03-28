@@ -13,14 +13,9 @@ lootWeapon_list = [
 "arifle_TRG20_F",
 "arifle_TRG21_F",
 "Binocular",
-"hgun_ACPC2_F",
-"hgun_P07_F",
 "hgun_PDW2000_F",
-"hgun_Rook40_F",
 "SMG_01_F",							// Vermin .45 ACP
-"SMG_02_F",							// Sting 9mm
-"srifle_EBR_F"
-//"arifle_SDAR_F",
+"SMG_02_F"							// Sting 9mm
 ]],[ 1, [						// MILITARY
 "arifle_Katiba_C_F",
 "arifle_Katiba_F",
@@ -38,15 +33,7 @@ lootWeapon_list = [
 "arifle_TRG21_F",
 "arifle_TRG21_GL_F",
 "Binocular",
-"hgun_ACPC2_snds_F",
-"hgun_P07_snds_F",
 "hgun_PDW2000_F",
-"hgun_Rook40_snds_F",
-"Laserdesignator",
-"launch_NLAW_F",
-"launch_RPG32_F",
-"launch_Titan_F",
-"launch_Titan_short_F",
 "LMG_Mk200_F",
 "LMG_Zafir_F",
 "Rangefinder",
@@ -56,13 +43,12 @@ lootWeapon_list = [
 "srifle_GM6_F",
 "srifle_LRR_F"
 ]],[ 2, [						// INDUSTRIAL
-"arifle_Katiba_C_F",
 "arifle_Mk20C_F",
 "arifle_Mk20_F",
-"arifle_MXC_F",
-"arifle_SDAR_F",
 "arifle_TRG20_F",
 "arifle_TRG21_F",
+"arifle_Katiba_C_F",
+"arifle_MXC_F",
 "Binocular",
 "SMG_01_F",							// Vermin .45 ACP
 "SMG_02_F"							// Sting 9mm
@@ -71,11 +57,6 @@ lootWeapon_list = [
 "arifle_MXC_F",
 "arifle_MXM_F",
 "arifle_MX_GL_F",
-"Laserdesignator",
-"launch_NLAW_F",
-"launch_RPG32_F",
-"launch_Titan_F",
-"launch_Titan_short_F",
 "Rangefinder",
 "srifle_GM6_F",
 "srifle_LRR_F"
@@ -88,106 +69,95 @@ lootWeapon_list = [
 //								magazinelist: list of magazine class names
 lootMagazine_list = [
 [ 0, [							// CIVIL
-"16Rnd_9x21_Mag",
-"20Rnd_556x45_UW_mag",
-"20Rnd_762x51_Mag",
-"30Rnd_45ACP_Mag_SMG_01",
-"30Rnd_556x45_Stanag",
-"30Rnd_9x21_Mag",
+//"16Rnd_9x21_Mag",
 "9Rnd_45ACP_Mag",
+"30Rnd_9x21_Mag",
+"30Rnd_45ACP_Mag_SMG_01_tracer_green",
+"30Rnd_556x45_Stanag_Tracer_Yellow",
+"30Rnd_65x39_caseless_mag_Tracer",
+"30Rnd_65x39_caseless_green_mag_Tracer"/*,
 "Chemlight_blue",
 "Chemlight_green",
 "Chemlight_red",
-"Chemlight_yellow",
-"HandGrenade",
-"HandGrenade_Stone"
+"Chemlight_yellow"*/
 ]],[ 1, [						// MILITARY
 "100Rnd_65x39_caseless_mag",
 "100Rnd_65x39_caseless_mag_Tracer",
 "150Rnd_762x51_Box",
 "150Rnd_762x51_Box_Tracer",
-"16Rnd_9x21_Mag",
+//"16Rnd_9x21_Mag",
 "1Rnd_HE_Grenade_shell",
-"1Rnd_SmokeBlue_Grenade_shell",
-"1Rnd_SmokeGreen_Grenade_shell",
-"1Rnd_SmokeOrange_Grenade_shell",
-"1Rnd_SmokePurple_Grenade_shell",
-"1Rnd_SmokeRed_Grenade_shell",
-"1Rnd_SmokeYellow_Grenade_shell",
 "1Rnd_Smoke_Grenade_shell",
+"SmokeShell",
+"SmokeShellPurple",
+"SmokeShellBlue",
+"SmokeShellGreen",
+"SmokeShellYellow",
+"SmokeShellOrange",
+"SmokeShellRed",
 "200Rnd_65x39_cased_Box",
 "200Rnd_65x39_cased_Box_Tracer",
 "20Rnd_556x45_UW_mag",
 "20Rnd_762x51_Mag",
+"20Rnd_762x51_Mag",
+"30Rnd_45ACP_Mag_SMG_01",
 "30Rnd_45ACP_Mag_SMG_01",
 "30Rnd_556x45_Stanag",
-"30Rnd_556x45_Stanag_Tracer_Green",
-"30Rnd_556x45_Stanag_Tracer_Red",
 "30Rnd_556x45_Stanag_Tracer_Yellow",
 "30Rnd_65x39_caseless_green",
 "30Rnd_65x39_caseless_green_mag_Tracer",
 "30Rnd_65x39_caseless_mag",
 "30Rnd_65x39_caseless_mag_Tracer",
 "30Rnd_9x21_Mag",
-"3Rnd_HE_Grenade_shell",
+"30Rnd_9x21_Mag",
+/*"3Rnd_HE_Grenade_shell",
 "3Rnd_SmokeBlue_Grenade_shell",
 "3Rnd_SmokeGreen_Grenade_shell",
 "3Rnd_SmokeOrange_Grenade_shell",
 "3Rnd_SmokePurple_Grenade_shell",
 "3Rnd_SmokeRed_Grenade_shell",
 "3Rnd_SmokeYellow_Grenade_shell",
-"3Rnd_Smoke_Grenade_shell",
+"3Rnd_Smoke_Grenade_shell",*/
 "5Rnd_127x108_Mag",
 "7Rnd_408_Mag",
+"9Rnd_45ACP_Mag",
 "9Rnd_45ACP_Mag",
 "APERSBoundingMine_Range_Mag",
 "APERSMine_Range_Mag",
 "APERSTripMine_Wire_Mag",
 "ATMine_Range_Mag",
-"Chemlight_blue",
+/*"Chemlight_blue",
 "Chemlight_green",
 "Chemlight_red",
-"Chemlight_yellow",
+"Chemlight_yellow",*/
 "ClaymoreDirectionalMine_Remote_Mag",
 "HandGrenade",
 "MiniGrenade",
-"NLAW_F",
-"RPG32_F",
-"RPG32_HE_F",
 "SatchelCharge_Remote_Mag",
-"SLAMDirectionalMine_Wire_Mag",
-"Titan_AA",
-"Titan_AP",
-"Titan_AT"
+"SLAMDirectionalMine_Wire_Mag"
 ]],[ 2, [						// INDUSTRIAL
-"20Rnd_556x45_UW_mag",
+"30Rnd_9x21_Mag",
 "30Rnd_45ACP_Mag_SMG_01",
 "30Rnd_556x45_Stanag",
-"30Rnd_556x45_Stanag_Tracer_Green",
-"30Rnd_556x45_Stanag_Tracer_Red",
 "30Rnd_556x45_Stanag_Tracer_Yellow",
 "30Rnd_65x39_caseless_green",
 "30Rnd_65x39_caseless_green_mag_Tracer",
 "30Rnd_65x39_caseless_mag",
-"30Rnd_65x39_caseless_mag_Tracer",
-"30Rnd_9x21_Mag",
+"30Rnd_65x39_caseless_mag_Tracer"/*,
 "Chemlight_blue",
 "Chemlight_green",
 "Chemlight_red",
-"Chemlight_yellow"
+"Chemlight_yellow"*/
 ]],[ 3, [						// RESEARCH
+"20Rnd_556x45_UW_mag",
 "30Rnd_556x45_Stanag",
 "30Rnd_556x45_Stanag",
+"30Rnd_65x39_caseless_mag",
+"30Rnd_65x39_caseless_mag",
 "30Rnd_65x39_caseless_green",
 "30Rnd_65x39_caseless_green",
 "5Rnd_127x108_Mag",
-"7Rnd_408_Mag",
-"NLAW_F",
-"RPG32_F",
-"RPG32_HE_F",
-"Titan_AA",
-"Titan_AP",
-"Titan_AT"
+"7Rnd_408_Mag"
 ]]];
 
 //here place hats, glasses, clothes, uniforms, vests
@@ -201,51 +171,18 @@ lootItem_list = [
 "FirstAidKit",
 "FirstAidKit",
 "FirstAidKit",
-"H_Bandanna_gry",
-"H_Beret_red",
-"H_Booniehat_dirty",
-"H_Cap_blu",
-"H_Cap_grn",
-"H_Cap_red",
-"H_Hat_brown",
-"H_Hat_checker",
-"H_Hat_grey",
-"I_UavTerminal",
 "muzzle_snds_acp", 					// .45 ACP
 "muzzle_snds_L", 					// 9mm
 "optic_Aco",
 "optic_ACO_grn",
 "optic_aco_smg",
 "optic_Holosight",
-"optic_Holosight_smg",
-"U_C_Commoner1_1",
-"U_C_Poloshirt_redwhite",
-"V_BandollierB_blk",
-"V_BandollierB_oli",
-"V_TacVestCamo_khk",
-"V_TacVestIR_blk",
-"V_TacVest_blk",
-"V_TacVest_blk_POLICE",
-"V_TacVest_brn",
-"V_TacVest_camo",
-"V_TacVest_khk",
-"V_TacVest_oli",
-"ItemMap",
-"ItemRadio",
-"ItemCompass",
-"ItemWatch"
+"optic_Holosight_smg"
 ]],[ 1, [						// MILITARY
 "acc_flashlight",
 "acc_pointer_IR",
-"B_UavTerminal",
 "FirstAidKit",
-"H_HelmetB_camo",
-"H_HelmetB_paint",
-"H_HelmetIA_net",
-"H_HelmetSpecB_blk",
-"H_PilotHelmetFighter_I",
 "ItemGPS",
-"I_UavTerminal",
 "Medikit",
 "muzzle_snds_acp", 					// .45 ACP
 "muzzle_snds_B", 					// 7.62mm
@@ -254,8 +191,8 @@ lootItem_list = [
 "muzzle_snds_L", 					// 9mm
 "muzzle_snds_M", 					// 5.56mm
 "NVGoggles",
-"NVGoggles_INDEP",
-"NVGoggles_OPFOR",
+//"NVGoggles_INDEP",
+//"NVGoggles_OPFOR",
 "optic_Aco",
 "optic_ACO_grn",
 "optic_aco_smg",
@@ -263,64 +200,33 @@ lootItem_list = [
 "optic_Hamr",
 "optic_Holosight",
 "optic_Holosight_smg",
-"optic_Nightstalker",
-"optic_NVS",
 "optic_SOS",
-"O_UavTerminal",
 "ToolKit",
-"U_B_CombatUniform_mcam",
-"U_B_GhillieSuit",
-"U_B_Wetsuit",
-"U_I_CombatUniform",
-"U_I_GhillieSuit",
-"U_I_Wetsuit",
-"U_O_CombatUniform_ocamo",
-"U_O_GhillieSuit",
-"U_O_Wetsuit",
-"V_Chestrig_blk",
-"V_HarnessOGL_brn",
-"V_HarnessOSpec_brn",
-"V_HarnessO_brn",
-"V_PlateCarrier1_blk",
-"V_PlateCarrier2_rgr",
-"V_PlateCarrier3_rgr",
-"V_PlateCarrierGL_rgr",
+"H_HelmetB",
+"H_HelmetIA",
+"H_HelmetO_ocamo",
+"V_PlateCarrier1_rgr",
 "V_PlateCarrierIA1_dgtl",
-"V_PlateCarrierIA2_dgtl",
-"V_PlateCarrierIAGL_dgtl",
-"V_PlateCarrierSpec_rgr",
-"V_RebreatherB",
-"V_RebreatherIA",
-"V_RebreatherIR"
+"V_HarnessO_brn"
 ]],[ 2, [						// INDUSTRIAL
 "FirstAidKit",
 "FirstAidKit",
-"ItemCompass",
-"ItemMap",
-"ItemWatch",
+"Medikit",
 "ToolKit",
-"ToolKit",
-"U_B_Wetsuit",
-"U_I_Wetsuit",
-"U_O_Wetsuit",
-"V_RebreatherB",
-"V_RebreatherIA",
-"V_RebreatherIR"
+"ToolKit"
 ]],[ 3, [						// RESEARCH
-"B_UavTerminal",
 "FirstAidKit",
 "FirstAidKit",
 "FirstAidKit",
 "ItemGPS",
-"I_UavTerminal",
 "Medikit",
 "NVGoggles",
-"NVGoggles_INDEP",
-"NVGoggles_OPFOR",
+//"NVGoggles_INDEP",
+//"NVGoggles_OPFOR",
 "optic_Nightstalker",
 "optic_NVS",
 "optic_SOS",
-"O_UavTerminal"
+"V_RebreatherB"
 ]]];
 
 //here place backpacks, parachutes and packed drones/stationary
@@ -330,69 +236,53 @@ lootItem_list = [
 //								backpacklist: list of backpack class names
 lootBackpack_list = [
 [ 0, [							// CIVIL
-"B_AssaultPack_blk",				// 34 Mags
-"B_AssaultPack_cbr",
-"B_AssaultPack_dgtl",
-"B_AssaultPack_khk",
-"B_AssaultPack_mcamo",
-"B_AssaultPack_ocamo",
-"B_AssaultPack_rgr",
-"B_AssaultPack_sgg",
-"B_BergenC_red",					// 50 Mags
-"B_Bergen_mcamo",					// 54 Mags
-"B_HuntingBackpack",				// 32 Mags
-"B_OutdoorPack_blu",				// 17 Mags
-"B_UAV_01_backpack_F",
-"I_UAV_01_backpack_F",
-"O_UAV_01_backpack_F"
+"B_FieldPack_blk",
+"B_FieldPack_cbr",
+"B_FieldPack_khk",
+"B_FieldPack_oucamo"
 ]],[ 1, [						// MILITARY
-"B_BergenG",						// 64 Mags
-"B_BergenC_red",
-"B_Carryall_cbr",					// 60 Mags
-"B_GMG_01_high_weapon_F",
-"B_GMG_01_weapon_F",
-"B_HMG_01_support_F",
-"B_HMG_01_support_high_F",
-"B_HMG_01_weapon_F",
-"B_Mortar_01_support_F",
-"B_Mortar_01_weapon_F",
-"B_Kitbag_cbr",						// ? Mags
-"B_Kitbag_mcamo",
-"B_Kitbag_mcamo_Eng",
-"B_Kitbag_rgr_Exp",
-"B_Kitbag_sgg",
-"B_UAV_01_backpack_F",
-"I_UAV_01_backpack_F",
-"O_UAV_01_backpack_F"
-]],[ 2, [						// INDUSTRIAL
-"B_Bergen_sgg",
-"B_Carryall_cbr",					// 60 Mags
-"B_HMG_01_support_F",
-"B_HMG_01_support_high_F",
-"B_HMG_01_weapon_F",
-"B_TacticalPack_blk",				// 42 Mags
-"B_TacticalPack_mcamo",
-"B_TacticalPack_ocamo",
-"B_TacticalPack_oli",
-"B_TacticalPack_rgr",
-"B_UAV_01_backpack_F",
-"I_UAV_01_backpack_F",
-"O_UAV_01_backpack_F"
-]],[ 3, [						// RESEARCH
-"B_BergenG",						// 64 Mags
-"B_Bergen_mcamo",
-"B_Carryall_cbr",					// 60 Mags
-"B_FieldPack_blk",					// 35 Mags
-"B_FieldPack_ocamo",
-"B_FieldPack_oli",
+"B_FieldPack_blk",
+"B_FieldPack_cbr",
+"B_FieldPack_khk",
 "B_FieldPack_oucamo",
-"B_GMG_01_high_weapon_F",
-"B_GMG_01_weapon_F",
-"B_HMG_01_support_F",
-"B_HMG_01_support_high_F",
-"B_HMG_01_weapon_F",
-"B_Mortar_01_support_F",
-"B_Mortar_01_weapon_F"
+"B_Kitbag_cbr",
+"B_Kitbag_rgr",
+"B_Kitbag_mcamo",
+"B_Kitbag_sgg",
+"B_Bergen_blk",
+"B_Bergen_rgr",
+"B_Bergen_mcamo",
+"B_Bergen_sgg",
+"B_Carryall_khk",
+"B_Carryall_mcamo",
+"B_Carryall_oli",
+"B_Carryall_oucamo"
+]],[ 2, [						// INDUSTRIAL
+"B_FieldPack_blk",
+"B_FieldPack_cbr",
+"B_FieldPack_khk",
+"B_FieldPack_oucamo",
+"B_Kitbag_cbr",
+"B_Kitbag_rgr",
+"B_Kitbag_mcamo",
+"B_Kitbag_sgg"
+]],[ 3, [						// RESEARCH
+"B_FieldPack_blk",
+"B_FieldPack_cbr",
+"B_FieldPack_khk",
+"B_FieldPack_oucamo",
+"B_Kitbag_cbr",
+"B_Kitbag_rgr",
+"B_Kitbag_mcamo",
+"B_Kitbag_sgg",
+"B_Bergen_blk",
+"B_Bergen_rgr",
+"B_Bergen_mcamo",
+"B_Bergen_sgg",
+"B_Carryall_khk",
+"B_Carryall_mcamo",
+"B_Carryall_oli",
+"B_Carryall_oucamo"
 ]]];
 
 //here place any other objects(ex.: Land_Basket_F, Box_East_Wps_F, Land_Can_V3_F, ...)
@@ -402,30 +292,36 @@ lootBackpack_list = [
 //								objectlist	: list of worldobject class names
 lootworldObject_list = [
 [ 0, [							// CIVIL
-"Box_East_Wps_F",
-"Box_NATO_Wps_F",
-"Land_Basket_F", 					// food
-"Land_CanisterPlastic_F",			// water
-"Land_CanisterFuel_F"				// Jerrycan
-]],[ 1, [						// MILITARY
-"Box_East_Wps_F",
-"Box_NATO_Wps_F",
-"Land_CanisterFuel_F",				// jerrycan
-"Land_Can_V3_F", 					// energydrink
-"Land_Suitcase_F"					// repairkit
-]],[ 2, [						// INDUSTRIAL
-//"Box_IND_Support_F",	//support boxes don't erease inventory
-"Box_East_Ammo_F",
-"Box_IND_Ammo_F",
-"Box_NATO_Ammo_F",
-"Land_CanisterFuel_F",				// jerrycan
-"Land_CanisterOil_F", 				// syphon hose
-"Land_Suitcase_F"					// repairkit
-]],[ 3, [						// RESEARCH
-"Box_IND_Grenades_F",
-"Box_NATO_Ammo_F",
-"Land_Can_V3_F", 					// energydrink
-"Land_Can_V3_F", 					// energydrink
+"Land_BakedBeans_F",				// food
+"Land_BakedBeans_F",				// food
+"Land_BottlePlastic_V2_F",			// water
+"Land_BottlePlastic_V2_F",			// water
+"Land_Can_V3_F",					// energydrink
 "Land_Suitcase_F",					// repairkit
-"Land_Suitcase_F"					// repairkit
+"Land_CanisterOil_F",				// syphon hose
+"Land_CanisterFuel_F"				// jerrycan
+]],[ 1, [						// MILITARY
+"Land_BakedBeans_F",				// food
+"Land_BottlePlastic_V2_F",			// water
+"Land_Can_V3_F",					// energydrink
+"Land_Suitcase_F",					// repairkit
+"Land_CanisterOil_F",				// syphon hose
+"Land_CanisterFuel_F"				// jerrycan
+]],[ 2, [						// INDUSTRIAL
+"Land_BakedBeans_F",				// food
+"Land_BottlePlastic_V2_F",			// water
+"Land_Can_V3_F",					// energydrink
+"Land_Suitcase_F",					// repairkit
+"Land_Suitcase_F",					// repairkit
+"Land_CanisterOil_F",				// syphon hose
+"Land_CanisterOil_F",				// syphon hose
+"Land_CanisterFuel_F",				// jerrycan
+"Land_CanisterFuel_F"				// jerrycan
+]],[ 3, [						// RESEARCH
+"Land_BakedBeans_F",				// food
+"Land_BottlePlastic_V2_F",			// water
+"Land_Can_V3_F",					// energydrink
+"Land_Suitcase_F",					// repairkit
+"Land_CanisterOil_F",				// syphon hose
+"Land_CanisterFuel_F"				// jerrycan
 ]]];

@@ -12,37 +12,29 @@ swSpZadjust = false;				//needed for ArmA 2 and older Maps/Buildings -> true
 //-------------------------------------------------------------------------------------
 //Variables
 //local
-_spawnradius = 80;					//Radius (in meter) around players to spawn loot
-_spInterval = 1800;					//Time (in sec.) to pass before an building spawns new loot
-_chfullfuel = 35;					//Chance (in %) of a spawned fuelcan to be full instead of empty
-_genZadjust = -0.1;					//High adjustment (in engine units) thats generally added to every spawnpoint
-_tmpTstPlace = [14730, 16276, 0];	//Coord's, in [x,y,z] of a preferably flat and unocupied piece of land
-_chperSpot = 75;					//Chance (in %) if a spot gets loot. Will be considered before 'spawnClassChance_list'
+#define LOOT_SPAWN_INTERVAL 30*60	//Time (in sec.) to pass before an building spawns new loot (must also change in LSclientScan.sqf)
+#define CHANCES_FULL_FUEL_CAN 35	//Chance (in %) of a spawned fuelcan to be full instead of empty
+#define LOOT_Z_ADJUST -0.1			//High adjustment thats generally added to every spawnpoint
+#define CHANCES_LOOT_PER_SPOT 50	//Chance (in %) if a spot gets loot. Will be considered before 'spawnClassChance_list'
 
-//"spawnClassChance_list" array of [class, %weapon, %magazine, %ICV, %backpack, %object]
-//									class   	: same classname as used in "Buildingstoloot_list"
-//									%weapon 	: % chance to spawn a weapon on spot
-//									%magazine 	: % chance to spawn magazines on spot
-//									%ICV	   	: % chance to spawn item/cloth/vests on spot
-//									%backpack 	: % chance to spawn a backpack on spot
-//									%object 	: % chance to spawn an world object on spot
-//-------------- A VALUE OF '-1' RESULTS IN NO LOOT FOR THIS CLASS AND TYPE ----------------
+_tmpTstPlace = [14730, 16276, 0];	//Coord's, in [x,y,z] of a preferably flat and unocupied piece of land
+
+//"spawnClassChance_list" array of [%weapon, %magazine, %ICV, %backpack, %object]
+//									%weapon 	: chance weight to spawn a weapon on spot
+//									%magazine 	: chance weight to spawn magazines on spot
+//									%ICV	   	: chance weight to spawn item/cloth/vests on spot
+//									%backpack 	: chance weight to spawn a backpack on spot
+//									%object 	: chance weight to spawn an world object on spot
+//-------------- A VALUE OF '0' RESULTS IN NO LOOT FOR THIS CLASS AND TYPE ----------------
 spawnClassChance_list = [
-[0, 13, 21, 24, 18, 22],	// civil
-[1, 22, 36, 28, 26, 18],	// military
-[2, 10, 21, 28, 26, 36],	// industrial
-[3, 12, 36, 36, -1, -1]		// research
+[1.0, 1.5, 2.0, 0.25, 5.0],	// civil
+[1.5, 2.0, 1.5, 0.5, 1.5],	// military
+[0.5, 1.0, 3.0, 0.25, 5.0],	// industrial
+[1.0, 1.5, 3.0, 0, 0]	// research
 ];
 
 //"exclcontainer_list" single array of container classnames to NOT to delete if filled
-exclcontainer_list = [
-"Box_East_Ammo_F", "Box_East_AmmoOrd_F", "Box_East_AmmoVeh_F", "Box_East_Grenades_F", "Box_East_Support_F",
-"Box_East_Wps_F", "Box_East_WpsLaunch_F", "Box_East_WpsSpecial_F",
-"Box_IND_Ammo_F", "Box_IND_AmmoOrd_F", "Box_IND_AmmoVeh_F", "Box_IND_Grenades_F", "Box_IND_Support_F",
-"Box_IND_Wps_F", "Box_IND_WpsLaunch_F", "Box_IND_WpsSpecial_F",
-"Box_NATO_Ammo_F", "Box_NATO_AmmoOrd_F", "Box_NATO_AmmoVeh_F", "Box_NATO_Grenades_F", "Box_NATO_Support_F",
-"Box_NATO_Wps_F", "Box_NATO_WpsLaunch_F", "Box_NATO_WpsSpecial_F"
-];
+exclcontainer_list = ["ReammoBox_F"];
 
 //-------------------------------------------------------------------------------------
 //DONT change these, will be filled in MAIN -------------------------------------------
@@ -172,35 +164,67 @@ if ((count Buildingstoloot_list) == 0) then {
 	diag_log format["--!!ERROR!! LOOTSPAWNER Buildingstoloot_list in lootBuildings.sqf MUST have one entry at least !!ERROR!!--"];
 	diag_log format["-- LOOTSPAWNER disabled --"];
 } else {
-	_dbgTime = time;
-	_hndl = [] spawn getListBuildingnames;
-	waitUntil{scriptDone _hndl};
-	diag_log format["-- LOOTSPAWNER spawnBuilding_list ready, d: %1s", (time - _dbgTime)];
-	_dbgTime = time;
-	_hndl = [_tmpTstPlace] spawn getListBuildingPositionjunction;
-	waitUntil{scriptDone _hndl};
-	diag_log format["-- LOOTSPAWNER Buildingpositions_list ready, d: %1s", (time - _dbgTime)];
-	_dbgTime = time;
-	_hndl = [] spawn getUsedclasses;
-	waitUntil{scriptDone _hndl};
-	diag_log format["-- LOOTSPAWNER LSusedclass_list ready, d: %1s", (time - _dbgTime)];
+	_dbgTime = diag_tickTime;
+	call getListBuildingnames;
+	
+	diag_log format["-- LOOTSPAWNER spawnBuilding_list ready, d: %1s", (diag_tickTime - _dbgTime)];
+	
+	_dbgTime = diag_tickTime;
+	[_tmpTstPlace] call getListBuildingPositionjunction;
+	
+	diag_log format["-- LOOTSPAWNER Buildingpositions_list ready, d: %1s", (diag_tickTime - _dbgTime)];
+	
+	_dbgTime = diag_tickTime;
+	call getUsedclasses;
+	
+	diag_log format["-- LOOTSPAWNER LSusedclass_list ready, d: %1s", (diag_tickTime - _dbgTime)];
+	
 	//run loot deleter continously
-	null = _spInterval spawn LSdeleter;
+	LOOT_SPAWN_INTERVAL spawn LSdeleter;
 	diag_log format["-- LOOTSPAWNER LSDer started..."];
+	
 	if (swDebugLS) then {
-		dbgTime = time;
+		dbgTime = diag_tickTime;
 		dbgTurns = 0;
 		dbgTurnsplU = 0;
 		dbgloopTime = 0;
 		dbgloopTimeplU	= 0;
 	};
+	
+	"pvar_spawnLootBuildings" addPublicVariableEventHandler
+	{
+		_buildings = [];
+		
+		{
+			_class = [_x, 0, "", [""]] call BIS_fnc_param;
+			_pos = [_x, 1, [], [[]]] call BIS_fnc_param;
+			
+			if (_class != "" && {count _pos == 3}) then
+			{
+				_nearBuilds = nearestObjects [_pos, [_class], 0.1];
+				_building = [_nearBuilds, 0, objNull, [objNull]] call BIS_fnc_param;
+				
+				if (!isNull _building) then
+				{
+					[_buildings, _building] call BIS_fnc_arrayPush;
+				};
+			};
+		} forEach (_this select 1);
+		
+		if (count _buildings > 0) then
+		{
+			[_buildings, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, CHANCES_LOOT_PER_SPOT] spawn fn_getBuildingstospawnLoot;
+		};
+	};
+	
+	/*
 	diag_log format["-- LOOTSPAWNER ready and waiting for players -----"];
 	//go into mainloop till mission ends
 	while {true} do {
 		_playersalive = false;
 		{
 			if (swDebugLS) then {
-				dbgTimeplU = time;
+				dbgTimeplU = diag_tickTime;
 			};
 			//is Player online and alive?
 			if ((isPlayer _x) && (alive _x)) then {
@@ -214,14 +238,14 @@ if ((count Buildingstoloot_list) == 0) then {
 					_BaP_list = nearestObjects [_posPlayer, spawnBuilding_list, _spawnradius];
 					if ((count _BaP_list) > 0) then {
 						//give to spawn function
-						_hndl = [_BaP_list, _spInterval, _chfullfuel, _genZadjust, _chperSpot] spawn fn_getBuildingstospawnLoot;
+						_hndl = [_BaP_list, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, CHANCES_LOOT_PER_SPOT] spawn fn_getBuildingstospawnLoot;
 						waitUntil{scriptDone _hndl};
 					};
 				};
 			};
 			sleep 0.001;
 			if (swDebugLS) then {
-				dbgloopTimeplU = dbgloopTimeplU + (time - dbgTimeplU);
+				dbgloopTimeplU = dbgloopTimeplU + (diag_tickTime - dbgTimeplU);
 				dbgTurnsplU = dbgTurnsplU + 1;
 			};
 		}forEach playableUnits;
@@ -230,13 +254,13 @@ if ((count Buildingstoloot_list) == 0) then {
 			dbgloopTimeplU	= 0;
 			dbgTurns = dbgTurns + 1;
 			//every 30 sec. give stats out
-			if ((time - dbgTime) > 30) then {
+			if ((diag_tickTime - dbgTime) > 30) then {
 				if (dbgTurnsplU > 0) then {
 					diag_log format["-- DEBUG LOOTSPAWNER MAIN turns (spawned): %1(%2), duration: %3sec, average: %4sec.",dbgTurns ,dbgTurnsplU , dbgloopTime, (dbgloopTime / dbgTurnsplU)];
 				} else {
 					diag_log format["-- DEBUG LOOTSPAWNER MAIN waiting for players"];
 				};
-				dbgTime = time;
+				dbgTime = diag_tickTime;
 				dbgTurns = 0;
 				dbgTurnsplU = 0;
 				dbgloopTime = 0;
@@ -247,4 +271,5 @@ if ((count Buildingstoloot_list) == 0) then {
 			sleep 2;
 		};
 	};
+	*/
 };

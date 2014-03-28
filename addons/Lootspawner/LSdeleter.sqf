@@ -6,7 +6,7 @@ private["_objlT","_countdel","_timedel","_objempty","_playersnear","_objisContai
 _objlT = _this;
 while {true} do {
 	_countdel = 0;
-	//_timedel = time;
+	//_timedel = diag_tickTime;
 	{
 		{
 			_objempty = false;
@@ -17,7 +17,7 @@ while {true} do {
 			//if "Lootready" NOT present then its not spawned by LS or in creation
 			if (!isNil "_objVar") then {
 				//check if lifetime is expired
-				if ((time - _objVar) > _objlT) then {
+				if ((diag_tickTime - _objVar) > _objlT) then {
 					//if object has the var. "objectLocked", it belongs now to a player and therefor bad idea to delete it
 					_objlocked = (_x getVariable "objectLocked");
 					if(isNil "_objlocked") then {
@@ -47,7 +47,7 @@ while {true} do {
 						}forEach playableUnits;
 						//if (_objempty AND !_playersnear) OR (!_objisContainer AND !_playersnear) then delete
 						if (((_objempty) && (!_playersnear)) || ((!_objisContainer) && (!_playersnear))) then {
-							//diag_log format["-- DEBUG LOOTSPAWNER Delete item: %1:%2:%3 %4vLT%5v%6v for %7 v%8v%9%10v%11v --", _objisContainer, _objempty, _playersnear, _objVar, (time - _objVar), _objlT, (typeOf _x), ((getWeaponCargo _x) select 0), ((getMagazineCargo _x) select 0), ((getItemCargo _x) select 0), ((getBackpackCargo _x) select 0)];
+							//diag_log format["-- DEBUG LOOTSPAWNER Delete item: %1:%2:%3 %4vLT%5v%6v for %7 v%8v%9%10v%11v --", _objisContainer, _objempty, _playersnear, _objVar, (diag_tickTime - _objVar), _objlT, (typeOf _x), ((getWeaponCargo _x) select 0), ((getMagazineCargo _x) select 0), ((getItemCargo _x) select 0), ((getBackpackCargo _x) select 0)];
 							deleteVehicle _x;
 							_countdel = _countdel + 1;
 						};

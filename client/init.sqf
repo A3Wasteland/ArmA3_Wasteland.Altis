@@ -149,3 +149,4 @@ else
 } forEach playableUnits;
 
 [] execVM "addons\fpsFix\vehicleManager.sqf";
+[] execVM "addons\Lootspawner\LSclientScan.sqf";
