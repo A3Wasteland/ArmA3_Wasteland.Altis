@@ -39,12 +39,11 @@ else
 	
 	if (local _objet) then
 	{
-		[netId _objet, _airdrop] execVM "server\functions\detachTowedObject.sqf";
+		_objet call detachTowedObject;
 	}
 	else
 	{
-		requestDetachTowedObject = [netId _objet, _airdrop];
-		publicVariable "requestDetachTowedObject";
+		[_objet, {_this call detachTowedObject}, false, false, _objet] call fn_vehicleInit;
 	};
 	
 	player globalChat format [STR_R3F_LOG_action_heliport_larguer_fait, getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];

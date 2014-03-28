@@ -90,8 +90,6 @@ relativePos = [_serverFunc, "relativePos.sqf"] call mf_compile;
 removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
 switchMoveGlobal = [_clientFunc, "switchMoveGlobal.sqf"] call mf_compile;
 
-"requestDetachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };
-
 "pvar_switchMoveGlobal" addPublicVariableEventHandler
 {
 	_array = _this select 1;

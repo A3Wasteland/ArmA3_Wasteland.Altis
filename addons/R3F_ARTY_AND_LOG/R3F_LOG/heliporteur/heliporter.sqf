@@ -57,11 +57,22 @@ else
 							// On mémorise aussi sur le réseau que l'objet est attaché à un véhicule
 							_objet setVariable ["R3F_LOG_est_transporte_par", _heliporteur, true];
 							
+							_heliBB = _heliporteur call fn_boundingBoxReal;
+							_heliMinBB = _heliBB select 0;
+							_heliMaxBB = _heliBB select 1;
+							
+							_objectBB = _objet call fn_boundingBoxReal;
+							_objectMinBB = _objectBB select 0;
+							_objectMaxBB = _objectBB select 1;
+							
+							_minZ = (_heliMinBB select 2) - (_objectMaxBB select 2) - 0.5;
+							
 							// Attacher sous l'héliporteur au ras du sol
-							_objet attachTo [_heliporteur, [
+							_objet attachTo [_heliporteur,
+							[
 								0,
 								0,
-								(boundingBox _heliporteur select 0 select 2) - (boundingBox _objet select 0 select 2) - (getPos _heliporteur select 2) + 0.5
+								(_minZ - ((getPosATL _heliporteur select 2) - (getPosATL _objet select 2))) min _minZ;
 							]];
 							
 							player globalChat format [STR_R3F_LOG_action_heliporter_fait, getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];

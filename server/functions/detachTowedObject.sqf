@@ -3,11 +3,11 @@
 //	@file Author: AgentRev
 //	@file Created: 014/07/2013 14:54
 
-private ["_object", "_tower", "_airdrop", "_pos", "_vel"];
+private ["_object", "_tower", "_airdrop", "_pos", "_posZ", "_vel"];
 
-if (typeName _this != "ARRAY") then { _this = [_this] };
+if (typeName _this != "OBJECT") exitWith {};
 
-_object = objectFromNetId ([_this, 0, "", [""]] call BIS_fnc_param);
+_object = _this;
 
 if (!isNull _object && {local _object}) then
 {
@@ -26,8 +26,11 @@ if (!isNull _object && {local _object}) then
 	else
 	{
 		_pos = getPos _object;
+		_posZ = (getPosATL _object) select 2;
 		detach _object;
-		_object setPosATL [_pos select 0, _pos select 1, 0.01];	
+		_object setPosATL [_pos select 0, _pos select 1, (_posZ - (_pos select 2)) + 0.01];	
 		_object setVelocity [0,0,0.01];
+		_object lockDriver false;
+		_objet enableCopilot true;
 	};
 };
