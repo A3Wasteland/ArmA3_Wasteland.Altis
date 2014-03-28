@@ -79,11 +79,11 @@ config_refuel_amounts = compileFinal str
 config_territory_markers = compileFinal str
 [
 	["TERRITORY_THRONOS_CASTLE", "Thronos Castle", 300, "CASTLE"],
-	["TERRITORY_KASTRO_CASTLE", "Kastro Castle", 300, "CASTLE"],
+	//["TERRITORY_KASTRO_CASTLE", "Kastro Castle", 300, "CASTLE"],
 	["TERRITORY_SW_AIRFIELD", "Southwest Airfield", 300, "AIRFIELD"],
-	["TERRITORY_MAIN_AIRBASE_SW", "Main Airbase (SW)", 200, "AIRBASE"],
-	["TERRITORY_MAIN_AIRBASE_CENTER", "Main Airbase (Center)", 200, "AIRBASE"],
-	["TERRITORY_MAIN_AIRBASE_NE", "Main Airbase (NE)", 200, "AIRBASE"],
+	["TERRITORY_MAIN_AIRBASE_SW", "Altis Airport (SW)", 200, "AIRBASE"],
+	["TERRITORY_MAIN_AIRBASE_CENTER", "Altis Airport (Center)", 200, "AIRBASE"],
+	["TERRITORY_MAIN_AIRBASE_NE", "Altis Airport (NE)", 200, "AIRBASE"],
 	["TERRITORY_NE_AIRFIELD", "Northeast Airfield", 300, "AIRFIELD"],
 	["TERRITORY_SE_AIRFIELD", "Southeast Airfield", 300, "AIRFIELD"],
 	["TERRITORY_NW_AIRFIELD", "Northwest Airfield", 300, "AIRFIELD"],
