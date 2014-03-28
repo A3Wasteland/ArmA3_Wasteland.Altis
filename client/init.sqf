@@ -121,10 +121,6 @@ waituntil {!(IsNull (findDisplay 46))};
 [] call updateMissionsMarkers;
 // [] call updateRadarMarkers;
 
-if (isNil "FZF_IC_INIT") then
-{
-	call compile preprocessFileLineNumbers "client\functions\newPlayerIcons.sqf";
-};
 
 // If we've got a position from the player save system, don't go through playerSpawn
 if (["playerWasMoved", false] call getPublicVar) then
@@ -136,7 +132,7 @@ else
 	true spawn playerSpawn;
 };
 
-[] spawn FZF_IC_INIT;
+[] execVM "client\functions\drawPlayerIcons.sqf";
 
 // Synchronize score compensation
 {
