@@ -14,7 +14,7 @@ _currentMove = _currentMove call parseMove;
 _result = "";
 
 {
-	_result = _result + [_currentMove, _x, ""] call BIS_fnc_getFromPairs;
+	_result = _result + ([_currentMove, _x, ""] call BIS_fnc_getFromPairs);
 } forEach _params;
 
 _result
