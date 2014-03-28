@@ -4,7 +4,7 @@
 //@file Created: 23/7/2013 16:00
 //@file Description: Repair the nearest Vehicle
 
-#define DURATION 5
+#define DURATION 20
 #define REPAIR_RANGE 6;
 #define ANIMATION "AinvPknlMstpSlayWrflDnon_medic"
 #define ERR_NO_VEHICLE "You are not close enough to a vehicle that needs repairing"
