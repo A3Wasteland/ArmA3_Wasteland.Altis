@@ -5,7 +5,7 @@ private ["_player", "_move"];
 _player = _this select 0;
 _move = _this select 1;
 
-switchMoveGlobal_var = [_player, _move];
-publicVariable "switchMoveGlobal_var";
+pvar_switchMoveGlobal = [_player, _move];
+publicVariable "pvar_switchMoveGlobal";
 
 _player switchMove _move;

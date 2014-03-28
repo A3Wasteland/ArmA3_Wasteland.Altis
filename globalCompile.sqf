@@ -71,8 +71,10 @@ _serverFunc = "server\functions";
 cargoToPairs = [_serverFunc, "cargoToPairs.sqf"] call mf_compile;
 detachTowedObject = [_serverFunc, "detachTowedObject.sqf"] call mf_compile;
 findSafePos = [_serverFunc, "findSafePos.sqf"] call mf_compile;
+fn_boundingBoxReal = [_serverFunc, "fn_boundingBoxReal.sqf"] call mf_compile;
 fn_filterString = [_serverFunc, "fn_filterString.sqf"] call mf_compile;
 fn_findString = [_serverFunc, "fn_findString.sqf"] call mf_compile;
+fn_getPos3D = [_serverFunc, "fn_getPos3D.sqf"] call mf_compile;
 fn_splitString = [_serverFunc, "fn_splitString.sqf"] call mf_compile;
 fn_vehicleInit = [_serverFunc, "fn_vehicleInit.sqf"] call mf_compile;
 generateKey = [_serverFunc, "network\generateKey.sqf"] call mf_compile;
@@ -90,7 +92,7 @@ switchMoveGlobal = [_clientFunc, "switchMoveGlobal.sqf"] call mf_compile;
 
 "requestDetachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };
 
-"switchMoveGlobal_var" addPublicVariableEventHandler
+"pvar_switchMoveGlobal" addPublicVariableEventHandler
 {
 	_array = _this select 1;
 	_player = _array select 0;
