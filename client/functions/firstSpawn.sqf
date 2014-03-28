@@ -4,6 +4,7 @@
 //	@file Created: 28/12/2013 19:42
 
 client_firstSpawn = true;
+
 [] execVM "client\functions\welcomeMessage.sqf";
 
 player addEventHandler ["Take",
@@ -15,39 +16,34 @@ player addEventHandler ["Take",
 		_vehicle setVariable ["itemTakenFromVehicle", true, true];
 	};
 }];
- 
-_startTime = floor time;
-_result = 0;
 
-waitUntil
-{ 
-	_currTime = floor time;
-	
-	if (_currTime - _startTime >= 180) then 
+if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
+{
+	player addEventHandler ["FiredNear", { combatTimestamp = diag_tickTime }];
+	player addEventHandler ["HitPart",
 	{
-		_result = 1;    
-	};
-	
-	(_result == 1)
+		_source = (_this select 0) select 1;
+		if (!isNull _source && {_source != player}) then {
+			combatTimestamp = diag_tickTime;
+		};
+	}];
 };
 
-if (playerSide in [west, east]) then
+_startTime = diag_tickTime;
+waitUntil {sleep 1; diag_tickTime - _startTime >= 180};
+
+if (playerSide in [BLUFOR,OPFOR]) then
 {
 	if ({_x select 0 == getPlayerUID player} count pvar_teamSwitchList == 0) then
 	{
 		pvar_teamSwitchList set [count pvar_teamSwitchList, [getPlayerUID player, playerSide]];
 		publicVariable "pvar_teamSwitchList";
 		
-		_side = "";
-		
-		if (playerSide == BLUFOR) then
+		_side = switch (playerSide) do
 		{
-			_side = "BLUFOR"; 
-		};
-   
-		if (playerSide == OPFOR) then
-		{
-			_side = "OPFOR"; 
+			case BLUFOR: { "BLUFOR" };
+			case OPFOR:  { "OPFOR" };
+			default      { "" };
 		};
 		
 		titleText [format["You have been locked to %1",_side],"PLAIN",0];

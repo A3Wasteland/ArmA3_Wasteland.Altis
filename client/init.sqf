@@ -7,10 +7,10 @@
 if (isDedicated) exitWith {};
 
 waitUntil {!isNil "A3W_network_compileFuncs"};
+waitUntil {!isNil "A3W_serverSetupComplete"};
+
 call A3W_network_compileFuncs;
 A3W_network_compileFuncs = nil;
-
-waitUntil {!isNil "A3W_serverSettingsSent"};
 
 [] execVM "client\functions\bannedNames.sqf";
 
@@ -121,15 +121,11 @@ waituntil {!(IsNull (findDisplay 46))};
 [] call updateMissionsMarkers;
 // [] call updateRadarMarkers;
 
-
-// If we've got a position from the player save system, don't go through playerSpawn
-if (["playerWasMoved", false] call getPublicVar) then
-{
-	player switchMove "AmovPpneMstpSnonWnonDnon";
-}
-else
-{
-	true spawn playerSpawn;
+// Only go through playerSpawn if no data from the player save system
+if (isNil "playerData_alive") then{
+	[] spawn playerSpawn;
+} else {
+	playerData_alive = nil;
 };
 
 [] execVM "client\functions\drawPlayerIcons.sqf";
@@ -147,6 +143,17 @@ else
 		};
 	};
 } forEach playableUnits;
+
+_uid = getPlayerUID player;
+
+// update player's spawn beaoon
+{
+	if (_x getVariable ["ownerUID",""] == _uid) exitWith
+	{
+		_x setVariable ["ownerName", name player, true];
+		_x setVariable ["side", playerSide, true];
+	};
+} forEach pvar_spawn_beacons;
 
 [] execVM "addons\fpsFix\vehicleManager.sqf";
 [] execVM "addons\Lootspawner\LSclientScan.sqf";

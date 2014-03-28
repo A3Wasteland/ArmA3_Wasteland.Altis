@@ -51,20 +51,31 @@ if (_kickTeamSwitcher) exitWith
 	[] spawn {sleep 20; endMission "LOSER";};
 };
 
-//Send player to debug zone to stop fake spawn locations.
-player setPosATL [7837.37,7627.14,0.00230217];
-player setDir 333.429;
-//             
+if (isNil "playerData_alive") then
+{
+	//Send player to debug zone to stop fake spawn locations.
+	player setPosATL [7837.37,7627.14,0.00230217];
+	[player, "AmovPknlMstpSnonWnonDnon"] call switchMoveGlobal;
 
-titleText ["Loading...", "BLACK OUT", 0.00001];
+	cutText ["Loading...", "BLACK OUT", 0.01];
 
-true spawn client_respawnDialog;
+	true spawn client_respawnDialog;
 
-waitUntil {respawnDialogActive};
+	waitUntil {respawnDialogActive};
 
-while {respawnDialogActive} do {
-	titleText ["", "BLACK OUT", 0.00001];
+	waitUntil {
+		cutText ["", "BLACK OUT", 0.00001];
+		!respawnDialogActive
+	};
+	sleep 0.1;
+
+	if (["A3W_playerSaving"] call isConfigOn) then
+	{
+		[] spawn fn_savePlayerData;
+	};
 };
-sleep 0.1;
-titleText ["", "BLACK IN", 0.00001];
+
+cutText ["", "BLACK IN", 1];
+titleText ["", "BLACK IN", 1];
+
 playerSpawning = false;

@@ -11,6 +11,9 @@
 #define respawn_PlayersInTown_Text2 3410
 #define respawn_PlayersInTown_Text3 3411
 #define respawn_PlayersInTown_Text4 3412
+#define respawn_Random_Button 3413
+#define respawn_LoadTowns_Button 3414
+#define respawn_LoadBeacons_Button 3415
 
 
 	class RespawnSelectionDialog {
@@ -115,67 +118,53 @@
 		};
 	};
 	
+	class w_RscStructuredTextLeft_PlayersInTown : w_RscStructuredTextLeft {
+		text = "";
+		size = 0.026;
+		x = 0.423 * safezoneW + safezoneX;
+		w = 0.250 * safezoneW;
+		h = 0.030 * safezoneH;
+	};
+	
+	#define PlayersInTown_Y 0.446
+	#define PlayersInTown_Y_offset 0.05
+	
 	class controls {
 	
-		class PlayersInTown0: w_RscText
+		class PlayersInTown0: w_RscStructuredTextLeft_PlayersInTown
 		{
 			idc = respawn_PlayersInTown_Text0;
-			text = "";
-
-			x = 0.443 * safezoneW + safezoneX;
-			y = 0.443 * safezoneH + safezoneY;
-			w = 0.230 * safezoneW;
-			h = 0.025 * safezoneH;
+			y = (PlayersInTown_Y + (PlayersInTown_Y_offset * 0)) * safezoneH + safezoneY;
 		};
 		
-		class PlayersInTown1: w_RscText
+		class PlayersInTown1: w_RscStructuredTextLeft_PlayersInTown
 		{
 			idc = respawn_PlayersInTown_Text1;
-			text = "";
-
-			x = 0.443 * safezoneW + safezoneX;
-			y = 0.493 * safezoneH + safezoneY;
-			w = 0.230 * safezoneW;
-			h = 0.025 * safezoneH;
+			y = (PlayersInTown_Y + (PlayersInTown_Y_offset * 1)) * safezoneH + safezoneY;
 		};
 		
-		class PlayersInTown2: w_RscText
+		class PlayersInTown2: w_RscStructuredTextLeft_PlayersInTown
 		{
 			idc = respawn_PlayersInTown_Text2;
-			text = "";
-
-			x = 0.443 * safezoneW + safezoneX;
-			y = 0.543 * safezoneH + safezoneY;
-			w = 0.230 * safezoneW;
-			h = 0.025 * safezoneH;
+			y = (PlayersInTown_Y + (PlayersInTown_Y_offset * 2)) * safezoneH + safezoneY;
 		};
 		
-		class PlayersInTown3: w_RscText
+		class PlayersInTown3: w_RscStructuredTextLeft_PlayersInTown
 		{
 			idc = respawn_PlayersInTown_Text3;
-			text = "";
-
-			x = 0.443 * safezoneW + safezoneX;
-			y = 0.593 * safezoneH + safezoneY;
-			w = 0.230 * safezoneW;
-			h = 0.025 * safezoneH;
+			y = (PlayersInTown_Y + (PlayersInTown_Y_offset * 3)) * safezoneH + safezoneY;
 		};
 		
-		class PlayersInTown4: w_RscText
+		class PlayersInTown4: w_RscStructuredTextLeft_PlayersInTown
 		{
 			idc = respawn_PlayersInTown_Text4;
-			text = "";
-
-			x = 0.443 * safezoneW + safezoneX;
-			y = 0.643 * safezoneH + safezoneY;
-			w = 0.230 * safezoneW;
-			h = 0.025 * safezoneH;
+			y = (PlayersInTown_Y + (PlayersInTown_Y_offset * 4)) * safezoneH + safezoneY;
 		};
 		
 		class RandomSpawnButton: w_RscButton
 		{
-			idc = -1;
-			onButtonClick = "(_this select 0) ctrlEnable false; [_this, 0] execVM 'client\functions\spawnAction.sqf'";
+			idc = respawn_Random_Button;
+			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
 			text = "Random";
 
 			x = 0.460* safezoneW + safezoneX;
@@ -186,7 +175,7 @@
 	
 		class LoadTownsButton: w_RscButton
 		{
-			idc = -1;
+			idc = respawn_LoadTowns_Button;
 			onButtonClick = "[0] execVM 'client\functions\switchButtonNames.sqf'";
 			text = "Towns";
 
@@ -198,7 +187,7 @@
 
 		class LoadBeaconsButton: w_RscButton
 		{
-			idc = -1;
+			idc = respawn_LoadBeacons_Button;
 			onButtonClick = "[1] execVM 'client\functions\switchButtonNames.sqf'";
 			text = "Beacons";
 
@@ -211,10 +200,10 @@
 		class TownButton0: w_RscButton
 		{
 			idc = respawn_Town_Button0;
-			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,0] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
 			text = "";
 
-			x = 0.343 * safezoneW + safezoneX;
+			x = 0.337 * safezoneW + safezoneX;
 			y = 0.443 * safezoneH + safezoneY;
 			w = 0.078 * safezoneW;
 			h = 0.033 * safezoneH;
@@ -223,10 +212,10 @@
 		class TownButton1: w_RscButton
 		{
 			idc = respawn_Town_Button1;
-			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,1] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
 			text = "";
 
-			x = 0.343 * safezoneW + safezoneX;
+			x = 0.337 * safezoneW + safezoneX;
 			y = 0.493 * safezoneH + safezoneY;
 			w = 0.078 * safezoneW;
 			h = 0.033 * safezoneH;
@@ -235,10 +224,10 @@
 		class TownButton2: w_RscButton
 		{
 			idc = respawn_Town_Button2;
-			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,2] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
 			text = "";
 
-			x = 0.343 * safezoneW + safezoneX;
+			x = 0.337 * safezoneW + safezoneX;
 			y = 0.543 * safezoneH + safezoneY;
 			w = 0.078 * safezoneW;
 			h = 0.033 * safezoneH;
@@ -247,10 +236,10 @@
 		class TownButton3: w_RscButton
 		{
 			idc = respawn_Town_Button3;
-			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,3] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
 			text = "";
 
-			x = 0.343 * safezoneW + safezoneX;
+			x = 0.337 * safezoneW + safezoneX;
 			y = 0.593 * safezoneH + safezoneY;
 			w = 0.078 * safezoneW;
 			h = 0.033 * safezoneH;
@@ -259,10 +248,10 @@
 		class TownButton4: w_RscButton
 		{
 			idc = respawn_Town_Button4;
-			onButtonClick = "(_this select 0) ctrlEnable false; [_this,1,4] execVM 'client\functions\spawnAction.sqf'";
+			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
 			text = "";
 
-			x = 0.343 * safezoneW + safezoneX;
+			x = 0.337 * safezoneW + safezoneX;
 			y = 0.643 * safezoneH + safezoneY;
 			w = 0.078 * safezoneW;
 			h = 0.033 * safezoneH;

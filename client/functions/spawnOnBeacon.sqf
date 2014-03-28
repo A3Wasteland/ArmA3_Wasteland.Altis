@@ -1,22 +1,20 @@
 //	@file Version: 1.1
 //	@file Name: spawnOnBeacons.sqf
-//	@file Author: [404] Costlyy, [GoT] JoSchaap, MercyfulFate
+//	@file Author: [404] Costlyy, [GoT] JoSchaap, MercyfulFate, AgentRev
 //	@file Created: 08/12/2012 18:30
 //	@file Args: 
 
-private "_buttonText";
-_buttonText = _this select 0;
+private ["_pos", "_owner"];
+_pos = _this select 0;
+_owner = _this select 1;
 
-{
-	if (_buttonText == _x getVariable ["ownerName", ""]) exitWith
-	{
-        player setPos ([getPos _x,1,25,1,0,0,0] call findSafePos);
-    };
-} forEach pvar_spawn_beacons;
+_playerPos = [_pos,1,25,1,0,0,0] call findSafePos;
+waitUntil {sleep 0.1; preloadCamera _playerPos};
+player setPos _playerPos;
 
 respawnDialogActive = false;
 closeDialog 0;
-[format ["You have spawned on %1's beacon", _buttonText], 5] call mf_notify_client;
+[format ["You have spawned on %1's beacon", _owner], 5] call mf_notify_client;
 
 sleep 5;
 
