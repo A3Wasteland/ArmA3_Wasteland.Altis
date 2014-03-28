@@ -40,15 +40,12 @@ if (isNil "_est_deplace_par") then
 // Ne pas monter dans un véhicule qui est en cours de transport
 _objet addEventHandler ["GetIn",
 {
-	if (_this select 2 == player) then
+	if (_this select 2 == player && {_this select 1 == "DRIVER"}) then
 	{
-		_this spawn
+		if ((!(isNull (_this select 0 getVariable "R3F_LOG_est_deplace_par")) && (alive (_this select 0 getVariable "R3F_LOG_est_deplace_par"))) || !(isNull (_this select 0 getVariable "R3F_LOG_est_transporte_par"))) then
 		{
-			if ((!(isNull (_this select 0 getVariable "R3F_LOG_est_deplace_par")) && (alive (_this select 0 getVariable "R3F_LOG_est_deplace_par"))) || !(isNull (_this select 0 getVariable "R3F_LOG_est_transporte_par"))) then
-			{
-				player action ["eject", _this select 0];
-				player globalChat STR_R3F_LOG_transport_en_cours;
-			};
+			player action ["eject", _this select 0];
+			player globalChat STR_R3F_LOG_transport_en_cours;
 		};
 	};
 }];
