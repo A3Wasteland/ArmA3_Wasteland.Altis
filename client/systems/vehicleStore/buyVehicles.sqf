@@ -96,8 +96,7 @@ storePurchaseHandle = _this spawn
 
 		if (!isNil "_texture") then
 		{
-			_vehicle setVariable ["textureName", _texture];
-			[[_vehicle, _texture], "applyVehicleTexture", true, true] call TPG_fnc_MP;
+			[_vehicle, _texture] call applyVehicleTexture;
 		};
 
 		// If UAV or UGV, fill vehicle with UAV AI, give UAV terminal to our player, and connect it to the vehicle
