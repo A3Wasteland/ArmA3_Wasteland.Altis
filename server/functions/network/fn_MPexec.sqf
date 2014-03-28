@@ -112,7 +112,8 @@ if (ismultiplayer && _mode == 0) then {
 			"clientFlagHandler",
 			"titleTextMessage",
 			"territoryActivityHandler",
-			"spawnStoreObject"
+			"spawnStoreObject",
+			"pushVehicleBack"
 		];
 		
 		_blockedParam = 
