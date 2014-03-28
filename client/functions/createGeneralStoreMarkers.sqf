@@ -16,7 +16,7 @@
 		_marker = createMarkerLocal [_markerName, _npcPos];
 		_markerName setMarkerShapeLocal "ICON";
 		_markerName setMarkerTypeLocal "mil_dot";
-		_markerName setMarkerColorLocal "ColorOrange";
+		_markerName setMarkerColorLocal "ColorBlue";
 		_markerName setMarkerSizeLocal [1,1];
 		_markerName setMarkerTextLocal "General Store";
 	};
