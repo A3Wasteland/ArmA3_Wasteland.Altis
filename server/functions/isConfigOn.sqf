@@ -3,4 +3,14 @@
 //	@file Author: AgentRev
 //	@file Created: 21/12/2013 14:51
 
-[_this select 0, 0] call getPublicVar >= 1
+private ["_varName", "_varValue"];
+_varName = _this select 0;
+
+_varValue = missionNamespace getVariable [_varName, 0];
+	
+if (typeName _varValue == "CODE") then
+{
+	_varValue = call _varValue;
+};
+
+_varValue >= 1
