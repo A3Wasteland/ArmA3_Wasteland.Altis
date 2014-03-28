@@ -14,6 +14,7 @@
 if(!isServer) exitWith {};
 
 PDB_databaseNameCompiler = {
+	private ["_return", "_name", "_prefix"];
 	_return = "";
 	_name = _this;
 	_prefix = PDB_ServerID;
@@ -30,7 +31,7 @@ iniDB_version = {
 call mf_compile;
 
 iniDB_HashFunction = {
-	private["_mode", "_data"];
+	private["_mode", "_data", "_cdata"];
 	_mode = _this select 0;
 	_data = _this select 1;
 	
@@ -74,7 +75,7 @@ iniDB_Base64Decode = {
 call mf_compile;
 
 iniDB_exists = {
-	private["_data"];
+	private ["_data", "_cdata"];
 	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_exists called with %1", _this]; };
 	_data = "iniDB" callExtension format["exists;%1", _this];
 	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_exists returned %1", _data]; };
@@ -90,6 +91,7 @@ call mf_compile;
 
 
 iniDB_delete = {
+	private ["_data", "_cdata"];
 	_data = "iniDB" callExtension format["delete;%1", _this];
 	_cdata = call compile _data;
 	
@@ -102,6 +104,7 @@ iniDB_delete = {
 call mf_compile;
 
 iniDB_deleteSection = {
+	private ["_data", "_cdata"];
 	_data = "iniDB" callExtension format["deletesection;%1;%2", _this select 0, _this select 1];
 	_cdata = call compile _data;
 	
@@ -116,7 +119,7 @@ call mf_compile;
 // =======================================================================
 
 iniDB_readRaw = {
-	private["_file", "_sec", "_key", "_data"];
+	private["_file", "_sec", "_key", "_data", "_cdata"];
 	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_readRaw called with %1", _this]; };
 	_file = _this select 0;
 	_sec = _this select 1;
@@ -138,7 +141,7 @@ iniDB_readRaw = {
 call mf_compile;
 
 iniDB_writeRaw = {
-	private["_file", "_sec", "_key", "_val", "_data"];
+	private["_file", "_sec", "_key", "_val", "_data", "_cdata"];
 	if (__DEBUG_INIDB_CALLS__ == 1) then {diag_log format["iniDB_writeRaw called with %1", _this];};
 
 	_file = _this select 0;
