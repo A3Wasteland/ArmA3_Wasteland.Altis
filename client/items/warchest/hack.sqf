@@ -32,7 +32,7 @@ _checks = {
 	[_failed, _text];
 };
 
-private ["_success", "amount", "_money"];
+private ["_success", "_amount", "_money"];
 MUTEX_LOCK_OR_FAIL;
 _success = [DURATION, ANIMATION, _checks, [_warchest]] call a3w_actions_start;
 MUTEX_UNLOCK;
