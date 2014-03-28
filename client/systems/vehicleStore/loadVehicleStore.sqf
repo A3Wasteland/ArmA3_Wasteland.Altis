@@ -7,6 +7,8 @@
 #include "dialog\vehiclestoreDefines.hpp";
 disableSerialization;
 
+vehicleStore_noBuzzard = false;
+
 private ["_vehshopDialog", "_Dialog", "_playerMoney", "_money", "_owner", "_fName", "_boatButton", "_subButton"];
 _vehshopDialog = createDialog "vehshopd";
 
@@ -27,6 +29,10 @@ currentOwnerID = _owner;
 		{
 			switch (_x) do 
 			{
+				case "NoBuzzard": 
+				{
+					vehicleStore_noBuzzard = true;
+				};
 				case "Boats": 
 				{
 					_boatButton ctrlShow false;

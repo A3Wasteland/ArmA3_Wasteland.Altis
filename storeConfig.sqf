@@ -783,9 +783,10 @@ storeOwnerConfig = compileFinal str
 	["GunStore3", 6, 135, []],
 	["GunStore4", 1, 65, []],
 	
-	["VehStore1", 1, 75, []],
+	// NoBuzzard = prevent purchase of A-143 Buzzard due to short runway, other planes are fine
+	["VehStore1", 1, 75, ["NoBuzzard"]],
 	["VehStore2", 6, 45, ["Boats", "Submarines"]],
-	["VehStore3", 4, 250, ["Boats", "Submarines"]],
+	["VehStore3", 4, 250, ["Boats", "Submarines", "NoBuzzard"]],
 	["VehStore4", 5, 155, ["Boats", "Submarines"]]
 ];
 	
