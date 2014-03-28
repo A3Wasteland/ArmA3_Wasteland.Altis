@@ -12,12 +12,9 @@ R3F_LOG_CFG_remorqueurs =
 	"MRAP_03_base_F",
 	"Truck_01_base_F",
 	"Truck_02_base_F",
+	"Truck_03_base_F",
 	"Wheeled_APC_F",
 	"Tank_F",
-//	"APC_Tracked_01_base_F", // For future weight system
-//	"APC_Tracked_02_base_F",
-//	"MBT_01_base_F",
-//	"MBT_02_base_F",
 	"Boat_Armed_01_base_F"
 ];
 
@@ -33,11 +30,12 @@ R3F_LOG_CFG_objets_remorquables =
 	"MRAP_01_base_F",
 	"MRAP_02_base_F",
 	"MRAP_03_base_F",
+	"UGV_01_base_F",
 	"SDV_01_base_F",
 	"Boat_Civil_01_base_F",
 	"Boat_Armed_01_base_F",
 	"Helicopter_Base_F",
-	"Plane_Base_F"
+	"Plane"
 ];
 
 /****** LIFT WITH VEHICLE  ******/
@@ -62,6 +60,7 @@ R3F_LOG_CFG_objets_heliportables =
 	"MRAP_01_base_F",
 	"MRAP_02_base_F",
 	"MRAP_03_base_F",
+	"UGV_01_base_F",
 	"SDV_01_base_F",
 	"Boat_Civil_01_base_F",
 	"Boat_Armed_01_base_F"
@@ -78,6 +77,7 @@ R3F_LOG_CFG_objets_heliportables =
 R3F_LOG_CFG_transporteurs =
 [
 	["Quadbike_01_base_F", 5],
+	["UGV_01_base_F", 10],
 	["Hatchback_01_base_F", 10],
 	["SUV_01_base_F", 20],
 	["Offroad_01_base_F", 30],
