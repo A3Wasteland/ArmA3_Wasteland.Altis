@@ -20,7 +20,7 @@ mf_items_spawn_beacon_nearest = {
     _beacon = objNull;
     _beacons = nearestObjects [player, [MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE], 3];
     {
-        if (_x getVariable ["spawn-beacon", false]) exitWith {
+        if (_x getVariable ["a3w_spawnBeacon", false]) exitWith {
             _beacon = _x;
         };
     } forEach _beacons;
@@ -40,6 +40,6 @@ _condition = "'' == [] call mf_items_spawn_beacon_can_steal;";
 _steal = ["Steal Spawn Beacon", path("steal.sqf"), [], 1, true, false, "", _condition];
 ["beacon-steal", _steal] call mf_player_actions_set;
 
-_condition = "'' == [] call mf_items_spawn_beacon_can_pack and playerSide != indepenent;";
+_condition = "'' == [] call mf_items_spawn_beacon_can_pack && {playerSide != independent}";
 _pack =["Change Spawn Permissions", path("toggle_spawn_permissions.sqf"), [], 1, true, false, "", _condition];
 ["beacon-spawn-toggle", _pack] call mf_player_actions_set;
