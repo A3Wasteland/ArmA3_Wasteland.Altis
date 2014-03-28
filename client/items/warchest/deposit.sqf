@@ -1,5 +1,5 @@
 #include "defines.sqf"
-#define ERR_NOT_ENOUGH_FUNDS "You dont have enough money."
+#define ERR_NOT_ENOUGH_FUNDS "You don't have enough money."
 private ["_warchest", "_amount", "_money"];
 disableSerialization;
 _warchest = findDisplay IDD_WARCHEST;
