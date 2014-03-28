@@ -113,6 +113,17 @@ if (_key != "" && {isPlayer _player} && {_isGenStore || _isGunStore || _isVehSto
 			_object = createVehicle [_class, _safePos, [], 0, "None"];
 			_objectID = netId _object;
 			
+			if (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0) then
+			{
+				//assign AI to the vehicle so it can actually be used
+				createVehicleCrew _object;
+				
+				[_object, {(driver _this) setName ["AI", "", ""]}, true, false] call fn_vehicleInit;
+
+				//assign AI to player's side to allow terminal connection
+				[_object] joinSilent (createGroup side _player);
+			};
+			
 			// Spawn remaining calls to speed up delivery confirmation
 			[_object, _safePos, _marker] spawn
 			{

@@ -63,17 +63,18 @@ storePurchaseHandle = _this spawn
 		//if they chose a color set the color
 		switch (toLower _colorText) do
 		{
-			case "black":       { _rgbString = "#(argb,8,8,3)color(0,0,0,1)" };
-			case "blue":        { _rgbString = "#(argb,8,8,3)color(0,0.1,0.8,1)" };
-			case "dark blue":   { _rgbString = "#(argb,8,8,3)color(0,0.01,0.06,1)" };
-			case "green":       { _rgbString = "#(argb,8,8,3)color(0.01,0.64,0,1)" };
-			case "orange":      { _rgbString = "#(argb,8,8,3)color(0.82,0.2,0,1)" };
-			case "pink":        { _rgbString = "#(argb,8,8,3)color(0.95,0.45,0.74,1)" };
-			case "purple":      { _rgbString = "#(argb,8,8,3)color(0.43,0.18,0.67,1)" };
-			case "red":         { _rgbString = "#(argb,8,8,3)color(0.79,0.03,0,1)" };
-			case "teal":        { _rgbString = "#(argb,8,8,3)color(0,0.93,0.86,1)" };
-			case "white":       { _rgbString = "#(argb,8,8,3)color(1,1,1,1)" };
-			case "yellow":      { _rgbString = "#(argb,8,8,3)color(1,0.97,0.17,1)" };		
+			case "black":       { _rgbString = "#(argb,8,8,3)color(0.1,0.1,0.1,0.1)" };
+			case "grey":        { _rgbString = "#(argb,8,8,3)color(0.5,0.51,0.512,0.3)" };
+			case "blue":        { _rgbString = "#(argb,8,8,3)color(0,0.2,1,0.75)" };
+			case "dark blue":   { _rgbString = "#(argb,8,8,3)color(0,0.3,0.6,0.05)" };
+			case "green":       { _rgbString = "#(argb,8,8,3)color(0,1,0,0.15)" };
+			case "orange":      { _rgbString = "#(argb,8,8,3)color(1,0.5,0,0.4)" };
+			case "pink":        { _rgbString = "#(argb,8,8,3)color(1,0.06,0.6,0.5)" };
+			case "purple":      { _rgbString = "#(argb,8,8,3)color(0.8,0,1,0.1)" };
+			case "red":         { _rgbString = "#(argb,8,8,3)color(1,0.1,0,0.3)" };
+			case "teal":        { _rgbString = "#(argb,8,8,3)color(0,1,1,0.15)" };
+			case "white":       { _rgbString = "#(argb,8,8,3)color(1,1,1,0.5)" };
+			case "yellow":      { _rgbString = "#(argb,8,8,3)color(1,0.9,0,0.3)" };
 			
 			case "orange camo": { _textureFilename = "camo_fack.jpg" };
 			case "pink camo":   { _textureFilename = "camo_pank.jpg" };
@@ -123,12 +124,6 @@ storePurchaseHandle = _this spawn
 				};
 			};
 
-			//assign AI to the vehicle so it can actually be used
-			createVehicleCrew _vehicle;
-
-			//assign AI to player group to allow terminal connection
-			[_vehicle] joinSilent group player;
-			
 			if (isNull getConnectedUav player) then
 			{
 				player connectTerminalToUav _vehicle;

@@ -731,6 +731,7 @@ rgbOnlyVehicles = compileFinal str
 colorsArray = compileFinal str
 [
 	["Black", true],
+	["Grey", true],
 	["White", true],
 	["Orange", true],
 	["Red", true],
