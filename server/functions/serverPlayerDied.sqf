@@ -1,6 +1,6 @@
 //	@file Version: 1.0
 //	@file Name: serverPlayerDied.sqf
-//	@file Author: [404] Pulse
+//	@file Author: [404] Pulse, AgentRev
 //	@file Created: 20/11/2012 05:19
 
 if (!isServer) exitWith {};
@@ -23,7 +23,9 @@ if (!isNull _backpack) then
 } forEach (_corpse nearEntities ["All", 20]);
 
 // Remove any persistent info about the player on death
-if (["A3W_playerSaving"] call isConfigOn) then
+if (isPlayer _corpse && {["A3W_playerSaving"] call isConfigOn}) then
 {
-	(getPlayerUID _corpse) call iniDB_delete;
+	((getPlayerUID _corpse) call PDB_databaseNameCompiler) call iniDB_delete;
 };
+
+if (goggles _corpse != "G_Diving") then { removeGoggles _corpse };
