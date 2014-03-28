@@ -156,6 +156,14 @@ staticHeliList =
 	"I_Heli_light_03_unarmed_F"
 ];
 
+//Object List - Random Planes.
+staticPlaneList = 
+[
+	"B_Plane_CAS_01_F",
+	"O_Plane_CAS_02_F",
+	"I_Plane_Fighter_03_CAS_F"
+];
+
 //Random Weapon List - Change this to what you want to spawn in cars.
 vehicleWeapons =
 [
