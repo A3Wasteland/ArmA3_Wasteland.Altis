@@ -25,7 +25,7 @@ removeHeadgear player;
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
 		case "Money": { player setVariable ["cmoney", _value, true] };
-		case "Position": { player setPos _value; playerWasMoved = true };
+		case "Position": { waitUntil {sleep 0.1; preloadCamera _value}; player setPosATL _value };
 		case "Direction": { player setDir _value };
 		case "Uniform":
 		{
@@ -78,9 +78,9 @@ removeHeadgear player;
 			};
 		};
 		case "LoadedMagazines": { { player addMagazine _x } forEach _value };
-		case "PrimaryWeapon": { if (_value != "") then { player addWeapon _value } };
-		case "SecondaryWeapon": { if (_value != "") then { player addWeapon _value } };
-		case "HandgunWeapon": { if (_value != "") then { player addWeapon _value } };
+		case "PrimaryWeapon": { player addWeapon _value; removeAllPrimaryWeaponItems player };
+		case "SecondaryWeapon": { player addWeapon _value };
+		case "HandgunWeapon": { player addWeapon _value; removeAllHandgunItems player };
 		case "PrimaryWeaponItems": { { if (_x != "") then { player addPrimaryWeaponItem _x } } forEach _value };
 		case "SecondaryWeaponItems": { { if (_x != "") then { player addSecondaryWeaponItem _x } } forEach _value };
 		case "HandgunItems": { { if (_x != "") then { player addHandgunItem _x } } forEach _value };

@@ -33,9 +33,6 @@ if (["A3W_moneySaving"] call isConfigOn) then
 	["Money", "NUMBER"] call _getValue;
 };
 
-["Position", "ARRAY"] call _getValue;
-["Direction", "NUMBER"] call _getValue;
-
 ["Uniform", "STRING"] call _getValue;
 ["Vest", "STRING"] call _getValue;
 ["Backpack", "STRING"] call _getValue;
@@ -57,20 +54,23 @@ if (["A3W_moneySaving"] call isConfigOn) then
 ["CurrentMuzzle", "STRING"] call _getValue;
 ["Stance", "STRING"] call _getValue;
 
-["WeaponsUniform", "ARRAY"] call _getValue;
-["WeaponsVest", "ARRAY"] call _getValue;
-["WeaponsBackpack", "ARRAY"] call _getValue;
+["UniformWeapons", "ARRAY"] call _getValue;
+["UniformItems", "ARRAY"] call _getValue;
+["UniformMagazines", "ARRAY"] call _getValue;
 
-["ItemsUniform", "ARRAY"] call _getValue;
-["ItemsVest", "ARRAY"] call _getValue;
-["ItemsBackpack", "ARRAY"] call _getValue;
+["VestWeapons", "ARRAY"] call _getValue;
+["VestItems", "ARRAY"] call _getValue;
+["VestMagazines", "ARRAY"] call _getValue;
 
-["MagazinesUniform", "ARRAY"] call _getValue;
-["MagazinesVest", "ARRAY"] call _getValue;
-["MagazinesBackpack", "ARRAY"] call _getValue;
+["BackpackWeapons", "ARRAY"] call _getValue;
+["BackpackItems", "ARRAY"] call _getValue;
+["BackpackMagazines", "ARRAY"] call _getValue;
 
 ["PartialMagazines", "ARRAY"] call _getValue;
 
 ["WastelandItems", "ARRAY"] call _getValue;
+
+["Position", "ARRAY"] call _getValue;
+["Direction", "NUMBER"] call _getValue;
 
 _data

@@ -9,16 +9,21 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 
 "applyPlayerData" addPublicVariableEventHandler
 {
-	_data = _this select 1;
-	if (count _data > 0) then { playerData_alive = true };
+	_this spawn
+	{
+		_data = _this select 1;
+		if (count _data > 0) then { playerData_alive = true };
 
-	_data call fn_applyPlayerData;
-	playerData_loaded = true;
+		_data call fn_applyPlayerData;
 
-	titleText ["","BLACK IN",4];
+		//fixes the issue with saved player being GOD when they log back on the server!
+		player allowDamage true;
 
-	//fixes the issue with saved player being GOD when they log back on the server!
-	player allowDamage true;
+		call playerSpawn;
 
-	player globalchat "Player account loaded!";
+		playerData_loaded = true;
+		player groupChat "Player account loaded!";
+
+		execVM "client\functions\firstSpawn.sqf";
+	};
 };
