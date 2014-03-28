@@ -14,7 +14,7 @@ if (typeName _this == "ARRAY" && {count _this >= 1}) then {
 	_msg = _this select 0;
 	_money = 0; if (count _this >= 2) then { _money = _this select 1; };
 	
-	titleText [_msg, "plain"]; titleFadeOut 10;
+	titleText [_msg, "plain down", 0.5];
 	if (_money > 0) then {
 		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
 	};
