@@ -28,8 +28,3 @@ if (!isNull pvar_PlayerTeamKiller) then
 
 	[] execVM "client\functions\createTeamKillDialog.sqf";
 };
-
-if (["A3W_playerSaving"] call isConfigOn) then
-{
-	call fn_savePlayerData;
-};
