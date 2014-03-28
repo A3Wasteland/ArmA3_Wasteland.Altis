@@ -48,7 +48,7 @@ _vehicle setVelocity [0,0,0.01];
 [_vehicle, 15*60, 30*60, 45*60, 1000, 0, false, _markerPos] execVM "server\functions\vehicle.sqf";
 
 //Set Vehicle Attributes
-_vehicle setFuel (random 0.5 + 0.25);
+_vehicle setFuel (0.2 + random 0.1);
 _vehicle setDamage (random 0.5);
 
 // Remove wheel damage
