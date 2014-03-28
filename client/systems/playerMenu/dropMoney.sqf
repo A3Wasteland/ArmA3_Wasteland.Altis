@@ -20,11 +20,11 @@ if((player getVariable "cmoney" < _money) OR (player getVariable "cmoney" < 0)) 
 mutexScriptInProgress = true;
 player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
 sleep 0.5;
-_pos = getPosATL player;
-_cash = "Land_Money_F" createVehicle (position player);
-_cash setPos ([player, [0,1,0]] call relativePos);
+
+_cash = createVehicle ["Land_Money_F", [player, [0,1,0]] call relativePos, [], 0, "CAN_COLLIDE"];
 _cash setVariable ["cmoney", _money, true];
 _cash setVariable ["owner", "world", true];
 player setVariable ["cmoney", (player getVariable "cmoney") - _money, true];
+
 sleep 0.5;
 mutexScriptInProgress = false;

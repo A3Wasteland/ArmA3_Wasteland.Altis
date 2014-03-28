@@ -68,19 +68,14 @@ if (side _killer == INDEPENDENT && {side _player == INDEPENDENT} && {_killer != 
 	publicVariableServer "requestCompensateNegativeScore";
 }; 
 
-private["_a","_b","_c","_d","_e","_f","_m","_player","_killer", "_to_delete"];
-
-_to_delete = [];
-_to_delete_quick = [];
 [_player, objNull] call mf_player_actions_refresh;
 
 if (_player getVariable "cmoney" > 0) then
 {
-	_m = "Land_Money_F" createVehicle (position _player);
+	_m = createVehicle ["Land_Money_F", player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
 	_m setVariable ["cmoney", _player getVariable "cmoney", true];
 	_m setVariable ["owner", "world", true];
 	_player setVariable ["cmoney", 0, true];
-	_to_delete = _to_delete + [_m];
 };
 
 {

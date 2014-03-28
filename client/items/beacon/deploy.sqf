@@ -28,28 +28,24 @@ _success = [MF_ITEMS_SPAWN_BEACON_DURATION, ANIM, _hasFailed, []] call a3w_actio
 
 if (_success) then {
     _uid = getPlayerUID player;
-	_pos = getPosATL player;
-    _dir = getdir player;
-    // Spawn 4m in front of the player  
-    _pos = [(_pos select 0)+4*sin(_dir),(_pos select 1)+4*cos(_dir),0];
-
-	_beacon = MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE createVehicle _pos;
-	_beacon setPosATL _pos;
-	_beacon allowDamage false;
+    // Spawn 2m in front of the player  
+    _beacon = createVehicle [MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE, [player, [0,2,0]] call relativePos, [], 0, "CAN_COLLIDE"];
+	_beacon setDir (getDir player + 270);
+	_beacon setVariable ["allowDamage", true, true];
     _beacon setVariable ["spawn-beacon", true, true];
 	_beacon setVariable ["R3F_LOG_disabled", true];
-	_beacon setVariable ['side', playerSide, true];
-	_beacon setVariable ['ownerName', name player, true];
-	_beacon setVariable ['ownerUID', _uid, true];
-    _beacon setVariable ['packing', false, true];
-    _beacon setVariable ['groupOnly', (playerSide == resistance), true];    
+	_beacon setVariable ["side", playerSide, true];
+	_beacon setVariable ["ownerName", name player, true];
+	_beacon setVariable ["ownerUID", _uid, true];
+    _beacon setVariable ["packing", false, true];
+    _beacon setVariable ["groupOnly", (playerSide == INDEPENDENT), true];
     {
-        if (_x getVariable ["ownerUID",""] == _uid) exitWith {
-            pvar_spawn_beacons set [_forEachIndex, "removeMe"];
+        if (_x getVariable ["ownerUID",""] == _uid) then {
+            pvar_spawn_beacons = pvar_spawn_beacons - [_x];
         };
     } forEach pvar_spawn_beacons;
-    pvar_spawn_beacons = pvar_spawn_beacons - ["removeMe"];
-	pvar_spawn_beacons = pvar_spawn_beacons + [_beacon];
+	
+	[pvar_spawn_beacons, _beacon] call BIS_fnc_arrayPush;
     publicVariable "pvar_spawn_beacons";
 	["You placed the Spawn Beacon successfully!", 5] call mf_notify_client;
 };

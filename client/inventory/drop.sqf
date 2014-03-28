@@ -30,15 +30,24 @@ if (_item select QTY <= 0) exitWith {
 	hint format["you have no %1 to drop", _item select NAME];
 };
 
-private ["_obj"];
-MUTEX_LOCK_OR_FAIL;
-player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
-sleep 0.5;
+private ["_pos", "_obj"];
 
-_obj = _type createVehicle (position player);
-_obj setPos ([player, [0,1,0]] call relativePos);
-_obj setVariable ["mf_item_id", _id, true];
-[_id, 1] call mf_inventory_remove;
+if (alive player) then
+{
+	MUTEX_LOCK_OR_FAIL;
+	player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+	sleep 0.5;
 
-sleep 0.5;
-MUTEX_UNLOCK;
+	_obj = createVehicle [_type, [player, [0,1,0]] call relativePos, [], 0, "CAN_COLLIDE"];
+	_obj setVariable ["mf_item_id", _id, true];
+	[_id, 1] call mf_inventory_remove;
+
+	sleep 0.5;
+	MUTEX_UNLOCK;
+}
+else
+{
+	_obj = createVehicle [_type, player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
+	_obj setVariable ["mf_item_id", _id, true];
+	[_id, 1] call mf_inventory_remove;
+};
