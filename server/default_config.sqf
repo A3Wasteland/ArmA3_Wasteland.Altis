@@ -4,17 +4,22 @@
 // if you have any doubts and/or questions about the mission find us at a3wasteland.com 
 
 // General settings
-A3W_startHour = 6;                 // In-game hour at mission start (0 to 23)
+A3W_startHour = 8;                 // In-game hour at mission start (0 to 23)
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 A3W_startingMoney = 100;           // Amount of money that players start with
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
+A3W_gunStoreIntruderWarning = 1;   // Warn players in gunstore areas of enemy intruders (0 = no, 1 = yes)
 
 // Persistence settings (requires iniDBI addon)
 A3W_playerSaving = 1;              // Save player data like position, health, inventory, etc. (0 = no, 1 = yes)
 A3W_moneySaving = 1;               // If playerSaving = 1, save player money amount (0 = no, 1 = yes)
+A3W_combatAbortDelay = 60;         // If playerSaving = 1, delay in seconds for which to disable abort and respawn buttons after firing or being shot (0 = none)
 A3W_baseSaving = 1;                // Save locked base parts between server restarts (0 = no, 1 = yes)
 A3W_boxSaving = 1;                 // Save locked weapon crates and their contents between server restarts (0 = no, 1 = yes)
-A3W_objectLifetime = 5*24;         // Maximum lifetime in hours for baseparts and crates across server restarts (0 = no time limit)
+A3W_warchestSaving = 1;            // Save warchest objects deployed by players between server restarts (0 = no, 1 = yes)
+A3W_warchestMoneySaving = 1;       // Save warchest team money between server restarts (0 = no, 1 = yes)
+A3W_spawnBeaconSaving = 1;         // Save spawn beacons between server restarts (0 = no, 1 = yes)
+A3W_objectLifetime = 5*24;         // Maximum lifetime in hours for saved objects (baseparts, crates, etc.) across server restarts (0 = no time limit)
 PDB_ServerID = "A3W_";             // iniDB savefiles prefix (change this in case you run multiple servers from the same folder)
 
 // Spawning settings
