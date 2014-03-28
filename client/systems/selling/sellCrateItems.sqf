@@ -10,44 +10,28 @@ if (!isNil "storeSellingHandle" && {typeName storeSellingHandle == "SCRIPT"} && 
 
 _crate = missionNamespace getVariable ["R3F_LOG_joueur_deplace_objet", objNull];
 
-if !(_crate isKindOf "ReammoBox_F") then
+/*if !(_crate isKindOf "ReammoBox_F") then
 {
 	hint "You aren't holding a valid crate!";
 }
 else
-{
+{*/
 	storeSellingHandle = _crate spawn
 	{
-		private ["_getHalfPrice", "_cargoToPairs", "_crate", "_sellValue", "_crateItems", "_allStoreItems", "_weaponEntry", "_weaponCfg", "_parentCfg", "_found", "_cfgItems", "_allCrateItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemName", "_confirmMsg"];
+		private ["_getHalfPrice", "_crate", "_sellValue", "_crateItems", "_allStoreItems", "_weaponEntry", "_weaponCfg", "_parentCfg", "_found", "_cfgItems", "_allCrateItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemName", "_confirmMsg"];
 
 		_getHalfPrice = 
 		{
 			((ceil ((_this / 2) / 5)) * 5) // Ceil half the value to the nearest multiple of 5
 		};
 		
-		_cargoToPairs =
-		{
-			// Example: converts [["a","b","c"],[1,2,3]] to [["a",1],["b",2],["c",3]]
-			private "_array";
-			_array = [];
-			
-			if (count _this > 1) then
-			{
-				{
-					_array set [count _array, [_x, (_this select 1) select _forEachIndex]];
-				} forEach (_this select 0);
-			};
-			
-			_array
-		};
-		
 		_crate = _this;
 		_sellValue = 0;
 		
 		// Get all the items
-		_crateWeapons = (getWeaponCargo _crate) call _cargoToPairs;
-		_crateMags = (getMagazineCargo _crate) call _cargoToPairs;
-		_crateItems = (getItemCargo _crate) call _cargoToPairs;
+		_crateWeapons = (getWeaponCargo _crate) call cargoToPairs;
+		_crateMags = (getMagazineCargo _crate) call cargoToPairs;
+		_crateItems = (getItemCargo _crate) call cargoToPairs;
 		
 		_allStoreItems = [call allRegularStoreItems, call ammoArray] call BIS_fnc_arrayPushStack;
 		
@@ -102,7 +86,7 @@ else
 		
 		if (count _allCrateItems == 0) exitWith
 		{
-			["This crate does not contain any valid items to sell.", "Error"] call BIS_fnc_guiMessage;
+			["This object does not contain any valid items to sell.", "Error"] call BIS_fnc_guiMessage;
 		};
 		
 		// Add value of each item to sell value, and acquire item display name
@@ -163,7 +147,7 @@ else
 			clearItemCargoGlobal _crate;
 
 			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
-			hint format ["You sold the crate items for $%1", _sellValue];
+			hint format ["You sold the contents for $%1", _sellValue];
 		};
 	};
 	
@@ -175,4 +159,4 @@ else
 	};
 	
 	storeSellingHandle = nil;
-};
+//};

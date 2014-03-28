@@ -5,6 +5,7 @@
 //	@file Args:
 
 #define STORE_ACTION_CONDITION "_this distance _target < 3"
+#define SELL_ACTION_CONDITION "{_obj = missionNamespace getVariable ['R3F_LOG_joueur_deplace_objet', objNull]; !isNull _obj && {getNumber (configFile >> 'CfgVehicles' >> typeOf _obj >> 'maximumLoad') > 0}}"
 
 private ["_npc", "_type", "_num", "_identity"];
 
@@ -12,23 +13,26 @@ _npc = _this select 0;
 _type = _this select 1;
 _num = _this select 2;
 
-switch (toLower _type) do
+if (hasInterface) then
 {
-	case "genstore":
+	switch (toLower _type) do
 	{
-		_npc addAction ["<img image='client\icons\store.paa'/> Open General Store", "client\systems\generalStore\loadGenStore.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION];
+		case "genstore":
+		{
+			_npc addAction ["<img image='client\icons\store.paa'/> Open General Store", "client\systems\generalStore\loadGenStore.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION];
+		};
+		case "gunstore":
+		{
+			_npc addAction ["<img image='client\icons\store.paa'/> Open Gun Store", "client\systems\gunStore\loadgunStore.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION];
+		};
+		case "vehstore":
+		{
+			_npc addAction ["<img image='client\icons\store.paa'/> Open Vehicle Store", "client\systems\vehicleStore\loadVehicleStore.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION];
+		};
 	};
-	case "gunstore":
-	{
-		_npc addAction ["<img image='client\icons\store.paa'/> Open Gun Store", "client\systems\gunStore\loadgunStore.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION];
-	};
-	case "vehstore":
-	{
-		_npc addAction ["<img image='client\icons\store.paa'/> Open Vehicle Store", "client\systems\vehicleStore\loadVehicleStore.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION];
-	};
-};
 
-_npc addAction ["<img image='client\icons\money.paa'/> Sell Crate Items", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && {(missionNamespace getVariable ['R3F_LOG_joueur_deplace_objet', objNull]) isKindOf 'ReammoBox_F'}"];
+	_npc addAction ["<img image='client\icons\money.paa'/> Sell Contents", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_ACTION_CONDITION];
+};
 
 _identity = format ["%1%2", _type, _num];
 _npc setIdentity _identity;
