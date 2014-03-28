@@ -70,18 +70,7 @@ player createDiaryRecord ["credits",
 [
 "Credits",
 "
-<br/><font size='16'>Original ArmA 2 Wasteland missions by:</font>
-<br/>	* Tonic
-<br/>	* Sa-Matra
-<br/>	* MarKeR
-<br/>
-<br/><font size='16'>Ported to ArmA 3 by 404Games:</font>
-<br/>	* Deadbeat
-<br/>	* Costlyy
-<br/>	* Pulse
-<br/>	* Domuk
-<br/>
-<br/><font size='16'>Development of this version by:</font>
+<br/><font size='16'>Developed by Team Wasteland:</font>
 <br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* AgentRev (TeamPlayerGaming)
 <br/>	* MercyfulFate
@@ -90,10 +79,23 @@ player createDiaryRecord ["credits",
 <br/>	* Torndeco
 <br/>	* Del1te (404Games)
 <br/>
+<br/><font size='16'>Original Arma 2 Wasteland missions by:</font>
+<br/>	* Tonic
+<br/>	* Sa-Matra
+<br/>	* MarKeR
+<br/>
+<br/><font size='16'>Ported to Arma 3 by 404Games:</font>
+<br/>	* Deadbeat
+<br/>	* Costlyy
+<br/>	* Pulse
+<br/>	* Domuk
+<br/>
 <br/><font size='16'>Other contributors:</font>
 <br/>	* 82ndab-Bravo17 (GitHub)
 <br/>	* afroVoodo (Armaholic)
 <br/>	* AWA (OpenDayZ)
+<br/>	* bodybag (Gameaholic.se)
+<br/>	* code34 (iniDBI)
 <br/>	* Das Attorney (Jump MF)
 <br/>	* Ed! (404Games forums)
 <br/>	* HatchetHarry (GitHub)
@@ -102,7 +104,7 @@ player createDiaryRecord ["credits",
 <br/>	* Krunch (GitHub)
 <br/>	* Mainfrezzer (Magnon)
 <br/>	* meat147 (GitHub)
-<br/>	* Na-Palm (BIS forums)
+<br/>	* Na_Palm (BIS forums)
 <br/>	* red281gt (GitHub)
 <br/>	* RockHound (BierAG)
 <br/>	* s3kShUn61 (GitHub)
