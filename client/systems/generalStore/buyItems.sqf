@@ -87,7 +87,6 @@ storePurchaseHandle = _this spawn
 		 
 		if (!_confirmResult) then
 		{
-			playSound "FD_CP_Not_Clear_F";
 			_price = -1;
 		};
 		
@@ -192,22 +191,15 @@ storePurchaseHandle = _this spawn
 					};
 					case "nvg":
 					{
-						switch (playerSide) do
-						{
-							case OPFOR:       { _itemClass = "NVGoggles_OPFOR" };
-							case INDEPENDENT: { _itemClass = "NVGoggles_INDEP" };
-							default           { _itemClass = "NVGoggles" };
-						};
-						
 						if ({["NVGoggles", _x] call fn_findString != -1} count assignedItems player == 0) then
 						{
-							player linkItem _itemClass;
+							player linkItem _class;
 						}
 						else
 						{
-							if ([player, _itemClass] call fn_fitsInventory) then
+							if ([player, _class] call fn_fitsInventory) then
 							{
-								player addItem _itemClass;
+								player addItem _class;
 							}
 							else
 							{

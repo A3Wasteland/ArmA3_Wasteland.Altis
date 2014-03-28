@@ -478,7 +478,7 @@ genItemArray = compileFinal str
 	["Medikit", "Medikit", 150, "item"],
 	["Toolkit", "ToolKit", 150, "item"],
 	["Mine Detector", "MineDetector", 100, "item"],
-	["NV Goggles", "NVGoggles_OPFOR", 100, "nvg"],
+	["NV Goggles", "NVGoggles", 100, "nvg"],
 	["Diving Goggles", "G_Diving", 100, "gogg"],
 	["Binoculars", "Binocular", 50, "binoc"],
 	["Rangefinder", "Rangefinder", 150, "binoc"],   

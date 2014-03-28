@@ -1,4 +1,4 @@
-//	@file Name: playerSetup.sqf
+//	@file Name: playerSetupGear.sqf
 //	@file Author: [GoT] JoSchaap, AgentRev
 
 private "_player";
@@ -16,25 +16,11 @@ sleep 0.1;
 _player unlinkItem "ItemGPS";
 //_player unlinkItem "ItemRadio";
 
-// # Remove NVGs #########
-{
-	if (["NVGoggles", _x] call fn_findString != -1) then
-	{
-		_player unlinkItem _x;
-	};
-} forEach assignedItems _player;
-// #######################
+// Remove NVGs
+_player unlinkItem (hmd _player);
 
-// # Add NVGs ############
-/*
-switch (side _player) do
-{
-	case OPFOR:       { _player linkItem "NVGoggles_OPFOR" };
-	case INDEPENDENT: { _player linkItem "NVGoggles_INDEP" };
-	default           { _player linkItem "NVGoggles" };
-};
-*/
-// #######################
+// Add NVGs
+//_player linkItem "NVGoggles";
 
 _player addBackpack "B_AssaultPack_rgr";
 _player addMagazine "9Rnd_45ACP_Mag";
