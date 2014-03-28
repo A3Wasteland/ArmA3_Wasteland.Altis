@@ -4,7 +4,7 @@
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap
 //	@file Description: The main init.
 
-#define DEBUG false
+#define DEBUG true
 
 enableSaving [false, false];
 

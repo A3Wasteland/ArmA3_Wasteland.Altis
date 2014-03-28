@@ -10,6 +10,48 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"0.9g",
+"
+<br/> [Added] - Vehicle stores
+<br/> [Added] - New lootspawner by Na_Palm, stuff in ALL buildings
+<br/> [Added] - New jets and truck added in A3 v1.14
+<br/> [Added] - New AAF vehicles added in A3 v1.08
+<br/> [Added] - New camos for Mk20 and MX in gunstores
+<br/> [Added] - Ability to push plane backwards
+<br/> [Added] - Ability to sell quadbike contents like crates
+<br/> [Added] - Abort delay during combat when player saving on
+<br/> [Changed] - Improved respawn menu
+<br/> [Changed] - Respawn now longer to preload destination
+<br/> [Changed] - Optimized player icons
+<br/> [Changed] - Optimized FPS fix
+<br/> [Changed] - Improved server persistence (requires iniDBI v1.4+)
+<br/> [Changed] - Improved player saving (server-specific)
+<br/> [Changed] - Improved base saving (server-specific)
+<br/> [Changed] - Reduced starting gear
+<br/> [Changed] - Modified some store prices
+<br/> [Changed] - Reduced initial fuel in cars and helis
+<br/> [Changed] - Removed Buzzard jet from too short runways
+<br/> [Changed] - Removed Kavala castle territory for use as base
+<br/> [Changed] - Increased vehicle repair time to 20 sec.
+<br/> [Changed] - Increased owner unlocking time to 10 sec.
+<br/> [Changed] - Toggling spawn beacon perms is now instant
+<br/> [Changed] - Improved Take option for player items
+<br/> [Changed] - Added option to cancel towing selection
+<br/> [Changed] - Added machine gunner to main mission NPCs
+<br/> [Changed] - Added grenadier to side mission NPCs
+<br/> [Fixed] - Error messages in various menus
+<br/> [Fixed] - Crash when toggling spawn beacon perms
+<br/> [Fixed] - Error when hacking warchests
+<br/> [Fixed] - Vehicle towing and lifting positions
+<br/> [Fixed] - Repair Vehicle option showing for brand new vehicles
+<br/> [Fixed] - Vest purchase price
+<br/> [Fixed] - Vest and helmet armor value
+<br/> [Fixed] - NPC leader now has launcher ammo
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "0.9f",
 "
 <br/> [Added] - Money missions
