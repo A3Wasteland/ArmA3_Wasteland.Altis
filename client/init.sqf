@@ -34,7 +34,7 @@ removeAllWeapons player;
 player switchMove "";
 
 //Stop people being civ's.
-if (!(playerSide in [BLUFOR, OPFOR, INDEPENDENT, sideEnemy])) then
+if !(playerSide in [BLUFOR,OPFOR,INDEPENDENT]) then
 {
 	endMission "LOSER";
 };
@@ -46,6 +46,11 @@ if (!(playerSide in [BLUFOR, OPFOR, INDEPENDENT, sideEnemy])) then
 
 //Call client compile list.
 player call compile preprocessFileLineNumbers "client\functions\clientCompile.sqf";
+
+//Setup player events.
+if (!isNil "client_initEH") then { player removeEventHandler ["Respawn", client_initEH] };
+player addEventHandler ["Respawn", { _this spawn onRespawn }];
+player addEventHandler ["Killed", { _this spawn onKilled }];
 
 //Player setup
 player call playerSetupStart;
@@ -88,11 +93,6 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 	territoryActivityHandler = "territory\client\territoryActivityHandler.sqf" call mf_compile;
 	[] execVM "territory\client\createCaptureTriggers.sqf";
 };
-
-//Setup player events.
-if (!isNil "client_initEH") then {player removeEventHandler ["Respawn", client_initEH];};
-player addEventHandler ["Respawn", { _this spawn onRespawn }];
-player addEventHandler ["Killed", { _this spawn onKilled }];
 
 //Setup player menu scroll action.
 [] execVM "client\clientEvents\onMouseWheel.sqf";
