@@ -90,8 +90,11 @@ _setStatus =
 		};
 	};
 
-	if((_this select 2) && ((_this select 1) in ["ENEMY", "MIXED"])) then {
-		hintSilent parseText format ["<t size='2' color='#ff0000'>%1</t><br/><br/>%2.","Warning!","Enemy player just entered the area"];
+	if (["A3W_gunStoreIntruderWarning"] call isConfigOn) then
+	{
+		if((_this select 2) && ((_this select 1) in ["ENEMY", "MIXED"])) then {
+			hintSilent parseText format ["<t size='2' color='#ff0000'>%1</t><br/><br/>%2.","Warning!","Enemy player just entered the area"];
+		};
 	};
 
 	_status set [_this select 0, _this select 1];
@@ -109,9 +112,9 @@ if (["A3W_showGunStoreStatus"] call isConfigOn) then
 			_enemyCount = 0;
 
 			{
-				if (_x distance _npcPos < _radius && {player != _x}) then
+				if (isPlayer _x && {_x distance _npcPos < _radius}) then
 				{
-					if (playerSide in [BLUFOR,OPFOR] && {side _x == playerSide} || {group _x == group player}) then
+					if ((playerSide in [BLUFOR,OPFOR] && {side _x == playerSide}) || {group _x == group player}) then
 					{
 						_friendlyCount = _friendlyCount + 1;
 					}
