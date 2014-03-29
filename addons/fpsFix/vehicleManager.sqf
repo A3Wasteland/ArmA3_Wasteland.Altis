@@ -12,8 +12,7 @@ if (isServer) exitWith {};
 
 #define MOVEMENT_DISTANCE_RESCAN 100
 #define DISABLE_DISTANCE_IMMOBILE 1000
-#define DISABLE_DISTANCE_MOBILE 2000
-#define DISABLE_DISTANCE_MOBILE_AIR 3000
+#define DISABLE_DISTANCE_MOBILE 2500
 
 private ["_eventCode", "_vehicleManager"];
 
@@ -36,14 +35,14 @@ _vehicleManager =
 
 			if (!local _vehicle &&
 			   {_vehicle isKindOf "Man" || {count crew _vehicle == 0}} &&
-			   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < diag_tickTime}) then
+			   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < diag_tickTime} &&
+			   {isTouchingGround _vehicle}) then
 			{
 				_dist = _vehicle distance positionCameraToWorld [0,0,0];
 				_vel = velocity _vehicle distance [0,0,0];
 
 				if ((_vel < 0.1 && {!(_vehicle isKindOf "Man")} && {_dist > DISABLE_DISTANCE_IMMOBILE}) ||
-				   {!(_vehicle isKindOf "Air") && {_dist > DISABLE_DISTANCE_MOBILE}} ||
-				   {_dist > DISABLE_DISTANCE_MOBILE_AIR}) then
+				   {_dist > DISABLE_DISTANCE_MOBILE}) then
 				{
 					_vehicle enableSimulation false;
 					_tryEnable = false;
@@ -58,7 +57,7 @@ _vehicleManager =
 
 			if !(_vehicle getVariable ["fpsFix_eventHandlers", false]) then
 			{
-				if !(_vehicle isKindOf "Man") then
+				if (_vehicle isKindOf "AllVehicles" && {!(_vehicle isKindOf "Man")}) then
 				{
 					//_vehicle addEventHandler ["EpeContactStart", _eventCode];
 					_vehicle addEventHandler ["GetIn", _eventCode];
