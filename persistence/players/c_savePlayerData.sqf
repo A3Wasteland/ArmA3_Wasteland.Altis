@@ -39,10 +39,9 @@ savePlayerHandle = _this spawn
 			[_data, ["Position", getPosATL player]] call BIS_fnc_arrayPush;
 			[_data, ["Direction", direction player]] call BIS_fnc_arrayPush;
 
-			[_data, ["CurrentWeapon", format ["%1", currentMuzzle player]]] call BIS_fnc_arrayPush; // currentMuzzle returns a number sometimes, hence the format
-
 			if (vehicle player == player) then
 			{
+				[_data, ["CurrentWeapon", format ["%1", currentMuzzle player]]] call BIS_fnc_arrayPush; // currentMuzzle returns a number sometimes, hence the format
 				[_data, ["Stance", format ["P%1", [player, ["P"]] call getMoveParams]]] call BIS_fnc_arrayPush;
 			};
 		};
