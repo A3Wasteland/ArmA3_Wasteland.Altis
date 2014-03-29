@@ -33,11 +33,19 @@ savePlayerHandle = _this spawn
 		[_data, ["Thirst", ["thirstLevel", 0] call getPublicVar]] call BIS_fnc_arrayPush;
 		[_data, ["Money", player getVariable ["cmoney", 0]]] call BIS_fnc_arrayPush; // Money is always saved, but only restored if A3W_moneySaving = 1
 
-		[_data, ["Position", getPosATL player]] call BIS_fnc_arrayPush;
-		[_data, ["Direction", direction player]] call BIS_fnc_arrayPush;
+		// Only save those when on ground or underwater (you probably wouldn't want to spawn 500m in the air if you get logged off in flight)
+		if ((getPos player) select 2 < 1 || {(getPosASL player) select 2 < 1}) then
+		{
+			[_data, ["Position", getPosATL player]] call BIS_fnc_arrayPush;
+			[_data, ["Direction", direction player]] call BIS_fnc_arrayPush;
 
-		[_data, ["CurrentWeapon", format ["%1", currentMuzzle player]]] call BIS_fnc_arrayPush; // currentMuzzle returns a number sometimes, hence the format
-		[_data, ["Stance", format ["P%1", [player, ["P"]] call getMoveParams]]] call BIS_fnc_arrayPush;
+			[_data, ["CurrentWeapon", format ["%1", currentMuzzle player]]] call BIS_fnc_arrayPush; // currentMuzzle returns a number sometimes, hence the format
+
+			if (vehicle player == player) then
+			{
+				[_data, ["Stance", format ["P%1", [player, ["P"]] call getMoveParams]]] call BIS_fnc_arrayPush;
+			};
+		};
 
 		_gear = [];
 
