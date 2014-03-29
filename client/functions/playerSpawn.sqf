@@ -38,17 +38,19 @@ if (playerSide != INDEPENDENT) then
 //Teamkiller Kick
 if (_kickTeamKiller) exitWith
 {
-	titleText [localize "STR_WL_Loading_Teamkiller", "black"];
-	titleFadeOut 9999;
-	[] spawn {sleep 20; endMission "LOSER";};
+	localize "STR_WL_Loading_Teamkiller";
+	9999 cutText [_text, "BLACK"];
+	titleText [_text, "BLACK"];
+	[] spawn {sleep 20; endMission "LOSER"};
 };
 
 //Teamswitcher Kick
 if (_kickTeamSwitcher) exitWith
 {
-	titleText [format[localize "STR_WL_Loading_Teamswitched", localize format ["STR_WL_Gen_Team%1_2", _side]], "black"];
-	titleFadeOut 9999;
-	[] spawn {sleep 20; endMission "LOSER";};
+	_text = format [localize "STR_WL_Loading_Teamswitched", localize format ["STR_WL_Gen_Team%1_2", _side]];
+	9999 cutText [_text, "BLACK"];
+	titleText [_text, "BLACK"];
+	[] spawn {sleep 20; endMission "LOSER"};
 };
 
 if (isNil "playerData_alive") then
@@ -57,17 +59,13 @@ if (isNil "playerData_alive") then
 	player setPosATL [7837.37,7627.14,0.00230217];
 	[player, "AmovPknlMstpSnonWnonDnon"] call switchMoveGlobal;
 
-	cutText ["Loading...", "BLACK OUT", 0.01];
+	9999 cutText ["Loading...", "BLACK", 0.01];
 
 	true spawn client_respawnDialog;
 
 	waitUntil {respawnDialogActive};
-
-	waitUntil {
-		cutText ["", "BLACK OUT", 0.00001];
-		!respawnDialogActive
-	};
-	sleep 0.1;
+	9999 cutText ["", "BLACK", 0.01];
+	waitUntil {!respawnDialogActive};
 
 	if (["A3W_playerSaving"] call isConfigOn) then
 	{
@@ -75,7 +73,6 @@ if (isNil "playerData_alive") then
 	};
 };
 
-cutText ["", "BLACK IN", 1];
-titleText ["", "BLACK IN", 1];
+9999 cutText ["", "BLACK IN"];
 
 playerSpawning = false;

@@ -8,9 +8,9 @@ if (playerSide in [BLUFOR,OPFOR]) then
 	{
 		if (_x select 0 == getPlayerUID player && {_x select 1 > 1}) exitWith
 		{
-			titleText ["", "BLACK IN", 0];
-			titleText [localize "STR_WL_Loading_Teamkiller", "black"];
-			titleFadeOut 9999;
+			_text = localize "STR_WL_Loading_Teamkiller";
+			9999 cutText [_text, "BLACK"];
+			titleText [_text, "BLACK"];
 			removeAllWeapons player;
 			
 			[] spawn
