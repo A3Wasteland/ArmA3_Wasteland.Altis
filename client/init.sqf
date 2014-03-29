@@ -121,12 +121,7 @@ waituntil {!(IsNull (findDisplay 46))};
 [] call updateMissionsMarkers;
 // [] call updateRadarMarkers;
 
-// Only go through playerSpawn if no data from the player save system
-if (isNil "playerData_alive") then{
-	[] spawn playerSpawn;
-} else {
-	playerData_alive = nil;
-};
+[] spawn playerSpawn;
 
 [] execVM "client\functions\drawPlayerIcons.sqf";
 

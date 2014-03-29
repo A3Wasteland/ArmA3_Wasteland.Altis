@@ -53,6 +53,7 @@ if (_kickTeamSwitcher) exitWith
 	[] spawn {sleep 20; endMission "LOSER"};
 };
 
+// Only go through respawn dialog if no data from the player save system
 if (isNil "playerData_alive") then
 {
 	//Send player to debug zone to stop fake spawn locations.
@@ -71,6 +72,10 @@ if (isNil "playerData_alive") then
 	{
 		[] spawn fn_savePlayerData;
 	};
+}
+else
+{
+	playerData_alive = nil;
 };
 
 9999 cutText ["", "BLACK IN"];
