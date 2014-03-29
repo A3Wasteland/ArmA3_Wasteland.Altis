@@ -75,7 +75,7 @@ switch (["A3W_vehicleLoot", 1] call getPublicVar) do
 		// 2nd weapon
         _weapon = vehicleWeapons call BIS_fnc_selectRandom;
         _mag = ((getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select 0) call getBallMagazine;
-        _car addWeaponCargoGlobal [_weapon2, 1];
+        _car addWeaponCargoGlobal [_weapon, 1];
         _car addMagazineCargoGlobal [_mag, 2 + floor random 3];
 		
 		_car addItemCargoGlobal ["FirstAidKit", 2];
