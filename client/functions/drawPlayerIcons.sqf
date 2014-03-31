@@ -32,6 +32,8 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 			default           { call bluforPlayerIcon };
 		};
 
+		_iconScaleUI =  (0.55 / (getResolution select 5)) * ICON_sizeScale; // 0.55 = Interface size "Small"
+
 		_units = if (playerSide == INDEPENDENT) then { units player } else { allUnits };
 
 		{
@@ -50,7 +52,7 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 				if (_distance < ICON_limitDistance && {count worldToScreen _pos > 0}) then
 				{
 					_pos set [2, (_pos select 2) + 1.35]; // Torso height
-					_size = (1 - ((_distance / ICON_limitDistance) * 0.6)) * ICON_sizeScale;
+					_size = (1 - ((_distance / ICON_limitDistance) * 0.6)) * _iconScaleUI;
 					_alpha = (ICON_limitDistance - _distance) / (ICON_limitDistance - ICON_fadeDistance);
 
 					drawIcon3D [_icon, [1,1,1,_alpha], _pos, _size, _size, 0, "", 0, 0, "PuristaMedium"];
