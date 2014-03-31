@@ -86,7 +86,8 @@ else
 		
 		if (count _allCrateItems == 0) exitWith
 		{
-			["This object does not contain any valid items to sell.", "Error"] call BIS_fnc_guiMessage;
+			playSound "FD_CP_Not_Clear_F";
+			["This object does not contain valid items to sell.", "Error"] call BIS_fnc_guiMessage;
 		};
 		
 		// Add value of each item to sell value, and acquire item display name
@@ -148,6 +149,7 @@ else
 
 			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
 			hint format ["You sold the contents for $%1", _sellValue];
+			playSound "FD_Finish_F";
 		};
 	};
 	

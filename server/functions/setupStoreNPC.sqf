@@ -5,7 +5,7 @@
 //	@file Args:
 
 #define STORE_ACTION_CONDITION "_this distance _target < 3"
-#define SELL_ACTION_CONDITION "{_obj = missionNamespace getVariable ['R3F_LOG_joueur_deplace_objet', objNull]; !isNull _obj && {getNumber (configFile >> 'CfgVehicles' >> typeOf _obj >> 'maximumLoad') > 0}}"
+#define SELL_ACTION_CONDITION "{_obj = missionNamespace getVariable ['R3F_LOG_joueur_deplace_objet', objNull]; _obj isKindOf 'ReammoBox_F' || {_obj isKindOf 'AllVehicles'}}"
 
 private ["_npc", "_type", "_num", "_identity"];
 
