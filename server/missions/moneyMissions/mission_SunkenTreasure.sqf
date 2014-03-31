@@ -73,11 +73,6 @@ _treas0 setVariable["cmoney",10000,true];
 _treas0 setVariable["owner","world",true];
 
 ["SunkenTreasure0",(position _treas0),_missionType] call createClientMarker;
-_marker = createMarker ["SunkenTreasure0", position _treas0];
-_marker setMarkerType "mil_destroy";
-_marker setMarkerSize [1.25, 1.25];
-_marker setMarkerColor "ColorRed";
-_marker setMarkerText _missionType;
 
 _group = createGroup civilian;
 
