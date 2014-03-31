@@ -65,14 +65,20 @@ else
 							_objectMinBB = _objectBB select 0;
 							_objectMaxBB = _objectBB select 1;
 							
+							_objectCenterX = (_objectMinBB select 0) + (((_objectMaxBB select 0) - (_objectMinBB select 0)) / 2);
+							_objectCenterY = (_objectMinBB select 1) + (((_objectMaxBB select 1) - (_objectMinBB select 1)) / 2);
+							
+							_heliPos = _heliporteur modelToWorld [0,0,0];
+							_objectPos = _objet modelToWorld [0,0,0];
+							
 							_minZ = (_heliMinBB select 2) - (_objectMaxBB select 2) - 0.5;
 							
 							// Attacher sous l'héliporteur au ras du sol
 							_objet attachTo [_heliporteur,
 							[
-								0,
-								0,
-								(_minZ - ((getPosATL _heliporteur select 2) - (getPosATL _objet select 2))) min _minZ;
+								0 - _objectCenterX,
+								0 - _objectCenterY,
+								((_objectPos select 2) - (_heliPos select 2) + 2) min _minZ
 							]];
 							
 							player globalChat format [STR_R3F_LOG_action_heliporter_fait, getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];
