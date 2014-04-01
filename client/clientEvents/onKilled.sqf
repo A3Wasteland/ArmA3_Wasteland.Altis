@@ -21,6 +21,7 @@ if (_player == player) then
 {
 	playerData_gear = "";
 	combatTimestamp = -1;
+};
 
 if (isNil {_player getVariable "cmoney"}) then { _player setVariable["cmoney", 0, true] };
 
