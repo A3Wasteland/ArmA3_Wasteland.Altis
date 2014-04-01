@@ -144,6 +144,7 @@ player createDiaryRecord ["credits",
 <br/>	* Hub (TeamPlayerGaming)
 <br/>	* k4n30 (GitHub)
 <br/>	* Krunch (GitHub)
+<br/>	* madbull (R3F)
 <br/>	* Mainfrezzer (Magnon)
 <br/>	* meat147 (GitHub)
 <br/>	* Na_Palm (BIS forums)
