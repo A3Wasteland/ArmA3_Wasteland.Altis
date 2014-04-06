@@ -1,8 +1,7 @@
 //	@file Version: 1.0
 //	@file Name: onKilled.sqf
-//	@file Author: [404] Deadbeat, MercyfulFate
+//	@file Author: [404] Deadbeat, MercyfulFate, AgentRev
 //	@file Created: 20/11/2012 05:19
-//	@file Args:
 
 _player = _this select 0;
 _killer = _this select 1;
@@ -16,14 +15,6 @@ else
 	PlayerCDeath = _player;
 	publicVariableServer "PlayerCDeath";
 };
-
-if (_player == player) then
-{
-	playerData_gear = "";
-	combatTimestamp = -1;
-};
-
-if (isNil {_player getVariable "cmoney"}) then { _player setVariable["cmoney", 0, true] };
 
 closeDialog 2001; // Close Gunstore
 closeDialog 2009; // Close Genstore
@@ -39,6 +30,34 @@ if (isUavConnected vehicle _killer) then
 		_killer = _uavOwner;
 	};
 };
+
+// Reset gear data, combat abort timer, and revive stuff
+if (_player == player) then
+{
+	playerData_gear = "";
+	combatTimestamp = -1;
+};
+
+if (isNil {_player getVariable "cmoney"}) then { _player setVariable ["cmoney", 0, true] };
+
+// Drop money & items
+if (_player getVariable "cmoney" > 0) then
+{
+	_m = createVehicle ["Land_Money_F", _player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
+	_m setVariable ["cmoney", _player getVariable "cmoney", true];
+	_m setVariable ["owner", "world", true];
+	_player setVariable ["cmoney", 0, true];
+};
+
+{
+	for "_i" from 1 to (_x select 1) do
+	{
+		(_x select 0) call mf_inventory_drop;
+	};
+} forEach call mf_inventory_all;
+
+[_player, objNull] call mf_player_actions_refresh;
+
 
 // Same-side kills
 if (side _player == side _killer && {_player != _killer} && {vehicle _player != vehicle _killer}) then
@@ -101,19 +120,3 @@ if (isPlayer pvar_PlayerTeamKiller) then
 	publicVar_teamkillMessage = pvar_PlayerTeamKiller;
 	publicVariable "publicVar_teamkillMessage";
 };
-
-[_player, objNull] call mf_player_actions_refresh;
-
-if (_player getVariable "cmoney" > 0) then
-{
-	_m = createVehicle ["Land_Money_F", player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
-	_m setVariable ["cmoney", _player getVariable "cmoney", true];
-	_m setVariable ["owner", "world", true];
-	_player setVariable ["cmoney", 0, true];
-};
-
-{
-	for "_i" from 1 to (_x select 1) do {
-		(_x select 0) call mf_inventory_drop;
-	};
-} forEach call mf_inventory_all;
