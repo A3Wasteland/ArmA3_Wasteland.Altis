@@ -96,6 +96,8 @@ switch (_lockState) do
 		        sleep 1;
                 _object setVariable ["objectLocked", false, true];
 				_object setVariable ["ownerUID", nil, true];
+				_object setVariable ["baseSaving_hoursAlive", nil, true];
+				_object setVariable ["baseSaving_spawningTime", nil, true];
                 2 cutText ["", "PLAIN DOWN", 1];
                 R3F_LOG_mutex_local_verrou = false;
 		    }; 
