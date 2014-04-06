@@ -55,7 +55,7 @@ with missionNamespace do
 							_secs = _remaining - (_mins * 60);
 							_time = format ["%1:%2%3", _mins, if (_secs < 10) then { "0" } else { "" }, _secs];
 							
-							cutText [format ["Cannot pussy out during combat! (%1)", _time], "PLAIN DOWN"];
+							cutText [format ["\nCannot pussy out during combat! (%1)", _time], "PLAIN DOWN"];
 							sleep 1;
 						};
 						
