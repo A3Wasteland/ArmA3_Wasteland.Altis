@@ -60,48 +60,49 @@ if (_player getVariable "cmoney" > 0) then
 
 
 // Same-side kills
-if (side _player == side _killer && {_player != _killer} && {vehicle _player != vehicle _killer}) then
+if (_player == player && (playerSide == side _killer) && (player != _killer) && (vehicle player != vehicle _killer)) then
 {
 	// Handle teamkills
-	if ((side _player) in [BLUFOR,OPFOR]) then
+	if (playerSide in [BLUFOR,OPFOR]) then
 	{
-		if (isPlayer _player) then
+		pvar_PlayerTeamKiller = objNull;
+		
+		if (_killer isKindOf "CAManBase") then
 		{
-			pvar_PlayerTeamKiller = objNull;
-			if(_killer isKindOf "CAManBase") then {
-				pvar_PlayerTeamKiller = _killer;
-			} else {
-				_veh = (_killer);
-				_trts = configFile >> "CfgVehicles" >> typeof _veh >> "turrets";
-				_paths = [[-1]];
-				if (count _trts > 0) then {
-					for "_i" from 0 to (count _trts - 1) do {
-						_trt = _trts select _i;
-						_trts2 = _trt >> "turrets";
-						_paths = _paths + [[_i]];
-						for "_j" from 0 to (count _trts2 - 1) do {
-							_trt2 = _trts2 select _j;
-							_paths = _paths + [[_i, _j]];
-						};
+			pvar_PlayerTeamKiller = _killer;
+		}
+		else
+		{
+			_veh = (_killer);
+			_trts = configFile >> "CfgVehicles" >> typeof _veh >> "turrets";
+			_paths = [[-1]];
+			if (count _trts > 0) then {
+				for "_i" from 0 to (count _trts - 1) do {
+					_trt = _trts select _i;
+					_trts2 = _trt >> "turrets";
+					_paths = _paths + [[_i]];
+					for "_j" from 0 to (count _trts2 - 1) do {
+						_trt2 = _trts2 select _j;
+						_paths = _paths + [[_i, _j]];
 					};
 				};
-				_ignore = ["SmokeLauncher", "FlareLauncher", "CMFlareLauncher", "CarHorn", "BikeHorn", "TruckHorn", "TruckHorn2", "SportCarHorn", "MiniCarHorn", "Laserdesignator_mounted"];
-				_suspects = [];
-				{
-					_weps = (_veh weaponsTurret _x) - _ignore;
-					if(count _weps > 0) then {
-						_unt = objNull;
-						if(_x select 0 == -1) then {_unt = driver _veh;}
-						else {_unt = _veh turretUnit _x;};
-						if(!isNull _unt) then {
-							[_suspects, _unt] call BIS_fnc_arrayPush;
-						};
+			};
+			_ignore = ["SmokeLauncher", "FlareLauncher", "CMFlareLauncher", "CarHorn", "BikeHorn", "TruckHorn", "TruckHorn2", "SportCarHorn", "MiniCarHorn", "Laserdesignator_mounted"];
+			_suspects = [];
+			{
+				_weps = (_veh weaponsTurret _x) - _ignore;
+				if(count _weps > 0) then {
+					_unt = objNull;
+					if(_x select 0 == -1) then {_unt = driver _veh;}
+					else {_unt = _veh turretUnit _x;};
+					if(!isNull _unt) then {
+						[_suspects, _unt] call BIS_fnc_arrayPush;
 					};
-				} forEach _paths;
+				};
+			} forEach _paths;
 
-				if(count _suspects == 1) then {
-					pvar_PlayerTeamKiller = _suspects select 0;
-				};
+			if(count _suspects == 1) then {
+				pvar_PlayerTeamKiller = _suspects select 0;
 			};
 		};
 	}

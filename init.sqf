@@ -42,12 +42,8 @@ if (!isDedicated) then
 		waitUntil {!isNull player};
 		client_initEH = player addEventHandler ["Respawn", { removeAllWeapons (_this select 0) }];
 
-		//Wipe Group.
-		if (count units player > 1) then
-		{  
-			diag_log "Player Group Wiped";
-			[player] joinSilent grpNull;
-		};
+		// Reset group & side
+		[player] joinSilent createGroup playerSide;
 
 		[] execVM "client\init.sqf";
 	};

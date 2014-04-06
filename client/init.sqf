@@ -41,9 +41,6 @@ player switchMove "";
 //Call client compile list.
 call compile preprocessFileLineNumbers "client\functions\clientCompile.sqf";
 
-// Reset group
-[player] joinSilent createGroup (player call vehicleSideCfg);
-
 //Stop people being civ's.
 if !(playerSide in [BLUFOR,OPFOR,INDEPENDENT]) exitWith
 {

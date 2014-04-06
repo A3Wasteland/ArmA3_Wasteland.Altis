@@ -10,7 +10,7 @@ _item = _this select 1;
 
 if (typeName _unit == "OBJECT") then
 {
-	_side = side _unit;
+	_side = if (_unit == player) then { playerSide } else { side _unit };
 	_unit = typeOf _unit;
 }
 else
