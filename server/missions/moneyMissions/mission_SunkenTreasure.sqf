@@ -24,6 +24,7 @@ diag_log format["WASTELAND SERVER - Money Mission Waiting to run: %1",_missionTy
 [moneyMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Money Mission Resumed: %1",_missionType];
 
+/*
 //not finished yet. need to find out how to get correct values for these :)
 _ZCoor = -10;
 switch((_rand)) do
@@ -65,10 +66,12 @@ switch((_rand)) do
 		_ZCoor = -30;
 	};
 };
+*/
 
-_fix = [_posRand select 0, _posRand select 1, _ZCoor];
-_treas0 = createVehicle ["Land_Money_F", _fix, [], 0, "CAN_COLLIDE"];
-_treas0 setPos _fix;
+
+
+_fix = [_posRand select 0, _posRand select 1, getTerrainHeightASL _posRand];
+_treas0 = createVehicle ["Land_Money_F", _fix, [], 0, "None"];
 _treas0 setVariable["cmoney",10000,true];
 _treas0 setVariable["owner","world",true];
 
@@ -89,23 +92,19 @@ _createVehicle = {
 	// not sure why this was added so commented it our for now..
 	//_vehicle addEventHandler ["IncomingMissile", "hint format['Incoming Missile Launched By: %1', name (_this select 2)]"];
     _vehicle setDir _direction;
-    _vehicle setVariable ["newVehicle",1,true];
-
-    clearMagazineCargoGlobal _vehicle;
-    clearWeaponCargoGlobal _vehicle;
+    [_vehicle] call vehicleSetup;
+    
     _group addVehicle _vehicle;
     
-	_soldier1 = [_group, _moneyp] call createRandomAquaticSoldier; 
-    _soldier2 = [_group, _position] call createRandomAquaticSoldier; 
-    _soldier2 moveInDriver _vehicle;
-    _soldier3 = [_group, _position] call createRandomAquaticSoldier; 
-    _soldier3 moveInTurret [_vehicle, [0]];
-    _soldier4 = [_group, _position] call createRandomAquaticSoldier; 
-	_soldier4 moveInTurret [_vehicle, [1]];    
+    [_group,_moneyp] spawn createSmallDivers;
+    _soldier1 = [_group, _position] call createRandomAquaticSoldier; 
+    _soldier1 moveInDriver _vehicle;
+    _soldier2 = [_group, _position] call createRandomAquaticSoldier;
+    _soldier2 moveInTurret [_vehicle, [1]];    
     _vehicle
 };
 _vehicles = [];
-_vehicles set [0, ["O_Boat_Armed_01_hmg_F", [(_posRand select 0), (_posRand select 1), 0], _fix, 110, _group] call _createVehicle];
+_vehicles set [0, ["O_Boat_Armed_01_hmg_F", [(_posRand select 0), (_posRand select 1), 0], _fix, random 360, _group] call _createVehicle];
 
 _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>$10,000 in sunken treasure has been located. Go get it!</t>", _missionType,  moneyMissionColor, subTextColor];
 [_hint] call hintBroadcast;
