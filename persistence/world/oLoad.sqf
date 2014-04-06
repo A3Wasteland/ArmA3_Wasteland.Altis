@@ -148,9 +148,9 @@ if (!isNil "_exists" && {_exists}) then
 	
 	if (_warchestMoneySavingOn) then
 	{
-		pvar_warchest_funds_west = [_fileName, "Info", "WarchestMoneyBLUFOR", "NUMBER"] call iniDB_read;
+		pvar_warchest_funds_west = ([_fileName, "Info", "WarchestMoneyBLUFOR", "NUMBER"] call iniDB_read) max 0;
 		publicVariable "pvar_warchest_funds_west";
-		pvar_warchest_funds_east = [_fileName, "Info", "WarchestMoneyOPFOR", "NUMBER"] call iniDB_read;
+		pvar_warchest_funds_east = ([_fileName, "Info", "WarchestMoneyOPFOR", "NUMBER"] call iniDB_read) max 0;
 		publicVariable "pvar_warchest_funds_east";
 	};
 };
