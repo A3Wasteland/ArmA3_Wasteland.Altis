@@ -33,19 +33,22 @@ waitUntil {time > 0.1};
 removeAllWeapons player;
 player switchMove "";
 
-//Stop people being civ's.
-if !(playerSide in [BLUFOR,OPFOR,INDEPENDENT]) then
-{
-	endMission "LOSER";
-};
-
 // initialize actions and inventory
 "client\actions" call mf_init;
 "client\inventory" call mf_init;
 "client\items" call mf_init;
 
 //Call client compile list.
-player call compile preprocessFileLineNumbers "client\functions\clientCompile.sqf";
+call compile preprocessFileLineNumbers "client\functions\clientCompile.sqf";
+
+// Reset group
+[player] joinSilent createGroup (player call vehicleSideCfg);
+
+//Stop people being civ's.
+if !(playerSide in [BLUFOR,OPFOR,INDEPENDENT]) exitWith
+{
+	endMission "LOSER";
+};
 
 //Setup player events.
 if (!isNil "client_initEH") then { player removeEventHandler ["Respawn", client_initEH] };
