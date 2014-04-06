@@ -187,7 +187,7 @@ _createVehicle = {
     _soldier moveInTurret [_vehicle, [0,0]];
     _soldier = [_group, _position] call createRandomSoldier; 
     _vehicle setVehicleLock "LOCKED";  // prevents players from getting into the vehicle while the AI are still owning it
-	_vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
+	// _vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
     _vehicle
 };
 

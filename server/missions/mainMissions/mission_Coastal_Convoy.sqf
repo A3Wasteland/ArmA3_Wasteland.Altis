@@ -274,7 +274,7 @@ _createVehicle =
 		} forEach (_vehicle magazinesTurret [-1]);
 	};
     _vehicle setVehicleLock "LOCKED";  // prevents players from getting into the vehicle while the AI are still owning it
-	_vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
+	// _vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
     _vehicle
 };
 

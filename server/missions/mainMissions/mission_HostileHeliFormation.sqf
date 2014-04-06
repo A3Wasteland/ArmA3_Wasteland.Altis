@@ -82,7 +82,7 @@ _createVehicle = {
 	};
 	// lock the vehicle untill the mission is finished and initialize cleanup on it
     _vehicle setVehicleLock "LOCKED";
-	_vehicle spawn cleanVehicleWreck;
+	// _vehicle spawn cleanVehicleWreck;
     _vehicle
 };
 

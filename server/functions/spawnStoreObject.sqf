@@ -141,7 +141,7 @@ if (_key != "" && {isPlayer _player} && {_isGenStore || _isGunStore || _isVehSto
 				{
 					_object setPosATL [_safePos select 0, _safePos select 1, 0.01];
 					_object setVelocity [0,0,0.01];
-					_object spawn cleanVehicleWreck;
+					// _object spawn cleanVehicleWreck;
 				};
 				
 				if (_object isKindOf "Plane") then
