@@ -28,16 +28,6 @@ if (isNull player) then { X_JIP = true };
 
 [DEBUG] call compile preprocessFileLineNumbers "globalCompile.sqf";
 
-if (!isDedicated) then
-{
-	[] spawn
-	{
-		9999 cutText ["Welcome to A3Wasteland, please wait for your client to initialize", "BLACK", 0.01];
-		waitUntil {!isNull player};
-		client_initEH = player addEventHandler ["Respawn", {removeAllWeapons (_this select 0)}];
-	};
-};
-
 //init Wasteland Core
 [] execVM "config.sqf";
 [] execVM "storeConfig.sqf"; // Separated as its now v large
@@ -45,16 +35,22 @@ if (!isDedicated) then
 
 if (!isDedicated) then
 {
-	waitUntil {!isNull player};
+	[] spawn
+	{
+		9999 cutText ["Welcome to A3Wasteland, please wait for your client to initialize", "BLACK", 0.01];
+		
+		waitUntil {!isNull player};
+		client_initEH = player addEventHandler ["Respawn", { removeAllWeapons (_this select 0) }];
 
-	//Wipe Group.
-	if (count units player > 1) then
-	{  
-		diag_log "Player Group Wiped";
-		[player] join grpNull;
+		//Wipe Group.
+		if (count units player > 1) then
+		{  
+			diag_log "Player Group Wiped";
+			[player] joinSilent grpNull;
+		};
+
+		[] execVM "client\init.sqf";
 	};
-
-	[] execVM "client\init.sqf";
 };
 
 if (isServer) then
