@@ -21,7 +21,7 @@ player call playerSetup;
 
 call playerSpawn;
 
-if (!isNull pvar_PlayerTeamKiller) then
+if (isPlayer pvar_PlayerTeamKiller) then
 {
 	pDialogTeamkiller = pvar_PlayerTeamKiller;
 	pvar_PlayerTeamKiller = objNull;
