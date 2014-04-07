@@ -8,7 +8,7 @@
 
 private ["_warchest", "_error", "_success"];
 _warchest = [] call mf_items_warchest_nearest;
-_error = [] call mf_items_warchest_can_pack;
+_error = [] call mf_items_warchest_can_hack;
 if (_error != "") exitWith {[_error, 5] call mf_notify_client};
 
 private "_checks";
