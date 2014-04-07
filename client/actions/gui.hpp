@@ -19,7 +19,7 @@ class ActionGUI : IGUIBack {
 		y = 1;
 		w = 0.09;
 		h = 0.05;
-		action = "a3w_actions_mutex = false;";
+		action = "a3w_actions_mutex = false; closeDialog 10101";
 	};
 
 	class MyText : RscStructuredText {
