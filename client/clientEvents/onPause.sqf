@@ -5,15 +5,18 @@
 
 disableSerialization;
 
-waitUntil {sleep 0.1; !isNull findDisplay 49}; // 49 = Esc menu
+waitUntil {!isNull findDisplay 49}; // 49 = Esc menu
+
+// Disable field manual to prevent scriptkiddie exploits
+((findDisplay 49) displayCtrl 122) ctrlEnable false;
 
 with missionNamespace do
 {
-	if (alive player && !isNil "getPublicVar" && !isNil "isConfigOn") then
+	_getPublicVar = missionNamespace getVariable "getPublicVar";
+	_isConfigOn = missionNamespace getVariable "isConfigOn";
+	
+	if (alive player && !isNil "_getPublicVar" && !isNil "_isConfigOn") then
 	{
-		_getPublicVar = missionNamespace getVariable "getPublicVar";
-		_isConfigOn = missionNamespace getVariable "isConfigOn";
-		
 		if (["A3W_playerSaving"] call _isConfigOn &&
 		   {["playerSetupComplete", false] call _getPublicVar} &&
 		   {!(["playerSpawning", false] call _getPublicVar)}) then
