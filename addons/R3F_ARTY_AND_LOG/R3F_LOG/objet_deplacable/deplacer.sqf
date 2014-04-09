@@ -75,9 +75,33 @@ else
 				};
 			} forEach getArray(configFile>>"CfgWeapons">>_arme_principale>>"muzzles");
 			
-			player playMove "AidlPercMstpSnonWnonDnon04";
-			sleep 1;
+			_currAction = [player, ["A"]] call getMoveParams;
+			_isSwimming = {_currAction == _x} count ["Aswm","Assw","Absw","Adve","Asdv","Abdv"] > 0;
+			
+			if (_isSwimming) then
+			{
+				sleep 0.5;
+			}
+			else
+			{
+				if (handgunWeapon player == "") then
+				{
+					player playMove "AmovPercMstpSnonWnonDnon";
+				}
+				else
+				{
+					player playMove "AmovPercMstpSrasWpstDnon";
+				};
+				
+				sleep 1;
+			};
+			
 			player removeWeapon _arme_principale;
+			
+			if (_isSwimming) then
+			{
+				player switchMove "";
+			};
 		}
 		else {sleep 0.5;};
 		
@@ -151,42 +175,41 @@ else
 
 			// this addition comes from Sa-Matra (fixes the heigt of some of the objects) - all credits for this fix go to him!
 
-			_adjustPOS=0;
+			_class = typeOf _objet;
 
-			switch(typeOf _objet) do {
-				case "Land_Scaffolding_F":
-				{
-					_adjustPOS=-3; 
-				};
-				case "Land_Canal_WallSmall_10m_F":
-				{
-					_adjustPOS=3;
-				};
-				case "Land_Canal_Wall_Stairs_F":
-				{
-					_adjustPOS=3;
-				};
+			_zOffset = switch (true) do
+			{
+				//case (_class == "Land_Scaffolding_F"):         { 3 }; 
+				case (_class == "Land_Canal_WallSmall_10m_F"): { 2 };
+				case (_class == "Land_Canal_Wall_Stairs_F"):   { 2 };
+				default { 0 };
 			};
 
-			if(R3F_LOG_force_horizontally) then {
+			if (R3F_LOG_force_horizontally) then
+			{
 				R3F_LOG_force_horizontally = false;
+				
+				_objectATL = getPosATL _objet;
 
-				_opos = getPosASL _objet;
-				_ppos = getPosASL player;
-				_opos set [2, _ppos select 2];
-				_opos2 = +_opos;
-				_opos2 set [2, (_opos2 select 2)+ _adjustPOS];
-				if(terrainIntersectASL [_opos, _opos2]) then {
-					_objet setPosATL [getPosATL _objet select 0, getPosATL _objet select 1, getPosATL player select 2];
-				} else {
-					_objet setPosASL _opos;
+				if ((_objectATL select 2) - _zOffset < 0) then
+				{
+					_objectATL set [2, 0 + _zOffset];
+					_objet setPosATL _objectATL;
+				}
+				else
+				{
+					_objectASL = getPosASL _objet;
+					_objectASL set [2, ((getPosASL player) select 2) + _zOffset];
+					_objet setPosASL _objectASL;
 				};
-			} else {
-				if((getPosATL player select 2) < 5) then {
-					_objet setPos [getPos _objet select 0, getPos _objet select 1, (getPosATL player select 2)+_adjustPOS];
-				} else {
-					_objet setPosATL [getPosATL _objet select 0, getPosATL _objet select 1, (getPosATL player select 2)+_adjustPOS];
-				};
+				
+				_objet setVectorUp [0,0,1];
+			}
+			else
+			{
+				_objectPos = getPos _objet;
+				_objectPos set [2, ((player call fn_getPos3D) select 2) + _zOffset];
+				_objet setPos _objectPos;
 			};
 			
 			_objet setVelocity [0,0,0];
