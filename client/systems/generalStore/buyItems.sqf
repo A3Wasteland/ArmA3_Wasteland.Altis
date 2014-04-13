@@ -163,6 +163,17 @@ storePurchaseHandle = _this spawn
 							[_itemText] call _showInsufficientSpaceError;
 						};
 					};
+					case "mag":
+					{
+						if ([player, _class] call fn_fitsInventory) then
+						{
+							player addMagazine _class;
+						}
+						else
+						{
+							[_itemText] call _showInsufficientSpaceError;
+						};
+					};
 					case "backpack":
 					{
 						if (backpack player == _class) exitWith
