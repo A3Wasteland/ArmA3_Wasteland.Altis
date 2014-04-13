@@ -17,7 +17,6 @@ canPushPlaneBack = "client\functions\canPushPlaneBack.sqf" call mf_compile;
 canWear = "client\functions\canWear.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
-getCurrentBinoculars = "client\functions\getCurrentBinoculars.sqf" call mf_compile;
 getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;
 getFullMove = "client\functions\getFullMove.sqf" call mf_compile;
 getMoveParams = "client\functions\getMoveParams.sqf" call mf_compile;

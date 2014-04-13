@@ -138,7 +138,7 @@ storePurchaseHandle = _this spawn
 				{
 					case "binoc":
 					{
-						_currentBinoc = player call getCurrentBinoculars;
+						_currentBinoc = binocular player;
 						
 						if (_currentBinoc == "") then
 						{
