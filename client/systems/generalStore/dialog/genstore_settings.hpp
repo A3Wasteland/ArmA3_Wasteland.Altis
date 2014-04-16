@@ -257,7 +257,7 @@ class genstored {
 		{
 			idc = -1;
 			onButtonClick = "[4] execVM 'client\systems\generalStore\populateGenStore.sqf'";
-			text = "Equipment";
+			text = "Items";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.425 * safezoneH + safezoneY;
@@ -269,7 +269,7 @@ class genstored {
 		{
 			idc = -1;
 			onButtonClick = "[5] execVM 'client\systems\generalStore\populateGenStore.sqf'";
-			text = "Items";
+			text = "Supplies";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.475 * safezoneH + safezoneY;

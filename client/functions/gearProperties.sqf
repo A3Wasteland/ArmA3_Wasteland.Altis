@@ -33,12 +33,12 @@ switch (_type) do
 		{
 			_containerClass = getText (configFile >> "CfgWeapons" >> vest player >> "ItemInfo" >> "containerClass");
 			_currentCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
-			_currentArmor = call compile getText (configFile >> "CfgWeapons" >> vest player >> "ItemInfo" >> "armor");
+			_currentArmor = getNumber (configFile >> "CfgWeapons" >> vest player >> "ItemInfo" >> "armor");
 		};
 		
 		_containerClass = getText (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "containerClass");
 		_newCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
-		_newArmor = call compile getText (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "armor");
+		_newArmor = getNumber (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "armor");
 	};
 	case "backpack":
 	{
@@ -53,10 +53,10 @@ switch (_type) do
 	{
 		if (headgear player != "") then
 		{
-			_currentArmor = call compile getText (configFile >> "CfgWeapons" >> headgear player >> "ItemInfo" >> "armor");
+			_currentArmor = getNumber (configFile >> "CfgWeapons" >> headgear player >> "ItemInfo" >> "armor");
 		};
 		
-		_newArmor = call compile getText (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "armor");
+		_newArmor = getNumber (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "armor");
 	};
 };
 

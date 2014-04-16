@@ -44,6 +44,22 @@ else
 					// On mémorise aussi sur le réseau que le canon est attaché en remorque
 					_objet setVariable ["R3F_LOG_est_transporte_par", _remorqueur, true];
 					
+					_disableDriving =
+					{
+						_this lockDriver true;
+						_this enableCopilot false;
+						player action ["EngineOff", _this];
+					};
+					
+					if (local _objet) then
+					{
+						_objet call _disableDriving;
+					}
+					else
+					{
+						[_objet, _disableDriving, false, false, _objet] call fn_vehicleInit;
+					};
+					
 					player switchMove "AinvPknlMstpSlayWrflDnon_medic";
 					
 					/*player addEventHandler ["AnimDone", 
@@ -55,17 +71,30 @@ else
 						};
 					}];*/
 					
+					_towerBB = _remorqueur call fn_boundingBoxReal;
+					_towerMinBB = _towerBB select 0;
+					_towerMaxBB = _towerBB select 1;
+					
+					_objectBB = _objet call fn_boundingBoxReal;
+					_objectMinBB = _objectBB select 0;
+					_objectMaxBB = _objectBB select 1;
+					
+					_towerCenterX = (_towerMinBB select 0) + (((_towerMaxBB select 0) - (_towerMinBB select 0)) / 2);
+					_objectCenterX = (_objectMinBB select 0) + (((_objectMaxBB select 0) - (_objectMinBB select 0)) / 2);
+					
+					_towerGroundPos = _remorqueur worldToModel (_remorqueur call fn_getPos3D);
+					
 					if ((getPosASL player) select 2 > 0) then
 					{
-					
 						// On place le joueur sur le côté du véhicule, ce qui permet d'éviter les blessure et rend l'animation plus réaliste
-						player attachTo [_remorqueur, [
-							(boundingBox _remorqueur select 1 select 0),
-							(boundingBox _remorqueur select 0 select 1) + 1,
-							(boundingBox _remorqueur select 0 select 2) - (boundingBox player select 0 select 2)
+						player attachTo [_remorqueur,
+						[
+							(_towerMinBB select 0) - 0.25,
+							(_towerMinBB select 1) - 0.25,
+							_towerMinBB select 2
 						]];
 						
-						player setDir 270;
+						player setDir 90;
 						player setPos (getPos player);
 						sleep 0.05;
 						detach player;
@@ -73,47 +102,12 @@ else
 					
 					sleep 2;
 					
-					_compensateY = 0;
-					_compensateZ = 0;
-					
-					if (_remorqueur isKindOf "Boat_Armed_01_base_F" && !(_objet isKindOf "Boat_Armed_01_base_F")) then
-					{
-						_compensateZ = _compensateZ + 1.25;
-					};
-					if (!(_remorqueur isKindOf "Boat_Armed_01_base_F") && _objet isKindOf "Boat_Armed_01_base_F") then
-					{
-						_compensateZ = _compensateZ - 0.5;
-					};
-					if (_objet isKindOf "Heli_Light_01_base_F") then
-					{
-						_compensateY = _compensateY - 1.25;
-						_compensateZ = _compensateZ - 0.9;
-					};
-					if (_objet isKindOf "Heli_Light_02_base_F") then
-					{
-						_compensateY = _compensateY + 3;
-						_compensateZ = _compensateZ + 0.25;
-					};
-					if (_objet isKindOf "Heli_Transport_01_base_F") then
-					{
-						_compensateY = _compensateY + 1.25;
-					};
-					if (_objet isKindOf "Heli_Attack_02_base_F") then
-					{
-						_compensateZ = _compensateZ + 0.2;
-					};
-										
 					// Attacher à l'arrière du véhicule au ras du sol
-					_objet attachTo [_remorqueur, [
-						0,
-						
-						((boundingCenter _objet select 1) - (boundingCenter _remorqueur select 1)) +
-						((boundingBoxReal _remorqueur select 0 select 1) + (boundingCenter _remorqueur select 1)) + 
-						((boundingBoxReal _objet select 0 select 1) + (boundingCenter _objet select 1)) - 0.11 + _compensateY,
-						
-						((boundingCenter _objet select 2) - (boundingCenter _remorqueur select 2)) +
-						((boundingBoxReal _remorqueur select 0 select 2) + (boundingCenter _remorqueur select 2)) + 
-						((boundingBoxReal _objet select 1 select 2) - (boundingCenter _objet select 2)) + 0.1 + _compensateZ
+					_objet attachTo [_remorqueur,
+					[
+						_towerCenterX - _objectCenterX,
+						(_towerMinBB select 1) - (_objectMaxBB select 1) - 0.5,
+						(_towerGroundPos select 2) - (_objectMinBB select 2) + 0.1
 					]];
 					
 					R3F_LOG_objet_selectionne = objNull;

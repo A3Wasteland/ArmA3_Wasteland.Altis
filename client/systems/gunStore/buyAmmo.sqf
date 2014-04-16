@@ -36,7 +36,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint format ["You don't have enough money for ""%1""", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 
@@ -44,7 +44,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint format ["You don't have enough space for ""%1""", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 
@@ -84,6 +84,7 @@ storePurchaseHandle = _this spawn
 		player setVariable ["cmoney", _playerMoney - _price, true];
 		_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
 		hint "Purchase successful!";
+		playSound "FD_Finish_F";
 	};
 };
 

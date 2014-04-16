@@ -7,19 +7,21 @@
 #*********************************************************/
 
 // Exit early if we're not enabled
-if (count (call config_territory_markers) == 0) exitWith { diag_log "[INFO] Territory system not enabled, not synchronising territory colors"; };
+if (count (["config_territory_markers", []] call getPublicVar) == 0) exitWith { diag_log "[INFO] Territory system not enabled, not synchronising territory colors"; };
 
-_markerColorForSide = {
+_markerColorForSide =
+{
     private['_side', '_markerColor'];
     _side = _this select 0;
     //diag_log format["_markerColorForSide called with %1", _this];
 
     _markerColor = "";
-    switch (_side) do {
-        case "WEST": { _markerColor = "colorblue"; };
-        case "EAST": { _markerColor = "colorred"; };
-        case "GUER": { _markerColor = "colorgreen"; };
-        default { _markerColor = "coloryellow"; };
+    switch (_side) do
+	{
+        case "WEST": { _markerColor = "colorblue" };
+        case "EAST": { _markerColor = "colorred" };
+        case "GUER": { _markerColor = "colorgreen" };
+        default { _markerColor = "coloryellow" };
     };
 
     //diag_log format["_markerColorForSide returning %1", _markerColor];
@@ -33,7 +35,9 @@ _markerColorForSide = {
 	private ['_markerName', '_markerOwnerSide', '_color'];
     _markerName = _x select 0;
     _markerOwnerSide = _x select 3;
-    if (_markerOwnerSide != "") then {
+	
+    if (_markerOwnerSide != "") then
+	{
 	    _color = [_markerOwnerSide] call _markerColorForSide;
    	 	_markerName setMarkerColor _color;
     	diag_log format ["Client setting territory marker %1 to %2", _markerName, _color];

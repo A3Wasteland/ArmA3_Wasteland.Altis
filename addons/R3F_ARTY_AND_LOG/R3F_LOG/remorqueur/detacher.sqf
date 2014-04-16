@@ -37,15 +37,20 @@ else
 			};
 		}];*/
 		
+		_towerBB = _remorqueur call fn_boundingBoxReal;
+		_towerMinBB = _towerBB select 0;
+		_towerMaxBB = _towerBB select 1;
+		
 		if ((getPosASL player) select 2 > 0) then
 		{
-			player attachTo [_remorqueur, [
-					(boundingBox _remorqueur select 1 select 0),
-					(boundingBox _remorqueur select 0 select 1) + 1,
-					(boundingBox _remorqueur select 0 select 2) - (boundingBox player select 0 select 2)
-				]];
-				
-			player setDir 270;
+			player attachTo [_remorqueur,
+			[
+				(_towerMinBB select 0) - 0.25,
+				(_towerMinBB select 1) - 0.25,
+				_towerMinBB select 2
+			]];
+			
+			player setDir 90;
 			player setPos (getPos player);
 			sleep 0.05;
 			detach player;
@@ -60,12 +65,11 @@ else
 		
 		if (local _objet) then
 		{
-			[netId _objet] execVM "server\functions\detachTowedObject.sqf";
+			_objet call detachTowedObject;
 		}
 		else
 		{
-			requestDetachTowedObject = netId _objet;
-			publicVariable "requestDetachTowedObject";
+			[_objet, {_this call detachTowedObject}, false, false, _objet] call fn_vehicleInit;
 		};
 		
 		sleep 4;

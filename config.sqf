@@ -50,8 +50,6 @@ militarylist = compileFinal str
 	["milSpawn_14"]
 ];
 
-cityLocations = [];
-
 config_items_jerrycans_max = compileFinal "1";
 config_items_syphon_hose_max = compileFinal "1";
 
@@ -63,14 +61,13 @@ config_refuel_amounts = compileFinal str
 	["Air", 0.10]
 ];
 
-// Is player saving enabled?
-config_player_saving_enabled = compileFinal "0";
+// NOTE: Player saving and money settings moved to external config (A3Wasteland_settings\main_config.sqf), default values are set in server\default_config.sqf
 
-// Can players get extra in-game cash at spawn by donating?
-config_player_donations_enabled = compileFinal "0";
+// Is player saving enabled?
+// config_player_saving_enabled = compileFinal "0";
 
 // How much do players spawn with?
-config_initial_spawn_money = compileFinal "100";
+// config_initial_spawn_money = compileFinal "100";
 
 // Territory system definitions. See territory/README.md for more details.
 //
@@ -82,11 +79,11 @@ config_initial_spawn_money = compileFinal "100";
 config_territory_markers = compileFinal str
 [
 	["TERRITORY_THRONOS_CASTLE", "Thronos Castle", 300, "CASTLE"],
-	["TERRITORY_KASTRO_CASTLE", "Kastro Castle", 300, "CASTLE"],
+	//["TERRITORY_KASTRO_CASTLE", "Kastro Castle", 300, "CASTLE"],
 	["TERRITORY_SW_AIRFIELD", "Southwest Airfield", 300, "AIRFIELD"],
-	["TERRITORY_MAIN_AIRBASE_SW", "Main Airbase (SW)", 200, "AIRBASE"],
-	["TERRITORY_MAIN_AIRBASE_CENTER", "Main Airbase (Center)", 200, "AIRBASE"],
-	["TERRITORY_MAIN_AIRBASE_NE", "Main Airbase (NE)", 200, "AIRBASE"],
+	["TERRITORY_MAIN_AIRBASE_SW", "Altis Airport (SW)", 200, "AIRBASE"],
+	["TERRITORY_MAIN_AIRBASE_CENTER", "Altis Airport (Center)", 200, "AIRBASE"],
+	["TERRITORY_MAIN_AIRBASE_NE", "Altis Airport (NE)", 200, "AIRBASE"],
 	["TERRITORY_NE_AIRFIELD", "Northeast Airfield", 300, "AIRFIELD"],
 	["TERRITORY_SE_AIRFIELD", "Southeast Airfield", 300, "AIRFIELD"],
 	["TERRITORY_NW_AIRFIELD", "Northwest Airfield", 300, "AIRFIELD"],

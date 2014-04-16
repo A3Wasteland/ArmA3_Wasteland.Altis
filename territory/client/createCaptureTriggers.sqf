@@ -7,7 +7,8 @@
 #*********************************************************/
 
 // Only make the global if we've not made it already
-if (isNil "clientTerritoryCaptureTriggers") then {
+if (isNil "clientTerritoryCaptureTriggers") then
+{
     clientTerritoryCaptureTriggers = [];
 };
 
@@ -20,18 +21,22 @@ if (count clientTerritoryCaptureTriggers > 0) exitWith { diag_log "clientTerrito
     // Search the map marker name for TERRITORY_ to see if its one of ours...
     _found = ["TERRITORY_", _x, true] call BIS_fnc_inString;
 
-    if (_found) then {
+    if (_found) then
+	{
         _markerName = _x;
 
         // Fetch the details from the config_territory_markers array, and issue a warning if nothing was found
-        _territoryDetails = [call config_territory_markers, { _x select 0 == _markerName }] call BIS_fnc_conditionalSelect;
+        _territoryDetails = [["config_territory_markers", []] call getPublicVar, { _x select 0 == _markerName }] call BIS_fnc_conditionalSelect;
 
         // If there's no corresponding marker in the config, we hide it locally
-        if (count _territoryDetails == 0) then {
+        if (count _territoryDetails == 0) then
+		{
             //player globalChat format["WARNING: No config_territory_markers definition for marker %1. Hiding it!", _markerName];
             diag_log format["WARNING: No config_territory_markers definition for marker %1. Hiding it!", _markerName];
             _markerName setMarkerAlphaLocal 0;
-        } else {
+        }
+		else
+		{
             _markerPos = getMarkerPos _markerName;
             _markerDir = markerDir _markerName;
             _markerSize = markerSize _markerName;

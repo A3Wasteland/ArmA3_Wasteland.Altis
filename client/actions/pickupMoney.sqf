@@ -36,6 +36,9 @@ if (vehicle player != player) exitWith
 	mutexScriptInProgress = false;
 };
 
+player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+sleep 0.5;
+
 _money = _moneyObj getVariable ["cmoney", 0];
 deleteVehicle _moneyObj;
 if (_money < 0) then { _money = 0 };
@@ -50,4 +53,5 @@ else
 	titleText ["The money was counterfeit!", "PLAIN DOWN", 0.5];
 };
 
+sleep 0.5;
 mutexScriptInProgress = false;

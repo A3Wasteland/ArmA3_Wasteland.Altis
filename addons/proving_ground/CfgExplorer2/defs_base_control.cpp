@@ -38,7 +38,7 @@ class RscCombo {
 	colorDisabled[] = {0, 0, 0, 0.3}; 
 	font = "TahomaB"; 
 	sizeEx = 0.03921; 
-	class ScrollBar { 
+	class ComboScrollBar { 
 		color[] = {1, 1, 1, 0.6}; 
 		colorActive[] = {1, 1, 1, 1}; 
 		colorDisabled[] = {1, 1, 1, 0.3}; 
@@ -94,7 +94,7 @@ class RscIGUIListBox {
 	autoScrollDelay = 5; 
 	autoScrollRewind = 0; 
 
-	class ScrollBar { 
+	class ListScrollBar { 
 		color[] = {1, 1, 1, 0.6}; 
 		colorActive[] = {1, 1, 1, 1}; 
 		colorDisabled[] = {1, 1, 1, 0.3}; 
@@ -154,9 +154,11 @@ class RscShortcutButton {
 	textureNoShortcut = "#(argb,8,8,3)color(0,0,0,0)"; 
 	color[] = {0.543, 0.5742, 0.4102, 1}; 
 	color2[] = {0.95, 0.95, 0.95, 1}; 
+	colorFocused[] = {0.543, 0.5742, 0.4102, 1}; 
 	colorDisabled[] = {1, 1, 1, 0.25}; 
 	colorBackground[] = {1, 1, 1, 1}; 
 	colorBackground2[] = {1, 1, 1, 0.4}; 
+	colorBackgroundFocused[] = {1, 1, 1, 1}; 
 	type = 16; 
 	idc = -1; 
 	style = 0; 

@@ -4,18 +4,19 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args: 
 
-private ["_buttonText", "_townName"];
-_buttonText = _this select 0;
-_townName = "[ERROR]";
+private ["_marker", "_townName"];
+_marker = _this;
 
 {
-	_name = _x select 2;
-	if (_buttonText == _name) exitWith
+	if (_x select 0 == _marker) exitWith
 	{
-		_townName = _name;
-		_pos = getMarkerPos (_x select 0);
+		_pos = getMarkerPos _marker;
 		_rad = _x select 1;
-		player setPos ([_pos,5,_rad,1,0,0,0] call findSafePos);
+		_townName = _x select 2;
+		
+		_playerPos = [_pos,5,_rad,1,0,0,0] call findSafePos;
+		waitUntil {sleep 0.1; preloadCamera _playerPos};
+		player setPos _playerPos;
 	};
 } forEach (call cityList);
 

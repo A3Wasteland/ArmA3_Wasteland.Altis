@@ -1,72 +1,160 @@
-// WARNING! This is a modified version for use with the GoT Wasteland v2 missionfile!
-// This is NOT a default persistantdb script!
-// changes by: JoSchaap (GoT2DayZ.nl)
+//	@file Version: 1.2
+//	@file Name: oLoad.sqf
+//	@file Author: JoSchaap, AgentRev, Austerror
+//	@file Description: Basesaving load script
 
-sleep 10;
-_check = ("Objects" call PDB_databaseNameCompiler) call iniDB_exists;
-if (!_check) exitWith {};
-_objectscount = ["Objects" call PDB_databaseNameCompiler, "Count", "Count", "NUMBER"] call iniDB_read;
-if (isNil "_objectscount") exitWith {};
+if (!isServer) exitWith {};
 
-for "_i" from 0 to (_objectscount - 1) do
+#include "functions.sqf"
+
+_strToSide =
 {
-	_objSaveName = format["obj%1", _i];
-	_class = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "classname", "STRING"] call iniDB_read;
-	_pos = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "pos", "ARRAY"] call iniDB_read;
-	_dir = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "dir", "ARRAY"] call iniDB_read;
-	_supplyleft = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "supplyleft", "NUMBER"] call iniDB_read;
-	// _weapons = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "weapons", "ARRAY"] call iniDB_read;
-	// _magazines = ["Objects" call PDB_databaseNameCompiler, _objSaveName, "magazines", "ARRAY"] call iniDB_read;
-	
-	if (!isNil "_objSaveName" && !isNil "_class" && !isNil "_pos" && !isNil "_dir" && !isNil "_supplyleft") then 
+	switch (toUpper _this) do
 	{
-
-		_obj = createVehicle [_class,_pos, [], 0, "CAN COLLIDE"];
-		_obj setPosASL _pos;
-		_obj setVectorDirAndUp _dir;
-
-		if (_class == "Land_Sacks_goods_F") then 
-		{
-			_obj setVariable["food",_supplyleft,true];
-		};
-
-		if (_class == "Land_WaterBarrel_F") then 
-		{
-			_obj setVariable["water",_supplyleft,true];
-		};
-		
-		// fix for rissen/sunken objects
-		// seems not to be needed here, so disabled again
-// 		_adjustPOS=-1;
-// 		switch(_class) do {
-// 			case "Land_Scaffolding_F":
-// 			{
-// 				_adjustPOS=-3; 
-// 			};
-// 			case "Land_Canal_WallSmall_10m_F":
-// 			{
-// 				_adjustPOS=3;
-// 			};
-// 			case "Land_Canal_Wall_Stairs_F":
-// 			{
-// 				_adjustPOS=3;
-// 			};
-//		};
-//		_obj setpos [getpos _obj select 0,getpos _obj select 1, (getposATL _obj select 2)+_adjustPOS];
-
-		clearWeaponCargoGlobal _obj;
-		clearMagazineCargoGlobal _obj;
-
-		// disabled because i dont want to load contents just base parts
-		// for [{_ii = 0}, {_ii < (count (_weapons select 0))}, {_ii = _ii + 1}] do {
-			// _obj addWeaponCargoGlobal [(_weapons select 0) select _ii, (_weapons select 1) select _ii];
-		// };
-
-		// for [{_ii = 0}, {_ii < (count (_magazines select 0))}, {_ii = _ii + 1}] do {
-		// _obj addMagazineCargoGlobal [(_magazines select 0) select _ii, (_magazines select 1) select _ii];
-		// };
-		// _obj setVariable ["objectLocked", true, true]; //force lock
+		case "WEST":  { BLUFOR };
+		case "EAST":  { OPFOR };
+		case "GUER":  { INDEPENDENT };
+		case "CIV":   { CIVILIAN };
+		case "LOGIC": { sideLogic };
+		default       { sideUnknown };
 	};
 };
 
-diag_log format["GoT Wasteland - baseSaving loaded %1 parts from iniDB", _objectscount];
+_isWarchestEntry = { [_variables, "a3w_warchest", false] call BIS_fnc_getFromPairs };
+_isBeaconEntry = { [_variables, "a3w_spawnBeacon", false] call BIS_fnc_getFromPairs };
+
+_maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
+
+_exists = _fileName call iniDB_exists;
+_objectsCount = 0;
+
+if (!isNil "_exists" && {_exists}) then
+{
+	_objectsCount = [_fileName, "Info", "ObjCount", "NUMBER"] call iniDB_read;
+	
+	if (!isNil "_objectsCount") then
+	{
+		for "_i" from 1 to _objectsCount do
+		{
+			_objName = format ["Obj%1", _i];
+			
+			_class = [_fileName, _objName, "Class", "STRING"] call iniDB_read;
+			_pos = [_fileName, _objName, "Position", "ARRAY"] call iniDB_read;
+			_hoursAlive = [_fileName, _objName, "HoursAlive", "NUMBER"] call iniDB_read;
+			
+			if (!isNil "_class" && {!isNil "_pos"} && {_maxLifetime <= 0 || {_hoursAlive < _maxLifetime}}) then 
+			{
+				_variables = [_fileName, _objName, "Variables", "ARRAY"] call iniDB_read;
+				
+				_allowed = switch (true) do
+				{
+					case (call _isWarchestEntry): { _warchestSavingOn };
+					case (call _isBeaconEntry):   { _beaconSavingOn };
+					case (_class call _isBox):    { _boxSavingOn };
+					default                       { _baseSavingOn };
+				};
+				
+				if (_allowed) then
+				{
+					_dir = [_fileName, _objName, "Direction", "ARRAY"] call iniDB_read;
+					_damage = [_fileName, _objName, "Damage", "NUMBER"] call iniDB_read;
+					_allowDamage = [_fileName, _objName, "AllowDamage", "NUMBER"] call iniDB_read;
+					
+					_obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
+					_obj setPosATL _pos;
+					
+					if (!isNil "_dir") then
+					{
+						_obj setVectorDirAndUp _dir;
+					};
+					
+					_obj setVariable ["baseSaving_hoursAlive", _hoursAlive];
+					_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
+					_obj setVariable ["objectLocked", true, true]; // force lock
+					
+					if (_allowDamage > 0) then
+					{
+						_obj setDamage _damage;
+						_obj setVariable ["allowDamage", true];
+					}
+					else
+					{
+						_obj allowDamage false;
+					};
+					
+					{
+						_var = _x select 0;
+						_value = _x select 1;
+						
+						switch (_var) do
+						{
+							case "side": { _value = _value call _strToSide };
+							case "ownerName": { _value = _value call iniDB_Base64Decode };
+						};
+						
+						_obj setVariable [_var, _value, true];
+					} forEach _variables;
+					
+					clearWeaponCargoGlobal _obj;
+					clearMagazineCargoGlobal _obj;
+					clearItemCargoGlobal _obj;
+					clearBackpackCargoGlobal _obj;
+					
+					_unlock = switch (true) do
+					{
+						case (_obj call _isWarchest): { true };
+						case (_obj call _isBeacon):
+						{
+							[pvar_spawn_beacons, _obj] call BIS_fnc_arrayPush;
+							publicVariable "pvar_spawn_beacons";
+							true
+						};
+						default { false };
+					};
+					
+					if (_unlock) exitWith
+					{
+						_obj setVariable ["objectLocked", false, true];
+					};
+					
+					if (_boxSavingOn) then
+					{
+						_weapons = [_fileName, _objName, "Weapons", "ARRAY"] call iniDB_read;
+						_magazines = [_fileName, _objName, "Magazines", "ARRAY"] call iniDB_read;
+						_items = [_fileName, _objName, "Items", "ARRAY"] call iniDB_read;
+						_backpacks = [_fileName, _objName, "Backpacks", "ARRAY"] call iniDB_read;
+						
+						if (!isNil "_weapons") then
+						{
+							{ _obj addWeaponCargoGlobal _x } forEach _weapons;
+						};
+						if (!isNil "_magazines") then
+						{
+							{ _obj addMagazineCargoGlobal _x } forEach _magazines;
+						};
+						if (!isNil "_items") then
+						{
+							{ _obj addItemCargoGlobal _x } forEach _items;
+						};
+						if (!isNil "_backpacks") then
+						{
+							{ _obj addBackpackCargoGlobal _x } forEach _backpacks;
+						};
+					};
+				};
+			};
+		};
+	};
+	
+	if (_warchestMoneySavingOn) then
+	{
+		pvar_warchest_funds_west = ([_fileName, "Info", "WarchestMoneyBLUFOR", "NUMBER"] call iniDB_read) max 0;
+		publicVariable "pvar_warchest_funds_west";
+		pvar_warchest_funds_east = ([_fileName, "Info", "WarchestMoneyOPFOR", "NUMBER"] call iniDB_read) max 0;
+		publicVariable "pvar_warchest_funds_east";
+	};
+};
+
+diag_log format ["A3Wasteland - world persistence loaded %1 objects from iniDB", _objectsCount];
+
+execVM "persistence\world\oSave.sqf";

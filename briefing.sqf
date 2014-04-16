@@ -10,6 +10,48 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"0.9g",
+"
+<br/> [Added] - Vehicle stores
+<br/> [Added] - New lootspawner by Na_Palm, stuff in ALL buildings
+<br/> [Added] - New jets and truck added in A3 v1.14
+<br/> [Added] - New AAF vehicles added in A3 v1.08
+<br/> [Added] - New camos for Mk20 and MX in gunstores
+<br/> [Added] - Ability to push plane backwards
+<br/> [Added] - Ability to sell quadbike contents like crates
+<br/> [Added] - Abort delay during combat when player saving on
+<br/> [Changed] - Improved respawn menu
+<br/> [Changed] - Respawn now longer to preload destination
+<br/> [Changed] - Optimized player icons
+<br/> [Changed] - Optimized FPS fix
+<br/> [Changed] - Improved server persistence (requires iniDBI v1.4+)
+<br/> [Changed] - Improved player saving (server-specific)
+<br/> [Changed] - Improved base saving (server-specific)
+<br/> [Changed] - Reduced starting gear
+<br/> [Changed] - Modified some store prices
+<br/> [Changed] - Reduced initial fuel in cars and helis
+<br/> [Changed] - Removed Buzzard jet from too short runways
+<br/> [Changed] - Removed Kavala castle territory for use as base
+<br/> [Changed] - Increased vehicle repair time to 20 sec.
+<br/> [Changed] - Increased owner unlocking time to 10 sec.
+<br/> [Changed] - Toggling spawn beacon perms is now instant
+<br/> [Changed] - Improved Take option for player items
+<br/> [Changed] - Added option to cancel towing selection
+<br/> [Changed] - Added machine gunner to main mission NPCs
+<br/> [Changed] - Added grenadier to side mission NPCs
+<br/> [Fixed] - Error messages in various menus
+<br/> [Fixed] - Crash when toggling spawn beacon perms
+<br/> [Fixed] - Error when hacking warchests
+<br/> [Fixed] - Vehicle towing and lifting positions
+<br/> [Fixed] - Repair Vehicle option showing for brand new vehicles
+<br/> [Fixed] - Vest purchase price
+<br/> [Fixed] - Vest and helmet armor value
+<br/> [Fixed] - NPC leader now has launcher ammo
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "0.9f",
 "
 <br/> [Added] - Money missions
@@ -70,18 +112,7 @@ player createDiaryRecord ["credits",
 [
 "Credits",
 "
-<br/><font size='16'>Original ArmA 2 Wasteland missions by:</font>
-<br/>	* Tonic
-<br/>	* Sa-Matra
-<br/>	* MarKeR
-<br/>
-<br/><font size='16'>Ported to ArmA 3 by 404Games:</font>
-<br/>	* Deadbeat
-<br/>	* Costlyy
-<br/>	* Pulse
-<br/>	* Domuk
-<br/>
-<br/><font size='16'>Development of this version by:</font>
+<br/><font size='16'>Developed by Team Wasteland:</font>
 <br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* AgentRev (TeamPlayerGaming)
 <br/>	* MercyfulFate
@@ -90,19 +121,33 @@ player createDiaryRecord ["credits",
 <br/>	* Torndeco
 <br/>	* Del1te (404Games)
 <br/>
+<br/><font size='16'>Original Arma 2 Wasteland missions by:</font>
+<br/>	* Tonic
+<br/>	* Sa-Matra
+<br/>	* MarKeR
+<br/>
+<br/><font size='16'>Ported to Arma 3 by 404Games:</font>
+<br/>	* Deadbeat
+<br/>	* Costlyy
+<br/>	* Pulse
+<br/>	* Domuk
+<br/>
 <br/><font size='16'>Other contributors:</font>
 <br/>	* 82ndab-Bravo17 (GitHub)
 <br/>	* afroVoodo (Armaholic)
 <br/>	* AWA (OpenDayZ)
+<br/>	* bodybag (Gameaholic.se)
+<br/>	* code34 (iniDBI)
 <br/>	* Das Attorney (Jump MF)
 <br/>	* Ed! (404Games forums)
 <br/>	* HatchetHarry (GitHub)
 <br/>	* Hub (TeamPlayerGaming)
 <br/>	* k4n30 (GitHub)
 <br/>	* Krunch (GitHub)
+<br/>	* madbull (R3F)
 <br/>	* Mainfrezzer (Magnon)
 <br/>	* meat147 (GitHub)
-<br/>	* Na-Palm (BIS forums)
+<br/>	* Na_Palm (BIS forums)
 <br/>	* red281gt (GitHub)
 <br/>	* RockHound (BierAG)
 <br/>	* s3kShUn61 (GitHub)

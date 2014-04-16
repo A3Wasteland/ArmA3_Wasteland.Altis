@@ -120,8 +120,7 @@ _grp setCurrentWaypoint [_grp, 1];
 			if (_unitPos distance _targetPos > 75) then
 			{
 				_doMove = [[5 + random 65, 0], ([_targetPos, _unitPos] call BIS_fnc_dirTo) + (random 90) - 45] call BIS_fnc_rotateVector2D;
-				_unit move ([_targetPos, _doMove] call BIS_fnc_vectorAdd);
-				_unit doMove ([_targetPos, _doMove] call BIS_fnc_vectorAdd);
+				_unit moveTo ([_targetPos, _doMove] call BIS_fnc_vectorAdd);
 				sleep 3;
 			};
 		};

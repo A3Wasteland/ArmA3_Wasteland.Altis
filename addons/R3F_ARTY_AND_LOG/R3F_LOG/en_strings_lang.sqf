@@ -39,6 +39,7 @@ STR_R3F_LOG_action_selectionner_objet_remorque = "Tow to a vehicle";
 STR_R3F_LOG_action_selectionner_objet_remorque_fait = "Now select the vehicle in which to load the object ""%1""...";
 
 STR_R3F_LOG_action_remorquer_selection = "... tow the selected object to this vehicle";
+STR_R3F_LOG_action_cancel_remorquer = "... cancel towing";
 STR_R3F_LOG_action_remorquer_selection_trop_loin = "The object ""%1"" is too far from the vehicle to be towed.";
 STR_R3F_LOG_action_remorquer_selection_objet_transporte = "The object ""%1"" is in transit.";
 

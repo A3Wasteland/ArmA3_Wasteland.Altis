@@ -12,7 +12,9 @@ _pos = getMarkerPos (_randomLoc select 0);
 _rad = _randomLoc select 1;
 _townName = _randomLoc select 2;
 
-player setPos ([_pos,5,_rad,1,0,0,0] call findSafePos);
+_playerPos = [_pos,5,_rad,1,0,0,0] call findSafePos;
+waitUntil {sleep 0.1; preloadCamera _playerPos};
+player setPos _playerPos;
 
 respawnDialogActive = false;
 closeDialog 0;

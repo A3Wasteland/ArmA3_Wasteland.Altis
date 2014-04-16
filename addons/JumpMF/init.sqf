@@ -4,9 +4,6 @@
 // Modified by: AgentRev
 //////////////////////////////////////////////////////////////////
 
-horde_jumpmf_fnc_switchmove = compileFinal "_this switchMove 'AovrPercMrunSrasWrflDf'";
-"horde_jumpmf_var_switchmove" addPublicVariableEventHandler { (_this select 1) call horde_jumpmf_fnc_switchmove };
-
 if (!hasInterface) exitWith {};
 
 horde_jumpmf_var_jumping = false;

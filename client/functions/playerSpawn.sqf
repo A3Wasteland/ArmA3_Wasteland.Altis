@@ -1,78 +1,83 @@
 //	@file Version: 1.0
 //	@file Name: playerSpawn.sqf
-//	@file Author: [404] Deadbeat
+//	@file Author: [404] Deadbeat, AgentRev
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-private ["_side"];
+private ["_kickTeamKiller", "_kickTeamSwitcher", "_side"];
 
 playerSpawning = true;
-playerUID = getPlayerUID(player);
-townSearch = 0;
-beaconSearch = 0;
 
-doKickTeamKiller = false;
-doKickTeamSwitcher = false;
+_kickTeamKiller = false;
+_kickTeamSwitcher = false;
 
-if (!isNil "pvar_teamKillList") then
+if (playerSide != INDEPENDENT) then
 {
-	//Check Teamkiller
+	if (!isNil "pvar_teamKillList") then
 	{
-		if(_x select 0 == playerUID) then {
-			
-			if((_x select 1) >= 2) then {
-				if(playerSide in [west, east]) then {
-					doKickTeamKiller = true;
-				};
-			};
-		};
-	} forEach pvar_teamKillList;
-};
-
-if (!isNil "pvar_teamSwitchList") then
-{
-	//Check Teamswitcher
-	{
-		if(_x select 0 == playerUID) then
 		{
-			if(playerSide != (_x select 1) && !(playerSide in [INDEPENDENT,sideEnemy])) then{
-				doKickTeamSwitcher = true;
-				_side = str(_x select 1);
-			};	
-		};
-	} forEach pvar_teamSwitchList;
+			if (_x select 0 == getPlayerUID player && {_x select 1 > 1}) exitWith
+			{
+				_kickTeamKiller = true;
+			};
+		} forEach pvar_teamKillList;
+	};
+
+	if (!isNil "pvar_teamSwitchList") then
+	{
+		{
+			if (_x select 0 == getPlayerUID player && {_x select 1 != playerSide}) exitWith
+			{
+				_side = _x select 1;
+				_kickTeamSwitcher = true;
+			};
+		} forEach pvar_teamSwitchList;
+	};
 };
 
-//Kick to lobby for appropriate reason
 //Teamkiller Kick
-if(doKickTeamKiller) exitWith {
-	titleText ["", "BLACK IN", 0];
-	titleText [localize "STR_WL_Loading_Teamkiller", "black"]; titleFadeOut 9999;
-	[] spawn {sleep 20; endMission "LOSER";};
+if (_kickTeamKiller) exitWith
+{
+	localize "STR_WL_Loading_Teamkiller";
+	9999 cutText [_text, "BLACK"];
+	titleText [_text, "BLACK"];
+	[] spawn {sleep 20; endMission "LOSER"};
 };
 
 //Teamswitcher Kick
-if(doKickTeamSwitcher) exitWith {
-	titleText ["", "BLACK IN", 0];
-	titleText [format[localize "STR_WL_Loading_Teamswitched", localize format ["STR_WL_Gen_Team%1_2", _side]], "black"]; titleFadeOut 9999;
-	[] spawn {sleep 20; endMission "LOSER";};
+if (_kickTeamSwitcher) exitWith
+{
+	_text = format [localize "STR_WL_Loading_Teamswitched", localize format ["STR_WL_Gen_Team%1_2", _side]];
+	9999 cutText [_text, "BLACK"];
+	titleText [_text, "BLACK"];
+	[] spawn {sleep 20; endMission "LOSER"};
 };
 
-//Send player to debug zone to stop fake spawn locations.
-player setPosATL [7837.37,7627.14,0.00230217];
-player setDir 333.429;
-//             
+// Only go through respawn dialog if no data from the player save system
+if (isNil "playerData_alive") then
+{
+	//Send player to debug zone to stop fake spawn locations.
+	player setPosATL [7837.37,7627.14,0.00230217];
+	[player, "AmovPknlMstpSnonWnonDnon"] call switchMoveGlobal;
 
-titleText ["Loading...", "BLACK OUT", 0.00001];
+	9999 cutText ["Loading...", "BLACK", 0.01];
 
-private ["_handle"];
-true spawn client_respawnDialog;
+	true spawn client_respawnDialog;
 
-waitUntil {respawnDialogActive};
+	waitUntil {respawnDialogActive};
+	9999 cutText ["", "BLACK", 0.01];
+	waitUntil {!respawnDialogActive};
 
-while {respawnDialogActive} do {
-	titleText ["", "BLACK OUT", 0.00001];
+	if (["A3W_playerSaving"] call isConfigOn) then
+	{
+		[] spawn fn_savePlayerData;
+	};
+}
+else
+{
+	playerData_alive = nil;
 };
-sleep 0.1;
-titleText ["", "BLACK IN", 0.00001];
+
+9999 cutText ["", "BLACK IN"];
+
 playerSpawning = false;

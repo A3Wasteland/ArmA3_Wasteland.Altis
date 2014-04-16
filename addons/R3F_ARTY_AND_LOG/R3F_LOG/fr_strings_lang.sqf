@@ -36,6 +36,7 @@ STR_R3F_LOG_action_selectionner_objet_remorque = "Remorquer à...";
 STR_R3F_LOG_action_selectionner_objet_remorque_fait = "Sélectionnez maintenant le véhicule dans lequel charger l'objet ""%1""...";
 
 STR_R3F_LOG_action_remorquer_selection = "... remorquer l'objet sélectionné à ce véhicule";
+STR_R3F_LOG_action_cancel_remorquer = "... annuler le remorquage";
 STR_R3F_LOG_action_remorquer_selection_trop_loin = "L'objet ""%1"" est trop loin du véhicule pour être remorqué.";
 STR_R3F_LOG_action_remorquer_selection_objet_transporte = "L'objet ""%1"" est en cours de transport.";
 

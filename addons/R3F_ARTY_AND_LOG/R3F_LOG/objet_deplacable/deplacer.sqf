@@ -75,9 +75,33 @@ else
 				};
 			} forEach getArray(configFile>>"CfgWeapons">>_arme_principale>>"muzzles");
 			
-			player playMove "AidlPercMstpSnonWnonDnon04";
-			sleep 1;
+			_currAction = [player, ["A"]] call getMoveParams;
+			_isSwimming = {_currAction == _x} count ["Aswm","Assw","Absw","Adve","Asdv","Abdv"] > 0;
+			
+			if (_isSwimming) then
+			{
+				sleep 0.5;
+			}
+			else
+			{
+				if (handgunWeapon player == "") then
+				{
+					player playMove "AmovPercMstpSnonWnonDnon";
+				}
+				else
+				{
+					player playMove "AmovPercMstpSrasWpstDnon";
+				};
+				
+				sleep 1;
+			};
+			
 			player removeWeapon _arme_principale;
+			
+			if (_isSwimming) then
+			{
+				player switchMove "";
+			};
 		}
 		else {sleep 0.5;};
 		
@@ -122,9 +146,9 @@ else
 			
 			_action_menu_release_relative = player addAction [("<img image='client\icons\r3f_release.paa' color='#06ef00'/> <t color='#06ef00'>" + STR_R3F_LOG_action_relacher_objet + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\relacher.sqf", false, 5, true, true];
 			_action_menu_release_horizontal = player addAction [("<img image='client\icons\r3f_releaseh.paa' color='#06ef00'/> <t color='#06ef00'>" + STR_RELEASE_HORIZONTAL + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\relacher.sqf", true, 5, true, true];
-			_action_menu_45 = player addAction [("<img image='client\icons\r3f_rotate.paa' color='#06ef00'/> <t color='#06ef00'>Rotate object 45°</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\rotate.sqf", 45, 5, true, true];
-			//_action_menu_90 = player addAction [("<img image='client\ui\ui_arrow_combo_ca.paa'/> <t color='#dddd00'>Rotate object 90°</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\rotate.sqf", 90, 5, true, true];
-			//_action_menu_180 = player addAction [("<img image='client\ui\ui_arrow_combo_ca.paa'/> <t color='#dddd00'>Rotate object 180°</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\rotate.sqf", 180, 5, true, true];
+			_action_menu_45 = player addAction [("<img image='client\icons\r3f_rotate.paa' color='#06ef00'/> <t color='#06ef00'>Rotate object 45°</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\rotate.sqf", 45, 5, true, false];
+			//_action_menu_90 = player addAction [("<img image='client\ui\ui_arrow_combo_ca.paa'/> <t color='#dddd00'>Rotate object 90°</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\rotate.sqf", 90, 5, true, false];
+			//_action_menu_180 = player addAction [("<img image='client\ui\ui_arrow_combo_ca.paa'/> <t color='#dddd00'>Rotate object 180°</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\rotate.sqf", 180, 5, true, false];
 			
 			// On limite la vitesse de marche et on interdit de monter dans un véhicule tant que l'objet est porté
 			while {!isNull R3F_LOG_joueur_deplace_objet && alive player} do
@@ -151,42 +175,41 @@ else
 
 			// this addition comes from Sa-Matra (fixes the heigt of some of the objects) - all credits for this fix go to him!
 
-			_adjustPOS=0;
+			_class = typeOf _objet;
 
-			switch(typeOf _objet) do {
-				case "Land_Scaffolding_F":
-				{
-					_adjustPOS=-3; 
-				};
-				case "Land_Canal_WallSmall_10m_F":
-				{
-					_adjustPOS=3;
-				};
-				case "Land_Canal_Wall_Stairs_F":
-				{
-					_adjustPOS=3;
-				};
+			_zOffset = switch (true) do
+			{
+				//case (_class == "Land_Scaffolding_F"):         { 3 }; 
+				case (_class == "Land_Canal_WallSmall_10m_F"): { 2 };
+				case (_class == "Land_Canal_Wall_Stairs_F"):   { 2 };
+				default { 0 };
 			};
 
-			if(R3F_LOG_force_horizontally) then {
+			if (R3F_LOG_force_horizontally) then
+			{
 				R3F_LOG_force_horizontally = false;
+				
+				_objectATL = getPosATL _objet;
 
-				_opos = getPosASL _objet;
-				_ppos = getPosASL player;
-				_opos set [2, _ppos select 2];
-				_opos2 = +_opos;
-				_opos2 set [2, (_opos2 select 2)+ _adjustPOS];
-				if(terrainIntersectASL [_opos, _opos2]) then {
-					_objet setPosATL [getPosATL _objet select 0, getPosATL _objet select 1, getPosATL player select 2];
-				} else {
-					_objet setPosASL _opos;
+				if ((_objectATL select 2) - _zOffset < 0) then
+				{
+					_objectATL set [2, 0 + _zOffset];
+					_objet setPosATL _objectATL;
+				}
+				else
+				{
+					_objectASL = getPosASL _objet;
+					_objectASL set [2, ((getPosASL player) select 2) + _zOffset];
+					_objet setPosASL _objectASL;
 				};
-			} else {
-				if((getPosATL player select 2) < 5) then {
-					_objet setPos [getPos _objet select 0, getPos _objet select 1, (getPosATL player select 2)+_adjustPOS];
-				} else {
-					_objet setPosATL [getPosATL _objet select 0, getPosATL _objet select 1, (getPosATL player select 2)+_adjustPOS];
-				};
+				
+				_objet setVectorUp [0,0,1];
+			}
+			else
+			{
+				_objectPos = getPos _objet;
+				_objectPos set [2, ((player call fn_getPos3D) select 2) + _zOffset];
+				_objet setPos _objectPos;
 			};
 			
 			_objet setVelocity [0,0,0];

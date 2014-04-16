@@ -25,6 +25,6 @@ _veh2 setDamage _damage;
 _veh2 setVehicleLock "UNLOCKED";
 _veh2 setVariable ["R3F_LOG_disabled", false, true];
 
-_veh2 spawn cleanVehicleWreck;
+// _veh2 spawn cleanVehicleWreck;
 
 _veh2

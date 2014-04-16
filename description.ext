@@ -4,7 +4,14 @@ disabledAI=1;
 disableChannels[] = {}; // {0} to disable global
 joinUnassigned = 0;
 enableItemsDropping = 0;
+weaponPool = 0;
+corpseRemovalMinTime = 15*60;
+corpseRemovalMaxTime = 15*60;
+wreckRemovalMinTime = 5*60;
+wreckRemovalMaxTime = 10*60;
+enableDebugConsole = 0;
 loadScreen = "Loading.jpg";
+onPauseScript = "client\clientEvents\onPause.sqf";
 class Header
 {
 	gameType=Sandbox;
@@ -46,7 +53,6 @@ class RscTitles
 	#include "addons\proving_ground\PG_rsctitles.hpp"
  	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
-	#include "client\systems\newicons.hpp"
 };
 
 class CfgIdentities

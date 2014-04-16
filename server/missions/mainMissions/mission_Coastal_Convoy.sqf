@@ -11,6 +11,8 @@ private ["_missionMarkerName","_missionType","_picture","_vehicleName","_vehicle
 
 _missionMarkerName = "CoastalConvoy_Marker";
 _missionType = "Coastal Patrol";
+_hardDifficulty = (["A3W_missionsDifficulty"] call isConfigOn);
+
 diag_log format["WASTELAND SERVER - Main Mission Started: %1", _missionType];
 diag_log format["WASTELAND SERVER - Main Mission Waiting to run: %1", _missionType];
 [mainMissionDelayTime] call createWaitCondition;
@@ -18,11 +20,16 @@ diag_log format["WASTELAND SERVER - Main Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the patrol (in hard difficulty also allows chance of mi48)
 _veh1 = ["O_Boat_Armed_01_hmg_F","B_Boat_Armed_01_minigun_F","I_Boat_Armed_01_minigun_F"] call BIS_fnc_selectRandom;
-if (A3W_missionsDifficulty == 1) then {
-	_veh2 = ["O_Heli_Attack_02_black_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
-} else {
-	_veh2 = ["O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Light_01_armed_F","B_Heli_Transport_01_camo_F"] call BIS_fnc_selectRandom;
+
+if (_hardDifficulty) then
+{
+	_veh2 = ["B_Heli_Light_01_armed_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Light_02_F","O_Heli_Attack_02_black_F"] call BIS_fnc_selectRandom;
+}
+else 
+{
+	_veh2 = ["B_Heli_Light_01_armed_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Light_02_F"] call BIS_fnc_selectRandom;
 };
+
 _veh3 = ["O_Boat_Armed_01_hmg_F","B_Boat_Armed_01_minigun_F","I_Boat_Armed_01_minigun_F"] call BIS_fnc_selectRandom;
 
 // available routes to add a route. If you add more routes append ,4 to the array and so on
@@ -207,7 +214,8 @@ switch (_rn) do
 
 _groupcc = createGroup civilian;
 
-_createVehicle = {
+_createVehicle =
+{
     private ["_type","_position","_direction","_groupcc","_vehicle","_soldier"];
     _type = _this select 0;
     _position = _this select 1;
@@ -221,7 +229,8 @@ _createVehicle = {
 	// the little-bird and Orca do not require gunners and should not have any passengers
     _soldier = [_groupcc, _position] call createRandomSoldierC; 
     _soldier moveInDriver _vehicle;
-    if ((_vehicle isKindOf "B_Heli_Transport_01_camo_F") || (_vehicle isKindOf "B_Heli_Transport_01_F")) then {
+    if ((_vehicle isKindOf "B_Heli_Transport_01_camo_F") || (_vehicle isKindOf "B_Heli_Transport_01_F")) then
+	{
 		// these choppers have 2 turrets so we need 2 gunners :)
 	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
@@ -230,24 +239,30 @@ _createVehicle = {
 	   _soldier assignAsGunner _vehicle;
        _soldier moveInTurret [_vehicle, [2]];
     };
-	if ((_vehicle isKindOf "B_Heli_Attack_01_F") || (_vehicle isKindOf "O_Heli_Attack_02_black_F") || (_vehicle isKindOf "O_Heli_Attack_02_F")) then {
+	if ((_vehicle isKindOf "B_Heli_Attack_01_F") || (_vehicle isKindOf "O_Heli_Attack_02_black_F") || (_vehicle isKindOf "O_Heli_Attack_02_F")) then
+	{
 		// these choppers need 1 gunner
 	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
        _soldier moveInTurret [_vehicle, [0]];
     };
 	
-	if ((_vehicle isKindOf _veh1) || (_vehicle isKindOf _veh3)) then {
+	if ((_vehicle isKindOf _veh1) || (_vehicle isKindOf _veh3)) then
+	{
 		// the boats need a gunner (rear) and a commander (frontgunner) aside from a driver
-	   if (A3W_missionsDifficulty == 1) then {  // frontgunner will be here if mission is running at hard dificulty
+		if (_hardDifficulty) then
+		{
+			// frontgunner will be here if mission is running at hard dificulty
 			_soldier = [_groupcc, _position] call createRandomSoldierC; 
 			_soldier assignAsGunner _vehicle;
 			_soldier moveInTurret [_vehicle, [0]]; //commanderseat - front funner
 		};
+		
 	   _soldier = [_groupcc, _position] call createRandomSoldierC; 
 	   _soldier assignAsGunner _vehicle;
        _soldier moveInTurret [_vehicle, [1]]; //rear gunner
     };
+	
 	// remove flares because it overpowers AI choppers
 	if ("CMFlareLauncher" in getArray (configFile >> "CfgVehicles" >> _type >> "weapons")) then
 	{
@@ -259,7 +274,7 @@ _createVehicle = {
 		} forEach (_vehicle magazinesTurret [-1]);
 	};
     _vehicle setVehicleLock "LOCKED";  // prevents players from getting into the vehicle while the AI are still owning it
-	_vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
+	// _vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
     _vehicle
 };
 

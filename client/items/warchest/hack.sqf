@@ -1,14 +1,14 @@
 #include "mutex.sqf"
 #define DURATION MF_ITEMS_WARCHEST_HACK_DURATION
 #define ANIMATION "AinvPknlMstpSlayWrflDnon_medic"
-#define ERR_IN_VEHICLE "Hacking Warchest Failed! You can't do that in a vehicle."
-#define ERR_TOO_FAR_AWAY "Hacking Warchest Failed! You are too far away."
-#define ERR_HACKED "Hacking Warchest Failed! Someone else just finished hacking this warchest."
-#define ERR_CANCELLED "Hacking Warchest Cancelled"
+#define ERR_IN_VEHICLE "Warchest Hacking Failed! You can't do that in a vehicle."
+#define ERR_TOO_FAR_AWAY "Warchest Hacking Failed! You are too far away."
+#define ERR_HACKED "Warchest Hacking Failed! Someone else just finished hacking this warchest."
+#define ERR_CANCELLED "Warchest Hacking Cancelled"
 
 private ["_warchest", "_error", "_success"];
 _warchest = [] call mf_items_warchest_nearest;
-_error = [] call mf_items_warchest_can_pack;
+_error = [] call mf_items_warchest_can_hack;
 if (_error != "") exitWith {[_error, 5] call mf_notify_client};
 
 private "_checks";
@@ -25,14 +25,14 @@ _checks = {
 		case (_warchest getVariable "side" == playerSide): {_text = ERR_HACKED};
 		case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};
 		default {
-			_text = format["Hacking Warchest %1%2 Complete", round(100 * _progress), "%"];
+			_text = format["Warchest Hacking %1%2 Complete", round(100 * _progress), "%"];
 			_failed = false;
 		};
 	};
 	[_failed, _text];
 };
 
-private ["_success", "amount", "_money"];
+private ["_success", "_amount", "_money"];
 MUTEX_LOCK_OR_FAIL;
 _success = [DURATION, ANIMATION, _checks, [_warchest]] call a3w_actions_start;
 MUTEX_UNLOCK;
@@ -52,6 +52,6 @@ if (_success) then {
 	};
 	_money = (player getVariable ["cmoney", 0]) + _amount;
 	player setVariable ["cmoney", _money, true];
-	[format["Hacking Warchest Complete! You Stole $%1", _amount], 5] call mf_notify_client;
+	[format["Warchest Hacking Complete! You stole $%1", _amount], 5] call mf_notify_client;
 };
 _success;

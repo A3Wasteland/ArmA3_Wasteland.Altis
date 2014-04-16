@@ -16,6 +16,7 @@ _leader = _group createUnit ["C_man_polo_1_F", [(_pos select 0) + 10, _pos selec
 removeAllAssignedItems _leader;
 _leader addUniform "U_B_CombatUniform_mcam";
 _leader addVest "V_PlateCarrier1_rgr";
+_leader addBackpack "B_AssaultPack_rgr";
 _leader addMagazine "30Rnd_556x45_Stanag";
 _leader addWeapon "arifle_TRG21_F";
 _leader addMagazine "30Rnd_556x45_Stanag";
@@ -44,15 +45,18 @@ _man3 addWeapon "arifle_TRG20_F";
 _man3 addMagazine "30Rnd_556x45_Stanag";
 _man3 addMagazine "30Rnd_556x45_Stanag";
 
-// Rifleman
+// Grenadier
 _man4 = _group createUnit ["C_man_polo_4_F", [_pos select 0, (_pos select 1) - 30, 0], [], 1, "Form"];
 removeAllAssignedItems _man4;
-_man4 addUniform "U_B_CombatUniform_mcam_vest";
+_man4 addUniform "U_B_CombatUniform_mcam_tshirt";
 _man4 addVest "V_PlateCarrier1_rgr";
 _man4 addMagazine "30Rnd_556x45_Stanag";
-_man4 addWeapon "arifle_TRG20_F";
+_man4 addWeapon "arifle_TRG21_GL_F";
 _man4 addMagazine "30Rnd_556x45_Stanag";
 _man4 addMagazine "30Rnd_556x45_Stanag";
+_man4 addMagazine "1Rnd_HE_Grenade_shell";
+_man4 addMagazine "1Rnd_HE_Grenade_shell";
+_man4 addMagazine "1Rnd_HE_Grenade_shell";
 
 _leader = leader _group;
 

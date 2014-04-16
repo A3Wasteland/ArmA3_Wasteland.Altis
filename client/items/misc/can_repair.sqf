@@ -28,7 +28,7 @@ switch (true) do {
     case (vehicle player != player):{_error = ERR_IN_VEHICLE};
 	case (isNull _vehicle): {_error = ERR_NO_VEHICLE};
 	case (!alive _vehicle): {_error = ERR_DESTROYED};
-	case (damage _vehicle < 0.05 && {{_vehicle getHitPointDamage (configName _x) < 0.2} count _hitPoints == 0}): {_error = ERR_FULL_HEALTH}; // 0.2 is the threshold at which wheel damage causes slower movement
+	case (damage _vehicle < 0.05 && {{_vehicle getHitPointDamage (configName _x) > 0.05} count _hitPoints == 0}): {_error = ERR_FULL_HEALTH}; // 0.2 is the threshold at which wheel damage causes slower movement
 	case (ITEM_COUNT(MF_ITEMS_REPAIR_KIT) <= 0): {_error = ERR_NO_REPAIR_KITS};
     default {};
 };

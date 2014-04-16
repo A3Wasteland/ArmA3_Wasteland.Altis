@@ -35,7 +35,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint parseText format ["Not enough money for<br/>""%1""", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 
@@ -43,7 +43,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint parseText format ["Not enough space for<br/>""%1""", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 	
@@ -51,7 +51,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint parseText format ["<t color='#ffff00'>An unknown error occurred.</t><br/>The purchase of ""%1"" has been cancelled.", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
 
@@ -59,7 +59,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 		hint format ["""%1"" has been spawned outside, in front of the store.", _itemText];
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_Finish_F";
 		_successHint = false;
 	};
 	
@@ -87,7 +87,6 @@ storePurchaseHandle = _this spawn
 		 
 		if (!_confirmResult) then
 		{
-			player say "FD_CP_Not_Clear_F";
 			_price = -1;
 		};
 		
@@ -107,7 +106,7 @@ storePurchaseHandle = _this spawn
 			_itemText = format ["You already have this %1.", _itemText];
 		};
 		
-		player say "FD_CP_Not_Clear_F";
+		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 		
 		[parseText _itemText, "Error"] call BIS_fnc_guiMessage
@@ -139,7 +138,7 @@ storePurchaseHandle = _this spawn
 				{
 					case "binoc":
 					{
-						_currentBinoc = player call getCurrentBinoculars;
+						_currentBinoc = binocular player;
 						
 						if (_currentBinoc == "") then
 						{
@@ -158,6 +157,17 @@ storePurchaseHandle = _this spawn
 						if ([player, _class] call fn_fitsInventory) then
 						{
 							player addItem _class;
+						}
+						else
+						{
+							[_itemText] call _showInsufficientSpaceError;
+						};
+					};
+					case "mag":
+					{
+						if ([player, _class] call fn_fitsInventory) then
+						{
+							player addMagazine _class;
 						}
 						else
 						{
@@ -192,22 +202,15 @@ storePurchaseHandle = _this spawn
 					};
 					case "nvg":
 					{
-						switch (playerSide) do
-						{
-							case OPFOR:       { _itemClass = "NVGoggles_OPFOR" };
-							case INDEPENDENT: { _itemClass = "NVGoggles_INDEP" };
-							default           { _itemClass = "NVGoggles" };
-						};
-						
 						if ({["NVGoggles", _x] call fn_findString != -1} count assignedItems player == 0) then
 						{
-							player linkItem _itemClass;
+							player linkItem _class;
 						}
 						else
 						{
-							if ([player, _itemClass] call fn_fitsInventory) then
+							if ([player, _class] call fn_fitsInventory) then
 							{
-								player addItem _itemClass;
+								player addItem _class;
 							}
 							else
 							{
@@ -353,6 +356,11 @@ storePurchaseHandle = _this spawn
 				_class = _x select 1;
 				_price = _x select 2;
 				
+				if (_price < 0) then
+				{
+					_price = [_class] call getCapacity;
+				};
+				
 				if (vest player == _class) exitWith
 				{
 					["vest"] call _showAlreadyHaveItemMessage;
@@ -420,6 +428,7 @@ storePurchaseHandle = _this spawn
 			player setVariable ["cmoney", _playerMoney - _price, true];
 			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
 			if (_successHint) then { hint "Purchase successful!" };
+			playSound "FD_Finish_F";
 		};
 	};
 	
@@ -428,7 +437,7 @@ storePurchaseHandle = _this spawn
 		missionNamespace setVariable [_requestKey, nil];
 	};
 	
-	sleep 0.5; // double-click protection
+	sleep 0.25; // double-click protection
 };
 
 if (typeName storePurchaseHandle == "SCRIPT") then

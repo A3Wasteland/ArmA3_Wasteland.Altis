@@ -75,10 +75,8 @@ if !(isServer && isDedicated) then
 	R3F_LOG_action_heliport_larguer_valide = false;
 	
 	R3F_LOG_action_deplacer_objet_valide = false;
-	R3F_LOG_action_remorquer_deplace_valide = false;
 	R3F_LOG_action_selectionner_objet_remorque_valide = false;
 	R3F_LOG_action_detacher_valide = false;
-	R3F_LOG_action_charger_deplace_valide = false;
 	R3F_LOG_action_selectionner_objet_charge_valide = false;
 	
 	/** Ce fil d'exécution permet de diminuer la fréquence des vérifications des conditions normalement faites dans les addAction (~60Hz) */

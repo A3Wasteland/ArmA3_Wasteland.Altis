@@ -7,7 +7,7 @@
 //@file Argument: [] automatically find the nearest object that can be used to refill an empty jerrycan
 
 #define ERR_NO_PUMP "You are not near a Fuel Pump/Container." 
-#define ERR_IN_VEHICLE "You cant do this while in a vehicle."
+#define ERR_IN_VEHICLE "You can't do this while in a vehicle."
 #define ERR_NO_JERRYCANS "You have no empty Jerrycans."
 private ["_container", "_error"];
 _container = objNull;

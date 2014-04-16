@@ -35,15 +35,43 @@ else
 			// On mémorise aussi sur le réseau que le canon est attaché en remorque
 			_objet setVariable ["R3F_LOG_est_transporte_par", _remorqueur, true];
 			
-			// On place le joueur sur le côté du véhicule, ce qui permet d'éviter les blessure et rend l'animation plus réaliste
-			player attachTo [_remorqueur, [
-				(boundingBox _remorqueur select 1 select 0),
-				(boundingBox _remorqueur select 0 select 1) + 1,
-				(boundingBox _remorqueur select 0 select 2) - (boundingBox player select 0 select 2)
-			]];
+			if (local _objet) then
+			{
+				_objet lockDriver true;
+			}
+			else
+			{
+				[_objet, {_this lockDriver true}, false, false, _objet] call fn_vehicleInit;
+			};
 			
-			player setDir 270;
-			player setPos (getPos player);
+			_towerBB = _remorqueur call fn_boundingBoxReal;
+			_towerMinBB = _towerBB select 0;
+			_towerMaxBB = _towerBB select 1;
+			
+			_objectBB = _objet call fn_boundingBoxReal;
+			_objectMinBB = _objectBB select 0;
+			_objectMaxBB = _objectBB select 1;
+			
+			_towerCenterX = (_towerMinBB select 0) + (((_towerMaxBB select 0) - (_towerMinBB select 0)) / 2);
+			_objectCenterX = (_objectMinBB select 0) + (((_objectMaxBB select 0) - (_objectMinBB select 0)) / 2);
+			
+			_towerGroundPos = _remorqueur worldToModel (_remorqueur call fn_getPos3D);
+			
+			if ((getPosASL player) select 2 > 0) then
+			{
+				// On place le joueur sur le côté du véhicule, ce qui permet d'éviter les blessure et rend l'animation plus réaliste
+				player attachTo [_remorqueur,
+				[
+					(_towerMinBB select 0) - 0.25,
+					(_towerMinBB select 1) - 0.25,
+					_towerMinBB select 2
+				]];
+				
+				player setDir 90;
+				player setPos (getPos player);
+				sleep 0.05;
+				detach player;
+			};
 			
 			// Faire relacher l'objet au joueur (si il l'a dans "les mains")
 			R3F_LOG_joueur_deplace_objet = objNull;
@@ -51,10 +79,11 @@ else
 			sleep 2;
 			
 			// Attacher à l'arrière du véhicule au ras du sol
-			_objet attachTo [_remorqueur, [
-				0,
-				(boundingBox _remorqueur select 0 select 1) + (boundingBox _objet select 0 select 1) + 3,
-				(boundingBox _remorqueur select 0 select 2) - (boundingBox _objet select 0 select 2)
+			_objet attachTo [_remorqueur,
+			[
+				_towerCenterX - _objectCenterX,
+				(_towerMinBB select 1) - (_objectMaxBB select 1) - 0.5,
+				(_towerGroundPos select 2) - (_objectMinBB select 2) + 0.1
 			]];
 			
 			detach player;

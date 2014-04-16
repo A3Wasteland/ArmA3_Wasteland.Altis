@@ -7,14 +7,17 @@
 
 // This is basically here to fix anything which isn't taken care of by the built-in JIP functionality
 
-if(!isServer) exitWith {};
+if (!isServer) exitWith {};
 
 private ['_id', '_name'];
 
 _id = _this select 0;
 _name = _this select 1;
 
-if (_name == '__SERVER__') exitWith { };
+if (_name == '__SERVER__') exitWith {};
 
 // Hook for territory system
-if (count (call config_territory_markers) > 0) then { [] execVM "territory\client\updateConnectingClients.sqf"; };
+if (count (["config_territory_markers", []] call getPublicVar) > 0) then
+{
+	[] execVM "territory\client\updateConnectingClients.sqf";
+};

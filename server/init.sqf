@@ -32,20 +32,8 @@ diag_log "WASTELAND SERVER - Server Compile Finished";
 
 "requestCompensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 
-// Default config
-A3W_buildingLoot = 1;        // Spawn and respawn Loot inside buildings in citys (0 = no, 1 = yes)
-A3W_startHour = 6;           // In-game hour at mission start (0 to 23)
-A3W_moonLight = 1;           // Moon light during night (0 = no, 1 = yes)
-A3W_missionsDifficulty = 0;  // Missions difficulty (0 = normal, 1 = hard)
-A3W_serverMissions = 1;      // Server main & side missions (0 = no, 1 = yes)
-A3W_serverSpawning = 1;      // Vehicle, object, and loot spawning (0 = no, 1 = yes)
-A3W_boxSpawning = 1;         // If serverSpawning = 1, also spawn ammo boxes in some towns (0 = no, 1 = yes)
-A3W_boatSpawning = 1;        // If serverSpawning = 1, also spawn boats at marked areas near coasts (0 = no, 1 = yes)
-A3W_heliSpawning = 1;        // If serverSpawning = 1, also spawn helicopters in some towns and airfields (0 = no, 1 = yes)
-A3W_planeSpawning = 1;       // If serverSpawning = 1, also spawn planes at some airfields (0 = no, 1 = yes)
-A3W_baseBuilding = 1;        // If serverSpawning = 1, also spawn basebuilding parts in towns (0 = no, 1 = yes)
-A3W_baseSaving = 0;          // Save base objects between restarts (0 = no, 1 = yes) - requires iniDB mod 
-PDB_ServerID = "any";        // iniDB saves prefix (change this in case you run multiple servers from the same folder)
+// load default config
+call compile preprocessFileLineNumbers "server\default_config.sqf";
 
 // load external config
 if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
@@ -58,85 +46,114 @@ else
 	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 };
 
+A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
+A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
+A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
+
+// Broadcast config variables
+publicVariable "A3W_startingMoney";
+publicVariable "A3W_showGunStoreStatus";
+publicVariable "A3W_gunStoreIntruderWarning";
+publicVariable "A3W_playerSaving";
+publicVariable "A3W_combatAbortDelay";
+
+_playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
+_baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
+_boxSavingOn = ["A3W_boxSaving"] call isConfigOn;
+_warchestSavingOn = ["A3W_warchestSaving"] call isConfigOn;
+_warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
+_beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
+_serverSavingOn = (_baseSavingOn || {_boxSavingOn} || {_warchestSavingOn} || {_warchestMoneySavingOn} || {_beaconSavingOn});
+
+_setupPlayerDB = [] spawn {}; // blank script to feed scriptDone a non-nil value
+
 // Do we need any persistence?
-if (["A3W_baseSaving", 0] call getPublicVar > 0 || {["config_player_saving_enabled", 0] call getPublicVar > 0}) then
+if (_playerSavingOn || {_serverSavingOn}) then
 {
 	// Our custom iniDB methods which fixes some issues with the current iniDB addon release
-	call compile preProcessFile "persistence\fn_inidb_custom.sqf";
-	diag_log format["[INFO] A3W running with iniDB version %1", ([] call iniDB_version)];
+	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
+	diag_log format ["[INFO] A3W running with iniDB version %1", call iniDB_version];
 
 	// Have we got player persistence enabled?
-	if (["config_player_saving_enabled", 0] call getPublicVar > 0) then {
-		diag_log "[INFO] A3W player saving is ENABLED";
-		execVM "persistence\players\s_serverGather.sqf";
-
-		if (["config_player_donations_enabled", 0] call getPublicVar > 0) then {
-			diag_log "[INFO] A3W player donations are ENABLED. Players can spawn with additional money";
-		} else {
-			diag_log "[INFO] A3W player donations are DISABLED";
-		};
-	} else {
-		diag_log "[INFO] A3W player saving is DISABLED";
-	};
-
-	// Have we got base saving enabled?
-	if (["A3W_baseSaving", 0] call getPublicVar > 0) then
+	if (_playerSavingOn) then
 	{
-		diag_log "[INFO] A3W base saving is ENABLED";
-		execVM "persistence\world\init.sqf";
-	} else {
-		diag_log "[INFO] A3W base saving is DISABLED";
+		_setupPlayerDB = execVM "persistence\players\s_setupPlayerDB.sqf";
 	};
+
+	// Have we got server persistence enabled?
+	if (_serverSavingOn) then
+	{
+		execVM "persistence\world\oLoad.sqf";
+	};
+	
+	diag_log format ["[INFO] A3W player saving is %1", if (_playerSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W base saving is %1", if (_baseSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W box saving is %1", if (_boxSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W warchest saving is %1", if (_warchestSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W warchest money saving is %1", if (_warchestMoneySavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W spawn beacon saving is %1", if (_beaconSavingOn) then { "ENABLED" } else { "DISABLED" }];
+};
+
+_setupPlayerDB spawn
+{
+	waitUntil {sleep 0.1; scriptDone _this};
+	A3W_serverSetupComplete = compileFinal "true";
+	publicVariable "A3W_serverSetupComplete";
 };
 
 if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 {
 	private ["_monthDay", "_startHour"];
-	_monthDay = if (["A3W_moonLight", 0] call getPublicVar > 0) then { 10 } else { 25 };
+	_monthDay = if (["A3W_moonLight"] call isConfigOn) then { 10 } else { 25 };
 	_startHour = ["A3W_startHour", date select 2] call getPublicVar;
 	setDate [2035, 6, _monthDay, _startHour, 0];
 };
 
-if (["A3W_buildingLoot", 0] call getPublicVar > 0) then 
+if (["A3W_buildingLoot"] call isConfigOn) then 
 {
 	diag_log "[INFO] A3W loot spawning is ENABLED";
-	execVM "server\spawning\lootCreation.sqf";
+	fn_getBuildingstospawnLoot = "addons\Lootspawner\fn_LSgetBuildingstospawnLoot.sqf" call mf_compile; 
+	LSdeleter = "addons\Lootspawner\LSdeleter.sqf" call mf_compile;
+	execVM "addons\Lootspawner\Lootspawner.sqf";
 };
 
 [] execVM "server\functions\serverTimeSync.sqf";
 
-if (["A3W_serverSpawning", 0] call getPublicVar > 0) then
+if (["A3W_serverSpawning"] call isConfigOn) then
 {
     diag_log "WASTELAND SERVER - Initializing Server Spawning";
 	
-	if (["A3W_heliSpawning", 0] call getPublicVar > 0) then
+	if (["A3W_heliSpawning"] call isConfigOn) then
 	{
 		_heliSpawn = [] execVM "server\functions\staticHeliSpawning.sqf";
 		waitUntil {sleep 0.1; scriptDone _heliSpawn};
 	};
 	
-	_vehSpawn = [] execVM "server\functions\vehicleSpawning.sqf";
-	waitUntil {sleep 0.1; scriptDone _vehSpawn};
+	if (["A3W_vehicleSpawning"] call isConfigOn) then
+	{
+		_vehSpawn = [] execVM "server\functions\vehicleSpawning.sqf";
+		waitUntil {sleep 0.1; scriptDone _vehSpawn};
+	};
 	
-	if (["A3W_planeSpawning", 0] call getPublicVar > 0) then
+	if (["A3W_planeSpawning"] call isConfigOn) then
 	{
 		_planeSpawn = [] execVM "server\functions\planeSpawning.sqf";
 		waitUntil {sleep 0.1; scriptDone _planeSpawn};
 	};
 	
-	if (["A3W_boatSpawning", 0] call getPublicVar > 0) then
+	if (["A3W_boatSpawning"] call isConfigOn) then
 	{
 		_boatSpawn = [] execVM "server\functions\boatSpawning.sqf";
 		waitUntil {sleep 0.1; scriptDone _boatSpawn};
 	};
 	
-	if (["A3W_baseBuilding", 0] call getPublicVar > 0) then
+	if (["A3W_baseBuilding"] call isConfigOn) then
 	{
 		_objSpawn = [] execVM "server\functions\objectsSpawning.sqf";
 		waitUntil {sleep 0.1; scriptDone _objSpawn};
 	};
 	
-	if (["A3W_boxSpawning", 0] call getPublicVar > 0) then
+	if (["A3W_boxSpawning"] call isConfigOn) then
 	{
 		_boxSpawn = [] execVM "server\functions\boxSpawning.sqf";
 		waitUntil {sleep 0.1; scriptDone _boxSpawn};
@@ -144,16 +161,20 @@ if (["A3W_serverSpawning", 0] call getPublicVar > 0) then
 };
 
 // Hooks for new players connecting, in case we need to manually update state
-onPlayerConnected "[_id, _name] execVM 'server\functions\onPlayerConnected.sqf'";
+["A3W_onPlayerConnected", "onPlayerConnected", { [_id, _name] execVM "server\functions\onPlayerConnected.sqf" }] call BIS_fnc_addStackedEventHandler;
 
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
 	diag_log "[INFO] A3W territory capturing is ENABLED";
-	[] ExecVM "territory\server\monitorTerritories.sqf";
+	[] execVM "territory\server\monitorTerritories.sqf";
+}
+else
+{
+	diag_log "[INFO] A3W territory capturing is DISABLED";
 };
 
 //Execute Server Missions.
-if (["A3W_serverMissions", 0] call getPublicVar > 0) then
+if (["A3W_serverMissions"] call isConfigOn) then
 {
 	diag_log "WASTELAND SERVER - Initializing Missions";
     [] execVM "server\missions\sideMissionController.sqf";

@@ -6,30 +6,8 @@
 
 #include "dialog\genstoreDefines.sqf";
 disableSerialization;
-private ["_switch", "_dialog", "_itemlist", "_itemlisttext", "_itemDesc", "_showPicture", "_itemsArray", "_parentCfg", "_weapon", "_picture", "_listIndex", "_showItem", "_factionCfg", "_faction", "_uniformClassCfg", "_sideCfg", "_uniformSides", "_playerSides", "_side"];
+private ["_switch", "_dialog", "_itemlist", "_itemlisttext", "_itemDesc", "_showPicture", "_itemsArray", "_playerSideNum", "_parentCfg", "_weapon", "_picture", "_listIndex", "_showItem", "_factionCfg", "_faction", "_isUniform", "_sideCfg", "_side"];
 _switch = _this select 0;
-
-_getAllowedSides =
-{
-	private ["_unitType", "_sides", "_side"];
-
-	_unitType = configFile >> "CfgVehicles" >> _this;
-	_sides = [];
-	
-	while {isClass _unitType} do
-	{
-		_side = getNumber (_unitType >> "side");
-		
-		if !(_side in _sides) then
-		{
-			_sides set [count _sides, _side];
-		};
-		
-		_unitType = inheritsFrom _unitType;
-	};
-
-	_sides
-};
 
 // Grab access to the controls
 _dialog = findDisplay genstore_DIALOG;
@@ -72,6 +50,11 @@ switch(_switch) do
 	case 5: 
 	{
 		_itemsArray = call customPlayerItems;
+		
+		if (playerSide == INDEPENDENT) then
+		{
+			_itemsArray = [_itemsArray, { _x select 1 != "warchest" }] call BIS_fnc_conditionalSelect;
+		};
 	};
 	case 6: 
 	{
@@ -82,6 +65,14 @@ switch(_switch) do
 	{
 		_itemsArray = [];
 	};
+};
+
+_playerSideNum = switch (playerSide) do
+{
+	case BLUFOR:      { 1 };
+	case OPFOR:       { 0 };
+	case INDEPENDENT: { 2 };
+	default           { 3 };
 };
 
 {
@@ -104,37 +95,28 @@ switch(_switch) do
 		{
 			case "CfgVehicles":
 			{
-				_factionCfg = _parentCfg >> _weaponClass >> "faction";
+				_sideCfg = _parentCfg >> _weaponClass >> "side";
 				
-				switch (true) do
+				if (isNumber _sideCfg) then
 				{
-					case (isText _factionCfg):
+					_side = getNumber _sideCfg;
+					
+					if (_side in [0,1,2] && {_side != _playerSideNum}) then
 					{
-						_faction = getText _factionCfg;
-						
-						if (_faction != faction player &&
-						   {_faction != "CIV_F"} &&
-						   {_faction != "Default"} &&
-						   {_faction != ""}) then
-						{
-							_showItem = false;
-						};
+						_showItem = false;
 					};
 				};
 			};
 			case "CfgWeapons":
 			{
-				_uniformClassCfg = _parentCfg >> _weaponClass >> "ItemInfo" >> "uniformClass";
+				_isUniform = isText (_parentCfg >> _weaponClass >> "ItemInfo" >> "uniformClass");
 				_sideCfg = _parentCfg >> _weaponClass >> "ItemInfo" >> "side";
 				
 				switch (true) do
 				{
-					case (isText _uniformClassCfg):
+					case (_isUniform):
 					{
-						_uniformSides = (getText _uniformClassCfg) call _getAllowedSides;
-						_playerSides = getArray (configFile >> "CfgVehicles" >> typeOf player >> "modelSides");
-						
-						if ({_x in _playerSides} count _uniformSides == 0) then
+						if !([player, _weaponClass] call canWear) then
 						{
 							_showItem = false;
 						};
@@ -143,10 +125,7 @@ switch(_switch) do
 					{
 						_side = getNumber _sideCfg;
 						
-						// Yes, the numbers are correct
-						if ((_side == 1 && playerSide != BLUFOR) ||
-							{_side == 0 && playerSide != OPFOR} ||
-							{_side == 2 && playerSide != INDEPENDENT}) then
+						if (_side in [0,1,2] && {_side != _playerSideNum}) then
 						{
 							_showItem = false;
 						};

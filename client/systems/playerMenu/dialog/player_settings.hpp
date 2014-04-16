@@ -44,22 +44,22 @@ class playerSettings {
 		class waterIcon : w_RscPicture {
 	  		idc = -1;
         	text = "client\icons\water.paa";
-        	x = 0.02; y = 0.19;
-			w = 0.04 * (safezoneH/safezoneW); h = 0.04;
+        	x = 0.022; y = 0.21;
+			w = 0.04 / (4/3); h = 0.04;
 		};
 		
 		class foodIcon : w_RscPicture {
       		idc = -1;
         	text = "client\icons\food.paa";
-        	x = 0.02; y = 0.26;
-			w = 0.04 * (safezoneH/safezoneW); h = 0.04;
+        	x = 0.022; y = 0.26;
+			w = 0.04 / (4/3); h = 0.04;
 		};
 		
 		class moneyIcon : w_RscPicture {	
 	  		idc = -1;
         	text = "client\icons\money.paa";
-        	x = 0.02; y = 0.32;
-			w = 0.04 * (safezoneH/safezoneW); h = 0.04;
+        	x = 0.022; y = 0.32;
+			w = 0.04 / (4/3); h = 0.04;
 		};
 		
 		class waterText : w_RscText {	
