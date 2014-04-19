@@ -153,7 +153,7 @@ while {true} do
 	if (["A3W_warchestMoneySaving"] call isConfigOn) then
 	{
 		_fundsWest = ["pvar_warchest_funds_west", 0] call getPublicVar;
-		_fundsEast = ["pvar_warchest_funds_est", 0] call getPublicVar;
+		_fundsEast = ["pvar_warchest_funds_east", 0] call getPublicVar;
 	};
 	
 	[_fileName, "Info", "WarchestMoneyBLUFOR", _fundsWest] call iniDB_write;
