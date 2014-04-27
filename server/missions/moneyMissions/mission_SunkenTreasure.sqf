@@ -70,7 +70,7 @@ switch((_rand)) do
 
 
 
-_fix = [_posRand select 0, _posRand select 1, getTerrainHeightASL _posRand];
+_fix = [_posRand select 0, _posRand select 1, _posRand select 2];
 _treas0 = createVehicle ["Land_Money_F", _fix, [], 0, "None"];
 _treas0 setVariable["cmoney",10000,true];
 _treas0 setVariable["owner","world",true];
