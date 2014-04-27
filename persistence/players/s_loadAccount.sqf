@@ -12,17 +12,20 @@ _data = [];
 
 _getValue =
 {
-	private ["_name", "_type", "_value"];
+	private ["_name", "_type", "_section", "_value"];
 	_name = _this select 0;
 	_type = _this select 1;
+	_section = [_this, 2, "PlayerSave"] call BIS_fnc_param;
 
-	_value = [_UID call PDB_databaseNameCompiler, "PlayerSave", _name, _type] call iniDB_read;
+	_value = [_UID call PDB_databaseNameCompiler, _section, _name, _type] call iniDB_read;
 
 	if (!isNil "_value") then
 	{
 		[_data, [_name, _value]] call BIS_fnc_arrayPush;
 	};
 };
+
+["Donator", "NUMBER", "PlayerInfo"] call _getValue;
 
 ["Damage", "NUMBER"] call _getValue;
 ["Hunger", "NUMBER"] call _getValue;

@@ -21,6 +21,7 @@ removeHeadgear player;
 
 	switch (_name) do
 	{
+		case "Donator": { player setVariable ["isDonator", _value > 0] };
 		case "Damage": { player setDamage _value };
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
