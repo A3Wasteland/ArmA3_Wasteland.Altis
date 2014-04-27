@@ -68,14 +68,16 @@ switch((_rand)) do
 };
 */
 
+["SunkenTreasure0", _posRand, _missionType] call createClientMarker;
 
-
-_fix = [_posRand select 0, _posRand select 1, getTerrainHeightASL _posRand];
-_treas0 = createVehicle ["Land_Money_F", _fix, [], 0, "None"];
+_treas0 = createVehicle ["Land_Money_F", _posRand, [], 0, "None"];
 _treas0 setVariable["cmoney",10000,true];
 _treas0 setVariable["owner","world",true];
 
-["SunkenTreasure0",(position _treas0),_missionType] call createClientMarker;
+_fix = [_posRand select 0, _posRand select 1, getTerrainHeightASL _posRand];
+_treas0 setPos _fix;
+
+_fix = getPosASL _treas0;
 
 _group = createGroup civilian;
 
@@ -88,7 +90,8 @@ _createVehicle = {
     _direction = _this select 3;
     _group = _this select 4;
     
-    _vehicle = _type createVehicle _position;
+    _vehicle = createVehicle [_type, _position, [], 0, "None"];
+	_vehicle setPos _position;
 	// not sure why this was added so commented it our for now..
 	//_vehicle addEventHandler ["IncomingMissile", "hint format['Incoming Missile Launched By: %1', name (_this select 2)]"];
     _vehicle setDir _direction;
@@ -97,14 +100,17 @@ _createVehicle = {
     _group addVehicle _vehicle;
     
     [_group,_moneyp] spawn createSmallDivers;
-    _soldier1 = [_group, _position] call createRandomAquaticSoldier; 
+    _soldier1 = [_group, _moneyp] call createRandomAquaticSoldier; 
     _soldier1 moveInDriver _vehicle;
-    _soldier2 = [_group, _position] call createRandomAquaticSoldier;
+    _soldier2 = [_group, _moneyp] call createRandomAquaticSoldier;
     _soldier2 moveInTurret [_vehicle, [1]];    
     _vehicle
 };
+
 _vehicles = [];
-_vehicles set [0, ["O_Boat_Armed_01_hmg_F", [(_posRand select 0), (_posRand select 1), 0], _fix, random 360, _group] call _createVehicle];
+_vehicles set [0, ["O_Boat_Armed_01_hmg_F", [_fix select 0, _fix select 1, 0], _fix, random 360, _group] call _createVehicle];
+
+//["SunkenTreasure0", _fix, _missionType] call createClientMarker;
 
 _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>$10,000 in sunken treasure has been located. Go get it!</t>", _missionType,  moneyMissionColor, subTextColor];
 [_hint] call hintBroadcast;
@@ -152,7 +158,6 @@ if(_result == 1) then
 	{if(!alive _x) then {deleteVehicle _x;};}forEach _vehicles;
 	{deleteVehicle _x;}forEach units _group; 
 	deleteGroup _group; 
-    deleteVehicle _treas0;
 	
     _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>The money is yours! Help out your team!</t>", _missionType, successMissionColor, subTextColor];
 	[_hint] call hintBroadcast;
