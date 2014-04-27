@@ -6,7 +6,7 @@
 
 //Creates the markers around vehicle stores.
 {
-	if (["VehStore", str _x] call fn_findString == 0) then
+	if (["VehStore", name _x] call fn_findString == 0) then
 	{
 		_npcPos = getPos _x;
 		

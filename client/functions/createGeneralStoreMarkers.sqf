@@ -6,7 +6,7 @@
 
 //Creates the markers around general stores.
 {
-	if (["GenStore", str _x] call fn_findString == 0) then
+	if (["GenStore", name _x] call fn_findString == 0) then
 	{
 		_npcPos = getPos _x;
 

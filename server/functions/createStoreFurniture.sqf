@@ -5,14 +5,13 @@
 
 if (!isServer) exitWith {};
 
-private ["_storeOwner", "_bPos", "_pDir", "_pDDirMod", "_fName", "_chair", "_desk", "_base", "_deskPos"];
+private ["_storeOwner", "_bPos", "_pDir", "_pDDirMod", "_chair", "_desk", "_base", "_deskPos"];
 
 //grab our arguments
 _storeOwner = _this select 0;
 _bPos = _this select 1;
 _pDir = _this select 2;
 _pDDirMod = _this select 3;
-_fName = _this select 4;
 _base = getPos _storeOwner;
 
 //create the bench NOTE: was going to use a plastic chair, but the bench looks nicer
@@ -34,7 +33,7 @@ _pDDirMod = _pDDirMod + 180; // desk model is inverted
 _bPos set [2, (_bPos select 2) + 0.05];
 
 //create the cashier station
-_desk = "Land_CashDesk_F" createVehicle _base;
+_desk = createVehicle ["Land_CashDesk_F", _base, [], 0, "None"];
 //_deskPos = [(_bPos select 0) + 1.2 * sin _pDir, (_bPos select 1) + 1.2 * cos _pDir, _bPos select 2];
 _deskPos = [_bPos, [[0, -0.8, 0], -_pDDirMod] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 _desk setPosATL _deskPos;
