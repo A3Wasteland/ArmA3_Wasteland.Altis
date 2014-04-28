@@ -12,7 +12,7 @@ if (isServer) exitWith {};
 
 #define MOVEMENT_DISTANCE_RESCAN 100
 #define DISABLE_DISTANCE_IMMOBILE 1000
-#define DISABLE_DISTANCE_MOBILE 2500
+#define DISABLE_DISTANCE_MOBILE 2000
 
 private ["_eventCode", "_vehicleManager"];
 
@@ -36,7 +36,7 @@ _vehicleManager =
 			if (!local _vehicle &&
 			   {_vehicle isKindOf "Man" || {count crew _vehicle == 0}} &&
 			   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < diag_tickTime} &&
-			   {isTouchingGround _vehicle}) then
+			   {isTouchingGround _vehicle || _vehicle isKindOf "Static"}) then
 			{
 				_dist = _vehicle distance positionCameraToWorld [0,0,0];
 				_vel = velocity _vehicle distance [0,0,0];
@@ -68,7 +68,7 @@ _vehicleManager =
 				_vehicle setVariable ["fpsFix_eventHandlers", true];
 			};
 		};
-	} forEach entities "All";
+	} forEach allMissionObjects "All";
 };
 
 _lastPos = [0,0,0];
