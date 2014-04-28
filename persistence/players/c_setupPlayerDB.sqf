@@ -16,6 +16,15 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 		if (count _data > 0) then
 		{
 			playerData_alive = true;
+			
+			_pos = [_data, "Position", []] call BIS_fnc_getFromPairs;
+			
+			if (count _pos > 2) then
+			{
+				player groupChat "Preloading location...";
+				waitUntil {sleep 0.1; preloadCamera _pos};
+			};
+			
 			_data call fn_applyPlayerData;
 			
 			player groupChat "Player account loaded!";
