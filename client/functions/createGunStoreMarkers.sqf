@@ -112,7 +112,7 @@ if (["A3W_showGunStoreStatus"] call isConfigOn) then
 			_enemyCount = 0;
 
 			{
-				if (isPlayer _x && {_x distance _npcPos < _radius}) then
+				if (isPlayer _x && alive _x && {_x distance _npcPos < _radius}) then
 				{
 					if ((playerSide in [BLUFOR,OPFOR] && {side _x == playerSide}) || {group _x == group player}) then
 					{
