@@ -263,5 +263,9 @@ while {true} do
     _hudActivityTextbox ctrlSetStructuredText parseText _activityMessage;
     _hudActivityTextbox ctrlCommit 0;
 
+	// Remove unrealistic blur effects
+	if (!isNil "BIS_fnc_feedback_damageBlur" && {ppEffectCommitted BIS_fnc_feedback_damageBlur}) then { ppEffectDestroy BIS_fnc_feedback_damageBlur };
+	if (!isNil "BIS_fnc_feedback_fatigueBlur" && {ppEffectCommitted BIS_fnc_feedback_fatigueBlur}) then { ppEffectDestroy BIS_fnc_feedback_fatigueBlur };
+
     sleep 1;
 };
