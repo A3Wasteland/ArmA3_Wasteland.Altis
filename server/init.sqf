@@ -46,12 +46,9 @@ else
 	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 };
 
-A3W_startingMoney = compileFinal str A3W_startingMoney;
 A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
 A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
-A3W_playerSaving = compileFinal str A3W_playerSaving;
 A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
-A3W_unlimitedStamina = compileFinal str A3W_unlimitedStamina;
 
 // Broadcast config variables
 publicVariable "A3W_startingMoney";
@@ -59,7 +56,6 @@ publicVariable "A3W_showGunStoreStatus";
 publicVariable "A3W_gunStoreIntruderWarning";
 publicVariable "A3W_playerSaving";
 publicVariable "A3W_combatAbortDelay";
-publicVariable "A3W_unlimitedStamina";
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
@@ -113,9 +109,11 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 	setDate [2035, 6, _monthDay, _startHour, 0];
 };
 
-if (["A3W_buildingLoot"] call isConfigOn || {["A3W_weaponsBuildingLoot"] call isConfigOn} || {["A3W_suppliesBuildingLoot"] call isConfigOn}) then 
+if (["A3W_buildingLoot"] call isConfigOn) then 
 {
 	diag_log "[INFO] A3W loot spawning is ENABLED";
+	fn_getBuildingstospawnLoot = "addons\Lootspawner\fn_LSgetBuildingstospawnLoot.sqf" call mf_compile; 
+	LSdeleter = "addons\Lootspawner\LSdeleter.sqf" call mf_compile;
 	execVM "addons\Lootspawner\Lootspawner.sqf";
 };
 
@@ -163,7 +161,7 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 };
 
 // Hooks for new players connecting, in case we need to manually update state
-//["A3W_onPlayerConnected", "onPlayerConnected", { [_id, _name] execVM "server\functions\onPlayerConnected.sqf" }] call BIS_fnc_addStackedEventHandler;
+["A3W_onPlayerConnected", "onPlayerConnected", { [_id, _name] execVM "server\functions\onPlayerConnected.sqf" }] call BIS_fnc_addStackedEventHandler;
 
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
