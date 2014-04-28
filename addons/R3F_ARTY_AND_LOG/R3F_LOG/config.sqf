@@ -5,6 +5,7 @@
  */
 R3F_LOG_CFG_remorqueurs =
 [
+	"SUV_01_base_F",
 	"Offroad_01_base_F",
 	"Van_01_base_F",
 	"MRAP_01_base_F",
