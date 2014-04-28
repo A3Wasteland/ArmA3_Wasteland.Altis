@@ -102,7 +102,7 @@ storePurchaseHandle = _this spawn
 		// If UAV or UGV, fill vehicle with UAV AI, give UAV terminal to our player, and connect it to the vehicle
 		if ({_vehicle isKindOf _x} count (call uavArray) > 0) then
 		{
-			switch (playerSide) do
+			switch (side player) do
 			{
 				case BLUFOR: { _uavTerminal = "B_UavTerminal" };
 				case OPFOR:	 { _uavTerminal = "O_UavTerminal" };
