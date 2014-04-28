@@ -779,11 +779,13 @@ storeOwnerConfig = compileFinal str
 	["GunStore3", 6, 135, []],
 	["GunStore4", 1, 65, []],
 	
-	// NoBuzzard = prevent purchase of A-143 Buzzard due to short runway, other planes are fine
+	// Boats = disable Boats button
+	// Planes = disable Planes button
+	// NoBuzzard = remove A-143 Buzzard from planes list due to short runway, other planes seem fine
 	["VehStore1", 1, 75, ["NoBuzzard"]],
-	["VehStore2", 6, 45, ["Boats", "Submarines"]],
-	["VehStore3", 4, 250, ["Boats", "Submarines", "NoBuzzard"]],
-	["VehStore4", 5, 155, ["Boats", "Submarines"]]
+	["VehStore2", 6, 45, ["Boats"]],
+	["VehStore3", 4, 250, ["Boats", "NoBuzzard"]],
+	["VehStore4", 5, 155, ["Boats"]]
 ];
 	
 // Outfits for store owners

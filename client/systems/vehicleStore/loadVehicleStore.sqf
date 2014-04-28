@@ -9,13 +9,14 @@ disableSerialization;
 
 vehicleStore_noBuzzard = false;
 
-private ["_vehshopDialog", "_Dialog", "_playerMoney", "_money", "_owner", "_fName", "_boatButton", "_subButton"];
+private ["_vehshopDialog", "_Dialog", "_playerMoney", "_money", "_owner", "_fName", "_planeButton", "_boatButton", "_subButton"];
 _vehshopDialog = createDialog "vehshopd";
 
 _Dialog = findDisplay vehshop_DIALOG;
 _playerMoney = _Dialog displayCtrl vehshop_money;
+_planeButton = _Dialog displayCtrl vehshop_button4;	
 _boatButton = _Dialog displayCtrl vehshop_button5;	
-_subButton = _Dialog displayCtrl vehshop_button6;	
+//_subButton = _Dialog displayCtrl vehshop_button6;	
 _money = player getVariable "cmoney";
 _playerMoney ctrlSetText format["Cash: $%1", _money];
 _owner = _this select 0;
@@ -27,20 +28,24 @@ currentOwnerID = _owner;
 	{
 		// The array of which vehicle types are unvailable at this store 
 		{
-			switch (_x) do 
+			switch (toLower _x) do 
 			{
-				case "NoBuzzard": 
+				case "nobuzzard": 
 				{
 					vehicleStore_noBuzzard = true;
 				};
-				case "Boats": 
+				case "boats": 
 				{
-					_boatButton ctrlShow false;
+					_boatButton ctrlEnable false;
 				};
-				case "Submarines":
+				case "planes": 
+				{
+					_planeButton ctrlEnable false;
+				};
+				/*case "Submarines":
 				{
 					_subButton	ctrlShow false;
-				};
+				};*/
 			};
 		} forEach (_x select 3);
 	};
