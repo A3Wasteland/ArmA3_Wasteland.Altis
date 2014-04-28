@@ -25,7 +25,15 @@ _plane = createVehicle [_planeType, _pos, [], 0, "None"];
 
 _plane setPosATL [_pos select 0, _pos select 1, ((getPosATL _plane) select 2) + 0.01];
 _plane setVelocity [0,0,0.01];
+_plane setFuel (0.4 + random 0.2);
 
 _plane setDir _markerDir;
+
+switch (true) do
+{
+	case (_planeType isKindOf "Plane_CAS_01_base_F"):     { _plane removeMagazinesTurret ["6Rnd_Missile_AGM_02_F", [-1]] };
+	case (_planeType isKindOf "Plane_CAS_02_base_F"):     { _plane removeMagazinesTurret ["4Rnd_Missile_AGM_01_F", [-1]] };
+	case (_planeType isKindOf "Plane_Fighter_03_base_F"): { _plane addMagazineTurret ["300Rnd_20mm_shells", [-1]] };
+};
 
 _plane enableSimulationGlobal true;
