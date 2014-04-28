@@ -134,7 +134,6 @@ waituntil {!(IsNull (findDisplay 46))};
 [] spawn playerSpawn;
 
 [] execVM "client\functions\drawPlayerIcons.sqf";
-[] execVM "client\functions\groupMarkers.sqf";
 [] execVM "addons\fpsFix\vehicleManager.sqf";
 [] execVM "addons\Lootspawner\LSclientScan.sqf";
 
