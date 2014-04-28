@@ -9,7 +9,7 @@ corpseRemovalMinTime = 15*60;
 corpseRemovalMaxTime = 15*60;
 wreckRemovalMinTime = 5*60;
 wreckRemovalMaxTime = 10*60;
-enableDebugConsole = 0;
+enableDebugConsole = 1;
 loadScreen = "Loading.jpg";
 onPauseScript = "client\clientEvents\onPause.sqf";
 class Header
