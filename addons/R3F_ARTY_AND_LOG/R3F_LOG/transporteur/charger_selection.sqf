@@ -87,6 +87,9 @@ else
 					};
 					
 					_objet attachTo [R3F_LOG_PUBVAR_point_attache, _position_attache];
+					detach _objet;
+					sleep 0.25;
+					_objet attachTo [R3F_LOG_PUBVAR_point_attache, _position_attache];
 					
 					R3F_LOG_objet_selectionne = objNull;
 					
