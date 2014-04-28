@@ -10,7 +10,7 @@
 	_marker = createMarkerLocal [_markerName, _pos];
 	_marker setMarkerShapeLocal "ELLIPSE";
 	_marker setMarkerSizeLocal [_x select 1, _x select 1];
-	_marker setMarkerColorLocal "ColorBlack";
+	_marker setMarkerColorLocal "ColorBlue";
     _marker setMarkerBrushLocal "SolidBorder";
 	_marker setMarkerAlphaLocal 0.3;   
 }forEach (call cityList);
