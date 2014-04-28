@@ -4,7 +4,7 @@
 // if you have any doubts and/or questions about the mission find us at a3wasteland.com 
 
 // General settings
-A3W_startHour = 8;                 // In-game hour at mission start (0 to 23)
+A3W_startHour = 15;                 // In-game hour at mission start (0 to 23)
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 A3W_startingMoney = 100;           // Amount of money that players start with
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
