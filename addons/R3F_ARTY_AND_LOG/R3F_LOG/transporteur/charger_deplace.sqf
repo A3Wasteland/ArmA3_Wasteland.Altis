@@ -72,6 +72,7 @@ else
 				// On mémorise sur le réseau le nouveau contenu du véhicule
 				_objets_charges = _objets_charges + [_objet];
 				_transporteur setVariable ["R3F_LOG_objets_charges", _objets_charges, true];
+				_objet setVariable ["R3F_LOG_est_transporte_par", _transporteur, true];
 				
 				player globalChat STR_R3F_LOG_action_charger_deplace_en_cours;
 				

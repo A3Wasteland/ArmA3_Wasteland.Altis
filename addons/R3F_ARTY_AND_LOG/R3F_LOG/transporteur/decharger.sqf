@@ -41,6 +41,7 @@ else
 		// On mémorise sur le réseau le nouveau contenu du transporteur (càd avec cet objet en moins)
 		_objets_charges = _objets_charges - [_objet_a_decharger];
 		_transporteur setVariable ["R3F_LOG_objets_charges", _objets_charges, true];
+		_objet_a_decharger setVariable ["R3F_LOG_est_transporte_par", objNull, true];
 		
 		detach _objet_a_decharger;
 		

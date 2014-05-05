@@ -49,7 +49,7 @@ NOTE: Some parameters have changed since the previous release, especially static
 if (!isServer) exitWith {};
 
 // Define variables
-_unit = _this select 0;
+_veh = _this select 0;
 _delay = if (count _this > 1) then {_this select 1} else {30};
 _deserted = if (count _this > 2) then {_this select 2} else {120};
 _proxyExtra = if (count _this > 3) then {_this select 3} else {240};
@@ -65,9 +65,9 @@ if (_deserted < 0) then {_deserted = 0};
 
 sleep 1;
 
-_dir = getDir _unit;
-_position = getPosASL _unit;
-_type = typeOf _unit;
+_dir = getDir _veh;
+_position = getPosASL _veh;
+_type = typeOf _veh;
 _dead = false;
 _brokenTimeout = 0;
 _desertedTimeout = 0;
@@ -80,12 +80,12 @@ _sleepTime = 5;
 
 {
 	if (_x < _sleepTime) then {
-		_sleepTime = ( if (_x > 1) then { _x } else { 1 } );
+		_sleepTime = ( if (_x > 4) then { _x / 4 } else { 1 } );
 	};
 } forEach [_delay, _deserted];
 
 _wheels = [];
-_hitPoints = configFile >> "CfgVehicles" >> (typeOf _unit) >> "HitPoints";
+_hitPoints = configFile >> "CfgVehicles" >> (typeOf _veh) >> "HitPoints";
 
 for "_i" from 0 to (count _hitPoints - 1) do
 {
@@ -101,111 +101,123 @@ while {_run} do
 {	
 	sleep _sleepTime;
 	
-	if (alive _unit) then
+	// Check if vehicle is not being towed or moved
+	if (isNull (_veh getVariable ["R3F_LOG_est_transporte_par", objNull]) &&
+	    isNull (_veh getVariable ["R3F_LOG_est_deplace_par", objNull])) then
 	{
-		_blownTire = false;
-		{ _blownTire = (_blownTire || {_unit getHitPointDamage _x == 1}) } forEach _wheels;
-	};
-	
-	if ((_blownTire || {!canMove _unit}) && {{alive _unit} count crew _unit == 0}) then
-	{
-		if (_delay > 0) then
+		if (alive _veh) then
 		{
-			if (_brokenTimeout == 0) then {
-				_brokenTimeout = diag_tickTime + _delay;
+			_blownTire = false;
+			{ _blownTire = (_blownTire || {_veh getHitPointDamage _x == 1}) } forEach _wheels;
+		};
+		
+		if ((_blownTire || {!canMove _veh}) && {{alive _veh} count crew _veh == 0}) then
+		{
+			if (_delay > 0) then
+			{
+				if (_brokenTimeout == 0) then {
+					_brokenTimeout = diag_tickTime + _delay;
+				}
+				else
+				{
+					if (_brokenTimeout <= diag_tickTime) then {
+						_dead = true;
+					};
+				};
 			}
 			else
 			{
-				if (_brokenTimeout <= diag_tickTime) then {
-					_dead = true;
-				};
+				_dead = true;
 			};
 		}
 		else
 		{
-			_dead = true;
-		};
-	}
-	else
-	{
-		if (_brokenTimeout != 0) then {
-			_brokenTimeout = 0;
-		};
-	};
-	
-	
-	// Check if the vehicle is deserted, or if something was taken from it, and that it's not being towed or moved.
-	
-	if (_deserted > 0 && 
-	   {getPosASL _unit distance _position > 10 || _unit getVariable ["itemTakenFromVehicle", false]} &&
-	   {{alive _unit} count crew _unit == 0} &&
-	   {isNull (_unit getVariable ["R3F_LOG_est_transporte_par", objNull])} && 
-	   {isNull (_unit getVariable ["R3F_LOG_est_deplace_par", objNull])}) then 
-	{
-		if (_desertedTimeout == 0) then {
-			_desertedTimeout = diag_tickTime + _deserted;
-		};
-		
-		if (_proxyExtra > 0 && {owner _unit > 1}) then
-		{
-			_lastDriver = [owner _unit] call findClientPlayer;
-			
-			if (isPlayer _lastDriver && {_lastDriver distance _unit <= _proxyDistance}) then
-			{
-				if (_desertedExtra == 0) then {
-					_desertedExtra = _proxyExtra;
-				};
-			}
-			else
-			{
-				if (_desertedExtra != 0) then {
-					_desertedExtra = 0;
-				};
+			if (_brokenTimeout != 0) then {
+				_brokenTimeout = 0;
 			};
 		};
-	
-		if (_desertedTimeout + _desertedExtra <= diag_tickTime) then {
-			_dead = true;
-		};
-	}
-	else
-	{
-		if (_desertedTimeout != 0) then {
-			_desertedTimeout = 0;
-		};
-	};
-	
-	// Respawn vehicle
-    if (_dead) then 
-	{
-		// Clean-up if vehicle is towing via R3F
 		
-		_towedUnit = _unit getVariable ["R3F_LOG_remorque", objNull];
 		
-		if (!isNil "_towedUnit" && {!isNull _towedUnit}) then
+		// Check if the vehicle is deserted, or if something was taken from it
+		
+		if (_deserted > 0 && 
+		   {getPosASL _veh distance _position > 10 || _veh getVariable ["itemTakenFromVehicle", false]} &&
+		   {{alive _veh} count crew _veh == 0}) then 
 		{
-			detach _towedUnit;
-			_towedUnit setVariable ["R3F_LOG_est_transporte_par", objNull, true];
-			_unit setVariable ["R3F_LOG_remorque", objNull, true];
+			if (_desertedTimeout == 0) then {
+				_desertedTimeout = diag_tickTime + _deserted;
+			};
 			
-			_pos = getPosATL _towedUnit;
-			_towedUnit setPosATL [_pos select 0, _pos select 1, 0];
+			if (_proxyExtra > 0 && {owner _veh > 1}) then
+			{
+				_lastDriver = [owner _veh] call findClientPlayer;
+				
+				if (isPlayer _lastDriver && {_lastDriver distance _veh <= _proxyDistance}) then
+				{
+					if (_desertedExtra == 0) then {
+						_desertedExtra = _proxyExtra;
+					};
+				}
+				else
+				{
+					if (_desertedExtra != 0) then {
+						_desertedExtra = 0;
+					};
+				};
+			};
+		
+			if (_desertedTimeout + _desertedExtra <= diag_tickTime) then {
+				_dead = true;
+			};
+		}
+		else
+		{
+			if (_desertedTimeout != 0) then {
+				_desertedTimeout = 0;
+			};
 		};
 		
-		if (typeName _static == "ARRAY") then { _position = _static; }
-		else { _position = getPosASL _unit; _dir = getDir _unit; };
-		
-		if (_explode) then { ("M_AT" createVehicle getPos _unit) setPosASL getPosASL _unit };
-		
-		sleep 0.1;
-		_carType = typeOf _unit;
-		deleteVehicle _unit;
-		sleep 0.1;
-		
-		// 404 Wasteland vehicle spawn script
-		[_position, _carType] call vehicleCreation;
-		
-		sleep 0.1;		
-		_run = false;
+		// Respawn vehicle
+		if (_dead) then 
+		{
+			// Clean-up if vehicle is towing via R3F
+			
+			_towedVeh = _veh getVariable ["R3F_LOG_remorque", objNull];
+			
+			if (!isNil "_towedVeh" && {!isNull _towedVeh}) then
+			{
+				_towedVeh setVariable ["R3F_LOG_est_transporte_par", objNull, true];
+				_veh setVariable ["R3F_LOG_remorque", objNull, true];
+				
+				if (local _towedVeh) then
+				{
+					[_towedVeh] call detachTowedObject;
+				}
+				else
+				{
+					[_towedVeh, {[_this] call detachTowedObject}, false, false, _towedVeh] call fn_vehicleInit;
+				};
+			};
+			
+			_position =	if (typeName _static == "ARRAY") then { _static } else { getPosATL _veh };
+			
+			if (_explode) then
+			{
+				_vehPos = getPosATL _veh;
+				_exp = createVehicle ["M_AT", _vehPos, [], 0, "CAN_COLLIDE"];
+				_exp setPosATL _vehPos;
+			};
+			
+			sleep 0.1;
+			_carType = typeOf _veh;
+			deleteVehicle _veh;
+			sleep 0.1;
+			
+			// A3Wasteland vehicle spawn script
+			[_position, _carType] call vehicleCreation;
+			
+			sleep 0.1;		
+			_run = false;
+		};
 	};
 };
