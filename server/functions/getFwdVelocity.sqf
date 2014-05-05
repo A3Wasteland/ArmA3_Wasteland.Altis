@@ -1,6 +1,9 @@
 //	@file Name: getFwdVelocity.sqf
 //	@file Author: AgentRev
 
+(velocityModelSpace _this) select 1
+
+/*
 private ["_veh", "_getAngleBetween", "_vel", "_dir", "_angle", "_scalar", "_absVel"];
 _veh = _this;
 
@@ -35,3 +38,4 @@ if (_angle > 90) then
 _absVel = _vel distance [0,0,0];
 
 (cos _angle) * _absVel * _scalar
+*/
