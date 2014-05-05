@@ -14,10 +14,10 @@ else
 {
 	storeSellingHandle = [] spawn
 	{
-		private ["_primary", "_primaryType", "_sellValue", "_getHalfPrice", "_weaponMags", "_magazines", "_currMag", "_currMagAmmo", "_mag", "_magAmmo", "_magFullAmmo", "_magValue", "_magAdded", "_magsToSell", "_confirmMsg", "_wepItems", "_wepItem", "_itemName", "_itemValue", "_magQty"];
+		private ["_primary", "_muzzle", "_sellValue", "_getHalfPrice", "_weaponMags", "_magazines", "_currMag", "_currMagAmmo", "_mag", "_magAmmo", "_magFullAmmo", "_magValue", "_magAdded", "_magsToSell", "_confirmMsg", "_wepItems", "_wepItem", "_itemName", "_itemValue", "_magQty"];
 
 		_primary = currentWeapon player;
-		_primaryType = getNumber (configFile >> "CfgWeapons" >> _primary >> "type");
+		_muzzle = currentMuzzle player;
 		_sellValue = 50; // This is the default value for items that aren't listed in the store
 		_magsToSell = [];
 		
@@ -34,7 +34,11 @@ else
 			};
 		} forEach (call allGunStoreFirearms);
 
-		_weaponMags = getArray (configFile >> "CfgWeapons" >> _primary >> "magazines");
+		_weaponMags = if (_primary != _muzzle) then {
+			getArray (configFile >> "CfgWeapons" >> _primary >> _muzzle >> "magazines")
+		} else {
+			getArray (configFile >> "CfgWeapons" >> _primary >> "magazines")
+		};
 		_magazines = magazinesAmmo player;
 		_currMag = currentMagazine player;
 		
