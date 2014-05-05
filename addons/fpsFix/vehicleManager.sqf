@@ -14,7 +14,7 @@ if (isServer) exitWith {};
 #define DISABLE_DISTANCE_IMMOBILE 1000
 #define DISABLE_DISTANCE_MOBILE 2000
 
-private ["_eventCode", "_vehicleManager"];
+private ["_eventCode", "_vehicleManager", "_lastPos", "_R3F_attachPoint"];
 
 _eventCode =
 {
@@ -28,7 +28,7 @@ _vehicleManager =
 	private ["_vehicle", "_tryEnable", "_dist", "_vel"];
 
 	{
-		if !(_x isKindOf "CAManBase") then
+		if (!(_x isKindOf "CAManBase") && _x != _R3F_attachPoint) then
 		{
 			_vehicle = _x;
 			_tryEnable = true;
@@ -36,12 +36,12 @@ _vehicleManager =
 			if (!local _vehicle &&
 			   {_vehicle isKindOf "Man" || {count crew _vehicle == 0}} &&
 			   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < diag_tickTime} &&
-			   {isTouchingGround _vehicle || _vehicle isKindOf "Static"}) then
+			   {isTouchingGround _vehicle || {!(_vehicle isKindOf "AllVehicles")} || {_vehicle isKindOf "Ship"}}) then
 			{
 				_dist = _vehicle distance positionCameraToWorld [0,0,0];
 				_vel = velocity _vehicle distance [0,0,0];
 
-				if ((_vel < 0.1 && {!(_vehicle isKindOf "Man")} && {_dist > DISABLE_DISTANCE_IMMOBILE}) ||
+				if ((_vel < 0.1 && _dist > DISABLE_DISTANCE_IMMOBILE && {!(_vehicle isKindOf "Man")}) ||
 				   {_dist > DISABLE_DISTANCE_MOBILE}) then
 				{
 					_vehicle enableSimulation false;
@@ -50,14 +50,14 @@ _vehicleManager =
 				};
 			};
 			
-			if (_tryEnable && {!simulationEnabled _vehicle}) then
+			if (_tryEnable && !simulationEnabled _vehicle) then
 			{
 				_vehicle enableSimulation true;
 			};
 
 			if !(_vehicle getVariable ["fpsFix_eventHandlers", false]) then
 			{
-				if (_vehicle isKindOf "AllVehicles" && {!(_vehicle isKindOf "Man")}) then
+				if (_vehicle isKindOf "AllVehicles" && !(_vehicle isKindOf "Man")) then
 				{
 					//_vehicle addEventHandler ["EpeContactStart", _eventCode];
 					_vehicle addEventHandler ["GetIn", _eventCode];
@@ -72,6 +72,7 @@ _vehicleManager =
 };
 
 _lastPos = [0,0,0];
+_R3F_attachPoint = objNull;
 
 while {true} do
 {
@@ -79,6 +80,11 @@ while {true} do
 
 	if (_lastPos distance _camPos > MOVEMENT_DISTANCE_RESCAN) then
 	{
+		if (isNull _R3F_attachPoint && !isNil "R3F_LOG_PUBVAR_point_attache") then
+		{
+			_R3F_attachPoint = R3F_LOG_PUBVAR_point_attache;
+		};
+
 		_lastPos = _camPos;
 		call _vehicleManager;
 	};
