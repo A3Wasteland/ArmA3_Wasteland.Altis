@@ -32,6 +32,7 @@ if (_packetName == "BIS_fnc_MP_packet") then
 		forEach
 		[
 			"client\functions\defineServerRules.sqf",
+			"territory\client\updateTerritoryMarkers.sqf",
 			"initPlayerServer.sqf"
 		];
 	};
@@ -53,7 +54,8 @@ if (_packetName == "BIS_fnc_MP_packet") then
 		"BIS_fnc_showNotification",
 		"BIS_fnc_taskSetState",
 		"BIS_fnc_tridentHandleDamage",
-		"BIS_fnc_tridentHandleDamage_server"
+		"BIS_fnc_tridentHandleDamage_server",
+		"JTS_FNC_SENT" // PM Compact by JTS
 	];
 
 	if (_allowedFile || _allowedFunction) then
