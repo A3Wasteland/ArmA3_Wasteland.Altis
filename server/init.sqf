@@ -72,7 +72,18 @@ if (_playerSavingOn || {_serverSavingOn}) then
 {
 	// Our custom iniDB methods which fixes some issues with the current iniDB addon release
 	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
-	diag_log format ["[INFO] A3W running with iniDB version %1", call iniDB_version];
+	
+	_verIniDB = call iniDB_version;
+	
+	if (_verIniDB == "") then
+	{
+		diag_log "[INFO] ### ERROR ### A3W NOT running with iniDB!";
+		diag_log "[INFO] ### ERROR ### Make sure iniDB.dll is in your Arma 3 folder, or otherwise that you have the @inidbi mod enabled!";
+	}
+	else
+	{
+		diag_log format ["[INFO] A3W running with iniDB v%1", _verIniDB];
+	};
 
 	// Have we got player persistence enabled?
 	if (_playerSavingOn) then
