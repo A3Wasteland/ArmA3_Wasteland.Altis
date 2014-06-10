@@ -30,7 +30,21 @@ if (!isNil "_inviterUID") then {
 
 if(_groupExists) then
 {
+	_oldGroup = group player;
+	_oldTerritories = _oldGroup getVariable ["currentTerritories", []];
+	
 	[player] join (group _inviter);
+	
+	_newGroup = group player;
+	_newTerritories = _newGroup getVariable ["currentTerritories", []];
+	[_newTerritories, _territories] call BIS_fnc_arrayPushStack;
+
+	_newGroup setVariable ["currentTerritories", _newTerritories, true];
+	_oldGroup setVariable ["currentTerritories", [], true];
+
+	[[_oldGroup, _newGroup], "convertTerritoryOwner", false, false] call TPG_fnc_MP;
+	[_newTerritories, false, _newGroup, true] call updateTerritoryMarkers;
+
     player globalChat format["you have accepted the invite"];
 } else {
 	player globalChat format["The group no longer exists or the leader disconnected"];    

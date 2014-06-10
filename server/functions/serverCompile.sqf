@@ -70,6 +70,7 @@ _path = "server\functions";
 addMilCap = [_path, "addMilCap.sqf"] call mf_compile;
 checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
 cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
+convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_compile;
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
 findClientPlayer = [_path, "findClientPlayer.sqf"] call mf_compile;
 fn_refillBox = [_path, "fn_refillbox.sqf"] call mf_compile;

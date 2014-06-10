@@ -27,6 +27,7 @@ parseMove = "client\functions\parseMove.sqf" call mf_compile;
 serverMessage = "client\functions\serverMessage.sqf" call mf_compile;
 titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
 uniformConverter = "client\functions\uniformConverter.sqf" call mf_compile;
+updateTerritoryMarkers = "territory\client\updateTerritoryMarkers.sqf" call mf_compile;
 vehicleSideCfg = "client\functions\vehicleSideCfg.sqf" call mf_compile;
 
 // Player details and actions

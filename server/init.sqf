@@ -171,9 +171,6 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 	};
 };
 
-// Hooks for new players connecting, in case we need to manually update state
-["A3W_onPlayerConnected", "onPlayerConnected", { [_id, _name] execVM "server\functions\onPlayerConnected.sqf" }] call BIS_fnc_addStackedEventHandler;
-
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
 	diag_log "[INFO] A3W territory capturing is ENABLED";

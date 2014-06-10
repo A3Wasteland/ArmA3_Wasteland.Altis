@@ -31,8 +31,19 @@ while { true } do
 	
 	diag_log format ["SERVER CLEANUP: Deleted %1 expired objects", _delQtyO];
 	
+	_doNotDelete = [];
+	
 	{
-		if (count units _x == 0) then
+		_team = _x select 2;
+		
+		if !(_team in _doNotDelete) then
+		{
+			[_doNotDelete, _team] call BIS_fnc_arrayPush;
+		};
+	} forEach currentTerritoryDetails;
+	
+	{
+		if (count units _x == 0 && {!(_x in _doNotDelete)}) then
 		{
 			deleteGroup _x;
 		};

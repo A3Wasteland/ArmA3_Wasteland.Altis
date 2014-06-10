@@ -8,7 +8,7 @@
 
 disableSerialization;
 
-private["_dialog","_playerListBox","_groupInvite","_target","_index","_playerData","_check","_unitCount"];
+private["_dialog","_playerListBox","_groupInvite","_target","_index","_playerData","_check","_group"];
 
 _dialog = findDisplay groupManagementDialog;
 _groupListBox = _dialog displayCtrl groupManagementGroupList;
@@ -24,6 +24,11 @@ _check = 0;
 if(_target == player) exitWith {player globalChat "you can't kick yourself";};
 if (_check == 0) exitWith {player globalChat "you must select someone to kick first";};
 
+_group = group _target;
+[[_group getVariable ["currentTerritories", []], false, _group, false], "updateTerritoryMarkers", _target, false] call TPG_fnc_MP;
 [_target] join grpNull;
+
+_target setVariable ["currentGroupRestore", grpNull, true];
+_target setVariable ["currentGroupIsLeader", false, true];
 
 player globalChat format["you have kicked %1 from the group",name _target];
