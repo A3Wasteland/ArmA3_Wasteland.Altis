@@ -113,7 +113,7 @@ if (ismultiplayer && _mode == 0) then {
 			"titleTextMessage",
 			"territoryActivityHandler",
 			"spawnStoreObject",
-			"pushVehicleBack"
+			"pushVehicle",
 			"convertTerritoryOwner",
 			"updateTerritoryMarkers"
 		];

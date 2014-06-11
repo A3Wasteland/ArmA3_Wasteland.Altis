@@ -101,7 +101,7 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 };
 
 //Setup player menu scroll action.
-[] execVM "client\clientEvents\onMouseWheel.sqf";
+//[] execVM "client\clientEvents\onMouseWheel.sqf";
 
 //Setup Key Handler
 waituntil {!(IsNull (findDisplay 46))};

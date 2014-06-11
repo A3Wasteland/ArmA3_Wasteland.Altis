@@ -11,13 +11,13 @@ playerSetupComplete = false;
 _player = _this select 0;
 _corpse = _this select 1;
 
-_corpse removeAction playerMenuId;
+//_corpse removeAction playerMenuId;
 { _corpse removeAction _x } forEach aActionsIDs;
 // The actions from mf_player_actions are removed in onKilled.
 
 player call playerSetup;
 
-[] execVM "client\clientEvents\onMouseWheel.sqf";
+//[] execVM "client\clientEvents\onMouseWheel.sqf";
 
 call playerSpawn;
 
