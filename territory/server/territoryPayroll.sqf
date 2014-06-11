@@ -1,0 +1,63 @@
+//	@file Name: territoryPayroll.sqf
+//	@file Author: AgentRev
+
+if (!isServer) exitWith {};
+
+_timeInterval = ["A3W_payrollInterval", 30*60] call getPublicVar;
+_moneyAmount = ["A3W_payrollAmount", 100] call getPublicVar;
+
+_territoryCapped = false;
+
+while {true} do
+{
+	if (_territoryCapped) then
+	{
+		sleep _timeInterval;
+	}
+	else
+	{
+		sleep 60;
+	};
+
+	_payouts = [];
+
+	{
+		_territoryOwner = _x select 2;
+		_territoryChrono = _x select 3;
+
+		if (_territoryChrono > 0) then
+		{
+			_territoryCapped = true;
+
+			if (_territoryChrono >= _timeInterval) then
+			{
+				_added = false;
+
+				{
+					_owner = _x select 0;
+
+					if (typeName _owner == typeName _territoryOwner && {_owner == _territoryOwner}) exitWith
+					{
+						_x set [1, (_x select 1) + 1];
+						_added = true;
+					};
+				} forEach _payouts;
+
+				if (!_added) then
+				{
+					[_payouts, [_territoryOwner, 1]] call BIS_fnc_arrayPush;
+				};
+			};
+		};
+	} forEach currentTerritoryDetails;
+
+	{
+		_team = _x select 0;
+		_count = _x select 1;
+
+		_money = _count * _moneyAmount;
+		_message =  format ["Your team received a $%1 bonus for holding %2 territor%3 during the past %4 minutes", _money, _count, if (_count == 1) then { "y" } else { "ies" }, ceil (_timeInterval / 60)];
+
+		[[_message, _money], "territoryActivityHandler", _team, false] call TPG_fnc_MP;
+	} forEach _payouts;
+};

@@ -540,6 +540,10 @@ _handleCapPointTick = {
     _currentTerritoryData
 };
 
+if (["A3W_territoryPayroll"] call isConfigOn) then
+{
+	execVM "territory\server\territoryPayroll.sqf";
+};
 
 //////////////////////////////////////////////////////////////////////////////
 // MAIN TERRITORY MONITOR LOOP                                              //

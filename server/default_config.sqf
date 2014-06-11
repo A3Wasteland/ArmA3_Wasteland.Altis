@@ -35,6 +35,11 @@ A3W_baseBuilding = 1;              // If serverSpawning = 1, spawn base parts in
 A3W_buildingLoot = 1;              // Spawn loot in all buildings (0 = no, 1 = yes)
 A3W_vehicleloot = 1;               // Level of loot added to vehicles (0 = none, 1 = weapon OR items, 2 = weapon AND items, 3 = two weapons AND items) - 2 or 3 recommended if buildingLoot = 0
 
+// Territory settings
+A3W_territoryPayroll = 1;          // Periodically reward sides and indie groups based on how many territories they own (0 = no, 1 = yes)
+A3W_payrollInterval = 30*60;       // Delay in seconds between each payroll
+A3W_payrollAmount = 100;           // Amount of money rewarded per territory on each payroll
+
 // Mission settings
 A3W_serverMissions = 1;            // Enable server missions (0 = no, 1 = yes)
 A3W_missionsDifficulty = 0;        // Missions difficulty (0 = normal, 1 = hard)
