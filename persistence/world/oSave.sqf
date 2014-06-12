@@ -31,8 +31,6 @@ _isSaveable =
 	} forEach _x;
 } forEach [objectList, call genObjectsArray];
 
-_fileName = "Objects" call PDB_databaseNameCompiler;
-
 // If file doesn't exist, create Info section at the top
 if !(_fileName call iniDB_exists) then
 {
@@ -53,7 +51,10 @@ while {true} do
 		{
 			_class = typeOf _obj;
 			
-			if (_obj getVariable ["objectLocked", false] && {(_baseSavingOn && {_class call _isSaveable}) || {_boxSavingOn && {_obj isKindOf "ReammoBox_F"}}} || 
+			if (_obj getVariable ["objectLocked", false] &&
+			       {(_baseSavingOn && {_class call _isSaveable}) ||
+				    (_boxSavingOn && {_class call _isBox}) ||
+					(_staticWeaponSavingOn && {_class call _isStaticWeapon})} || 
 			   {_warchestSavingOn && {_obj call _isWarchest}} ||
 			   {_beaconSavingOn && {_obj call _isBeacon}}) then
 			{
@@ -67,7 +68,7 @@ while {true} do
 				{
 					_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
 				};
-				
+						
 				_hoursAlive = (_obj getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - (_obj getVariable "baseSaving_spawningTime")) / 3600);
 
 				_variables = [];
@@ -123,6 +124,13 @@ while {true} do
 					_items = (getItemCargo _obj) call cargoToPairs;
 					_backpacks = (getBackpackCargo _obj) call cargoToPairs;
 				};
+				
+				_turretMags = [];
+				
+				if (_staticWeaponSavingOn && {_class call _isStaticWeapon}) then
+				{
+					_turretMags = magazinesAmmo _obj;
+				};
 
 				_objCount = _objCount + 1;
 				_objName = format ["Obj%1", _objCount];
@@ -139,6 +147,8 @@ while {true} do
 				[_fileName, _objName, "Magazines", _magazines] call iniDB_write;
 				[_fileName, _objName, "Items", _items] call iniDB_write;
 				[_fileName, _objName, "Backpacks", _backpacks] call iniDB_write;
+				
+				[_fileName, _objName, "TurretMagazines", _turretMags] call iniDB_write;
 				
 				sleep 0.01;
 			};

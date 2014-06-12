@@ -16,6 +16,7 @@ A3W_moneySaving = 1;               // If playerSaving = 1, save player money amo
 A3W_combatAbortDelay = 60;         // If playerSaving = 1, delay in seconds for which to disable abort and respawn buttons after firing or being shot (0 = none)
 A3W_baseSaving = 0;                // Save locked base parts between server restarts (0 = no, 1 = yes)
 A3W_boxSaving = 0;                 // Save locked weapon crates and their contents between server restarts (0 = no, 1 = yes)
+A3W_staticWeaponSaving = 0;        // Save locked static weapons and their magazines between server restarts (0 = no, 1 = yes)
 A3W_warchestSaving = 0;            // Save warchest objects deployed by players between server restarts (0 = no, 1 = yes)
 A3W_warchestMoneySaving = 0;       // Save warchest team money between server restarts (0 = no, 1 = yes)
 A3W_spawnBeaconSaving = 0;         // Save spawn beacons between server restarts (0 = no, 1 = yes)

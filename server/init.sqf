@@ -60,15 +60,17 @@ publicVariable "A3W_combatAbortDelay";
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
 _boxSavingOn = ["A3W_boxSaving"] call isConfigOn;
+_staticWeaponSavingOn = ["A3W_staticWeaponSaving"] call isConfigOn;
 _warchestSavingOn = ["A3W_warchestSaving"] call isConfigOn;
 _warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
 _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
-_serverSavingOn = (_baseSavingOn || {_boxSavingOn} || {_warchestSavingOn} || {_warchestMoneySavingOn} || {_beaconSavingOn});
+
+_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || {_warchestSavingOn} || {_warchestMoneySavingOn} || {_beaconSavingOn});
 
 _setupPlayerDB = [] spawn {}; // blank script to feed scriptDone a non-nil value
 
 // Do we need any persistence?
-if (_playerSavingOn || {_serverSavingOn}) then
+if (_playerSavingOn || _serverSavingOn) then
 {
 	// Our custom iniDB methods which fixes some issues with the current iniDB addon release
 	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
