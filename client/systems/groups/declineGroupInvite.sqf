@@ -7,9 +7,9 @@
 {
 	if(getPlayerUID player == _x select 1) then
 	{
-        currentInvites set [_forEachIndex,"REMOVETHISCRAP"];
-        currentInvites = currentInvites - ["REMOVETHISCRAP"];
-        publicVariableServer "currentInvites";       
+        currentInvites set [_forEachIndex, -1];
+        currentInvites = currentInvites - [-1];
+        publicVariable "currentInvites";       
 	};
 }forEach currentInvites;
 

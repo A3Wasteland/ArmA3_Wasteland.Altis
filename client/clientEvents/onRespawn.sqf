@@ -15,7 +15,19 @@ _corpse = _this select 1;
 { _corpse removeAction _x } forEach aActionsIDs;
 // The actions from mf_player_actions are removed in onKilled.
 
-player call playerSetup;
+_group = _player getVariable ["currentGroupRestore", grpNull];
+
+if (!isNull _group && {group _player != _group}) then
+{
+	[_player] join _group;
+	
+	if (_player getVariable ["currentGroupIsLeader", false] && leader _group != _player) then
+	{
+		_group selectLeader _player;
+	};
+};
+
+_player call playerSetup;
 
 //[] execVM "client\clientEvents\onMouseWheel.sqf";
 

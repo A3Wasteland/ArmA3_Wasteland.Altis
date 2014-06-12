@@ -15,14 +15,13 @@ _groupListBox = _dialog displayCtrl groupManagementGroupList;
 
 _index = lbCurSel _groupListBox;
 _playerData = _groupListBox lbData _index;
-_check = 0;
 
 //Check selected data is valid            			
-{if (str(_x) == _playerData) then {_target = _x;_check = 1;};}forEach playableUnits;
+{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach playableUnits;
 
 //Checks
-if(_target == player) exitWith {player globalChat "you can't kick yourself";};
-if (_check == 0) exitWith {player globalChat "you must select someone to kick first";};
+if (isNil "_target") exitWith {player globalChat "you must select someone to kick first"};
+if (_target == player) exitWith {player globalChat "you can't kick yourself"};
 
 _group = group _target;
 [[_group getVariable ["currentTerritories", []], false, _group, false], "updateTerritoryMarkers", _target, false] call TPG_fnc_MP;

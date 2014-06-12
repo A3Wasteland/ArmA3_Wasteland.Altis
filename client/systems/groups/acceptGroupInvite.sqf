@@ -11,9 +11,9 @@ _groupExists = false;
 	if(getPlayerUID player == _x select 1) then
 	{
     	_inviterUID = _x select 0;
-        currentInvites set [_forEachIndex,"REMOVETHISCRAP"];
-        currentInvites = currentInvites - ["REMOVETHISCRAP"];
-        publicVariableServer "currentInvites";       
+        currentInvites set [_forEachIndex, -1];
+        currentInvites = currentInvites - [-1];
+        publicVariable "currentInvites";       
 	};
 }forEach currentInvites;
 
@@ -46,6 +46,8 @@ if(_groupExists) then
 	[_newTerritories, false, _newGroup, true] call updateTerritoryMarkers;
 
     player globalChat format["you have accepted the invite"];
+	player setVariable ["currentGroupRestore", group _inviter, true];
+	player setVariable ["currentGroupIsLeader", false, true];
 } else {
 	player globalChat format["The group no longer exists or the leader disconnected"];    
 }; 

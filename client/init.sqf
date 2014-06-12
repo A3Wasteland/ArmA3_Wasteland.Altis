@@ -114,6 +114,20 @@ waituntil {!(IsNull (findDisplay 46))};
 "pvar_teamKillList" addPublicVariableEventHandler {[] call updateTeamKiller};
 "publicVar_teamkillMessage" addPublicVariableEventHandler {if (local (_this select 1)) then { [] spawn teamkillMessage }};
 "compensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
+"promoteToGroupLeader" addPublicVariableEventHandler
+{
+	_player = _this select 1;
+	_group = group _player;
+	_oldLeader = leader _group;
+
+	if (local _group) then
+	{
+		_group selectLeader _player;
+		["You have been promoted to group leader.", "titleTextMessage", _player, false] call TPG_fnc_MP;
+		_oldLeader setVariable ["currentGroupIsLeader", false, true];
+		_player setVariable ["currentGroupIsLeader", true, true];
+	};
+};
 
 //client Executes
 [] execVM "client\functions\initSurvival.sqf";
