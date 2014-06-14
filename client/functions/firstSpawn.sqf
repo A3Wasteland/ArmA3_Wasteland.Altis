@@ -17,6 +17,16 @@ player addEventHandler ["Take",
 	};
 }];
 
+player addEventHandler ["GetIn",
+{
+	_vehicle = _this select 1;
+	
+	if (_vehicle getVariable ["A3W_handleDamage", false] && isNil {_vehicle getVariable "A3W_handleDamageEH"}) then
+	{
+		_vehicle setVariable ["A3W_handleDamageEH", _vehicle addEventHandler ["HandleDamage", vehicleHandleDamage]];
+	};
+}];
+
 if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 {
 	player addEventHandler ["FiredNear", { combatTimestamp = diag_tickTime }];

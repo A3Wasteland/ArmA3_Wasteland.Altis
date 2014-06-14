@@ -41,6 +41,8 @@ _pos = _markerPos;
 //Car Initialization
 _vehicle = createVehicle [_vehicleType, _pos, [], 0, "None"];
 
+_vehicle setDamage (random 0.5); // setDamage must always be called before vehicleSetup
+
 [_vehicle] call vehicleSetup;
 _vehicle setPosATL [_pos select 0, _pos select 1, 1.5];
 _vehicle setVelocity [0,0,0.01];
@@ -49,7 +51,6 @@ _vehicle setVelocity [0,0,0.01];
 
 //Set Vehicle Attributes
 _vehicle setFuel (0.2 + random 0.1);
-_vehicle setDamage (random 0.5);
 
 // Remove wheel damage
 {

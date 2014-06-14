@@ -17,3 +17,11 @@ _vehicle disableTIEquipment true;
 clearMagazineCargoGlobal _vehicle;
 clearWeaponCargoGlobal _vehicle;
 clearItemCargoGlobal _vehicle;
+
+_vehicle setVariable ["A3W_handleDamage", true, true];
+
+{
+	_vehicle setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x, true];
+} forEach ((typeOf _vehicle) call getHitPoints);
+
+_vehicle addEventHandler ["HandleDamage", vehicleHandleDamage];
