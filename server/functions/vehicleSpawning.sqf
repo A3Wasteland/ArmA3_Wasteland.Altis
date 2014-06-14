@@ -3,8 +3,6 @@
 //	@file Author: [GoT] JoSchaap, AgentRev
 //  new one, no longer requires Spawn_ markers but uses the town's radius in config.sqf to pick the ammount of vehicles
 
-#define A3W_TOWN_SPAWNING_METERS_PER_VEHICLE 20 // This defines a fraction of the town's radius for which to spawn a vehicle (ex.: 20 meters per vehicle in town with 100m radius = 5 vehicles in town)
-
 if (!isServer) exitWith {};
 
 private ["_counter","_townname","_tradius","_pos","_vehammount","_minrad","_maxrad","_lcounter","_spawnedVehicles","_createRandomVehicle","_angleIncr","_langle","_lpos"];
@@ -48,11 +46,17 @@ _createRandomVehicle =
 	//diag_log format ["Vehicle spawn #%1 done", _counter];
 };
 
+_totalRadius = 0;
+
+{ _totalRadius = _totalRadius + (_x select 1) } forEach (call citylist);
+
+_carPerMeters = (["A3W_vehicleQuantity", 200] call getPublicVar) / _totalRadius;
+
 {
 	_pos = getMarkerPos (_x select 0);
 	_tradius = _x select 1;
 	_townname = _x select 2;
-	_vehammount = ceil (_tradius / A3W_TOWN_SPAWNING_METERS_PER_VEHICLE); // Spawns a vehicle for each fraction of the town's radius
+	_vehammount = round (_tradius * _carPerMeters); // Calculates the quantity of vehicle based on the town's radius
 	_angleIncr = 360 / _vehammount;
 	_langle = random _angleIncr;
 	//_minrad = 15;
