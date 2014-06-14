@@ -13,12 +13,11 @@ if (count _this > 0) then {
 
 _error = "failed";
 switch (true) do {
-    case not(alive player): {}; // caller is dead, no need for error message
-    case (vehicle player != player): {_error = ERR_IN_VEHICLE};
-    case (isNull _warchest): {_error = ERR_TOO_FAR};
-    case not(_warchest getVariable ["a3w_warchest", false]): {_error = ERR_NOT_WARCHEST};
-    case (player distance _warchest >= 5): {_error = ERR_TOO_FAR};
-    case (_warchest getVariable ["side", sideUnknown] == playerSide): {_error = ERR_SAME_SIDE};
-    default {_error = ""};
+	case (player distance _warchest > 5): {_error = ERR_TOO_FAR};
+	case (!alive player): {}; // caller is dead, no need for error message
+	case (vehicle player != player): {_error = ERR_IN_VEHICLE};
+	case !(_warchest getVariable ["a3w_warchest", false]): {_error = ERR_NOT_WARCHEST};
+	case (_warchest getVariable ["side", sideUnknown] == playerSide): {_error = ERR_SAME_SIDE};
+	default {_error = ""};
 };
 _error

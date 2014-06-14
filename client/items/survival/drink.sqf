@@ -14,7 +14,7 @@ _hasFailed = {
 	_text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player) : {}; // player is dead, not need for a error message
+		case (!alive player) : {}; // player is dead, not need for a error message
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED;};
 		default {
 			_failed = false;

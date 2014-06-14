@@ -25,11 +25,11 @@ _hasFailed = {
 	_text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player): {};
+		case (!alive player): {};
         case (isNull _beacon): {_text = ERR_SOMEONE_ELSE_TAKEN};
-		case not(vehicle player == player): {_text = ERR_IN_VEHICLE};
-		case not((_beacon getVariable["side", ""]) != playerSide): {_text = ERR_NOT_OPP_SIDE};
-		case not(player distance _beacon < 5): {_text = ERR_TOO_FAR_AWAY;};
+		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
+		case (_beacon getVariable ["side", sideUnknown] == playerSide): {_text = ERR_NOT_OPP_SIDE};
+		case (player distance _beacon > 5): {_text = ERR_TOO_FAR_AWAY;};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED;};
 		default {
 			_text = format["Stealing %1%2 Complete", round(_progress*100), "%"];

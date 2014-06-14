@@ -25,7 +25,7 @@ _checks = {
     _text = "";
     _failed = true;
     switch (true) do {
-        case not(alive player): {}; // player is dead, no need for a notification
+        case (!alive player): {}; // player is dead, no need for a notification
         case (vehicle player != player): {_text = ERR_IN_VEHICLE};
         case (player distance _container > 5): {_text = ERR_TOO_FAR_AWAY};
         case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};

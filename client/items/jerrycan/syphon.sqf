@@ -23,7 +23,7 @@ _checks = {
     _text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player): {}; //player is dead, no need for a notification
+		case (!alive player): {}; //player is dead, no need for a notification
 		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
 		case (player distance _vehicle > 5): {_text = ERR_TOO_FAR_AWAY};
 		case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};
@@ -38,7 +38,7 @@ _success = [DURATION, ANIMATION, _checks, [_vehicle]] call a3w_actions_start;
 if (_success) then {
     // the fuel qty is handled by mf_remote_refuel.
     // will execute locally if _currVehicle is local
-	[[netId _vehicle], "mf_remote_syphon",_vehicle] spawn TPG_fnc_MP;
+	[[netId _vehicle], "mf_remote_syphon", _vehicle] call TPG_fnc_MP;
 	[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_remove;
 	[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_add;
     ["Syphoning complete!", 5] call mf_notify_client;

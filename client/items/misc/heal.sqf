@@ -26,7 +26,7 @@ _checks = {
     _text = "";
     _failed = true;
     switch (true) do {
-        case not(alive player): {}; // player is dead, no need for a notification
+        case (!alive player): {}; // player is dead, no need for a notification
         case (damage player > 0.255): {_text = ERR_NOT_ENOUGH_HEALTH};
         case (damage player < 0.005): {_text = ERR_FULL_HEALTH};
         case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};

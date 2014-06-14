@@ -13,8 +13,8 @@ _checks = {
     _text = "";
     _failed = true;
     switch (true) do {
-        case not(playerSide == east || playerSide == west) : {_text = ERR_NOT_EAST_WEST };
-        case not(alive player): {}; //player dead, not need to notify them
+        case (!alive player): {}; //player dead, not need to notify them
+        case !(playerSide in [EAST,WEST]) : {_text = ERR_NOT_EAST_WEST};
         case (vehicle player != player): {_text = ERR_IN_VEHICLE};
         case (player distance _position > 3): {_text = ERR_TOO_FAR_AWAY};
         case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};

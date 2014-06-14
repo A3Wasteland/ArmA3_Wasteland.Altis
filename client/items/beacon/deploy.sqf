@@ -14,9 +14,9 @@ _hasFailed = {
     _progress = _this select 0;
     _failed = true;
     switch (true) do {
-        case not(alive player):{};
+        case (!alive player): {};
         case (doCancelAction) :{doCancelAction = false; _text = ERR_CANCELLED;};
-        case not(vehicle player == player): {_text = ERR_IN_VEHICLE};
+        case (vehicle player != player): {_text = ERR_IN_VEHICLE};
         default {
             _text = format["Spawn Beacon %1%2 Deployed", round(_progress*100), "%"];
             _failed = false;
