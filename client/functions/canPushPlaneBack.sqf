@@ -18,7 +18,7 @@ switch (_this select 0) do
 		
 		_uav = getConnectedUav player;
 		
-		if (!isNull _uav && {isNil {_uav getVariable "uavAction_pushPlane"}}) then
+		if (!isNull _uav && {_uav isKindOf "Plane" && isNil {_uav getVariable "uavAction_pushPlane"}}) then
 		{
 			_uav setVariable ["uavAction_pushPlane", [_uav, "[1, _target]"] call addPushPlaneAction];
 		};
@@ -36,4 +36,12 @@ switch (_this select 0) do
 	};
 };
 
-(_veh != player && {_isDriver} && {_veh isKindOf "Plane"} && {isTouchingGround _veh} && {isEngineOn _veh} && {_veh call getFwdVelocity < 0.1})
+(
+	_veh != player &&
+	_isDriver &&
+	isEngineOn _veh &&
+	{isTouchingGround _veh} &&
+	{_veh isKindOf "Plane"} &&
+	{(velocity _veh) distance [0,0,0] <= 10} &&
+	{_veh call getFwdVelocity < 0.1}
+)
