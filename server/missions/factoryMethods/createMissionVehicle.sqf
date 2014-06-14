@@ -20,7 +20,7 @@ _veh setDamage _damage; // setDamage must always be called before vehicleSetup
 
 [_veh] call vehicleSetup;
 
-_veh setPosATL [_randomPos select 0, _randomPos select 1, 0.01];
+_veh setPosATL [_randomPos select 0, _randomPos select 1, 0.05];
 _veh setVelocity [0,0,0.01];
 _veh setFuel _fuel;
 _veh setVehicleAmmo _ammo;

@@ -29,7 +29,7 @@ if (!isNull _object && {local _object}) then
 		_altitude = (getPosATL _object) select 2;
 		detach _object;
 		if (_tower isKindOf "Helicopter") then { _object setVectorUp [0,0,1] };
-		_object setPosATL [_pos select 0, _pos select 1, (_altitude - (_pos select 2)) + 0.01];	
+		_object setPosATL [_pos select 0, _pos select 1, (_altitude - (_pos select 2)) + 0.05];	
 		_object setVelocity [0,0,0.01];
 	};
 	
