@@ -184,7 +184,7 @@ _getPlayerThreshold =
 	private ["_friendlyPlayers", "_friendlyNPCs", "_enemyPlayers", "_enemyNPCs"];
 	_this call _getPlayersInfo;
 	
-	((_friendlyPlayers + _friendlyNPCs) - (_enemyPlayers + _enemyNPCs))
+	((_friendlyPlayers + _friendlyNPCs) - (_enemyPlayers + _enemyNPCs) + (if (!showBeacons && _enemyPlayers > _friendlyPlayers) then { -1000 } else { 0 }))
 };
 
 // Function to determine if a beacon is allowed for use with BIS_fnc_conditionalSelect
@@ -268,11 +268,27 @@ while {respawnDialogActive} do
 		
 		_textStr = "";
 		
+		if (!_isBeacon) then
+		{
+			if (_enemyPlayers > _friendlyPlayers) then
+			{
+				_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy majority</t>] ";
+				_button ctrlEnable false;
+			}
+			else
+			{
+				if (ctrlEnabled (_display displayCtrl respawn_Random_Button)) then
+				{
+					_button ctrlEnable true;
+				};
+			};
+		};
+		
 		if (_friendlyPlayers > 0) then
 		{
 			{
-				if (_textStr != "") then { _textStr = _textStr + ", " };
 				_textStr = _textStr + format ["<t color='#00ff00'>%1</t>", name _x];
+				if (_forEachIndex < _friendlyPlayers - 1 && _textStr != "") then { _textStr = _textStr + ", " };
 			} forEach _friendlyUnits;
 		};
 		
