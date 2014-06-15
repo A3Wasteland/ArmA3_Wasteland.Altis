@@ -32,16 +32,14 @@ if (hasInterface) then
 		};
 	};
 
-	_npc addAction ["<img image='client\icons\money.paa'/> Sell Contents", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_ACTION_CONDITION];
+	_npc addAction ["<img image='client\icons\money.paa'/> Sell contents", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_ACTION_CONDITION];
 };
 
 _npcName = format ["%1%2", _type, _num];
 _npc setName _npcName;
 
 _npc allowDamage false;
-_npc disableAI "MOVE";
-_npc disableAI "ANIM";
-_npc disableAI "FSM";
+{ _npc disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
 
 _building = nearestBuilding _npc;
 
@@ -135,8 +133,16 @@ if (isServer) then
 			};
 			
 			_bPos = _building buildingPos _npcPos;
-			_npc setPosATL _bPos;
-			
+
+			if ([_bPos, [0,0,0]] call BIS_fnc_areEqual) then
+			{
+				_bPos = getPosATL _npc;
+			}
+			else
+			{
+				_npc setPosATL _bPos;
+			};
+
 			_desk = [_npc, _bPos, _pDir, _deskDirMod] call compile preprocessFileLineNumbers "server\functions\createStoreFurniture.sqf";
 			
 			sleep 1;
@@ -149,8 +155,8 @@ if (isServer) then
 			_npcHeightRel = (_desk worldToModel (getPosATL _npc)) select 2;
 			
 			// must be done twice for the direction to set properly
-			for "_i" from 0 to 1 do
-			{			
+			for "_i" from 1 to 2 do
+			{
 				_npc attachTo
 				[
 					_desk,

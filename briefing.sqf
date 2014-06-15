@@ -135,6 +135,7 @@ player createDiaryRecord ["credits",
 <br/><font size='16'>Other contributors:</font>
 <br/>	* 82ndab-Bravo17 (GitHub)
 <br/>	* afroVoodo (Armaholic)
+<br/>	* Austerror (GitHub)
 <br/>	* AWA (OpenDayZ)
 <br/>	* bodybag (Gameaholic.se)
 <br/>	* code34 (iniDBI)
@@ -154,6 +155,7 @@ player createDiaryRecord ["credits",
 <br/>	* Sa-Matra (BIS forums)
 <br/>	* Sanjo (GitHub)
 <br/>	* SCETheFuzz (GitHub)
+<br/>	* Shockwave (A3W forums)
 <br/>	* SicSemperTyrannis (iniDB)
 <br/>	* SPJESTER (404Games forums)
 <br/>	* spunFIN (BIS forums)

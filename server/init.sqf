@@ -43,11 +43,13 @@ if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 else
 {
 	diag_log format["[WARNING] A3W configuration file '%1\main_config.sqf' was not found. Using default settings!", externalConfigFolder];
-	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
+	diag_log "[WARNING] For more information go to http://forums.a3wasteland.com/";
 };
 
+A3W_startingMoney = compileFinal str A3W_startingMoney;
 A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
 A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
+A3W_playerSaving = compileFinal str A3W_playerSaving;
 A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
 A3W_unlimitedStamina = compileFinal str A3W_unlimitedStamina;
 
@@ -101,12 +103,19 @@ if (_playerSavingOn || _serverSavingOn) then
 		execVM "persistence\world\oLoad.sqf";
 	};
 	
-	diag_log format ["[INFO] A3W player saving is %1", if (_playerSavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W base saving is %1", if (_baseSavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W box saving is %1", if (_boxSavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W warchest saving is %1", if (_warchestSavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W warchest money saving is %1", if (_warchestMoneySavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W spawn beacon saving is %1", if (_beaconSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	{
+		diag_log format ["[INFO] A3W %1 = %2", _x select 0, if (_x select 1) then { "ON" } else { "OFF" }];
+	}
+	forEach
+	[
+		["playerSaving", _playerSavingOn],
+		["baseSaving", _baseSavingOn],
+		["boxSaving", _boxSavingOn],
+		["staticWeaponSaving", _staticWeaponSavingOn],
+		["warchestSaving", _warchestSavingOn],
+		["warchestMoneySaving", _warchestMoneySavingOn],
+		["spawnBeaconSaving", _beaconSavingOn]
+	];
 };
 
 _setupPlayerDB spawn

@@ -141,7 +141,7 @@ class HJ_ConfigExplorer
 		{
 			top = ((0.05 * SafeZoneW) - TextSize_normal) / 4);
 			//top = 0.004;
-		}
+		};
 	};
 
 
@@ -356,7 +356,7 @@ class HJ_ConfigExplorer
 		tooltip = "copy all text to clipboard";
 		
 		action = "copyToClipboard ctrlText 113;";
-	}
+	};
 	
 	class tVersion:RscText 
 	{

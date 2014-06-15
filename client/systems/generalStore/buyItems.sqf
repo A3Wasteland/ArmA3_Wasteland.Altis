@@ -218,6 +218,24 @@ storePurchaseHandle = _this spawn
 							};
 						};
 					};
+					case "gps":
+					{
+						if ({_x in ["ItemGPS", "B_UavTerminal", "O_UavTerminal", "I_UavTerminal"]} count assignedItems player == 0) then
+						{
+							player linkItem _class;
+						}
+						else
+						{
+							if ([player, _class] call fn_fitsInventory) then
+							{
+								player addItem _class;
+							}
+							else
+							{
+								[_itemText] call _showInsufficientSpaceError;
+							};
+						};
+					};
 					// Crates transferred to genObjectsArray below
 					/*case "ammocrate":
 					{

@@ -25,7 +25,7 @@ if (typeName _customInit == "STRING") then
 {
 	if (_thisCheck) then
 	{
-		private ["_initChars", "_strLen", "_command", "_varNameChars", "_inlineStr1Quote", "_inlineStr2Quote", "_vehicleChars"];
+		private ["_initChars", "_strLen", "_command", "_varNameChars", "_inlineStr1Quote", "_inlineStr2Quote", "_i", "_vehicleChars"];
 		
 		_initChars = toArray _customInit;
 		_strLen = count _initChars;

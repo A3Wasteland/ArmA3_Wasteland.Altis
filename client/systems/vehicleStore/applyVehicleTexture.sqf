@@ -9,12 +9,14 @@
 // Generally called from buyVehicles.sqf
 
 private ["_veh", "_texture", "_selections"];
-	
+
 _veh = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _texture = [_this, 1, "", [""]] call BIS_fnc_param;
 
-if (!isNull _veh && {_texture != ""}) then
+if (!isNull _veh && _texture != "") then
 {
+	_veh setVariable ["BIS_enableRandomization", false, true];
+
 	// Apply texture to all appropriate parts
 	_selections = switch (true) do
 	{
@@ -23,7 +25,7 @@ if (!isNull _veh && {_texture != ""}) then
 		case (_veh isKindOf "MRAP_01_base_F"):            { [0,2] };
 		case (_veh isKindOf "MRAP_02_base_F"):            { [0,2] };
 		case (_veh isKindOf "MRAP_03_base_F"):            { [0,1] };
-		
+
 		case (_veh isKindOf "Truck_01_base_F"):           { [0,1,2] };
 		case (_veh isKindOf "Truck_02_base_F"):           { [0,1] };
 		case (_veh isKindOf "Truck_03_base_F"):           { [0,1] };
@@ -45,9 +47,11 @@ if (!isNull _veh && {_texture != ""}) then
 		case (_veh isKindOf "Heli_Attack_02_base_F"):     { [0,1] };
 
 		case (_veh isKindOf "Plane_Base_F"):              { [0,1] };
-		
+
 		default                                           { [0] };
 	};
-	
+
 	{ _veh setObjectTextureGlobal [_x, _texture] } forEach _selections;
+
+	_veh setVariable ["A3W_objectTexture", _texture, true];
 };

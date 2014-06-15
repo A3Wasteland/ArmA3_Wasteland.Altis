@@ -293,7 +293,7 @@ class gunshopd {
 		{
 			idc = -1;
 			onButtonClick = "[8] execVM 'client\systems\gunStore\populateGunStore.sqf'";
-			text = "Static Guns";
+			text = "Armament";
 
 			x = 0.20 * safezoneW + safezoneX;
 			y = 0.575 * safezoneH + safezoneY;//625
