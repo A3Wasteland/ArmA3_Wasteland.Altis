@@ -151,6 +151,11 @@ waituntil {!(IsNull (findDisplay 46))};
 [] execVM "addons\fpsFix\vehicleManager.sqf";
 [] execVM "addons\Lootspawner\LSclientScan.sqf";
 
+if (["A3W_groupMarkers"] call isConfigOn) then
+{
+	[] execVM "client\functions\groupMarkers.sqf";
+};
+
 // Synchronize score compensation
 {
 	if (isPlayer _x) then

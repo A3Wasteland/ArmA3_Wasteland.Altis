@@ -7,6 +7,7 @@
 A3W_startHour = 15;                 // In-game hour at mission start (0 to 23)
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 A3W_startingMoney = 100;           // Amount of money that players start with
+A3W_groupMarkers = 1;              // Show group markers with player names on the map, regardless of difficulty level (0 = no, 1 = yes)
 A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (0 = no, 1 = yes) - this also removes energy drinks from the mission
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
 A3W_gunStoreIntruderWarning = 1;   // Warn players in gunstore areas of enemy intruders (0 = no, 1 = yes)
