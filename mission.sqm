@@ -2468,7 +2468,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=165;
+		items=175;
 		class Item0
 		{
 			position[]={3612.1487,12.11851,13020.892};
@@ -3739,6 +3739,76 @@ class Mission
 			type="Empty";
 			colorName="ColorGUER";
 			angle=130;
+		};
+		class Item165
+		{
+			position[]={10982.468,27.277164,13424.412};
+			name="Town_21";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item166
+		{
+			position[]={7139.9814,113.59856,16450.223};
+			name="Town_22";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item167
+		{
+			position[]={8635.8496,182.03915,18260.393};
+			name="Town_23";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item168
+		{
+			position[]={12370.079,24.217855,15654.707};
+			name="Town_24";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item169
+		{
+			position[]={19408.883,39.291336,13239.641};
+			name="Town_25";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item170
+		{
+			position[]={20533.469,34.293266,8877.2207};
+			name="Town_26";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item171
+		{
+			position[]={21379.736,19.919834,16358.808};
+			name="Town_27";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item172
+		{
+			position[]={21690.945,15.570066,7555.9463};
+			name="Town_28";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item173
+		{
+			position[]={27029.561,20.629999,23216.389};
+			name="Town_29";
+			type="Empty";
+			colorName="ColorRed";
+		};
+		class Item174
+		{
+			position[]={18799.342,30.400841,16576.244};
+			name="Town_30";
+			type="Empty";
+			colorName="ColorRed";
 		};
 	};
 };
