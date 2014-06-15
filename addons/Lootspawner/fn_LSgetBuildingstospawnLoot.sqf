@@ -19,6 +19,8 @@ _chpSpot = _this select 4;
 
 _begintime = diag_tickTime;
 {
+	if (!(_x getVariable ["A3W_purchasedStoreObject", false]) && isNil {_x getVariable "baseSaving_hoursAlive"}) then
+	{
 	_BaPname = "";
 	_lootClass = 0;
 	_buildPosViable_list = [];
@@ -190,5 +192,6 @@ _begintime = diag_tickTime;
 		};
 	};
 	sleep 0.001;
+	};
 }forEach _BaP_list;
 //diag_log format["-- LOOTSPAWNER DEBUG BaP: %1 buildings ready, needed %2s, EXIT now --", (count _BaP_list), (diag_tickTime - _begintime)];

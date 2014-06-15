@@ -112,7 +112,9 @@ if (_key != "" && {isPlayer _player} && {_isGenStore || _isGunStore || _isVehSto
 			
 			_object = createVehicle [_class, _safePos, [], 0, "None"];
 			_objectID = netId _object;
-			
+
+			_object setVariable ["A3W_purchasedStoreObject", true];
+
 			if (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0) then
 			{
 				//assign AI to the vehicle so it can actually be used
