@@ -43,7 +43,25 @@ _npc disableAI "ANIM";
 _npc disableAI "FSM";
 
 _building = nearestBuilding _npc;
-_building allowDamage false;
+
+// Prevent structural damage, but allow shooting breakable stuff
+_building addEventHandler ["HandleDamage",
+{
+	_selection = _this select 1;
+	_damage = _this select 2;
+
+	_selArray = toArray _selection;
+	_selArray resize 4;
+
+	if ((toString _selArray) in ["","dam_"]) then
+	{
+		0
+	}
+	else
+	{
+		_damage
+	};
+}];
 
 if (isServer) then
 {
