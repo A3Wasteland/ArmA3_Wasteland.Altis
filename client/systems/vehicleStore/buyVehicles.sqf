@@ -74,8 +74,12 @@ storePurchaseHandle = _this spawn
 			case "red":         { _rgbString = "#(argb,8,8,3)color(1,0.1,0,0.3)" };
 			case "teal":        { _rgbString = "#(argb,8,8,3)color(0,1,1,0.15)" };
 			case "white":       { _rgbString = "#(argb,8,8,3)color(1,1,1,0.5)" };
-			case "yellow":      { _rgbString = "#(argb,8,8,3)color(1,0.9,0,0.3)" };
-			
+			case "yellow":      { _rgbString = "#(argb,8,8,3)color(1,0.8,0,0.4)" };
+
+			case "nato tan":    { _rgbString = "#(argb,8,8,3)color(0.584,0.565,0.515,0.3)" };
+			case "csat brown":  { _rgbString = "#(argb,8,8,3)color(0.624,0.512,0.368,0.3)" };
+			case "aaf green":   { _rgbString = "#(argb,8,8,3)color(0.546,0.59,0.363,0.2)" };
+
 			case "orange camo": { _textureFilename = "camo_fack.jpg" };
 			case "pink camo":   { _textureFilename = "camo_pank.jpg" };
 			case "red camo":    { _textureFilename = "camo_deser.jpg" };
