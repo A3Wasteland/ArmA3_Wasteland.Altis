@@ -7,9 +7,12 @@
 private ["_player", "_corpse", "_town", "_spawn", "_temp"];
 
 playerSetupComplete = false;
+9999 cutText ["", "BLACK", 0.01];
 
 _player = _this select 0;
 _corpse = _this select 1;
+
+_player setVariable ["playerSpawning", true, true];
 
 //_corpse removeAction playerMenuId;
 { _corpse removeAction _x } forEach aActionsIDs;

@@ -81,3 +81,4 @@ else
 9999 cutText ["", "BLACK IN"];
 
 playerSpawning = false;
+player setVariable ["playerSpawning", false, true];
