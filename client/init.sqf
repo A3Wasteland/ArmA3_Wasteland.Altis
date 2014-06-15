@@ -113,7 +113,6 @@ waituntil {!(IsNull (findDisplay 46))};
 // "clientRadarMarkers" addPublicVariableEventHandler {[] call updateRadarMarkers};
 "pvar_teamKillList" addPublicVariableEventHandler {[] call updateTeamKiller};
 "publicVar_teamkillMessage" addPublicVariableEventHandler {if (local (_this select 1)) then { [] spawn teamkillMessage }};
-"compensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 "promoteToGroupLeader" addPublicVariableEventHandler
 {
 	_player = _this select 1;
@@ -155,20 +154,6 @@ if (["A3W_groupMarkers"] call isConfigOn) then
 {
 	[] execVM "client\functions\groupMarkers.sqf";
 };
-
-// Synchronize score compensation
-{
-	if (isPlayer _x) then
-	{
-		_scoreVar = "addScore_" + getPlayerUID _x;
-		_scoreVal = missionNamespace getVariable _scoreVar;
-		
-		if (!isNil "_scoreVal" && {typeName _scoreVal == "SCALAR"}) then
-		{
-			_x addScore _scoreVal;
-		};
-	};
-} forEach playableUnits;
 
 // update player's spawn beaoon
 {
