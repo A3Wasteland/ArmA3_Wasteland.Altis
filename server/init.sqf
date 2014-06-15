@@ -173,6 +173,8 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 	};
 };
 
+["A3W_quit", "onPlayerDisconnected", { [_id, _uid, _name] spawn fn_onPlayerDisconnected }] call BIS_fnc_addStackedEventHandler;
+
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
 	diag_log "[INFO] A3W territory capturing is ENABLED";
