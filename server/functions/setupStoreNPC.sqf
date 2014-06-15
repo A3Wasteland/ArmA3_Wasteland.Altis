@@ -6,6 +6,7 @@
 
 #define STORE_ACTION_CONDITION "_this distance _target < 3"
 #define SELL_ACTION_CONDITION "{_obj = missionNamespace getVariable ['R3F_LOG_joueur_deplace_objet', objNull]; _obj isKindOf 'ReammoBox_F' || {_obj isKindOf 'AllVehicles'}}"
+#define SELL_BOX_ACTION_CONDITION "cursorTarget == _target"
 
 private ["_npc", "_type", "_num", "_npcName"];
 
@@ -174,4 +175,49 @@ if (isServer) then
 		};
 
 	} forEach (call storeOwnerConfig);
+};
+
+// Add sell box in front of counter
+if (hasInterface) then
+{
+	_objs = nearestObjects [_npc, ["Land_CashDesk_F"], 5];
+
+	if (count _objs > 0) then
+	{
+		_desk = _objs select 0;
+
+		_sellBox = "Box_IND_Ammo_F" createVehicleLocal getPosATL _desk;
+		_sellBox setVariable ["R3F_LOG_disabled", true];
+		_sellBox setVariable ["A3W_storeSellBox", true];
+		_sellBox setObjectTexture [0, ""]; // remove side marking
+		_sellBox allowDamage false;
+
+		clearBackpackCargo _sellBox;
+		clearMagazineCargo _sellBox;
+		clearWeaponCargo _sellBox;
+		clearItemCargo _sellBox;
+
+		_sellBox setPosASL [getPosASL _desk, [[-0.05,-0.6,0], -(getDir _desk)] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
+		_sellBox setDir (getDir _desk + 90);
+
+		_sellBox addAction ["<img image='client\icons\money.paa'/> Sell crate contents", "client\systems\selling\sellCrateItems.sqf", [true], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_BOX_ACTION_CONDITION];
+
+		_sellBox spawn
+		{
+			_sellBox = _this;
+			_boxPos = getPosATL _sellBox;
+			_boxVecDir = vectorDir _sellBox;
+			_boxVecUp = vectorUp _sellBox;
+
+			while {!isNull _sellBox} do
+			{
+				sleep 5;
+				if ((getPosATL _sellBox) distance _boxPos > 0.05 || (vectorDir _sellBox) distance _boxVecDir > 0.05) then
+				{
+					_sellBox setPosATL _boxPos;
+					_sellBox setVectorDirAndUp [_boxVecDir, _boxVecUp];
+				};
+			};
+		};
+	};
 };
