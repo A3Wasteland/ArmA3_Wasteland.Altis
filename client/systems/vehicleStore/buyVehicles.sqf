@@ -82,16 +82,34 @@ storePurchaseHandle = _this spawn
 			case "yellow camo": { _textureFilename = "camo_fuel.jpg" };
 		};
 
-		// If its a texture, get the right directory
-		if (!isNil "_textureFilename") then
+		if (_vehicle isKindOf "Kart_01_Base_F") then
 		{
-			_texture = format ["%1\%2", _textureDir, _textureFilename];
+			_oldTexDir = _textureDir;
+			_textureDir = "\A3\Soft_F_Kart\Kart_01\Data";
+
+			switch (toLower _colorText) do
+			{
+				case "black":  { _textureFilename = "Kart_01_base_black_CO.paa" };
+				case "blue":   { _textureFilename = "Kart_01_base_blue_CO.paa" };
+				case "green":  { _textureFilename = "Kart_01_base_green_CO.paa" };
+				case "yellow": { _textureFilename = "Kart_01_base_yellow_CO.paa" };
+				case "orange": { _textureFilename = "Kart_01_base_orange_CO.paa" };
+				case "red":    { _textureFilename = "Kart_01_base_red_CO.paa" };
+				case "white":  { _textureFilename = "Kart_01_base_white_CO.paa" };
+				default        { _textureDir = _oldTexDir };
+			};
 		};
 
 		// If its a straight RGBA string, we can apply it directly
 		if (!isNil "_rgbString") then
 		{
 			_texture = _rgbString;
+		};
+
+		// If its a texture, get the right directory
+		if (!isNil "_textureFilename") then
+		{
+			_texture = format ["%1\%2", _textureDir, _textureFilename];
 		};
 
 		if (!isNil "_texture") then

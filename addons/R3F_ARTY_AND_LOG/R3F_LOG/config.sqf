@@ -107,6 +107,7 @@ R3F_LOG_CFG_objets_transportables =
 	["StaticWeapon", 5],
 	["B_supplyCrate_F", 5],
 	["ReammoBox_F", 3],
+	["Kart_01_Base_F", 5],
 	["Quadbike_01_base_F", 10],
 	["Rubber_duck_base_F", 10],
 	["UAV_01_base_F", 2],

@@ -331,8 +331,19 @@ headArray = compileFinal str
 	// ["Shemag (Khaki)", "H_ShemagOpen_khk", 25, "hat"],
 	["Shemag (Tan)", "H_ShemagOpen_tan", 25, "hat"],
 	["Shemag mask (Khaki)", "H_Shemag_khk", 25, "hat"],
-	["Shemag mask (Olive)", "H_Shemag_olive", 25, "hat"]//,
-	// ["Shemag mask (Tan)", "H_Shemag_tan", 25, "hat"]
+	["Shemag mask (Olive)", "H_Shemag_olive", 25, "hat"],
+	// ["Shemag mask (Tan)", "H_Shemag_tan", 25, "hat"],
+	["Racing Helmet (Black)", "H_RacingHelmet_1_black_F", 25, "hat"],
+	["Racing Helmet (Blue)", "H_RacingHelmet_1_blue_F", 25, "hat"],
+	["Racing Helmet (Green)", "H_RacingHelmet_1_green_F", 25, "hat"],
+	["Racing Helmet (Yellow)", "H_RacingHelmet_1_yellow_F", 25, "hat"],
+	["Racing Helmet (Orange)", "H_RacingHelmet_1_orange_F", 25, "hat"],
+	["Racing Helmet (Red)", "H_RacingHelmet_1_red_F", 25, "hat"],
+	["Racing Helmet (White)", "H_RacingHelmet_1_white_F", 25, "hat"],
+	["Racing Helmet (Fuel)", "H_RacingHelmet_1_F", 25, "hat"],
+	["Racing Helmet (Bluking)", "H_RacingHelmet_2_F", 25, "hat"],
+	["Racing Helmet (Redstone)", "H_RacingHelmet_3_F", 25, "hat"],
+	["Racing Helmet (Vrana)", "H_RacingHelmet_4_F", 25, "hat"]
 ];
 
 uniformArray = compileFinal str
@@ -393,7 +404,18 @@ uniformArray = compileFinal str
 	["Polo (Burgundy)", "U_C_Poloshirt_burgundy", 25, "uni"],
 	["Polo (Blue/green)", "U_C_Poloshirt_stripped", 25, "uni"],
 	["Polo (Competitor)", "U_Competitor", 25, "uni"],
-	["Polo (Rangemaster)", "U_Rangemaster", 25, "uni"]
+	["Polo (Rangemaster)", "U_Rangemaster", 25, "uni"],
+	["Racing Suit (Black)", "U_C_Driver_1_black", 25, "uni"],
+	["Racing Suit (Blue)", "U_C_Driver_1_blue", 25, "uni"],
+	["Racing Suit (Green)", "U_C_Driver_1_green", 25, "uni"],
+	["Racing Suit (Yellow)", "U_C_Driver_1_yellow", 25, "uni"],
+	["Racing Suit (Orange)", "U_C_Driver_1_orange", 25, "uni"],
+	["Racing Suit (Red)", "U_C_Driver_1_red", 25, "uni"],
+	["Racing Suit (White)", "U_C_Driver_1_white", 25, "uni"],
+	["Racing Suit (Fuel)", "U_C_Driver_1", 25, "uni"],
+	["Racing Suit (Bluking)", "U_C_Driver_2", 25, "uni"],
+	["Racing Suit (Redstone)", "U_C_Driver_3", 25, "uni"],
+	["Racing Suit (Vrana)", "U_C_Driver_4", 25, "uni"]
 ];
 
 vestArray = compileFinal str
@@ -536,7 +558,7 @@ allGenStoreVanillaItems = compileFinal str (call genItemArray + call genObjectsA
 //Text name, classname, buy cost, spawn type, sell price (selling not implemented) or spawning color
 landArray = compileFinal str
 [
-	["Quadbike (Civilian)", "C_Quadbike_01_F", 400, "vehicle", 200],
+	["Kart", "C_Kart_01_F", 100, "vehicle"],
 	["Quadbike (NATO)", "B_Quadbike_01_F", 500, "vehicle", 250],
 	["Quadbike (CSAT)", "O_Quadbike_01_F", 500, "vehicle", 250],
 	["Quadbike (AAF)", "I_Quadbike_01_F", 500, "vehicle", 250],
