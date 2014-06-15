@@ -9,6 +9,11 @@ _player setSkill 0;
 _player setVariable ["BIS_noCoreConversations", true];
 _player allowDamage false;
 
+if (["A3W_unlimitedStamina"] call isConfigOn) then
+{
+	_player enableFatigue false;
+};
+
 enableSentences false;
 
 removeAllWeapons _player;

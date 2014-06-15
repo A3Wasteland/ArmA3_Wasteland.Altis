@@ -49,6 +49,7 @@ else
 A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
 A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
 A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
+A3W_unlimitedStamina = compileFinal str A3W_unlimitedStamina;
 
 // Broadcast config variables
 publicVariable "A3W_startingMoney";
@@ -56,6 +57,7 @@ publicVariable "A3W_showGunStoreStatus";
 publicVariable "A3W_gunStoreIntruderWarning";
 publicVariable "A3W_playerSaving";
 publicVariable "A3W_combatAbortDelay";
+publicVariable "A3W_unlimitedStamina";
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;

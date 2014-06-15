@@ -51,9 +51,21 @@ switch(_switch) do
 	{
 		_itemsArray = call customPlayerItems;
 		
-		if (playerSide == INDEPENDENT) then
+		_excludedItems = [];
+		
+		if !(playerSide in [BLUFOR,OPFOR]) then
 		{
-			_itemsArray = [_itemsArray, { _x select 1 != "warchest" }] call BIS_fnc_conditionalSelect;
+			[_excludedItems, "warchest"] call BIS_fnc_arrayPush;
+		};
+		
+		if (["A3W_unlimitedStamina"] call isConfigOn) then
+		{
+			[_excludedItems, "energydrink"] call BIS_fnc_arrayPush;
+		};
+		
+		if (count _excludedItems > 0) then
+		{
+			_itemsArray = [_itemsArray, { !((_x select 1) in _excludedItems) }] call BIS_fnc_conditionalSelect;
 		};
 	};
 	case 6: 
