@@ -32,7 +32,7 @@ _additionTwo = _additionArray call BIS_fnc_selectRandom;
 _additionArray = _additionArray - [_additionTwo];
 _additionThree = vehicleAddition2 call BIS_fnc_selectRandom;
 
-_buildingLootOn = ["A3W_buildingLoot"] call isConfigOn;
+_buildingLootOn = (["A3W_buildingLoot"] call isConfigOn || ["A3W_buildingLootWeapons"] call isConfigOn);
 
 // A3W_vehicleloot
 //Add guns and magazines, note the Global at the end
@@ -44,12 +44,12 @@ switch (["A3W_vehicleLoot", 1] call getPublicVar) do
 		_random = random 1;
 		
 		// If building loot is turned off, give everything, otherwise 50/50 chance between gun or items
-        if (_random < 0.5 || {!_buildingLootOn}) then
+        if (_random < 0.5 || !_buildingLootOn) then
 		{
             _car addWeaponCargoGlobal [_weapon, 1];
             _car addMagazineCargoGlobal [_mag, 2 + floor random 3];
         };
-		if (_random >= 0.5 || {!_buildingLootOn}) then
+		if (_random >= 0.5 || !_buildingLootOn) then
 		{
             _car addItemCargoGlobal [_additionTwo, 1];
             if (_nightTime) then { _car addMagazineCargoGlobal [_additionThree, 1] };

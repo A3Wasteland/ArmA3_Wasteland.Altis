@@ -4,7 +4,7 @@
 // if you have any doubts and/or questions about the mission find us at a3wasteland.com 
 
 // General settings
-A3W_startHour = 15;                 // In-game hour at mission start (0 to 23)
+A3W_startHour = 15;                // In-game hour at mission start (0 to 23)
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 A3W_startingMoney = 100;           // Amount of money that players start with
 A3W_groupMarkers = 1;              // Show group markers with player names on the map, regardless of difficulty level (0 = no, 1 = yes)
@@ -36,8 +36,10 @@ A3W_boxSpawning = 0;               // If serverSpawning = 1, spawn weapon crates
 A3W_baseBuilding = 1;              // If serverSpawning = 1, spawn base parts in towns (0 = no, 1 = yes)
 
 // Loot settings
-A3W_buildingLoot = 1;              // Spawn loot in all buildings (0 = no, 1 = yes)
-A3W_vehicleloot = 1;               // Level of loot added to vehicles (0 = none, 1 = weapon OR items, 2 = weapon AND items, 3 = two weapons AND items) - 2 or 3 recommended if buildingLoot = 0
+A3W_buildingLootWeapons = 0;       // Spawn weapon loot in all buildings (0 = no, 1 = yes)
+A3W_buildingLootSupplies = 1;      // Spawn supply loot (backpacks & player items) in all buildings (0 = no, 1 = yes)
+A3W_buildingLootChances = 25;      // Chance percentage that loot will spawn at each spot in a building (0 to 100)
+A3W_vehicleLoot = 2;               // Level of loot added to vehicles (0 = none, 1 = weapon OR items, 2 = weapon AND items, 3 = two weapons AND items) - 2 or 3 recommended if buildingLoot = 0
 
 // Territory settings
 A3W_territoryPayroll = 1;          // Periodically reward sides and indie groups based on how many territories they own (0 = no, 1 = yes)

@@ -15,7 +15,6 @@ swSpZadjust = false;				//needed for ArmA 2 and older Maps/Buildings -> true
 #define LOOT_SPAWN_INTERVAL 30*60	//Time (in sec.) to pass before an building spawns new loot (must also change in LSclientScan.sqf)
 #define CHANCES_FULL_FUEL_CAN 35	//Chance (in %) of a spawned fuelcan to be full instead of empty
 #define LOOT_Z_ADJUST -0.1			//High adjustment thats generally added to every spawnpoint
-#define CHANCES_LOOT_PER_SPOT 50	//Chance (in %) if a spot gets loot. Will be considered before 'spawnClassChance_list'
 
 _tmpTstPlace = [14730, 16276, 0];	//Coord's, in [x,y,z] of a preferably flat and unocupied piece of land
 
@@ -33,6 +32,23 @@ spawnClassChance_list = [
 [1.0, 1.5, 3.0, 0, 0]	// research
 ];
 
+if (["A3W_buildingLootWeapons", 1] call getPublicVar == 0) then
+{
+	{
+		_x set [0, 0];
+		_x set [1, 0];
+		_x set [2, 0];
+	} forEach spawnClassChance_list;
+};
+
+if (["A3W_buildingLootSupplies", 1] call getPublicVar == 0) then
+{
+	{
+		_x set [3, 0];
+		_x set [4, 0];
+	} forEach spawnClassChance_list;
+};
+
 //"exclcontainer_list" single array of container classnames to NOT to delete if filled
 exclcontainer_list = ["ReammoBox_F"];
 
@@ -44,6 +60,14 @@ LSusedclass_list = ["GroundWeaponHolder"];
 //DONT change these, will be filled in MAIN -------------------------------------------
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
+fn_getBuildingstospawnLoot = {
+	#include "fn_LSgetBuildingstospawnLoot.sqf"
+} call mf_compile;
+
+LSdeleter = {
+	#include "LSdeleter.sqf"
+} call mf_compile;
+
 //Buildings that can spawn loot go in this list
 #include "LSlootBuildings.sqf"
 //Loot goes in these lists
@@ -213,7 +237,7 @@ if ((count Buildingstoloot_list) == 0) then {
 		
 		if (count _buildings > 0) then
 		{
-			[_buildings, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, CHANCES_LOOT_PER_SPOT] spawn fn_getBuildingstospawnLoot;
+			[_buildings, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, ["A3W_buildingLootChances", 25] call getPublicVar] spawn fn_getBuildingstospawnLoot;
 		};
 	};
 	
@@ -238,7 +262,7 @@ if ((count Buildingstoloot_list) == 0) then {
 					_BaP_list = nearestObjects [_posPlayer, spawnBuilding_list, _spawnradius];
 					if ((count _BaP_list) > 0) then {
 						//give to spawn function
-						_hndl = [_BaP_list, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, CHANCES_LOOT_PER_SPOT] spawn fn_getBuildingstospawnLoot;
+						_hndl = [_BaP_list, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, ["A3W_buildingLootChances", 25] call getPublicVar] spawn fn_getBuildingstospawnLoot;
 						waitUntil{scriptDone _hndl};
 					};
 				};
