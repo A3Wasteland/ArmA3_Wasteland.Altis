@@ -38,13 +38,13 @@ if (_vel != 0) then
 			{
 				_fwdVel = _veh call getFwdVelocity;
 
-				if ((_onFoot && {(velocity _veh) distance [0,0,0] < abs _vel}) ||
+				if ((_onFoot && {vectorMagnitude velocity _veh < abs _vel}) ||
 				   (!_onFoot && {(_vel < 0 && _fwdVel > _vel) || (_vel > 0 && _fwdVel < _vel)})) then
 				{
 					_vectorDir = if (_onFoot) then { [getPosASL _caller, getPosASL _veh] call BIS_fnc_vectorFromXToY } else { vectorDir _veh };
 					_vectorVel = [_vectorDir, _vel / 2] call BIS_fnc_vectorMultiply;
 					_finalVel = [velocity _veh, _vectorVel] call BIS_fnc_vectorAdd;
-					_finalMag = _finalVel distance [0,0,0];
+					_finalMag = vectorMagnitude _finalVel;
 
 					if (_finalMag > abs _vel) then
 					{

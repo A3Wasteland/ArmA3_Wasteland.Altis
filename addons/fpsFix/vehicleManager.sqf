@@ -39,7 +39,7 @@ _vehicleManager =
 			   {isTouchingGround _vehicle || {!(_vehicle isKindOf "AllVehicles")} || {_vehicle isKindOf "Ship"}}) then
 			{
 				_dist = _vehicle distance positionCameraToWorld [0,0,0];
-				_vel = velocity _vehicle distance [0,0,0];
+				_vel = vectorMagnitude velocity _vehicle;
 
 				if ((_vel < 0.1 && _dist > DISABLE_DISTANCE_IMMOBILE && {!(_vehicle isKindOf "Man")}) ||
 				   {_dist > DISABLE_DISTANCE_MOBILE}) then

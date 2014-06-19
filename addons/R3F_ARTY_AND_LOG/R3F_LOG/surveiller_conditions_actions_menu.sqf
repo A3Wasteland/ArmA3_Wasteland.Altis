@@ -86,7 +86,7 @@ while {true} do
 						alive _x &&
 						_x != _objet_pointe &&
 						{isNull (_x getVariable "R3F_LOG_remorque")} &&
-						{(velocity _x) distance [0,0,0] < 6} &&
+						{vectorMagnitude velocity _x < 6} &&
 						{(getPos _x) select 2 < 2} &&
 						{!(_x getVariable "R3F_LOG_disabled")}
 					} count nearestObjects [_objet_pointe, R3F_LOG_CFG_remorqueurs, 18] > 0} &&
@@ -113,7 +113,7 @@ while {true} do
 					{{
 						alive _x &&
 						_x != _objet_pointe &&
-						{(velocity _x) distance [0,0,0] < 6} &&
+						{vectorMagnitude velocity _x < 6} &&
 						{(getPos _x) select 2 < 2} &&
 						{!(_x getVariable "R3F_LOG_disabled")}
 					} count nearestObjects [_objet_pointe, R3F_LOG_classes_transporteurs, 18] > 0} &&
@@ -139,7 +139,7 @@ while {true} do
 				{!(R3F_LOG_joueur_deplace_objet getVariable "R3F_LOG_disabled")} &&
 				{{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_remorque")} &&
-				{(velocity _objet_pointe) distance [0,0,0] < 6} &&
+				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
 				{!(_objet_pointe getVariable "R3F_LOG_disabled")} &&
 				{{_objet_pointe isKindOf (_x select 0)} count R3F_LOG_CFG_objets_transportables == 0};
@@ -153,7 +153,7 @@ while {true} do
 				{!(R3F_LOG_objet_selectionne getVariable "R3F_LOG_disabled")} &&
 				{{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_remorque")} &&
-				{(velocity _objet_pointe) distance [0,0,0] < 6} &&
+				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
 				{!(_objet_pointe getVariable "R3F_LOG_disabled")};
 		};
@@ -168,7 +168,7 @@ while {true} do
 				{R3F_LOG_joueur_deplace_objet != _objet_pointe} &&
 				{!(R3F_LOG_joueur_deplace_objet getVariable "R3F_LOG_disabled")} &&
 				{{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_classes_objets_transportables > 0} &&
-				{(velocity _objet_pointe) distance [0,0,0] < 6} &&
+				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
 				{!(_objet_pointe getVariable "R3F_LOG_disabled")};
 
@@ -180,7 +180,7 @@ while {true} do
 				{R3F_LOG_objet_selectionne != _objet_pointe} &&
 				{!(R3F_LOG_objet_selectionne getVariable "R3F_LOG_disabled")} &&
 				{{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_classes_objets_transportables > 0} &&
-				{(velocity _objet_pointe) distance [0,0,0] < 6} &&
+				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
 				{!(_objet_pointe getVariable "R3F_LOG_disabled")};
 
@@ -188,7 +188,7 @@ while {true} do
 			R3F_LOG_action_contenu_vehicule_valide =
 				alive _objet_pointe &&
 				isNull R3F_LOG_joueur_deplace_objet &&
-				{(velocity _objet_pointe) distance [0,0,0] < 6} &&
+				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
 				{!(_objet_pointe getVariable "R3F_LOG_disabled")};
 		};
@@ -212,7 +212,7 @@ while {true} do
 			driver R3F_LOG_objet_addAction == player &&
 			{{_x != R3F_LOG_objet_addAction && {!(_x getVariable "R3F_LOG_disabled")}} count nearestObjects [R3F_LOG_objet_addAction, R3F_LOG_CFG_objets_heliportables, 15] > 0} &&
 			{isNull (R3F_LOG_objet_addAction getVariable "R3F_LOG_heliporte")} &&
-			{(velocity R3F_LOG_objet_addAction) distance [0,0,0] < 6} &&
+			{vectorMagnitude velocity R3F_LOG_objet_addAction < 6} &&
 			{(getPos R3F_LOG_objet_addAction) select 2 > 1} &&
 			{!(R3F_LOG_objet_addAction getVariable "R3F_LOG_disabled")};
 
@@ -220,7 +220,7 @@ while {true} do
 		R3F_LOG_action_heliport_larguer_valide =
 			driver R3F_LOG_objet_addAction == player &&
 			{!isNull (R3F_LOG_objet_addAction getVariable "R3F_LOG_heliporte")} &&
-			//{(velocity R3F_LOG_objet_addAction) distance [0,0,0] < 15} &&
+			//{vectorMagnitude velocity R3F_LOG_objet_addAction < 15} &&
 			//{(getPos R3F_LOG_objet_addAction) select 2 < 40} &&
 			{!(R3F_LOG_objet_addAction getVariable "R3F_LOG_disabled")};
 	};

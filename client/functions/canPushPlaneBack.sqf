@@ -42,6 +42,6 @@ switch (_this select 0) do
 	isEngineOn _veh &&
 	{isTouchingGround _veh} &&
 	{_veh isKindOf "Plane"} &&
-	{(velocity _veh) distance [0,0,0] <= 10} &&
+	{vectorMagnitude velocity _veh <= 10} &&
 	{_veh call getFwdVelocity < 0.1}
 )

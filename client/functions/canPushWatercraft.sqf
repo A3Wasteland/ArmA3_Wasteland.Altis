@@ -14,6 +14,6 @@ _vel = _this select 0;
 	{getNumber (configFile >> "CfgVehicles" >> typeOf _veh >> "canFloat") > 0} &&
 	{getTerrainHeightASL _pos < 1} &&
 	{_pos select 2 <= 5} &&
-	{(velocity _veh) distance [0,0,0] <= abs _vel + 1} &&
+	{vectorMagnitude velocity _veh <= abs _vel + 1} &&
 	{if (_vel < 0) then { _veh call getFwdVelocity < 0.5 } else { _veh call getFwdVelocity > -0.5 }}
 )

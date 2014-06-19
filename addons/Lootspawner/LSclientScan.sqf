@@ -22,7 +22,7 @@ if (hasInterface) then
 		if (alive player) then
 		{
 			// jogging has 4.16..., sprinting has 5.5... so if player velocity is < 6 spawn loot
-			if ((velocity player) distance [0,0,0] < 6) then
+			if (vectorMagnitude velocity player < 6) then
 			{
 				_buildList = [];
 				

@@ -14,5 +14,5 @@ _vel = _this select 0;
 	{!canMove _veh || (_veh isKindOf "Boat_F" && {!surfaceIsWater _vPos || _vPos select 2 > -0.9})} &&
 	{_pPos select 2 >= -1.5} &&
 	{_pPos distance _vPos < 10} &&
-	{(velocity _veh) distance [0,0,0] <= abs _vel + 1}
+	{vectorMagnitude velocity _veh <= abs _vel + 1}
 )
