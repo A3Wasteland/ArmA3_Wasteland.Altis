@@ -78,7 +78,7 @@ _maxAttempts = if (isDedicated) then { 9999 } else { 999 };
 for "_attempts" from 0 to _maxAttempts do
 {
 	private "_testPos";
-	_testPos = [_pos, [[_minDist + random (_maxDist - _minDist), 0], random 360] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
+	_testPos = _pos vectorAdd ([[_minDist + random (_maxDist - _minDist), 0], random 360] call BIS_fnc_rotateVector2D);
 	
 	if (count (_testPos isFlatEmpty [_objDist, 0, _maxGradient, _objDist max 5, _waterMode, _shoreMode, objNull]) > 0) exitWith
 	{

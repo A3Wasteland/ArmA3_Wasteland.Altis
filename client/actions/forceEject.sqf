@@ -28,5 +28,5 @@ else
 
 if (!isNil "_push") then
 {
-	player setVelocity ([velocity player, _push] call BIS_fnc_vectorAdd);
+	player setVelocity ((velocity player) vectorAdd _push);
 };

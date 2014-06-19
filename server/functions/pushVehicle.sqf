@@ -43,7 +43,7 @@ if (_vel != 0) then
 				{
 					_vectorDir = if (_onFoot) then { [getPosASL _caller, getPosASL _veh] call BIS_fnc_vectorFromXToY } else { vectorDir _veh };
 					_vectorVel = [_vectorDir, _vel / 2] call BIS_fnc_vectorMultiply;
-					_finalVel = [velocity _veh, _vectorVel] call BIS_fnc_vectorAdd;
+					_finalVel = (velocity _veh) vectorAdd _vectorVel;
 					_finalMag = vectorMagnitude _finalVel;
 
 					if (_finalMag > abs _vel) then

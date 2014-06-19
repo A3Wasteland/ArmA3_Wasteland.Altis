@@ -203,7 +203,7 @@ if (hasInterface) then
 		clearWeaponCargo _sellBox;
 		clearItemCargo _sellBox;
 
-		_sellBox setPosASL [getPosASL _desk, [[-0.05,-0.6,0], -(getDir _desk)] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
+		_sellBox setPosASL ((getPosASL _desk) vectorAdd ([[-0.05,-0.6,0], -(getDir _desk)] call BIS_fnc_rotateVector2D));
 		_sellBox setDir (getDir _desk + 90);
 
 		_sellBox addAction ["<img image='client\icons\money.paa'/> Sell crate contents", "client\systems\selling\sellCrateItems.sqf", [true], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_BOX_ACTION_CONDITION];
