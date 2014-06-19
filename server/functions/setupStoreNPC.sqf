@@ -218,7 +218,7 @@ if (hasInterface) then
 			while {!isNull _sellBox} do
 			{
 				sleep 5;
-				if ((getPosATL _sellBox) distance _boxPos > 0.05 || (vectorDir _sellBox) distance _boxVecDir > 0.05) then
+				if ((getPosATL _sellBox) vectorDistance _boxPos > 0.05 || (vectorDir _sellBox) vectorDistance _boxVecDir > 0.05) then
 				{
 					_sellBox setPosATL _boxPos;
 					_sellBox setVectorDirAndUp [_boxVecDir, _boxVecUp];

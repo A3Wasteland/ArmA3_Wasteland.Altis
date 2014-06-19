@@ -39,7 +39,7 @@ while {true} do {
 						//check if any alive player is near
 						{
 							if ((isPlayer _x) && (alive _x)) then {
-								if (((getPosATL _x) distance (getPosATL _obj)) < 500)  then {
+								if ((getPosASL _x) vectorDistance (getPosASL _obj) < 500)  then {
 									_playersnear = true;
 								};
 							};

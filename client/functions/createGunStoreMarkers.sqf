@@ -15,7 +15,7 @@ _col_mixed = "ColorOrange";
 {
 	if (["GunStore", name _x] call fn_findString == 0) then
 	{
-		_npcPos = getPos _x;
+		_npcPos = getPosASL _x;
 
 		if (["A3W_showGunStoreStatus"] call isConfigOn) then
 		{
@@ -107,12 +107,12 @@ if (["A3W_showGunStoreStatus"] call isConfigOn) then
 	while {showmarkers} do
 	{
 		{
-			_npcPos = getPos _x;
+			_npc = _x;
 			_friendlyCount = 0;
 			_enemyCount = 0;
 
 			{
-				if (isPlayer _x && alive _x && {_x distance _npcPos < _radius}) then
+				if (isPlayer _x && alive _x && {_x distance _npc < _radius}) then
 				{
 					if ((playerSide in [BLUFOR,OPFOR] && {side _x == playerSide}) || {group _x == group player}) then
 					{
@@ -125,7 +125,7 @@ if (["A3W_showGunStoreStatus"] call isConfigOn) then
 				};
 			} forEach playableUnits;
 
-			if (player distance _npcPos < _radius) then
+			if (player distance _npc < _radius) then
 			{
 				if(_enemyCount > 0) then
 				{
