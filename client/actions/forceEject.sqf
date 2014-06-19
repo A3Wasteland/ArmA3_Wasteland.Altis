@@ -3,7 +3,7 @@
 
 if (!alive player) exitWith {};
 
-private ["_veh", "_push", "_vel"];
+private ["_veh", "_push", "_vecDir"];
 
 _veh = vehicle player;
 if (_veh == player) exitWith {};
@@ -15,14 +15,15 @@ if (_veh isKindOf "Plane") then
 	if (!isTouchingGround _veh) then
 	{
 		player setDir getDir _veh;
-		_push = [vectorUp _veh, 40] call BIS_fnc_vectorMultiply; // Simulate rocket seat ejection
+		_push = (vectorUp _veh) vectorMultiply 40; // Simulate rocket seat ejection
 	};
 }
 else
 {
 	if ((getPos _veh) select 2 > 4) then
 	{
-		_push = [((getPosASL _veh) vectorDiff (getPosASL player)) call BIS_fnc_unitVector, 5] call BIS_fnc_vectorMultiply; // Push 5m/s away from vehicle
+		_vecDir = (getPosASL _veh) vectorDiff (getPosASL player);
+		_push = _vecDir vectorMultiply (5 / vectorMagnitude _vecDir); // Push 5m/s away from vehicle
 	};
 };
 
