@@ -128,7 +128,7 @@ _playerSideNum = switch (playerSide) do
 				{
 					case (_isUniform):
 					{
-						if !([player, _weaponClass] call canWear) then
+						if !(player isUniformAllowed _weaponClass) then
 						{
 							_showItem = false;
 						};

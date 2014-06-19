@@ -16,7 +16,6 @@ addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
 canPushPlaneBack = "client\functions\canPushPlaneBack.sqf" call mf_compile;
 canPushVehicleOnFoot = "client\functions\canPushVehicleOnFoot.sqf" call mf_compile;
 canPushWatercraft = "client\functions\canPushWatercraft.sqf" call mf_compile;
-canWear = "client\functions\canWear.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
 getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;

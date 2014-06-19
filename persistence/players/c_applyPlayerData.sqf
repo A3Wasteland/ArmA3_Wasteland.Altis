@@ -33,7 +33,7 @@ removeHeadgear player;
 			// If uniform cannot be worn by player due to different team, try to convert it, else give default instead
 			if (_value != "") then
 			{
-				if ([player, _value] call canWear) then
+				if (player isUniformAllowed _value) then
 				{
 					player addUniform _value;
 				}
@@ -41,7 +41,7 @@ removeHeadgear player;
 				{
 					_newUniform = [player, _value] call uniformConverter;
 
-					if ([player, _newUniform] call canWear) then
+					if (player isUniformAllowed _newUniform) then
 					{
 						player addUniform _newUniform;
 					}
