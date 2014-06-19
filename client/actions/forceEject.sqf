@@ -22,7 +22,7 @@ else
 {
 	if ((getPos _veh) select 2 > 4) then
 	{
-		_push = [([getPosASL _veh, getPosASL player] call BIS_fnc_vectorDiff) call BIS_fnc_unitVector, 5] call BIS_fnc_vectorMultiply; // Push 5m/s away from vehicle
+		_push = [((getPosASL _veh) vectorDiff (getPosASL player)) call BIS_fnc_unitVector, 5] call BIS_fnc_vectorMultiply; // Push 5m/s away from vehicle
 	};
 };
 
