@@ -115,7 +115,8 @@ if (ismultiplayer && _mode == 0) then {
 			"spawnStoreObject",
 			"pushVehicle",
 			"convertTerritoryOwner",
-			"updateTerritoryMarkers"
+			"updateTerritoryMarkers",
+			"parachuteLiftedVehicle"
 		];
 		
 		_blockedParam = 

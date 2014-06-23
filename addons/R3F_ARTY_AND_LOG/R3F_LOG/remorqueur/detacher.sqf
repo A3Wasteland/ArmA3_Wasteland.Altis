@@ -65,11 +65,11 @@ else
 		
 		if (local _objet) then
 		{
-			_objet call detachTowedObject;
+			[_objet] call detachTowedObject;
 		}
 		else
 		{
-			[_objet, {_this call detachTowedObject}, false, false, _objet] call fn_vehicleInit;
+			[_objet, {[_this] call detachTowedObject}, false, false, _objet] call fn_vehicleInit;
 		};
 		
 		sleep 4;

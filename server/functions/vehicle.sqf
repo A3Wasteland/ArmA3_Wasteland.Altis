@@ -195,7 +195,7 @@ while {_run} do
 				}
 				else
 				{
-					[_towedVeh, {[_this] call detachTowedObject}, false, false, _towedVeh] call fn_vehicleInit;
+					[[netId _towedVeh], "detachTowedObject", _towedVeh] call TPG_fnc_MP;
 				};
 			};
 			
