@@ -18,9 +18,10 @@
 #define respawn_Random_Button 3413
 #define respawn_LoadTowns_Button 3414
 #define respawn_LoadBeacons_Button 3415
+#define respawn_Preload_Checkbox 3416
 
 // Check if both players are on the same side, and that our player is BLUFOR or OPFOR, or that both are in the same group
-#define FRIENDLY_CONDITION (side _x == playerSide && {playerSide in [BLUFOR,OPFOR] || {group _x == group player}})
+#define FRIENDLY_CONDITION (side _x == playerSide && {playerSide in [BLUFOR,OPFOR] || group _x == group player})
 
 #define BEACON_CHECK_RADIUS 250
 
@@ -35,11 +36,14 @@ _display displayAddEventHandler ["KeyDown", "(respawnDialogActive && _this selec
 _respawnText = _display displayCtrl respawn_Content_Text;
 _missionUptimeText = _display displayCtrl respawn_MissionUptime_Text;
 
-switch (playerSide) do
+_townsButton = _display displayCtrl respawn_LoadTowns_Button;
+_beaconsButton = _display displayCtrl respawn_LoadBeacons_Button;
+
+_side = switch (playerSide) do
 {
-	case BLUFOR: { _side = "BLUFOR" };
-	case OPFOR:  { _side = "BLUFOR" };
-	default      { _side = "Independent" };
+	case BLUFOR: { "BLUFOR" };
+	case OPFOR:  { "OPFOR" };
+	default      { "Independent" };
 };
 
 _respawnText ctrlSetStructuredText parseText (format ["Welcome to Wasteland<br/>You are on %1. Please select a spawn point.", _side]);
@@ -60,7 +64,7 @@ _disableAllButtons = "";
 
 {
 	_disableAllButtons = _disableAllButtons + (format ["ctrlEnable [%1, false]; ", _x]);
-} forEach [respawn_Random_Button, respawn_LoadTowns_Button, respawn_LoadBeacons_Button];
+} forEach [respawn_Random_Button, respawn_LoadTowns_Button, respawn_LoadBeacons_Button, respawn_Preload_Checkbox];
 
 {
 	_button = _display displayCtrl (_x select 0);
@@ -70,6 +74,8 @@ _disableAllButtons = "";
 } forEach _dynamicControlsArray;
 
 buttonSetAction [respawn_Random_Button, format ["%1 [%2,0] execVM 'client\functions\spawnAction.sqf'", _disableAllButtons, respawn_Random_Button]];
+
+(_display displayCtrl respawn_Preload_Checkbox) cbSetChecked (profileNamespace getVariable ["A3W_preloadSpawn", true]);
 
 _setPlayersInfo =
 {
@@ -86,7 +92,7 @@ _setPlayersInfo =
 	
 	if (_isBeacon) then
 	{
-		_centerPos = getPos _location;
+		_centerPos = _location call getPos3D;
 		_maxRad = BEACON_CHECK_RADIUS;
 	}
 	else // town
@@ -112,7 +118,7 @@ _setPlayersInfo =
 				}
 				else
 				{
-					_friendlyNPCs = _friendlyNPCs + 1;										
+					_friendlyNPCs = _friendlyNPCs + 1;
 				};
 			}
 			else
@@ -123,7 +129,10 @@ _setPlayersInfo =
 				}
 				else
 				{
-					_enemyNPCs = _enemyNPCs + 1;										
+					if (side _x != sideLogic) then
+					{
+						_enemyNPCs = _enemyNPCs + 1;
+					};
 				};
 			};
 		};
@@ -225,31 +234,50 @@ while {respawnDialogActive} do
 	
 	_locations = [];
 	
-	if (showBeacons) then
+	_towns = [];
 	{
-		_beacons = ["pvar_spawn_beacons", []] call getPublicVar;
+		private "_friendlyPlayers";
+		_town = _x select 0;
+		_town call _setPlayersInfo;
 		
-		{ _x call _setPlayersInfo } forEach _beacons;
+		if (_friendlyPlayers > 0) then
+		{
+			[_towns, _town] call BIS_fnc_arrayPush;
+		};
+	} forEach (call cityList);
+
+	_beacons = ["pvar_spawn_beacons", []] call getPublicVar;
+	{ _x call _setPlayersInfo } forEach _beacons;
+	_allowedBeacons = [_beacons, {_x call _isBeaconAllowed}] call BIS_fnc_conditionalSelect;
+	
+	if (ctrlEnabled (_display displayCtrl respawn_Random_Button)) then
+	{
+		if (count _towns == 0) then
+		{
+			if (ctrlEnabled _townsButton) then { _townsButton ctrlEnable false };
+		}
+		else
+		{
+			if (!ctrlEnabled _townsButton) then { _townsButton ctrlEnable true };
+		};
 		
-		_allowedBeacons = [_beacons, {_x call _isBeaconAllowed}] call BIS_fnc_conditionalSelect;
-		_locations = [_allowedBeacons, [], {_x call _getPlayerThreshold}, "DESCEND", {alive _x}] call BIS_fnc_sortBy;
+		if (count _allowedBeacons == 0) then
+		{
+			if (ctrlEnabled _beaconsButton) then { _beaconsButton ctrlEnable false };
+		}
+		else
+		{
+			if (!ctrlEnabled _beaconsButton) then { _beaconsButton ctrlEnable true };
+		};
+	};
+	
+	_locations = if (showBeacons) then
+	{
+		[_allowedBeacons, [], {_x call _getPlayerThreshold}, "DESCEND", {alive _x}] call BIS_fnc_sortBy
 	}
 	else
 	{
-		_towns = [];
-		
-		{
-			private "_friendlyPlayers";
-			_town = _x select 0;
-			_town call _setPlayersInfo;
-			
-			if (_friendlyPlayers > 0) then
-			{
-				[_towns, _town] call BIS_fnc_arrayPush;
-			};
-		} forEach (call cityList);
-		
-		_locations = [_towns, [], {_x call _getPlayerThreshold}, "DESCEND"] call BIS_fnc_sortBy;
+		[_towns, [], {_x call _getPlayerThreshold}, "DESCEND"] call BIS_fnc_sortBy
 	};
 	
 	_btnIndex = 0;
@@ -272,7 +300,7 @@ while {respawnDialogActive} do
 		{
 			if (_enemyPlayers > _friendlyPlayers) then
 			{
-				_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy majority</t>] ";
+				_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
 				_button ctrlEnable false;
 			}
 			else

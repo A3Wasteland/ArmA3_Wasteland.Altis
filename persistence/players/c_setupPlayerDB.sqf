@@ -12,29 +12,32 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 	_this spawn
 	{
 		_data = _this select 1;
-		
+
 		if (count _data > 0) then
 		{
 			playerData_alive = true;
-			
-			_pos = [_data, "Position", []] call fn_getFromPairs;
-			
-			if (count _pos > 2) then
+
+			if (profileNamespace getVariable ["A3W_preloadSpawn", true]) then
 			{
-				player groupChat "Preloading location...";
-				waitUntil {sleep 0.1; preloadCamera _pos};
+				_pos = [_data, "Position", []] call fn_getFromPairs;
+
+				if (count _pos > 2) then
+				{
+					player groupChat "Preloading location...";
+					waitUntil {sleep 0.1; preloadCamera _pos};
+				};
 			};
-			
+
 			_data call fn_applyPlayerData;
-			
+
 			//fixes the issue with saved player being GOD when they log back on the server!
 			player allowDamage true;
-			
+
 			player groupChat "Player account loaded!";
-			
+
 			execVM "client\functions\firstSpawn.sqf";
 		};
-		
+
 		playerData_loaded = true;
 	};
 };

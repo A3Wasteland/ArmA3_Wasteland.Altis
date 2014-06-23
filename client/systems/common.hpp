@@ -29,6 +29,7 @@
 #define CT_XSLIDER 43 
 #define CT_XCOMBO 44 
 #define CT_ANIMATED_TEXTURE 45 
+#define CT_CHECKBOX 77 
 #define CT_OBJECT 80 
 #define CT_OBJECT_ZOOM 81 
 #define CT_OBJECT_CONTAINER 82 
@@ -441,3 +442,39 @@ class w_RscCombo {
 	};	
 };
 
+class w_RscCheckBox
+{
+	idc = -1;
+	type = CT_CHECKBOX;
+	style = 0;
+	checked = 0;
+	w = "0.04 * (safezoneW min safezoneH)";
+	h = "0.04 * (safezoneW min safezoneH)";
+	color[] = {1, 1, 1, 0.7};
+	colorFocused[] = {1, 1, 1, 1};
+	colorHover[] = {1, 1, 1, 1};
+	colorPressed[] = {1, 1, 1, 1};
+	colorDisabled[] = {1, 1, 1, 0.2};
+	colorBackground[] = {0, 0, 0, 0};
+	colorBackgroundFocused[] = {0, 0, 0, 0};
+	colorBackgroundHover[] = {0, 0, 0, 0};
+	colorBackgroundPressed[] = {0, 0, 0, 0};
+	colorBackgroundDisabled[] = {0, 0, 0, 0};
+	textureChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	textureUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	textureFocusedChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	textureFocusedUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	textureHoverChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	textureHoverUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	texturePressedChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	texturePressedUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	textureDisabledChecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_checked_ca.paa";
+	textureDisabledUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {1, 1, 1, 1};
+	soundEnter[] = {1, 1, 1, 1};
+	soundPush[] = {1, 1, 1, 1};
+	soundClick[] = {1, 1, 1, 1};
+	soundEscape[] = {1, 1, 1, 1};
+};

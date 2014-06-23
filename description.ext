@@ -30,6 +30,7 @@ overviewPicture = "Loading.jpg";
 #include "client\gui_base.hpp"
 #include "addons\R3F_ARTY_AND_LOG\desc_include.h"
 #include "client\systems\common.hpp"
+#include "client\systems\ui_toolkit.hpp"
 #include "client\items\warchest\dialog.hpp"
 #include "client\actions\gui.hpp"
 #include "client\systems\playerMenu\dialog\player_settings.hpp"
