@@ -20,8 +20,8 @@ _strToSide =
 	};
 };
 
-_isWarchestEntry = { [_variables, "a3w_warchest", false] call BIS_fnc_getFromPairs };
-_isBeaconEntry = { [_variables, "a3w_spawnBeacon", false] call BIS_fnc_getFromPairs };
+_isWarchestEntry = { [_variables, "a3w_warchest", false] call fn_getFromPairs };
+_isBeaconEntry = { [_variables, "a3w_spawnBeacon", false] call fn_getFromPairs };
 
 _maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
 

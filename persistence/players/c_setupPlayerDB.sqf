@@ -17,7 +17,7 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 		{
 			playerData_alive = true;
 			
-			_pos = [_data, "Position", []] call BIS_fnc_getFromPairs;
+			_pos = [_data, "Position", []] call fn_getFromPairs;
 			
 			if (count _pos > 2) then
 			{

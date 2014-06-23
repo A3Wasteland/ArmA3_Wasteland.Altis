@@ -48,15 +48,15 @@ else
 
 		{
 			{
-				[_crateWeapons, _x select 0, _x select 1] call BIS_fnc_addToPairs;
+				[_crateWeapons, _x select 0, _x select 1] call fn_addToPairs;
 			} forEach ((getWeaponCargo _x) call cargoToPairs);
 
 			{
-				[_crateMags, _x select 0, _x select 1] call BIS_fnc_addToPairs;
+				[_crateMags, _x select 0, _x select 1] call fn_addToPairs;
 			} forEach ((getMagazineCargo _x) call cargoToPairs);
 
 			{
-				[_crateItems, _x select 0, _x select 1] call BIS_fnc_addToPairs;
+				[_crateItems, _x select 0, _x select 1] call fn_addToPairs;
 			} forEach ((getItemCargo _x) call cargoToPairs);
 		} forEach everyBackpack _crate;
 
@@ -93,7 +93,7 @@ else
 
 				for "_i" from 0 to (count _cfgItems - 1) do
 				{
-					[_crateItems, getText ((_cfgItems select _i) >> "item"), 1] call BIS_fnc_addToPairs;
+					[_crateItems, getText ((_cfgItems select _i) >> "item"), 1] call fn_addToPairs;
 				};
 			};
 
@@ -103,7 +103,7 @@ else
 
 				if (_found) then
 				{
-					[_crateWeapons, configName _parentCfg, _weaponEntry select 1] call BIS_fnc_addToPairs;
+					[_crateWeapons, configName _parentCfg, _weaponEntry select 1] call fn_addToPairs;
 				};
 			};
 		} forEach (+_crateWeapons);
