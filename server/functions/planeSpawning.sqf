@@ -10,7 +10,7 @@ private "_counter";
 _counter = 0;
 
 {
-	if (["planeSpawn_", _x] call fn_findString == 0) then
+	if (["planeSpawn_", _x] call fn_startsWith) then
 	{
 		if (random 1 < 0.25) then // 25% chance spawning
 		{

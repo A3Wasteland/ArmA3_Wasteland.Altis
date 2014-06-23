@@ -42,7 +42,7 @@ if (_pressedKey in actionKeys "GetOver") then
 						(_prevVel select 1) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
 						(velocity player) select 2
 					];
-					(["AovrPercMrun", animationState player] call fn_findString == -1)
+					!(["AovrPercMrun", animationState player] call fn_startsWith)
 				};
 				
 				[player, _prevMove] call switchMoveGlobal;

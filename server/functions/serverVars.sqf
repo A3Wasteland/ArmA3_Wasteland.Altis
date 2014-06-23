@@ -227,7 +227,7 @@ vehicleAddition2 =
 
 MissionSpawnMarkers = [];
 {
-	if (["Mission_", _x] call fn_findString == 0) then
+	if (["Mission_", _x] call fn_startsWith) then
 	{
 		MissionSpawnMarkers set [count MissionSpawnMarkers, [_x, false]];
 	};

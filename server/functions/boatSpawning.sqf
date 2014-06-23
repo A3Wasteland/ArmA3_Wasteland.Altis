@@ -10,7 +10,7 @@ private "_counter";
 _counter = 0;
 
 {
-	if (["boatSpawn_", _x] call fn_findString == 0) then
+	if (["boatSpawn_", _x] call fn_startsWith) then
 	{
 		if (random 1 < 0.75) then // 75% chance spawning
 		{

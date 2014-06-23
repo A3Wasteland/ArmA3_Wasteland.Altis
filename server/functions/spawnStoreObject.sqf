@@ -13,11 +13,11 @@ _class = [_this, 1, "", [""]] call BIS_fnc_param;
 _marker = [_this, 2, "", [""]] call BIS_fnc_param;
 _key = [_this, 3, "", [""]] call BIS_fnc_param;
 
-_isGenStore = (["GenStore", _marker] call fn_findString == 0);
-_isGunStore = (["GunStore", _marker] call fn_findString == 0);
-_isVehStore = (["VehStore", _marker] call fn_findString == 0);
+_isGenStore = ["GenStore", _marker] call fn_startsWith;
+_isGunStore = ["GunStore", _marker] call fn_startsWith;
+_isVehStore = ["VehStore", _marker] call fn_startsWith;
 
-if (_key != "" && {isPlayer _player} && {_isGenStore || _isGunStore || _isVehStore}) then
+if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore}) then
 {
 	_objectID = "";
 	
