@@ -12,6 +12,7 @@ if (!hasInterface) exitWith {};
 bluforPlayerIcon = call currMissionDir + "client\icons\igui_side_blufor_ca.paa";
 opforPlayerIcon = call currMissionDir + "client\icons\igui_side_opfor_ca.paa";
 indepPlayerIcon = call currMissionDir + "client\icons\igui_side_indep_ca.paa";
+revivePlayerIcon = call currMissionDir + "client\icons\revive.paa";
 
 showPlayerNames = false;
 hudPlayerIcon_uiScale = (0.55 / (getResolution select 5)) * ICON_sizeScale; // 0.55 = Interface size "Small"
@@ -48,7 +49,56 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 					_pos set [2, (_pos select 2) + 1.35]; // Torso height
 					_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
 					_color = [1,1,1,_alpha];
-					_size = (1 - ((_dist / ICON_limitDistance) * 0.6)) * hudPlayerIcon_uiScale;
+					_size = 0;
+
+					if (_unit getVariable ["FAR_isUnconscious", 0] == 1) then
+					{
+						_icon = revivePlayerIcon;
+						_size = (2 - ((_dist / ICON_limitDistance) * 0.8)) * hudPlayerIcon_uiScale;
+
+						// Revive icon blinking code
+						if (_unit getVariable ["FAR_isStabilized", 0] == 0) then
+						{
+							_blink = false;
+							_timestamp = _unit getVariable ["FAR_iconBlinkTimestamp", 0];
+							_time = time;
+
+							if (isNil {_unit getVariable "FAR_iconBlink"} || (_time >= _timestamp && _time < _timestamp + 0.3)) then
+							{
+								_blink = true;
+
+								if !(_unit getVariable ["FAR_iconBlink", false]) then
+								{
+									_unit setVariable ["FAR_iconBlink", true];
+									_unit setVariable ["FAR_iconBlinkTimestamp", _time];
+								};
+							}
+							else
+							{
+								if (_unit getVariable ["FAR_iconBlink", false]) then
+								{
+									_unit setVariable ["FAR_iconBlink", false];
+									_unit setVariable ["FAR_iconBlinkTimestamp", _time + 1.25];
+								};
+							};
+
+							if (_blink) then
+							{
+								_color = [1,0,0,_alpha];
+							};
+						}
+						else
+						{
+							if (!isNil {_unit getVariable "FAR_iconBlink"}) then
+							{
+								_unit setVariable ["FAR_iconBlink", nil];
+							};
+						};
+					}
+					else
+					{
+						_size = (1 - ((_dist / ICON_limitDistance) * 0.6)) * hudPlayerIcon_uiScale;
+					};
 
 					_text = if (showPlayerNames) then {
 						if (isPlayer _unit) then { name _unit } else { "[AI]" }

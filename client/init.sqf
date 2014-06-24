@@ -150,6 +150,7 @@ waitUntil {!isNull findDisplay 46};
 [] execVM "client\functions\drawPlayerIcons.sqf";
 [] execVM "addons\fpsFix\vehicleManager.sqf";
 [] execVM "addons\Lootspawner\LSclientScan.sqf";
+[] execVM "addons\far_revive\FAR_revive_init.sqf";
 
 if (["A3W_groupMarkers"] call isConfigOn) then
 {

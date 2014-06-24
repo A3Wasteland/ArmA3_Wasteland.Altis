@@ -33,6 +33,7 @@ overviewPicture = "Loading.jpg";
 #include "client\systems\ui_toolkit.hpp"
 #include "client\items\warchest\dialog.hpp"
 #include "client\actions\gui.hpp"
+#include "addons\far_revive\revive_gui.hpp"
 #include "client\systems\playerMenu\dialog\player_settings.hpp"
 #include "client\systems\groups\dialog\groupManagement.hpp"
 #include "client\systems\gunStore\dialog\gunshop_settings.hpp"

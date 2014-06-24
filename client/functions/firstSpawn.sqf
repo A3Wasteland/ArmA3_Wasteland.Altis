@@ -60,6 +60,8 @@ player addEventHandler ["GetIn",
 	};
 }];
 
+player addEventHandler ["HandleDamage", unitHandleDamage];
+
 if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 {
 	player addEventHandler ["FiredNear", { combatTimestamp = diag_tickTime }];
