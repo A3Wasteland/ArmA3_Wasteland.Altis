@@ -22,7 +22,7 @@ player moveInDriver _para;
 _para spawn
 {
 	sleep 4.25; // parachute deployment time
-	waitUntil {sleep 0.1; isTouchingGround _this || !alive _this};
-	sleep 1.5;
+	waitUntil {sleep 0.1; isTouchingGround _this || !alive _this || !alive player};
+	if (alive player) then { sleep 1.5 };
 	deleteVehicle _this;
 };

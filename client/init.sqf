@@ -104,7 +104,7 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 //[] execVM "client\clientEvents\onMouseWheel.sqf";
 
 //Setup Key Handler
-waituntil {!(IsNull (findDisplay 46))};
+waitUntil {!isNull findDisplay 46};
 (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call onKeyPress"];
 
 "currentDate" addPublicVariableEventHandler {[] call timeSync};
@@ -117,10 +117,10 @@ waituntil {!(IsNull (findDisplay 46))};
 {
 	_player = _this select 1;
 	_group = group _player;
-	_oldLeader = leader _group;
 
 	if (local _group) then
 	{
+		_oldLeader = leader _group;
 		_group selectLeader _player;
 		["You have been promoted to group leader.", "titleTextMessage", _player, false] call TPG_fnc_MP;
 		_oldLeader setVariable ["currentGroupIsLeader", false, true];

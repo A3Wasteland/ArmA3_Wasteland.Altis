@@ -3,15 +3,35 @@
 //	@file Author: AgentRev
 //	@file Created: 16/11/2013 21:17
 
-private ["_unit", "_weapon"];
-_unit = _this;
-_weapon = "non";
+private ["_unit", "_noLauncher", "_weapon"];
 
-switch (true) do
+if (typeName _this == "ARRAY") then
 {
-	case (currentWeapon _unit == primaryWeapon _unit):   { _weapon = "rfl" };
-	case (currentWeapon _unit == secondaryWeapon _unit): { _weapon = "lnr" };
-	case (currentWeapon _unit == handgunWeapon _unit):   { _weapon = "pst" };
+	_unit = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
+	_noLauncher = [_this, 1, false, [false]] call BIS_fnc_param;
+}
+else
+{
+	_unit = _this;
+	_noLauncher = false;
+};
+
+_weapon = switch (true) do
+{
+	case (currentWeapon _unit == primaryWeapon _unit):   { "rfl" };
+	case (currentWeapon _unit == secondaryWeapon _unit): { "lnr" };
+	case (currentWeapon _unit == handgunWeapon _unit):   { "pst" };
+	default                                              { "non" };
+};
+
+if (_noLauncher && _weapon == "lnr") then
+{
+	_weapon = switch (true) do
+	{
+		case (secondaryWeapon _unit != ""): { "pst" };
+		case (primaryWeapon _unit != ""):   { "rfl" };
+		default                             { "non" };
+	};
 };
 
 _weapon

@@ -15,7 +15,6 @@ class TeamkillDialog {
 	class controlsBackground {
 		class MainBG:w_RscPicture {
 			idc = -1;
-			text = "\ca\ui\data\ui_audio_background_ca.paa";
 			moving = true;
 
 			x = 0.25;

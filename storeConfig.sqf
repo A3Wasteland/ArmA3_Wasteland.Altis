@@ -455,7 +455,7 @@ vestArray = compileFinal str
 
 backpackArray = compileFinal str
 [
-	["Parachute", "B_Parachute", 200, "backpack"],
+	//["Parachute", "B_Parachute", 200, "backpack"],
 
 	["Assault Pack (Black)", "B_AssaultPack_blk", 150, "backpack"],
 	["Assault Pack (Green)", "B_AssaultPack_rgr", 150, "backpack"],

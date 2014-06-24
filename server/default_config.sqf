@@ -1,7 +1,8 @@
 // A3Wasteland config file
 // You will need to shutdown the server to edit settings in this file!
-// To enable base saving your server NEEDS to run with the iniDBI mod! Get it at http://forums.bistudio.com/showthread.php?167927
+// To enable base saving your server NEEDS to run iniDBI! Get the A3W Saving Pack at https://github.com/A3Wasteland/Release_Files
 // if you have any doubts and/or questions about the mission find us at a3wasteland.com 
+// This file is overriden by the external file "A3Wasteland_settings\main_config.sqf" if present
 
 // General settings
 A3W_startHour = 15;                // In-game hour at mission start (0 to 23)
@@ -12,7 +13,7 @@ A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
 A3W_gunStoreIntruderWarning = 1;   // Warn players in gunstore areas of enemy intruders (0 = no, 1 = yes)
 
-// Persistence settings (requires iniDBI addon)
+// Persistence settings (requires iniDBI)
 A3W_playerSaving = 0;              // Save player data like position, health, inventory, etc. (0 = no, 1 = yes)
 A3W_moneySaving = 1;               // If playerSaving = 1, save player money amount (0 = no, 1 = yes)
 A3W_combatAbortDelay = 60;         // If playerSaving = 1, delay in seconds for which to disable abort and respawn buttons after firing or being shot (0 = none)

@@ -6,6 +6,6 @@ _player = _this select 0;
 _move = _this select 1;
 
 pvar_switchMoveGlobal = [_player, _move];
-publicVariable "pvar_switchMoveGlobal";
+[] spawn { publicVariable "pvar_switchMoveGlobal" };
 
 _player switchMove _move;

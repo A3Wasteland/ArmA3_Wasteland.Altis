@@ -207,10 +207,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 	
 	if (!isNil "drn_JIPWeatherSync") then
 	{
-		sleep 0.5;
-		skipTime 1;
-		sleep 0.5;
-		skipTime -1;
+		forceWeatherChange;
 		drn_JIPWeatherSync = nil;
 	};
     
@@ -356,10 +353,7 @@ if (isServer) then {
 	
 	if (!isNil "drn_JIPWeatherSync") then
 	{
-		sleep 0.5;
-		skipTime 1;
-		sleep 0.5;
-		skipTime -1;
+		forceWeatherChange;
 		drn_JIPWeatherSync = nil;
 	};
     

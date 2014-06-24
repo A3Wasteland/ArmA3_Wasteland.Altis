@@ -26,7 +26,7 @@ removeHeadgear player;
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
 		case "Money": { player setVariable ["cmoney", _value, true] };
-		case "Position": { waitUntil {sleep 0.1; preloadCamera _value}; player setPosATL _value };
+		case "Position": { player setPosATL _value };
 		case "Direction": { player setDir _value };
 		case "Uniform":
 		{

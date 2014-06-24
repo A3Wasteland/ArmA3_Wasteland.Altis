@@ -56,13 +56,12 @@ mf_compile = compileFinal
 mf_init =
 {
 	private "_path";
-	_path = "";
-	if (typeName _this == "STRING") then {
-		_path = _this;
+	_path = if (typeName _this == "STRING") then {
+		_this
 	} else {
-		_path = format["%1\%2", _this select 0, _this select 1];
+		format ["%1\%2", _this select 0, _this select 1]
 	};
-	_path call compile preProcessFileLineNumbers format["%1\init.sqf", _path];
+	_path call compile preProcessFileLineNumbers format ["%1\init.sqf", _path];
 } call mf_compile;
 
 _clientFunc = "client\functions";
@@ -98,8 +97,7 @@ vehicleHandleDamage = [_serverFunc, "vehicleHandleDamage.sqf"] call mf_compile;
 
 "pvar_switchMoveGlobal" addPublicVariableEventHandler
 {
-	_array = _this select 1;
-	_player = _array select 0;
-	_move = _array select 1;
+	_player = (_this select 1) select 0;
+	_move = (_this select 1) select 1;
 	_player switchMove _move;
 };

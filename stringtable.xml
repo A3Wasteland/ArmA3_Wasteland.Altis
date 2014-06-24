@@ -121,7 +121,7 @@
 	</Package>
 	<Package name="Dialogs">
 		<Key ID="STR_WL_dialog_TeamkillText">
-			<English>You got team-killed by %2 player %1.&lt;br/&gt;&lt;br/&gt;If this was an accident then forgive them, otherwise they should explain their actions.&lt;br/&gt;&lt;br/&gt;If the player does not explain why then select Punish or Announce.</English>
+			<English>You got team-killed by %2 player %1&lt;br/&gt;&lt;br/&gt;If this was an accident then forgive them, otherwise they should explain their actions.&lt;br/&gt;&lt;br/&gt;If the player does not explain why then select Punish or Announce.</English>
 		</Key>
 	</Package>
 	<Package name="Actions">

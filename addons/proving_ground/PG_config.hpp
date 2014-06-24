@@ -17,9 +17,9 @@ class balca_debug_main
 /////////////
 
 	class balca_btn_control_group : balca_debug_control_group {
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = 1;
-		y = safezoneY; 
+		y = safezoneY_PG; 
 		h = 1;
 
 		class Controls {
@@ -254,8 +254,8 @@ class balca_debug_veh_creator
 		idc = -1;
 		type = CT_STATIC;
 		style = ST_PICTURE;
-		x = safezoneX-border_offsetX; w = column_weight*3 + border_offsetX*3;
-		y = safezoneY-border_offsetY-btn_height*3; h = display_height+border_offsetY*2+btn_height*4;
+		x = safezoneX_PG-border_offsetX; w = column_weight*3 + border_offsetX*3;
+		y = safezoneY_PG-border_offsetY-btn_height*3; h = display_height+border_offsetY*2+btn_height*4;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -271,10 +271,10 @@ class balca_debug_veh_creator
 	class balca_VC_vehlist : balca_debug_list
 	{
 		idc = balca_VC_vehlist_IDC;
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*4 - (safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*4 - (safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		onLBSelChanged= "[1] call c_proving_ground_fnc_create_vehicle";
@@ -284,9 +284,9 @@ class balca_debug_veh_creator
 	class balca_VC_vehicle_shortcut : balca_debug_image
 	{
 		idc = balca_VC_vehicle_shortcut_IDC;
-		x = safezoneX + column_weight; 
+		x = safezoneX_PG + column_weight; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2;
+		y = safezoneY_PG + offset_top*2;
 		h = img_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -298,10 +298,10 @@ class balca_debug_veh_creator
 		idc = balca_VC_veh_info_IDC;
 		type = CT_STRUCTURED_TEXT+ST_LEFT;
 		size = 0.023;
-		x = safezoneX + column_weight*2; 
+		x = safezoneX_PG + column_weight*2; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*3-(safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*3-(safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -309,104 +309,104 @@ class balca_debug_veh_creator
 
 	class balca_VC_fill_static : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*0; w = btn_weight-column_div;
-		y = safezoneY - btn_height;
+		x = safezoneX_PG + border_offsetX + btn_weight*0; w = btn_weight-column_div;
+		y = safezoneY_PG - btn_height;
 		text = "Static";
 		action = "[0,0] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_fill_car : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*0; w = btn_weight-column_div;
-		y = safezoneY;
+		x = safezoneX_PG + border_offsetX + btn_weight*0; w = btn_weight-column_div;
+		y = safezoneY_PG;
 		text = "Car";
 		action = "[0,1] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_fill_truck : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*1; w = btn_weight-column_div;
-		y = safezoneY - btn_height;
+		x = safezoneX_PG + border_offsetX + btn_weight*1; w = btn_weight-column_div;
+		y = safezoneY_PG - btn_height;
 		text = "Truck";
 		action = "[0,2] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_fill_APC : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*1; w = btn_weight-column_div;
-		y = safezoneY;
+		x = safezoneX_PG + border_offsetX + btn_weight*1; w = btn_weight-column_div;
+		y = safezoneY_PG;
 		text = "APC";
 		action = "[0,3] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_fill_tank : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*2; w = btn_weight-column_div;
-		y = safezoneY - btn_height;
+		x = safezoneX_PG + border_offsetX + btn_weight*2; w = btn_weight-column_div;
+		y = safezoneY_PG - btn_height;
 		text = "Tank";
 		action = "[0,4] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_fill_helicopter : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*2; w = btn_weight-column_div;
-		y = safezoneY;
+		x = safezoneX_PG + border_offsetX + btn_weight*2; w = btn_weight-column_div;
+		y = safezoneY_PG;
 		text = "Helicopter";
 		action = "[0,5] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_fill_plane : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*3; w = btn_weight-column_div;
-		y = safezoneY - btn_height;
+		x = safezoneX_PG + border_offsetX + btn_weight*3; w = btn_weight-column_div;
+		y = safezoneY_PG - btn_height;
 		text = "Plane";
 		action = "[0,6] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_fill_ship : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*3; w = btn_weight-column_div;
-		y = safezoneY;
+		x = safezoneX_PG + border_offsetX + btn_weight*3; w = btn_weight-column_div;
+		y = safezoneY_PG;
 		text = "Ship";
 		action = "[0,7] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_class_to_clipboard_btn : balca_debug_btn
 	{
-		x = safezoneX; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom-btn_height;
+		x = safezoneX_PG; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom-btn_height;
 		text = "Class to clipboard";
 		action = "[4] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_info_to_clipboard_btn : balca_debug_btn
 	{
-		x = safezoneX+column_weight*2; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom-btn_height;
+		x = safezoneX_PG+column_weight*2; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom-btn_height;
 		text = "Info to clipboard";
 		action = "[5] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_create_veh_core_btn : balca_debug_btn
 	{
-		x = safezoneX+column_weight; w = column_weight-column_div;
-		y = safezoneY + offset_top*2+img_height;
+		x = safezoneX_PG+column_weight; w = column_weight-column_div;
+		y = safezoneY_PG + offset_top*2+img_height;
 		text = "Create at core";
 		action = "[2] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_create_veh_player_btn : balca_debug_btn
 	{
-		x = safezoneX+column_weight; w = column_weight-column_div;
-		y = safezoneY + offset_top*2+img_height + btn_height;
+		x = safezoneX_PG+column_weight; w = column_weight-column_div;
+		y = safezoneY_PG + offset_top*2+img_height + btn_height;
 		text = "Create at player";
 		action = "[3] call c_proving_ground_fnc_create_vehicle"; 
 	};
 
 	class balca_VC_close_btn : balca_debug_btn
 	{
-		x = safezoneX+column_weight*2; w = btn_weight;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG+column_weight*2; w = btn_weight;
+		y = display_height-safezoneY_PG- offset_bottom;
         text = "Back";
         action = "closeDialog 0; createDialog 'balca_debug_main'";
 	};
@@ -447,8 +447,8 @@ class balca_debug_weap_creator
 		idc = -1;
 		type = CT_STATIC;
 		style = ST_PICTURE;
-		x = safezoneX-border_offsetX; w = column_weight*3 + border_offsetX*3;
-		y = safezoneY-border_offsetY-btn_height*3; h = display_height+border_offsetY*2+btn_height*4;
+		x = safezoneX_PG-border_offsetX; w = column_weight*3 + border_offsetX*3;
+		y = safezoneY_PG-border_offsetY-btn_height*3; h = display_height+border_offsetY*2+btn_height*4;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -464,10 +464,10 @@ class balca_debug_weap_creator
 	class balca_WC_weaplist : balca_debug_list
 	{
 		idc = balca_WC_weaplist_IDC;
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*4 - (safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*4 - (safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		onLBSelChanged= "[1] call c_proving_ground_fnc_create_weapon;";
@@ -477,10 +477,10 @@ class balca_debug_weap_creator
 	class balca_WC_magazinelist : balca_debug_list
 	{
 		idc = balca_WC_magazinelist_IDC;
-		x = safezoneX + column_weight; 
+		x = safezoneX_PG + column_weight; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2 + img_height_wc; 
-		h = display_height - offset_bottom*4 - img_height_wc-(safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2 + img_height_wc; 
+		h = display_height - offset_bottom*4 - img_height_wc-(safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		onLBSelChanged= "[3] call c_proving_ground_fnc_create_weapon;";
@@ -490,9 +490,9 @@ class balca_debug_weap_creator
 	class balca_WC_weapon_shortcut : balca_debug_image
 	{
 		idc = balca_WC_weapon_shortcut_IDC;
-		x = safezoneX + column_weight; 
+		x = safezoneX_PG + column_weight; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2;
+		y = safezoneY_PG + offset_top*2;
 		h = img_height_wc;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -504,9 +504,9 @@ class balca_debug_weap_creator
 		idc = balca_WC_weap_info_IDC;
 		type = CT_STRUCTURED_TEXT+ST_LEFT;
 		size = 0.023;
-		x = safezoneX + column_weight*2; 
+		x = safezoneX_PG + column_weight*2; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2;
+		y = safezoneY_PG + offset_top*2;
 		h = img_height_wc;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -518,10 +518,10 @@ class balca_debug_weap_creator
 		idc = balca_WC_magazine_info_IDC;
 		type = CT_STRUCTURED_TEXT;
 		size = 0.023;
-		x = safezoneX + column_weight*2; 
+		x = safezoneX_PG + column_weight*2; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2 + img_height_wc; 
-		h = display_height - offset_bottom*4 - img_height_wc-(safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2 + img_height_wc; 
+		h = display_height - offset_bottom*4 - img_height_wc-(safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -529,112 +529,112 @@ class balca_debug_weap_creator
 
 	class balca_WC_fill_rifles : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*0; w = btn_weight-column_div;
-		y = safezoneY - btn_height;
+		x = safezoneX_PG + border_offsetX + btn_weight*0; w = btn_weight-column_div;
+		y = safezoneY_PG - btn_height;
 		text = "Rifles";
 		action = "[0,0] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_fill_scoped_rifles : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*0; w = btn_weight-column_div;
-		y = safezoneY;
+		x = safezoneX_PG + border_offsetX + btn_weight*0; w = btn_weight-column_div;
+		y = safezoneY_PG;
 		text = "Scoped";
 		action = "[0,1] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_fill_heavy : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*1; w = btn_weight-column_div;
-		y = safezoneY - btn_height;
+		x = safezoneX_PG + border_offsetX + btn_weight*1; w = btn_weight-column_div;
+		y = safezoneY_PG - btn_height;
 		text = "Heavy";
 		action = "[0,2] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_fill_launchers : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*1; w = btn_weight-column_div;
-		y = safezoneY;
+		x = safezoneX_PG + border_offsetX + btn_weight*1; w = btn_weight-column_div;
+		y = safezoneY_PG;
 		text = "Launchers ";
 		action = "[0,3] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_fill_pistols : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*2; w = btn_weight-column_div;
-		y = safezoneY - btn_height;
+		x = safezoneX_PG + border_offsetX + btn_weight*2; w = btn_weight-column_div;
+		y = safezoneY_PG - btn_height;
 		text = "Pistols";
 		action = "[0,4] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_fill_grenades : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*2; w = btn_weight-column_div;
-		y = safezoneY;
+		x = safezoneX_PG + border_offsetX + btn_weight*2; w = btn_weight-column_div;
+		y = safezoneY_PG;
 		text = "Grenades";
 		action = "[0,5] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_fill_binocular : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*3; w = btn_weight-column_div;
-		y = safezoneY - btn_height;
+		x = safezoneX_PG + border_offsetX + btn_weight*3; w = btn_weight-column_div;
+		y = safezoneY_PG - btn_height;
 		text = "Binoculars";
 		action = "[0,6] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_fill_items : balca_debug_btn
 	{
-		x = safezoneX + border_offsetX + btn_weight*3; w = btn_weight-column_div;
-		y = safezoneY;
+		x = safezoneX_PG + border_offsetX + btn_weight*3; w = btn_weight-column_div;
+		y = safezoneY_PG;
 		text = "Items";
 		action = "[0,7] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_weap_to_clipboard_btn : balca_debug_btn
 	{
-		x = safezoneX; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom-btn_height;
+		x = safezoneX_PG; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom-btn_height;
 		text = "Class to clipboard";
 		action = "[5] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_ammo_to_clipboard_btn : balca_debug_btn
 	{
-		x = safezoneX+column_weight; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom-btn_height;
+		x = safezoneX_PG+column_weight; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom-btn_height;
 		text = "Ammo to clipboard";
 		action = "[6] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_create_weap_btn : balca_debug_btn
 	{
-		x = safezoneX; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "Get weapon";
 		action = "[2] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_create_magazine_btn : balca_debug_btn
 	{
-		x = safezoneX+column_weight; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG+column_weight; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "Get magazine";
 		action = "[4] call c_proving_ground_fnc_create_weapon;"; 
 	};
 
 	class balca_WC_clear_magazines_btn : balca_debug_btn
 	{
-		x = safezoneX+column_weight*2; w = column_weight-column_div;
-		y = display_height-safezoneY-offset_bottom-btn_height;
+		x = safezoneX_PG+column_weight*2; w = column_weight-column_div;
+		y = display_height-safezoneY_PG-offset_bottom-btn_height;
 		text = "Clear magazines";
 		action = "c_proving_ground_MAGS = [];{player removeMagazine _x} forEach (magazines player);"; 
 	};
 
 	class balca_WC_close_btn : balca_debug_btn
 	{
-		x = safezoneX+column_weight*2; w = btn_weight;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG+column_weight*2; w = btn_weight;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "Close";
 		action = "closeDialog 0;"; 
 	};
@@ -662,8 +662,8 @@ class balca_debug_console
 		idc = -1;
 		type = CT_STATIC;
 		style = ST_PICTURE;
-		x = safezoneX-border_offsetX; w = column_weight*3 + border_offsetX*4;
-		y = safezoneY-border_offsetY; h = display_height+border_offsetY*2;
+		x = safezoneX_PG-border_offsetX; w = column_weight*3 + border_offsetX*4;
+		y = safezoneY_PG-border_offsetY; h = display_height+border_offsetY*2;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -679,17 +679,17 @@ class balca_debug_console
 	class balca_debug_console_edit : balca_debug_edit
 	{
 		idc = balca_debug_console_edit_IDC;
-		x = safezoneX; w = column_weight*3;
-		y = safezoneY + offset_top*2; h = str_height*3;
+		x = safezoneX_PG; w = column_weight*3;
+		y = safezoneY_PG + offset_top*2; h = str_height*3;
 		text = "enter command here";
 	};
 
 	class balca_debug_console_result : balca_debug_edit
 	{
 		idc = balca_debug_console_result_IDC;
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = column_weight*3;
-		y = safezoneY + offset_top*2 + str_height*3;
+		y = safezoneY_PG + offset_top*2 + str_height*3;
 		h = str_height*2;
 		text = "";
 	};
@@ -697,10 +697,10 @@ class balca_debug_console
 	class balca_debug_console_history : balca_debug_list
 	{
 		idc = balca_debug_console_history_IDC;
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = column_weight*3;
-		y = safezoneY + offset_top*2 + str_height*5; 
-		h = display_height - offset_bottom*4 - str_height*5 - (safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2 + str_height*5; 
+		h = display_height - offset_bottom*4 - str_height*5 - (safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		onLBSelChanged= "[2] call c_proving_ground_fnc_exec_console;";
@@ -708,9 +708,9 @@ class balca_debug_console
 	};
 
 	class balca_debug_console_control_group : balca_debug_control_group {
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = 1;
-		y = display_height-safezoneY- offset_bottom-btn_height; 
+		y = display_height-safezoneY_PG- offset_bottom-btn_height; 
 		h = str_height*4;
 		class Controls {
 			class balca_debug_console_exec_btn : balca_debug_btn
@@ -787,8 +787,8 @@ class balca_target_display
 		idc = -1;
 		type = CT_STATIC;
 		style = ST_PICTURE;
-		x = safezoneX-border_offsetX; w = column_weight*3 + border_offsetX*3;
-		y = safezoneY-border_offsetY-btn_height*3; h = display_height+border_offsetY*2+btn_height*4;
+		x = safezoneX_PG-border_offsetX; w = column_weight*3 + border_offsetX*3;
+		y = safezoneY_PG-border_offsetY-btn_height*3; h = display_height+border_offsetY*2+btn_height*4;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -806,10 +806,10 @@ class balca_target_display
 	class balca_target_vehlist : balca_debug_list
 	{
 		idc = balca_target_vehlist_IDC;
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*4 - (safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*4 - (safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		onLBSelChanged= "[2] call c_proving_ground_fnc_target;";
@@ -819,9 +819,9 @@ class balca_target_display
 	class balca_target_vehicle_shortcut : balca_debug_image
 	{
 		idc = balca_target_vehicle_shortcut_IDC;
-		x = safezoneX + column_weight; 
+		x = safezoneX_PG + column_weight; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2;
+		y = safezoneY_PG + offset_top*2;
 		h = img_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -833,10 +833,10 @@ class balca_target_display
 		idc = balca_target_veh_info_IDC;
 		type = CT_STRUCTURED_TEXT+ST_LEFT;
 		size = 0.023;
-		x = safezoneX + column_weight; 
+		x = safezoneX_PG + column_weight; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2 + img_height; 
-		h = display_height - offset_bottom*3 - img_height-(safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2 + img_height; 
+		h = display_height - offset_bottom*3 - img_height-(safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -845,17 +845,17 @@ class balca_target_display
 	class balca_target_map : balca_debug_map
 	{
 		idc = balca_target_map_IDC;
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = column_weight*2 - column_div;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*4 - (safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*4 - (safezoneY_PG + offset_top*2);
 		onMouseButtonDblClick = "[9,((_this select 0) ctrlMapScreenToWorld [_this select 2,_this select 3])] call c_proving_ground_fnc_target";
 	};
 
 	class balca_target_type_control_group : balca_debug_control_group {
-		x = safezoneX + border_offsetX + btn_weight*0; 
+		x = safezoneX_PG + border_offsetX + btn_weight*0; 
 		w = 1;
-		y = safezoneY - btn_height; 
+		y = safezoneY_PG - btn_height; 
 		h = str_height*4;
 
 		class Controls {
@@ -926,10 +926,10 @@ class balca_target_display
 	};//end control group
 
 	class balca_target_management_control_group : balca_debug_control_group {
-		x = safezoneX+column_weight*2; 
+		x = safezoneX_PG+column_weight*2; 
 		w = 1;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*4 - (safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*4 - (safezoneY_PG + offset_top*2);
 		
 		class Controls {
 			class balca_target_mode_desc : balca_debug_text
@@ -1254,8 +1254,8 @@ class balca_target_display
 
 	class balca_target_close_btn : balca_debug_btn
 	{
-		x = safezoneX + btn_weight*3; w = btn_weight;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG + btn_weight*3; w = btn_weight;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "Close";
 		action = "closeDialog 0;"; 
 	};
@@ -1280,8 +1280,8 @@ class balca_sound_player
 		idc = -1;
 		type = CT_STATIC;
 		style = ST_PICTURE;
-		x = safezoneX-border_offsetX; w = column_weight*3 + border_offsetX*3;
-		y = safezoneY-border_offsetY; h = display_height+border_offsetY*2+btn_height*1;
+		x = safezoneX_PG-border_offsetX; w = column_weight*3 + border_offsetX*3;
+		y = safezoneY_PG-border_offsetY; h = display_height+border_offsetY*2+btn_height*1;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -1297,10 +1297,10 @@ class balca_sound_player
 	class balca_soundlist : balca_debug_list
 	{
 		idc = balca_soundlist_IDC;
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = column_weight*3 - column_div;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*4 - (safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*4 - (safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		onLBSelChanged= "";
@@ -1309,16 +1309,16 @@ class balca_sound_player
 
 	class balca_clipboard_btn : balca_debug_btn
 	{
-		x = safezoneX; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "to Clipboard";
 		action = "[2] call c_proving_ground_fnc_sound;"; 
 	};
 
 	class balca_close_btn : balca_debug_btn
 	{
-		x = safezoneX + column_weight*2; w = btn_weight;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG + column_weight*2; w = btn_weight;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "Close";
 		action = "closeDialog 0;"; 
 	};
@@ -1344,8 +1344,8 @@ class balca_statistics
 		idc = -1;
 		type = CT_STATIC;
 		style = ST_PICTURE;
-		x = safezoneX-border_offsetX; w = column_weight*3 + border_offsetX*3;
-		y = safezoneY-border_offsetY; h = display_height+border_offsetY*2+btn_height*1;
+		x = safezoneX_PG-border_offsetX; w = column_weight*3 + border_offsetX*3;
+		y = safezoneY_PG-border_offsetY; h = display_height+border_offsetY*2+btn_height*1;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -1363,10 +1363,10 @@ class balca_statistics
 		idc = balca_stat_text_IDC;
 		type = CT_STRUCTURED_TEXT+ST_LEFT;
 		size = 0.023;
-		x = safezoneX; 
+		x = safezoneX_PG; 
 		w = column_weight - column_div;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*3 -(safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*3 -(safezoneY_PG + offset_top*2);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -1374,24 +1374,24 @@ class balca_statistics
 
 	class balca_reset_btn : balca_debug_btn
 	{
-		x = safezoneX; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "Reset";
 		action = "[1] call c_proving_ground_fnc_statistics;"; 
 	};
 
 	class balca_clipboard_btn : balca_debug_btn
 	{
-		x = safezoneX + column_weight; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG + column_weight; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "to Clipboard";
 		action = "[2] call c_proving_ground_fnc_statistics;"; 
 	};
 
 	class balca_close_btn : balca_debug_btn
 	{
-		x = safezoneX + column_weight*2; w = btn_weight;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG + column_weight*2; w = btn_weight;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "Close";
 		action = "closeDialog 0;"; 
 	};
@@ -1415,8 +1415,8 @@ class balca_environment
 		idc = -1;
 		type = CT_STATIC;
 		style = ST_PICTURE;
-		x = safezoneX-border_offsetX; w = column_weight*1 + border_offsetX*3;
-		y = safezoneY-border_offsetY; h = display_height+border_offsetY*2+btn_height*1;
+		x = safezoneX_PG-border_offsetX; w = column_weight*1 + border_offsetX*3;
+		y = safezoneY_PG-border_offsetY; h = display_height+border_offsetY*2+btn_height*1;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
 		text = "";
@@ -1430,10 +1430,10 @@ class balca_environment
 /////////////
 
 	class balca_env_control_group : balca_debug_control_group {
-		x = safezoneX+column_weight*0; 
+		x = safezoneX_PG+column_weight*0; 
 		w = 1;
-		y = safezoneY + offset_top*2; 
-		h = display_height - offset_bottom*4 - (safezoneY + offset_top*2);
+		y = safezoneY_PG + offset_top*2; 
+		h = display_height - offset_bottom*4 - (safezoneY_PG + offset_top*2);
 		
 		class Controls {
 
@@ -1574,8 +1574,8 @@ class balca_environment
 
 	class balca_apply_btn : balca_debug_btn
 	{
-		x = safezoneX; w = column_weight-column_div;
-		y = display_height-safezoneY- offset_bottom;
+		x = safezoneX_PG; w = column_weight-column_div;
+		y = display_height-safezoneY_PG- offset_bottom;
 		text = "Apply";
 		action = "[1] call c_proving_ground_fnc_environment;"; 
 	};

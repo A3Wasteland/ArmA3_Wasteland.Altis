@@ -67,65 +67,36 @@ savePlayerHandle = _this spawn
 		[_gear, ["AssignedItems", assignedItems player]] call BIS_fnc_arrayPush;
 
 
-		_magsUniform = (getMagazineCargo uniformContainer player) call cargoToPairs;
-		_magsVest = (getMagazineCargo vestContainer player) call cargoToPairs;
-		_magsBackpack = (getMagazineCargo backpackContainer player) call cargoToPairs;
-
-		_allCargoMags = [];
+		_uMags = [];
+		_vMags = [];
+		_bMags = [];
 
 		{
-			_allCargoMags set [count _allCargoMags, [_x select 0, _x select 1, 0]];
-		} forEach _magsUniform;
-
-		{
-			_allCargoMags set [count _allCargoMags, [_x select 0, _x select 1, 1]];
-		} forEach _magsVest;
-
-		{
-			_allCargoMags set [count _allCargoMags, [_x select 0, _x select 1, 2]];
-		} forEach _magsBackpack;
-
-		// The reason why cargo magazines are acquired this way is because that magazinesAmmoFull does not return the
-		// proper container of handgrenades assigned to special muzzles ("SmokeShellMuzzle", "ChemlightGreenMuzzle", etc.)
-		// So, by gathering magazine cargos, they can be properly restored to their original container.
-
-		_removeCargoMag =
-		{
-			// This function removes one instance of a magazine type from _allCargoMags.
-			// It is used in the magazinesAmmoFull loop below to remove partial mags from _allCargoMags,
-			// as the contents of _allCargoMags are saved and used to restore full mags in their original container.
-
-			private ["_mag", "_container", "_allCargoMags", "_cargoMag", "_cargoCount", "_cargoContainer"];
-			_mag = _this select 0;
-			_container = _this select 1;
-			_allCargoMags = +(_this select 2);
-
-			switch (toLower _container) do
-			{
-				case "uniform":  { _container = 0 };
-				case "vest":     { _container = 1 };
-				case "backpack": { _container = 2 };
-				default          { _container = -1 };
-			};
+			_magArr = _x select 0;
 
 			{
-				_cargoMag = _x select 0;
-				_cargoCount = _x select 1;
-				_cargoContainer = _x select 2;
+				_mag = _x select 0;
+				_ammo = _x select 1;
 
-				if (_mag == _cargoMag && {_cargoContainer == _container || {_container == -1}}) exitWith
+				if (_ammo == getNumber (configFile >> "CfgMagazines" >> _mag >> "count")) then
 				{
-					_x set [1, _cargoCount - 1];
-
-					if (_x select 1 <= 0) then
+					[_magArr, _mag, 1] call fn_addToPairs;
+				}
+				else
+				{
+					if (_ammo > 0) then
 					{
-						_allCargoMags = [_allCargoMags, _forEachIndex] call BIS_fnc_removeIndex;
+						_partialMags set [count _partialMags, [_mag, _ammo]];
 					};
 				};
-			} forEach _allCargoMags;
-
-			_allCargoMags
-		};
+			} forEach magazinesAmmoCargo (_x select 1);
+		}
+		forEach
+		[
+			[_uMags, uniformContainer player],
+			[_vMags, vestContainer player],
+			[_bMags, backpackContainer player]
+		];
 
 		_partialMags = [];
 		_loadedMags = [];
@@ -133,47 +104,27 @@ savePlayerHandle = _this spawn
 		{
 			_mag = _x select 0;
 			_ammo = _x select 1;
-			_loadedInWeapon = (_x select 2 && {_x select 3 != 0}); // if loaded and not hand grenade
-			_container = _x select 4;
+			_loaded = _x select 2;
+			_type = _x select 3;
 
-			if (_loadedInWeapon) then
+			// if loaded in weapon, not empty, and not hand grenade
+			if (_loaded && _ammo > 0 && _type != 0) then
 			{
-				if (_ammo > 0) then { _loadedMags set [count _loadedMags, [_mag, _ammo]] };
-			}
-			else
-			{
-				if (_ammo < getNumber (configFile >> "CfgMagazines" >> _mag >> "count")) then
-				{
-					if (_ammo > 0) then { _partialMags set [count _partialMags, [_mag, _ammo]] };
-					_allCargoMags = [_mag, _container, _allCargoMags] call _removeCargoMag;
-				};
+				_loadedMags set [count _loadedMags, [_mag, _ammo]];
 			};
 		} forEach magazinesAmmoFull player;
 
-		_fullMagsUniform = [];
-		_fullMagsVest = [];
-		_fullMagsBackpack = [];
-
-		{
-			switch (_x select 2) do
-			{
-				case 0: { _fullMagsUniform set [count _fullMagsUniform, [_x select 0, _x select 1]] };
-				case 1: { _fullMagsVest set [count _fullMagsVest, [_x select 0, _x select 1]] };
-				case 2: { _fullMagsBackpack set [count _fullMagsBackpack, [_x select 0, _x select 1]] };
-			};
-		} forEach _allCargoMags;
-
 		[_data, ["UniformWeapons", (getWeaponCargo uniformContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
 		[_data, ["UniformItems", (getItemCargo uniformContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["UniformMagazines", _fullMagsUniform]] call BIS_fnc_arrayPush;
+		[_data, ["UniformMagazines", _uMags]] call BIS_fnc_arrayPush;
 
 		[_data, ["VestWeapons", (getWeaponCargo vestContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
 		[_data, ["VestItems", (getItemCargo vestContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["VestMagazines", _fullMagsVest]] call BIS_fnc_arrayPush;
+		[_data, ["VestMagazines", _vMags]] call BIS_fnc_arrayPush;
 
 		[_data, ["BackpackWeapons", (getWeaponCargo backpackContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
 		[_data, ["BackpackItems", (getItemCargo backpackContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["BackpackMagazines", _fullMagsBackpack]] call BIS_fnc_arrayPush;
+		[_data, ["BackpackMagazines", _bMags]] call BIS_fnc_arrayPush;
 
 		[_gear, ["PartialMagazines", _partialMags]] call BIS_fnc_arrayPush;
 		[_gear, ["LoadedMagazines", _loadedMags]] call BIS_fnc_arrayPush;

@@ -22,7 +22,7 @@ else
 {
 	if ((getPos _veh) select 2 > 4) then
 	{
-		_vecDir = (getPosASL _veh) vectorDiff (getPosASL player);
+		_vecDir = (getPosASL player) vectorDiff (getPosASL _veh);
 		_push = _vecDir vectorMultiply (5 / vectorMagnitude _vecDir); // Push 5m/s away from vehicle
 	};
 };

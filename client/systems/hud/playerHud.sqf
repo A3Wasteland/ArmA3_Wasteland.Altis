@@ -80,6 +80,8 @@ _displayTerritoryActivity =
     [_topLeftIconText, _activityMessage]
 };
 
+_unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
+
 while {true} do
 {
     private ["_ui","_vitals","_hudVehicle","_health","_tempString","_yOffset","_vehicle"];
@@ -125,16 +127,17 @@ while {true} do
     _lastHealthReading = _health;
 
     // Icons in bottom right
-	_str = if (["A3W_unlimitedStamina"] call isConfigOn) then {
+	_str = if (_unlimitedStamina) then {
 		""
 	} else {
-		format ["%1 <img size='0.7' image='client\icons\running_man.paa'/>", 100 - round((getFatigue player) * 100)]
+		format ["%1 <img size='0.7' image='client\icons\running_man.paa'/>", 100 - ceil((getFatigue player) * 100)];
 	};
     _str = format["%1<br/>%2 <img size='0.7' image='client\icons\money.paa'/>", _str, player getVariable "cmoney"];
-    _str = format["%1<br/>%2 <img size='0.7' image='client\icons\water.paa'/>", _str, round thirstLevel];
-    _str = format["%1<br/>%2 <img size='0.7' image='client\icons\food.paa'/>", _str, round hungerLevel];
+    _str = format["%1<br/>%2 <img size='0.7' image='client\icons\water.paa'/>", _str, ceil thirstLevel];
+    _str = format["%1<br/>%2 <img size='0.7' image='client\icons\food.paa'/>", _str, ceil hungerLevel];
     _str = format["%1<br/><t color='%2'>%3</t> <img size='0.7' image='client\icons\health.paa'/>", _str, _healthTextColor, _health];
 
+	_vitals ctrlShow alive player;
 	_vitals ctrlSetStructuredText parseText _str;
     _vitals ctrlCommit 0;
     
@@ -237,7 +240,7 @@ while {true} do
 				
 				_hudActivityIcon ctrlSetPosition
 				[
-					(_activityIconOrigPos select 0) + (_topLeftBoxPos select 2) + 0.01,
+					(_activityIconOrigPos select 0) + (_topLeftBoxPos select 2) + (0.015 * (safezoneW min safezoneH)),
 					_activityIconOrigPos select 1,
 					_activityIconOrigPos select 2,
 					_activityIconOrigPos select 3
@@ -245,7 +248,7 @@ while {true} do
 				
 				_hudActivityTextbox ctrlSetPosition
 				[
-					(_activityTextboxOrigPos select 0) + (_topLeftBoxPos select 2) + 0.01,
+					(_activityTextboxOrigPos select 0) + (_topLeftBoxPos select 2) + (0.015 * (safezoneW min safezoneH)),
 					_activityTextboxOrigPos select 1,
 					_activityTextboxOrigPos select 2,
 					_activityTextboxOrigPos select 3
