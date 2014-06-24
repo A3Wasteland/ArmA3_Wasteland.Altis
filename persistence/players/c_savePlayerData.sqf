@@ -71,6 +71,7 @@ savePlayerHandle = _this spawn
 		_uMags = [];
 		_vMags = [];
 		_bMags = [];
+		_partialMags = [];
 
 		{
 			_magArr = _x select 0;
@@ -99,7 +100,6 @@ savePlayerHandle = _this spawn
 			[_bMags, backpackContainer player]
 		];
 
-		_partialMags = [];
 		_loadedMags = [];
 
 		{

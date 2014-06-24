@@ -53,7 +53,7 @@ removeHeadgear player;
 			};
 		};
 		case "Vest": { if (_value != "") then { player addVest _value } };
-		case "Backpack": { if (_value != "") then { player addBackpack _value } };
+		case "Backpack": { removeBackpack player; if (_value != "") then { player addBackpack _value } };
 		case "Goggles": { if (_value != "") then { player addGoggles _value } };
 		case "Headgear":
 		{
@@ -78,7 +78,11 @@ removeHeadgear player;
 				};
 			};
 		};
-		case "LoadedMagazines": { { player addMagazine _x } forEach _value };
+		case "LoadedMagazines":
+		{
+			player addBackpack "B_Carryall_Base"; // temporary backpack to hold mags
+			{ player addMagazine _x } forEach _value;
+		};
 		case "PrimaryWeapon": { player addWeapon _value; removeAllPrimaryWeaponItems player };
 		case "SecondaryWeapon": { player addWeapon _value };
 		case "HandgunWeapon": { player addWeapon _value; removeAllHandgunItems player };

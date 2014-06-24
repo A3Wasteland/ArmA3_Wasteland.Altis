@@ -36,12 +36,6 @@ if (["A3W_moneySaving"] call isConfigOn) then
 	["Money", "NUMBER"] call _getValue;
 };
 
-["Uniform", "STRING"] call _getValue;
-["Vest", "STRING"] call _getValue;
-["Backpack", "STRING"] call _getValue;
-["Goggles", "STRING"] call _getValue;
-["Headgear", "STRING"] call _getValue;
-
 ["LoadedMagazines", "ARRAY"] call _getValue;
 
 ["PrimaryWeapon", "STRING"] call _getValue;
@@ -56,6 +50,12 @@ if (["A3W_moneySaving"] call isConfigOn) then
 
 ["CurrentMuzzle", "STRING"] call _getValue;
 ["Stance", "STRING"] call _getValue;
+
+["Uniform", "STRING"] call _getValue;
+["Vest", "STRING"] call _getValue;
+["Backpack", "STRING"] call _getValue;
+["Goggles", "STRING"] call _getValue;
+["Headgear", "STRING"] call _getValue;
 
 ["UniformWeapons", "ARRAY"] call _getValue;
 ["UniformItems", "ARRAY"] call _getValue;
