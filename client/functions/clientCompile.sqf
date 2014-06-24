@@ -9,6 +9,7 @@ mf_util_playUntil = "client\functions\playUntil.sqf" call mf_compile;
 onRespawn = "client\clientEvents\onRespawn.sqf" call mf_compile;
 onKilled = "client\clientEvents\onKilled.sqf" call mf_compile;
 onKeyPress = "client\clientEvents\onKeyPress.sqf" call mf_compile;
+onKeyRelease = "client\clientEvents\onKeyRelease.sqf" call mf_compile;
 
 // Functions
 addPushPlaneAction = "client\functions\addPushPlaneAction.sqf" call mf_compile;

@@ -9,24 +9,14 @@ if (!hasInterface) exitWith {};
 #define ICON_limitDistance 1250
 #define ICON_sizeScale 0.75
 
-/*
-hudPlayerIcon = switch (playerSide) do
-{
-	case OPFOR:       { call currMissionDir + "client\icons\igui_side_opfor_ca.paa" };
-	case INDEPENDENT: { call currMissionDir + "client\icons\igui_side_indep_ca.paa" };
-	default           { call currMissionDir + "client\icons\igui_side_blufor_ca.paa" };
-};
-*/
+bluforPlayerIcon = call currMissionDir + "client\icons\igui_side_blufor_ca.paa";
+opforPlayerIcon = call currMissionDir + "client\icons\igui_side_opfor_ca.paa";
+indepPlayerIcon = call currMissionDir + "client\icons\igui_side_indep_ca.paa";
 
+showPlayerNames = false;
 hudPlayerIcon_uiScale = (0.55 / (getResolution select 5)) * ICON_sizeScale; // 0.55 = Interface size "Small"
-	
-if (isNil "missionEH_drawPlayerIcons") then
-{
-	bluforPlayerIcon = compileFinal str (call currMissionDir + "client\icons\igui_side_blufor_ca.paa");
-	opforPlayerIcon = compileFinal str (call currMissionDir + "client\icons\igui_side_opfor_ca.paa");
-	indepPlayerIcon = compileFinal str (call currMissionDir + "client\icons\igui_side_indep_ca.paa");
-}
-else
+
+if (!isNil "missionEH_drawPlayerIcons") then
 {
 	removeMissionEventHandler ["Draw3D", missionEH_drawPlayerIcons];
 };
@@ -35,33 +25,40 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 {
 	if (!visibleMap && isNull findDisplay 49 && showPlayerIcons) then
 	{
-		_units = if (playerSide == INDEPENDENT) then { units player } else { allUnits };
+		_icon = switch (playerSide) do
+		{
+			case BLUFOR: { bluforPlayerIcon };
+			case OPFOR:  { opforPlayerIcon };
+			default      { indepPlayerIcon };
+		};
 
 		{
-			if (alive _x && (side _x == playerSide) && (_x != player)) then
-			{
-				_pos = visiblePositionASL _x;
-				_pos set [2, (_x modelToWorld [0,0,0]) select 2];
+			_unit = _x;
 
-				_distance = _pos distance positionCameraToWorld [0,0,0];
+			if (alive _unit && (side group _unit == playerSide) && (_unit != player)) then // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
+			{
+				_dist = _unit distance positionCameraToWorld [0,0,0];
+
+				_pos = visiblePositionASL _unit;
+				_pos set [2, (_unit modelToWorld [0,0,0]) select 2];
 
 				// only draw players inside range and screen
-				if (_distance < ICON_limitDistance && (count worldToScreen _pos > 0)) then
+				if (_dist < ICON_limitDistance && (count worldToScreen _pos > 0)) then
 				{
-					_icon = switch (side _x) do
-					{
-						case OPFOR:       { call opforPlayerIcon };
-						case INDEPENDENT: { call indepPlayerIcon };
-						default           { call bluforPlayerIcon };
+					_pos set [2, (_pos select 2) + 1.35]; // Torso height
+					_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
+					_color = [1,1,1,_alpha];
+					_size = (1 - ((_dist / ICON_limitDistance) * 0.6)) * hudPlayerIcon_uiScale;
+
+					_text = if (showPlayerNames) then {
+						if (isPlayer _unit) then { name _unit } else { "[AI]" }
+					} else {
+						""
 					};
 
-					_pos set [2, (_pos select 2) + 1.25]; // Torso height
-					_size = (1 - ((_distance / ICON_limitDistance) * 0.6)) * hudPlayerIcon_uiScale;
-					_alpha = (ICON_limitDistance - _distance) / (ICON_limitDistance - ICON_fadeDistance);
-
-					drawIcon3D [_icon, [1,1,1,_alpha], _pos, _size, _size, 0]; //, "", 1, 0.03, "PuristaMedium"];
+					drawIcon3D [_icon, _color, _pos, _size, _size, 0, _text]; //, 1, 0.03, "PuristaMedium"];
 				};
 			};
-		} forEach _units;
+		} forEach (if (playerSide in [BLUFOR,OPFOR]) then { allUnits } else { units player });
 	};
 }];
