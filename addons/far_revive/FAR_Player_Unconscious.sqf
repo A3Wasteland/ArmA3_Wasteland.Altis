@@ -154,191 +154,161 @@ _unit spawn
 	};
 };
 
-// Call this code only on players
-//if (isPlayer _unit) then
-//{
-	_bleedStart = diag_tickTime;
-	_bleedOut = _bleedStart + FAR_BleedOut;
+_bleedStart = diag_tickTime;
+_bleedOut = _bleedStart + FAR_BleedOut;
 
-	private ["_reviveGUI", "_progBar", "_progText", "_reviveText", "_bleedPause", "_treatedBy"];
+private ["_reviveGUI", "_progBar", "_progText", "_reviveText", "_bleedPause", "_treatedBy"];
 
-	if (_unit == player) then
+if (_unit == player) then
+{
+	_reviveGUI = findDisplay 911;
+	_progBar = _reviveGUI displayCtrl 9110;
+	_progText = _reviveGUI displayCtrl 9111;
+	_reviveText = _reviveGUI displayCtrl 9113;
+};
+
+while {UNCONSCIOUS(_unit) && (FAR_BleedOut <= 0 || diag_tickTime < _bleedOut)} do
+{
+	_dmg = damage _unit;
+
+	if (_unit getVariable ["FAR_handleStabilize", false]) then
 	{
-		_reviveGUI = findDisplay 911;
-		_progBar = _reviveGUI displayCtrl 9110;
-		_progText = _reviveGUI displayCtrl 9111;
-		_reviveText = _reviveGUI displayCtrl 9113;
-	};
-
-	while {UNCONSCIOUS(_unit) && (FAR_BleedOut <= 0 || diag_tickTime < _bleedOut)} do
+		_unit setDamage 0.25;
+		_unit setVariable ["FAR_handleStabilize", nil, true];
+		_unit setVariable ["FAR_treatedBy", nil, true];
+		_treatedBy = nil;
+	}
+	else
 	{
-		_dmg = damage _unit;
+		_currentlyTreatedBy = _unit getVariable ["FAR_treatedBy", objNull];
 
-		if (_unit getVariable ["FAR_handleStabilize", false]) then
+		if (alive _currentlyTreatedBy) then
 		{
-			_unit setDamage 0.25;
-			_unit setVariable ["FAR_handleStabilize", nil, true];
-			_unit setVariable ["FAR_treatedBy", nil, true];
-			_treatedBy = nil;
+			if (isNil "_treatedBy") then
+			{
+				_treatedBy = _currentlyTreatedBy;
+				_bleedPause = diag_tickTime - _bleedStart;
+
+				if (_unit == player) then
+				{
+					_progText ctrlSetText "Being treated...";
+				};
+			};
+
+			_bleedStart = diag_tickTime - _bleedPause;
 		}
 		else
 		{
-			_currentlyTreatedBy = _unit getVariable ["FAR_treatedBy", objNull];
-
-			if (alive _currentlyTreatedBy) then
+			if (!isNil "_treatedBy") then
 			{
-				if (isNil "_treatedBy") then
-				{
-					_treatedBy = _currentlyTreatedBy;
-					_bleedPause = diag_tickTime - _bleedStart;
-
-					if (_unit == player) then
-					{
-						_progText ctrlSetText "Being treated...";
-					};
-				};
-
-				_bleedStart = diag_tickTime - _bleedPause;
-			}
-			else
-			{
-				if (!isNil "_treatedBy") then
-				{
-					_treatedBy = nil;
-					_bleedPause = nil;
-					_unit setVariable ["FAR_treatedBy", nil, true];
-				};
+				_treatedBy = nil;
+				_bleedPause = nil;
+				_unit setVariable ["FAR_treatedBy", nil, true];
 			};
 		};
+	};
 
-		if (_dmg < 0.5) then // assume healing by medic
+	if (_dmg < 0.5) then // assume healing by medic
+	{
+		if (!STABILIZED(_unit)) then
 		{
-			if (!STABILIZED(_unit)) then
+			_unit setVariable ["FAR_isStabilized", 1, true];
+
+			if (isPlayer _unit) then
 			{
-				_unit setVariable ["FAR_isStabilized", 1, true];
-
-				if (isPlayer _unit) then
-				{
-					//Unit has been stabilized. Disregard bleedout timer and umute player
-					_unit setVariable ["ace_sys_wounds_uncon", false];
-				};
+				//Unit has been stabilized. Disregard bleedout timer and umute player
+				_unit setVariable ["ace_sys_wounds_uncon", false];
 			};
-
-			if (_unit == player) then
-			{
-				_progBar progressSetPosition 1;
-				_progBar ctrlSetForegroundColor [0,0.75,0,1];
-				_progText ctrlSetText "Stabilized";
-				player setVariable ["FAR_iconBlink", nil, true];
-
-				//(FAR_cutTextLayer + 1) cutText [format ["\n\nYou have been stabilized\n\n%1", call FAR_CheckFriendlies], "PLAIN DOWN", 0.01];
-			};
-
-			_bleedStart = diag_tickTime;
 		};
-
-		_bleedOut = _bleedStart + (FAR_BleedOut * ((1 - (_dmg max 0.5)) / 0.5));
 
 		if (_unit == player) then
 		{
-			if (_dmg >= 0.5 && isNil "_treatedBy") then
-			{
-				_remaining = ceil (_bleedOut - diag_tickTime);
-				_mins = floor (_remaining / 60);
-				_secs = _remaining - (_mins * 60);
-				_time = format ["%1:%2%3", _mins, if (_secs < 10) then { "0" } else { "" }, _secs];
+			_progBar progressSetPosition 1;
+			_progBar ctrlSetForegroundColor [0,0.75,0,1];
+			_progText ctrlSetText "Stabilized";
+			player setVariable ["FAR_iconBlink", nil, true];
 
-				_progBar progressSetPosition ((_bleedOut - diag_tickTime) / FAR_BleedOut);
-				_progText ctrlSetText _time;
-
-				//(FAR_cutTextLayer + 1) cutText [format ["\n\nBleedout in %1\n\n%2", _time, call FAR_CheckFriendlies], "PLAIN DOWN"];
-			};
-
-			_reviveText ctrlSetStructuredText parseText (call FAR_CheckFriendlies);
+			//(FAR_cutTextLayer + 1) cutText [format ["\n\nYou have been stabilized\n\n%1", call FAR_CheckFriendlies], "PLAIN DOWN", 0.01];
 		};
 
-		_draggedBy = DRAGGED_BY(_unit);
-
-		if (!isNull _draggedBy && {!alive _draggedBy || UNCONSCIOUS(_draggedBy)}) then
-		{
-			if (attachedTo _unit == _draggedBy) then
-			{
-				detach _unit;
-				sleep 0.01;
-			};
-
-			if (!isPlayer attachedTo _unit) then
-			{
-				_unit setVariable ["FAR_draggedBy", nil, true];
-			};
-		};
-
-		sleep 0.1;
+		_bleedStart = diag_tickTime;
 	};
 
-	if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
+	_bleedOut = _bleedStart + (FAR_BleedOut * ((1 - (_dmg max 0.5)) / 0.5));
+
+	if (_unit == player) then
 	{
-		_unit setDamage 0;
-		_unit setVariable ["FAR_killerPrimeSuspect", nil];
-		_unit setVariable ["FAR_killerVehicle", nil];
-		_unit setVariable ["FAR_killerAmmo", nil];
-		_unit setVariable ["FAR_killerSuspects", nil];
-		_unit setVariable ["FAR_isStabilized", 0, true];
-		_unit setVariable ["FAR_iconBlink", nil, true];
-		_unit setCaptive false;
-
-		if (isPlayer _unit) then
+		if (_dmg >= 0.5 && isNil "_treatedBy") then
 		{
-			// Unmute ACRE
-			_unit setVariable ["ace_sys_wounds_uncon", false];
+			_remaining = ceil (_bleedOut - diag_tickTime);
+			_mins = floor (_remaining / 60);
+			_secs = _remaining - (_mins * 60);
+			_time = format ["%1:%2%3", _mins, if (_secs < 10) then { "0" } else { "" }, _secs];
 
-			if (["A3W_unlimitedStamina"] call isConfigOn) then
-			{
-				_unit enableFatigue false;
-			};
-		}
-		else
-		{
-			{ _unit enableAi _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
+			_progBar progressSetPosition ((_bleedOut - diag_tickTime) / FAR_BleedOut);
+			_progText ctrlSetText _time;
+
+			//(FAR_cutTextLayer + 1) cutText [format ["\n\nBleedout in %1\n\n%2", _time, call FAR_CheckFriendlies], "PLAIN DOWN"];
 		};
 
-		_unit playMove format ["AmovPpneMstpSrasW%1Dnon", _unit call getMoveWeapon];
-	}
-	else // Player bled out
-	{
-		_unit setDamage 1;
+		_reviveText ctrlSetStructuredText parseText (call FAR_CheckFriendlies);
+	};
 
-		if (!isPlayer _unit) then
+	_draggedBy = DRAGGED_BY(_unit);
+
+	if (!isNull _draggedBy && {!alive _draggedBy || UNCONSCIOUS(_draggedBy)}) then
+	{
+		if (attachedTo _unit == _draggedBy) then
 		{
-			_unit setVariable ["FAR_isUnconscious", 0, true];
+			detach _unit;
+			sleep 0.01;
+		};
+
+		if (!isPlayer attachedTo _unit) then
+		{
 			_unit setVariable ["FAR_draggedBy", nil, true];
-			_unit setVariable ["FAR_treatedBy", nil, true];
 		};
 	};
-/*}
-else
+
+	sleep 0.1;
+};
+
+if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 {
-	// [Debugging] Bleedout for AI
-	_bleedOut = diag_tickTime + FAR_BleedOut;
+	_unit setDamage 0;
+	_unit setVariable ["FAR_killerPrimeSuspect", nil];
+	_unit setVariable ["FAR_killerVehicle", nil];
+	_unit setVariable ["FAR_killerAmmo", nil];
+	_unit setVariable ["FAR_killerSuspects", nil];
+	_unit setVariable ["FAR_isStabilized", 0, true];
+	_unit setVariable ["FAR_iconBlink", nil, true];
+	_unit setCaptive false;
 
-	while { alive _unit && {_unit getVariable ["FAR_isUnconscious", 0] == 1 && _unit getVariable ["FAR_isStabilized", 0] == 0 && (FAR_BleedOut <= 0 || diag_tickTime < _bleedOut)} } do
+	if (isPlayer _unit) then
 	{
-		sleep 0.5;
-	};
+		// Unmute ACRE
+		_unit setVariable ["ace_sys_wounds_uncon", false];
 
-	if (_unit getVariable ["FAR_isStabilized", 0] == 1) then
-	{
-		waitUntil { sleep 0.1; !alive _unit || {_unit getVariable ["FAR_isUnconscious", 0] == 0} } do
+		if (["A3W_unlimitedStamina"] call isConfigOn) then
 		{
-			sleep 0.5;
+			_unit enableFatigue false;
 		};
+	}
+	else
+	{
+		{ _unit enableAi _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
 	};
 
-	// AI bled out
-	if (FAR_BleedOut > 0 && {diag_tickTime > _bleedOut} && {_unit getVariable ["FAR_isStabilized",0] == 0}) then
+	_unit playMove format ["AmovPpneMstpSrasW%1Dnon", _unit call getMoveWeapon];
+}
+else // Player bled out
+{
+	_unit setDamage 1;
+
+	if (!isPlayer _unit) then
 	{
-		_unit setDamage 1;
 		_unit setVariable ["FAR_isUnconscious", 0, true];
-		_unit setVariable ["FAR_isDragged", 0, true];
-	}
-};*/
+		_unit setVariable ["FAR_draggedBy", nil, true];
+		_unit setVariable ["FAR_treatedBy", nil, true];
+	};
+};
