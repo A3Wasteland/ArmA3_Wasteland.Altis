@@ -10,6 +10,14 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"0.9h",
+"
+<br/> Changelog coming soon!
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "0.9g",
 "
 <br/> [Added] - Vehicle stores
