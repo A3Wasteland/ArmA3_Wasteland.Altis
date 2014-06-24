@@ -64,11 +64,18 @@ player addEventHandler ["HandleDamage", unitHandleDamage];
 
 if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 {
-	player addEventHandler ["FiredNear", { combatTimestamp = diag_tickTime }];
-	player addEventHandler ["HitPart",
+	player addEventHandler ["FiredNear",
 	{
-		_source = (_this select 0) select 1;
-		if (!isNull _source && {_source != player}) then {
+		// Don't prevent aborting when explosives are being placed
+		if (_this select 3 != "Put") then {
+			combatTimestamp = diag_tickTime;
+		};
+	];
+
+	player addEventHandler ["Hit",
+	{
+		_source = effectiveCommander (_this select 1);
+		if (!isNull _source && _source != player) then {
 			combatTimestamp = diag_tickTime;
 		};
 	}];

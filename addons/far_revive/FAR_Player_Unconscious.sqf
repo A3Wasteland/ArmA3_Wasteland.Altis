@@ -167,7 +167,7 @@ if (_unit == player) then
 	_reviveText = _reviveGUI displayCtrl 9113;
 };
 
-while {UNCONSCIOUS(_unit) && (FAR_BleedOut <= 0 || diag_tickTime < _bleedOut)} do
+while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 {
 	_dmg = damage _unit;
 
@@ -286,6 +286,8 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 
 	if (isPlayer _unit) then
 	{
+		[] spawn fn_savePlayerData;
+
 		// Unmute ACRE
 		_unit setVariable ["ace_sys_wounds_uncon", false];
 
@@ -296,7 +298,7 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 	}
 	else
 	{
-		{ _unit enableAi _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
+		{ _unit enableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
 	};
 
 	_unit playMove format ["AmovPpneMstpSrasW%1Dnon", _unit call getMoveWeapon];

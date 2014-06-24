@@ -4,6 +4,7 @@
 if (isDedicated) exitWith {};
 
 fn_requestPlayerData = compileFinal "requestPlayerData = player; publicVariableServer 'requestPlayerData'";
+fn_deletePlayerData = compileFinal "deletePlayerData = player; publicVariableServer 'deletePlayerData'";
 fn_applyPlayerData = "persistence\players\c_applyPlayerData.sqf" call mf_compile;
 fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 
