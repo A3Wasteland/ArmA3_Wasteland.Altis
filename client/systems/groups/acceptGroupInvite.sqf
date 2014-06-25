@@ -20,13 +20,14 @@ _groupExists = false;
 //Get the inviter with their UID
 if (!isNil "_inviterUID") then {
 	{
-		if(getPlayerUID _x == _inviterUID) then
+		if(getPlayerUID _x == _inviterUID) exitWith
 	    {
     		_inviter = _x;
 			_groupExists = true;	    
 		};   
-	};
-}forEach playableUnits;
+	} forEach playableUnits;
+};
+
 
 if(_groupExists) then
 {
