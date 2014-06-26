@@ -314,3 +314,8 @@ else // Player bled out
 		_unit setVariable ["FAR_treatedBy", nil, true];
 	};
 };
+
+if (_unit == player) then
+{
+	closeDialog 911;
+};
