@@ -53,12 +53,18 @@ if (_money != 0) then
 };
 
 // Drop items
+_itemsDroppedOnDeath = [];
+
 {
 	for "_i" from 1 to (_x select 1) do
 	{
-		(_x select 0) call mf_inventory_drop;
+		_obj = (_x select 0) call mf_inventory_drop;
+		[_itemsDroppedOnDeath, netId _obj] call BIS_fnc_arrayPush;
 	};
 } forEach call mf_inventory_all;
+
+itemsDroppedOnDeath = _itemsDroppedOnDeath;
+publicVariableServer "itemsDroppedOnDeath";
 
 [_player, objNull] call mf_player_actions_refresh;
 

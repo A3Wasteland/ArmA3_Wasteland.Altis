@@ -1,7 +1,7 @@
 //	@file Name: WastelandServClean.sqf
 
 // Based off AgentRev's cleanup
-// runs every X minutes to cleanup dead bodies and clutterred items arround them
+// runs every X minutes to cleanup items dropped on death over the map
 // if you set Death-time to 15 minutes (900 sec), after killing you got 15-19 minutes (depending on the interval) to get the loot from your kill
 // you can change the intervals below, be aware to use SECONDS :)
 
@@ -10,9 +10,9 @@ private ["_runInt", "_deathTime"];
 // configure cleanup below this line
 
 _runInt = 5*60;		// Interval to run the cleanup 
-_deathTime = 15*60;	// Time a body has to have been dead before cleaning it up
+_deathTime = 30*60;	// Time an item has to have been dropped before cleaning it up
 
-// you should not change code below this line :)
+// corpse cleanup is managed by the "corpseRemoval" options in description.ext
 
 while { true } do
 {
@@ -27,7 +27,7 @@ while { true } do
 			_delQtyO = _delQtyO + 1;
 		};
 		sleep 0.01;
-	} forEach entities "All";
+	} forEach entities "Thing";
 	
 	diag_log format ["SERVER CLEANUP: Deleted %1 expired objects", _delQtyO];
 	

@@ -92,11 +92,13 @@ if (!isPlayer _unit && vehicle _unit != _unit) then
 	};
 };
 
+/*
 {
 	if (owner _x == owner _unit && {!isNil {_x getVariable "mf_item_id"}}) then
 	{
 		_x setVariable ["processedDeath", diag_tickTime]; // make separate PV event
 	};
 } forEach (_unit nearEntities ["All", 25]);
+*/
 
 if !(["G_Diving", goggles _unit] call fn_startsWith) then { removeGoggles _unit };

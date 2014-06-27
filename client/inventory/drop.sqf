@@ -50,4 +50,5 @@ else
 	_obj = createVehicle [_type, player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
 	_obj setVariable ["mf_item_id", _id, true];
 	[_id, 1] call mf_inventory_remove;
+	_obj
 };
