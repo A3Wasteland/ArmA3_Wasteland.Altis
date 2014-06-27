@@ -139,7 +139,12 @@ if (!isNil "_exists" && {_exists}) then
 						};
 						if (!isNil "_backpacks") then
 						{
-							{ _obj addBackpackCargoGlobal _x } forEach _backpacks;
+							{
+								if !((_x select 0) isKindOf "Weapon_Bag_Base") then
+								{
+									_obj addBackpackCargoGlobal _x;
+								};
+							} forEach _backpacks;
 						};
 					};
 					

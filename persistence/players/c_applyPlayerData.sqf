@@ -53,7 +53,22 @@ removeHeadgear player;
 			};
 		};
 		case "Vest": { if (_value != "") then { player addVest _value } };
-		case "Backpack": { removeBackpack player; if (_value != "") then { player addBackpack _value } };
+		case "Backpack":
+		{
+			removeBackpack player;
+
+			if (_value != "") then
+			{
+				if (_value isKindOf "Weapon_Bag_Base") then
+				{
+					player addBackpack "B_AssaultPack_rgr"; // NO SOUP FOR YOU
+				}
+				else
+				{
+					player addBackpack _value;
+				};
+			};
+		};
 		case "Goggles": { if (_value != "") then { player addGoggles _value } };
 		case "Headgear":
 		{
