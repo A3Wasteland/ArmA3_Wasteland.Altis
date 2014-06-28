@@ -18,7 +18,7 @@ _crate = if (_storeSellBox) then
 }
 else
 {
-	_missionNamespace getVariable ["R3F_LOG_joueur_deplace_objet", objNull]
+	missionNamespace getVariable ["R3F_LOG_joueur_deplace_objet", objNull]
 };
 
 /*if !(_crate isKindOf "ReammoBox_F") then
