@@ -92,7 +92,7 @@ _setPlayersInfo =
 	
 	if (_isBeacon) then
 	{
-		_centerPos = _location call getPos3D;
+		_centerPos = _location call fn_getPos3D;
 		_maxRad = BEACON_CHECK_RADIUS;
 	}
 	else // town
@@ -204,7 +204,7 @@ _isBeaconAllowed =
 	_beacon = _this;
 	_allowed = false;
 	
-	if (_beacon getVariable ["side", sideUnknown] == playerSide) then
+	if (alive _beacon && _beacon getVariable ["side", sideUnknown] == playerSide) then
 	{
 		if (playerSide == INDEPENDENT || {_beacon getVariable ["groupOnly", false]}) then
 		{
@@ -246,9 +246,13 @@ while {respawnDialogActive} do
 		};
 	} forEach (call cityList);
 
-	_beacons = ["pvar_spawn_beacons", []] call getPublicVar;
-	{ _x call _setPlayersInfo } forEach _beacons;
-	_allowedBeacons = [_beacons, {_x call _isBeaconAllowed}] call BIS_fnc_conditionalSelect;
+	_beacons = [];
+	{
+		if (_x call _isBeaconAllowed) then
+		{
+			_beacons set [count _beacons, _x];
+		};
+	} forEach (["pvar_spawn_beacons", []] call getPublicVar);
 	
 	if (ctrlEnabled (_display displayCtrl respawn_Random_Button)) then
 	{
@@ -259,21 +263,23 @@ while {respawnDialogActive} do
 		else
 		{
 			if (!ctrlEnabled _townsButton) then { _townsButton ctrlEnable true };
+			if (count _beacons == 0 && showBeacons) then { showBeacons = false };
 		};
 		
-		if (count _allowedBeacons == 0) then
+		if (count _beacons == 0) then
 		{
 			if (ctrlEnabled _beaconsButton) then { _beaconsButton ctrlEnable false };
 		}
 		else
 		{
 			if (!ctrlEnabled _beaconsButton) then { _beaconsButton ctrlEnable true };
+			if (count _towns == 0 && !showBeacons) then { showBeacons = true };
 		};
 	};
 	
 	_locations = if (showBeacons) then
 	{
-		[_allowedBeacons, [], {_x call _getPlayerThreshold}, "DESCEND", {alive _x}] call BIS_fnc_sortBy
+		[_beacons, [], {_x call _getPlayerThreshold}, "DESCEND", {alive _x}] call BIS_fnc_sortBy
 	}
 	else
 	{
