@@ -60,6 +60,10 @@ player addEventHandler ["GetIn",
 	};
 }];
 
+{
+	player setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x];
+} forEach ((typeOf player) call getHitPoints);
+
 player addEventHandler ["HandleDamage", unitHandleDamage];
 
 if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
