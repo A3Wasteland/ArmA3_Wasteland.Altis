@@ -1,11 +1,10 @@
 //	@file Name: convertTerritoryOwner.sqf
 //	@file Author: AgentRev
 
-private ["_territory", "_oldGroup", "_newGroup", "_currentTeam"];
+private ["_oldGroup", "_newGroup", "_currentTeam"];
 
-_territory = _this select 0;
-_oldGroup = _this select 1;
-_newGroup = _this select 2;
+_oldGroup = _this select 0;
+_newGroup = _this select 1;
 
 {
 	_currentTeam = _x select 2;
