@@ -137,7 +137,7 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 	setDate [2035, 6, _monthDay, _startHour, 0];
 };
 
-if (["A3W_buildingLoot"] call isConfigOn || {["A3W_buildingLootWeapons"] call isConfigOn} || {["A3W_buildingLootSupplies"] call isConfigOn}) then 
+if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then 
 {
 	diag_log "[INFO] A3W loot spawning is ENABLED";
 	execVM "addons\Lootspawner\Lootspawner.sqf";
