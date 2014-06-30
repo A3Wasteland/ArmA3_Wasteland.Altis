@@ -86,6 +86,7 @@ refillPrimaryAmmo = [_path, "refillPrimaryAmmo.sqf"] call mf_compile;
 setMissionSkill = [_path, "setMissionSkill.sqf"] call mf_compile;
 spawnStoreObject = [_path, "spawnStoreObject.sqf"] call mf_compile;
 vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
+vehicleRespawnCheck = [_path, "vehicle.sqf"] call mf_compile;
 vehicleSetup = [_path, "vehicleSetup.sqf"] call mf_compile;
 
 //Player Management

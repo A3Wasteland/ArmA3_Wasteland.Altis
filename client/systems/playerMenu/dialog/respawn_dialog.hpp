@@ -63,12 +63,11 @@ class RespawnSelectionDialog
 			h = RspnTopBar_H;
 		};
 
-		class RspnMenuTitle: w_RscText
+		class RspnMenuTitle: w_RscTextCenter
 		{
 			idc = -1;
 			text = "Respawn Menu";
 			sizeEx = 0.06 * TEXT_SCALE;
-			style = 2; // ST_CENTER
 
 			// relative to RspnTopBar
 			#define RspnMenuTitle_W (0.267 * X_SCALE)

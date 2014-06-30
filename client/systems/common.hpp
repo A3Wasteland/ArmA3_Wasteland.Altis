@@ -94,6 +94,11 @@ class w_RscText {
 	text = "";
 };
 
+class w_RscTextCenter : w_RscText
+{
+	style = ST_CENTER;
+};
+
 class w_RscStructuredText
 {
 	access = 0;
