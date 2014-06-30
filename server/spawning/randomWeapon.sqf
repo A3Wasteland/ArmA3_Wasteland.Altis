@@ -32,7 +32,7 @@ _additionTwo = _additionArray call BIS_fnc_selectRandom;
 _additionArray = _additionArray - [_additionTwo];
 _additionThree = vehicleAddition2 call BIS_fnc_selectRandom;
 
-_buildingLootOn = ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn}) || {["A3W_buildingLoot"] call isConfigOn});
+_buildingLootOn = (["A3W_buildingLootWeapons"] call isConfigOn && {isNil "A3W_buildingLoot" || {["A3W_buildingLoot"] call isConfigOn}});
 
 // A3W_vehicleloot
 //Add guns and magazines, note the Global at the end
