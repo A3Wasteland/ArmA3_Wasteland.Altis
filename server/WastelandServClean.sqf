@@ -11,6 +11,7 @@ private ["_runInt", "_deathTime"];
 
 _runInt = 5*60;		// Interval to run the cleanup 
 _deathTime = 30*60;	// Time an item has to have been dropped before cleaning it up
+_vehDeathTime = 10*60;	// Time a vehicle has to have been destroyed before cleaning it up
 
 // corpse cleanup is managed by the "corpseRemoval" options in description.ext
 
@@ -21,13 +22,16 @@ while { true } do
 	_delQtyO = 0;
 	
 	{
-		if (diag_tickTime - (_x getVariable ["processedDeath", diag_tickTime]) >= _deathTime) then
+		_processedDeath = _x getVariable ["processedDeath", diag_tickTime];
+		_timeLimit = if (_x isKindOf "AllVehicles") then { _vehDeathTime } else { _deathTime };
+
+		if (diag_tickTime - _processedDeath >= _timeLimit) then
 		{
 			deleteVehicle _x;
 			_delQtyO = _delQtyO + 1;
 		};
 		sleep 0.01;
-	} forEach entities "Thing";
+	} forEach entities "All";
 	
 	diag_log format ["SERVER CLEANUP: Deleted %1 expired objects", _delQtyO];
 	

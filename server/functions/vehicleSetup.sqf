@@ -25,3 +25,6 @@ _vehicle setVariable ["A3W_handleDamage", true, true];
 } forEach ((typeOf _vehicle) call getHitPoints);
 
 _vehicle addEventHandler ["HandleDamage", vehicleHandleDamage];
+
+// Wreck cleanup
+_vehicle addEventHandler ["Killed", { (_this select 0) setVariable ["processedDeath", diag_tickTime] }];
