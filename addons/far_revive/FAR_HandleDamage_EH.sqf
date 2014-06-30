@@ -69,6 +69,11 @@ if (UNCONSCIOUS(_unit)) then
 				_unit setDamage _damage;
 			};
 		};
+
+		if (_damage >= 1 && _criticalHit) then
+		{
+			diag_log format ["KILLED by [%1] with [%2]", _source, _ammo];
+		};
 	//};
 }
 else
@@ -90,9 +95,9 @@ else
 		};
 
 		_damage = 0.5;
+
+		diag_log format ["INCAPACITATED by [%1] with [%2]", _source, _ammo];
 	};
 };
-
-diag_log format ["yYy %1", _this];
 
 //_damage
