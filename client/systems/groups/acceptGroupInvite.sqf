@@ -38,7 +38,7 @@ if(_groupExists) then
 	
 	_newGroup = group player;
 	_newTerritories = _newGroup getVariable ["currentTerritories", []];
-	[_newTerritories, _territories] call BIS_fnc_arrayPushStack;
+	[_newTerritories, _oldTerritories] call BIS_fnc_arrayPushStack;
 
 	_newGroup setVariable ["currentTerritories", _newTerritories, true];
 	_oldGroup setVariable ["currentTerritories", [], true];
