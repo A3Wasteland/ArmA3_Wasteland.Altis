@@ -164,6 +164,7 @@ R3F_LOG_CFG_objets_deplacables =
 [
 	"StaticWeapon",
 	"ReammoBox_F",
+	"Kart_01_Base_F",
 	"Quadbike_01_base_F",
 	"Rubber_duck_base_F",
 	"SDV_01_base_F",
