@@ -208,7 +208,7 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 		};
 	};
 
-	if (_dmg < 0.5) then // assume healing by medic
+	if (ceil (_dmg * 100) < 50) then // assume healing by medic
 	{
 		if (!STABILIZED(_unit)) then
 		{
