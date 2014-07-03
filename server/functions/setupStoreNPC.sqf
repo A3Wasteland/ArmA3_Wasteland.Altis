@@ -186,7 +186,14 @@ if (isServer) then
 // Add sell box in front of counter
 if (hasInterface) then
 {
-	_objs = nearestObjects [_npc, ["Land_CashDesk_F"], 5];
+	private "_objs";
+
+	waitUntil
+	{
+		sleep 3;
+		_objs = nearestObjects [_npc, ["Land_CashDesk_F"], 5];
+		(count _objs > 0 || serverTime > 120)
+	};
 
 	if (count _objs > 0) then
 	{
