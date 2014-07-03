@@ -86,6 +86,7 @@ R3F_LOG_CFG_transporteurs =
 	["MRAP_01_base_F", 20],
 	["MRAP_02_base_F", 20],
 	["MRAP_03_base_F", 20],
+	["B_Truck_01_box_F", 150],
 	["Truck_F", 75],
 	["Wheeled_APC_F", 30],
 	["Tank_F", 30],

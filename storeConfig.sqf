@@ -580,9 +580,9 @@ landArray = compileFinal str
 	["Fuel Truck (Camo)", "B_G_Van_01_fuel_F", 2100, "vehicle"],
 
 	["HEMTT Tractor", "B_Truck_01_mover_F", 2000, "vehicle"],
-	["HEMTT Box", "B_Truck_01_box_F", 3000, "vehicle"],
 	["HEMTT Transport", "B_Truck_01_transport_F", 3000, "vehicle"],
 	["HEMTT Covered", "B_Truck_01_covered_F", 4000, "vehicle"],
+	["HEMTT Box", "B_Truck_01_box_F", 4000, "vehicle"],
 	["HEMTT Fuel", "B_Truck_01_fuel_F", 5000, "vehicle"],
 	["HEMTT Medical", "B_Truck_01_medical_F", 6000, "vehicle"],
 	["HEMTT Repair", "B_Truck_01_Repair_F", 7500, "vehicle"],
