@@ -103,8 +103,8 @@ else
 					sleep 2;
 					
 					// Attacher à l'arrière du véhicule au ras du sol
-					_remorqueur enableSimulationGlobal true;
-					_objet enableSimulationGlobal true;
+					[_remorqueur, true] call fn_enableSimulationGlobal;
+					[_objet, true] call fn_enableSimulationGlobal;
 					_objet attachTo [_remorqueur,
 					[
 						_towerCenterX - _objectCenterX,

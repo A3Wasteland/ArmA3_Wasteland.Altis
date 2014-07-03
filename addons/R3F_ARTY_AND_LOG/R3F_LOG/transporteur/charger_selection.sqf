@@ -87,8 +87,8 @@ else
 						_nb_tirage_pos = _nb_tirage_pos + 1;
 					};
 					
-					R3F_LOG_PUBVAR_point_attache enableSimulationGlobal true;
-					_objet enableSimulationGlobal true;
+					[R3F_LOG_PUBVAR_point_attache, true] call fn_enableSimulationGlobal;
+					[_objet, true] call fn_enableSimulationGlobal;
 					_objet attachTo [R3F_LOG_PUBVAR_point_attache, _position_attache];
 					
 					R3F_LOG_objet_selectionne = objNull;

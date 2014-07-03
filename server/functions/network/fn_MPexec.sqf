@@ -116,7 +116,8 @@ if (ismultiplayer && _mode == 0) then {
 			"pushVehicle",
 			"convertTerritoryOwner",
 			"updateTerritoryMarkers",
-			"parachuteLiftedVehicle"
+			"parachuteLiftedVehicle",
+			"fn_enableSimulationGlobal"
 		];
 		
 		_blockedParam = 
