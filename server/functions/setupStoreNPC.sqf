@@ -211,6 +211,15 @@ if (hasInterface) then
 		clearItemCargo _sellBox;
 
 		_sellBox setPosASL ((getPosASL _desk) vectorAdd ([[-0.05,-0.6,0], -(getDir _desk)] call BIS_fnc_rotateVector2D));
+		_boxPos = getPos _sellBox;
+
+		if (_boxPos select 2 > 0) then
+		{
+			_boxPosASL = getPosASL _sellBox;
+			_boxPosASL set [2, (_boxPosASL select 2) - (_boxPos select 2)];
+			_sellBox setPosASL _boxPosASL;
+		};
+
 		_sellBox setDir (getDir _desk + 90);
 
 		_sellBox addAction ["<img image='client\icons\money.paa'/> Sell crate contents", "client\systems\selling\sellCrateItems.sqf", [true], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_BOX_ACTION_CONDITION];
