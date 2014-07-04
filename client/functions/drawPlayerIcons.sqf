@@ -26,7 +26,7 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 {
 	if (!visibleMap && isNull findDisplay 49 && showPlayerIcons) then
 	{
-		_icon = switch (playerSide) do
+		_teamIcon = switch (playerSide) do
 		{
 			case BLUFOR: { bluforPlayerIcon };
 			case OPFOR:  { opforPlayerIcon };
@@ -49,6 +49,7 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 					_pos set [2, (_pos select 2) + 1.35]; // Torso height
 					_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
 					_color = [1,1,1,_alpha];
+					_icon = _teamIcon;
 					_size = 0;
 
 					if (_unit getVariable ["FAR_isUnconscious", 0] == 1) then
