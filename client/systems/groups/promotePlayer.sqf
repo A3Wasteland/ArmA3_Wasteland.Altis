@@ -29,6 +29,7 @@ if (isNil "_target") exitWith { player globalChat "You must select someone to pr
 
 if (_target == player) exitWith { player globalChat "You can't promote yourself." };
 
+_inCombat = false;
 
 //check to see how close to the enemy the target leader is
 {
