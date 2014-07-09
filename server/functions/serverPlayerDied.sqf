@@ -19,6 +19,8 @@ if (isPlayer _unit && {["A3W_playerSaving"] call isConfigOn}) then
 _killer = if (count _this > 1) then { _this select 1 } else { objNull };
 _presumedKiller = if (count _this > 2) then { _this select 2 } else { objNull };
 
+if !(_killer isKindOf "Man") then { _killer = effectiveCommander _killer };
+
 // Score handling
 if (!isNull _killer) then
 {

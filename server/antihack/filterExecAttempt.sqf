@@ -10,7 +10,7 @@ _packetName = [_this, 0, "", [""]] call BIS_fnc_param;
 
 if (_packetName == "BIS_fnc_MP_packet") then
 {
-	private ["_values", "_arguments", "_code", "_function", "_filePath", "_allowedFile", "_allowedFunction"];
+	private ["_values", "_arguments", "_code", "_function", "_filePath", "_allowedFile", "_allowedFunction", "_funcArray", "_testArray"];
 	_values = [_this select 1, 0] call BIS_fnc_removeIndex;
 	
 	_arguments = [_values, 0] call BIS_fnc_removeIndex;
@@ -38,23 +38,27 @@ if (_packetName == "BIS_fnc_MP_packet") then
 	};
 	
 	_allowedFunction = false;
+	_funcArray = toArray _function;
 	
 	{
-		if (_function == _x) exitWith
+		_testArray = +_funcArray;
+		_testArray resize count toArray _x;
+		
+		if (toString _testArray == _x) exitWith
 		{
 			_allowedFunction = true;
 		};
 	}
 	forEach
 	[
-		"BIS_fnc_effectKilledAirDestruction",
-		"BIS_fnc_effectKilledAirDestructionStage2",
-		"BIS_fnc_effectKilledSecondaries",
+		"BIS_fnc_advHint",
+		"BIS_fnc_deleteTask",
+		"BIS_fnc_effectKilled",
 		"BIS_fnc_kbTellLocal",
+		"BIS_fnc_setTask",
 		"BIS_fnc_showNotification",
-		"BIS_fnc_taskSetState",
+		"BIS_fnc_task",
 		"BIS_fnc_tridentHandleDamage",
-		"BIS_fnc_tridentHandleDamage_server",
 		"JTS_FNC_SENT" // PM Compact by JTS
 	];
 

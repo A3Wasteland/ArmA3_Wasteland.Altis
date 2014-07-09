@@ -7,7 +7,7 @@ if (!isServer) exitWith {};
 
 private ["_vehicle", "_toolkitFullRepair"];
 _vehicle = _this select 0;
-_toolkitFullRepair = [_this, 1, false, [false]] call BIS_fnc_param;
+// _toolkitFullRepair = [_this, 1, false, [false]] call BIS_fnc_param;
 
 _vehicle setVariable [call vChecksum, true];
 _vehicle disableTIEquipment true;

@@ -10,16 +10,17 @@ _killer = _player getVariable ["FAR_killerPrimeSuspect", objNull];
 if (isNull _killer) then { _killer = _presumedKiller };
 if (_killer == _player) then { _killer = objNull };
 
-_killData = [_player, _killer, _presumedKiller];
-
-if (isServer) then
+[_player, _killer, _presumedKiller] spawn
 {
-	_killData spawn server_PlayerDied;
-}
-else
-{
-	PlayerCDeath = _killData;
-	publicVariableServer "PlayerCDeath";
+	if (isServer) then
+	{
+		_this call server_PlayerDied;
+	}
+	else
+	{
+		PlayerCDeath = _this;
+		publicVariableServer "PlayerCDeath";
+	};
 };
 
 if (_player == player) then

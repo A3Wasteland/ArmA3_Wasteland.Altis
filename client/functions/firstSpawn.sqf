@@ -11,7 +11,7 @@ player addEventHandler ["Take",
 {
 	_vehicle = _this select 1;
 	
-	if (_vehicle isKindOf "Car" && {!(_vehicle getVariable ["itemTakenFromVehicle", false])}) then
+	if (_vehicle isKindOf "LandVehicle" && {!(_vehicle getVariable ["itemTakenFromVehicle", false])}) then
 	{
 		_vehicle setVariable ["itemTakenFromVehicle", true, true];
 	};
