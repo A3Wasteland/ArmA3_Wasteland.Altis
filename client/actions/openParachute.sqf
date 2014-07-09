@@ -11,7 +11,7 @@ waitUntil {sleep 0.1; count (player nearEntities ["Air", 10]) == 0};
 
 if (!alive player) exitWith {};
 
-_pos = player call fn_getPos3D;
+_pos = getPosATL player;
 _class = if (_pos select 2 < 20) then { "NonSteerable_Parachute_F" } else { "Steerable_Parachute_F" };
 
 _para = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
