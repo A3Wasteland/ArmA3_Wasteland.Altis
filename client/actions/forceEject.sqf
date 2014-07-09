@@ -12,11 +12,8 @@ moveOut player;
 
 if (_veh isKindOf "Plane") then
 {
-	if (!isTouchingGround _veh) then
-	{
-		player setDir getDir _veh;
-		_push = (vectorUp _veh) vectorMultiply 40; // Simulate rocket seat ejection
-	};
+	player setDir getDir _veh;
+	_push = (vectorUp _veh) vectorMultiply 40; // Simulate rocket seat ejection
 }
 else
 {
