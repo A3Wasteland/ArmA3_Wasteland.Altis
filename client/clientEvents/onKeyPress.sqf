@@ -12,28 +12,29 @@ _handled = false;
 switch (_key) do
 {
 	// U key
-	case 22:
+	case (_key == 22):
 	{
 		execVM "client\systems\adminPanel\checkAdmin.sqf";
 	};
 
 	// Tilde (key above Tab)
-	case 41:
+	case (_key == 41):
 	{
 		[] spawn loadPlayerMenu;
 		_handled = true;
 	};
 
-	// Left Windows key
-	case 219:
+	// Left & right Windows key
+	case (_key in [219,220]):
 	{
-		showPlayerNames = true;
-	};
-
-	// Right Windows key
-	case 220:
-	{
-		showPlayerNames = true;
+		if (isNil "showPlayerNames") then
+		{
+			showPlayerNames = true;
+		}
+		else
+		{
+			showPlayerNames = !showPlayerNames;
+		};
 	};
 };
 
