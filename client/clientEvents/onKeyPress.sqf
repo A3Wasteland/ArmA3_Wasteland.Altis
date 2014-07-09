@@ -9,7 +9,7 @@ private ["_key", "_handled"];
 _key = _this select 1;
 _handled = false;
 
-switch (_key) do
+switch (true) do
 {
 	// U key
 	case (_key == 22):
