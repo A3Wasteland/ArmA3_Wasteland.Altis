@@ -15,11 +15,23 @@ if (_unit == player) then
 {
 	if (createDialog "ReviveBlankGUI") then
 	{
-		(findDisplay 910) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
+		//(findDisplay 910) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
 	};
 
 	[100] call BIS_fnc_bloodEffect;
 	FAR_cutTextLayer cutText ["", "BLACK OUT"];
+};
+
+// Suspect timeout
+_unit spawn
+{
+	_unit = _this;
+	sleep 1;
+
+	if (UNCONSCIOUS(_unit) && isNil {_unit getVariable "FAR_killerSuspects"}) then
+	{
+		_unit setVariable ["FAR_killerSuspects", []];
+	};
 };
 
 waitUntil {!isNil {_unit getVariable "FAR_killerSuspects"}};
