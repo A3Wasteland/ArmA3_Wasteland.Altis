@@ -12,7 +12,7 @@ if(player != leader group player) exitWith {player globalChat format["you are no
 
 disableSerialization;
 
-private["_dialog","_groupListBox","_playerListBox","_groupInvite","_target","_index","_playerData","_check","_unitCount","_isLeader","_side1","_side2","_dist","_inCombat","_cont","_destPlayerUID","_msg"];
+private ["_dialog", "_groupListBox", "_target", "_index", "_playerData", "_inCombat", "_isIndie"];
 
 _dialog = findDisplay groupManagementDialog;
 _groupListBox = _dialog displayCtrl groupManagementGroupList;
@@ -30,14 +30,15 @@ if (isNil "_target") exitWith { player globalChat "You must select someone to pr
 if (_target == player) exitWith { player globalChat "You can't promote yourself." };
 
 _inCombat = false;
+_isIndie = !((side group _target) in [BLUFOR,OPFOR]);
 
 //check to see how close to the enemy the target leader is
 {
-	if (_dist < 100 && (side _x != side _target || group _x != group _target)) exitWith
+	if (_x distance _target < 100 && (side _x != side _target || (_isIndie && group _x != group _target))) exitWith
 	{
 		_inCombat = true;
 	};
-}forEach playableUnits;
+} forEach playableUnits;
 
 if (!_inCombat) then
 {
