@@ -4,7 +4,7 @@
 //	@file Date modified: 07/12/2012 05:19
 //	@file Args:
 
-#define PICK_DISTANCE 5
+#define PICK_DISTANCE 2
 
 // Check if mutex lock is active.
 if (mutexScriptInProgress) exitWith
@@ -32,6 +32,15 @@ if (isNil "_moneyObj" || {player distance _moneyObj > PICK_DISTANCE}) exitWith
 {
 	titleText ["You are too far to pick the money up.", "PLAIN DOWN", 0.5];
 	mutexScriptInProgress = false;
+};
+
+if (
+count((position _moneyObj) nearEntities [["CAManBase"], 3]) > 1
+) exitWith
+{
+	titleText ["Dupe protection - You can't pickup money if other players are nearby", "PLAIN DOWN", 0.5];
+	mutexScriptInProgress = false;
+	sleep 0.5;
 };
 
 player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
