@@ -18,25 +18,42 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 		{
 			playerData_alive = true;
 
-			if (profileNamespace getVariable ["A3W_preloadSpawn", true]) then
-			{
-				_pos = [_data, "Position", []] call fn_getFromPairs;
+			_pos = [_data, "Position", []] call fn_getFromPairs;
+			_preload = profileNamespace getVariable ["A3W_preloadSpawn", true];
 
-				if (count _pos > 2) then
+			if (count _pos == 2) then { _pos set [2, 0] };
+			if (count _pos == 3) then
+			{
+				if (_preload) then
 				{
-					player groupChat "Preloading location...";
+					player groupChat "Preloading previous location...";
 					waitUntil {sleep 0.1; preloadCamera _pos};
+				}
+				else
+				{
+					player groupChat "Loading previous location...";
 				};
+			}
+			else
+			{
+				playerData_resetPos = true;
 			};
 
 			_data call fn_applyPlayerData;
 
-			//fixes the issue with saved player being GOD when they log back on the server!
-			player allowDamage true;
-
 			player groupChat "Player account loaded!";
 
-			execVM "client\functions\firstSpawn.sqf";
+			if (isNil "playerData_resetPos") then
+			{
+				//fixes the issue with saved player being GOD when they log back on the server!
+				player allowDamage true;
+
+				execVM "client\functions\firstSpawn.sqf";
+			}
+			else
+			{
+				player groupChat "Your position has been reset";
+			};
 		};
 
 		playerData_loaded = true;

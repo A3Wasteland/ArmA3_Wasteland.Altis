@@ -26,7 +26,7 @@ removeHeadgear player;
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
 		case "Money": { player setVariable ["cmoney", _value, true] };
-		case "Position": { player setPosATL _value };
+		case "Position": { if (count _value == 3) then { player setPosATL _value } };
 		case "Direction": { player setDir _value };
 		case "Uniform":
 		{
@@ -118,7 +118,7 @@ removeHeadgear player;
 			} forEach _value;
 		};
 		case "CurrentWeapon": { player selectWeapon _value };
-		case "Stance": { player switchMove ([player, _value] call getFullMove) };
+		case "Stance": { [player, [player, _value] call getFullMove] call switchMoveGlobal };
 		case "UniformWeapons": { { (uniformContainer player) addWeaponCargoGlobal _x } forEach _value };
 		case "UniformItems": { { (uniformContainer player) addItemCargoGlobal _x } forEach _value };
 		case "UniformMagazines": { { (uniformContainer player) addMagazineCargoGlobal _x } forEach _value };

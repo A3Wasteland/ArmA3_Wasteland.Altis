@@ -27,13 +27,16 @@ spawnActionHandle = [_this select 1, _this select 2] spawn
 	_switch = _this select 0;
 	_data = [_this select 1, false];
 
-	// Deal with money here
-	_baseMoney = ["A3W_startingMoney", 100] call getPublicVar;
-	player setVariable ["cmoney", _baseMoney, true];
+	if (isNil "playerData_resetPos") then
+	{
+		// Deal with money here
+		_baseMoney = ["A3W_startingMoney", 100] call getPublicVar;
+		player setVariable ["cmoney", _baseMoney, true];
 
-	[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
-	[MF_ITEMS_WATER, 1] call mf_inventory_add;
-	[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_add;
+		[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
+		[MF_ITEMS_WATER, 1] call mf_inventory_add;
+		[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_add;
+	};
 
 	if (cbChecked ((uiNamespace getVariable "RespawnSelectionDialog") displayCtrl respawn_Preload_Checkbox)) then
 	{
@@ -46,9 +49,9 @@ spawnActionHandle = [_this select 1, _this select 2] spawn
 
 	switch (_switch) do 
 	{
-		case 1: { _data call compile preprocessFileLineNumbers "client\functions\spawnInTown.sqf" };
-		case 2: { _data call compile preprocessFileLineNumbers "client\functions\spawnOnBeacon.sqf" };
-		default { _data call compile preprocessFileLineNumbers "client\functions\spawnRandom.sqf" };
+		case 1: { _data call spawnInTown };
+		case 2: { _data call spawnOnBeacon };
+		default { _data call spawnRandom };
 	};
 
 	player allowDamage true;

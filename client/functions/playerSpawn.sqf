@@ -54,10 +54,8 @@ if (_kickTeamSwitcher) exitWith
 };
 
 // Only go through respawn dialog if no data from the player save system
-if (isNil "playerData_alive") then
+if (isNil "playerData_alive" || !isNil "playerData_resetPos") then
 {
-	//Send player to debug zone to stop fake spawn locations.
-	player setPosATL [7837.37,7627.14,0.00230217];
 	[player, "AmovPknlMstpSnonWnonDnon"] call switchMoveGlobal;
 
 	9999 cutText ["Loading...", "BLACK", 0.01];
@@ -72,11 +70,10 @@ if (isNil "playerData_alive") then
 	{
 		[] spawn fn_savePlayerData;
 	};
-}
-else
-{
-	playerData_alive = nil;
 };
+
+playerData_alive = nil;
+playerData_resetPos = nil;
 
 9999 cutText ["", "BLACK IN"];
 
