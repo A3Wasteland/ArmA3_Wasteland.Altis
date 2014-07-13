@@ -93,6 +93,7 @@ isConfigOn = [_serverFunc, "isConfigOn.sqf"] call mf_compile;
 pushVehicle = [_serverFunc, "pushVehicle.sqf"] call mf_compile;
 relativePos = [_serverFunc, "relativePos.sqf"] call mf_compile;
 removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
+splitWeaponItems = [_serverFunc, "splitWeaponItems.sqf"] call mf_compile;
 switchMoveGlobal = [_clientFunc, "switchMoveGlobal.sqf"] call mf_compile;
 vehicleHandleDamage = [_serverFunc, "vehicleHandleDamage.sqf"] call mf_compile;
 

@@ -508,7 +508,9 @@ genItemArray = compileFinal str
 	["Chemlight (Red)", "Chemlight_red", 25, "mag"]
 ];
 
-allRegularStoreItems = compileFinal str (call allGunStoreFirearms + call throwputArray + call ammoArray + call accessoriesArray + call genItemArray);
+allStoreMagazines = compileFinal str (call ammoArray + call throwputArray + call genItemArray);
+allRegularStoreItems = compileFinal str (call allGunStoreFirearms + call allStoreMagazines + call accessoriesArray);
+allStoreGear = compileFinal str (call headArray + call uniformArray + call vestArray + call backpackArray);
 
 genObjectsArray = compileFinal str
 [
@@ -553,7 +555,7 @@ genObjectsArray = compileFinal str
 	["Scaffolding", "Land_Scaffolding_F", 200, "object"]
 ];
 
-allGenStoreVanillaItems = compileFinal str (call genItemArray + call genObjectsArray + call headArray + call uniformArray + call vestArray + call backpackArray);
+allGenStoreVanillaItems = compileFinal str (call genItemArray + call genObjectsArray + call allStoreGear);
 
 //Text name, classname, buy cost, spawn type, sell price (selling not implemented) or spawning color
 landArray = compileFinal str
