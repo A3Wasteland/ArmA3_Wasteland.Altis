@@ -118,10 +118,10 @@ waitUntil {!isNull findDisplay 46};
 {
 	_player = _this select 1;
 	_group = group _player;
+	_oldLeader = leader _group;
 
-	if (local _group) then
+	if (player == _oldLeader) then
 	{
-		_oldLeader = leader _group;
 		_group selectLeader _player;
 		["You have been promoted to group leader.", "titleTextMessage", _player, false] call TPG_fnc_MP;
 		_oldLeader setVariable ["currentGroupIsLeader", false, true];

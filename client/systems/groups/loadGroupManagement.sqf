@@ -7,6 +7,7 @@
 #define groupManagementDialog 55510
 #define groupManagementPlayerList 55511
 #define groupManagementGroupList 55512
+#define groupManagementPromoteButton 55513
 #define groupManagementInviteButton 55514
 #define groupManagementKickButton 55515
 #define groupManagementDisbandButton 55516
@@ -17,7 +18,7 @@
             
 disableSerialization;
 				
-private ["_start","_dialog","_myGroup","_playerListBox","_groupListBox","_uid","_namestr","_index","_groupCreate","_groupInvite","_groupKick","_groupDisband","_groupLeaveButton","_inGroup","_isLeader","_name"];
+private ["_start","_dialog","_myGroup","_playerListBox","_groupListBox","_uid","_namestr","_index","_groupCreate","_groupPromote","_groupInvite","_groupKick","_groupDisband","_groupLeaveButton","_inGroup","_isLeader","_name"];
 
 closeDialog 0;
 _start = createDialog "GroupManagement";	
@@ -27,6 +28,7 @@ _dialog = findDisplay groupManagementDialog;
 groupManagmentActive = true;
 _playerListBox = _dialog displayCtrl groupManagementPlayerList;
 _groupListBox = _dialog displayCtrl groupManagementGroupList;
+_groupPromote = _dialog displayCtrl groupManagementPromoteButton;
 _groupInvite = _dialog displayCtrl groupManagementInviteButton;
 _groupKick = _dialog displayCtrl groupManagementKickButton;
 _groupDisband = _dialog displayCtrl groupManagementDisbandButton;
@@ -44,13 +46,15 @@ _groupAcceptInvite ctrlShow false;
 _hasInvite = false;
 while{groupManagmentActive} do
 {
+	_groupPromote ctrlShow (player == leader player);
+
     //Check if player has invite.
     { if (_x select 1 == getPlayerUID player) exitWith { _hasInvite = true } } forEach currentInvites;
     
     //Member Controls
-    if(count units group player > 1) then 
+    if(count units player > 1) then 
     {
-        if(player == leader group player) then
+        if(player == leader player) then
         {
 			_groupDisband ctrlShow true;
             _groupKick ctrlShow true;
