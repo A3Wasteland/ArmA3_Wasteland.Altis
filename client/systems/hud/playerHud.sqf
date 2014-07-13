@@ -133,8 +133,8 @@ while {true} do
 		format ["%1 <img size='0.7' image='client\icons\running_man.paa'/>", 100 - ceil((getFatigue player) * 100)];
 	};
 	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\money.paa'/>", _str, player getVariable "cmoney"];
-	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\water.paa'/>", _str, ceil thirstLevel];
-	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\food.paa'/>", _str, ceil hungerLevel];
+	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\water.paa'/>", _str, 0 max ceil thirstLevel];
+	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\food.paa'/>", _str, 0 max ceil hungerLevel];
 	_str = format["%1<br/><t color='%2'>%3</t> <img size='0.7' image='client\icons\health.paa'/>", _str, _healthTextColor, _health];
 
 	_vitals ctrlShow alive player;

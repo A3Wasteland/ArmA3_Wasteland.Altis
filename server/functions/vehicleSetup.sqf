@@ -18,6 +18,11 @@ clearMagazineCargoGlobal _vehicle;
 clearWeaponCargoGlobal _vehicle;
 clearItemCargoGlobal _vehicle;
 
+if (_vehicle isKindOf "AllVehicles") then
+{
+	clearBackpackCargoGlobal _vehicle;
+};
+
 _vehicle setVariable ["A3W_handleDamage", true, true];
 
 {
