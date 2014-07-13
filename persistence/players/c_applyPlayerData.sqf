@@ -23,6 +23,7 @@ removeHeadgear player;
 	{
 		case "Donator": { player setVariable ["isDonator", _value > 0] };
 		case "Damage": { player setDamage _value };
+		case "HitPoints": { { player setHitPointDamage _x } forEach _value };
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
 		case "Money": { player setVariable ["cmoney", _value, true] };

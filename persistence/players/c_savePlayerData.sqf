@@ -32,6 +32,14 @@ savePlayerHandle = _this spawn
 		_data = [];
 
 		[_data, ["Damage", damage player]] call BIS_fnc_arrayPush;
+
+		_hitPoints = [];
+		{
+			_hitPoint = configName _x;
+			_hitPoints set [count _hitPoints, [_hitPoint, player getHitPointDamage _hitPoint]];
+		} forEach (player call getHitPoints);
+
+		[_data, ["HitPoints", _hitPoints]] call BIS_fnc_arrayPush;
 		[_data, ["Hunger", ["hungerLevel", 0] call getPublicVar]] call BIS_fnc_arrayPush;
 		[_data, ["Thirst", ["thirstLevel", 0] call getPublicVar]] call BIS_fnc_arrayPush;
 		[_data, ["Money", player getVariable ["cmoney", 0]]] call BIS_fnc_arrayPush; // Money is always saved, but only restored if A3W_moneySaving = 1
