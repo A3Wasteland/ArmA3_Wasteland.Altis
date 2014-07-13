@@ -74,7 +74,7 @@ if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 		if (_this select 3 != "Put") then {
 			combatTimestamp = diag_tickTime;
 		};
-	];
+	}];
 
 	player addEventHandler ["Hit",
 	{
