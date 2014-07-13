@@ -34,10 +34,22 @@ if (isNil "_moneyObj" || {player distance _moneyObj > PICK_DISTANCE}) exitWith
 	mutexScriptInProgress = false;
 };
 
+_playerUID = getPlayerUID player;
+_owner = _moneyObj getVariable ["owner", "world"];
+
+if (!(_owner in ["world", _playerUID]) &&
+   {{getPlayerUID _x == _owner} count (_moneyObj nearEntities ["CAManBase", PICK_DISTANCE]) > 0}) exitWith
+{
+	titleText ["Somebody else is picking the money up.", "PLAIN DOWN", 0.5];
+	mutexScriptInProgress = false;
+};
+
+_moneyObj setVariable ["owner", _playerUID, true];
+
 player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
 sleep 0.5;
 
-if (!isNull _moneyObj) then
+if (_moneyObj getVariable ["owner", "world"] == _playerUID) then
 {
 	_money = _moneyObj getVariable ["cmoney", 0];
 	deleteVehicle _moneyObj;
