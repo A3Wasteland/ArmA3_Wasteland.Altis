@@ -4,25 +4,50 @@
 if (!alive player) exitWith {};
 if (vehicle player != player) exitWith {};
 
-private ["_pos", "_class", "_para"];
+private ["_wait", "_pos", "_para"];
 
 // some aircrafts blow up on contact with parachutes, so we have to make sure none's close
-waitUntil {sleep 0.1; count (player nearEntities ["Air", 10]) == 0};
+waitUntil {sleep 0.1; {player distance _x < 10 max (sizeOf typeOf _x)} count (player nearEntities ["Air", 20]) == 0};
 
 if (!alive player) exitWith {};
 
+_wait = false;
 _pos = getPosATL player;
-_class = if (_pos select 2 < 20) then { "NonSteerable_Parachute_F" } else { "Steerable_Parachute_F" };
 
-_para = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
-_para disableCollisionWith player;
-_para setDir getDir player;
-player moveInDriver _para;
-
-_para spawn
+if (_pos select 2 < 20) then
 {
-	sleep 4.25; // parachute deployment time
-	waitUntil {sleep 0.1; isTouchingGround _this || !alive _this || !alive player};
-	if (alive player) then { sleep 1.5 };
-	deleteVehicle _this;
+	_para = createVehicle ["NonSteerable_Parachute_F", _pos, [], 0, "FLY"];
+	_para setPosATL _pos;
+	_para setDir 0;
+}
+else
+{
+	_wait = true;
+	_para = createVehicle ["Steerable_Parachute_F", _pos, [], 0, "CAN_COLLIDE"];
+	_para setDir getDir player;
+};
+
+player moveInDriver _para;
+_para setVelocity [0,0,0];
+
+[_para, _wait] spawn
+{
+	_para = _this select 0;
+	_wait = _this select 1;
+
+	if (_wait) then
+	{
+		sleep 4.25; // parachute deployment time
+	}
+	else
+	{
+		sleep 0.5;
+	};
+
+	waitUntil {sleep 0.1; isTouchingGround _para || !alive _para};
+	_para setVelocity [0,0,0];
+	sleep 0.5;
+	moveOut player;
+	sleep 1.5;
+	deleteVehicle _para;
 };

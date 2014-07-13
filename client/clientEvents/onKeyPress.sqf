@@ -36,6 +36,15 @@ switch (true) do
 			showPlayerNames = !showPlayerNames;
 		};
 	};
+
+	case (_key in actionKeys "GetOver"):
+	{
+		if (vehicle player == player && (getPos player) select 2 > 2.5) then
+		{
+			execVM "client\actions\openParachute.sqf";
+			_handled = true;
+		};
+	}	
 };
 
 _handled
