@@ -39,12 +39,29 @@ switch (true) do
 
 	case (_key in actionKeys "GetOver"):
 	{
-		if (vehicle player == player && (getPos player) select 2 > 2.5) then
+		_veh = vehicle player;
+
+		if (_veh == player) then
 		{
-			execVM "client\actions\openParachute.sqf";
-			_handled = true;
+			if ((getPos player) select 2 > 2.5) then
+			{
+				execVM "client\actions\openParachute.sqf";
+				_handled = true;
+			};
+		}
+		else
+		{
+			if (_veh isKindOf "ParachuteBase") then
+			{
+				moveOut player;
+				_veh spawn
+				{
+					sleep 1;
+					deleteVehicle _this;
+				};
+			};
 		};
-	}	
+	};
 };
 
 _handled

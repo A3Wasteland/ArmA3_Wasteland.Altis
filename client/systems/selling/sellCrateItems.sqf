@@ -134,7 +134,6 @@ else
 
 		// Add value of each item to sell value, and acquire item display name
 		{
-			systemChat str _x;
 			_item = _x;
 			_itemClass = _x select 0;
 			_itemQty = _x select 1;

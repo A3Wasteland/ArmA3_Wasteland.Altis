@@ -7,7 +7,7 @@ if (vehicle player != player) exitWith {};
 private ["_wait", "_pos", "_para"];
 
 // some aircrafts blow up on contact with parachutes, so we have to make sure none's close
-waitUntil {sleep 0.1; {player distance _x < 10 max (sizeOf typeOf _x)} count (player nearEntities ["Air", 20]) == 0};
+waitUntil {sleep 0.1; {player distance _x < 10 max (sizeOf typeOf _x)} count (player nearEntities ["Helicopter_F", 20]) == 0};
 
 if (!alive player) exitWith {};
 
@@ -27,6 +27,7 @@ else
 	_para setDir getDir player;
 };
 
+_para disableCollisionWith player;
 player moveInDriver _para;
 _para setVelocity [0,0,0];
 
@@ -45,9 +46,13 @@ _para setVelocity [0,0,0];
 	};
 
 	waitUntil {sleep 0.1; isTouchingGround _para || !alive _para};
-	_para setVelocity [0,0,0];
-	sleep 0.5;
-	moveOut player;
-	sleep 1.5;
-	deleteVehicle _para;
+
+	if (!isNull _para) then
+	{
+		_para setVelocity [0,0,0];
+		sleep 0.5;
+		if (vehicle player == _para) then { moveOut player };
+		sleep 1.5;
+		deleteVehicle _para;
+	};
 };
