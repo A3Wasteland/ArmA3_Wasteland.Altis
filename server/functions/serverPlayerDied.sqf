@@ -14,6 +14,7 @@ _unit = _this select 0;
 if (isPlayer _unit && {["A3W_playerSaving"] call isConfigOn}) then
 {
 	((getPlayerUID _unit) call PDB_databaseNameCompiler) call iniDB_delete;
+	_unit removeEventHandler ["Local", _unit getVariable ["corpseLocalEH", -1]]; // remove corpse deletion on leave since it was a legit kill
 };
 
 _killer = if (count _this > 1) then { _this select 1 } else { objNull };
