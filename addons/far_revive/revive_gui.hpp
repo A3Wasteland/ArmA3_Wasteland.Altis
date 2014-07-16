@@ -98,6 +98,7 @@ class ReviveGUI : IGUIBack
 	class RevTextBG : IGUIBack
 	{
 		idc = -1;
+		colorBackground[] = {0, 0, 0, 0.4};
 
 		// below RevSuicideBtn
 		#define RevTextBG_X RevProgBar_X
@@ -115,6 +116,7 @@ class ReviveGUI : IGUIBack
 	{
 		idc = 9113;
 		text = "";
+		size = 0.04 * TEXT_SCALE;
 
 		class Attributes {
 			align = "center";

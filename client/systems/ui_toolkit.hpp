@@ -10,7 +10,7 @@
 #define FOLLOW_RESOLUTION
 
 // This is the percentage from the dev resolution that the UI must start compensating in order to stay at a reasonable size (ex: UI cannot get smaller than 75% from the dev resolution)
-#define FOLLOW_RES_LOWER_CAP 0.7
+#define FOLLOW_RES_LOWER_CAP 0.75
 
 // Effects:
 // FOLLOW_UI_SIZE only = UI will be scaled according to the user's UI size, relative from UI_SIZE_DEV below, regardless of the resolution (not recommended)
@@ -48,7 +48,7 @@
 
 // Determine if UI scale is relative to resolution
 #ifdef FOLLOW_RESOLUTION
-	#define RES_SCALE (((RES_Y_DEV / RES_Y) - (1 - FOLLOW_RES_LOWER_CAP)) max 1) // Regular UI scale, with lower cap
+	#define RES_SCALE (((RES_Y_DEV * FOLLOW_RES_LOWER_CAP) / RES_Y) max 1) // Regular UI scale, with lower cap
 #else
 	#define RES_SCALE (RES_Y_DEV / RES_Y) // Constant UI scale across all resolutions below dev resolution
 #endif

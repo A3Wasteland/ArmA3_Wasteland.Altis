@@ -85,6 +85,7 @@ class RespawnSelectionDialog
 		{
 			idc = respawn_Content_Text;
 			text = "";
+			size = 0.04 * TEXT_SCALE;
 
 			// relative to RspnTopBar
 			#define RspnStructText_W (0.533 * X_SCALE)
@@ -156,8 +157,9 @@ class RespawnSelectionDialog
 		{
 			idc = respawn_MissionUptime_Text;
 			text = "Mission Uptime: 00:00:00";
+			size = 0.04 * TEXT_SCALE;
 
-			#define RspnMissionUptime_W (0.213 * X_SCALE)
+			#define RspnMissionUptime_W (0.23 * X_SCALE)
 			#define RspnMissionUptime_H (0.025 * Y_SCALE)
 			#define RspnMissionUptime_X ((RspnLine_X + RspnLine_W) - RspnMissionUptime_W) // aligned right to RspnBottomLine
 			#define RspnMissionUptime_Y (RspnLobbyButton_Y + CENTER(RspnButton_H, RspnMissionUptime_H)) // centered to RspnLobbyButton
@@ -171,7 +173,7 @@ class RespawnSelectionDialog
 
 	class RspnButton: w_RscButton
 	{
-		size = 0.04 * TEXT_SCALE;
+		sizeEx = 0.04 * TEXT_SCALE;
 
 		#define RspnButton_W (0.139 * X_SCALE)
 
@@ -217,7 +219,7 @@ class RespawnSelectionDialog
 			sizeEx = 0.036 * TEXT_SCALE;
 
 			// right of RspnPreloadChk
-			#define RspnPreloadChkText_W (0.06 * X_SCALE)
+			#define RspnPreloadChkText_W (0.08 * X_SCALE)
 			#define RspnPreloadChkText_H (0.03 * Y_SCALE)
 			#define RspnPreloadChkText_X (RspnPreloadChk_X + RspnPreloadChk_W + (0.001 * X_SCALE))
 			#define RspnPreloadChkText_Y ((RspnPreloadChk_Y + CENTER(RspnPreloadChk_H, RspnPreloadChkText_H)) - (0.0015 * Y_SCALE))
@@ -387,4 +389,4 @@ class RespawnSelectionDialog
 			y = RspnLobbyButton_Y;
 		};
 	};
-};
+};
