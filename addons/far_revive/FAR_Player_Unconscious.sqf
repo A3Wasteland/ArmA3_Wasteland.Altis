@@ -75,7 +75,11 @@ if (FAR_EnableDeathMessages && difficultyEnabled "deathMessages" && !isNil "_kil
 _unit spawn
 {
 	_unit = _this;
-	[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
+
+	if (vehicle _unit == _unit) then
+	{
+		[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
+	};
 
 	sleep 1;
 
@@ -83,14 +87,14 @@ _unit spawn
 
 	while {UNCONSCIOUS(_unit)} do
 	{
-		if (animationState _unit != "AinjPpneMstpSnonWrflDnon") then
+		if (vehicle _unit == _unit && animationState _unit != "AinjPpneMstpSnonWrflDnon") then
 		{
 			[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
 		};
 
 		if (_unit == player && cameraView != "INTERNAL") then
 		{
-			player switchCamera "INTERNAL";
+			(vehicle player) switchCamera "INTERNAL";
 		};
 
 		if (!STABILIZED(_unit)) then
@@ -109,25 +113,69 @@ _unit spawn
 
 	if (_unit == player && !alive player) then
 	{
-		player switchCamera "EXTERNAL";
+		(vehicle player) switchCamera "EXTERNAL";
 	};
 };
 
-// Eject unit if inside vehicle
+// Eject unit if inside immobile vehicle
 _unit spawn
 {
-	private ["_vehicle", "_unconscious"];
+	private "_unconscious";
 	_unit = _this;
+	_veh = vehicle _unit;
+
+	if (_veh != _unit) then
+	{
+		if (_veh isKindOf "Helicopter_Base_F" && isCopilotEnabled _veh) then
+		{
+			_pilot = driver _veh;
+			_copilot = _veh turretUnit [0];
+
+			if (_unit in [_pilot, _copilot]) then
+			{
+				if (!isNull _pilot && !isNull _copilot && _pilot != _copilot) then
+				{
+					// Give control to copilot if appropriate
+					if (_pilot == _unit) then
+					{
+						_unit action ["UnlockVehicleControl", _veh];
+						[[_copilot, netId _veh], "copilotTakeControl", _copilot] call TPG_fnc_MP;
+					};
+
+					// Give control back to pilot if appropriate
+					if (_copilot == _unit) then
+					{
+						_unit action ["SuspendVehicleControl", _veh];
+					};
+				}
+				else
+				{
+					// Turn off engine
+					_unit action ["EngineOff", _veh];
+					_veh engineOn false;
+				};
+			};
+		}
+		else
+		{
+			if (driver _veh == _unit) then
+			{
+				// Turn off engine
+				_unit action ["EngineOff", _veh];
+				_veh engineOn false;
+			};
+		};
+	};
 
 	waitUntil
 	{
 		sleep 0.1;
-		_vehicle = vehicle _unit;
+		_veh = vehicle _unit;
 		_unconscious = UNCONSCIOUS(_unit);
-		((isTouchingGround _vehicle || (getPos _vehicle) select 2 < 1) && {vectorMagnitude velocity _unit < 1}) || !_unconscious
+		((isTouchingGround _veh || (getPos _veh) select 2 < 1) && {vectorMagnitude velocity _unit < 1}) || !_unconscious
 	};
 
-	if (_unconscious && _vehicle != _unit) then
+	if (_unconscious && _veh != _unit) then
 	{
 		unassignVehicle _unit;
 		moveOut _unit;

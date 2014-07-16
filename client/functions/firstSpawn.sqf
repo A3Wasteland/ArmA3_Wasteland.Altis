@@ -58,6 +58,28 @@ player addEventHandler ["GetIn",
 	{
 		_vehicle setVariable ["A3W_handleDamageEH", _vehicle addEventHandler ["HandleDamage", vehicleHandleDamage]];
 	};
+	
+	if (isNil {_vehicle getVariable "A3W_unconsciousEngineEH"}) then
+	{
+		_vehicle setVariable ["A3W_unconsciousEngineEH", _vehicle addEventHandler ["Engine",
+		{
+			_veh = _this select 0;
+			_turnedOn = _this select 1;
+			
+			if (local _veh && {_turnedOn && (driver _veh) getVariable ["FAR_isUnconscious", 0] == 1}) then
+			{
+				(driver _veh) action ["EngineOff", _veh];
+				_veh engineOn false;
+			};
+		}]];
+	};
+}];
+
+player addEventHandler ["GetOut",
+{
+	_vehicle = _this select 1;
+	_vehicle removeEventHandler ["Engine", _vehicle getVariable ["A3W_unconsciousEngineEH", -1]];
+	_vehicle setVariable ["A3W_unconsciousEngineEH", nil];
 }];
 
 {
