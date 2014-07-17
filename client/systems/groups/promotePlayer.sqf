@@ -42,17 +42,12 @@ _isIndie = !((side group _target) in [BLUFOR,OPFOR]);
 
 if (!_inCombat) then
 {
-	//diag_log "Promote to leader: After the checks";
-	promoteToGroupLeader = _target;
-	publicVariable "promoteToGroupLeader";
-	
-	//notify the clients
-	//if(X_Server) then {call serverRelayHandler};
-	//serverRelaySystem = [MESSAGE_BROADCAST_MSG_TO_PLAYER, MESSAGE_BROADCAST_MSG_TYPE_GCHAT, getPlayerUID _target, "You have been promoted to group leader."];
-	//publicVariable "serverRelaySystem";
+	(group player) selectLeader _target;
+	["You have been promoted to group leader.", "titleTextMessage", _target] call TPG_fnc_MP;
+
 	player globalChat format ["You have promoted %1 to group leader", name _target];
-	//player setVariable ["currentGroupIsLeader", false, true];
-	//_target setVariable ["currentGroupIsLeader", true, true];
+	player setVariable ["currentGroupIsLeader", false, true];
+	_target setVariable ["currentGroupIsLeader", true, true];
 }
 else
 {
