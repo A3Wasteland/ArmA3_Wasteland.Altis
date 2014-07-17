@@ -11,12 +11,14 @@
 #define ERR_TOO_FAR_AWAY "Stealing Spawn Beacon Failed! You are too far away to do that."
 #define ERR_CANCELLED "Stealing Spawn Beacon Cancelled"
 #define ERR_SOMEONE_ELSE_TAKEN "Packing Spawn Beacon Failed! Someone else finished packing it up before you"
-private ["_beacon", "_error", "_hasFailed", "_success"];
-
-private "_error";
+private ["_beacon", "_error", "_isIndie", "_ownerSide", "_ownerUID", "_hasFailed", "_success"];
 _beacon = [] call mf_items_spawn_beacon_nearest;
 _error = [_beacon] call mf_items_spawn_beacon_can_steal;
 if (_error != "") exitWith {[_error, 5] call mf_notify_client};
+
+_isIndie = !(playerSide in [BLUFOR,OPFOR]);
+_ownerSide = _beacon getVariable ["side", sideUnknown];
+_ownerUID = _beacon getVariable ["ownerUID", "0"];
 
 _hasFailed = {
 	private ["_progress", "_beacon", "_failed", "_text"];
@@ -28,7 +30,7 @@ _hasFailed = {
 		case (!alive player): {};
         case (isNull _beacon): {_text = ERR_SOMEONE_ELSE_TAKEN};
 		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
-		case (_beacon getVariable ["side", sideUnknown] == playerSide): {_text = ERR_NOT_OPP_SIDE};
+		case ((!_isIndie && _ownerSide == playerSide) || {_isIndie && {{getPlayerUID _x == _ownerUID} count units player > 0}}): {_text = ERR_NOT_OPP_SIDE};
 		case (player distance _beacon > 5): {_text = ERR_TOO_FAR_AWAY;};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED;};
 		default {
