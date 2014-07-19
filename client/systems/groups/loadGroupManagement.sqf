@@ -18,7 +18,7 @@
             
 disableSerialization;
 				
-private ["_start","_dialog","_myGroup","_playerListBox","_groupListBox","_uid","_namestr","_index","_groupCreate","_groupPromote","_groupInvite","_groupKick","_groupDisband","_groupLeaveButton","_inGroup","_isLeader","_name"];
+private ["_start","_dialog","_myGroup","_playerListBox","_groupListBox","_uid","_namestr","_allPlayers","_index","_groupCreate","_groupPromote","_groupInvite","_groupKick","_groupDisband","_groupLeaveButton","_inGroup","_isLeader","_name"];
 
 closeDialog 0;
 _start = createDialog "GroupManagement";	
@@ -68,6 +68,8 @@ while{groupManagmentActive} do
 		_groupLeaveButton ctrlShow false;    
     };
     
+	_allPlayers = call allPlayers;
+	
     //Sort Invite Controls
     if(_hasInvite) then
     {
@@ -85,7 +87,7 @@ while{groupManagmentActive} do
 					{
 						_name = name _x;
 					};
-				} forEach playableUnits;
+				} forEach _allPlayers;
 			};
 		} forEach currentInvites;
 
@@ -112,7 +114,7 @@ while{groupManagmentActive} do
 			_index = _playerListBox lbAdd _namestr;
 			_playerListBox lbSetData [_index, getPlayerUID _x];
 	    };
-	} forEach playableUnits;
+	} forEach _allPlayers;
     
     //Update group player list
     {

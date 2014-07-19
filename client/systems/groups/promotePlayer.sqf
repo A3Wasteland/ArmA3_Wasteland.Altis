@@ -12,7 +12,7 @@ if(player != leader group player) exitWith {player globalChat format["you are no
 
 disableSerialization;
 
-private ["_dialog", "_groupListBox", "_target", "_index", "_playerData", "_inCombat", "_isIndie"];
+private ["_dialog", "_groupListBox", "_target", "_index", "_playerData", "_allPlayers", "_inCombat", "_isIndie"];
 
 _dialog = findDisplay groupManagementDialog;
 _groupListBox = _dialog displayCtrl groupManagementGroupList;
@@ -20,8 +20,10 @@ _groupListBox = _dialog displayCtrl groupManagementGroupList;
 _index = lbCurSel _groupListBox;
 _playerData = _groupListBox lbData _index;
 
+_allPlayers = call allPlayers;
+
 //Check selected data is valid
-{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach playableUnits;
+{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach _allPlayers;
 //diag_log "Promote to leader: Before the checks";
 
 //Checks
@@ -34,11 +36,11 @@ _isIndie = !((side group _target) in [BLUFOR,OPFOR]);
 
 //check to see how close to the enemy the target leader is
 {
-	if (_x distance _target < 100 && (side _x != side _target || (_isIndie && group _x != group _target))) exitWith
+	if (_x distance _target < 100 && (side group _x != side group _target || (_isIndie && group _x != group _target))) exitWith
 	{
 		_inCombat = true;
 	};
-} forEach playableUnits;
+} forEach _allPlayers;
 
 if (!_inCombat) then
 {

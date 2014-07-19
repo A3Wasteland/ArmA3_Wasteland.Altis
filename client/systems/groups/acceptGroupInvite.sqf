@@ -25,7 +25,7 @@ if (!isNil "_inviterUID") then {
     		_inviter = _x;
 			_groupExists = true;	    
 		};   
-	} forEach playableUnits;
+	} forEach (call allPlayers);
 };
 
 

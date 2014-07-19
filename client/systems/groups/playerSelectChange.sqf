@@ -19,7 +19,7 @@ _groupInvite = _dialog displayCtrl groupManagementInviteButton;
 _index = lbCurSel _playerListBox;
 _playerData = _playerListBox lbData _index;
 
-{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach playableUnits;
+{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call allPlayers);
 if (isNil "_target") exitWith {};
 
 if (!isStreamFriendlyUIEnabled && player == leader player && count units _target == 1) then //streamfriendly users cannot create groups themselves only accept invites

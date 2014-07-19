@@ -17,7 +17,7 @@ _index = lbCurSel _groupListBox;
 _playerData = _groupListBox lbData _index;
 
 //Check selected data is valid            			
-{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach playableUnits;
+{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call allPlayers);
 
 //Checks
 if (isNil "_target") exitWith {player globalChat "you must select someone to kick first"};

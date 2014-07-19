@@ -67,6 +67,7 @@ mf_init =
 _clientFunc = "client\functions";
 _serverFunc = "server\functions";
 
+allPlayers = [_serverFunc, "allPlayers.sqf"] call mf_compile;
 cargoToPairs = [_serverFunc, "cargoToPairs.sqf"] call mf_compile;
 detachTowedObject = [_serverFunc, "detachTowedObject.sqf"] call mf_compile;
 findSafePos = [_serverFunc, "findSafePos.sqf"] call mf_compile;
