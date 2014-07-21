@@ -25,7 +25,7 @@ _checks = {
 	switch (true) do {
 		case (!alive player): {}; //player is dead, no need for a notification
 		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
-		case (player distance _vehicle > 5): {_text = ERR_TOO_FAR_AWAY};
+		case (player distance _vehicle > (sizeOf typeOf _vehicle / 3) max 2): {_text = ERR_TOO_FAR_AWAY};
 		case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};
 		default {
 			_text = format["Syphoning fuel %1%2 Complete", round(100 * _progress), "%"];

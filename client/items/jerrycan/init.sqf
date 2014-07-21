@@ -72,9 +72,9 @@ mf_remote_syphon = {
 [MF_ITEMS_JERRYCAN_FULL, "Full Jerrycan", _refuel, "Land_CanisterFuel_F", _icon, _max] call mf_inventory_create;
 [MF_ITEMS_SYPHON_HOSE, "Syphon Hose", _syphon, "Land_CanisterOil_F", _icon, MF_ITEMS_SYHON_HOSE_MAX] call mf_inventory_create;
 
-mf_jerrycan_can_refill = compileFinal preProcessFileLineNumbers format["%1\can_refill.sqf", _path];
-mf_jerrycan_can_refuel = compileFinal preProcessFileLineNumbers format["%1\can_refuel.sqf", _path];
-mf_jerrycan_can_syphon = compileFinal preProcessFileLineNumbers format["%1\can_syphon.sqf", _path];
+mf_jerrycan_can_refill = [_path, "can_refill.sqf"] call mf_compile;
+mf_jerrycan_can_refuel = [_path, "can_refuel.sqf"] call mf_compile;
+mf_jerrycan_can_syphon = [_path, "can_syphon.sqf"] call mf_compile;
 
 // Setting up refill action.
 private ["_label1", "_execute1", "_condition1", "_action1"];

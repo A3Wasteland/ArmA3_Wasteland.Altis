@@ -14,18 +14,8 @@
 #define ERR_TOO_FAR_AWAY "Repairing Failed! You moved too far away from the vehicle"
 #define ERR_CANCELLED "Repairing Cancelled!"
 
-private ["_vehicles", "_vehicle", "_hitPoints", "_checks", "_success"];
-_vehicles = nearestObjects [player, ["LandVehicle", "Air", "Ship"], 5];
-_vehicle = objNull;
-{
-    if (damage _x >= 0.005) exitWith {_vehicle = _x};
-} forEach _vehicles;
-
-if (isNull _vehicle) exitWith {
-    [ERR_NO_VEHICLE, 5] call mf_notify_client;
-    false;
-};
-
+private ["_vehicle", "_hitPoints", "_checks", "_success"];
+_vehicle = call mf_repair_nearest_vehicle;
 _hitPoints = (typeOf _vehicle) call getHitPoints;
 
 _checks = {
@@ -37,7 +27,7 @@ _checks = {
     switch (true) do {
         case (!alive player): {}; // player is dead, no need for a notification
         case (vehicle player != player): {_text = ERR_IN_VEHICLE};
-        case (player distance _vehicle > (sizeOf typeOf _vehicle) / 2): {_text = ERR_TOO_FAR_AWAY};
+        case (player distance _vehicle > (sizeOf typeOf _vehicle / 3) max 2): {_text = ERR_TOO_FAR_AWAY};
         case (!alive _vehicle): {_error = ERR_DESTROYED};
 		case (damage _vehicle < 0.05 && {{_vehicle getHitPointDamage (configName _x) > 0.05} count _hitPoints == 0}): {_error = ERR_FULL_HEALTH}; // 0.2 is the threshold at which wheel damage causes slower movement
         case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};
