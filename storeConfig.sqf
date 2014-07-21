@@ -33,12 +33,12 @@ rifleArray = compileFinal str
 	["SDAR Underwater Rifle", "arifle_SDAR_F", 100],
 
 	// Assault Rifles
-	["Mk20 Carbine", "arifle_Mk20C_F", 150],
-	["Mk20 Carbine (Tan)", "arifle_Mk20C_plain_F", 150],
-	["Mk20 Rifle", "arifle_Mk20_F", 200],
-	["Mk20 Rifle (Tan)", "arifle_Mk20_plain_F", 200],
-	["Mk20 EGLM Rifle", "arifle_Mk20_GL_F", 250],
-	["Mk20 EGLM Rifle (Tan)", "arifle_Mk20_GL_plain_F", 250],
+	["Mk20 Carbine", "arifle_Mk20C_plain_F", 150],
+	["Mk20 Carbine (Camo)", "arifle_Mk20C_F", 175],
+	["Mk20 Rifle", "arifle_Mk20_plain_F", 200],
+	["Mk20 Rifle (Camo)", "arifle_Mk20_F", 200],
+	["Mk20 EGLM Rifle", "arifle_Mk20_GL_plain_F", 250],
+	["Mk20 EGLM Rifle (Camo)", "arifle_Mk20_GL_F", 250],
 
 	["TRG-20 Carbine", "arifle_TRG20_F", 150],
 	["TRG-21 Rifle ", "arifle_TRG21_F", 200],
@@ -49,29 +49,31 @@ rifleArray = compileFinal str
 	["Katiba GL Rifle", "arifle_Katiba_GL_F", 250],
 
 	["MX Carbine", "arifle_MXC_F", 150],
-	["MX Carbine (Black)", "arifle_MXC_Black_F", 150],
+	["MX Carbine (Black)", "arifle_MXC_Black_F", 175],
 	["MX Rifle", "arifle_MX_F", 200],
-	["MX Rifle (Black)", "arifle_MX_Black_F", 200],
+	["MX Rifle (Black)", "arifle_MX_Black_F", 225],
 	["MX 3GL Rifle", "arifle_MX_GL_F", 250],
-	["MX 3GL Rifle (Black)", "arifle_MX_GL_Black_F", 250],
+	["MX 3GL Rifle (Black)", "arifle_MX_GL_Black_F", 275],
 
 	// Markman Rifles
 	["MXM Rifle", "arifle_MXM_F", 300],
-	["MXM Rifle (Black)", "arifle_MXM_Black_F", 300],
-	["DMR Rifle", "srifle_DMR_01_F", 350],
-	["Mk18 ABR Rifle", "srifle_EBR_F", 400],
+	["MXM Rifle (Black)", "arifle_MXM_Black_F", 325],
+	["DMR Rifle", "srifle_DMR_01_F", 375],
+	["Mk18 ABR Rifle", "srifle_EBR_F", 450],
 
 	// Sniper Rifles
 	["M320 LRR Sniper", "srifle_LRR_SOS_F", 1000],
-	["GM6 Lynx Sniper", "srifle_GM6_SOS_F", 1000]
+	["M320 LRR Sniper (Camo)", "srifle_LRR_camo_SOS_F", 1200],
+	["GM6 Lynx Sniper", "srifle_GM6_SOS_F", 1000],
+	["GM6 Lynx Sniper (camo)", "srifle_GM6_camo_SOS_F", 1200]
 ];
 
 lmgArray = compileFinal str
 [
 	["MX SW LMG", "arifle_MX_SW_F", 300],
-	["MX SW LMG (Black)", "arifle_MX_SW_Black_F", 300],
-	["Mk200 LMG", "LMG_Mk200_F", 350],
-	["Zafir LMG", "LMG_Zafir_F", 400]
+	["MX SW LMG (Black)", "arifle_MX_SW_Black_F", 325],
+	["Mk200 LMG", "LMG_Mk200_F", 375],
+	["Zafir LMG", "LMG_Zafir_F", 450]
 ];
 
 shotgunArray = compileFinal str
