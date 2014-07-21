@@ -23,3 +23,12 @@ if (isNil {_veh getVariable "A3W_unconsciousEngineEH"}) then
 		};
 	}]];
 };
+
+if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_serviceBeaconActions"}) then
+{
+	_veh setVariable ["A3W_serviceBeaconActions",
+	[
+		_veh addAction ["Beacons on", "client\functions\animateVehicle.sqf", ["BeaconsServicesStart", 1], 1.5, false, true, "", "driver _target == player && _target animationPhase 'BeaconsServicesStart' < 1"],
+		_veh addAction ["Beacons off", "client\functions\animateVehicle.sqf", ["BeaconsServicesStart", 0], 1.5, false, true, "", "driver _target == player && _target animationPhase 'BeaconsServicesStart' >= 1"]
+	]];
+};

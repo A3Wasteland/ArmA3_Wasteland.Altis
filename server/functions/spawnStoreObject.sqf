@@ -179,6 +179,11 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 						_object setFuelCargo 25;
 					};
 
+					case (_object isKindOf "Offroad_01_repair_base_F"):
+					{
+						_object setRepairCargo 5;
+					};
+
 					case ({_object isKindOf _x} count ["B_Truck_01_Repair_F", "O_Truck_02_box_F", "O_Truck_03_repair_F", "I_Truck_02_box_F"] > 0):
 					{
 						_object setRepairCargo 25;
