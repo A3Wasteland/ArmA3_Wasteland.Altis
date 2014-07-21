@@ -50,37 +50,31 @@ player addEventHandler ["Put",
 	};
 }];
 
-player addEventHandler ["GetIn",
+// Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan, among a LOT of other things
+[] spawn
 {
-	_vehicle = _this select 1;
-	
-	if (_vehicle getVariable ["A3W_handleDamage", false] && isNil {_vehicle getVariable "A3W_handleDamageEH"}) then
-	{
-		_vehicle setVariable ["A3W_handleDamageEH", _vehicle addEventHandler ["HandleDamage", vehicleHandleDamage]];
-	};
-	
-	if (isNil {_vehicle getVariable "A3W_unconsciousEngineEH"}) then
-	{
-		_vehicle setVariable ["A3W_unconsciousEngineEH", _vehicle addEventHandler ["Engine",
-		{
-			_veh = _this select 0;
-			_turnedOn = _this select 1;
-			
-			if (local _veh && {_turnedOn && (driver _veh) getVariable ["FAR_isUnconscious", 0] == 1}) then
-			{
-				(driver _veh) action ["EngineOff", _veh];
-				_veh engineOn false;
-			};
-		}]];
-	};
-}];
+	_lastVeh = vehicle player;
 
-player addEventHandler ["GetOut",
-{
-	_vehicle = _this select 1;
-	_vehicle removeEventHandler ["Engine", _vehicle getVariable ["A3W_unconsciousEngineEH", -1]];
-	_vehicle setVariable ["A3W_unconsciousEngineEH", nil];
-}];
+	while {true} do
+	{
+		_currVeh = vehicle player;
+
+		if (_lastVeh != _currVeh) then
+		{
+			if (_currVeh != player) then
+			{
+				[_currVeh] call getInVehicle;
+			}
+			else
+			{
+				[_lastVeh] call getOutVehicle;
+			};
+		};
+
+		_lastVeh = _currVeh;
+		sleep 0.25;
+	};
+};
 
 {
 	player setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x];

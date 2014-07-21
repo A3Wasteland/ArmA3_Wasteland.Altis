@@ -6,6 +6,8 @@ mf_notify_client = "client\functions\notifyClient.sqf" call mf_compile;
 mf_util_playUntil = "client\functions\playUntil.sqf" call mf_compile;
 
 // Event handlers
+getInVehicle = "client\clientEvents\getInVehicle.sqf" call mf_compile;
+getOutVehicle = "client\clientEvents\getOutVehicle.sqf" call mf_compile;
 onRespawn = "client\clientEvents\onRespawn.sqf" call mf_compile;
 onKilled = "client\clientEvents\onKilled.sqf" call mf_compile;
 onKeyPress = "client\clientEvents\onKeyPress.sqf" call mf_compile;
