@@ -3719,7 +3719,7 @@ class Mission
 		class Item162
 		{
 			position[]={21075.549,26.424484,7093.2808};
-			name="planeSpawn_8_noBuzzard";
+			name="planeSpawn_8";
 			type="Empty";
 			colorName="ColorGUER";
 			angle=11;
@@ -3727,7 +3727,7 @@ class Mission
 		class Item163
 		{
 			position[]={26834.336,24.213842,24541.688};
-			name="planeSpawn_9_noBuzzard";
+			name="planeSpawn_9";
 			type="Empty";
 			colorName="ColorGUER";
 			angle=38;
@@ -3735,7 +3735,7 @@ class Mission
 		class Item164
 		{
 			position[]={26754.703,20.465672,24654.771};
-			name="planeSpawn_10_noBuzzard";
+			name="planeSpawn_10";
 			type="Empty";
 			colorName="ColorGUER";
 			angle=130;
