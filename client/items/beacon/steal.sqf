@@ -30,7 +30,7 @@ _hasFailed = {
 		case (!alive player): {};
         case (isNull _beacon): {_text = ERR_SOMEONE_ELSE_TAKEN};
 		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
-		case ((!_isIndie && _ownerSide == playerSide) || {_isIndie && {{getPlayerUID _x == _ownerUID} count units player > 0}}): {_text = ERR_NOT_OPP_SIDE};
+		case ((!_isIndie && _ownerSide == playerSide) || (_isIndie && {{getPlayerUID _x == _ownerUID} count units player > 0})): {_text = ERR_NOT_OPP_SIDE};
 		case (player distance _beacon > 5): {_text = ERR_TOO_FAR_AWAY;};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED;};
 		default {
