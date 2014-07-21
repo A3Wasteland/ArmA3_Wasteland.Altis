@@ -97,7 +97,7 @@ diag_log format ["Player starting with $%1", player getVariable ["cmoney", 0]];
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
 	territoryActivityHandler = "territory\client\territoryActivityHandler.sqf" call mf_compile;
-	[] execVM "territory\client\createCaptureTriggers.sqf";
+	[] execVM "territory\client\setupCaptureTriggers.sqf";
 };
 
 //Setup player menu scroll action.

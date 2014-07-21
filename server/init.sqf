@@ -122,9 +122,11 @@ if (_playerSavingOn || _serverSavingOn) then
 	];
 };
 
-_setupPlayerDB spawn
+_createTriggers = execVM "territory\server\createCaptureTriggers.sqf";
+
+[_setupPlayerDB, _createTriggers] spawn
 {
-	waitUntil {sleep 0.1; scriptDone _this};
+	waitUntil {sleep 0.1; {scriptDone _x} count _this == count _this};
 	A3W_serverSetupComplete = compileFinal "true";
 	publicVariable "A3W_serverSetupComplete";
 };
