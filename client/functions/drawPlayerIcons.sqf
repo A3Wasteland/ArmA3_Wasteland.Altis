@@ -5,8 +5,8 @@
 
 if (!hasInterface) exitWith {};
 
-#define ICON_fadeDistance 750
-#define ICON_limitDistance 1250
+#define ICON_fadeDistance 1250
+#define ICON_limitDistance 2000
 #define ICON_sizeScale 0.75
 
 bluforPlayerIcon = call currMissionDir + "client\icons\igui_side_blufor_ca.paa";
@@ -36,15 +36,15 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 		{
 			_unit = _x;
 
-			if (alive _unit && (side group _unit == playerSide) && (_unit != player)) then // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
+			if (alive _unit && (side group _unit == playerSide) && (_unit != player) && !(_unit getVariable ["playerSpawning", false])) then // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
 			{
 				_dist = _unit distance positionCameraToWorld [0,0,0];
 
-				_pos = visiblePositionASL _unit;
-				_pos set [2, (_unit modelToWorld [0,0,0]) select 2];
+				_pos = _unit modelToWorld [0,0,0]; // visiblePositionASL _unit;
+				//_pos set [2, (_unit modelToWorld [0,0,0]) select 2];
 
 				// only draw players inside range and screen
-				if (_dist < ICON_limitDistance && (count worldToScreen _pos > 0)) then
+				if (_dist < ICON_limitDistance && count worldToScreen _pos > 0) then
 				{
 					_pos set [2, (_pos select 2) + 1.35]; // Torso height
 					_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
@@ -98,7 +98,7 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 					}
 					else
 					{
-						_size = (1 - ((_dist / ICON_limitDistance) * 0.6)) * hudPlayerIcon_uiScale;
+						_size = (1 - ((_dist / ICON_limitDistance) * 0.7)) * hudPlayerIcon_uiScale;
 					};
 
 					_text = if (showPlayerNames) then {
