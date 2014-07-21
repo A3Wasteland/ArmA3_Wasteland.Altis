@@ -74,8 +74,8 @@ _displayTerritoryActivity =
 		case "RESET":           { _territoryActionText = "Territory capture started" };
 	};
 
-	_activityMessage = format["Location: <t font='%1'>%2</t><br/>%3", _boldFont, _descriptiveName, _territoryActionText];
-	_topLeftIconText = "<img size='3' image='territory\client\icons\territory_cap_white.paa'/>";
+	_activityMessage = format ["Location: <t font='%1'>%2</t><br/>%3", _boldFont, _descriptiveName, _territoryActionText];
+	_topLeftIconText = format ["<img size='%1' image='territory\client\icons\territory_cap_white.paa'/>", 3 * (0.55 / (getResolution select 5))];
 
 	[_topLeftIconText, _activityMessage]
 };
@@ -152,25 +152,25 @@ while {true} do
 			{
 				if (driver _vehicle == _x) then
 				{
-					_tempString = format ["%1 %2 <img size='0.7' image='client\icons\driver.paa'/><br/>",_tempString, (name _x)];
+					_tempString = format ["%1 %2 <img image='client\icons\driver.paa'/><br/>",_tempString, (name _x)];
 					_yOffset = _yOffset + 0.04;
 				}
 				else
 				{
-					_tempString = format ["%1 %2 <img size='0.7' image='client\icons\gunner.paa'/><br/>",_tempString, (name _x)];
+					_tempString = format ["%1 %2 <img image='client\icons\gunner.paa'/><br/>",_tempString, (name _x)];
 					_yOffset = _yOffset + 0.04;
 				};
 			}
 			else
 			{
-				_tempString = format ["%1 %2 <img size='0.7' image='client\icons\cargo.paa'/><br/>",_tempString, (name _x)];
+				_tempString = format ["%1 %2 <img image='client\icons\cargo.paa'/><br/>",_tempString, (name _x)];
 				_yOffset = _yOffset + 0.04;
 			};
 		} forEach crew _vehicle;
 
 		if (isStreamFriendlyUIEnabled) then
 		{
-			_tempString = format ["Wasteland<br/>by<br/>Team Wasteland<br/>[StreamFriendly:ON]<br/>"];
+			_tempString = format ["A3Wasteland %1<br/>www.a3wasteland.com", worldName];
 			_yOffset = _yOffset + 0.20;
 			_hudVehicle ctrlSetStructuredText parseText _tempString;
 		}
@@ -205,13 +205,13 @@ while {true} do
 	_activityBackgroundAlpha = 0;
 
 	// Activity does not show when the map or Esc menu is open
-	if (!visibleMap && {isNull findDisplay 49}) then
+	if (!visibleMap && isNull findDisplay 49) then
 	{
 		// Determine activity. Currently this is territory cap only
 		_territoryActivity = player getVariable ["TERRITORY_ACTIVITY", []];
 		_territoryName = player getVariable ["TERRITORY_OCCUPATION", ""];
 
-		if (count _territoryActivity > 0 && {_territoryName != ""}) then
+		if (count _territoryActivity > 0 && _territoryName != "") then
 		{
 			_activityDetails = [] call _displayTerritoryActivity;
 
@@ -220,7 +220,7 @@ while {true} do
 		};
 
 		// Show the UI if we have activity
-		if (_activityIconStr != "" && {_activityMessage != ""}) then
+		if (_activityIconStr != "" && _activityMessage != "") then
 		{
 			if (isNil "_activityIconOrigPos" && isNil "_activityTextboxOrigPos") then
 			{

@@ -10,21 +10,15 @@
 	Returns: Boolean - test result
 */
 
-private ["_needles", "_haystack", "_caseSensitive", "_checkMatch", "_found", "_testArray"];
+private ["_needles", "_haystack", "_caseSensitive", "_found", "_testArray", "_testStr"];
 
 _needles = [_this, 0, [], ["",[]]] call BIS_fnc_param;
 _haystack = toArray ([_this, 1, "", [""]] call BIS_fnc_param);
 _caseSensitive = [_this, 2, false, [false]] call BIS_fnc_param;
 
-if (typeName _needles == "STRING") then
+if (typeName _needles != "ARRAY") then
 {
 	_needles = [_needles];
-};
-
-_checkMatch = if (_caseSensitive) then {
-	{_this in [toString _testArray]}
-} else {
-	{_this == toString _testArray}
 };
 
 _found = false;
@@ -32,8 +26,9 @@ _found = false;
 {
 	_testArray = +_haystack;
 	_testArray resize count toArray _x;
+	_testStr = toString _testArray;
 
-	if (_x call _checkMatch) exitWith
+	if (_x isEqualTo _testStr || (!_caseSensitive && _x == _testStr)) exitWith
 	{
 		_found = true;
 	};

@@ -72,6 +72,11 @@ if (FAR_EnableDeathMessages && difficultyEnabled "deathMessages" && !isNil "_kil
 	};
 };
 
+if (!alive vehicle _unit) exitWith
+{
+	_unit setDamage 1;
+};
+
 _unit spawn
 {
 	_unit = _this;
@@ -229,6 +234,11 @@ if (_unit == player) then
 
 while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 {
+	if (!alive vehicle _unit) exitWith
+	{
+		_unit setDamage 1;
+	};
+
 	_dmg = damage _unit;
 
 	if (_unit getVariable ["FAR_handleStabilize", false]) then

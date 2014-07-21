@@ -16,7 +16,14 @@ if (!hasInterface) exitWith {};
 	{
 		_markerSize = markerSize _marker;
 		_onEnter = format ["player setVariable ['TERRITORY_OCCUPATION', '%1', true]", _marker];
-		_onExit = "player setVariable ['TERRITORY_OCCUPATION', '', true]; player setVariable ['TERRITORY_ACTIVITY', [], true]";
+		_onExit =
+		("
+			if (player getVariable ['TERRITORY_OCCUPATION', ''] == '" + _marker + "') then
+			{
+				player setVariable ['TERRITORY_OCCUPATION', '', true];
+				player setVariable ['TERRITORY_ACTIVITY', []];
+			};
+		");
 
 		_trig setTriggerArea [_markerSize select 0, _markerSize select 1, markerDir _marker, true];
 		_trig setTriggerActivation ["ANY", "PRESENT", true];

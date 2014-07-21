@@ -174,7 +174,7 @@ while {true} do
 	// Reverse-delete old objects
 	if (_oldObjCount > _objCount) then
 	{
-		for [{_i = _oldObjCount}, {_i > _objCount}, {_i = _i - 1}] do
+		for "_i" from _oldObjCount to (_objCount + 1) step -1 do
 		{
 			[_fileName, format ["Obj%1", _i]] call iniDB_deleteSection;
 		};

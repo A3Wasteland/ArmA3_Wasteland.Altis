@@ -40,8 +40,8 @@ missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
 			{
 				_dist = _unit distance positionCameraToWorld [0,0,0];
 
-				_pos = _unit modelToWorld [0,0,0]; // visiblePositionASL _unit;
-				//_pos set [2, (_unit modelToWorld [0,0,0]) select 2];
+				_pos = visiblePositionASL _unit;
+				_pos set [2, (_unit modelToWorld [0,0,0]) select 2];
 
 				// only draw players inside range and screen
 				if (_dist < ICON_limitDistance && count worldToScreen _pos > 0) then

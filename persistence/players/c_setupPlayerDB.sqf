@@ -45,8 +45,9 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 
 			if (isNil "playerData_resetPos") then
 			{
-				//fixes the issue with saved player being GOD when they log back on the server!
+				player enableSimulation true;
 				player allowDamage true;
+				player setVelocity [0,0,0];
 
 				execVM "client\functions\firstSpawn.sqf";
 			}

@@ -10,25 +10,20 @@
 	Returns: Number - first match position, -1 if not found
 */
 
-private ["_needles", "_haystack", "_caseSensitive", "_checkMatch", "_hayLen", "_found", "_testArray", "_i"];
+private ["_needles", "_haystack", "_caseSensitive", "_hayLen", "_found", "_testArray", "_i", "_testStr"];
 
 _needles = [_this, 0, [], ["",[]]] call BIS_fnc_param;
 _haystack = toArray ([_this, 1, "", [""]] call BIS_fnc_param);
 _caseSensitive = [_this, 2, false, [false]] call BIS_fnc_param;
 
-if (typeName _needles == "STRING") then
+if (typeName _needles != "ARRAY") then
 {
 	_needles = [_needles];
 };
 
-_checkMatch = if (_caseSensitive) then {
-	{_this in [toString _testArray]}
-} else {
-	{_this == toString _testArray}
-};
-
 _hayLen = count _haystack;
 _found = -1;
+scopeName "fn_findString";
 
 {
 	_needleLen = count toArray _x;
@@ -37,17 +32,18 @@ _found = -1;
 
 	for "_i" from _needleLen to _hayLen do
 	{
-		if (_x call _checkMatch) exitWith
+		_testStr = toString _testArray;
+
+		if (_x isEqualTo _testStr || (!_caseSensitive && _x == _testStr)) then
 		{
 			_found = _i - _needleLen;
+			breakTo "fn_findString";
 		};
 
 		_testArray set [_needleLen, _haystack select _i];
-		_testArray set [0, "x"];
-		_testArray = _testArray - ["x"];
+		_testArray set [0, -1];
+		_testArray = _testArray - [-1];
 	};
-
-	if (_found != -1) exitWith {};
 } forEach _needles;
 
 _found

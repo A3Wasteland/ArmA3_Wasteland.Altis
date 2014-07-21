@@ -62,6 +62,12 @@ if (UNCONSCIOUS(_unit)) then
 
 		if (!isNil "_oldDamage") then
 		{
+			// Apply part of the damage without multiplier when below the stabilization threshold of 50% damage
+			if (STABILIZED(_unit) && {_criticalHit && FAR_DamageMultiplier < 1}) then
+			{
+				_oldDamage = _damage min 0.5;
+			};
+
 			_damage = ((_damage - _oldDamage) * FAR_DamageMultiplier) + _oldDamage;
 
 			if (_criticalHit) then

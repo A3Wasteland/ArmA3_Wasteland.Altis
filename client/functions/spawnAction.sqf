@@ -54,7 +54,9 @@ spawnActionHandle = [_this select 1, _this select 2] spawn
 		default { _data call spawnRandom };
 	};
 
+	player enableSimulation true;
 	player allowDamage true;
+	player setVelocity [0,0,0];
 
 	if (isNil "client_firstSpawn") then
 	{

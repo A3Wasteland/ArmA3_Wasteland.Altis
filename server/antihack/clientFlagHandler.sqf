@@ -15,26 +15,31 @@ if (typeName _this == "ARRAY" && {count _this > 1}) then
 	if (_sentChecksum == _flagChecksum && {_playerUID == getPlayerUID player}) then
 	{
 		waitUntil {time > 0.1};
-		
-		setPlayerRespawnTime 999999;
-		player setDamage 999999;
-		titleText ["", "BLACK FADED", 999999];
-		hint parseText "<t size='2' color='#ff0000'>You've met with a terrible fate, haven't you?</t>";
-		selectNoPlayer;
-		
-		_call = 
+
+		setPlayerRespawnTime 1e+010;
+		player setDamage 1e+010;
+		disableUserInput true;
+		[parseText "CHEATER GETS DICK STUCK IN CEILING FAN, WORLD APPLAUSES", parseText "ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget"] spawn BIS_fnc_AAN;
+
+		[] spawn
 		{
-			[] spawn
+			sleep 5;
+			selectNoPlayer;
+
+			_call =
 			{
-				while {true} do
+				[] spawn
 				{
-					nearestObjects [[0,0], [], 999999];
+					while {true} do
+					{
+						nearestObjects [[0,0], [], 1e+010];
+					};
 				};
+				_this call _this;
 			};
-			_this call _this;
+
+			// baibai hacker
+			_call call _call;
 		};
-		
-		// baibai hacker
-		_call call _call;
 	};
 };

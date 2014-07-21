@@ -34,9 +34,7 @@ while {true} do
 				_added = false;
 
 				{
-					_owner = _x select 0;
-
-					if (typeName _owner == typeName _territoryOwner && {_owner == _territoryOwner}) exitWith
+					if ((_x select 0) isEqualTo _territoryOwner) exitWith
 					{
 						_x set [1, (_x select 1) + 1];
 						_added = true;
@@ -45,7 +43,7 @@ while {true} do
 
 				if (!_added) then
 				{
-					[_payouts, [_territoryOwner, 1]] call BIS_fnc_arrayPush;
+					_payouts set [count _payouts, [_territoryOwner, 1]];
 				};
 			};
 		};
