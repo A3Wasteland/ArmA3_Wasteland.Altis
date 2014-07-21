@@ -95,26 +95,10 @@ _isInTeam =
 
 	_player = _this select 0;
 	_team = _this select 1;
-	_playerTeam = if (typeName _team == "GROUP") then { group _player } else { side _player };
+	_playerTeam = group _player;
+	if (typeName _team == "SIDE") then { side _playerTeam };
 
 	(_playerTeam == _team)
-};
-
-_isSameTeam =
-{
-	//diag_log format ["_isSameTeam called with %1", _this];
-
-	private ["_team1", "_team2"];
-
-	_team1 = _this select 0;
-	_team2 = _this select 1;
-
-	(typeName _team1 == typeName _team2 && {_team1 == _team2})
-};
-
-_isNotNull =
-{
-	(typeName _this != "SIDE" || {_this != sideUnknown})
 };
 
 // Trigger for when a capture of a territory has started
@@ -213,10 +197,11 @@ _getTeamName =
 
 _getPlayerTeam =
 {
-	private "_side";
-	_side = side _this;
+	private ["_group", "_side"];
+	_group = group _this;
+	_side = side _group;
 
-	if (_side in [BLUFOR,OPFOR]) then {	_side } else { group _this }
+	if (_side in [BLUFOR,OPFOR]) then {	_side } else { _group }
 };
 
 // Count players in a particular area for each team, and calculate if its
@@ -240,7 +225,7 @@ _teamCountsForPlayerArray =
 			_added = false;
 
 			{
-				if ([_x select 0, _playerTeam] call _isSameTeam) exitWith
+				if ((_x select 0) isEqualTo _playerTeam) exitWith
 				{
 					_x set [1, (_x select 1) + 1];
 					_added = true;
@@ -307,26 +292,15 @@ _handleTeamCounts =
     if (!_newAreaContested) then
 	{
         // Territory is currently uncontested. Was the previous state uncontested and the same team?
-        if (_currentAreaContested) then
+        if (_currentAreaContested || (_currentDominantTeam isEqualTo _newDominantTeam && !(_currentDominantTeam isEqualTo sideUnknown))) then
 		{
-            // If it was last contested, reset our cap counter (or we could carry on?)
+            // If it was last contested, or uncontested with the same team, reset our cap counter (or we could carry on?)
             _action = "CAPTURE";
         }
 		else
 		{
-            // Was previously uncontested too
-
-            // Was it the same team?
-            if (!([_currentDominantTeam, _newDominantTeam] call _isSameTeam) || {!(_currentDominantTeam call _isNotNull)}) then
-			{
-                // It's changed teams during our interval
-                _action = "RESET";
-            }
-			else
-			{
-                // Hasn't changed
-                _action = "CAPTURE";
-            };
+			// Previously uncontested and the team has changed
+			_action = "RESET";
         };
     }
 	else
@@ -359,12 +333,12 @@ _updatePlayerTerritoryActivity =
         _territoryActivity = [];
 
         // Set a variable on them to indicate blocked capping
-        if !([_currentTerritoryOwner, _newDominantTeam] call _isSameTeam) then
+        if !(_currentTerritoryOwner isEqualTo _newDominantTeam) then
 		{
             if (_action == "BLOCK") then
 			{
                 // We split a BLOCK state into defenders and attackers
-                if ([_currentTerritoryOwner, _playerTeam] call _isSameTeam) then
+                if (_currentTerritoryOwner isEqualTo _playerTeam) then
 				{
                     _territoryActivity set [0, "BLOCKEDDEFENDER"];
                 }
@@ -435,7 +409,7 @@ _handleCapPointTick = {
         _newTerritoryDetails = [_newTerritoryData, { _x select 0 == _currentTerritoryName }] call BIS_fnc_conditionalSelect;
 		
 		// If territory is is held by anyone, update chrono
-		if (_currentTerritoryOwner call _isNotNull) then
+		if !(_currentTerritoryOwner isEqualTo sideUnknown) then
 		{
 			_currentTerritoryChrono = _currentTerritoryChrono + _realLoopTime;
 		};
@@ -443,7 +417,7 @@ _handleCapPointTick = {
         //diag_log format["BIS_fnc_conditionalSelect found _newTerritoryDetails as %1", _newTerritoryDetails];
 
         // We have people at this territory?
-        if (count _newTerritoryData > 0 && { count _newTerritoryDetails > 0 }) then
+        if (count _newTerritoryData > 0 && {count _newTerritoryDetails > 0}) then
 		{
             _newTerritoryDetails = _newTerritoryDetails select 0;
 
@@ -468,11 +442,11 @@ _handleCapPointTick = {
             //diag_log format["_newContestedStatus is %1, _currentTerritoryOwner is %2, _newDominantTeam is %3, action is %4", _newContestedStatus, _currentTerritoryOwner, _newDominantTeam, _action];
             ////////////////////////////////////////////////////////////////////////
 
-            if (_newContestedStatus || {!([_currentTerritoryOwner, _newDominantTeam] call _isSameTeam)}) then
+            if (_newContestedStatus || !(_currentTerritoryOwner isEqualTo _newDominantTeam)) then
 			{
                 if (_action == "CAPTURE") then
 				{
-                    if (_currentTerritoryTimer == 0 && {_currentTerritoryOwner call _isNotNull}) then
+                    if (_currentTerritoryTimer == 0 && !(_currentTerritoryOwner isEqualTo sideUnknown)) then
 					{
                        // Just started capping. Let the current owners know!
                         _currentDominantTeamName = [_currentDominantTeam] call _getTeamName;
@@ -491,31 +465,27 @@ _handleCapPointTick = {
                     _newCapPointTimer = 0;
                 };
 
-                //diag_log format["---> %1 action is %2 with the timer at %3", _currentTerritoryName, _action, _newCapPointTimer];
+                //diag_log format["---> %1 action is %2 with the timer at %3", _currentTerritoryName, _action, [_newCapPointTimer, _newDominantTeam, _currentDominantTeam]];
 
-                if (_newCapPointTimer >= _capturePeriod) then
+                if (_newCapPointTimer >= _capturePeriod && !(_newDominantTeam isEqualTo _currentTerritoryOwner)) then
 				{
-                    // Find the current marker color which denotes capture status
-                     _newMarkerColor = [_newDominantTeam] call getTeamMarkerColor;
+					_newMarkerColor = [_newDominantTeam] call getTeamMarkerColor;
 
-                    if (getMarkerColor _currentTerritoryName != _newMarkerColor) then
-					{
-                        // If the timer is above what we consider a successful capture and its not already theirs...
-                        _currentTerritoryName setMarkerColor _newMarkerColor;
-                        _currentTerritoryOwner = _newDominantTeam;
+					// If the timer is above what we consider a successful capture and its not already theirs...
+					_currentTerritoryName setMarkerColor _newMarkerColor;
 
-                        _configEntry = [["config_territory_markers", []] call getPublicVar, { _x select 0 == _currentTerritoryName }] call BIS_fnc_conditionalSelect;
-                        _territoryDescriptiveName = (_configEntry select 0) select 1;
-                        _value = (_configEntry select 0) select 2;
+					_configEntry = [["config_territory_markers", []] call getPublicVar, { _x select 0 == _currentTerritoryName }] call BIS_fnc_conditionalSelect;
+					_territoryDescriptiveName = (_configEntry select 0) select 1;
+					_value = (_configEntry select 0) select 2;
 
-                        // Reset to zero
-                        _newCapPointTimer = 0;
-						_currentTerritoryChrono = 0;
+					// Reset to zero
+					_newCapPointTimer = 0;
+					_currentTerritoryChrono = 0;
 
-                        //diag_log format["%1 captured point %2 (%3)", _newDominantTeam, _currentTerritoryName, _territoryDescriptiveName];
+					//diag_log format["%1 captured point %2 (%3)", _newDominantTeam, _currentTerritoryName, _territoryDescriptiveName];
 
-                        [_currentDominantTeam, _newDominantTeam, _value, _currentTerritoryName, _territoryDescriptiveName] call _onCaptureFinished;
-                    };
+					[_currentTerritoryOwner, _newDominantTeam, _value, _currentTerritoryName, _territoryDescriptiveName] call _onCaptureFinished;
+					_currentTerritoryOwner = _newDominantTeam;
                 };
 
                 [_currentTerritoryOwner, _newTerritoryOccupiers, _newDominantTeam, _action] call _updatePlayerTerritoryActivity;
