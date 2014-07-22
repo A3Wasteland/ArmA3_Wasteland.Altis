@@ -4,7 +4,7 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-private ["_player", "_corpse", "_town", "_spawn", "_temp"];
+private ["_player", "_corpse"];
 
 playerSetupComplete = false;
 9999 cutText ["", "BLACK", 0.01];
@@ -12,6 +12,7 @@ playerSetupComplete = false;
 _player = _this select 0;
 _corpse = _this select 1;
 
+_corpse setVariable ["newRespawnedUnit", _player, true];
 _player setVariable ["playerSpawning", true, true];
 
 //_corpse removeAction playerMenuId;

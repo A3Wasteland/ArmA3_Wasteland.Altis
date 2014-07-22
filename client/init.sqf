@@ -138,9 +138,9 @@ waitUntil {!isNull findDisplay 46};
 [] execVM "addons\Lootspawner\LSclientScan.sqf";
 [] execVM "addons\far_revive\FAR_revive_init.sqf";
 
-if (["A3W_groupMarkers"] call isConfigOn) then
+if (["A3W_teamPlayersMap"] call isConfigOn) then
 {
-	[] execVM "client\functions\groupMarkers.sqf";
+	[] execVM "client\functions\drawPlayerMarkers.sqf";
 };
 
 // update player's spawn beaoon

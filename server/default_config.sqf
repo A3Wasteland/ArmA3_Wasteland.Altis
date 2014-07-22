@@ -7,7 +7,7 @@
 // General settings
 A3W_startHour = 15;                // In-game hour at mission start (0 to 23)
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
-A3W_groupMarkers = 1;              // Show group markers with player names on the map, regardless of difficulty level (0 = no, 1 = yes)
+A3W_teamPlayersMap = 1;            // Show all friendly players on the map at all times, regardless of difficulty level (0 = no, 1 = yes)
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
 A3W_gunStoreIntruderWarning = 1;   // Warn players in gunstore areas of enemy intruders (0 = no, 1 = yes)
 
