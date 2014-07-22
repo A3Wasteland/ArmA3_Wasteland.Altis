@@ -797,7 +797,7 @@ customPlayerItems = compileFinal str
 // Notes: Gun and general stores have position of spawned crate, vehicle stores have an extra air spawn direction
 //
 // Array contents are as follows:
-// Name, Building Position, Desk Direction Modifier, Excluded Buttons
+// Name, Building Position, Desk Direction (or [Desk Direction, Front Offset]), Excluded Buttons
 storeOwnerConfig = compileFinal str
 [
 	["GenStore1", 6, 240, []],

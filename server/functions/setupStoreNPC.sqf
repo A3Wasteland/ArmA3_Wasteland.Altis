@@ -71,9 +71,21 @@ if (isServer) then
 	{
 		if (_x select 0 == _npcName) exitWith
 		{
+			private "_frontOffset";
+
 			//collect our arguments
 			_npcPos = _x select 1;
 			_deskDirMod = _x select 2;
+
+			if (typeName _deskDirMod == "ARRAY" && {count _deskDirMod > 0}) then
+			{
+				if (count _deskDirMod > 1) then
+				{
+					_frontOffset = _deskDirMod select 1;
+				};
+
+				_deskDirMod = _deskDirMod select 0;
+			};
 
 			private "_storeOwnerAppearance";
 				
@@ -133,6 +145,11 @@ if (isServer) then
 			};
 			
 			_bPos = _building buildingPos _npcPos;
+
+			if (!isNil "_frontOffset") then
+			{
+				_bPos = _bPos vectorAdd ([[0, _frontOffset, 0], -_pDir] call BIS_fnc_rotateVector2D);
+			};
 
 			if ([_bPos, [0,0,0]] call BIS_fnc_areEqual) then
 			{
