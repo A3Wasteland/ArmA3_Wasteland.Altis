@@ -29,7 +29,7 @@ else
 {*/
 	storeSellingHandle = [_crate, _forceSell] spawn
 	{
-		private ["_getHalfPrice", "_crate", "_forceSell", "_sellValue", "_crateItems", "_crateMags", "_crateWeapons", "_weaponArray", "_class", "_container", "_allStoreMagazines", "_allRegularStoreItems", "_allStoreItems", "_weaponEntry", "_weaponCfg", "_parentCfg", "_found", "_cfgItems", "_allCrateItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemQtyArr", "_cfgCategory", "_magFullAmmo", "_magFullPrice", "_magValue", "_itemName", "_objectName", "_confirmMsg"];
+		private ["_getHalfPrice", "_crate", "_forceSell", "_sellValue", "_crateItems", "_crateMags", "_crateWeapons", "_weaponArray", "_class", "_container", "_allStoreMagazines", "_allRegularStoreItems", "_allStoreItems", "_weaponEntry", "_weaponCfg", "_parentCfg", "_found", "_cfgItems", "_allCrateItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemQtyArr", "_cfgCategory", "_magFullAmmo", "_magFullPrice", "_magValue", "_itemName", "_objectName", "_confirmMsg", "_clearing"];
 
 		_getHalfPrice =
 		{
@@ -229,10 +229,16 @@ else
 			// Display confirmation
 			if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then
 			{
-				clearBackpackCargoGlobal _crate;
-				clearMagazineCargoGlobal _crate;
-				clearWeaponCargoGlobal _crate;
-				clearItemCargoGlobal _crate;
+				// Have to spawn clearing commands due to mysterious crash-to-desktop...
+				_clearing = _crate spawn
+				{
+					clearBackpackCargoGlobal _this;
+					clearMagazineCargoGlobal _this;
+					clearWeaponCargoGlobal _this;
+					clearItemCargoGlobal _this;
+				};
+
+				waitUntil {scriptDone _clearing};
 
 				player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
 				hint format ['You sold the inventory of "%1" for $%2', _objectName, _sellValue];
