@@ -6,20 +6,15 @@ mf_notify_client = "client\functions\notifyClient.sqf" call mf_compile;
 mf_util_playUntil = "client\functions\playUntil.sqf" call mf_compile;
 
 // Event handlers
-getInVehicle = "client\clientEvents\getInVehicle.sqf" call mf_compile;
-getOutVehicle = "client\clientEvents\getOutVehicle.sqf" call mf_compile;
 onRespawn = "client\clientEvents\onRespawn.sqf" call mf_compile;
 onKilled = "client\clientEvents\onKilled.sqf" call mf_compile;
 onKeyPress = "client\clientEvents\onKeyPress.sqf" call mf_compile;
-onKeyRelease = "client\clientEvents\onKeyRelease.sqf" call mf_compile;
 
 // Functions
 addPushPlaneAction = "client\functions\addPushPlaneAction.sqf" call mf_compile;
 addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
 canPushPlaneBack = "client\functions\canPushPlaneBack.sqf" call mf_compile;
-canPushVehicleOnFoot = "client\functions\canPushVehicleOnFoot.sqf" call mf_compile;
-canPushWatercraft = "client\functions\canPushWatercraft.sqf" call mf_compile;
-copilotTakeControl = "client\functions\copilotTakeControl.sqf" call mf_compile;
+canWear = "client\functions\canWear.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
 getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;
@@ -32,8 +27,6 @@ parseMove = "client\functions\parseMove.sqf" call mf_compile;
 serverMessage = "client\functions\serverMessage.sqf" call mf_compile;
 titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
 uniformConverter = "client\functions\uniformConverter.sqf" call mf_compile;
-unitHandleDamage = "client\functions\unitHandleDamage.sqf" call mf_compile;
-updateTerritoryMarkers = "territory\client\updateTerritoryMarkers.sqf" call mf_compile;
 vehicleSideCfg = "client\functions\vehicleSideCfg.sqf" call mf_compile;
 
 // Player details and actions
@@ -44,9 +37,6 @@ playerSetupStart = "client\functions\playerSetupStart.sqf" call mf_compile;
 playerSetupGear = "client\functions\playerSetupGear.sqf" call mf_compile;
 playerSetupEnd = "client\functions\playerSetupEnd.sqf" call mf_compile;
 spawnAction = "client\functions\spawnAction.sqf" call mf_compile;
-spawnInTown = "client\functions\spawnInTown.sqf" call mf_compile;
-spawnOnBeacon = "client\functions\spawnOnBeacon.sqf" call mf_compile;
-spawnRandom = "client\functions\spawnRandom.sqf" call mf_compile;
 // placeSpawnBeacon = "client\systems\playerMenu\placeSpawnBeacon.sqf" call mf_compile;
 // refuelVehicle = "client\systems\playerMenu\refuel.sqf" call mf_compile;
 // repairVehicle = "client\systems\playerMenu\repair.sqf" call mf_compile;

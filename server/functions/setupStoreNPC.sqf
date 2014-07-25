@@ -6,7 +6,6 @@
 
 #define STORE_ACTION_CONDITION "_this distance _target < 3"
 #define SELL_ACTION_CONDITION "{_obj = missionNamespace getVariable ['R3F_LOG_joueur_deplace_objet', objNull]; _obj isKindOf 'ReammoBox_F' || {_obj isKindOf 'AllVehicles'}}"
-#define SELL_BOX_ACTION_CONDITION "cursorTarget == _target"
 
 private ["_npc", "_type", "_num", "_npcName"];
 
@@ -32,35 +31,19 @@ if (hasInterface) then
 		};
 	};
 
-	_npc addAction ["<img image='client\icons\money.paa'/> Sell contents", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_ACTION_CONDITION];
+	_npc addAction ["<img image='client\icons\money.paa'/> Sell Contents", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_ACTION_CONDITION];
 };
 
 _npcName = format ["%1%2", _type, _num];
 _npc setName _npcName;
 
 _npc allowDamage false;
-{ _npc disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
+_npc disableAI "MOVE";
+_npc disableAI "ANIM";
+_npc disableAI "FSM";
 
 _building = nearestBuilding _npc;
-
-// Prevent structural damage, but allow shooting breakable stuff
-_building addEventHandler ["HandleDamage",
-{
-	_selection = _this select 1;
-	_damage = _this select 2;
-
-	_selArray = toArray _selection;
-	_selArray resize 4;
-
-	if ((toString _selArray) in ["","dam_"]) then
-	{
-		0
-	}
-	else
-	{
-		_damage
-	};
-}];
+_building allowDamage false;
 
 if (isServer) then
 {
@@ -71,21 +54,9 @@ if (isServer) then
 	{
 		if (_x select 0 == _npcName) exitWith
 		{
-			private "_frontOffset";
-
 			//collect our arguments
 			_npcPos = _x select 1;
 			_deskDirMod = _x select 2;
-
-			if (typeName _deskDirMod == "ARRAY" && {count _deskDirMod > 0}) then
-			{
-				if (count _deskDirMod > 1) then
-				{
-					_frontOffset = _deskDirMod select 1;
-				};
-
-				_deskDirMod = _deskDirMod select 0;
-			};
 
 			private "_storeOwnerAppearance";
 				
@@ -145,21 +116,8 @@ if (isServer) then
 			};
 			
 			_bPos = _building buildingPos _npcPos;
-
-			if (!isNil "_frontOffset") then
-			{
-				_bPos = _bPos vectorAdd ([[0, _frontOffset, 0], -_pDir] call BIS_fnc_rotateVector2D);
-			};
-
-			if ([_bPos, [0,0,0]] call BIS_fnc_areEqual) then
-			{
-				_bPos = getPosATL _npc;
-			}
-			else
-			{
-				_npc setPosATL _bPos;
-			};
-
+			_npc setPosATL _bPos;
+			
 			_desk = [_npc, _bPos, _pDir, _deskDirMod] call compile preprocessFileLineNumbers "server\functions\createStoreFurniture.sqf";
 			
 			sleep 1;
@@ -172,8 +130,8 @@ if (isServer) then
 			_npcHeightRel = (_desk worldToModel (getPosATL _npc)) select 2;
 			
 			// must be done twice for the direction to set properly
-			for "_i" from 1 to 2 do
-			{
+			for "_i" from 0 to 1 do
+			{			
 				_npc attachTo
 				[
 					_desk,
@@ -198,65 +156,4 @@ if (isServer) then
 		};
 
 	} forEach (call storeOwnerConfig);
-};
-
-// Add sell box in front of counter
-if (hasInterface) then
-{
-	private "_objs";
-
-	waitUntil
-	{
-		sleep 3;
-		_objs = nearestObjects [_npc, ["Land_CashDesk_F"], 5];
-		(count _objs > 0 || serverTime > 120)
-	};
-
-	if (count _objs > 0) then
-	{
-		_desk = _objs select 0;
-
-		_sellBox = "Box_IND_Ammo_F" createVehicleLocal getPosATL _desk;
-		_sellBox setVariable ["R3F_LOG_disabled", true];
-		_sellBox setVariable ["A3W_storeSellBox", true];
-		_sellBox setObjectTexture [0, ""]; // remove side marking
-		_sellBox allowDamage false;
-
-		clearBackpackCargo _sellBox;
-		clearMagazineCargo _sellBox;
-		clearWeaponCargo _sellBox;
-		clearItemCargo _sellBox;
-
-		_sellBox setPosASL ((getPosASL _desk) vectorAdd ([[-0.05,-0.6,0], -(getDir _desk)] call BIS_fnc_rotateVector2D));
-		_boxPos = getPos _sellBox;
-
-		if (_boxPos select 2 > 0) then
-		{
-			_boxPosASL = getPosASL _sellBox;
-			_boxPosASL set [2, (_boxPosASL select 2) - (_boxPos select 2)];
-			_sellBox setPosASL _boxPosASL;
-		};
-
-		_sellBox setDir (getDir _desk + 90);
-
-		_sellBox addAction ["<img image='client\icons\money.paa'/> Sell crate contents", "client\systems\selling\sellCrateItems.sqf", [true], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_BOX_ACTION_CONDITION];
-
-		_sellBox spawn
-		{
-			_sellBox = _this;
-			_boxPos = getPosATL _sellBox;
-			_boxVecDir = vectorDir _sellBox;
-			_boxVecUp = vectorUp _sellBox;
-
-			while {!isNull _sellBox} do
-			{
-				sleep 5;
-				if ((getPosATL _sellBox) vectorDistance _boxPos > 0.05 || (vectorDir _sellBox) vectorDistance _boxVecDir > 0.05) then
-				{
-					_sellBox setPosATL _boxPos;
-					_sellBox setVectorDirAndUp [_boxVecDir, _boxVecUp];
-				};
-			};
-		};
-	};
 };

@@ -1,13 +1,12 @@
 respawn="BASE";
 respawnDelay=15;
 disabledAI=1;
-disableChannels[] = {2}; // {0} to disable global, {2} for command channel
+disableChannels[] = {}; // {0} to disable global
 joinUnassigned = 0;
 enableItemsDropping = 0;
 weaponPool = 0;
-corpseLimit = 20;
 corpseRemovalMinTime = 15*60;
-corpseRemovalMaxTime = 30*60;
+corpseRemovalMaxTime = 15*60;
 wreckRemovalMinTime = 5*60;
 wreckRemovalMaxTime = 10*60;
 enableDebugConsole = 1;
@@ -31,10 +30,8 @@ overviewPicture = "Loading.jpg";
 #include "client\gui_base.hpp"
 #include "addons\R3F_ARTY_AND_LOG\desc_include.h"
 #include "client\systems\common.hpp"
-#include "client\systems\ui_toolkit.hpp"
 #include "client\items\warchest\dialog.hpp"
 #include "client\actions\gui.hpp"
-#include "addons\far_revive\revive_gui.hpp"
 #include "client\systems\playerMenu\dialog\player_settings.hpp"
 #include "client\systems\groups\dialog\groupManagement.hpp"
 #include "client\systems\gunStore\dialog\gunshop_settings.hpp"

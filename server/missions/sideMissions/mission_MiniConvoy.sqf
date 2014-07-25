@@ -180,8 +180,7 @@ _createVehicle = {
     _direction = _this select 2;
     _groupsm = _this select 3;
     
-    _vehicle = createVehicle [_type, _position, [], 0, "None"];
-	_vehicle setVariable ["BIS_enableRandomization", false, true];
+    _vehicle = _type createVehicle _position;
 	[_vehicle] call vehicleSetup;
     _vehicle setDir _direction;
     _groupsm addVehicle _vehicle;
@@ -191,12 +190,7 @@ _createVehicle = {
     _soldier = [_groupsm, _position] call createRandomSoldier; 
     _soldier moveInCargo [_vehicle, 0];
     _vehicle setVehicleLock "LOCKED";  // prevents players from getting into the vehicle while the AI are still owning it
-	
-	if (_vehicle isKindOf "C_Van_01_box_F") then
-	{
-		_vehicle setObjectTextureGlobal [0, "\A3\Soft_F_Bootcamp\Van_01\Data\Van_01_ext_IG_01_CO.paa"]; // Apply camo instead of civilian color
-	};
-	
+	// _vehicle spawn cleanVehicleWreck;  // courtesy of AgentREV sets cleanup on the mission vehicles once wrecked :)
     _vehicle
 };
 

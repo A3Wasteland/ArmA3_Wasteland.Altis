@@ -11,7 +11,7 @@ private ["_uniform", "_side", "_uniforms", "_uniArray"];
 _unit = _this select 0;
 _uniform = _this select 1;
 
-if !(_unit isUniformAllowed _uniform) then
+if !([_unit, _uniform] call canWear) then
 {
 	_uniforms = 
 	[
@@ -36,7 +36,7 @@ if !(_unit isUniformAllowed _uniform) then
 		if ({_uniform == _x} count _uniArray > 0) exitWith
 		{
 			{
-				if (_unit isUniformAllowed _x) exitWith
+				if ([_unit, _x] call canWear) exitWith
 				{
 					_uniform = _x;
 				};

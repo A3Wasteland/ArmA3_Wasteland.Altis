@@ -13,7 +13,6 @@
 #define respawn_Random_Button 3413
 #define respawn_LoadTowns_Button 3414
 #define respawn_LoadBeacons_Button 3415
-#define respawn_Preload_Checkbox 3416
 
 disableSerialization;
 
@@ -21,42 +20,38 @@ if (!isNil "spawnActionHandle" && {typeName spawnActionHandle == "SCRIPT"} && {!
 
 spawnActionHandle = [_this select 1, _this select 2] spawn
 {
-	disableSerialization;
-
 	private ["_switch", "_data"];
 	_switch = _this select 0;
-	_data = [_this select 1, false];
+	_data = _this select 1;
 
-	if (isNil "playerData_resetPos") then
-	{
-		// Deal with money here
-		_baseMoney = ["A3W_startingMoney", 100] call getPublicVar;
-		player setVariable ["cmoney", _baseMoney, true];
+	player allowDamage true;
 
-		[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
-		[MF_ITEMS_WATER, 1] call mf_inventory_add;
-		[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_add;
-	};
+	// Deal with money here
+	_baseMoney = ["A3W_startingMoney", 100] call getPublicVar;
+	player setVariable ["cmoney", _baseMoney, true];
 
-	if (cbChecked ((uiNamespace getVariable "RespawnSelectionDialog") displayCtrl respawn_Preload_Checkbox)) then
-	{
-		_data set [1, true];
-	}
-	else
-	{
-		profileNamespace setVariable ["A3W_preloadSpawn", false];
-	};
+	[MF_ITEMS_CANNED_FOOD, 1] call mf_inventory_add;
+	[MF_ITEMS_WATER, 1] call mf_inventory_add;
+	[MF_ITEMS_REPAIR_KIT, 1] call mf_inventory_add;
 
 	switch (_switch) do 
 	{
-		case 1: { _data call spawnInTown };
-		case 2: { _data call spawnOnBeacon };
-		default { _data call spawnRandom };
+		case 1:
+		{
+			_scriptHandle = _data execVM "client\functions\spawnInTown.sqf";
+			waitUntil {sleep 0.1; scriptDone _scriptHandle};
+		};
+		case 2:
+		{
+			_scriptHandle = _data execVM "client\functions\spawnOnBeacon.sqf";
+			waitUntil {sleep 0.1; scriptDone _scriptHandle};
+		};
+		default
+		{
+			_scriptHandle = [] execVM "client\functions\spawnRandom.sqf";
+			waitUntil {sleep 0.1; scriptDone _scriptHandle};
+		};
 	};
-
-	player enableSimulation true;
-	player allowDamage true;
-	player setVelocity [0,0,0];
 
 	if (isNil "client_firstSpawn") then
 	{
@@ -64,15 +59,14 @@ spawnActionHandle = [_this select 1, _this select 2] spawn
 	};
 };
 
-private ["_dialog", "_ctrlButton", "_header", "_spawnActionHandle"];
-_dialog = uiNamespace getVariable "RespawnSelectionDialog";
-_header = _dialog displayCtrl respawn_Content_Text;
+private ["_ctrlButton", "_header", "_spawnActionHandle"];
+_header = (uiNamespace getVariable "RespawnSelectionDialog") displayCtrl respawn_Content_Text;
 //_ctrlButton = (uiNamespace getVariable "RespawnSelectionDialog") displayCtrl (_this select 0);
 
-if (cbChecked (_dialog displayCtrl respawn_Preload_Checkbox)) then
-{
+//if (!isNull _ctrlButton) then
+//{
 	_header ctrlSetStructuredText parseText "<t size='0.5'> <br/></t><t size='1.33'>Preloading spawn...</t>";
-};
+//};
 
 if (typeName spawnActionHandle == "SCRIPT") then
 {

@@ -13,11 +13,11 @@ _class = [_this, 1, "", [""]] call BIS_fnc_param;
 _marker = [_this, 2, "", [""]] call BIS_fnc_param;
 _key = [_this, 3, "", [""]] call BIS_fnc_param;
 
-_isGenStore = ["GenStore", _marker] call fn_startsWith;
-_isGunStore = ["GunStore", _marker] call fn_startsWith;
-_isVehStore = ["VehStore", _marker] call fn_startsWith;
+_isGenStore = (["GenStore", _marker] call fn_findString == 0);
+_isGunStore = (["GunStore", _marker] call fn_findString == 0);
+_isVehStore = (["VehStore", _marker] call fn_findString == 0);
 
-if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore}) then
+if (_key != "" && {isPlayer _player} && {_isGenStore || _isGunStore || _isVehStore}) then
 {
 	_objectID = "";
 	
@@ -112,9 +112,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			
 			_object = createVehicle [_class, _safePos, [], 0, "None"];
 			_objectID = netId _object;
-
-			_object setVariable ["A3W_purchasedStoreObject", true];
-
+			
 			if (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0) then
 			{
 				//assign AI to the vehicle so it can actually be used
@@ -143,7 +141,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				
 				if (_object isKindOf "AllVehicles" && !(_object isKindOf "StaticWeapon")) then
 				{
-					_object setPosATL [_safePos select 0, _safePos select 1, 0.05];
+					_object setPosATL [_safePos select 0, _safePos select 1, 0.01];
 					_object setVelocity [0,0,0.01];
 					// _object spawn cleanVehicleWreck;
 				};
@@ -155,39 +153,6 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				else
 				{
 					_object setDir (random 360);
-				};
-
-				switch (true) do
-				{
-					case ({_object isKindOf _x} count ["Box_NATO_AmmoVeh_F", "Box_East_AmmoVeh_F", "Box_IND_AmmoVeh_F"] > 0):
-					{
-						_object setAmmoCargo 5;
-					};
-
-					case ({_object isKindOf _x} count ["B_Truck_01_ammo_F", "O_Truck_02_Ammo_F", "O_Truck_03_ammo_F", "I_Truck_02_ammo_F"] > 0):
-					{
-						_object setAmmoCargo 25;
-					};
-
-					case ({_object isKindOf _x} count ["C_Van_01_fuel_F", "I_G_Van_01_fuel_F"] > 0):
-					{
-						_object setFuelCargo 10;
-					};
-
-					case ({_object isKindOf _x} count ["B_Truck_01_fuel_F", "O_Truck_02_fuel_F", "O_Truck_03_fuel_F", "I_Truck_02_fuel_F"] > 0):
-					{
-						_object setFuelCargo 25;
-					};
-
-					case (_object isKindOf "Offroad_01_repair_base_F"):
-					{
-						_object setRepairCargo 5;
-					};
-
-					case ({_object isKindOf _x} count ["B_Truck_01_Repair_F", "O_Truck_02_box_F", "O_Truck_03_repair_F", "I_Truck_02_box_F"] > 0):
-					{
-						_object setRepairCargo 25;
-					};
 				};
 			};
 		};

@@ -45,7 +45,6 @@ if (!isDedicated) then
 
 		// Reset group & side
 		[player] joinSilent createGroup playerSide;
-		player setVariable ["playerSpawning", true, true];
 
 		[] execVM "client\init.sqf";
 	};
@@ -63,3 +62,6 @@ if (isServer) then
 [] execVM "addons\proving_Ground\init.sqf";
 [] execVM "addons\scripts\DynamicWeatherEffects.sqf";
 [] execVM "addons\JumpMF\init.sqf";
+//[] execVM "addons\scripts\OffroadAUG.sqf"; 
+[] execVM "addons\scripts\zlt_fastrope.sqf";
+[] execVM "addons\scripts\windShield.sqf";

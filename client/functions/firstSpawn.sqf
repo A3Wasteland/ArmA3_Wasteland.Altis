@@ -11,91 +11,19 @@ player addEventHandler ["Take",
 {
 	_vehicle = _this select 1;
 	
-	if (_vehicle isKindOf "LandVehicle" && {!(_vehicle getVariable ["itemTakenFromVehicle", false])}) then
+	if (_vehicle isKindOf "Car" && {!(_vehicle getVariable ["itemTakenFromVehicle", false])}) then
 	{
 		_vehicle setVariable ["itemTakenFromVehicle", true, true];
 	};
 }];
 
-player addEventHandler ["Put",
-{
-	_vehicle = _this select 1;
-	
-	if (_vehicle getVariable ["A3W_storeSellBox", false] && isNil {_vehicle getVariable "A3W_storeSellBox_track"}) then
-	{
-		_vehicle setVariable ["A3W_storeSellBox_track", _vehicle spawn
-		{
-			_vehicle = _this;
-			
-			waitUntil {sleep 1; !alive player || player distance _vehicle > 25};
-			
-			_sellScript = [_vehicle, player, -1, [true, true]] execVM "client\systems\selling\sellCrateItems.sqf";
-			waitUntil {sleep 0.1; scriptDone _sellScript};
-			
-			if (!alive player) then
-			{
-				sleep 0.5;
-				
-				if (player getVariable ["cmoney", 0] > 0) then
-				{
-					_m = createVehicle ["Land_Money_F", player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
-					_m setVariable ["cmoney", player getVariable "cmoney", true];
-					_m setVariable ["owner", "world", true];
-					player setVariable ["cmoney", 0, true];
-				};
-			};
-			
-			_vehicle setVariable ["A3W_storeSellBox_track", nil];
-		}];
-	};
-}];
-
-// Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan, among a LOT of other things
-[] spawn
-{
-	_lastVeh = vehicle player;
-
-	while {true} do
-	{
-		_currVeh = vehicle player;
-
-		if (_lastVeh != _currVeh) then
-		{
-			if (_currVeh != player) then
-			{
-				[_currVeh] call getInVehicle;
-			}
-			else
-			{
-				[_lastVeh] call getOutVehicle;
-			};
-		};
-
-		_lastVeh = _currVeh;
-		sleep 0.25;
-	};
-};
-
-{
-	player setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x];
-} forEach ((typeOf player) call getHitPoints);
-
-player addEventHandler ["HandleDamage", unitHandleDamage];
-
 if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 {
-	player addEventHandler ["FiredNear",
+	player addEventHandler ["FiredNear", { combatTimestamp = diag_tickTime }];
+	player addEventHandler ["HitPart",
 	{
-		// Don't prevent aborting when explosives are being placed
-		if (_this select 3 != "Put") then {
-			combatTimestamp = diag_tickTime;
-		};
-	}];
-
-	player addEventHandler ["Hit",
-	{
-		_source = effectiveCommander (_this select 1);
-		if (!isNull _source && _source != player) then {
+		_source = (_this select 0) select 1;
+		if (!isNull _source && {_source != player}) then {
 			combatTimestamp = diag_tickTime;
 		};
 	}];

@@ -4,18 +4,28 @@ if (!hasInterface) exitWith {};
 
 waitUntil {!isNull player};
 
+player createDiarySubject ["Rules", "Rules"];
 player createDiarySubject ["infos", "Infos and Help"];
 player createDiarySubject ["changelog", "Changelog"];
 player createDiarySubject ["credits", "Credits"];
 
-player createDiaryRecord ["changelog",
+player createDiaryRecord ["Rules",
 [
-"0.9h",
+"Rules",
 "
-<br/> Changelog coming soon!
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 "
-]];
-
 player createDiaryRecord ["changelog",
 [
 "0.9g",
@@ -120,6 +130,8 @@ player createDiaryRecord ["credits",
 [
 "Credits",
 "
+<br/><font size='18'>Mission Edited by aVa Phenim
+<br/>
 <br/><font size='16'>Developed by Team Wasteland:</font>
 <br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* AgentRev (TeamPlayerGaming)
@@ -143,13 +155,11 @@ player createDiaryRecord ["credits",
 <br/><font size='16'>Other contributors:</font>
 <br/>	* 82ndab-Bravo17 (GitHub)
 <br/>	* afroVoodo (Armaholic)
-<br/>	* Austerror (GitHub)
 <br/>	* AWA (OpenDayZ)
 <br/>	* bodybag (Gameaholic.se)
 <br/>	* code34 (iniDBI)
 <br/>	* Das Attorney (Jump MF)
 <br/>	* Ed! (404Games forums)
-<br/>	* Farooq (GitHub)
 <br/>	* HatchetHarry (GitHub)
 <br/>	* Hub (TeamPlayerGaming)
 <br/>	* k4n30 (GitHub)
@@ -164,7 +174,6 @@ player createDiaryRecord ["credits",
 <br/>	* Sa-Matra (BIS forums)
 <br/>	* Sanjo (GitHub)
 <br/>	* SCETheFuzz (GitHub)
-<br/>	* Shockwave (A3W forums)
 <br/>	* SicSemperTyrannis (iniDB)
 <br/>	* SPJESTER (404Games forums)
 <br/>	* spunFIN (BIS forums)

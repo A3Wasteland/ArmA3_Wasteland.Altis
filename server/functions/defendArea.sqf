@@ -94,7 +94,7 @@ _grp setCurrentWaypoint [_grp, 1];
 	{
 		private ["_unit", "_unitPos", "_targetPos", "_doMove"];
 		_unit = _this select 0;
-		_targetPos = ATLtoASL (_this select 1);
+		_targetPos = _this select 1;
 		
 		while { alive _unit } do
 		{
@@ -117,12 +117,12 @@ _grp setCurrentWaypoint [_grp, 1];
 			
 			if (!isNull _unit) then
 			{
-				_unitPos = getPosASL _unit;
+				_unitPos = getPos _unit;
 				
-				if (_unitPos vectorDistance _targetPos > 75) then
+				if (_unitPos distance _targetPos > 75) then
 				{
-					_doMove = [[5 + random 65, 0, 0], ([_targetPos, _unitPos] call BIS_fnc_dirTo) + (random 90) - 45] call BIS_fnc_rotateVector2D;
-					_unit moveTo (_targetPos vectorAdd _doMove);
+					_doMove = [[5 + random 65, 0], ([_targetPos, _unitPos] call BIS_fnc_dirTo) + (random 90) - 45] call BIS_fnc_rotateVector2D;
+					_unit moveTo ([_targetPos, _doMove] call BIS_fnc_vectorAdd);
 					sleep 3;
 				};
 			};
