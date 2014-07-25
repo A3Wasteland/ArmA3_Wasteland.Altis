@@ -90,8 +90,8 @@ class Mission
 	randomSeed=14957468;
 	class Intel
 	{
-		briefingName="aVagaming.com.au Wasteland";
-		overviewText="Wasteland by aVa Phenim original code by Team wasteland";
+		briefingName="Phenim";
+		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3Wasteland.com for more details";
 		resistanceWest=0;
 		startWeather=0.10000001;
 		startWind=0.30000001;
@@ -3740,6 +3740,7 @@ class Mission
 			colorName="ColorGUER";
 			angle=130;
 		};
+	};
 };
 class Intro
 {
