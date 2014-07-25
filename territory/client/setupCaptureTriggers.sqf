@@ -25,7 +25,7 @@ if (!hasInterface) exitWith {};
 			};
 		");
 
-		_trig setTriggerArea [_markerSize select 0, _markerSize select 1, markerDir _marker, true];
+		_trig setTriggerArea [_markerSize select 0, _markerSize select 1, markerDir _marker, markerShape _marker == "RECTANGLE"];
 		_trig setTriggerActivation ["ANY", "PRESENT", true];
 		_trig setTriggerStatements ["(vehicle player) in thislist", _onEnter, _onExit];
 	};
