@@ -4,10 +4,28 @@ if (!hasInterface) exitWith {};
 
 waitUntil {!isNull player};
 
+player createDiarySubject ["Rules", "Rules"];
 player createDiarySubject ["infos", "Infos and Help"];
 player createDiarySubject ["changelog", "Changelog"];
 player createDiarySubject ["credits", "Credits"];
 
+player createDiaryRecord ["Rules",
+[
+"Rules",
+"
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+"
 player createDiaryRecord ["changelog",
 [
 "0.9g",
@@ -112,6 +130,8 @@ player createDiaryRecord ["credits",
 [
 "Credits",
 "
+<br/><font size='18'>Mission Edited by aVa Phenim
+<br/>
 <br/><font size='16'>Developed by Team Wasteland:</font>
 <br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* AgentRev (TeamPlayerGaming)

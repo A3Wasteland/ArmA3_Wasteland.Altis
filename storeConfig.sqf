@@ -63,7 +63,58 @@ rifleArray = compileFinal str
 
 	// Sniper Rifles
 	["M320 LRR Sniper", "srifle_LRR_SOS_F", 1000],
-	["GM6 Lynx Sniper", "srifle_GM6_SOS_F", 1000]
+	["GM6 Lynx Sniper", "srifle_GM6_SOS_F", 1000],
+	
+	// Ak's
+	["AK74", "hlc_rifle_ak74", 280],		 	//- AK74
+	["AKS74", "hlc_rifle_aks74", 280],			//- AKS74
+	["AKS74U", "hlc_rifle_aks74u", 280],			//- AKS74U
+	["AKM", "hlc_rifle_akm", 280],			//-AKM
+	["RPK", "hlc_rifle_rpk", 280],			//-RPK
+	["AK12", "hlc_rifle_ak12", 280],			//-AK12
+	["AKM+GP25", "hlc_rifle_akmgl", 280],			//-AKM+GP25
+	["AKS74+GP30", "hlc_rifle_aks74_GL", 280],		//-AKS74+GP30 (Export Variant)
+	["SAIGA 12K", "hlc_rifle_saiga12k", 280],		//-Saiga12K Shotgun
+	["AEK971", "hlc_rifle_aek971", 280],
+	
+	//AR 15'S
+	["AR15 Sanitied Carbine", "hlc_rifle_RU556", 350],		 	//- AR15 Sanitied Carbine (Magpul AFG, MOE,P-Mag,BAD-lever. Novekse KX3)
+	["AR15 Magpul Carbine", "hlc_rifle_RU5562", 350],		 	//- AR15 Magpul Carbine (Magpul AFG, UBR,P-Mag,BAD-lever. Novekse KX3)
+	["Colt Carbine ", "hlc_rifle_Colt727", 350],		//- Colt Carbine (Colt Model 727 "Commando" - "M4" Barrel, M16A2 Upper, Full-Auto Lower)
+	["Colt Carbine + M203", "hlc_rifle_Colt727_GL", 450],		//- Same as above, add M203
+	["Strategic Jack Carbine", "hlc_rifle_bcmjack", 350], 		//- Bravo Company MFG/Haley Strategic Jack Carbine)
+	["Busmaster .300 Carbine", "hlc_rifle_Bushmaster300", 400],	//- Busmaster .300 Carbine (M4A1-profile carbine chambered for .300 Blackout, instead of 5.56mm NATO)
+	["AR15 .300 Dissipator Carbine", "hlc_rifle_vendimus", 400],		//- AR15 .300 Dissipator Carbine (Carbine-length heavy barrel covered by full-length rifle furniture)
+	["Rock River Arms LAR-15 AMR", "hlc_rifle_SAMR", 350],			//- Rock River Arms LAR-15 AMR (Full-Auto-Capable full-length rifle, kitted out to be able to double as a marksman rifle, with accuracy to match)
+	["AAC Honey-Badger Sans Suppressor", "hlc_rifle_honeybase", 350],		//- AAC 'Honey-Badger',Sans Suppressor
+	["AAC Honey-Badger Suppressed", "hlc_rifle_honeybadger", 350],	//- AAC 'Honey-Badger' (Suppressed Carbine-length defense weapon, created to show off the low-velocity suppressed capabilities of the .300 Blackout round)
+	["Enfield L1A1 SLR", "hlc_rifle_l1a1slr", 350],		//- Enfield L1A1 SLR
+	["Lithgow SLR Australian manufactured L1A1", "hlc_rifle_SLR", 350], 		 	//- Lithgow SLR (Australian manufactured L1A1)
+	["Steyr STG.58", "hlc_rifle_STG58F", 350],		 	//- Steyr STG.58 
+	
+	//FAL
+	["FN FAL 'Para'", "hlc_rifle_FAL5061", 350],		// - FN FAL 'Para' 
+	["FN C1A1", "hlc_rifle_c1A1", 350],		 	//- FN C1A1 (Canadian SLR variant, manufactured by FN)
+	["FN LAR", "hlc_rifle_LAR", 350],		 	//- FN LAR (Light infantry rifle contracted to Israel, Differs from the Support variant by the omission of bipod and standard width barrel)
+	["Lithgow SLR Chopmod", "hlc_rifle_SLRchopmod", 350],		//- Lithgow SLR Chopmod ( Litghow SLR with the selector group from an L2A1  Barrel sawn down and flash suppressor omitted, additional pistol grip drilled to foregrip.
+	["DSA Arms FAL OSW", "hlc_rifle_falosw", 350],			//- DSA Arms FAL OSW (Offensive Suppression Weapon. Or Offensively Short Weapon)
+	["DSA Arms FAL OSW + M203 GL", "hlc_rifle_osw_GL", 350],			//-DSA Arms FAL OSW + M203 GL
+	
+	//G3 's
+	["H&K G3SG1", "hlc_rifle_g3sg1", 500],		 	//- H&K G3SG1 (Designated marksman rifle)
+	["H&K PSG1", "hlc_rifle_psg1", 500],		 	//- H&K PSG1 (Sniper Weapon System. So dedcated to the role that the tripod that it mounts to is not integral to the weapon)
+	["H&K G3A3", "hlc_rifle_g3a3", 500],		 	//- H&K G3A3 (Infantry Rifle)
+	["H&K G3KA4", "hlc_rifle_g3ka4", 500],		 	//- H&K G3KA4 (Modernised,slightly shorter Infantry rifle)
+	["H&K G3KA4 + M203", "HLC_Rifle_g3ka4_GL", 500],		//- H&K G3KA4 + M203
+	["FR Ordnance MC51", "hlc_rifle_hk51", 500],		 	//- FR Ordnance MC51 (G3 rifle made as compact as an MP5. A Specfic request made by the SAS, apparently 50 made, but none saw combat)
+	["H&K HK53", "hlc_rifle_hk53", 500],			//- H&K HK53 (H&K's formalised solution to the SASR's dilemma, essentially an HK33 made to fit the same size package as the MP5)
+	
+	//M14
+	["M14 (Infantry Rifle)", "hlc_rifle_M14", 500],		 	//- M14 (Infantry Rifle)
+	["M21 Marksman Rifle", "hlc_rifle_M21", 500],		 	//- M21 Marksman Rifle ( Removal of select fire, Addition of Fibreglass stock and Harris Bipod)
+	["M14 DMR", "hlc_rifle_M14DMR", 500],		 	//- M14 DMR (USMC Designated Marksman Weapon. ArmA2 DMR)
+	["Troy M14 SOPMOD", "hlc_rifle_m14sopmod", 500]	 	//- Troy M14 SOPMOD (Precursor to the EBR. Modernised M14 Chasis)
+	
 ];
 
 lmgArray = compileFinal str
@@ -71,7 +122,11 @@ lmgArray = compileFinal str
 	["MX SW LMG", "arifle_MX_SW_F", 300],
 	["MX SW LMG (Black)", "arifle_MX_SW_Black_F", 300],
 	["Mk200 LMG", "LMG_Mk200_F", 350],
-	["Zafir LMG", "LMG_Zafir_F", 400]
+	["Zafir LMG", "LMG_Zafir_F", 400],
+	
+	//M60
+	["M60E4", "hlc_lmg_M60E4", 800],		 	//- M60E4
+	["M60", "hlc_lmg_m60", 800]				//-  M60 (original variant, no rails, longer, heavier)
 ];
 
 shotgunArray = compileFinal str
@@ -173,12 +228,43 @@ ammoArray = compileFinal str
 	[".408 7Rnd Cheetah Mag", "7Rnd_408_Mag", 50],
 	["12.7mm 5Rnd Mag", "5Rnd_127x108_Mag", 50],
 	["12.7mm 5Rnd APDS Mag", "5Rnd_127x108_APDS_Mag", 60],
+	["AK 5.45mm Standard", "hlc_30Rnd_545x39_B_AK", 15],	// - 30 Round magazine of 5.45x39mm Ball Rounds (i.e, standard bullets)
+	["AK 5.45mm Tracer", "hlc_30Rnd_545x39_T_AK", 15],	// - 30 Round magazine of 5.45x39mm Tracer Rounds
+	["AK 5.45mm Enhanced Performance", "hlc_30Rnd_545x39_EP_AK", 15],	// - 30 Round magazine of 5.45x39mm Enhanced Performance Rounds 
+	["AK 5.45mm MixeD", "hlc_45Rnd_545x39_t_rpk", 15],	// - 45 Round magazine of 5.45x39mm Mixed
+	["AK 7.62mm Standard", "hlc_30Rnd_762x39_b_ak", 15],	// - 30 Round magazine of 7.62x39mm Ball Rounds (i.e, standard bullets)
+	["AK 7.62mm Tracer", "hlc_30Rnd_762x39_t_ak", 15],	// - 30 Round magazine of 7.62x39mm Tracer Rounds
+	["RPK 7.62mm Tracer ", "hlc_45Rnd_762x39_t_rpk", 15],	// - 45 Round magazine of 7.62x39mm Tracer Rounds
+	["RPK 7.62mm Mixed", "hlc_45Rnd_762x39_m_rpk", 15],	// - 45 Round magazine of 7.62x39mm Mixed
+	["RPK 7.62mm Mixed 75 Round", "hlc_75rnd_762x39_m_rpk", 15],	//- 75 Round magazine of 7.62x39mm Mixed
+	["12 Gauge 00-Buckshot", "hlc_10rnd_12g_buck_S12", 15],	//- 10 Round magazine of 12 Gauge 00-Buckshot rounds 
+	["12 Gauge Solid", "hlc_10rnd_12g_slug_S12", 15],	//- 10 Round magazine of 12 Gauge Solid Slug rounds
+	[".300 Blackout FMJ", "29rnd_300BLK_STANAG", 15],		//- 30 Round magazine of .300 Blackout FMJ (-1 to ensure smooth feeding)
+	[".300 Blackout Tracer", "29rnd_300BLK_STANAG_T", 15],	// - 30 Round magazine of .300 Blackout Tracer Rounds
+	[".300 Blackout FMJ Cold Rounds SD", "29rnd_300BLK_STANAG_S", 15],	// - 30 Round magazine of .300 Blackout FMJ "cold" loads for optimum sound suppression.
+	["5.56mm Nato Enhanced", "hlc_30rnd_556x45_EPR", 15],		//- 30 Round magazine of 5.56x45mm NATO Enhanced Performance Rounds.
+	["Mk318 5.56mm Nato", "hlc_30rnd_556x45_SOST", 15],	//- 30 Round magazine of 5.56x45mm NATO Mk318 Rounds(designed for optimal performance with even SBR-length rifles).
+	["Mk262 5.56mm Nato ", "hlc_30rnd_556x45_SPR", 15],		//- 30 Round magazine of 5.56x45mm NATO Mk262 Rounds(desgined for long range ballistic consistency).
+	["FAL 7.62 Standard 20 Rounds", "hlc_20Rnd_762x51_B_fal", 15],	//- 20 Round magazine of 7.62x51mm Ball Rounds (i.e, standard bullets)
+	["FAL 7.62 Tracer 20 Rounds", "hlc_20Rnd_762x51_t_fal", 15],	//- 20 Round magazine of 7.62x51mm Tracer Rounds
+	["FAL 7.62 Cold Load 20 Rounds", "hlc_20Rnd_762x51_S_fal", 15],	//- 20 Round magazine of 7.62x51mm cold-loaded ball (subsonic, for use with suppressor
+	["7.62 Mixed 50 Rounds", "hlc_50rnd_762x51_M_FAL", 15],	//- 50 Round magazine of 7.62x51mm Mixed at a ratio of 1 Tracer for every 5 Standard Ball rounds
+	["G3 7.62 Standard 20 Rounds", "hlc_20Rnd_762x51_B_G3", 15],	// - 20 Round magazine of 7.62x51mm Ball Rounds (i.e, standard bullets
+	["G3 7.62 Tracer 20 Rounds", "hlc_20rnd_762x51_T_G3", 15],	// - 20 Round magazine of 7.62x51mm Tracer Rounds
+	["G3 7.62 Mixed 20 Rounds", "hlc_50rnd_762x51_M_G3", 15],	// - 50 Round magazine of 7.62x51mm Mixed at a ratio of 1 Tracer for every 5 Standard Ball rounds (X-systems drum mag, so you can have the SAW be interoperable with the rest of the squad.
+	["M14 7.62 Standard 20 Rounds", "hlc_20Rnd_762x51_B_M14", 15],	//- 20 Round magazine of 7.62x51mm Ball Rounds (i.e, standard bullets)
+	["M14 7.62 Tracer 20 Rounds", "hlc_20rnd_762x51_T_M14", 15],	//- 20 Round magazine of 7.62x51mm Tracer Rounds
+	["M14 7.62 Mixed 50 Rounds", "hlc_50rnd_762x51_M_M14", 15],	//- 50 Round magazine of 7.62x51mm Mixed at a ratio of 1 Tracer for every 5 Standard Ball rounds (X-systems drum mag, so you can have the SAW be interoperable with the rest of the squad.)
+	["M60 7.62 Standard 100 Rounds", "hlc_100Rnd_762x51_B_M60E4", 15],//- 100 Round magazine of 7.62x51mm Ball Rounds (i.e, standard bullets)
+	["M60 7.62 Tracer 100 Rounds", "hlc_100Rnd_762x51_T_M60E4", 15],//- 100 Round magazine of 7.62x51mm Tracer Rounds
+	["M60 7.62 Mixed 100 Rounds", "hlc_100Rnd_762x51_M_M60E4", 15],	//- 100 Round magazine of 7.62x51mm Mixed at a ratio of 1 Tracer for every 2 Standard Ball rounds
 	["RPG-42 AT Rocket", "RPG32_F", 250],              // Direct damage: high   | Splash damage: low    | Guidance: none
 	["RPG-42 HE Rocket", "RPG32_HE_F", 250],           // Direct damage: medium | Splash damage: medium | Guidance: none
 	["PCML Missile", "NLAW_F", 350],                   // Direct damage: high   | Splash damage: low    | Guidance: laser, land vehicles
 	["Titan AT Missile", "Titan_AT", 350],             // Direct damage: high   | Splash damage: low    | Guidance: mouse, laser, land vehicles
 	["Titan Antipersonnel Missile", "Titan_AP", 350],  // Direct damage: low    | Splash damage: high   | Guidance: mouse, laser
 	["Titan AA Missile", "Titan_AA", 350],             // Direct damage: low    | Splash damage: high   | Guidance: aircraft
+	["GP25  GP30 HE Rounds", "hlc_VOG25_AK", 150],				
 	["40mm HE Grenade Round", "1Rnd_HE_Grenade_shell", 125],
 	["40mm 3Rnd HE Grenades", "3Rnd_HE_Grenade_shell", 250],
 	["40mm Smoke Round (White)", "1Rnd_Smoke_Grenade_shell", 50],
@@ -205,6 +291,7 @@ ammoArray = compileFinal str
 	["40mm 3Rnd Flares (Yellow)", "3Rnd_UGL_FlareYellow_F", 50],
 	["40mm 3Rnd Flares (Red)", "3Rnd_UGL_FlareRed_F", 50],
 	["40mm 3Rnd Flares (IR)", "3Rnd_UGL_FlareCIR_F", 50]
+	
 ];
 
 //Gun Store item List
@@ -235,7 +322,25 @@ accessoriesArray = compileFinal str
 	["NVS", "optic_NVS", 400, "item"],
 	["TWS", "optic_tws", 600, "item"],
 	["TWS MG", "optic_tws_mg", 650, "item"],
-	["Nightstalker", "optic_Nightstalker", 750, "item"]
+	["Nightstalker", "optic_Nightstalker", 750, "item"],
+	["PS01 Sniper Scope", "HLC_Optic_PSO1", 125, "item"],			//- PSO1 Sniper Optic
+	["PBS1 Suppressor", "HLC_Optic_1p29", 125, "item"],			//- 1P29 Rifle Combat Optic
+	["AK PBS4 Suppressor 5.45x39", "hlc_muzzle_545SUP_AK", 125, "item"],		//- PBS4 Suppressor (5.45x39)
+	["AK PBS1 Suppressor 7.62x39", "hlc_muzzle_762SUP_AK", 125, "item"],		//- PBS1 Suppressor (7.62x39)
+	["Kobra Collimator Sight", "hlc_optic_kobra", 125, "item"],			//- Kobra Collimator Sight
+	["Goshawk Thermal Sight", "hlc_optic_goshawk", 650, "item"],		//- Goshawk Thermal Sight
+	["Sound Suppressor 5.56MM NATO AR15s", "hlc_muzzle_556NATO_KAC", 125, "item"],	//-Sound Suppressor 5.56MM NATO AR15s
+	["Sound Suppressor .300 Blackout AR15s", "hlc_muzzle_300blk_KAC", 125, "item"],	//- Sound Suppressor .300 Blackout AR15s
+	["Leupold LRT M14", "hlc_optic_LRT_m14", 125, "item"],		
+	["AN PVS4 Night Optic Exclusive to the FALs", "hlc_optic_PVS4FAL", 650, "item"],		
+	["suit Optic", "hlc_optic_suit", 125, "item"],			
+	["FAL Suppressor", "hlc_muzzle_snds_fal", 125, "item"],		
+	["Sound Suppressor for the HK53 and later the HK33", "hlc_muzzle_snds_HK33", 125, "item"],		
+	["Sound Suppressor for the G3 Rifles PSG excluded", "hlc_muzzle_snds_G3", 125, "item"],	
+	["Zeiss Diavari 1.5-6x Rifle Optic in high-profile mount", "HLC_Optic_ZFSG1", 125, "item"],			
+	["Trijicon Accupoint G3 Rifle optic in high-profile mount", "hlc_optic_accupoint_g3", 125, "item"],	
+	["Sound Suppressor for the M14 Rifles", "hlc_muzzle_snds_M14", 125, "item"],		
+	["Redfield AR-TEL Optic", "hlc_optic_artel_m14", 125, "item"]		
 ];
 
 // If commented, means the color/camo isn't implemented or is a duplicate of another hat
@@ -624,7 +729,6 @@ helicoptersArray = compileFinal str
 	["PO-30 Orca (Black)", "O_Heli_Light_02_unarmed_F", 6000, "vehicle", ""], // Ka-60
 	["WY-55 Hellcat (Green)", "I_Heli_light_03_unarmed_F", 6000, "vehicle", ""], // AW159
 	["CH-49 Mohawk", "I_Heli_Transport_02_F", 8000, "vehicle", ""], // AW101
-	
 	["UH-80 Ghost Hawk", "B_Heli_Transport_01_F", 12500, "vehicle", ""], // UH-60 Stealth with 2 side miniguns
 	["UH-80 Ghost Hawk (Camo)", "B_Heli_Transport_01_camo_F", 12500, "vehicle", ""], // UH-60 Stealth with 2 side miniguns (green camo)
 	["AH-9 Pawnee", "B_Heli_Light_01_armed_F", 20000, "vehicle", ""], // Armed AH-6
@@ -646,6 +750,9 @@ planesArray = compileFinal str
 	["K40 Ababil-3 ATGM UAV (CSAT)", "O_UAV_02_F", 10000, "vehicle", 5000],
 	["K40 Ababil-3 Bomber UAV (CSAT)", "O_UAV_02_CAS_F", 10000, "vehicle", 5000],
 	["K40 Ababil-3 ATGM UAV (AAF)", "I_UAV_02_F", 10000, "vehicle", 5000],
+	["Cessna 185 - Civilian", "GNT_C185", 4000, "vehicle", 2000],
+	["cessna 185 - Amphibian", "GNT_C185F", 4000, "vehicle", 2000],
+	["Cessna 185 - Armed", "GNT_C185T", 4000, "vehicle", 2000],
 	["K40 Ababil-3 Bomber UAV (AAF)", "I_UAV_02_CAS_F", 10000, "vehicle", 5000]
 ];
 
@@ -691,6 +798,9 @@ noColorVehicles = compileFinal str
 [
 	/*
 	"Hatchback_01_base_F",
+	"GNT_C185",
+	"GNT_C185T",
+	"GNT_C185F",
 	"Van_01_base_F",
 	"SUV_01_base_F",
 	"Offroad_01_base_F",
@@ -712,6 +822,7 @@ rgbOnlyVehicles = compileFinal str
 [
 	/*
 	"Quadbike_01_base_F",
+	B_SDV_01_F
 	"Truck_02_base_F",
 	"Heli_Transport_01_base_F",
 	"O_Boat_Transport_01_F",

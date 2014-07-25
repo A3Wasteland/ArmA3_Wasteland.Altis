@@ -159,3 +159,5 @@ waituntil {!(IsNull (findDisplay 46))};
 		_x setVariable ["side", playerSide, true];
 	};
 } forEach pvar_spawn_beacons;
+
+nul = [this] execVM "OffroadAUG.sqf"; 
