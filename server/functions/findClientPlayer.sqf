@@ -13,6 +13,6 @@ _player = objNull;
 		_player = _x;
 	};
 }
-forEach (call allPlayers);
+forEach playableUnits;
 
 _player

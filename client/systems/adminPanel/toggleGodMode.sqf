@@ -10,17 +10,6 @@ if ((getPlayerUID player) call isAdmin) then
 	{
 		player allowDamage false;
 		player setVariable ["isAdminInvulnerable", true, true];
-
-		if (player getVariable ["FAR_isUnconscious", 0] == 1) then
-		{
-			player setVariable ["FAR_isUnconscious", 0, true];
-			[] spawn
-			{
-				sleep 1;
-				closeDialog 911;
-			};
-		};
-
 		hint "You are now invulnerable";
 	}
 	else

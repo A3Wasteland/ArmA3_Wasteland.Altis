@@ -6,7 +6,7 @@
 
 #include "dialog\gunstoreDefines.sqf";
 disableSerialization;
-private ["_switch", "_dialog", "_gunlisttext", "_gunlist", "_ammolist", "_ammoBtn", "_ammoLbl", "_gunDesc", "_showAmmo", "_playerSideNum", "_itemsArray", "_parentCfg", "_weaponClass", "_weapon", "_picture", "_gunlistIndex"];
+private ["_switch", "_dialog", "_gunlisttext", "_gunlist", "_ammolist", "_ammoBtn", "_ammoLbl", "_gunDesc", "_showAmmo", "_itemsArray", "_parentCfg", "_weaponClass", "_weapon", "_picture", "_gunlistIndex"];
 _switch = _this select 0;
 
 // Grab access to the controls
@@ -25,14 +25,6 @@ lbClear _ammolist;
 _gunlist lbSetCurSel -1;
 
 _showAmmo = false;
-
-_playerSideNum = switch (playerSide) do
-{
-	case BLUFOR:      { 1 };
-	case OPFOR:       { 0 };
-	case INDEPENDENT: { 2 };
-	default           { 3 };
-};
 
 switch(_switch) do 
 {
@@ -76,14 +68,7 @@ switch(_switch) do
 	};
 	case 8:
 	{
-		_itemsArray = [];
-		
-		{
-			if (getNumber (configFile >> "CfgVehicles" >> _x select 1 >> "side") in [_playerSideNum, 3]) then
-			{
-				[_itemsArray, _x] call BIS_fnc_arrayPush;
-			};
-		} forEach (call staticGunsArray);
+		_itemsArray = call staticGunsArray;
 	};
 	default
 	{
@@ -123,7 +108,7 @@ else
 		_picture = getText (_weapon >> "picture");
 		
 		// Show scope on sniper rifle pictures
-		if (["_SOS_F", _weaponClass] call fn_findString != -1) then
+		if (["_SOS_F", _weaponClass] call fn_findString == count toArray _weaponClass - 6) then
 		{
 			private ["_picArr", "_picLen"];
 			_picArr = toArray _picture;
@@ -136,9 +121,6 @@ else
 			};
 		};
 	
-		if (_picture != "" && _picture != "pictureThing") then
-		{
-			_gunlist lbSetPicture [_gunlistIndex, _picture];
-		};
+		_gunlist lbSetPicture [_gunlistIndex, _picture];
 	};
 } forEach _itemsArray;

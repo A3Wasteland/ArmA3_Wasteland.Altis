@@ -51,21 +51,9 @@ switch(_switch) do
 	{
 		_itemsArray = call customPlayerItems;
 		
-		_excludedItems = [];
-		
-		if !(playerSide in [BLUFOR,OPFOR]) then
+		if (playerSide == INDEPENDENT) then
 		{
-			[_excludedItems, "warchest"] call BIS_fnc_arrayPush;
-		};
-		
-		if (["A3W_unlimitedStamina"] call isConfigOn) then
-		{
-			[_excludedItems, "energydrink"] call BIS_fnc_arrayPush;
-		};
-		
-		if (count _excludedItems > 0) then
-		{
-			_itemsArray = [_itemsArray, { !((_x select 1) in _excludedItems) }] call BIS_fnc_conditionalSelect;
+			_itemsArray = [_itemsArray, { _x select 1 != "warchest" }] call BIS_fnc_conditionalSelect;
 		};
 	};
 	case 6: 
@@ -128,7 +116,7 @@ _playerSideNum = switch (playerSide) do
 				{
 					case (_isUniform):
 					{
-						if !(player isUniformAllowed _weaponClass) then
+						if !([player, _weaponClass] call canWear) then
 						{
 							_showItem = false;
 						};

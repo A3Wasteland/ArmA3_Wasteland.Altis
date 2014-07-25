@@ -4,41 +4,20 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-private ["_player", "_corpse"];
+private ["_player", "_corpse", "_town", "_spawn", "_temp"];
 
 playerSetupComplete = false;
-9999 cutText ["", "BLACK", 0.01];
 
 _player = _this select 0;
 _corpse = _this select 1;
 
-_corpse setVariable ["newRespawnedUnit", _player, true];
-_player setVariable ["playerSpawning", true, true];
-
-//_corpse removeAction playerMenuId;
+_corpse removeAction playerMenuId;
 { _corpse removeAction _x } forEach aActionsIDs;
 // The actions from mf_player_actions are removed in onKilled.
 
-_group = _player getVariable ["currentGroupRestore", grpNull];
+player call playerSetup;
 
-if (!isNull _group && {group _player != _group}) then
-{
-	[_player] join _group;
-	
-	if (_player getVariable ["currentGroupIsLeader", false] && leader _group != _player) then
-	{
-		_group selectLeader _player;
-	};
-};
-
-if (!isServer) then
-{
-	[_player, "handleCorpseOnLeave", false] spawn TPG_fnc_MP; // setup corpse deletion when leaving while alive
-};
-
-_player call playerSetup;
-
-//[] execVM "client\clientEvents\onMouseWheel.sqf";
+[] execVM "client\clientEvents\onMouseWheel.sqf";
 
 call playerSpawn;
 

@@ -3,12 +3,30 @@
 //	@file Author: AgentRev
 //	@file Created: 08/06/2013 01:07
 
-private ["_key", "_i"];
-_key = "k";
+private ["_key", "_char"];
+_key = [];
 
-for "_i" from 1 to 5 do
+for "_x" from 0 to (floor random 33 + 31) do
 {
-	_key = _key + str (100000 + random 899999);
+	if (_x != 0) then
+	{
+		_char = floor random 36;
+	}
+	else
+	{
+		_char = floor random 26 + 10;
+	};
+	
+	if (_char < 10) then
+	{
+		_char = _char + 48;
+	}
+	else
+	{
+		_char = _char + 55;
+	};
+	
+	_key set [_x, _char];		
 };
 
-_key
+toString _key

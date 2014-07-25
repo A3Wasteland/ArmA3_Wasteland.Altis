@@ -43,17 +43,12 @@ if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 else
 {
 	diag_log format["[WARNING] A3W configuration file '%1\main_config.sqf' was not found. Using default settings!", externalConfigFolder];
-	diag_log "[WARNING] For more information go to http://forums.a3wasteland.com/";
+	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
 };
 
-A3W_startingMoney = compileFinal str A3W_startingMoney;
 A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
 A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
-A3W_playerSaving = compileFinal str A3W_playerSaving;
 A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
-A3W_unlimitedStamina = compileFinal str A3W_unlimitedStamina;
-A3W_bleedingTime = compileFinal str A3W_bleedingTime;
-A3W_teamPlayersMap = compileFinal str A3W_teamPlayersMap;
 
 // Broadcast config variables
 publicVariable "A3W_startingMoney";
@@ -61,24 +56,19 @@ publicVariable "A3W_showGunStoreStatus";
 publicVariable "A3W_gunStoreIntruderWarning";
 publicVariable "A3W_playerSaving";
 publicVariable "A3W_combatAbortDelay";
-publicVariable "A3W_unlimitedStamina";
-publicVariable "A3W_bleedingTime";
-publicVariable "A3W_teamPlayersMap";
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
 _boxSavingOn = ["A3W_boxSaving"] call isConfigOn;
-_staticWeaponSavingOn = ["A3W_staticWeaponSaving"] call isConfigOn;
 _warchestSavingOn = ["A3W_warchestSaving"] call isConfigOn;
 _warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
 _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
-
-_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || {_warchestSavingOn} || {_warchestMoneySavingOn} || {_beaconSavingOn});
+_serverSavingOn = (_baseSavingOn || {_boxSavingOn} || {_warchestSavingOn} || {_warchestMoneySavingOn} || {_beaconSavingOn});
 
 _setupPlayerDB = [] spawn {}; // blank script to feed scriptDone a non-nil value
 
 // Do we need any persistence?
-if (_playerSavingOn || _serverSavingOn) then
+if (_playerSavingOn || {_serverSavingOn}) then
 {
 	// Our custom iniDB methods which fixes some issues with the current iniDB addon release
 	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
@@ -107,26 +97,17 @@ if (_playerSavingOn || _serverSavingOn) then
 		execVM "persistence\world\oLoad.sqf";
 	};
 	
-	{
-		diag_log format ["[INFO] A3W %1 = %2", _x select 0, if (_x select 1) then { "ON" } else { "OFF" }];
-	}
-	forEach
-	[
-		["playerSaving", _playerSavingOn],
-		["baseSaving", _baseSavingOn],
-		["boxSaving", _boxSavingOn],
-		["staticWeaponSaving", _staticWeaponSavingOn],
-		["warchestSaving", _warchestSavingOn],
-		["warchestMoneySaving", _warchestMoneySavingOn],
-		["spawnBeaconSaving", _beaconSavingOn]
-	];
+	diag_log format ["[INFO] A3W player saving is %1", if (_playerSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W base saving is %1", if (_baseSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W box saving is %1", if (_boxSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W warchest saving is %1", if (_warchestSavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W warchest money saving is %1", if (_warchestMoneySavingOn) then { "ENABLED" } else { "DISABLED" }];
+	diag_log format ["[INFO] A3W spawn beacon saving is %1", if (_beaconSavingOn) then { "ENABLED" } else { "DISABLED" }];
 };
 
-_createTriggers = execVM "territory\server\createCaptureTriggers.sqf";
-
-[_setupPlayerDB, _createTriggers] spawn
+_setupPlayerDB spawn
 {
-	waitUntil {sleep 0.1; {scriptDone _x} count _this == count _this};
+	waitUntil {sleep 0.1; scriptDone _this};
 	A3W_serverSetupComplete = compileFinal "true";
 	publicVariable "A3W_serverSetupComplete";
 };
@@ -139,9 +120,11 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 	setDate [2035, 6, _monthDay, _startHour, 0];
 };
 
-if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then 
+if (["A3W_buildingLoot"] call isConfigOn) then 
 {
 	diag_log "[INFO] A3W loot spawning is ENABLED";
+	fn_getBuildingstospawnLoot = "addons\Lootspawner\fn_LSgetBuildingstospawnLoot.sqf" call mf_compile; 
+	LSdeleter = "addons\Lootspawner\LSdeleter.sqf" call mf_compile;
 	execVM "addons\Lootspawner\Lootspawner.sqf";
 };
 
@@ -188,7 +171,8 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 	};
 };
 
-["A3W_quit", "onPlayerDisconnected", { [_id, _uid, _name] spawn fn_onPlayerDisconnected }] call BIS_fnc_addStackedEventHandler;
+// Hooks for new players connecting, in case we need to manually update state
+["A3W_onPlayerConnected", "onPlayerConnected", { [_id, _name] execVM "server\functions\onPlayerConnected.sqf" }] call BIS_fnc_addStackedEventHandler;
 
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {

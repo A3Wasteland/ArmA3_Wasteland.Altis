@@ -10,7 +10,6 @@ if (isPlayer _player) then
 {
 	_player addScore 2;
 	
-	/*
 	if (isServer) then
 	{
 		compensateNegativeScore = _player;
@@ -27,5 +26,4 @@ if (isPlayer _player) then
 		missionNamespace setVariable [_scoreVar, _scoreVal + 2];
 		publicVariable _scoreVar;
 	};
-	*/
 };

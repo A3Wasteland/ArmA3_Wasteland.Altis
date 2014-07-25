@@ -19,8 +19,6 @@ _chpSpot = _this select 4;
 
 _begintime = diag_tickTime;
 {
-	if (!(_x getVariable ["A3W_purchasedStoreObject", false]) && isNil {_x getVariable "baseSaving_hoursAlive"}) then
-	{
 	_BaPname = "";
 	_lootClass = 0;
 	_buildPosViable_list = [];
@@ -116,11 +114,6 @@ _begintime = diag_tickTime;
 							case 5:
 							{
 								_loot = ((lootworldObject_list select _lootClass) select 1) call BIS_fnc_selectRandom;
-								
-								if (_loot == "Land_Can_V3_F" && {["A3W_unlimitedStamina"] call isConfigOn}) exitWith {
-									_lootholder = objNull;
-								};
-								
 								_lootholder = createVehicle [_loot, _tmpPos, [], 0, "CAN_COLLIDE"];
 								_lootholder setPosATL _tmpPos;
 								if(_loot == "Land_CanisterFuel_F") then {
@@ -156,34 +149,31 @@ _begintime = diag_tickTime;
 							};
 						};
 						
-						if (!isNull _lootholder) then
-						{
-							_height = getTerrainHeightASL _spwnPos;
-							
-							// buildingPos returns ATL over ground and ASL over water
-							if (_height < 0) then {
-								_lootholder setPosASL _spwnPos;
-							} else {
-								_lootholder setPosATL _spwnPos;
-							};
-							
-							sleep 0.001;
-							// Fix for wrong height (getPos Z = height above floor under object)
-							_spwnPos set [2, (_spwnPos select 2) - ((getPos _lootholder) select 2)];
-							
-							// must be done twice
-							if (_height < 0) then {
-								_lootholder setPosASL _spwnPos;
-							} else {
-								_lootholder setPosATL _spwnPos;
-							};
-							
-							_lootholder setdir (random 360);
-							
-							//1 category loot only per place so -> exit For
-							//no lootpiling
-							_lootholder setVariable ["Lootready", diag_tickTime];
+						_height = getTerrainHeightASL _spwnPos;
+						
+						// buildingPos returns ATL over ground and ASL over water
+						if (_height < 0) then {
+							_lootholder setPosASL _spwnPos;
+						} else {
+							_lootholder setPosATL _spwnPos;
 						};
+						
+						sleep 0.001;
+						// Fix for wrong height (getPos Z = height above floor under object)
+						_spwnPos set [2, (_spwnPos select 2) - ((getPos _lootholder) select 2)];
+						
+						// must be done twice
+						if (_height < 0) then {
+							_lootholder setPosASL _spwnPos;
+						} else {
+							_lootholder setPosATL _spwnPos;
+						};
+						
+						_lootholder setdir (random 360);
+						
+						//1 category loot only per place so -> exit For
+						//no lootpiling
+						_lootholder setVariable ["Lootready", diag_tickTime];
 					};
 				};
 			};
@@ -192,6 +182,5 @@ _begintime = diag_tickTime;
 		};
 	};
 	sleep 0.001;
-	};
 }forEach _BaP_list;
 //diag_log format["-- LOOTSPAWNER DEBUG BaP: %1 buildings ready, needed %2s, EXIT now --", (count _BaP_list), (diag_tickTime - _begintime)];

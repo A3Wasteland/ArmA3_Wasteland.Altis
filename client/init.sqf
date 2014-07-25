@@ -97,16 +97,15 @@ diag_log format ["Player starting with $%1", player getVariable ["cmoney", 0]];
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
 	territoryActivityHandler = "territory\client\territoryActivityHandler.sqf" call mf_compile;
-	[] execVM "territory\client\setupCaptureTriggers.sqf";
+	[] execVM "territory\client\createCaptureTriggers.sqf";
 };
 
 //Setup player menu scroll action.
-//[] execVM "client\clientEvents\onMouseWheel.sqf";
+[] execVM "client\clientEvents\onMouseWheel.sqf";
 
 //Setup Key Handler
-waitUntil {!isNull findDisplay 46};
-(findDisplay 46) displayAddEventHandler ["KeyDown", onKeyPress];
-//(findDisplay 46) displayAddEventHandler ["KeyUp", onKeyRelease];
+waituntil {!(IsNull (findDisplay 46))};
+(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call onKeyPress"];
 
 "currentDate" addPublicVariableEventHandler {[] call timeSync};
 "messageSystem" addPublicVariableEventHandler {[] call serverMessage};
@@ -114,6 +113,7 @@ waitUntil {!isNull findDisplay 46};
 // "clientRadarMarkers" addPublicVariableEventHandler {[] call updateRadarMarkers};
 "pvar_teamKillList" addPublicVariableEventHandler {[] call updateTeamKiller};
 "publicVar_teamkillMessage" addPublicVariableEventHandler {if (local (_this select 1)) then { [] spawn teamkillMessage }};
+"compensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 
 //client Executes
 [] execVM "client\functions\initSurvival.sqf";
@@ -136,12 +136,20 @@ waitUntil {!isNull findDisplay 46};
 [] execVM "client\functions\drawPlayerIcons.sqf";
 [] execVM "addons\fpsFix\vehicleManager.sqf";
 [] execVM "addons\Lootspawner\LSclientScan.sqf";
-[] execVM "addons\far_revive\FAR_revive_init.sqf";
 
-if (["A3W_teamPlayersMap"] call isConfigOn) then
+// Synchronize score compensation
 {
-	[] execVM "client\functions\drawPlayerMarkers.sqf";
-};
+	if (isPlayer _x) then
+	{
+		_scoreVar = "addScore_" + getPlayerUID _x;
+		_scoreVal = missionNamespace getVariable _scoreVar;
+		
+		if (!isNil "_scoreVal" && {typeName _scoreVal == "SCALAR"}) then
+		{
+			_x addScore _scoreVal;
+		};
+	};
+} forEach playableUnits;
 
 // update player's spawn beaoon
 {
@@ -151,3 +159,5 @@ if (["A3W_teamPlayersMap"] call isConfigOn) then
 		_x setVariable ["side", playerSide, true];
 	};
 } forEach pvar_spawn_beacons;
+
+nul = [this] execVM "OffroadAUG.sqf"; 

@@ -71,8 +71,6 @@ _newPos = [];
 _posX = _pos select 0;
 _posY = _pos select 1;
 
-if (count _pos == 2) then { _pos set [2, 0] };
-
 //Limit the amount of attempts at finding a good location.
 private ["_attempts", "_maxAttempts"];
 _maxAttempts = if (isDedicated) then { 9999 } else { 999 };
@@ -80,7 +78,7 @@ _maxAttempts = if (isDedicated) then { 9999 } else { 999 };
 for "_attempts" from 0 to _maxAttempts do
 {
 	private "_testPos";
-	_testPos = _pos vectorAdd ([[_minDist + random (_maxDist - _minDist), 0, 0], random 360] call BIS_fnc_rotateVector2D);
+	_testPos = [_pos, [[_minDist + random (_maxDist - _minDist), 0], random 360] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 	
 	if (count (_testPos isFlatEmpty [_objDist, 0, _maxGradient, _objDist max 5, _waterMode, _shoreMode, objNull]) > 0) exitWith
 	{

@@ -141,7 +141,7 @@ while {_run} do
 		// Check if the vehicle is deserted, or if something was taken from it
 		
 		if (_deserted > 0 && 
-		   {(getPosASL _veh) vectorDistance _position > 10 || _veh getVariable ["itemTakenFromVehicle", false]} &&
+		   {getPosASL _veh distance _position > 10 || _veh getVariable ["itemTakenFromVehicle", false]} &&
 		   {{alive _veh} count crew _veh == 0}) then 
 		{
 			if (_desertedTimeout == 0) then {
@@ -195,7 +195,7 @@ while {_run} do
 				}
 				else
 				{
-					[[netId _towedVeh], "detachTowedObject", _towedVeh] call TPG_fnc_MP;
+					[_towedVeh, {[_this] call detachTowedObject}, false, false, _towedVeh] call fn_vehicleInit;
 				};
 			};
 			

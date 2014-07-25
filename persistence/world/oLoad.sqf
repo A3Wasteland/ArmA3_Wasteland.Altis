@@ -20,8 +20,8 @@ _strToSide =
 	};
 };
 
-_isWarchestEntry = { [_variables, "a3w_warchest", false] call fn_getFromPairs };
-_isBeaconEntry = { [_variables, "a3w_spawnBeacon", false] call fn_getFromPairs };
+_isWarchestEntry = { [_variables, "a3w_warchest", false] call BIS_fnc_getFromPairs };
+_isBeaconEntry = { [_variables, "a3w_spawnBeacon", false] call BIS_fnc_getFromPairs };
 
 _maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
 
@@ -48,11 +48,10 @@ if (!isNil "_exists" && {_exists}) then
 				
 				_allowed = switch (true) do
 				{
-					case (call _isWarchestEntry):       { _warchestSavingOn };
-					case (call _isBeaconEntry):         { _beaconSavingOn };
-					case (_class call _isBox):          { _boxSavingOn };
-					case (_class call _isStaticWeapon): { _staticWeaponSavingOn };
-					default                             { _baseSavingOn };
+					case (call _isWarchestEntry): { _warchestSavingOn };
+					case (call _isBeaconEntry):   { _beaconSavingOn };
+					case (_class call _isBox):    { _boxSavingOn };
+					default                       { _baseSavingOn };
 				};
 				
 				if (_allowed) then
@@ -118,7 +117,7 @@ if (!isNil "_exists" && {_exists}) then
 						_obj setVariable ["objectLocked", false, true];
 					};
 					
-					if (_boxSavingOn && {_class call _isBox}) then
+					if (_boxSavingOn) then
 					{
 						_weapons = [_fileName, _objName, "Weapons", "ARRAY"] call iniDB_read;
 						_magazines = [_fileName, _objName, "Magazines", "ARRAY"] call iniDB_read;
@@ -139,23 +138,7 @@ if (!isNil "_exists" && {_exists}) then
 						};
 						if (!isNil "_backpacks") then
 						{
-							{
-								if !((_x select 0) isKindOf "Weapon_Bag_Base") then
-								{
-									_obj addBackpackCargoGlobal _x;
-								};
-							} forEach _backpacks;
-						};
-					};
-					
-					if (_staticWeaponSavingOn && {_class call _isStaticWeapon}) then
-					{
-						_turretMags = [_fileName, _objName, "TurretMagazines", "ARRAY"] call iniDB_read;
-						
-						if (!isNil "_turretMags") then
-						{
-							_obj setVehicleAmmo 0;
-							{ _obj addMagazine _x } forEach _turretMags;
+							{ _obj addBackpackCargoGlobal _x } forEach _backpacks;
 						};
 					};
 				};

@@ -1,49 +1,82 @@
-//	@file Name: fn_findString.sqf
-//	@file Author: AgentRev, Killzone_Kid
-
 /*
-	Parameters:
-	_this select 0: String or Array - string(s) to search for
-	_this select 1: String - string to check in
-	_this select 2: Boolean - case sensitive search (optional, default: false)
-
-	Returns: Number - first match position, -1 if not found
+	File: findString.sqf
+	Author: Mika Hannola, modified by AgentRev
+	
+	Description:
+	Find a string within a string.
+	
+	Parameter(s):
+	_this select 0: <string> strings to be found
+	_this select 1: <string> string to search from
+	_this select 2 (Optional): <boolean> search is case sensitive (default: false)
+	
+	Search is case insensitive
+	
+	Returns:
+	Number (true when string is found).
+	
+	How to use:
+	_found = [["string"], "String", true] call fn_findString;
 */
 
-private ["_needles", "_haystack", "_caseSensitive", "_hayLen", "_found", "_testArray", "_i", "_testStr"];
+private ["_find", "_string", "_caseSensitive", "_finds", "_findArray", "_findArrayCount", "_found", "_stringArray", "_findCount", "_stringCount", "_maxPos", "_i", "_x", "_forEachIndex", "_currentPos"];
 
-_needles = [_this, 0, [], ["",[]]] call BIS_fnc_param;
-_haystack = toArray ([_this, 1, "", [""]] call BIS_fnc_param);
+_find = [_this, 0, [], ["",[]]] call BIS_fnc_param;
+_string = [_this, 1, "", [""]] call BIS_fnc_param;
 _caseSensitive = [_this, 2, false, [false]] call BIS_fnc_param;
 
-if (typeName _needles != "ARRAY") then
+if (!_caseSensitive) then
 {
-	_needles = [_needles];
+	_string = toLower _string;
 };
 
-_hayLen = count _haystack;
-_found = -1;
-scopeName "fn_findString";
+if (typeName _find == typeName "") then
+{
+	_find = [_find];
+};
+
+_finds = [];
+_findCountMin = 0;
 
 {
-	_needleLen = count toArray _x;
-	_testArray = +_haystack;
-	_testArray resize _needleLen;
-
-	for "_i" from _needleLen to _hayLen do
+	_findArray = if (_caseSensitive) then { toArray _x } else { toArray toLower _x };
+	_findArrayCount = count _findArray;
+	
+	if (_findArrayCount > 0) then
 	{
-		_testStr = toString _testArray;
-
-		if (_x isEqualTo _testStr || (!_caseSensitive && _x == _testStr)) then
+		if (_findArrayCount < _findCountMin || _findCountMin == 0) then 
 		{
-			_found = _i - _needleLen;
-			breakTo "fn_findString";
+			_findCountMin = _findArrayCount;
 		};
-
-		_testArray set [_needleLen, _haystack select _i];
-		_testArray set [0, -1];
-		_testArray = _testArray - [-1];
+		
+		_finds set [count _finds, _findArray];
 	};
-} forEach _needles;
+	
+} forEach _find;
+
+_found = -1;
+_stringArray = toArray _string;
+_stringCount = count _stringArray;
+_maxPos = _stringCount - _findCountMin;
+
+scopeName "main";
+for "_i" from 0 to _maxPos do
+{
+	{
+		_found = _i;
+			
+		{
+			_currentPos = _i + _forEachIndex;
+			
+			if (_currentPos >= _stringCount || {_x != _stringArray select _currentPos}) exitWith
+			{
+				_found = -1;
+			};
+		} forEach _x;
+		
+		if (_found != -1) then { breakTo "main" };
+			
+	} forEach _finds;
+};
 
 _found
