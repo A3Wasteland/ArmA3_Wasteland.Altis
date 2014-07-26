@@ -593,7 +593,7 @@ landArray = compileFinal str
 	["HEMTT Repair", "B_Truck_01_Repair_F", 7500, "vehicle"],
 	["HEMTT Ammo", "B_Truck_01_ammo_F", 15000, "vehicle"],
 
-	["Tempest Device", "O_Truck_03_device_F", 2500, "vehicle"],
+	["Tempest Resupply Truck", "O_Truck_03_device_F", 5500, "vehicle"],
 	["Tempest Transport", "O_Truck_03_transport_F", 3000, "vehicle"],
 	["Tempest Covered", "O_Truck_03_covered_F", 4000, "vehicle"],
 	["Tempest Fuel", "O_Truck_03_fuel_F", 5000, "vehicle"],
