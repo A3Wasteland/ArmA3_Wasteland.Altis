@@ -302,7 +302,11 @@ while {respawnDialogActive} do
 		
 		_textStr = "";
 		
-		if (!_isBeacon) then
+		if (_isBeacon) then
+		{
+			_button ctrlEnable true;
+		}
+		else
 		{
 			if (_enemyPlayers > _friendlyPlayers) then
 			{
