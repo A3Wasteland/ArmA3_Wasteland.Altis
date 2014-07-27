@@ -17,14 +17,14 @@ if (typeName _this == "ARRAY" && {count _this > 1}) then
 		waitUntil {time > 0.1};
 
 		setPlayerRespawnTime 1e+010;
-		player setDamage 1e+010;
+		player setDamage 1;
 		disableUserInput true;
-		[parseText "CHEATER GETS DICK STUCK IN CEILING FAN, WORLD APPLAUSES", parseText "ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget - ur a faget"] spawn BIS_fnc_AAN;
+		selectNoPlayer;
+		hint parseText "<t size='2' color='#FF0000'>You've met with a terrible fate, haven't you?</t>";
 
 		[] spawn
 		{
-			sleep 5;
-			selectNoPlayer;
+			sleep 1;
 
 			_call =
 			{
