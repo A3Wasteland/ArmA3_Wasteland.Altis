@@ -36,6 +36,13 @@ if (!isServer) then
 	[_player, "handleCorpseOnLeave", false] spawn TPG_fnc_MP; // setup corpse deletion when leaving while alive
 };
 
+_respawnPos = markerPos "respawn_west";
+
+if !(_respawnPos isEqualTo [0,0,0]) then
+{
+	_player setPos _respawnPos;
+};
+
 _player call playerSetup;
 
 //[] execVM "client\clientEvents\onMouseWheel.sqf";
