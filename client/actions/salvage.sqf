@@ -8,7 +8,7 @@
 // Check if mutex lock is active.
 if (mutexScriptInProgress) exitWith
 {
-	player globalChat "You are already performing another action.";
+	titleText ["You are already performing another action.", "PLAIN DOWN", 0.5];
 };
 
 
@@ -35,13 +35,13 @@ if(cursortarget isKindOf 'Air')then
 {
 	if(cursortarget isKindOf 'I_UAV_01_F' or cursortarget isKindOf 'O_UAV_01_F' or cursortarget isKindOf 'B_UAV_01_F') then
 	{
-	player setVariable ['cmoney', (player getVariable ['cmoney', 0]) + _salvagemoney, true];			
+		player setVariable ['cmoney', (player getVariable ['cmoney', 0]) + _salvagemoney, true];			
 	}
 	else 
 	{
 	//More money for other destroyed air vehicles
-	_salvagemoney = 1000;
-	player setVariable ['cmoney', (player getVariable ['cmoney', 0]) + _salvagemoney, true];
+		_salvagemoney = 1000;
+		player setVariable ['cmoney', (player getVariable ['cmoney', 0]) + _salvagemoney, true];
 	};
 };
 	
@@ -50,12 +50,12 @@ if(cursortarget isKindOf 'Land')then
 	if(cursortarget isKindOf 'tank') then
 	{
 	//More money for destroyed tanks
-	_salvagemoney = 500;
-	player setVariable ['cmoney', (player getVariable ['cmoney', 0]) + _salvagemoney, true];
+		_salvagemoney = 500;
+		player setVariable ['cmoney', (player getVariable ['cmoney', 0]) + _salvagemoney, true];
 	}
 	else 
 	{
-	player setVariable ['cmoney', (player getVariable ['cmoney', 0]) + _salvagemoney, true];
+		player setVariable ['cmoney', (player getVariable ['cmoney', 0]) + _salvagemoney, true];
 	};
 };
 	
