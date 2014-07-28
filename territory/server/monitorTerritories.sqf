@@ -150,7 +150,7 @@ _onCaptureFinished =
 	if (typeName _oldTeam == "GROUP") then
 	{
 		_groupCaptures = (_oldTeam getVariable ["currentTerritories", []]) - [_captureName];
-		_captureTeam setVariable ["currentTerritories", _groupCaptures, true];
+		_oldTeam setVariable ["currentTerritories", _groupCaptures, true];
 	};
 
 	if (typeName _captureTeam == "GROUP") then
