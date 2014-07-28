@@ -28,6 +28,7 @@ aActionsIDs = [];
 	
 	player addAction ["<t color='#FF0000'>Emergency eject</t>", "client\actions\forceEject.sqf", [], -9, false, true, "", "(vehicle player) isKindOf 'Air'"],
 	player addAction ["Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, false, false, "", "!(vehicle player == player) and (cursortarget iskindof 'O_Truck_03_device_F') and (player distance cursortarget) < 30"],
+	player addAction ["Salvage","client\actions\salvage.sqf",0,0,false,false,"","!alive cursortarget and ((cursortarget iskindof 'Land')||(cursortarget iskindof 'Air')) and (player distance cursortarget) < 15"],
 	player addAction ["<t color='#FF00FF'>Open magic parachute</t>", "client\actions\openParachute.sqf", [], 20, true, true, "", "vehicle player == player && (getPos player) select 2 > 2.5"]
 ];
 
