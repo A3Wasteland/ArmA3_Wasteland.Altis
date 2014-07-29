@@ -8,11 +8,13 @@
 
 // If you decide to use this in another mission, a little mention in the credits would be appreciated :) - AgentRev
 
-if (isServer) exitWith {};
+//if (isServer) exitWith {};
 
 #define MOVEMENT_DISTANCE_RESCAN 100
 #define DISABLE_DISTANCE_IMMOBILE 1000
 #define DISABLE_DISTANCE_MOBILE 2000
+
+scriptName "vehicleManager";
 
 private ["_eventCode", "_vehicleManager", "_lastPos", "_R3F_attachPoint"];
 
@@ -25,31 +27,31 @@ _eventCode =
 
 _vehicleManager =
 {
-	private ["_vehicle", "_tryEnable", "_dist", "_vel"];
+	private ["_vehicle", "_isAnimal", "_isMotorVehicle", "_tryEnable", "_dist"];
 
 	{
 		if (!(_x isKindOf "CAManBase") && _x != _R3F_attachPoint) then
 		{
 			_vehicle = _x;
+			_isAnimal = _vehicle isKindOf "Man";
+			_isVehicle = _vehicle isKindOf "AllVehicles";
 			_tryEnable = true;
 
 			if (!local _vehicle &&
-			   {_vehicle isKindOf "Man" || {count crew _vehicle == 0}} &&
-			   {_vehicle getVariable ["fpsFix_simulationCooloff", 0] < diag_tickTime} &&
-			   {isTouchingGround _vehicle || {!(_vehicle isKindOf "AllVehicles")} || {_vehicle isKindOf "Ship"}}) then
+			   {(count crew _vehicle == 0 || _isAnimal) &&
+			   (_vehicle getVariable ["fpsFix_simulationCooloff", 0] < diag_tickTime) &&
+			   (!_isVehicle || {isTouchingGround _vehicle || _vehicle isKindOf "Ship"})}) then
 			{
 				_dist = _vehicle distance positionCameraToWorld [0,0,0];
-				_vel = vectorMagnitude velocity _vehicle;
 
-				if ((_vel < 0.1 && _dist > DISABLE_DISTANCE_IMMOBILE && {!(_vehicle isKindOf "Man")}) ||
-				   {_dist > DISABLE_DISTANCE_MOBILE}) then
+				if (_dist > DISABLE_DISTANCE_MOBILE ||
+				   {_dist > DISABLE_DISTANCE_IMMOBILE && vectorMagnitude velocity _vehicle < 0.1 && !_isAnimal}) then
 				{
 					_vehicle enableSimulation false;
 					_tryEnable = false;
-					sleep 0.01;
 				};
 			};
-			
+
 			if (_tryEnable && !simulationEnabled _vehicle) then
 			{
 				_vehicle enableSimulation true;
@@ -57,18 +59,19 @@ _vehicleManager =
 
 			if !(_vehicle getVariable ["fpsFix_eventHandlers", false]) then
 			{
-				if (_vehicle isKindOf "AllVehicles" && !(_vehicle isKindOf "Man")) then
+				if (_isVehicle && !_isAnimal) then
 				{
 					//_vehicle addEventHandler ["EpeContactStart", _eventCode];
 					_vehicle addEventHandler ["GetIn", _eventCode];
 				};
-				
-				_vehicle addEventHandler ["Killed", _eventCode];
 
+				_vehicle addEventHandler ["Killed", _eventCode];
 				_vehicle setVariable ["fpsFix_eventHandlers", true];
 			};
 		};
-	} forEach allMissionObjects "All";
+
+		sleep 0.01;
+	} forEach allMissionObjects "";
 };
 
 _lastPos = [0,0,0];

@@ -116,11 +116,9 @@ waitUntil {!isNull findDisplay 46};
 "publicVar_teamkillMessage" addPublicVariableEventHandler {if (local (_this select 1)) then { [] spawn teamkillMessage }};
 
 //client Executes
+[A3W_scriptThreads, execVM "client\systems\hud\playerHud.sqf"] call BIS_fnc_arrayPush;
 [] execVM "client\functions\initSurvival.sqf";
-[] execVM "client\systems\hud\playerHud.sqf";
-[] execVM "client\functions\playerTags.sqf";
-[] execVM "client\functions\groupTags.sqf";
-[] call updateMissionsMarkers;
+[] spawn updateMissionsMarkers;
 // [] call updateRadarMarkers;
 
 [] spawn
@@ -132,9 +130,9 @@ waitUntil {!isNull findDisplay 46};
 
 [] spawn playerSpawn;
 
+[A3W_scriptThreads, execVM "addons\fpsFix\vehicleManager.sqf"] call BIS_fnc_arrayPush;
+[A3W_scriptThreads, execVM "addons\Lootspawner\LSclientScan.sqf"] call BIS_fnc_arrayPush;
 [] execVM "client\functions\drawPlayerIcons.sqf";
-[] execVM "addons\fpsFix\vehicleManager.sqf";
-[] execVM "addons\Lootspawner\LSclientScan.sqf";
 [] execVM "addons\far_revive\FAR_revive_init.sqf";
 
 if (["A3W_teamPlayersMap"] call isConfigOn) then

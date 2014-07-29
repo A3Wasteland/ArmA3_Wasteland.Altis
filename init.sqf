@@ -26,6 +26,8 @@ if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
 if (isNull player) then { X_JIP = true };
 
+A3W_scriptThreads = [];
+
 [DEBUG] call compile preprocessFileLineNumbers "globalCompile.sqf";
 
 //init Wasteland Core
