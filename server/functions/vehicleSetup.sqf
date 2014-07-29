@@ -33,3 +33,11 @@ _vehicle addEventHandler ["HandleDamage", vehicleHandleDamage];
 
 // Wreck cleanup
 _vehicle addEventHandler ["Killed", { (_this select 0) setVariable ["processedDeath", diag_tickTime] }];
+
+// Lower SUV center of mass to prevent rollovers
+if (_vehicle isKindOf "SUV_01_base_F") then
+{
+	_centerOfMass = getCenterOfMass _vehicle;
+	_centerOfMass set [2, -0.657];
+	_vehicle setCenterOfMass _centerOfMass;
+};
