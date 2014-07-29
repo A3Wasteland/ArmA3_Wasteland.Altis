@@ -9,6 +9,8 @@
 #define hud_activity_icon_idc 3602
 #define hud_activity_textbox_idc 3603
 
+scriptName "playerHud";
+
 disableSerialization;
 private ["_lastHealthReading", "_lastTerritoryName", "_lastTerritoryDescriptiveName", "_territoryCaptureIcon", "_activityIconOrigPos", "_activityTextboxOrigPos", "_dispUnitInfo", "_topLeftBox", "_topLeftBoxPos"];
 
@@ -94,16 +96,7 @@ while {true} do
 	_hudActivityTextbox = _ui displayCtrl hud_activity_textbox_idc;
 
 	//Calculate Health 0 - 100
-	_health = (1 - damage player) * 100;
-
-	if (_health > 1) then
-	{
-		_health = floor _health;
-	}
-	else
-	{
-		_health = ceil _health;
-	};
+	_health = ceil (((1 - damage player) * 100) max 0);
 
 	// Flash the health colour on the HUD according to it going up, down or the same
 	_healthTextColor = "#FFFFFF";
@@ -133,68 +126,54 @@ while {true} do
 		format ["%1 <img size='0.7' image='client\icons\running_man.paa'/>", 100 - ceil((getFatigue player) * 100)];
 	};
 	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\money.paa'/>", _str, player getVariable "cmoney"];
-	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\water.paa'/>", _str, 0 max ceil thirstLevel];
-	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\food.paa'/>", _str, 0 max ceil hungerLevel];
+	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\water.paa'/>", _str, ceil (thirstLevel max 0)];
+	_str = format["%1<br/>%2 <img size='0.7' image='client\icons\food.paa'/>", _str, ceil (hungerLevel max 0)];
 	_str = format["%1<br/><t color='%2'>%3</t> <img size='0.7' image='client\icons\health.paa'/>", _str, _healthTextColor, _health];
 
 	_vitals ctrlShow alive player;
 	_vitals ctrlSetStructuredText parseText _str;
 	_vitals ctrlCommit 0;
 
-	if (player != vehicle player) then
+	_tempString = "";
+	_yOffset = 0.26;
+
+	if (isStreamFriendlyUIEnabled) then
 	{
-		_tempString = "";
-		_yOffset = 0.24;
-		_vehicle = assignedVehicle player;
+		_tempString = format ["<t color='#A0FFFFFF'>A3Wasteland %1<br/>www.a3wasteland.com</t>", worldName];
+		_yOffset = 0.28;
 
-		{
-			if ((driver _vehicle == _x) || (gunner _vehicle == _x)) then
-			{
-				if (driver _vehicle == _x) then
-				{
-					_tempString = format ["%1 %2 <img image='client\icons\driver.paa'/><br/>",_tempString, (name _x)];
-					_yOffset = _yOffset + 0.04;
-				}
-				else
-				{
-					_tempString = format ["%1 %2 <img image='client\icons\gunner.paa'/><br/>",_tempString, (name _x)];
-					_yOffset = _yOffset + 0.04;
-				};
-			}
-			else
-			{
-				_tempString = format ["%1 %2 <img image='client\icons\cargo.paa'/><br/>",_tempString, (name _x)];
-				_yOffset = _yOffset + 0.04;
-			};
-		} forEach crew _vehicle;
-
-		if (isStreamFriendlyUIEnabled) then
-		{
-			_tempString = format ["A3Wasteland %1<br/>www.a3wasteland.com", worldName];
-			_yOffset = _yOffset + 0.20;
-			_hudVehicle ctrlSetStructuredText parseText _tempString;
-		}
-		else
-		{
-			_hudVehicle ctrlSetStructuredText parseText _tempString;
-		};
+		_hudVehicle ctrlSetStructuredText parseText _tempString;
 
 		_x = safeZoneX + (safeZoneW * (1 - (0.42 / SafeZoneW)));
 		_y = safeZoneY + (safeZoneH * (1 - (_yOffset / SafeZoneH)));
 		_hudVehicle ctrlSetPosition [_x, _y, 0.4, 0.65];
-		_hudVehicle ctrlCommit 0;
 	}
 	else
 	{
-		_tempString = "";
-		_yOffset = 0.26;
-		_hudVehicle ctrlSetStructuredText parseText _tempString;
-		_x = safeZoneX + (safeZoneW * (1 - (0.42 / SafeZoneW)));
-		_y = safeZoneY + (safeZoneH * (1 - (_yOffset / SafeZoneH)));
-		_hudVehicle ctrlSetPosition [_x, _y, 0.4, 0.65];
-		_hudVehicle ctrlCommit 0;
+		if (player != vehicle player) then
+		{
+			_yOffset = 0.24;
+			_vehicle = assignedVehicle player;
+
+			{
+				_icon = switch (true) do
+				{
+					case (driver _vehicle == _x): { "client\icons\driver.paa" };
+					case (gunner _vehicle == _x): { "client\icons\gunner.paa" };
+					default                       { "client\icons\cargo.paa" };
+				};
+
+				_tempString = format ["%1 %2 <img image='%3'/><br/>", _tempString, name _x, _icon];
+				_yOffset = _yOffset + 0.04;
+			} forEach crew _vehicle;
+		};
 	};
 
+	_hudVehicle ctrlSetStructuredText parseText _tempString;
+	_x = safeZoneX + (safeZoneW * (1 - (0.42 / SafeZoneW)));
+	_y = safeZoneY + (safeZoneH * (1 - (_yOffset / SafeZoneH)));
+	_hudVehicle ctrlSetPosition [_x, _y, 0.4, 0.65];
+	_hudVehicle ctrlCommit 0;
 
 	// Territory system! Uses two new boxes in the top left of the HUD. We
 	// can extend the system later to encompas other activities
