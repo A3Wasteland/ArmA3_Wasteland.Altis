@@ -125,7 +125,6 @@ waitUntil {!isNull findDisplay 46};
 
 [] spawn
 {
-	call compile preprocessFileLineNumbers "client\functions\createTownMarkers.sqf"; // wait until town markers are placed before adding others
 	[] execVM "client\functions\createGunStoreMarkers.sqf";
 	[] execVM "client\functions\createGeneralStoreMarkers.sqf";
 	[] execVM "client\functions\createVehicleStoreMarkers.sqf";

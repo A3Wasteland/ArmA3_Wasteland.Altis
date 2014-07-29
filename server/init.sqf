@@ -122,6 +122,8 @@ if (_playerSavingOn || _serverSavingOn) then
 	];
 };
 
+call compile preprocessFileLineNumbers "server\functions\createTownMarkers.sqf";
+
 _createTriggers = execVM "territory\server\createCaptureTriggers.sqf";
 
 [_setupPlayerDB, _createTriggers] spawn
