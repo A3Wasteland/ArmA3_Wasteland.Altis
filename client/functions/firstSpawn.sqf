@@ -50,6 +50,49 @@ player addEventHandler ["Put",
 	};
 }];
 
+player addEventHandler ["WeaponDisassembled",
+{
+	_this spawn
+	{
+		_unit = _this select 0;
+		_bag1 = _this select 1;
+		_bag2 = _this select 2;
+
+		_currBag = unitBackpack _unit;
+
+		titleText ['You are not allowed to disassemble static weapons.\nUse the "Move" option instead.', "PLAIN DOWN"];
+
+		_this spawn
+		{
+			_bag1 = _this select 1;
+			_bag2 = _this select 2;
+
+			_bag1Cont = objNull;
+			_bag2Cont = objNull;
+
+			{
+				if (_bag1 in everyBackpack _x) then { _bag1Cont = _x };
+				if (_bag2 in everyBackpack _x) then { _bag2Cont = _x };
+			} forEach nearestObjects [player, ["GroundWeaponHolder"], 10];
+
+			_bag1Cont hideObjectGlobal true;
+			_bag2Cont hideObjectGlobal true;
+		};
+
+		_unit action ["TakeBag", _bag1];
+
+		if (isNull _currBag) then
+		{
+			_time = time;
+			waitUntil {unitBackpack _unit == _bag1 || time - _time > 3};
+		};
+
+		_unit action ["Assemble", _bag2];
+
+		if (!isNull _currBag) then { _unit action ["TakeBag", _currBag] };
+	};
+}];
+
 // Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan, among a LOT of other things
 [] spawn
 {
