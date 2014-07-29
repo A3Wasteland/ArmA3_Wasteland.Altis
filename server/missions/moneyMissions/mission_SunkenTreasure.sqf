@@ -69,8 +69,8 @@ switch((_rand)) do
 */
 
 _treas0 = createVehicle ["Land_Money_F", _posRand, [], 0, "None"];
-_treas0 setVariable["cmoney",10000,true];
-_treas0 setVariable["owner","world",true];
+_treas0 setVariable["cmoney",20000,true];
+_treas0 setVariable["owner","mission",true];
 
 _fix = [_posRand select 0, _posRand select 1, getTerrainHeightASL _posRand];
 _treas0 setPos _fix;
@@ -110,7 +110,7 @@ _vehicles set [0, ["O_Boat_Armed_01_hmg_F", [_fix select 0, _fix select 1, 0], _
 
 ["SunkenTreasure0", _fix, _missionType] call createClientMarker;
 
-_hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>$10,000 in sunken treasure has been located. Go get it!</t>", _missionType,  moneyMissionColor, subTextColor];
+_hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>$20,000 in sunken treasure has been located. Go get it!</t>", _missionType,  moneyMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1",_missionType];
@@ -140,6 +140,7 @@ if(_result == 1) then
 } else {
 	//Mission Complete.
 		_unitsAlive = { alive _x } count units _group;
+	_treas0 setVariable ["owner","world",true];
 	if(_unitsAlive == 0) then
 	{
 		private ["_ammobox", "_ammobox2"];
