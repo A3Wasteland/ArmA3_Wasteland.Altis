@@ -195,6 +195,11 @@ storePurchaseHandle = _this spawn
 		{
 			player setVariable ["cmoney", _playerMoney - _price, true];
 			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+			
+			if (["A3W_playerSaving"] call isConfigOn) then
+			{
+				[] spawn fn_savePlayerData;
+			};
 		};
 	};
 	

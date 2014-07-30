@@ -29,7 +29,7 @@ _checks = {
 private ["_success", "_warchest", "_hackAction", "_accessAction"];
 _success = [DURATION, ANIMATION, _checks, [getPosATL player]] call a3w_actions_start;
 if (_success) then {
-	_warchest = createVehicle [MF_ITEMS_WARCHEST_OBJECT_TYPE, [player, [0,1,0]] call relativePos, [], 0, "CAN_COLLIDE"];
+	_warchest = createVehicle [MF_ITEMS_WARCHEST_OBJECT_TYPE, [player, [0,1.5,0]] call relativePos, [], 0, "CAN_COLLIDE"];
 	_warchest setDir (getDir player + 180);
     _warchest setVariable ['side', playerSide, true];
 	_warchest setVariable ["R3F_LOG_disabled", true];

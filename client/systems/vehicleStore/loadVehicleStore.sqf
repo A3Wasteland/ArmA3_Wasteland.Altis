@@ -50,3 +50,14 @@ currentOwnerID = _owner;
 		} forEach (_x select 3);
 	};
 } foreach (call storeOwnerConfig);
+
+_Dialog spawn
+{
+	disableSerialization;
+	while {!isNull _this} do
+	{
+		_escMenu = findDisplay 49;
+		if (!isNull _escMenu) exitWith { _escMenu closeDisplay 0 }; // Force close Esc menu if open
+		sleep 0.1;
+	};
+};
