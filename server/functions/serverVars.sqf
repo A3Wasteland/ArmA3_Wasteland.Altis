@@ -31,7 +31,10 @@ publicVariable "currentInvites";
 "itemsDroppedOnDeath" addPublicVariableEventHandler
 {
 	{
-		(objectFromNetId _x) setVariable ["processedDeath", diag_tickTime];
+		if (!isNil "_x") then
+		{
+			(objectFromNetId _x) setVariable ["processedDeath", diag_tickTime];
+		};
 	} forEach (_this select 1);
 };
 

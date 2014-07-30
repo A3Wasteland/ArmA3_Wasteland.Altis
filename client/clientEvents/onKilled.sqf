@@ -57,11 +57,17 @@ if (_money != 0) then
 _itemsDroppedOnDeath = [];
 
 {
+	_id = _x select 0;
+	_type = (_id call mf_inventory_get) select 4;
+
 	for "_i" from 1 to (_x select 1) do
 	{
-		_obj = (_x select 0) call mf_inventory_drop;
+		_obj = createVehicle [_type, player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
+		_obj setVariable ["mf_item_id", _id, true];
 		[_itemsDroppedOnDeath, netId _obj] call BIS_fnc_arrayPush;
 	};
+
+	[_id, _x select 1] call mf_inventory_remove;
 } forEach call mf_inventory_all;
 
 itemsDroppedOnDeath = _itemsDroppedOnDeath;
