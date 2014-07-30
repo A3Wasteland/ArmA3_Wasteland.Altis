@@ -163,14 +163,27 @@ drn_fnc_overcastOdds =
 
 drn_fnc_fogOdds =
 {
-	if (_this < 1/3) then
+	private ["_currFog", "_maxFog", "_fogVal"];
+	_currFog = _this select 0;
+	_maxFog = _this select 1;
+
+	if (_maxFog > 0) then
 	{
-		0
+		_fogVal = _currFog / _maxFog;
+
+		if (_fogVal < 1/3) then
+		{
+			0
+		}
+		else
+		{
+			(9/4) * (_fogVal - (1/3)) ^ 2
+		};
 	}
 	else
 	{
-		(9/4) * (_this - (1/3)) ^ 2
-	}
+		0
+	};
 };
 
 drn_fnc_DynamicWeather_SetWeatherLocal = {
@@ -291,7 +304,7 @@ if (isServer) then {
         };
     };
 	
-	0 setFog [(((_initialFog / _maximumFog) call drn_fnc_fogOdds) * _maximumFog) max (rain / 4), 0.001, 1000];
+	0 setFog [(([_initialFog, _maximumFog] call drn_fnc_fogOdds) * _maximumFog) max (rain / 4), 0.001, 1000];
 	
     if (_initialOvercast == -1) then {
         _initialOvercast = (_minimumOvercast + random (_maximumOvercast - _minimumOvercast));
@@ -442,7 +455,7 @@ if (isServer) then {
                     _fogValue = _minimumFog + (_maximumFog - _minimumFog) * (0.55 + random 0.45);
                 };
 				
-				drn_DynamicWeather_WeatherTargetValue = [((_fogValue / _maximumFog) call drn_fnc_fogOdds) * _maximumFog, _fogDecay, _fogBase];
+				drn_DynamicWeather_WeatherTargetValue = [([_fogValue, _maximumFog] call drn_fnc_fogOdds) * _maximumFog, _fogDecay, _fogBase];
                 
                 drn_DynamicWeather_WeatherChangeStartedTime = time;
                 _weatherChangeTimeSek = _minWeatherChangeTimeMin * 60 + random ((_maxWeatherChangeTimeMin - _minWeatherChangeTimeMin) * 60);
