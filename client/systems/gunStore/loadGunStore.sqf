@@ -15,4 +15,15 @@ _playerMoney = _Dialog displayCtrl gunshop_money;
 _playerMoney ctrlSetText format["Cash: $%1", player getVariable "cmoney"];
 if(!isNil "_this") then {_owner = _this select 0;};
 if(!isNil "_owner") then {currentOwnerName = name _owner;};
-if(!isNil "_owner") then {currentOwnerID = _owner;};
+if(!isNil "_owner") then {currentOwnerID = _owner;};
+[] spawn
+{
+	disableSerialization;
+	_dialog = findDisplay gunshop_DIALOG;
+	while {!isNull _dialog} do
+	{
+		_escMenu = findDisplay 49;
+		if (!isNull _escMenu) exitWith { _escMenu closeDisplay 0 }; // Force close Esc menu if open
+		sleep 0.1;
+	};
+};
