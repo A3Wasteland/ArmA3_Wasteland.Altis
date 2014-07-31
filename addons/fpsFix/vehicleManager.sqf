@@ -8,7 +8,7 @@
 
 // If you decide to use this in another mission, a little mention in the credits would be appreciated :) - AgentRev
 
-//if (isServer) exitWith {};
+if (isServer) exitWith {};
 
 #define MOVEMENT_DISTANCE_RESCAN 100
 #define DISABLE_DISTANCE_IMMOBILE 1000
