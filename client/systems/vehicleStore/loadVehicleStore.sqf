@@ -51,10 +51,11 @@ currentOwnerID = _owner;
 	};
 } foreach (call storeOwnerConfig);
 
-_Dialog spawn
+[] spawn
 {
 	disableSerialization;
-	while {!isNull _this} do
+	_dialog = findDisplay vehshop_DIALOG;
+	while {!isNull _dialog} do
 	{
 		_escMenu = findDisplay 49;
 		if (!isNull _escMenu) exitWith { _escMenu closeDisplay 0 }; // Force close Esc menu if open
