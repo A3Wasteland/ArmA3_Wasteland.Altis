@@ -147,7 +147,7 @@ _onCaptureFinished =
 
 	_captureColor = [_captureTeam, true] call getTeamMarkerColor;
 
-	if (typeName _oldTeam == "GROUP") then
+	if (typeName _oldTeam == "GROUP" && {!isNull _oldTeam}) then
 	{
 		_groupCaptures = (_oldTeam getVariable ["currentTerritories", []]) - [_captureName];
 		_oldTeam setVariable ["currentTerritories", _groupCaptures, true];
