@@ -41,7 +41,36 @@ _npc setName _npcName;
 _npc allowDamage false;
 { _npc disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
 
-_building = nearestBuilding _npc;
+private "_building";
+
+if (isServer) then
+{
+	_building = nearestBuilding _npc;
+	_npc setVariable ["storeNPC_nearestBuilding", [typeOf _building, _building modelToWorld [0,0,0]], true];
+}
+else
+{
+	private "_nearestBuilding";
+
+	waitUntil
+	{
+		sleep 0.1;
+		_nearestBuilding = _npc getVariable "storeNPC_nearestBuilding";
+		!isNil "_nearestBuilding"
+	};
+
+	_buildings = nearestObjects [_nearestBuilding select 1, [_nearestBuilding select 0], 10];
+
+	if (count _buildings > 0) then
+	{
+		_building = _buildings select 0;
+	};
+};
+
+if (isNil "_building") then
+{
+	_building = nearestBuilding _npc;
+};
 
 // Prevent structural damage, but allow shooting breakable stuff
 _building addEventHandler ["HandleDamage",
@@ -52,14 +81,7 @@ _building addEventHandler ["HandleDamage",
 	_selArray = toArray _selection;
 	_selArray resize 4;
 
-	if ((toString _selArray) in ["","dam_"]) then
-	{
-		0
-	}
-	else
-	{
-		_damage
-	};
+	if ((toString _selArray) in ["","dam_"]) then { 0 } else { _damage };
 }];
 
 if (isServer) then
@@ -151,7 +173,7 @@ if (isServer) then
 				_bPos = _bPos vectorAdd ([[0, _frontOffset, 0], -_pDir] call BIS_fnc_rotateVector2D);
 			};
 
-			if ([_bPos, [0,0,0]] call BIS_fnc_areEqual) then
+			if (_bPos isEqualTo [0,0,0]) then
 			{
 				_bPos = getPosATL _npc;
 			}
@@ -200,6 +222,11 @@ if (isServer) then
 	} forEach (call storeOwnerConfig);
 };
 
+if (isServer) then
+{
+	_npc setVariable ["storeNPC_setupComplete", true, true];
+};
+
 // Add sell box in front of counter
 if (hasInterface) then
 {
@@ -208,8 +235,8 @@ if (hasInterface) then
 	waitUntil
 	{
 		sleep 3;
-		_objs = nearestObjects [_npc, ["Land_CashDesk_F"], 5];
-		(count _objs > 0 || serverTime > 120)
+		_objs = _npc nearEntities ["Land_CashDesk_F", 10];
+		(count _objs > 0 || _npc getVariable ["storeNPC_setupComplete", false])
 	};
 
 	if (count _objs > 0) then
@@ -244,14 +271,14 @@ if (hasInterface) then
 		_sellBox spawn
 		{
 			_sellBox = _this;
-			_boxPos = getPosATL _sellBox;
+			_boxPos = getPosASL _sellBox;
 			_boxVecDir = vectorDir _sellBox;
 			_boxVecUp = vectorUp _sellBox;
 
 			while {!isNull _sellBox} do
 			{
 				sleep 5;
-				if ((getPosATL _sellBox) vectorDistance _boxPos > 0.05 || (vectorDir _sellBox) vectorDistance _boxVecDir > 0.05) then
+				if ((getPosASL _sellBox) vectorDistance _boxPos > 0.1 || (vectorDir _sellBox) vectorDistance _boxVecDir > 0.1) then
 				{
 					_sellBox setPosATL _boxPos;
 					_sellBox setVectorDirAndUp [_boxVecDir, _boxVecUp];
