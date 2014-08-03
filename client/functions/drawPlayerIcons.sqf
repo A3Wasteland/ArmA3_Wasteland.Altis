@@ -9,107 +9,124 @@ if (!hasInterface) exitWith {};
 #define ICON_limitDistance 2000
 #define ICON_sizeScale 0.75
 
-bluforPlayerIcon = call currMissionDir + "client\icons\igui_side_blufor_ca.paa";
-opforPlayerIcon = call currMissionDir + "client\icons\igui_side_opfor_ca.paa";
-indepPlayerIcon = call currMissionDir + "client\icons\igui_side_indep_ca.paa";
-revivePlayerIcon = call currMissionDir + "client\icons\revive.paa";
-
 showPlayerNames = false;
 hudPlayerIcon_uiScale = (0.55 / (getResolution select 5)) * ICON_sizeScale; // 0.55 = Interface size "Small"
+drawPlayerIcons_array = [];
 
-if (!isNil "missionEH_drawPlayerIcons") then
+if (!isNil "drawPlayerIcons_draw3D") then { removeMissionEventHandler ["Draw3D", drawPlayerIcons_draw3D] };
+drawPlayerIcons_draw3D = addMissionEventHandler ["Draw3D",
 {
-	removeMissionEventHandler ["Draw3D", missionEH_drawPlayerIcons];
-};
+	{ drawIcon3D _x } forEach drawPlayerIcons_array;
+}];
 
-missionEH_drawPlayerIcons = addMissionEventHandler ["Draw3D",
+if (!isNil "drawPlayerIcons_thread") then { terminate drawPlayerIcons_thread };
+drawPlayerIcons_thread = [] spawn
 {
-	if (!visibleMap && isNull findDisplay 49 && showPlayerIcons) then
+	scriptName "drawPlayerIcons";
+
+	_uiScale = (0.55 / (getResolution select 5)) * ICON_sizeScale; // 0.55 = Interface size "Small"
+
+	_reviveIcon = call currMissionDir + "client\icons\revive.paa";
+	_teamIcon = switch (playerSide) do
 	{
-		_teamIcon = switch (playerSide) do
-		{
-			case BLUFOR: { bluforPlayerIcon };
-			case OPFOR:  { opforPlayerIcon };
-			default      { indepPlayerIcon };
-		};
+		case BLUFOR: { call currMissionDir + "client\icons\igui_side_blufor_ca.paa" };
+		case OPFOR:  { call currMissionDir + "client\icons\igui_side_opfor_ca.paa" };
+		default      { call currMissionDir + "client\icons\igui_side_indep_ca.paa" };
+	};
 
-		{
-			_unit = _x;
+	// Execute every frame
+	waitUntil
+	{
+		_newArray = [];
 
-			if (alive _unit && (side group _unit == playerSide) && (_unit != player) && !(_unit getVariable ["playerSpawning", false])) then // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
+		if (!visibleMap && isNull findDisplay 49 && showPlayerIcons) then
+		{
 			{
-				_dist = _unit distance positionCameraToWorld [0,0,0];
+				_unit = _x;
 
-				_pos = visiblePositionASL _unit;
-				_pos set [2, (_unit modelToWorld [0,0,0]) select 2];
-
-				// only draw players inside range and screen
-				if (_dist < ICON_limitDistance && count worldToScreen _pos > 0) then
+				if (side group _unit == playerSide && {alive _unit && _unit != player && !(_unit getVariable ["playerSpawning", false])}) then // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
 				{
-					_pos set [2, (_pos select 2) + 1.35]; // Torso height
-					_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
-					_color = [1,1,1,_alpha];
-					_icon = _teamIcon;
-					_size = 0;
+					_camPos = positionCameraToWorld [0,0,0];
+					_dist = _unit distance _camPos;
 
-					if (_unit getVariable ["FAR_isUnconscious", 0] == 1) then
+					_posASL = visiblePositionASL _unit;
+					_pos = [_posASL select 0, _posASL select 1, (_unit modelToWorld [0,0,0]) select 2];
+
+					if (!surfaceIsWater _camPos) then { _camPos = ATLtoASL _camPos };
+
+					// only draw players inside range and screen
+					if (_dist < ICON_limitDistance && {count worldToScreen _pos > 0 && !terrainIntersectASL [_camPos, _posASL]}) then
 					{
-						_icon = revivePlayerIcon;
-						_size = (2 - ((_dist / ICON_limitDistance) * 0.8)) * hudPlayerIcon_uiScale;
+						_pos set [2, (_pos select 2) + 1.35]; // Torso height
+						_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
+						_color = [1,1,1,_alpha];
+						_icon = _teamIcon;
+						_size = 0;
 
-						// Revive icon blinking code
-						if (_unit getVariable ["FAR_isStabilized", 0] == 0) then
+						if (_unit getVariable ["FAR_isUnconscious", 0] == 1) then
 						{
-							_blink = false;
-							_timestamp = _unit getVariable ["FAR_iconBlinkTimestamp", 0];
-							_time = time;
+							_icon = _reviveIcon;
+							_size = (2 - ((_dist / ICON_limitDistance) * 0.8)) * _uiScale;
 
-							if (isNil {_unit getVariable "FAR_iconBlink"} || (_time >= _timestamp && _time < _timestamp + 0.3)) then
+							// Revive icon blinking code
+							if (_unit getVariable ["FAR_isStabilized", 0] == 0) then
 							{
-								_blink = true;
+								_blink = false;
+								_timestamp = _unit getVariable ["FAR_iconBlinkTimestamp", 0];
+								_time = time;
 
-								if !(_unit getVariable ["FAR_iconBlink", false]) then
+								if (isNil {_unit getVariable "FAR_iconBlink"} || (_time >= _timestamp && _time < _timestamp + 0.3)) then
 								{
-									_unit setVariable ["FAR_iconBlink", true];
-									_unit setVariable ["FAR_iconBlinkTimestamp", _time];
+									_blink = true;
+
+									if !(_unit getVariable ["FAR_iconBlink", false]) then
+									{
+										_unit setVariable ["FAR_iconBlink", true];
+										_unit setVariable ["FAR_iconBlinkTimestamp", _time];
+									};
+								}
+								else
+								{
+									if (_unit getVariable ["FAR_iconBlink", false]) then
+									{
+										_unit setVariable ["FAR_iconBlink", false];
+										_unit setVariable ["FAR_iconBlinkTimestamp", _time + 1.25];
+									};
+								};
+
+								if (_blink) then
+								{
+									_color = [1,0,0,_alpha];
 								};
 							}
 							else
 							{
-								if (_unit getVariable ["FAR_iconBlink", false]) then
+								if (!isNil {_unit getVariable "FAR_iconBlink"}) then
 								{
-									_unit setVariable ["FAR_iconBlink", false];
-									_unit setVariable ["FAR_iconBlinkTimestamp", _time + 1.25];
+									_unit setVariable ["FAR_iconBlink", nil];
 								};
-							};
-
-							if (_blink) then
-							{
-								_color = [1,0,0,_alpha];
 							};
 						}
 						else
 						{
-							if (!isNil {_unit getVariable "FAR_iconBlink"}) then
-							{
-								_unit setVariable ["FAR_iconBlink", nil];
-							};
+							_size = (1 - ((_dist / ICON_limitDistance) * 0.7)) * _uiScale;
 						};
-					}
-					else
-					{
-						_size = (1 - ((_dist / ICON_limitDistance) * 0.7)) * hudPlayerIcon_uiScale;
-					};
 
-					_text = if (showPlayerNames) then {
-						if (isPlayer _unit) then { name _unit } else { "[AI]" }
-					} else {
-						""
-					};
+						_text = if (showPlayerNames) then {
+							if (isPlayer _unit) then { name _unit } else { "[AI]" }
+						} else {
+							""
+						};
 
-					drawIcon3D [_icon, _color, _pos, _size, _size, 0, _text]; //, 1, 0.03, "PuristaMedium"];
+						_newArray set [count _newArray, [_icon, _color, _pos, _size, _size, 0, _text]]; //, 1, 0.03, "PuristaMedium"];
+					};
 				};
-			};
-		} forEach (if (playerSide in [BLUFOR,OPFOR]) then { allUnits } else { units player });
+			} forEach (if (playerSide in [BLUFOR,OPFOR]) then { allUnits } else { units player });
+		};
+
+		drawPlayerIcons_array = _newArray;
+		false
 	};
-}];
+};
+
+[A3W_scriptThreads, drawPlayerIcons_thread] call BIS_fnc_arrayPush;
