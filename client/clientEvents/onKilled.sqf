@@ -73,8 +73,7 @@ _itemsDroppedOnDeath = [];
 itemsDroppedOnDeath = _itemsDroppedOnDeath;
 publicVariableServer "itemsDroppedOnDeath";
 
-[_player, objNull] call mf_player_actions_refresh;
-
+_player spawn fn_removeAllManagedActions;
 
 // Same-side kills
 if (_player == player && (playerSide == side _killer) && (player != _killer) && (vehicle player != vehicle _killer)) then

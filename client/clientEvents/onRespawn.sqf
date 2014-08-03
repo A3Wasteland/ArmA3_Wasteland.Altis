@@ -15,10 +15,6 @@ _corpse = _this select 1;
 _corpse setVariable ["newRespawnedUnit", _player, true];
 _player setVariable ["playerSpawning", true, true];
 
-//_corpse removeAction playerMenuId;
-{ _corpse removeAction _x } forEach aActionsIDs;
-// The actions from mf_player_actions are removed in onKilled.
-
 _group = _player getVariable ["currentGroupRestore", grpNull];
 
 if (!isNull _group && {group _player != _group}) then

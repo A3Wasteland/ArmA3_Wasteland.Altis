@@ -8,11 +8,12 @@ FAR_Player_Actions =
 	if (alive player && player isKindOf "Man") then
 	{
 		// addAction args: title, filename, (arguments, priority, showWindow, hideOnUse, shortcut, condition, positionInModel, radius, radiusView, showIn3D, available, textDefault, textToolTip)
-		[aActionsIDs, player addAction ["<t color='#00C900'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", "call FAR_Check_Revive"]] call BIS_fnc_arrayPush;
-		[aActionsIDs, player addAction ["<t color='#00C900'>" + "Stabilize" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_stabilize"], 99, true, true, "", "call FAR_Check_Stabilize"]] call BIS_fnc_arrayPush;
-		//player addAction ["<t color='#C90000'>" + "Suicide" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_suicide"], 9, false, true, "", "call FAR_Check_Suicide"];
-		[aActionsIDs, player addAction ["<t color='#C9C900'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, false, true, "", "call FAR_Check_Dragging && primaryWeapon _this != ''"]] call BIS_fnc_arrayPush;
-		// the primary weapon check is because you can't move without a rifle while dragging
+		{ [player, _x] call fn_addManagedAction } forEach
+		[
+			["<t color='#00C900'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", "call FAR_Check_Revive"],
+			["<t color='#00C900'>" + "Stabilize" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_stabilize"], 99, true, true, "", "call FAR_Check_Stabilize"],
+			["<t color='#C9C900'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, false, true, "", "call FAR_Check_Dragging && primaryWeapon player != ''"] // the primary weapon check is because you can't move without a rifle while dragging
+		];
 	};
 }
 call mf_compile;

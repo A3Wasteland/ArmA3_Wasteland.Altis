@@ -14,17 +14,20 @@ onKeyPress = "client\clientEvents\onKeyPress.sqf" call mf_compile;
 onKeyRelease = "client\clientEvents\onKeyRelease.sqf" call mf_compile;
 
 // Functions
-addPushPlaneAction = "client\functions\addPushPlaneAction.sqf" call mf_compile;
 addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
 canPushPlaneBack = "client\functions\canPushPlaneBack.sqf" call mf_compile;
 canPushVehicleOnFoot = "client\functions\canPushVehicleOnFoot.sqf" call mf_compile;
 canPushWatercraft = "client\functions\canPushWatercraft.sqf" call mf_compile;
 copilotTakeControl = "client\functions\copilotTakeControl.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
+fn_addManagedAction = "client\functions\fn_addManagedAction.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
+fn_removeAllManagedActions = "client\functions\fn_removeAllManagedActions.sqf" call mf_compile;
+fn_removeManagedAction = "client\functions\fn_removeManagedAction.sqf" call mf_compile;
 getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;
 getFullMove = "client\functions\getFullMove.sqf" call mf_compile;
 getMoveParams = "client\functions\getMoveParams.sqf" call mf_compile;
+getPushPlaneAction = "client\functions\getPushPlaneAction.sqf" call mf_compile;
 isAdmin = "client\systems\adminPanel\isAdmin.sqf" call mf_compile;
 isAssignableBinocular = "client\functions\isAssignableBinocular.sqf" call mf_compile;
 isWeaponType = "client\functions\isWeaponType.sqf" call mf_compile;

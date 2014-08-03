@@ -2,8 +2,8 @@
 //	@file Author: AgentRev
 
 private ["_isDriver", "_veh", "_uav", "_uavCtrl"];
-
 _isDriver = false;
+_veh = objNull;
 
 switch (_this select 0) do
 {
@@ -20,7 +20,7 @@ switch (_this select 0) do
 		
 		if (!isNull _uav && {_uav isKindOf "Plane" && isNil {_uav getVariable "uavAction_pushPlane"}}) then
 		{
-			_uav setVariable ["uavAction_pushPlane", [_uav, "[1, _target]"] call addPushPlaneAction];
+			_uav setVariable ["uavAction_pushPlane", [_uav, ["[1, _target]"] call getPushPlaneAction] call fn_addManagedAction];
 		};
 	};
 	case 1:

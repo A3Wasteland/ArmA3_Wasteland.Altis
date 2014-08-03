@@ -58,6 +58,8 @@ if (!isNil "client_initEH") then { player removeEventHandler ["Respawn", client_
 player addEventHandler ["Respawn", { _this spawn onRespawn }];
 player addEventHandler ["Killed", { _this spawn onKilled }];
 
+[A3W_scriptThreads, execVM "client\functions\evalManagedActions.sqf"] call BIS_fnc_arrayPush;
+
 //Player setup
 player call playerSetupStart;
 
@@ -108,11 +110,11 @@ waitUntil {!isNull findDisplay 46};
 (findDisplay 46) displayAddEventHandler ["KeyDown", onKeyPress];
 //(findDisplay 46) displayAddEventHandler ["KeyUp", onKeyRelease];
 
-"currentDate" addPublicVariableEventHandler {[] call timeSync};
-"messageSystem" addPublicVariableEventHandler {[] call serverMessage};
-"clientMissionMarkers" addPublicVariableEventHandler {[] call updateMissionsMarkers};
-// "clientRadarMarkers" addPublicVariableEventHandler {[] call updateRadarMarkers};
-"pvar_teamKillList" addPublicVariableEventHandler {[] call updateTeamKiller};
+"currentDate" addPublicVariableEventHandler {[] spawn timeSync};
+"messageSystem" addPublicVariableEventHandler {[] spawn serverMessage};
+"clientMissionMarkers" addPublicVariableEventHandler {[] spawn updateMissionsMarkers};
+// "clientRadarMarkers" addPublicVariableEventHandler {[] spawn updateRadarMarkers};
+"pvar_teamKillList" addPublicVariableEventHandler {[] spawn updateTeamKiller};
 "publicVar_teamkillMessage" addPublicVariableEventHandler {if (local (_this select 1)) then { [] spawn teamkillMessage }};
 
 //client Executes
