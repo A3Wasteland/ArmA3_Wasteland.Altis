@@ -93,6 +93,19 @@ player addEventHandler ["WeaponDisassembled",
 	};
 }];
 
+player addEventHandler ["InventoryOpened",
+{
+	_obj = _this select 1;
+	if (!simulationEnabled _obj) then { _obj enableSimulation true };
+	_obj setVariable ["inventoryIsOpen", true];
+}];
+
+player addEventHandler ["InventoryClosed",
+{
+	_obj = _this select 1;
+	_obj setVariable ["inventoryIsOpen", nil];
+}];
+
 // Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan, among a LOT of other things
 [] spawn
 {

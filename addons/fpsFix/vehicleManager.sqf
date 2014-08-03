@@ -11,8 +11,9 @@
 if (isServer) exitWith {};
 
 #define MOVEMENT_DISTANCE_RESCAN 100
-#define DISABLE_DISTANCE_IMMOBILE 1000
 #define DISABLE_DISTANCE_MOBILE 2000
+#define DISABLE_DISTANCE_IMMOBILE 1000
+#define DISABLE_DISTANCE_THING 0
 
 scriptName "vehicleManager";
 
@@ -33,19 +34,21 @@ _vehicleManager =
 		if (!(_x isKindOf "CAManBase") && _x != _R3F_attachPoint) then
 		{
 			_vehicle = _x;
-			_isAnimal = _vehicle isKindOf "Man";
+			_isAnimal = _vehicle isKindOf "Animal";
 			_isVehicle = _vehicle isKindOf "AllVehicles";
+			_isThing = _vehicle isKindOf "Thing";
 			_tryEnable = true;
 
 			if (!local _vehicle &&
 			   {(count crew _vehicle == 0 || _isAnimal) &&
 			   (_vehicle getVariable ["fpsFix_simulationCooloff", 0] < diag_tickTime) &&
-			   (!_isVehicle || {isTouchingGround _vehicle || _vehicle isKindOf "Ship"})}) then
+			   ((getPos _vehicle) select 2 < 1 || {_vehicle isKindOf "Static"})}) then
 			{
 				_dist = _vehicle distance positionCameraToWorld [0,0,0];
+				_vel = vectorMagnitude velocity _vehicle;
 
 				if (_dist > DISABLE_DISTANCE_MOBILE ||
-				   {_dist > DISABLE_DISTANCE_IMMOBILE && vectorMagnitude velocity _vehicle < 0.1 && !_isAnimal}) then
+				   {_vel < 0.1 && ((_dist > DISABLE_DISTANCE_IMMOBILE && !_isAnimal) || {_dist > DISABLE_DISTANCE_THING && _isThing && !(_vehicle getVariable ["inventoryIsOpen", false])})}) then
 				{
 					_vehicle enableSimulation false;
 					_tryEnable = false;
@@ -61,17 +64,23 @@ _vehicleManager =
 			{
 				if (_isVehicle && !_isAnimal) then
 				{
-					//_vehicle addEventHandler ["EpeContactStart", _eventCode];
 					_vehicle addEventHandler ["GetIn", _eventCode];
 				};
 
+				if (_isThing) then
+				{
+					_vehicle addEventHandler ["EpeContactStart", _eventCode];
+				};
+
+				_vehicle addEventHandler ["Explosion", _eventCode];
 				_vehicle addEventHandler ["Killed", _eventCode];
+
 				_vehicle setVariable ["fpsFix_eventHandlers", true];
 			};
 		};
 
 		sleep 0.01;
-	} forEach allMissionObjects "";
+	} forEach allMissionObjects "All";
 };
 
 _lastPos = [0,0,0];
