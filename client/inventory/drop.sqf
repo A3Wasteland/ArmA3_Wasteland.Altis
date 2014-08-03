@@ -39,6 +39,7 @@ if (alive player) then
 	sleep 0.5;
 
 	_obj = createVehicle [_type, [player, [0,1,0]] call relativePos, [], 0, "CAN_COLLIDE"];
+	_obj setDir getDir player;
 	_obj setVariable ["mf_item_id", _id, true];
 	[_id, 1] call mf_inventory_remove;
 
@@ -48,6 +49,7 @@ if (alive player) then
 else
 {
 	_obj = createVehicle [_type, player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
+	_obj setDir random 360;
 	_obj setVariable ["mf_item_id", _id, true];
 	[_id, 1] call mf_inventory_remove;
 	_obj

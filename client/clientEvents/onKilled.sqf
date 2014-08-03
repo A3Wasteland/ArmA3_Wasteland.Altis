@@ -45,7 +45,8 @@ if (_money != 0) then
 	// Drop money
 	if (_money > 0) then
 	{
-		_m = createVehicle ["Land_Money_F", _player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
+		_m = createVehicle ["Land_Money_F", getPosATL _player, [], 0.5, "CAN_COLLIDE"];
+		_m setDir random 360;
 		_m setVariable ["cmoney", _money, true];
 		_m setVariable ["owner", "world", true];
 	};
@@ -62,7 +63,8 @@ _itemsDroppedOnDeath = [];
 
 	for "_i" from 1 to (_x select 1) do
 	{
-		_obj = createVehicle [_type, player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
+		_obj = createVehicle [_type, getPosATL _player, [], 0.5, "CAN_COLLIDE"];
+		_obj setDir random 360;
 		_obj setVariable ["mf_item_id", _id, true];
 		[_itemsDroppedOnDeath, netId _obj] call BIS_fnc_arrayPush;
 	};

@@ -96,7 +96,8 @@ while {true} do
 	_hudActivityTextbox = _ui displayCtrl hud_activity_textbox_idc;
 
 	//Calculate Health 0 - 100
-	_health = ceil (((1 - damage player) * 100) max 0);
+	_health = ((1 - damage player) * 100) max 0;
+	_health = if (_health > 1) then { floor _health } else { ceil _health };
 
 	// Flash the health colour on the HUD according to it going up, down or the same
 	_healthTextColor = "#FFFFFF";
@@ -139,7 +140,7 @@ while {true} do
 
 	if (isStreamFriendlyUIEnabled) then
 	{
-		_tempString = format ["<t color='#A0FFFFFF'>A3Wasteland %1<br/>www.a3wasteland.com</t>", worldName];
+		_tempString = format ["<t color='#A0FFFFFF'>A3Wasteland %1<br/>www.a3wasteland.com</t>", getText (configFile >> "CfgWorlds" >> worldName >> "description")];
 		_yOffset = 0.28;
 
 		_hudVehicle ctrlSetStructuredText parseText _tempString;
