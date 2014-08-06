@@ -226,7 +226,7 @@ FAR_Check_Dragging =
 {
 	_target = cursorTarget;
 
-	if (isNil "_target" || {isNull _target}) exitWith {};
+	if (isNull _target) exitWith {false};
 
 	// Make sure player is alive and target is an injured unit
 	if (!alive player || UNCONSCIOUS(player) || FAR_isDragging || isNil "_target" ||
