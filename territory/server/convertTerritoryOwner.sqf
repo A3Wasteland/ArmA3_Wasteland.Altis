@@ -6,6 +6,8 @@ private ["_oldGroup", "_newGroup", "_currentTeam"];
 _oldGroup = _this select 0;
 _newGroup = _this select 1;
 
+if (isNil "currentTerritoryDetails") exitWith {};
+
 {
 	_currentTeam = _x select 2;
 	
