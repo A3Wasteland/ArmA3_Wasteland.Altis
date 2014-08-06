@@ -46,7 +46,7 @@ private "_building";
 if (isServer) then
 {
 	_building = nearestBuilding _npc;
-	_npc setVariable ["storeNPC_nearestBuilding", [typeOf _building, _building modelToWorld [0,0,0]], true];
+	_npc setVariable ["storeNPC_nearestBuilding", netId _building, true];
 }
 else
 {
@@ -59,30 +59,17 @@ else
 		!isNil "_nearestBuilding"
 	};
 
-	_buildings = nearestObjects [_nearestBuilding select 1, [_nearestBuilding select 0], 10];
-
-	if (count _buildings > 0) then
-	{
-		_building = _buildings select 0;
-	};
+	_building = objectFromNetId _nearestBuilding;
 };
 
-if (isNil "_building") then
+if (isNil "_building" || {isNull _building}) then
 {
 	_building = nearestBuilding _npc;
 };
 
-// Prevent structural damage, but allow shooting breakable stuff
-_building addEventHandler ["HandleDamage",
-{
-	_selection = _this select 1;
-	_damage = _this select 2;
-
-	_selArray = toArray _selection;
-	_selArray resize 4;
-
-	if ((toString _selArray) in ["","dam_"]) then { 0 } else { _damage };
-}];
+_building allowDamage true;
+for "_i" from 1 to 99 do { _building setHit ["glass_" + str _i, 1] }; // pre-break the windows so people can shoot thru them
+_building allowDamage false; // disable building damage
 
 if (isServer) then
 {
