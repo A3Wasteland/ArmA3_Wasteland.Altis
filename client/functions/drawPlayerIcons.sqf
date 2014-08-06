@@ -44,18 +44,19 @@ drawPlayerIcons_thread = [] spawn
 			{
 				_unit = _x;
 
-				if (side group _unit == playerSide && {alive _unit && _unit != player && !(_unit getVariable ["playerSpawning", false])}) then // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
+				if (side group _unit == playerSide && // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
+				   {alive _unit &&
+				   (_unit != player || cameraOn != vehicle player) &&
+				   {!(_unit getVariable ["playerSpawning", false]) &&
+				   (vehicle _unit != getConnectedUAV player || cameraOn != vehicle _unit)}}) then // do not show UAV AI icons when controlling UAV
 				{
-					_camPos = positionCameraToWorld [0,0,0];
-					_dist = _unit distance _camPos;
+					_dist = _unit distance  positionCameraToWorld [0,0,0];
 
-					_posASL = visiblePositionASL _unit;
-					_pos = [_posASL select 0, _posASL select 1, (_unit modelToWorld [0,0,0]) select 2];
-
-					if (!surfaceIsWater _camPos) then { _camPos = ATLtoASL _camPos };
+					_pos = visiblePositionASL _unit;
+					_pos set [2, ((_unit modelToWorld [0,0,0]) select 2) + 1.35]; // Torso height
 
 					// only draw players inside range and screen
-					if (_dist < ICON_limitDistance && {count worldToScreen _pos > 0 && !terrainIntersectASL [_camPos, _posASL]}) then
+					if (_dist < ICON_limitDistance && {count worldToScreen _pos > 0}) then
 					{
 						_pos set [2, (_pos select 2) + 1.35]; // Torso height
 						_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
