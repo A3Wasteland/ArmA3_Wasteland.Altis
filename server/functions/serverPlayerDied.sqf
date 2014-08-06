@@ -8,7 +8,7 @@ if (!isServer) exitWith {};
 private ["_unit", "_killer", "_presumedKiller", "_backpack"];
 
 _unit = _this select 0;
-//_unit setVariable ["processedDeath", diag_tickTime];
+_unit setVariable ["processedDeath", diag_tickTime];
 
 // Remove player save on death
 if (isPlayer _unit && {["A3W_playerSaving"] call isConfigOn}) then
