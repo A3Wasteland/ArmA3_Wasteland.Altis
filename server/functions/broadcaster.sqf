@@ -11,7 +11,7 @@ while {true} do
 	//To broadcast clientRaderMarkers to clients from the server due to clients not being able to broadcast server wide variables with eventhandlers.
 	//publicVariable "currentInvites";
 	//publicVariable "clientRadarMarkers";
-	serverFPS = diag_fpsmin;
+	serverFPS = diag_fps;
 	publicVariable "serverFPS";
 	sleep 1;
 };
