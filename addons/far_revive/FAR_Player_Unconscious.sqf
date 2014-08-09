@@ -75,6 +75,7 @@ if (FAR_EnableDeathMessages && difficultyEnabled "deathMessages" && !isNil "_kil
 if (!alive vehicle _unit) exitWith
 {
 	_unit setDamage 1;
+	FAR_cutTextLayer cutText ["", "PLAIN"];
 };
 
 _unit spawn
@@ -237,6 +238,7 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 	if (!alive vehicle _unit) exitWith
 	{
 		_unit setDamage 1;
+		FAR_cutTextLayer cutText ["", "PLAIN"];
 	};
 
 	_dmg = damage _unit;
