@@ -97,7 +97,7 @@ _createVehicle = {
     
     _group addVehicle _vehicle;
     
-    [_group,_moneyp] spawn createSmallDivers;
+    [_group,_moneyp] call createSmallDivers;
     _soldier1 = [_group, _moneyp] call createRandomAquaticSoldier; 
     _soldier1 moveInDriver _vehicle;
     _soldier2 = [_group, _moneyp] call createRandomAquaticSoldier;

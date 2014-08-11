@@ -50,7 +50,7 @@ _slbox2 = createVehicle ["Box_NATO_WpsSpecial_F",[(_randomPos select 0), (_rando
 _slbox2 allowDamage false;
 _slbox2 setVariable ["R3F_LOG_disabled", true, true];
 
-[_CivGrpM,_randomPos] spawn createLargeDivers;
+[_CivGrpM,_randomPos] call createLargeDivers;
 
 _picture = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "displayName");
