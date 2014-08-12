@@ -134,7 +134,6 @@ FAR_findKiller = "addons\far_revive\FAR_findKiller.sqf" call mf_compile;
 				terminate FAR_Player_Unconscious_thread;
 				closeDialog 910;
 				closeDialog 911;
-				uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
 				FAR_cutTextLayer cutText ["", "PLAIN"];
 				//(FAR_cutTextLayer + 1) cutText ["", "PLAIN"];
 			};

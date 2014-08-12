@@ -28,6 +28,7 @@ if (_player == player) then
 	closeDialog 2001; // Close Gunstore
 	closeDialog 2009; // Close Genstore
 	closeDialog 5285; // Close Vehstore
+	uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; // close message boxes
 
 	playerData_gear = ""; // Reset gear data
 	//combatTimestamp = -1; // Reset abort timer
