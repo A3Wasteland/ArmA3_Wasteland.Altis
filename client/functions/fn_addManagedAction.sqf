@@ -35,8 +35,15 @@ _id = _obj addAction _params;
 
 if (_id != -1 && !isNil "_condition") then
 {
+	_condition = switch (toUpper typeName _condition) do
+	{
+		case "CODE":   { _condition };
+		case "STRING": { compile _condition };
+		default        { compile str _condition };
+	};
+
 	waitUntil {!managedActions_arrayCleanup};
-	[managedActions_array, [_obj, _id, _conditionPvar, compile _condition]] call BIS_fnc_arrayPush;
+	[managedActions_array, [_obj, _id, _conditionPvar, _condition]] call BIS_fnc_arrayPush;
 };
 
 _id

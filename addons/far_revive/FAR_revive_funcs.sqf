@@ -10,9 +10,9 @@ FAR_Player_Actions =
 		// addAction args: title, filename, (arguments, priority, showWindow, hideOnUse, shortcut, condition, positionInModel, radius, radiusView, showIn3D, available, textDefault, textToolTip)
 		{ [player, _x] call fn_addManagedAction } forEach
 		[
-			["<t color='#00C900'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", "call FAR_Check_Revive"],
-			["<t color='#00C900'>" + "Stabilize" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_stabilize"], 99, true, true, "", "call FAR_Check_Stabilize"],
-			["<t color='#C9C900'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, false, true, "", "call FAR_Check_Dragging && primaryWeapon player != ''"] // the primary weapon check is because you can't move without a rifle while dragging
+			["<t color='#00C900'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", FAR_Check_Revive],
+			["<t color='#00C900'>" + "Stabilize" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_stabilize"], 99, true, true, "", FAR_Check_Stabilize],
+			["<t color='#C9C900'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, true, true, "", FAR_Check_Dragging]
 		];
 	};
 }
@@ -118,6 +118,11 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_Drag =
 {
+	if (primaryWeapon player == "") exitWith
+	{
+		titleText ["You need a primary weapon to be able to drag,\notherwise your player will freeze.\n(Arma 3 bug)", "PLAIN DOWN", 0.5];
+	};
+
 	FAR_isDragging = true;
 
 	private ["_target", "_id"];
