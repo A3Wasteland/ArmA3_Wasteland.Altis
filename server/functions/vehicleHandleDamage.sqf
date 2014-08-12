@@ -2,6 +2,7 @@
 //	@file Author: AgentRev
 
 #define COLLISION_DMG_SCALE 0.2
+#define PLANE_COLLISION_DMG_SCALE 0.5
 #define WHEEL_COLLISION_DMG_SCALE 0.05
 #define HELI_MISSILE_DMG_SCALE 5.0
 #define IFV_DMG_SCALE 1.5
@@ -36,10 +37,11 @@ if (_selection != "?") then
 				_selSubstr = toArray _selection;
 				_selSubstr resize 5;
 
-				_scale = if (toString _selSubstr == "wheel") then {
-					WHEEL_COLLISION_DMG_SCALE
-				} else {
-					COLLISION_DMG_SCALE
+				_scale = switch (true) do
+				{
+					case (toString _selSubstr == "wheel"): { WHEEL_COLLISION_DMG_SCALE };
+					case (_vehicle isKindOf "Plane"):      { PLANE_COLLISION_DMG_SCALE };
+					default                                { COLLISION_DMG_SCALE };
 				};
 
 				_damage = ((_damage - _oldDamage) * _scale) + _oldDamage;
