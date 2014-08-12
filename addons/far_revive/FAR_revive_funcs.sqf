@@ -184,27 +184,32 @@ FAR_public_EH =
 	if(count _this < 2) exitWith {};
 
 	_EH  = _this select 0;
-	_target = _this select 1;
+	_value = _this select 1;
 
 	// FAR_isDragging
 	if (_EH == "FAR_isDragging_EH") then
 	{
-		_target setDir 180;
+		_value setDir 180;
 	};
 
 	// FAR_deathMessage
 	if (_EH == "FAR_deathMessage") then
 	{
-		_unit = _target select 0;
-		_killer = [_target, 1] call BIS_fnc_param;
+		_names = _value select 0;
+		_unitName = _names select 0;
+		_killerName = [_names, 1] call BIS_fnc_param;
+		_unit = objectFromNetId (_value select 1);
 
-		if (isNil "_killer") then
+		if (alive _unit) then
 		{
-			systemChat format ["%1 was injured", toString _unit];
-		}
-		else
-		{
-			systemChat format ["%1 was injured by %2", toString _unit, toString _killer];
+			if (isNil "_killerName") then
+			{
+				systemChat format ["%1 was injured", toString _unitName];
+			}
+			else
+			{
+				systemChat format ["%1 was injured by %2", toString _unitName, toString _killerName];
+			};
 		};
 	};
 }
