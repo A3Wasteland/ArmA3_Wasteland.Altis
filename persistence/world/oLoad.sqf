@@ -158,6 +158,14 @@ if (!isNil "_exists" && {_exists}) then
 							{ _obj addMagazine _x } forEach _turretMags;
 						};
 					};
+					
+					_ammoCargo = [_fileName, _objName, "AmmoCargo", "NUMBER"] call iniDB_read;
+					_fuelCargo = [_fileName, _objName, "FuelCargo", "NUMBER"] call iniDB_read;
+					_repairCargo = [_fileName, _objName, "RepairCargo", "NUMBER"] call iniDB_read;
+					
+					if (!isNil "_ammoCargo") then { _obj setAmmoCargo _ammoCargo };
+					if (!isNil "_fuelCargo") then { _obj setFuelCargo _fuelCargo };
+					if (!isNil "_repairCargo") then { _obj setRepairCargo _repairCargo };
 				};
 			};
 		};

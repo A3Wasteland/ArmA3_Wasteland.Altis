@@ -116,7 +116,7 @@ while {true} do
 				_items = [];
 				_backpacks = [];
 				
-				if (getNumber (configFile >> "CfgVehicles" >> _class >> "maximumLoad") > 0) then
+				if (_class call _hasInventory) then
 				{
 					// Save weapons & ammo
 					_weapons = (getWeaponCargo _obj) call cargoToPairs;
@@ -131,10 +131,16 @@ while {true} do
 				{
 					_turretMags = magazinesAmmo _obj;
 				};
-
+				
+				_ammoCargo = getAmmoCargo _obj;
+				_fuelCargo = getFuelCargo _obj;
+				_repairCargo = getRepairCargo _obj;
+				
+				// Save data
+				
 				_objCount = _objCount + 1;
 				_objName = format ["Obj%1", _objCount];
-
+				
 				[_fileName, _objName, "Class", _class] call iniDB_write;
 				[_fileName, _objName, "Position", _pos] call iniDB_write;
 				[_fileName, _objName, "Direction", _dir] call iniDB_write;
@@ -149,6 +155,10 @@ while {true} do
 				[_fileName, _objName, "Backpacks", _backpacks] call iniDB_write;
 				
 				[_fileName, _objName, "TurretMagazines", _turretMags] call iniDB_write;
+				
+				[_fileName, _objName, "AmmoCargo", _turretMags] call iniDB_write;
+				[_fileName, _objName, "FuelCargo", _turretMags] call iniDB_write;
+				[_fileName, _objName, "RepairCargo", _turretMags] call iniDB_write;
 				
 				sleep 0.01;
 			};
