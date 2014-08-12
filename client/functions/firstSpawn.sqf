@@ -140,9 +140,35 @@ player addEventHandler ["HandleDamage", unitHandleDamage];
 
 if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 {
+	player addEventHandler ["Fired",
+	{
+		// Remove remote explosives if within 100m of a store
+		if (_this select 1 == "Put") then
+		{
+			_ammo = _this select 4;
+
+			if ({_ammo isKindOf _x} count ["PipeBombBase", "ClaymoreDirectionalMine_Remote_Ammo"] > 0) then
+			{
+				_mag = _this select 5;
+				_bomb = _this select 6;
+				_minDist = 100;
+
+				{
+					if (_x getVariable ["storeNPC_setupComplete", false] && {_bomb distance _x < _minDist}) exitWith
+					{
+						deleteVehicle _bomb;
+						player addMagazine _mag;
+						playSound "FD_CP_Not_Clear_F";
+						titleText [format ["You are not allowed to place remote explosives within %1m of a store.\nThe explosive has been re-added to your inventory.", _minDist], "PLAIN DOWN", 0.5];
+					};
+				} forEach entities "CAManBase";
+			};
+		};
+	}];
+
 	player addEventHandler ["FiredNear",
 	{
-		// Don't prevent aborting when explosives are being placed
+		// Prevent aborting if event is not for placing an explosive
 		if (_this select 3 != "Put") then {
 			combatTimestamp = diag_tickTime;
 		};
