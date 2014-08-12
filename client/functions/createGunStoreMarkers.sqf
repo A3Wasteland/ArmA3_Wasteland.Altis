@@ -13,7 +13,7 @@ _col_mixed = "ColorOrange";
 
 //Creates the markers around gunstores.
 {
-	if (["GunStore", name _x] call fn_startsWith) then
+	if (!isPlayer _x && {["GunStore", name _x] call fn_startsWith}) then
 	{
 		_npcPos = getPosASL _x;
 
@@ -112,9 +112,9 @@ if (["A3W_showGunStoreStatus"] call isConfigOn) then
 			_enemyCount = 0;
 
 			{
-				if (isPlayer _x && alive _x && {_x distance _npc < _radius}) then
+				if (isPlayer _x && alive _x && _x distance _npc < _radius) then
 				{
-					if ((playerSide in [BLUFOR,OPFOR] && {side _x == playerSide}) || {group _x == group player}) then
+					if ((side group _x == playerSide && playerSide in [BLUFOR,OPFOR]) || group _x == group player) then
 					{
 						_friendlyCount = _friendlyCount + 1;
 					}

@@ -6,7 +6,7 @@
 
 //Creates the markers around vehicle stores.
 {
-	if (["VehStore", name _x] call fn_startsWith) then
+	if (!isPlayer _x && {["VehStore", name _x] call fn_startsWith}) then
 	{
 		_npcPos = getPos _x;
 		
