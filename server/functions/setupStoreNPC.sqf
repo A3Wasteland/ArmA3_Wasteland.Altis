@@ -258,14 +258,14 @@ if (hasInterface) then
 		_sellBox spawn
 		{
 			_sellBox = _this;
-			_boxPos = getPosASL _sellBox;
+			_boxPos = getPosATL _sellBox;
 			_boxVecDir = vectorDir _sellBox;
 			_boxVecUp = vectorUp _sellBox;
 
 			while {!isNull _sellBox} do
 			{
 				sleep 5;
-				if ((getPosASL _sellBox) vectorDistance _boxPos > 0.1 || (vectorDir _sellBox) vectorDistance _boxVecDir > 0.1) then
+				if ((getPosATL _sellBox) vectorDistance _boxPos > 0.1 || (vectorDir _sellBox) vectorDistance _boxVecDir > 0.1) then
 				{
 					_sellBox setPosATL _boxPos;
 					_sellBox setVectorDirAndUp [_boxVecDir, _boxVecUp];
