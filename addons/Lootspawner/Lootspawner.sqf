@@ -220,18 +220,11 @@ if ((count Buildingstoloot_list) == 0) then {
 		_buildings = [];
 		
 		{
-			_class = [_x, 0, "", [""]] call BIS_fnc_param;
-			_pos = [_x, 1, [], [[]]] call BIS_fnc_param;
+			_building = objectFromNetId _x;
 			
-			if (_class != "" && {count _pos == 3}) then
+			if (!isNull _building) then
 			{
-				_nearBuilds = nearestObjects [_pos, [_class], 0.1];
-				_building = [_nearBuilds, 0, objNull, [objNull]] call BIS_fnc_param;
-				
-				if (!isNull _building) then
-				{
-					[_buildings, _building] call BIS_fnc_arrayPush;
-				};
+				_buildings set [count _buildings, _building];
 			};
 		} forEach (_this select 1);
 		

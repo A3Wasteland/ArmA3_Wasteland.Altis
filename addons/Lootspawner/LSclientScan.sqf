@@ -33,9 +33,7 @@ if (hasInterface) then
 
 					if (_status < 2 && {_timeStamp == 0 || serverTime - _timeStamp > LOOT_SPAWN_INTERVAL}) then
 					{
-						_pos = _x modelToWorld [0,0,0]; // nearestObjects scan distance is based from model center
-
-						_buildList set [count _buildList, [typeOf _x, _pos]]; // buildings must be transmitted by position and class because they have no network ID
+						_buildList set [count _buildList, netId _x];
 					};
 
 					sleep 0.01;
