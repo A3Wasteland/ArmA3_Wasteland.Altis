@@ -3,6 +3,7 @@
 
 if (!isServer) exitWith {};
 
+fn_deletePlayerSave = "persistence\players\s_deletePlayerSave.sqf" call mf_compile;
 fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 
 "savePlayerData" addPublicVariableEventHandler
@@ -27,7 +28,7 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 
 	if (!isNull _player && !alive _player) then
 	{
-		(_UID call PDB_databaseNameCompiler) call iniDB_delete;
+		_UID call fn_deletePlayerSave;
 	};
 };
 
@@ -51,5 +52,5 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 "deletePlayerData" addPublicVariableEventHandler
 {
 	_player = _this select 1;
-	((getPlayerUID _player) call PDB_databaseNameCompiler) call iniDB_delete;
+	(getPlayerUID _player) call fn_deletePlayerSave;
 };

@@ -1,6 +1,8 @@
 //	@file Name: c_applyPlayerData.sqf
 //	@file Author: AgentRev
 
+// This is where you load player status & inventory data which will be wiped upon death, for persistent variables use c_applyPlayerInfo.sqf instead
+
 if (isDedicated) exitWith {};
 
 private ["_data", "_name", "_value"];
@@ -21,7 +23,6 @@ removeHeadgear player;
 
 	switch (_name) do
 	{
-		case "Donator": { player setVariable ["isDonator", _value > 0] };
 		case "Damage": { player setDamage _value };
 		case "HitPoints": { { player setHitPointDamage _x } forEach _value };
 		case "Hunger": { hungerLevel = _value };

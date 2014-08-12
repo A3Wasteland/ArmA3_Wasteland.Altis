@@ -29,6 +29,7 @@ _getValue =
 };
 
 ["Donator", "NUMBER", "PlayerInfo"] call _getValue;
+//["BankMoney", "NUMBER", "PlayerInfo"] call _getValue; // Not implemented in vanilla mission
 
 ["Damage", "NUMBER"] call _getValue;
 ["Hunger", "NUMBER"] call _getValue;

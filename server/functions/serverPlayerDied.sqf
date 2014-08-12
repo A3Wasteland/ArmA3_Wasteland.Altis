@@ -13,7 +13,7 @@ _unit setVariable ["processedDeath", diag_tickTime];
 // Remove player save on death
 if (isPlayer _unit && {["A3W_playerSaving"] call isConfigOn}) then
 {
-	((getPlayerUID _unit) call PDB_databaseNameCompiler) call iniDB_delete;
+	(getPlayerUID _unit) call fn_deletePlayerSave;
 	_unit removeEventHandler ["Local", _unit getVariable ["corpseLocalEH", -1]]; // remove corpse deletion on leave since it was a legit kill
 };
 

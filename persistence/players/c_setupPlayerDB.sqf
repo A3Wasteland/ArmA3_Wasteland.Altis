@@ -6,6 +6,7 @@ if (isDedicated) exitWith {};
 fn_requestPlayerData = compileFinal "requestPlayerData = player; publicVariableServer 'requestPlayerData'";
 fn_deletePlayerData = compileFinal "deletePlayerData = player; publicVariableServer 'deletePlayerData'; playerData_gear = ''";
 fn_applyPlayerData = "persistence\players\c_applyPlayerData.sqf" call mf_compile;
+fn_applyPlayerInfo = "persistence\players\c_applyPlayerInfo.sqf" call mf_compile;
 fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 
 "applyPlayerData" addPublicVariableEventHandler
@@ -13,8 +14,9 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 	_this spawn
 	{
 		_data = _this select 1;
+		_saveValid = [_data, "PlayerSaveValid", false] call fn_getFromPairs;
 
-		if ([_data, "PlayerSaveValid", false] call fn_getFromPairs) then
+		if (_saveValid) then
 		{
 			playerData_alive = true;
 
@@ -40,7 +42,12 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 			};
 
 			_data call fn_applyPlayerData;
+		};
 
+		_data call fn_applyPlayerInfo;
+
+		if (_saveValid) then
+		{
 			player groupChat "Player account loaded!";
 
 			if (isNil "playerData_resetPos") then
