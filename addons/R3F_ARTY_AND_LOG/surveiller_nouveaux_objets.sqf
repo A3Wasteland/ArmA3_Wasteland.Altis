@@ -70,7 +70,7 @@ while {true} do
 					};
 					
 					_objet setVariable ["R3F_LOG_init_done", true]; 
-					if (!simulationEnabled _objet) then { _objet enableSimulation true };
+					if (!local _objet && !simulationEnabled _objet) then { _objet enableSimulation true };
 					#endif
 				};
 				
