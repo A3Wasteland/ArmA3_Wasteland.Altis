@@ -65,7 +65,7 @@ spawnActionHandle = [_this select 1, _this select 2] spawn
 };
 
 private ["_dialog", "_ctrlButton", "_header", "_spawnActionHandle"];
-_dialog = uiNamespace getVariable "RespawnSelectionDialog";
+_dialog = uiNamespace getVariable ["RespawnSelectionDialog", displayNull];
 _header = _dialog displayCtrl respawn_Content_Text;
 //_ctrlButton = (uiNamespace getVariable "RespawnSelectionDialog") displayCtrl (_this select 0);
 
