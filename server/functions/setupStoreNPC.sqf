@@ -4,9 +4,10 @@
 //	@file Created: 12/10/2013 12:36
 //	@file Args:
 
-#define STORE_ACTION_CONDITION "_this distance _target < 3"
-#define SELL_ACTION_CONDITION "{_obj = missionNamespace getVariable ['R3F_LOG_joueur_deplace_objet', objNull]; _obj isKindOf 'ReammoBox_F' || {_obj isKindOf 'AllVehicles'}}"
-#define SELL_BOX_ACTION_CONDITION "cursorTarget == _target"
+#define STORE_ACTION_CONDITION "(player distance _target < 3)"
+#define SELL_CRATE_ACTION_CONDITION "(!isNil 'R3F_LOG_joueur_deplace_objet' && {R3F_LOG_joueur_deplace_objet isKindOf 'ReammoBox_F'})"
+#define SELL_CONTENTS_ACTION_CONDITION "(!isNil 'R3F_LOG_joueur_deplace_objet' && {{R3F_LOG_joueur_deplace_objet isKindOf _x} count ['ReammoBox_F','AllVehicles'] > 0})"
+#define SELL_BIN_ACTION_CONDITION "(cursorTarget == _target)"
 
 private ["_npc", "_type", "_num", "_npcName"];
 
@@ -32,7 +33,8 @@ if (hasInterface) then
 		};
 	};
 
-	_npc addAction ["<img image='client\icons\money.paa'/> Sell contents", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_ACTION_CONDITION];
+	_npc addAction ["<img image='client\icons\money.paa'/> Sell crate", "client\systems\selling\sellCrateItems.sqf", [false, false, true], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_CRATE_ACTION_CONDITION];
+	_npc addAction ["<img image='client\icons\money.paa'/> Sell contents", "client\systems\selling\sellCrateItems.sqf", [], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_CONTENTS_ACTION_CONDITION];
 };
 
 _npcName = format ["%1%2", _type, _num];
@@ -252,8 +254,7 @@ if (hasInterface) then
 		};
 
 		_sellBox setDir (getDir _desk + 90);
-
-		_sellBox addAction ["<img image='client\icons\money.paa'/> Sell crate contents", "client\systems\selling\sellCrateItems.sqf", [true], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_BOX_ACTION_CONDITION];
+		_sellBox addAction ["<img image='client\icons\money.paa'/> Sell bin contents", "client\systems\selling\sellCrateItems.sqf", [true], 1, false, false, "", STORE_ACTION_CONDITION + " && " + SELL_BIN_ACTION_CONDITION];
 
 		_sellBox spawn
 		{

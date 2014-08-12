@@ -73,6 +73,7 @@ loadGunStore = "client\systems\gunStore\loadGunStore.sqf" call mf_compile;
 gearProperties = "client\functions\gearProperties.sqf" call mf_compile;
 getCapacity = "client\functions\getCapacity.sqf" call mf_compile;
 getItemInfo = "client\functions\getItemInfo.sqf" call mf_compile;
+getSellPriceList = "client\systems\selling\getSellPriceList.sqf" call mf_compile;
 requestStoreObject = "client\functions\requestStoreObject.sqf" call mf_compile;
 
 // Custom paint/textures on vehicles

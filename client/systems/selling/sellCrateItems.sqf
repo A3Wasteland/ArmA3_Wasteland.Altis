@@ -5,12 +5,15 @@
 //	@file Args:
 
 #define PRICE_DEBUGGING false
+#define CARGO_STRING(OBJ) (str getWeaponCargo OBJ + str getMagazineCargo OBJ + str getItemCargo OBJ + str getBackpackCargo OBJ)
+#define CONTAINER_SELL_PRICE 50 // price for the crate itself (do not price higher than "Empty Ammo Crate" from general store)
 
 if (!isNil "storeSellingHandle" && {typeName storeSellingHandle == "SCRIPT"} && {!scriptDone storeSellingHandle}) exitWith {hint "Please wait, your previous sale is being processed"};
 
 _params = [_this, 3, [], [[]]] call BIS_fnc_param;
 _storeSellBox = [_params, 0, false, [false]] call BIS_fnc_param;
 _forceSell = [_params, 1, false, [false]] call BIS_fnc_param;
+_deleteObject = [_params, 2, false, [false]] call BIS_fnc_param;
 
 _crate = if (_storeSellBox) then
 {
@@ -27,101 +30,27 @@ else
 }
 else
 {*/
-	storeSellingHandle = [_crate, _forceSell] spawn
+	storeSellingHandle = [_crate, _forceSell, _deleteObject] spawn
 	{
-		private ["_getHalfPrice", "_crate", "_forceSell", "_sellValue", "_crateItems", "_crateMags", "_crateWeapons", "_weaponArray", "_class", "_container", "_allStoreMagazines", "_allRegularStoreItems", "_allStoreItems", "_weaponEntry", "_weaponCfg", "_parentCfg", "_found", "_cfgItems", "_allCrateItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemQtyArr", "_cfgCategory", "_magFullAmmo", "_magFullPrice", "_magValue", "_itemName", "_objectName", "_confirmMsg", "_clearing"];
-
-		_getHalfPrice =
-		{
-			((ceil ((_this / 2) / 5)) * 5) // Ceil half the value to the nearest multiple of 5
-		};
-
 		_crate = _this select 0;
 		_forceSell = _this select 1;
+		_deleteObject = _this select 2;
 		_sellValue = 0;
 
+		_originalCargo = CARGO_STRING(_crate);
+
 		// Get all the items
+		_allCrateItems = _crate call getSellPriceList;
 
-		_crateItems = (getItemCargo _crate) call cargoToPairs;
+		_objectClass = typeOf _crate;
+		_objectName = getText (configFile >> "CfgVehicles" >> _objectClass >> "displayName");
 
-		_crateMags = [];
+		// Include crate in item list if it's to be deleted
+		if (_deleteObject) then
 		{
-			[_crateMags, _x select 0, [_x select 1]] call fn_addToPairs;
-		} forEach magazinesAmmoCargo _crate;
-
-		_crateWeapons = [];
-		{
-			_weaponArray = _x call splitWeaponItems;
-			[_crateWeapons, _weaponArray select 0, 1] call fn_addToPairs;
-			{ [_crateItems, _x, 1] call fn_addToPairs } forEach (_weaponArray select 1);
-			{ [_crateMags, _x select 0, [_x select 1]] call fn_addToPairs } forEach (_weaponArray select 2);
-		} forEach weaponsItemsCargo _crate;
-
-		// Add stuff contained in uniforms, vest, and backpacks inside the object to the main arrays
-		{
-			_class = _x select 0;
-			_container = _x select 1;
-
-			[_crateItems, _class, 1] call fn_addToPairs;
-
-			{
-				[_crateItems, _x select 0, _x select 1] call fn_addToPairs;
-			} forEach ((getItemCargo _container) call cargoToPairs);
-
-			{
-				[_crateMags, _x select 0, [_x select 1]] call fn_addToPairs;
-			} forEach magazinesAmmoCargo _container;
-
-			{
-				_weaponArray = _x call splitWeaponItems;
-				[_crateWeapons, _weaponArray select 0, 1] call fn_addToPairs;
-				{ [_crateItems, _x, 1] call fn_addToPairs } forEach (_weaponArray select 1);
-				{ [_crateMags, _x select 0, [_x select 1]] call fn_addToPairs } forEach (_weaponArray select 2);
-			} forEach weaponsItemsCargo _container;
-		} forEach everyContainer _crate;
-
-		_allStoreMagazines = call allStoreMagazines;
-		_allRegularStoreItems = call allRegularStoreItems;
-		_allStoreItems = _allRegularStoreItems + call allStoreGear;
-
-		// Find parent equivalents to weapons which aren't listed in the gunstore
-		{
-			_weaponEntry = _x;
-			_weaponCfg = configFile >> "CfgWeapons" >> (_weaponEntry select 0);
-			_parentCfg = _weaponCfg;
-			_found = false;
-
-			while {!_found && isClass _parentCfg && {getText (_weaponCfg >> "model") == getText (_parentCfg >> "model")}} do
-			{
-				{
-					if (_x select 1 == configName _parentCfg) exitWith
-					{
-						_found = true;
-					};
-				} forEach _allRegularStoreItems;
-
-				if (!_found) then
-				{
-					_parentCfg = inheritsFrom _parentCfg;
-				};
-			};
-
-			if (_parentCfg != _weaponCfg) then
-			{
-				_crateWeapons set [_forEachIndex, [_weaponEntry select 0, 0]];
-
-				if (_found) then
-				{
-					[_crateWeapons, configName _parentCfg, _weaponEntry select 1] call fn_addToPairs;
-				};
-			};
-		} forEach (+_crateWeapons);
-
-		// Combine all items in new array
-		_allCrateItems = [];
-		[_allCrateItems, _crateWeapons] call BIS_fnc_arrayPushStack;
-		[_allCrateItems, _crateMags] call BIS_fnc_arrayPushStack;
-		[_allCrateItems, _crateItems] call BIS_fnc_arrayPushStack;
+			_objectClass = typeOf _crate;
+			_allCrateItems = [[_objectClass, 1, _objectName, CONTAINER_SELL_PRICE]] + _allCrateItems;
+		};
 
 		if (count _allCrateItems == 0) exitWith
 		{
@@ -132,69 +61,13 @@ else
 			};
 		};
 
-		// Add value of each item to sell value, and acquire item display name
+		// Calculate total value
 		{
-			_item = _x;
-			_itemClass = _x select 0;
-			_itemQty = _x select 1;
-			_itemQtyArr = nil;
-			_itemValue = 10;
-
-			if (typeName _itemQty == "ARRAY") then
+			if (count _x > 3) then
 			{
-				_itemQtyArr = _itemQty;
-				_itemQty = count _itemQty;
-			};
-
-			if (_itemQty > 0) then
-			{
-				_cfgCategory = switch (true) do
-				{
-					case (isClass (configFile >> "CfgWeapons" >> _itemClass)):   { "CfgWeapons" };
-					case (isClass (configFile >> "CfgMagazines" >> _itemClass)): { "CfgMagazines" };
-					case (isClass (configFile >> "CfgGlasses" >> _itemClass)):   { "CfgGlasses" };
-					default                                                      { "CfgVehicles" };
-				};
-
-				if (_cfgCategory == "CfgMagazines") then
-				{
-					_magFullAmmo = getNumber (configFile >> "CfgMagazines" >> _itemClass >> "count");
-
-					{
-						if (_x select 1 == _itemClass) exitWith
-						{
-							_itemValue = _x select 2;
-						};
-					} forEach _allStoreMagazines;
-
-					{
-						_magValue = (_itemValue * (_x / _magFullAmmo)) call _getHalfPrice; // Get selling price relative to ammo count
-						_sellValue = _sellValue + _magValue;
-					} forEach _itemQtyArr;
-
-					_item set [1, _itemQty];
-				}
-				else
-				{
-					{
-						if (_x select 1 == _itemClass) exitWith
-						{
-							_itemValue = ((_x select 2) * _itemQty) call _getHalfPrice;
-						};
-					} forEach _allStoreItems;
-
-					_sellValue = _sellValue + _itemValue;
-				};
-
-				_itemName = getText (configFile >> _cfgCategory >> _itemClass >> "displayName");
-
-				_item set [2, _itemName];
-				if (PRICE_DEBUGGING) then { _item set [3, _itemValue] };
-				_allCrateItems set [_forEachIndex, _item];
+				_sellValue = _sellValue + (_x select 3);
 			};
 		} forEach _allCrateItems;
-
-		_objectName = getText (configFile >> "CfgVehicles" >> typeOf _crate >> "displayName");
 
 		if (_forceSell) then
 		{
@@ -229,20 +102,45 @@ else
 			// Display confirmation
 			if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then
 			{
-				// Have to spawn clearing commands due to mysterious crash-to-desktop...
-				_clearing = _crate spawn
+				// Check if somebody else manipulated the cargo since the start
+				if (CARGO_STRING(_crate) == _originalCargo) then
 				{
-					clearBackpackCargoGlobal _this;
-					clearMagazineCargoGlobal _this;
-					clearWeaponCargoGlobal _this;
-					clearItemCargoGlobal _this;
+					// Have to spawn clearing commands due to mysterious game crash...
+					_clearing = _crate spawn
+					{
+						clearBackpackCargoGlobal _this;
+						clearMagazineCargoGlobal _this;
+						clearWeaponCargoGlobal _this;
+						clearItemCargoGlobal _this;
+					};
+
+					waitUntil {scriptDone _clearing};
+
+					if (_deleteObject) then
+					{
+						if (_crate getVariable ["R3F_LOG_est_deplace_par", objNull] == player) then
+						{
+							[_crate, player, -1, false] execVM "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\relacher.sqf";
+							waitUntil {_crate getVariable ["R3F_LOG_est_deplace_par", objNull] != player};
+						};
+
+						if (isNull (_crate getVariable ["R3F_LOG_est_deplace_par", objNull])) then
+						{
+							deleteVehicle _crate;
+						};
+					};
+
+					player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+
+					_hintMsg = if (_deleteObject) then { 'You sold "%1" for $%2' } else { 'You sold the inventory of "%1" for $%2' };
+					hint format [_hintMsg, _objectName, _sellValue];
+					playSound "FD_Finish_F";
+				}
+				else
+				{
+					playSound "FD_CP_Not_Clear_F";
+					[format ['The contents of "%1" have changed, please restart the selling process.', _objectName], "Error"] call BIS_fnc_guiMessage;
 				};
-
-				waitUntil {scriptDone _clearing};
-
-				player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
-				hint format ['You sold the inventory of "%1" for $%2', _objectName, _sellValue];
-				playSound "FD_Finish_F";
 			};
 		};
 	};
