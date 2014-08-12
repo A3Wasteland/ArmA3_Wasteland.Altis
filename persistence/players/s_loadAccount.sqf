@@ -5,10 +5,13 @@
 
 if (!isServer) exitWith {};
 
-private ["_UID", "_data", "_getValue"];
+private ["_UID", "_data", "_saveValid", "_getValue"];
 
 _UID = _this;
 _data = [];
+
+_saveValid = ([_UID call PDB_databaseNameCompiler, "PlayerSave", "Position", "STRING"] call iniDB_read != "");
+[_data, ["PlayerSaveValid", _saveValid]] call BIS_fnc_arrayPush;
 
 _getValue =
 {

@@ -14,7 +14,7 @@ fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
 	{
 		_data = _this select 1;
 
-		if (count _data > 0) then
+		if ([_data, "PlayerSaveValid", false] call fn_getFromPairs) then
 		{
 			playerData_alive = true;
 
