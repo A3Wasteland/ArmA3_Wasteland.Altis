@@ -6,7 +6,8 @@
 
 if (!isServer) exitWith {};
 
-private ["_player", "_class", "_marker", "_key", "_isGenStore", "_isGunStore", "_isVehStore", "_objectID", "_objectsArray", "_itemEntry", "_itemPrice", "_safePos", "_object"];
+scopeName "spawnStoreObject";
+private ["_player", "_class", "_marker", "_key", "_isGenStore", "_isGunStore", "_isVehStore", "_timeoutKey", "_objectID", "_objectsArray", "_itemEntry", "_itemPrice", "_safePos", "_object"];
 
 _player = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _class = [_this, 1, "", [""]] call BIS_fnc_param;
@@ -19,6 +20,7 @@ _isVehStore = ["VehStore", _marker] call fn_startsWith;
 
 if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore}) then
 {
+	_timeoutKey = _key + "_timeout";
 	_objectID = "";
 	
 	if (_isGenStore || _isGunStore) then
@@ -110,9 +112,17 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			_safePos = (markerPos _marker) findEmptyPosition [0, 50, _class];
 			if (count _safePos == 0) then { _safePos = markerPos _marker };
 			
+			if (_player getVariable [_timeoutKey, true]) then { breakOut "spawnStoreObject" }; // Timeout
+			
 			_object = createVehicle [_class, _safePos, [], 0, "None"];
+			
+			if (_player getVariable [_timeoutKey, true]) then // Timeout
+			{
+				deleteVehicle _object;
+				breakOut "spawnStoreObject";
+			};
+			
 			_objectID = netId _object;
-
 			_object setVariable ["A3W_purchasedStoreObject", true];
 
 			if (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0) then
@@ -126,6 +136,12 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 				//assign AI to player's side to allow terminal connection
 				(crew _object) joinSilent (createGroup side _player);
+			};
+			
+			if (_player getVariable [_timeoutKey, true]) then // Timeout
+			{
+				deleteVehicle _object;
+				breakOut "spawnStoreObject";
 			};
 			
 			// Spawn remaining calls to speed up delivery confirmation
@@ -195,12 +211,18 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 	
 	// [compile format ["%1 = '%2'", _key, _objectID], "BIS_fnc_spawn", _player, false] call TPG_fnc_MP;
 	
+	if (_player getVariable [_timeoutKey, true]) then // Timeout
+	{
+		if (!isNil "_object") then { deleteVehicle _object };
+		breakOut "spawnStoreObject";
+	};
+	
 	if (isPlayer _player) then
 	{
 		_player setVariable [_key, _objectID, true];
 	}
 	else
 	{
-		deleteVehicle _object;
+		if (!isNil "_object") then { deleteVehicle _object };
 	};
 };
