@@ -145,10 +145,7 @@ storePurchaseHandle = _this spawn
 				};
 			};
 
-			if (isNull getConnectedUav player) then
-			{
-				player connectTerminalToUav _vehicle;
-			};
+			player connectTerminalToUav _vehicle;
 		};
 		
 		_vehicle
