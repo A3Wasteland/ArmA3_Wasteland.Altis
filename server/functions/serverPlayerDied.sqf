@@ -90,7 +90,7 @@ if (!isPlayer _unit && vehicle _unit != _unit) then
 
 		if (_veh != _this) then
 		{
-			_this setPos (_this call fn_getPos3D); // ejects dead bodies
+			_this setPos getPosATL _this; // ejects dead bodies
 		};
 	};
 };
