@@ -6,7 +6,7 @@ if (!isServer) exitWith {};
 private "_fileName";
 _fileName = _this call PDB_playerFileName;
 
-if (parseNumber ("iniDB" callExtension "version") >= 1.4) then
+if (parseNumber (call iniDB_version) >= 1.2) then
 {
 	[_fileName, "PlayerSave"] call iniDB_deleteSection;
 }

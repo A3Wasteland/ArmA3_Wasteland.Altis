@@ -24,12 +24,7 @@ PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', 
 
 PDB_databaseNameCompiler = PDB_objectFileName;
 
-iniDB_version = {
-	private["_data"];
-	_data = "iniDB" callExtension "version";
-	_data
-}
-call mf_compile;
+iniDB_version = compileFinal str ("iniDB" callExtension "version");
 
 iniDB_HashFunction = {
 	private["_mode", "_data", "_cdata"];
