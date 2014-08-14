@@ -4,7 +4,7 @@
 if (!isServer) exitWith {};
 
 private "_fileName";
-_fileName = _this call PDB_databaseNameCompiler;
+_fileName = _this call PDB_playerFileName;
 
 if (parseNumber ("iniDB" callExtension "version") >= 1.4) then
 {

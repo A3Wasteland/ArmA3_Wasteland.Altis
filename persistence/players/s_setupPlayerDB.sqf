@@ -18,11 +18,11 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 	if (!isNull _player && alive _player && _player getVariable ["FAR_isUnconscious", 0] == 0) then
 	{
 		{
-			[_UID call PDB_databaseNameCompiler, "PlayerInfo", _x select 0, _x select 1] call iniDB_write;
+			[_UID call PDB_playerFileName, "PlayerInfo", _x select 0, _x select 1] call iniDB_write;
 		} forEach _info;
 
 		{
-			[_UID call PDB_databaseNameCompiler, "PlayerSave", _x select 0, _x select 1] call iniDB_write;
+			[_UID call PDB_playerFileName, "PlayerSave", _x select 0, _x select 1] call iniDB_write;
 		} forEach _data;
 	};
 
@@ -37,7 +37,7 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 	_player = _this select 1;
 	_UID = getPlayerUID _player;
 
-	if ((_UID call PDB_databaseNameCompiler) call iniDB_exists) then
+	if ((_UID call PDB_playerFileName) call iniDB_exists) then
 	{
 		applyPlayerData = _UID call fn_loadAccount;
 	}
