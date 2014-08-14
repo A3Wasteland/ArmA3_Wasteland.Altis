@@ -235,7 +235,7 @@ if (_unit == player) then
 
 while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 {
-	if (!alive vehicle _unit) exitWith
+	if (!alive vehicle _unit || (getPosASL _unit) select 2 < 1.5) exitWith
 	{
 		_unit setDamage 1;
 		FAR_cutTextLayer cutText ["", "PLAIN"];
