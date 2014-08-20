@@ -38,7 +38,7 @@ player addEventHandler ["Put",
 				
 				if (player getVariable ["cmoney", 0] > 0) then
 				{
-					_m = createVehicle ["Land_Money_F", player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
+					_m = createVehicle ["Land_Money_F", getPosATL player, [], 0.5, "CAN_COLLIDE"];
 					_m setVariable ["cmoney", player getVariable "cmoney", true];
 					_m setVariable ["owner", "world", true];
 					player setVariable ["cmoney", 0, true];

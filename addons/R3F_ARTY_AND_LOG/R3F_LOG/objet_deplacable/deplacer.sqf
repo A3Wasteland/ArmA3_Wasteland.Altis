@@ -218,7 +218,7 @@ else
 			else
 			{
 				_objectPos = getPos _objet;
-				_objectPos set [2, ((player call fn_getPos3D) select 2) + _zOffset];
+				_objectPos set [2, ((getPosATL player) select 2) + _zOffset];
 				_objet setPos _objectPos;
 			};
 			

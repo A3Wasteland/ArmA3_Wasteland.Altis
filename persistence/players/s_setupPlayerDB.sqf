@@ -3,6 +3,7 @@
 
 if (!isServer) exitWith {};
 
+fn_deletePlayerSave = "persistence\players\s_deletePlayerSave.sqf" call mf_compile;
 fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 
 "savePlayerData" addPublicVariableEventHandler
@@ -17,17 +18,17 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 	if (!isNull _player && alive _player && _player getVariable ["FAR_isUnconscious", 0] == 0) then
 	{
 		{
-			[_UID call PDB_databaseNameCompiler, "PlayerInfo", _x select 0, _x select 1] call iniDB_write;
+			[_UID call PDB_playerFileName, "PlayerInfo", _x select 0, _x select 1] call iniDB_write;
 		} forEach _info;
 
 		{
-			[_UID call PDB_databaseNameCompiler, "PlayerSave", _x select 0, _x select 1] call iniDB_write;
+			[_UID call PDB_playerFileName, "PlayerSave", _x select 0, _x select 1] call iniDB_write;
 		} forEach _data;
 	};
 
 	if (!isNull _player && !alive _player) then
 	{
-		(_UID call PDB_databaseNameCompiler) call iniDB_delete;
+		_UID call fn_deletePlayerSave;
 	};
 };
 
@@ -36,7 +37,7 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 	_player = _this select 1;
 	_UID = getPlayerUID _player;
 
-	if ((_UID call PDB_databaseNameCompiler) call iniDB_exists) then
+	if ((_UID call PDB_playerFileName) call iniDB_exists) then
 	{
 		applyPlayerData = _UID call fn_loadAccount;
 	}
@@ -51,5 +52,5 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 "deletePlayerData" addPublicVariableEventHandler
 {
 	_player = _this select 1;
-	((getPlayerUID _player) call PDB_databaseNameCompiler) call iniDB_delete;
+	(getPlayerUID _player) call fn_deletePlayerSave;
 };

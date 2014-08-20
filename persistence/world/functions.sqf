@@ -25,4 +25,4 @@ _hasInventory =
 	 getNumber (_vehCfg >> "transportMaxBackpacks") > 0})
 };
 
-_fileName = "Objects" call PDB_databaseNameCompiler;
+_fileName = "Objects" call PDB_objectFileName;

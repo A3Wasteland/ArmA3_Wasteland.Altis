@@ -11,24 +11,20 @@
 
 #define __DEBUG_INIDB_CALLS__ 0
 
-if(!isServer) exitWith {};
+if (!isServer) exitWith {};
 
-PDB_databaseNameCompiler = {
-	private ["_return", "_name", "_prefix"];
-	_return = "";
-	_name = _this;
-	_prefix = PDB_ServerID;
-	_return = format["%1%2", _prefix, _name];
-	_return;
-}
-call mf_compile;
+if (!isNil "PDB_ServerID") then
+{
+	PDB_PlayerFileID = PDB_ServerID;
+	PDB_ObjectFileID = PDB_ServerID;
+};
 
-iniDB_version = {
-	private["_data"];
-	_data = "iniDB" callExtension "version";
-	_data
-}
-call mf_compile;
+PDB_playerFileName = compileFinal ("format ['%1%2', '" + PDB_PlayerFileID + "', _this]");
+PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', _this]");
+
+PDB_databaseNameCompiler = PDB_objectFileName;
+
+iniDB_version = compileFinal str ("iniDB" callExtension "version");
 
 iniDB_HashFunction = {
 	private["_mode", "_data", "_cdata"];
