@@ -7,22 +7,21 @@
 // configure cleanup below this line
 
 #define CLEANUP_INTERVAL (5*60) // Interval to run the cleanup
-#define ITEM_CLEANUP_TIME (30*60) // Time an item has to have been dropped before cleaning it up
-#define WRECK_CLEANUP_TIME (10*60) // Time a vehicle has to have been destroyed before cleaning it up
-
-// corpse cleanup is managed by the "corpseRemoval" options in description.ext
+#define ITEM_CLEANUP_TIME (30*60) // Time an item has to have been dropped before deleting it
+#define WRECK_CLEANUP_TIME (10*60) // Time a vehicle has to have been destroyed before deleting it
+#define CORPSE_CLEANUP_TIME (30*60) // Time a corpse has to have been dead before deleting it
 
 _cleanupCode =
 {
-	private ["_obj", "_isWreck", "_processedDeath", "_timeLimit"];
+	private ["_obj", "_isDead", "_processedDeath", "_timeLimit"];
 	_obj = _this select 0;
-	_isWreck = if (count _this > 1) then { _this select 1 } else { !alive _obj && {_obj isKindOf "AllVehicles" && !(_obj isKindOf "Man")} };
+	_isDead = if (count _this > 1) then { _this select 1 } else { !alive _obj && {_obj isKindOf "AllVehicles"} };
 
 	_processedDeath = _obj getVariable ["processedDeath", 0];
 
-	if (_isWreck) then
+	if (_isDead) then
 	{
-		_timeLimit = WRECK_CLEANUP_TIME;
+		_timeLimit = if (_obj isKindOf "CAManBase") then { CORPSE_CLEANUP_TIME } else { WRECK_CLEANUP_TIME };
 
 		if (_processedDeath == 0) then
 		{
