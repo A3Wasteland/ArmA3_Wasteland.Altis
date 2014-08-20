@@ -9,14 +9,18 @@ disableSerialization;
 
 vehicleStore_noBuzzard = false;
 
-private ["_vehshopDialog", "_Dialog", "_playerMoney", "_money", "_owner", "_fName", "_planeButton", "_boatButton", "_subButton"];
+private ["_vehshopDialog", "_Dialog", "_playerMoney", "_money", "_owner", "_landButton", "_armorButton", "_tankButton", "_heliButton", "_planeButton", "_boatButton", "_subButton"];
 _vehshopDialog = createDialog "vehshopd";
 
 _Dialog = findDisplay vehshop_DIALOG;
 _playerMoney = _Dialog displayCtrl vehshop_money;
-_planeButton = _Dialog displayCtrl vehshop_button4;	
-_boatButton = _Dialog displayCtrl vehshop_button5;	
-//_subButton = _Dialog displayCtrl vehshop_button6;	
+_landButton = _Dialog displayCtrl vehshop_button0;
+_armorButton = _Dialog displayCtrl vehshop_button1;
+_tankButton = _Dialog displayCtrl vehshop_button2;
+_heliButton = _Dialog displayCtrl vehshop_button3;
+_planeButton = _Dialog displayCtrl vehshop_button4;
+_boatButton = _Dialog displayCtrl vehshop_button5;
+//_subButton = _Dialog displayCtrl vehshop_button6;
 _money = player getVariable "cmoney";
 _playerMoney ctrlSetText format["Cash: $%1", _money];
 _owner = _this select 0;
@@ -26,23 +30,39 @@ currentOwnerID = _owner;
 {
 	if (_x select 0 == currentOwnerName) exitWith
 	{
-		// The array of which vehicle types are unvailable at this store 
+		// The array of which vehicle types are unvailable at this store
 		{
-			switch (toLower _x) do 
+			switch (toLower _x) do
 			{
-				case "nobuzzard": 
+				case "nobuzzard":
 				{
 					vehicleStore_noBuzzard = true;
 				};
-				case "boats": 
+				case "land":
 				{
-					_boatButton ctrlEnable false;
+					_landButton ctrlEnable false;
 				};
-				case "planes": 
+				case "armored":
+				{
+					_armorButton ctrlEnable false;
+				};
+				case "tanks":
+				{
+					_tankButton ctrlEnable false;
+				};
+				case "helicopters":
+				{
+					_heliButton ctrlEnable false;
+				};
+				case "planes":
 				{
 					_planeButton ctrlEnable false;
 				};
-				/*case "Submarines":
+				case "boats":
+				{
+					_boatButton ctrlEnable false;
+				};
+				/*case "submarines":
 				{
 					_subButton	ctrlShow false;
 				};*/
