@@ -222,7 +222,8 @@ while {true} do
 			{!isNull (R3F_LOG_objet_addAction getVariable "R3F_LOG_heliporte")} &&
 			//{vectorMagnitude velocity R3F_LOG_objet_addAction < 15} &&
 			//{(getPos R3F_LOG_objet_addAction) select 2 < 40} &&
-			{!(R3F_LOG_objet_addAction getVariable "R3F_LOG_disabled")};
+			{!(R3F_LOG_objet_addAction getVariable "R3F_LOG_disabled")} &&
+			{(getPosATL (R3F_LOG_objet_addAction getVariable "R3F_LOG_heliporte") select 2) >= 0};
 	};
 
 	sleep 0.3;
