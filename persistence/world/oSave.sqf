@@ -79,7 +79,7 @@ while {true} do
 					{
 						[_variables, ["food", _obj getVariable ["food", 20]]] call BIS_fnc_arrayPush;
 					};
-					case (_obj isKindOf "Land_WaterBarrel_F"):
+					case (_obj isKindOf "Land_BarrelWater_F"):
 					{
 						[_variables, ["water", _obj getVariable ["water", 20]]] call BIS_fnc_arrayPush;
 					};
