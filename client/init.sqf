@@ -95,6 +95,8 @@ player call playerSetupEnd;
 
 diag_log format ["Player starting with $%1", player getVariable ["cmoney", 0]];
 
+[] execVM "territory\client\hideDisabledTerritories.sqf";
+
 // Territory system enabled?
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
