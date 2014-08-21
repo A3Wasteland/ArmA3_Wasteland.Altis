@@ -195,7 +195,8 @@ while {_run} do
 				}
 				else
 				{
-					[[netId _towedVeh], "detachTowedObject", _towedVeh] call TPG_fnc_MP;
+					pvar_detachTowedObject = [netId _towedVeh];
+					publicVariable "pvar_detachTowedObject";
 				};
 			};
 			

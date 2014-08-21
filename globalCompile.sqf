@@ -104,3 +104,5 @@ vehicleHandleDamage = [_serverFunc, "vehicleHandleDamage.sqf"] call mf_compile;
 	_move = (_this select 1) select 1;
 	_player switchMove _move;
 };
+
+"pvar_detachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };

@@ -130,12 +130,18 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				//assign AI to the vehicle so it can actually be used
 				createVehicleCrew _object;
 				
-				waitUntil {!isNull driver _object};
-				
-				[_object, { {_x setName ["AI","",""]} forEach crew _this }, true, false] spawn fn_vehicleInit;
+				[_object, _player] spawn
+				{
+					_object = _this select 0;
+					_player = _this select 1;
 
-				//assign AI to player's side to allow terminal connection
-				(crew _object) joinSilent (createGroup side _player);
+					waitUntil {!isNull driver _object};
+
+					//assign AI to player's side to allow terminal connection
+					(crew _object) joinSilent (createGroup side _player);
+
+					[_object, { {_x setName ["AI","",""]} forEach crew _this }, true, false] call fn_vehicleInit;
+				};
 			};
 			
 			if (_player getVariable [_timeoutKey, true]) then // Timeout

@@ -15,5 +15,6 @@ if (isServer) then
 }
 else
 {
-	[[netId _object, _simul], "fn_enableSimulationGlobal", false] call TPG_fnc_MP;
+	pvar_enableSimulationGlobal = [netId _object, _simul];
+	publicVariableServer "pvar_enableSimulationGlobal";
 };

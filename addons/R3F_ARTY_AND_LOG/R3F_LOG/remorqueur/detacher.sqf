@@ -69,7 +69,8 @@ else
 		}
 		else
 		{
-			[_objet, {[_this] call detachTowedObject}, false, false, _objet] call fn_vehicleInit;
+			pvar_detachTowedObject = [netId _objet];
+			publicVariable "pvar_detachTowedObject";
 		};
 		
 		sleep 4;

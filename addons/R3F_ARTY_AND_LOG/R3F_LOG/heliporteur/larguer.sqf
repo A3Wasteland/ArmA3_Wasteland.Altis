@@ -31,7 +31,8 @@ else
 	
 	if (_parachute) then
 	{
-		[netId _objet, "parachuteLiftedVehicle", false, false] call TPG_fnc_MP;
+		pvar_parachuteLiftedVehicle = netId _objet;
+		publicVariableServer "pvar_parachuteLiftedVehicle";
 	}
 	else
 	{
@@ -43,7 +44,8 @@ else
 		}
 		else
 		{
-			[[netId _objet, _airdrop], "detachTowedObject", _objet, false] call TPG_fnc_MP;
+			pvar_detachTowedObject = [netId _objet, _airdrop];
+			publicVariable "pvar_detachTowedObject";
 		};
 	};
 	

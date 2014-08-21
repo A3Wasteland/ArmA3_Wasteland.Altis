@@ -43,7 +43,9 @@ if(_groupExists) then
 	_newGroup setVariable ["currentTerritories", _newTerritories, true];
 	_oldGroup setVariable ["currentTerritories", [], true];
 
-	[[_oldGroup, _newGroup], "convertTerritoryOwner", false, false] call TPG_fnc_MP;
+	pvar_convertTerritoryOwner = [_oldGroup, _newGroup];
+	publicVariableServer "pvar_convertTerritoryOwner";
+
 	[_newTerritories, false, _newGroup, true] call updateTerritoryMarkers;
 
     player globalChat format["you have accepted the invite"];

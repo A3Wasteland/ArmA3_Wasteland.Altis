@@ -8,35 +8,7 @@ if (!isServer) exitWith {};
 
 diag_log "WASTELAND SERVER - Initializing Server Vars";
 
-pvar_teamSwitchList = [];
-publicVariable "pvar_teamSwitchList";
-pvar_teamKillList = [];
-publicVariable "pvar_teamKillList";
-pvar_spawn_beacons = [];
-publicVariable "pvar_spawn_beacons";
-pvar_warchest_funds_east = 0;
-publicVariable "pvar_warchest_funds_east";
-pvar_warchest_funds_west = 0;
-publicVariable "pvar_warchest_funds_west";
-clientMissionMarkers = [];
-publicVariable "clientMissionMarkers";
-clientRadarMarkers = [];
-publicVariable "clientRadarMarkers";
-currentDate = [];
-publicVariable "currentDate";
-currentInvites = [];
-publicVariable "currentInvites";
-
-"PlayerCDeath" addPublicVariableEventHandler { (_this select 1) spawn server_playerDied };
-"itemsDroppedOnDeath" addPublicVariableEventHandler
-{
-	{
-		if (!isNil "_x") then
-		{
-			(objectFromNetId _x) setVariable ["processedDeath", diag_tickTime];
-		};
-	} forEach (_this select 1);
-};
+#include "setupPublicVariables.sqf"
 
 currentStaticHelis = []; // Storage for the heli marker numbers so that we don't spawn wrecks on top of live helis
 

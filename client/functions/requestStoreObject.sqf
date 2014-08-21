@@ -9,7 +9,9 @@
 #define OBJECT_PURCHASE_POST_TIMEOUT 5
 
 player setVariable [_requestKey + "_timeout", false, true];
-[[player, _class, currentOwnerName, _requestKey], "spawnStoreObject", false, false] call TPG_fnc_MP;
+
+pvar_spawnStoreObject = [player, _class, currentOwnerName, _requestKey];
+publicVariableServer "pvar_spawnStoreObject";
 
 private ["_requestTimeout", "_object"];
 
