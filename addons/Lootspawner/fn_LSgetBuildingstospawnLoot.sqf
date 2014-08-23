@@ -40,10 +40,10 @@ _begintime = diag_tickTime;
 				if (_BaPname == (_x select 0)) exitWith {
 					_lootClass = (_x select 1);
 					//get viable positions Idx
-					_buildPosViable_list set [count _buildPosViable_list, ((Buildingpositions_list select _forEachIndex) select 1)];
+					_buildPosViable_list pushBack ((Buildingpositions_list select _forEachIndex) select 1);
 					if (swSpZadjust) then {
 						//get position adjustments
-						_buildPosZadj_list set [count _buildPosZadj_list, ((Buildingpositions_list select _forEachIndex) select 2)];
+						_buildPosZadj_list pushBack ((Buildingpositions_list select _forEachIndex) select 2);
 					};
 				};
 				sleep 0.001;

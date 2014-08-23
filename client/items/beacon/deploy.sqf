@@ -45,7 +45,7 @@ if (_success) then {
         };
     } forEach pvar_spawn_beacons;
 	
-	[pvar_spawn_beacons, _beacon] call BIS_fnc_arrayPush;
+	pvar_spawn_beacons pushBack _beacon;
     publicVariable "pvar_spawn_beacons";
 	["You placed the Spawn Beacon successfully!", 5] call mf_notify_client;
 };

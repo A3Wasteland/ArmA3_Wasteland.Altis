@@ -67,7 +67,7 @@ _itemsDroppedOnDeath = [];
 		_obj = createVehicle [_type, getPosATL _player, [], 0.5, "CAN_COLLIDE"];
 		_obj setDir random 360;
 		_obj setVariable ["mf_item_id", _id, true];
-		[_itemsDroppedOnDeath, netId _obj] call BIS_fnc_arrayPush;
+		_itemsDroppedOnDeath pushBack netId _obj;
 	};
 
 	[_id, _x select 1] call mf_inventory_remove;
@@ -115,7 +115,7 @@ if (_player == player && (playerSide == side _killer) && (player != _killer) && 
 					if(_x select 0 == -1) then {_unt = driver _veh;}
 					else {_unt = _veh turretUnit _x;};
 					if(!isNull _unt) then {
-						[_suspects, _unt] call BIS_fnc_arrayPush;
+						_suspects pushBack _unt;
 					};
 				};
 			} forEach _paths;

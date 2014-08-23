@@ -35,11 +35,11 @@ if (_keyType != "ARRAY") then
 					{
 						if (_valType == _x1Type) then
 						{
-							{ _x1 set [count _x1, _x] } forEach _val;
+							{ _x1 pushBack _x } forEach _val;
 						}
 						else
 						{
-							_x1 set [count _x1, _val];
+							_x1 pushBack _val;
 						};
 					}
 					else
@@ -53,7 +53,7 @@ if (_keyType != "ARRAY") then
 							if (_valType == "ARRAY") then
 							{
 								_x1 = [_x1];
-								{ _x1 set [count _x1, _x] } forEach _val;
+								{ _x1 pushBack _x } forEach _val;
 							}
 							else
 							{
@@ -78,7 +78,7 @@ if (_keyType != "ARRAY") then
 
 	if (!_added) then
 	{
-		_arr set [count _arr, [_key, _val]];
+		_arr pushBack [_key, _val];
 		_added = true;
 	};
 };

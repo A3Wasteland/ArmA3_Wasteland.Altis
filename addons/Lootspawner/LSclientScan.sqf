@@ -11,7 +11,7 @@
 
 _spawnBuilding_list = [];
 
-{ _spawnBuilding_list set [count _spawnBuilding_list, _x select 0] } forEach Buildingstoloot_list;
+{ _spawnBuilding_list pushBack (_x select 0) } forEach Buildingstoloot_list;
 
 if (hasInterface) then
 {
@@ -33,7 +33,7 @@ if (hasInterface) then
 
 					if (_status < 2 && {_timeStamp == 0 || serverTime - _timeStamp > LOOT_SPAWN_INTERVAL}) then
 					{
-						_buildList set [count _buildList, netId _x];
+						_buildList pushBack netId _x;
 					};
 
 					sleep 0.01;

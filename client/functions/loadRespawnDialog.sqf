@@ -114,7 +114,7 @@ _setPlayersInfo =
 				if (isPlayer _x) then
 				{
 					_friendlyPlayers = _friendlyPlayers + 1;
-					_friendlyUnits set [count _friendlyUnits, _x];
+					_friendlyUnits pushBack _x;
 				}
 				else
 				{
@@ -242,7 +242,7 @@ while {respawnDialogActive} do
 		
 		if (_friendlyPlayers > 0) then
 		{
-			[_towns, _town] call BIS_fnc_arrayPush;
+			_towns pushBack _town;
 		};
 	} forEach (call cityList);
 
@@ -250,7 +250,7 @@ while {respawnDialogActive} do
 	{
 		if (_x call _isBeaconAllowed) then
 		{
-			_beacons set [count _beacons, _x];
+			_beacons pushBack _x;
 		};
 	} forEach (["pvar_spawn_beacons", []] call getPublicVar);
 	

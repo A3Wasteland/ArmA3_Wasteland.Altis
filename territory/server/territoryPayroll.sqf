@@ -43,7 +43,7 @@ while {true} do
 
 				if (!_added) then
 				{
-					_payouts set [count _payouts, [_territoryOwner, 1]];
+					_payouts pushBack [_territoryOwner, 1];
 				};
 			};
 		};

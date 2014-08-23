@@ -96,4 +96,4 @@ mf_survival_handle3 = [] spawn
 	};
 };
 
-[A3W_scriptThreads, [mf_survival_handle1, mf_survival_handle2, mf_survival_handle3]] call BIS_fnc_arrayPushStack;
+{ A3W_scriptThreads pushBack _x } forEach [mf_survival_handle1, mf_survival_handle2, mf_survival_handle3];

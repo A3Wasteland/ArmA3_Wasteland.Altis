@@ -78,7 +78,7 @@ LSdeleter = {
 //fill spawnBuilding_list with buildingnames only
 getListBuildingnames = {
 	{
-		spawnBuilding_list set [count spawnBuilding_list, (_x select 0)];
+		spawnBuilding_list pushBack (_x select 0);
 		//diag_log format["-- LOOTSPAWNER DEBUG add to spawnBuilding_list: %1 ", (_x select 0)];
 	}forEach Buildingstoloot_list;
 };
@@ -90,7 +90,7 @@ getUsedclasses = {
 	for "_class" from 0 to ((count lootworldObject_list) - 1) do {
 		for "_item" from 0 to ((count ((lootworldObject_list select _class) select 1)) - 1) do {
 			if !((((lootworldObject_list select _class) select 1) select _item) in LSusedclass_list) then {
-				LSusedclass_list set [count LSusedclass_list, (((lootworldObject_list select _class) select 1) select _item)];
+				LSusedclass_list pushBack (((lootworldObject_list select _class) select 1) select _item);
 			};
 			sleep 0.001;
 		};
@@ -133,10 +133,10 @@ getListBuildingPositionjunction = {
 					} else {
 						_posViable = true;
 					};
-					_tmpPoslist set [count _tmpPoslist, _pos];
+					_tmpPoslist pushBack _pos;
 					//get Z adjustment for position
 					if (_posViable) then {
-						_posIdxlist set [count _posIdxlist, _poscount];
+						_posIdxlist pushBack _poscount;
 						_posAdjustZ = 0;
 						if (swSpZadjust) then {
 							if(_pos select 2 < 0) then {
@@ -157,9 +157,9 @@ getListBuildingPositionjunction = {
 							_posnew = [_posnew select 0, _posnew select 1, (_posnew select 2) + 0.05];
 							_posAdjustZ = (_posOrg select 2) - (_posnew select 2);
 //							diag_log format["-- LOOTSPAWNER DEBUG adjusted %1 times", _z];
-							_posAdjustZlist set [count _posAdjustZlist, _posAdjustZ];
+							_posAdjustZlist pushBack _posAdjustZ;
 						} else {
-							_posAdjustZlist set [count _posAdjustZlist, _posAdjustZ];
+							_posAdjustZlist pushBack _posAdjustZ;
 						};
 					};
 					_poscount = _poscount + 1;
@@ -170,10 +170,10 @@ getListBuildingPositionjunction = {
 			//save final position Index & adjustments to list
 			if (_poscount != 0) then {
 				//diag_log format["-- LOOTSPAWNER DEBUG add to Buildingpositions_list: v%1v v%2v v%3v added", _buildingname, _posIdxlist, _posAdjustZlist];
-				Buildingpositions_list set [count Buildingpositions_list, [_buildingname, _posIdxlist, _posAdjustZlist]];
+				Buildingpositions_list pushBack [_buildingname, _posIdxlist, _posAdjustZlist];
 			} else {
 				diag_log format["-- !!LOOTSPAWNER WARNING!! in Buildingstoloot_list: %1 has no building positions --", _buildingname];
-				Buildingpositions_list set [count Buildingpositions_list, [_buildingname, [0], [0]]];
+				Buildingpositions_list pushBack [_buildingname, [0], [0]];
 			};
 		};
 		deleteVehicle _tmpBuild;
@@ -224,7 +224,7 @@ if ((count Buildingstoloot_list) == 0) then {
 			
 			if (!isNull _building) then
 			{
-				_buildings set [count _buildings, _building];
+				_buildings pushBack _building;
 			};
 		} forEach (_this select 1);
 		

@@ -11,7 +11,7 @@ _UID = _this;
 _data = [];
 
 _saveValid = ([_UID call PDB_playerFileName, "PlayerSave", "Position", "STRING"] call iniDB_read != "");
-[_data, ["PlayerSaveValid", _saveValid]] call BIS_fnc_arrayPush;
+_data pushBack ["PlayerSaveValid", _saveValid];
 
 _getValue =
 {
@@ -24,7 +24,7 @@ _getValue =
 
 	if (!isNil "_value") then
 	{
-		[_data, [_name, _value]] call BIS_fnc_arrayPush;
+		_data pushBack [_name, _value];
 	};
 };
 

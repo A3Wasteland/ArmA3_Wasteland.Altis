@@ -46,7 +46,7 @@ _createRandomObject =
 	while {_lcounter < _objammount} do
 	{
 		_lpos = _pos vectorAdd ([[_maxrad, 0, 0], _langle] call BIS_fnc_rotateVector2D);
-		_spawnedObjects set [count _spawnedObjects, [_lpos, _minrad, _maxrad, _counter] spawn _createRandomObject];
+		_spawnedObjects pushBack ([_lpos, _minrad, _maxrad, _counter] spawn _createRandomObject);
 		//_minrad = _minrad + 15;
 		//_maxrad = _maxrad + 15;
 		_langle = _langle + _angleIncr;

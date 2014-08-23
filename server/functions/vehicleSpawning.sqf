@@ -67,7 +67,7 @@ _carPerMeters = (["A3W_vehicleQuantity", 200] call getPublicVar) / _totalRadius;
 	while {_lcounter < _vehammount} do
 	{
 		_lpos = _pos vectorAdd ([[_maxrad, 0, 0], _langle] call BIS_fnc_rotateVector2D);
-		_spawnedVehicles set [count _spawnedVehicles, [_lpos, _minrad, _maxrad, _counter] spawn _createRandomVehicle];
+		_spawnedVehicles pushBack ([_lpos, _minrad, _maxrad, _counter] spawn _createRandomVehicle);
 		//_minrad = _minrad + 15;
 		//_maxrad = _maxrad + 15;
 		_langle = _langle + _angleIncr;

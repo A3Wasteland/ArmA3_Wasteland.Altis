@@ -55,12 +55,12 @@ switch(_switch) do
 		
 		if !(playerSide in [BLUFOR,OPFOR]) then
 		{
-			[_excludedItems, "warchest"] call BIS_fnc_arrayPush;
+			_excludedItems pushBack "warchest";
 		};
 		
 		if (["A3W_unlimitedStamina"] call isConfigOn) then
 		{
-			[_excludedItems, "energydrink"] call BIS_fnc_arrayPush;
+			_excludedItems pushBack "energydrink";
 		};
 		
 		if (count _excludedItems > 0) then

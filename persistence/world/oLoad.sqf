@@ -106,7 +106,7 @@ if (!isNil "_exists" && {_exists}) then
 						case (_obj call _isWarchest): { true };
 						case (_obj call _isBeacon):
 						{
-							[pvar_spawn_beacons, _obj] call BIS_fnc_arrayPush;
+							pvar_spawn_beacons pushBack _obj;
 							publicVariable "pvar_spawn_beacons";
 							true
 						};

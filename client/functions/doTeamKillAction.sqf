@@ -18,7 +18,7 @@ if(_this) then {
 		};
 	};
 	if(!_added) then {
-		pvar_teamKillList set [count pvar_teamKillList, [_uid, 1]];
+		pvar_teamKillList pushBack [_uid, 1];
         _added = true;
 	};
 	publicVariable "pvar_teamKillList";

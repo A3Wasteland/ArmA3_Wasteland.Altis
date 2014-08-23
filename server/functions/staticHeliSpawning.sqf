@@ -20,7 +20,7 @@ _count = 0;
 			_position = markerPos _marker;
 			[0, _position] call staticHeliCreation;
 			
-			currentStaticHelis set [count currentStaticHelis, _marker];
+			currentStaticHelis pushBack _marker;
 			
 			_count = _count + 1;
 		};

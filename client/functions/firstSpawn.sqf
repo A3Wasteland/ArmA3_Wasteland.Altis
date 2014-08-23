@@ -190,7 +190,7 @@ if (playerSide in [BLUFOR,OPFOR]) then
 {
 	if ({_x select 0 == getPlayerUID player} count pvar_teamSwitchList == 0) then
 	{
-		pvar_teamSwitchList set [count pvar_teamSwitchList, [getPlayerUID player, playerSide]];
+		pvar_teamSwitchList pushBack [getPlayerUID player, playerSide];
 		publicVariable "pvar_teamSwitchList";
 		
 		_side = switch (playerSide) do

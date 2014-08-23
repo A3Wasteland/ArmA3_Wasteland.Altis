@@ -35,7 +35,7 @@ if (_keyType != "ARRAY") then
 
 	if (!_added) then
 	{
-		_arr set [count _arr, [_key, _val]];
+		_arr pushBack [_key, _val];
 		_added = true;
 	};
 };

@@ -95,7 +95,7 @@ if (A3W_missionsDifficulty == 1) then {
 									// pick random townmarkers from the citylist and use their location as waypoints
 while {_travelcount < _travels} do {
 	_travelcount = (_travelcount + 1);
-	_waypoints set [count _waypoints, getMarkerPos (((call citylist) call BIS_fnc_selectRandom) select 0)];
+	_waypoints pushBack getMarkerPos (((call citylist) call BIS_fnc_selectRandom) select 0);
 };
 
 {

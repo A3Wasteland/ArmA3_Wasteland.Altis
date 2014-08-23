@@ -54,9 +54,9 @@ _col_mixed = "ColorOrange";
 		_markerName setMarkerTextLocal "GUN STORE";
 		// _markerName setMarkerAlphaLocal 0.5;
 
-		_status set [count _status, "EMPTY"];
+		_status pushBack "EMPTY";
 
-		_gunStores set [count _gunStores, _x];
+		_gunStores pushBack _x;
 	};
 } forEach entities "CAManBase";
 

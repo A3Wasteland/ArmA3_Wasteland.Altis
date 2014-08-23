@@ -50,7 +50,7 @@ else
 		{
 			_currMagAmmo = player ammo _primary;
 			
-			_magazines set [count _magazines, [_currMag, _currMagAmmo]];
+			_magazines pushBack [_currMag, _currMagAmmo];
 			
 			_magFullAmmo = getNumber (configFile >> "CfgMagazines" >> _currMag >> "count");
 			_magValue = 10;
@@ -84,7 +84,7 @@ else
 					
 					if (!_magAdded) then
 					{
-						_magsToSell set [count _magsToSell, [_mag, 1]];
+						_magsToSell pushBack [_mag, 1];
 					};
 				};
 			} forEach _magazines;

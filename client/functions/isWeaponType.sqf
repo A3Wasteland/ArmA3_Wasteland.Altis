@@ -19,7 +19,7 @@ _typeBits = [];
 
 while {_typeHolder > 0} do
 {
-	_typeBits set [count _typeBits, _typeHolder % 2];
+	_typeBits pushBack (_typeHolder % 2);
 	_typeHolder = floor (_typeHolder / 2);
 };
 
@@ -28,7 +28,7 @@ _weaponTypeBits = [];
 
 while {_typeHolder > 0} do
 {
-	_weaponTypeBits set [count _weaponTypeBits, _typeHolder % 2];
+	_weaponTypeBits pushBack (_typeHolder % 2);
 	_typeHolder = floor (_typeHolder / 2);
 };
 

@@ -16,7 +16,7 @@ if (!isNil "clientMissionMarkers") then
 			_marker setMarkerColorLocal "ColorRed";
 			_marker setMarkerTextLocal (_x select 2);
 
-			currentMissionsMarkers set [count currentMissionsMarkers, _x select 0];
+			currentMissionsMarkers pushBack (_x select 0);
 		};
 	} forEach clientMissionMarkers;
 };

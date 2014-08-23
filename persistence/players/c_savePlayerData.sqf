@@ -21,59 +21,61 @@ savePlayerHandle = _this spawn
 			_manualSave = [_this, 3, false, [false]] call BIS_fnc_param;
 		};
 
-		_info = [];
-
-		[_info, ["UID", _UID]] call BIS_fnc_arrayPush;
-		[_info, ["Name", name player]] call BIS_fnc_arrayPush;
-		[_info, ["LastGroupSide", str side group player]] call BIS_fnc_arrayPush;
-		[_info, ["LastPlayerSide", str playerSide]] call BIS_fnc_arrayPush;
-		//[_info, ["BankMoney", player getVariable ["bmoney", 0]]] call BIS_fnc_arrayPush; // Not implemented in vanilla mission
-
-		_data = [];
-
-		[_data, ["Damage", damage player]] call BIS_fnc_arrayPush;
+		_info =
+		[
+			["UID", _UID],
+			["Name", name player],
+			["LastGroupSide", str side group player],
+			["LastPlayerSide", str playerSide]/*,
+			["BankMoney", player getVariable ["bmoney", 0]]*/ // Not implemented in vanilla mission
+		];
 
 		_hitPoints = [];
 		{
 			_hitPoint = configName _x;
-			_hitPoints set [count _hitPoints, [_hitPoint, player getHitPointDamage _hitPoint]];
+			_hitPoints pushBack [_hitPoint, player getHitPointDamage _hitPoint];
 		} forEach (player call getHitPoints);
 
-		[_data, ["HitPoints", _hitPoints]] call BIS_fnc_arrayPush;
-		[_data, ["Hunger", ["hungerLevel", 0] call getPublicVar]] call BIS_fnc_arrayPush;
-		[_data, ["Thirst", ["thirstLevel", 0] call getPublicVar]] call BIS_fnc_arrayPush;
-		[_data, ["Money", player getVariable ["cmoney", 0]]] call BIS_fnc_arrayPush; // Money is always saved, but only restored if A3W_moneySaving = 1
+		_data =
+		[
+			["Damage", damage player],
+			["HitPoints", _hitPoints],
+			["Hunger", ["hungerLevel", 0] call getPublicVar],
+			["Thirst", ["thirstLevel", 0] call getPublicVar],
+			["Money", player getVariable ["cmoney", 0]] // Money is always saved, but only restored if A3W_moneySaving = 1
+		];
 
 		// Only save those when on ground or underwater (you probably wouldn't want to spawn 500m in the air if you get logged off in flight)
 		if (isTouchingGround vehicle player || {(getPos player) select 2 < 0.5 || (getPosASL player) select 2 < 0.5}) then
 		{
-			[_data, ["Position", getPosATL player]] call BIS_fnc_arrayPush;
-			[_data, ["Direction", direction player]] call BIS_fnc_arrayPush;
+			_data pushBack ["Position", getPosATL player];
+			_data pushBack ["Direction", direction player];
 
 			if (vehicle player == player) then
 			{
-				[_data, ["CurrentWeapon", format ["%1", currentMuzzle player]]] call BIS_fnc_arrayPush; // currentMuzzle returns a number sometimes, hence the format
-				[_data, ["Stance", [player, ["P"]] call getMoveParams]] call BIS_fnc_arrayPush;
+				_data pushBack ["CurrentWeapon", format ["%1", currentMuzzle player]]; // currentMuzzle returns a number sometimes, hence the format
+				_data pushBack ["Stance", [player, ["P"]] call getMoveParams];
 			};
 		};
 
-		_gear = [];
+		_gear =
+		[
+			["Uniform", uniform player],
+			["Vest", vest player],
+			["Backpack", backpack player],
+			["Goggles", goggles player],
+			["Headgear", headgear player],
 
-		[_gear, ["Uniform", uniform player]] call BIS_fnc_arrayPush;
-		[_gear, ["Vest", vest player]] call BIS_fnc_arrayPush;
-		[_gear, ["Backpack", backpack player]] call BIS_fnc_arrayPush;
-		[_gear, ["Goggles", goggles player]] call BIS_fnc_arrayPush;
-		[_gear, ["Headgear", headgear player]] call BIS_fnc_arrayPush;
+			["PrimaryWeapon", primaryWeapon player],
+			["SecondaryWeapon", secondaryWeapon player],
+			["HandgunWeapon", handgunWeapon player],
 
-		[_gear, ["PrimaryWeapon", primaryWeapon player]] call BIS_fnc_arrayPush;
-		[_gear, ["SecondaryWeapon", secondaryWeapon player]] call BIS_fnc_arrayPush;
-		[_gear, ["HandgunWeapon", handgunWeapon player]] call BIS_fnc_arrayPush;
+			["PrimaryWeaponItems", primaryWeaponItems player],
+			["SecondaryWeaponItems", secondaryWeaponItems player],
+			["HandgunItems", handgunItems player],
 
-		[_gear, ["PrimaryWeaponItems", primaryWeaponItems player]] call BIS_fnc_arrayPush;
-		[_gear, ["SecondaryWeaponItems", secondaryWeaponItems player]] call BIS_fnc_arrayPush;
-		[_gear, ["HandgunItems", handgunItems player]] call BIS_fnc_arrayPush;
-
-		[_gear, ["AssignedItems", assignedItems player]] call BIS_fnc_arrayPush;
+			["AssignedItems", assignedItems player]
+		];
 
 
 		_uMags = [];
@@ -96,7 +98,7 @@ savePlayerHandle = _this spawn
 				{
 					if (_ammo > 0) then
 					{
-						_partialMags set [count _partialMags, [_mag, _ammo]];
+						_partialMags pushBack [_mag, _ammo];
 					};
 				};
 			} forEach magazinesAmmoCargo (_x select 1);
@@ -119,41 +121,41 @@ savePlayerHandle = _this spawn
 			// if loaded in weapon, not empty, and not hand grenade
 			if (_loaded && _ammo > 0 && _type != 0) then
 			{
-				_loadedMags set [count _loadedMags, [_mag, _ammo]];
+				_loadedMags pushBack [_mag, _ammo];
 			};
 		} forEach magazinesAmmoFull player;
 
-		[_data, ["UniformWeapons", (getWeaponCargo uniformContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["UniformItems", (getItemCargo uniformContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["UniformMagazines", _uMags]] call BIS_fnc_arrayPush;
+		_data pushBack ["UniformWeapons", (getWeaponCargo uniformContainer player) call cargoToPairs];
+		_data pushBack ["UniformItems", (getItemCargo uniformContainer player) call cargoToPairs];
+		_data pushBack ["UniformMagazines", _uMags];
 
-		[_data, ["VestWeapons", (getWeaponCargo vestContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["VestItems", (getItemCargo vestContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["VestMagazines", _vMags]] call BIS_fnc_arrayPush;
+		_data pushBack ["VestWeapons", (getWeaponCargo vestContainer player) call cargoToPairs];
+		_data pushBack ["VestItems", (getItemCargo vestContainer player) call cargoToPairs];
+		_data pushBack ["VestMagazines", _vMags];
 
-		[_data, ["BackpackWeapons", (getWeaponCargo backpackContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["BackpackItems", (getItemCargo backpackContainer player) call cargoToPairs]] call BIS_fnc_arrayPush;
-		[_data, ["BackpackMagazines", _bMags]] call BIS_fnc_arrayPush;
+		_data pushBack ["BackpackWeapons", (getWeaponCargo backpackContainer player) call cargoToPairs];
+		_data pushBack ["BackpackItems", (getItemCargo backpackContainer player) call cargoToPairs];
+		_data pushBack ["BackpackMagazines", _bMags];
 
-		[_gear, ["PartialMagazines", _partialMags]] call BIS_fnc_arrayPush;
-		[_gear, ["LoadedMagazines", _loadedMags]] call BIS_fnc_arrayPush;
+		_gear pushBack ["PartialMagazines", _partialMags];
+		_gear pushBack ["LoadedMagazines", _loadedMags];
 
 		_wastelandItems = [];
 		{
 			if (_x select 1 > 0) then
 			{
-				[_wastelandItems, [_x select 0, _x select 1]] call BIS_fnc_arrayPush;
+				_wastelandItems pushBack [_x select 0, _x select 1];
 			};
 		} forEach call mf_inventory_all;
 
-		[_gear, ["WastelandItems", _wastelandItems]] call BIS_fnc_arrayPush;
+		_gear pushBack ["WastelandItems", _wastelandItems];
 
 
 		_gearStr = str _gear;
 
 		if (_gearStr != ["playerData_gear", ""] call getPublicVar) then
 		{
-			[_data, _gear] call BIS_fnc_arrayPushStack;
+			{ _data pushBack _x } forEach _gear;
 			playerData_gear = _gearStr;
 		};
 

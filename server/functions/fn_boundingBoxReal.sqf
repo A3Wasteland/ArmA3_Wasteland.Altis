@@ -290,10 +290,7 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 	];
 
 	_classesBBox = [];
-
-	{
-		[_classesBBox, [_x, []]] call BIS_fnc_arrayPush;
-	} forEach _parentClasses;
+	{ _classesBBox pushBack [_x, []] } forEach _parentClasses;
 
 	_pos = getPosATL player;
 	_pos set [1, (_pos select 1) + 15];
@@ -418,7 +415,7 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		{
 			if (_vehicle isKindOf (_x select 0)) exitWith
 			{
-				[_x select 1, [_kind, [_minReal,_maxReal]]] call BIS_fnc_arrayPush;
+				(_x select 1) pushBack [_kind, [_minReal,_maxReal]];
 			};
 		} forEach _classesBBox;
 
@@ -433,7 +430,7 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 	{
 		if (count (_x select 1) > 0) then
 		{
-			[_validBBoxes, _x] call BIS_fnc_arrayPush;
+			_validBBoxes pushBack _x;
 		};
 	} forEach _classesBBox;
 

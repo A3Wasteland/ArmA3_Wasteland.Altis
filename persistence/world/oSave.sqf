@@ -26,7 +26,7 @@ _isSaveable =
 		
 		if (!(_obj isKindOf "ReammoBox_F") && {!(_obj call _isSaveable)}) then
 		{
-			[_saveableObjects, _obj] call BIS_fnc_arrayPush;
+			_saveableObjects pushBack _obj;
 		};
 	} forEach _x;
 } forEach [objectList, call genObjectsArray];
@@ -77,11 +77,11 @@ while {true} do
 				{
 					case (_obj isKindOf "Land_Sacks_goods_F"):
 					{
-						[_variables, ["food", _obj getVariable ["food", 20]]] call BIS_fnc_arrayPush;
+						_variables pushBack ["food", _obj getVariable ["food", 20]];
 					};
 					case (_obj isKindOf "Land_BarrelWater_F"):
 					{
-						[_variables, ["water", _obj getVariable ["water", 20]]] call BIS_fnc_arrayPush;
+						_variables pushBack ["water", _obj getVariable ["water", 20]];
 					};
 				};
 				
@@ -89,25 +89,25 @@ while {true} do
 				
 				if (_owner != "") then
 				{
-					[_variables, ["ownerUID", _owner]] call BIS_fnc_arrayPush;
+					_variables pushBack ["ownerUID", _owner];
 				};
 				
 				switch (true) do
 				{
 					case (_obj call _isWarchest):
 					{
-						[_variables, ["a3w_warchest", true]] call BIS_fnc_arrayPush;
-						[_variables, ["R3F_LOG_disabled", true]] call BIS_fnc_arrayPush;
-						[_variables, ["side", str (_obj getVariable ["side", sideUnknown])]] call BIS_fnc_arrayPush;
+						_variables pushBack ["a3w_warchest", true];
+						_variables pushBack ["R3F_LOG_disabled", true];
+						_variables pushBack ["side", str (_obj getVariable ["side", sideUnknown])];
 					};
 					case (_obj call _isBeacon):
 					{
-						[_variables, ["a3w_spawnBeacon", true]] call BIS_fnc_arrayPush;
-						[_variables, ["R3F_LOG_disabled", true]] call BIS_fnc_arrayPush;
-						[_variables, ["side", str (_obj getVariable ["side", sideUnknown])]] call BIS_fnc_arrayPush;
-						[_variables, ["ownerName", (_obj getVariable ["ownerName", "[Beacon]"]) call iniDB_Base64Encode]] call BIS_fnc_arrayPush;
-						[_variables, ["packing", false]] call BIS_fnc_arrayPush;
-						[_variables, ["groupOnly", _obj getVariable ["groupOnly", false]]] call BIS_fnc_arrayPush;
+						_variables pushBack ["a3w_spawnBeacon", true];
+						_variables pushBack ["R3F_LOG_disabled", true];
+						_variables pushBack ["side", str (_obj getVariable ["side", sideUnknown])];
+						_variables pushBack ["ownerName", (_obj getVariable ["ownerName", "[Beacon]"]) call iniDB_Base64Encode];
+						_variables pushBack ["packing", false];
+						_variables pushBack ["groupOnly", _obj getVariable ["groupOnly", false]];
 					};
 				};
 				

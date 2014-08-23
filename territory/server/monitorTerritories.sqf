@@ -69,7 +69,7 @@ currentTerritoryDetails = [];
 {
     _markerName = _x select 0;
     //diag_log format ["Adding %1 to lastCapturePointDetails", _markerName];
-    currentTerritoryDetails set [count currentTerritoryDetails, [_markerName, [], sideUnknown, 0, 0]];
+    currentTerritoryDetails pushBack [_markerName, [], sideUnknown, 0, 0];
 } forEach (["config_territory_markers", []] call getPublicVar);
 
 // This will track how long each loop takes, to monitor how long it really ends up taking when
@@ -139,7 +139,7 @@ _onCaptureFinished =
 	{
 		if (!((side _x) in [BLUFOR,OPFOR]) && {{isPlayer _x} count units _x > 0}) then
 		{
-			[_otherTeams, _x] call BIS_fnc_arrayPush;
+			_otherTeams pushBack _x;
 		};
 	} forEach allGroups;
 
@@ -234,7 +234,7 @@ _teamCountsForPlayerArray =
 
 			if (!_added) then
 			{
-				[_teamCounts, [_playerTeam, 1]] call BIS_fnc_arrayPush;
+				_teamCounts pushBack [_playerTeam, 1];
 			};
         } forEach _players;
 
@@ -353,7 +353,7 @@ _updatePlayerTerritoryActivity =
             };
 
             _territoryActivity set [1, _capturePeriod - _newCapPointTimer];
-            _newPlayersWithTerritoryActivity set [count _newPlayersWithTerritoryActivity, _playerUID];
+            _newPlayersWithTerritoryActivity pushBack _playerUID;
         };
 
         //diag_log format["Setting TERRITORY_ACTIVITY to %1 for %2", _territoryActivity, _player];
@@ -543,7 +543,7 @@ while {true} do
                 // Make the entry
                 //diag_log format["%1 has TERRITORY_OCCUPATION for %2", name _x, _curCapPoint];
                 //diag_log format["CAP PLAYER LOOP: Adding %1 to _territoryOccupiersMapSingle at %2", _x, _curCapPoint];
-                _territoryOccupiersMapSingle set [count _territoryOccupiersMapSingle, [_curCapPoint, _x]];
+                _territoryOccupiersMapSingle pushBack [_curCapPoint, _x];
             };
         };
 

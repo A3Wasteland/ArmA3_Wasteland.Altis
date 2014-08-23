@@ -119,7 +119,7 @@ drawPlayerIcons_thread = [] spawn
 							""
 						};
 
-						_newArray set [count _newArray, [_icon, _color, _pos, _size, _size, 0, _text]]; //, 1, 0.03, "PuristaMedium"];
+						_newArray pushBack [_icon, _color, _pos, _size, _size, 0, _text]; //, 1, 0.03, "PuristaMedium"];
 					};
 				};
 			} forEach (if (playerSide in [BLUFOR,OPFOR]) then { allUnits } else { units player });
@@ -130,4 +130,4 @@ drawPlayerIcons_thread = [] spawn
 	};
 };
 
-[A3W_scriptThreads, drawPlayerIcons_thread] call BIS_fnc_arrayPush;
+A3W_scriptThreads pushBack drawPlayerIcons_thread;

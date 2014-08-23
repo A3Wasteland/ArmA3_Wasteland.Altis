@@ -28,7 +28,7 @@ while {isClass _cfgVehicle} do
 
 			if ({configName _hitPoint == configName _x} count _hitPoints == 0) then
 			{
-				_hitPoints set [count _hitPoints, _hitPoint];
+				_hitPoints pushBack _hitPoint;
 			};
 		};
 	};

@@ -16,7 +16,7 @@ _nightTime = (date select 3 >= 18 || date select 3 < 5); // spawn night items be
 // If night is falling, add flashlight, IR pointers, and NV goggles to loot possibilities
 if (_nightTime) then
 {
-	[_additionArray, ["acc_flashlight", "acc_pointer_IR"]] call BIS_fnc_arrayPushStack;
+	{ _additionArray pushBack _x} forEach ["acc_flashlight", "acc_pointer_IR"];
 	if (random 1 < 0.15) then { _car addItemCargoGlobal ["NVGoggles", 1]};
 };
 

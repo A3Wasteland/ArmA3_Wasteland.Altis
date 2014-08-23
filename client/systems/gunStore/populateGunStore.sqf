@@ -81,7 +81,7 @@ switch(_switch) do
 		{
 			if (getNumber (configFile >> "CfgVehicles" >> _x select 1 >> "side") in [_playerSideNum, 3]) then
 			{
-				[_itemsArray, _x] call BIS_fnc_arrayPush;
+				_itemsArray pushBack _x;
 			};
 		} forEach (call staticGunsArray);
 	};

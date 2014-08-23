@@ -24,7 +24,7 @@ _markers = [];
 
 	if (typeName _markerTeam == "GROUP" || {_markerTeam != sideUnknown}) then
 	{
-		[_markers, [_markerName, _markerTeam]] call BIS_fnc_arrayPush;
+		_markers pushBack [_markerName, _markerTeam];
 	};
 } forEach currentTerritoryDetails;
 

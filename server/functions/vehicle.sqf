@@ -92,7 +92,7 @@ for "_i" from 0 to (count _hitPoints - 1) do
 	_hitPoint = configName (_hitPoints select _i);
 	if ([["Wheel","Track"], _hitPoint] call fn_findString != -1) then
 	{
-		_wheels set [count _wheels, _hitPoint];
+		_wheels pushBack _hitPoint;
 	};
 };
 

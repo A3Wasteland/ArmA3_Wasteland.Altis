@@ -113,9 +113,9 @@ _allStoreItems = call allRegularStoreItems + call allStoreGear;
 
 // Combine all items in new array
 _allObjItems = [];
-[_allObjItems, _objWeapons] call BIS_fnc_arrayPushStack;
-[_allObjItems, _objMags] call BIS_fnc_arrayPushStack;
-[_allObjItems, _objItems] call BIS_fnc_arrayPushStack;
+{ _allObjItems pushBack _x } forEach _objWeapons;
+{ _allObjItems pushBack _x } forEach _objMags;
+{ _allObjItems pushBack _x } forEach _objItems;
 
 // Add value of each item to sell value, and acquire item display name
 {

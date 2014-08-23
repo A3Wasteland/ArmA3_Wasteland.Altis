@@ -33,13 +33,13 @@ if (((_dead && !isNull _source) || (_criticalHit && UNCONSCIOUS(_unit))) && isNi
 
 				if (_seat == "Driver") then
 				{
-					_suspects set [count _suspects, [_suspect, _source magazinesTurret [-1]]];
+					_suspects pushBack [_suspect, _source magazinesTurret [-1]];
 				}
 				else
 				{
 					if (_seat == "Turret") then
 					{
-						_suspects set [count _suspects, [_suspect, _source magazinesTurret (_role select 1)]];
+						_suspects pushBack [_suspect, _source magazinesTurret (_role select 1)];
 					};
 				};
 			};

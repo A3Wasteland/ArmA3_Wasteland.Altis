@@ -112,7 +112,7 @@ else
 while {_travelcount < _travels} do
 {
 	_travelcount = (_travelcount + 1);
-	_waypoints set [count _waypoints, getMarkerPos (((call citylist) call BIS_fnc_selectRandom) select 0)];
+	_waypoints pushBack getMarkerPos (((call citylist) call BIS_fnc_selectRandom) select 0);
 };
 
 {

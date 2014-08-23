@@ -43,7 +43,7 @@ if (_id != -1 && !isNil "_condition") then
 	};
 
 	waitUntil {!managedActions_arrayCleanup};
-	[managedActions_array, [_obj, _id, _conditionPvar, _condition]] call BIS_fnc_arrayPush;
+	managedActions_array pushBack [_obj, _id, _conditionPvar, _condition];
 };
 
 _id

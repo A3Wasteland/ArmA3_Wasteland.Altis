@@ -34,7 +34,7 @@ if(_hasInvite) exitWith {player globalChat "This player already has a pending in
 
 diag_log "Invite to group: After the checks";
 
-currentInvites set [count currentInvites, [getPlayerUID player, getPlayerUID _target]];
+currentInvites pushBack [getPlayerUID player, getPlayerUID _target];
 publicVariable "currentInvites"; 
 
 [format ["You have been invited to join %1's group", name player], "titleTextMessage", _target, false] call TPG_fnc_MP;

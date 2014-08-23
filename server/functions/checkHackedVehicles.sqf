@@ -27,7 +27,7 @@ _hackedVehicles = [];
 			_name = "";
 		};
 		
-		_hackedVehicles set [count _hackedVehicles, [netId _x, toArray _name]];
+		_hackedVehicles pushBack [netId _x, toArray _name];
 	};
 } forEach vehicles;
 

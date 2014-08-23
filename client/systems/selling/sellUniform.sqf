@@ -41,7 +41,7 @@ else
 			if (_x select 4 == "Uniform") then
 			{
 				_uniformItems = _uniformItems - [_x select 0];
-				_uniformMags set [count _uniformMags, [_x select 0, _x select 1]];
+				_uniformMags pushBack [_x select 0, _x select 1];
 			};
 		} forEach magazinesAmmoFull player;
 		
@@ -99,7 +99,7 @@ else
 				_itemName = getText (configFile >> "CfgWeapons" >> _item >> "displayName");
 				if (_itemName == "") then { _itemName = getText (configFile >> "CfgMagazines" >> _item >> "displayName") };
 				
-				_itemsToSell set [count _itemsToSell, [_item, 1, _itemName]];
+				_itemsToSell pushBack [_item, 1, _itemName];
 			};
 		} forEach _allUniformItems;
 		

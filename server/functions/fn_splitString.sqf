@@ -25,13 +25,13 @@ _resultArray = [];
 _localArray = [];
 {
 	if (_x in _separatorArray) then {
-		_resultArray set [count _resultArray,tostring _localArray];
+		_resultArray pushBack tostring _localArray;
 		_localArray = [];
 	} else {
-		_localArray set [count _localArray,_x];
+		_localArray pushBack _x;
 	};
 } foreach _stringArray;
 
-_resultArray set [count _resultArray,tostring _localArray];
+_resultArray pushBack toString _localArray;
 // _resultArray = _resultArray - [""];
 _resultArray

@@ -15,7 +15,7 @@ for "_i" from 1 to 3 do
 
 	if (_item != "") then
 	{
-		_items set [count _items, _item];
+		_items pushBack _item;
 	};
 };
 
@@ -25,7 +25,7 @@ for "_i" from 4 to (count _array - 1) do
 
 	if (count _mag > 1 && {_mag select 1 > 0}) then
 	{
-		_mags set [count _mags, _mag];
+		_mags pushBack _mag;
 	};
 };
 
