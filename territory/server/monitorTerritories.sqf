@@ -123,7 +123,7 @@ _onCaptureStarted =
 // Trigger for when a capture of a territory has ended.
 _onCaptureFinished =
 {
-    private ["_oldTeam", "_captureTeam", "_captureValue", "_captureName", "_captureDescription", "_descriptiveTeamName", "_otherTeams", "_captureColor", "_groupCaptures", "_msg", "_msgOthers"];
+    private ["_oldTeam", "_captureTeam", "_captureValue", "_captureName", "_captureDescription", "_descriptiveTeamName", "_otherTeams", "_captureColor", "_groupCaptures", "_msgWinners", "_msgOthers"];
 
     //diag_log format["_onCapture called with %1", _this];
 
@@ -159,14 +159,14 @@ _onCaptureFinished =
 		_captureTeam setVariable ["currentTerritories", _groupCaptures, true];
 	};
 
-	[[[_captureName], false, _captureTeam, true], "updateTerritoryMarkers", _captureTeam, false] call TPG_fnc_MP;
-	[[[_captureName], false, _captureTeam, false], "updateTerritoryMarkers", _otherTeams, false] call TPG_fnc_MP;
+	["pvar_updateTerritoryMarkers", [_captureTeam, [[_captureName], false, _captureTeam, true]]] call fn_publicVariableAll;
+	["pvar_updateTerritoryMarkers", [_otherTeams, [[_captureName], false, _captureTeam, false]]] call fn_publicVariableAll;
 
-	_msg = format ["Your team has successfully captured %1 and you've received $%2", _captureDescription, _captureValue];
-    [[_msg, _captureValue], "territoryActivityHandler", _captureTeam, false] call TPG_fnc_MP;
+	_msgWinners = format ["Your team has successfully captured %1 and you've received $%2", _captureDescription, _captureValue];
+	["pvar_territoryActivityHandler", [_captureTeam, [_msgWinners, _captureValue]]] call fn_publicVariableAll;
 
-    _msgOthers = format ["%1 has captured %2", _descriptiveTeamName, _captureDescription];
-    [[_msgOthers], "territoryActivityHandler", _otherTeams, false] call TPG_fnc_MP;
+	_msgOthers = format ["%1 has captured %2", _descriptiveTeamName, _captureDescription];
+	["pvar_territoryActivityHandler", [_otherTeams, [_msgOthers]]] call fn_publicVariableAll;
 };
 
 // Give the human readable name for a team
@@ -234,7 +234,7 @@ _teamCountsForPlayerArray =
 
 			if (!_added) then
 			{
-				_teamCounts pushBack [_playerTeam, 1];
+				[_teamCounts, [_playerTeam, 1]] call BIS_fnc_arrayPush;
 			};
         } forEach _players;
 

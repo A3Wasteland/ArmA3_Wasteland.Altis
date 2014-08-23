@@ -1,4 +1,4 @@
-//	@file Name: setupPublicVariables.sqf
+//	@file Name: setupServerPVars.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, [404] Pulse, AgentRev, MercyfulFate
 
 pvar_teamSwitchList = [];

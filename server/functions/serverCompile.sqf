@@ -74,6 +74,7 @@ convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_com
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
 findClientPlayer = [_path, "findClientPlayer.sqf"] call mf_compile;
 fn_onPlayerDisconnected = [_path, "fn_onPlayerDisconnected.sqf"] call mf_compile;
+fn_publicVariableAll = [_path, "fn_publicVariableAll.sqf"] call mf_compile;
 fn_refillBox = [_path, "fn_refillbox.sqf"] call mf_compile;
 fn_refillTruck = [_path, "fn_refilltruck.sqf"] call mf_compile;
 fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;

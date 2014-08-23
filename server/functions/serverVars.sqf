@@ -8,7 +8,7 @@ if (!isServer) exitWith {};
 
 diag_log "WASTELAND SERVER - Initializing Server Vars";
 
-#include "setupPublicVariables.sqf"
+#include "setupServerPVars.sqf"
 
 currentStaticHelis = []; // Storage for the heli marker numbers so that we don't spawn wrecks on top of live helis
 
@@ -210,6 +210,6 @@ MissionSpawnMarkers = [];
 {
 	if (["Mission_", _x] call fn_startsWith) then
 	{
-		MissionSpawnMarkers set [count MissionSpawnMarkers, [_x, false]];
+		MissionSpawnMarkers pushBack [_x, false];
 	};
 } forEach allMapMarkers;

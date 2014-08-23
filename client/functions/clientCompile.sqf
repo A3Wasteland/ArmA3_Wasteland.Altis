@@ -30,6 +30,7 @@ getMoveParams = "client\functions\getMoveParams.sqf" call mf_compile;
 getPushPlaneAction = "client\functions\getPushPlaneAction.sqf" call mf_compile;
 isAdmin = "client\systems\adminPanel\isAdmin.sqf" call mf_compile;
 isAssignableBinocular = "client\functions\isAssignableBinocular.sqf" call mf_compile;
+isPVarTarget = "client\functions\isPVarTarget.sqf" call mf_compile;
 isWeaponType = "client\functions\isWeaponType.sqf" call mf_compile;
 parseMove = "client\functions\parseMove.sqf" call mf_compile;
 serverMessage = "client\functions\serverMessage.sqf" call mf_compile;
