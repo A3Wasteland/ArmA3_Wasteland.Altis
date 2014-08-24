@@ -94,6 +94,10 @@ while {true} do
 				
 				switch (true) do
 				{
+					case (_obj call _isBox):
+					{
+						_variables pushBack ["cmoney", _obj getVariable ["cmoney", 0]];
+					};
 					case (_obj call _isWarchest):
 					{
 						_variables pushBack ["a3w_warchest", true];

@@ -30,7 +30,7 @@ _icon = "/client/icons/breifcase.paa";
 
 private ["_condition", "_action"];
 _condition = "'' == [] call mf_items_warchest_can_access;";
-_action = ["Access Warchest", mf_items_warchest_access, nil, 2, true, false, "", _condition];
+_action = ["<img image='client\icons\money.paa'/> Access Warchest", mf_items_warchest_access, nil, 2, true, false, "", _condition];
 ["warchest-access", _action] call mf_player_actions_set;
 
 _condition = "'' == [] call mf_items_warchest_can_pack;";
