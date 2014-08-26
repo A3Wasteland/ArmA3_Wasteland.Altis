@@ -39,25 +39,33 @@ switch (true) do
 
 	case (_key in actionKeys "GetOver"):
 	{
-		_veh = vehicle player;
+		if (alive player) then
+		{
+			_veh = vehicle player;
 
-		if (_veh == player) then
-		{
-			if ((getPos player) select 2 > 2.5) then
+			if (_veh == player) then
 			{
-				execVM "client\actions\openParachute.sqf";
-				_handled = true;
-			};
-		}
-		else
-		{
-			if (_veh isKindOf "ParachuteBase") then
-			{
-				moveOut player;
-				_veh spawn
+				if ((getPos player) select 2 > 2.5) then
 				{
-					sleep 1;
-					deleteVehicle _this;
+					openParachuteTimestamp = diag_tickTime;
+					execVM "client\actions\openParachute.sqf";
+					_handled = true;
+				};
+			}
+			else
+			{
+				if (_veh isKindOf "ParachuteBase") then
+				{
+					// 1s cooldown after parachute is deployed so you don't start falling again if you double-tap the key
+					if (isNil "openParachuteTimestamp" || {diag_tickTime - openParachuteTimestamp >= 1}) then
+					{
+						moveOut player;
+						_veh spawn
+						{
+							sleep 1;
+							deleteVehicle _this;
+						};
+					};
 				};
 			};
 		};

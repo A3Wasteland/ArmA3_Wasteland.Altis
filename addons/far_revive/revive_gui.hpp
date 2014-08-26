@@ -20,7 +20,7 @@ class ReviveGUI : IGUIBack
 		idc = -1;
 
 		#define RevBG_W (0.35 * X_SCALE)
-		#define RevBG_H (0.25 * Y_SCALE)
+		#define RevBG_H (0.30 * Y_SCALE)
 		#define RevBG_X (0.5 - (RevBG_W / 2)) // middle of screen
 		#define RevBG_Y ((0.5 + (safezoneH / 4)) - (RevBG_H / 2)) // middle of screen bottom
 

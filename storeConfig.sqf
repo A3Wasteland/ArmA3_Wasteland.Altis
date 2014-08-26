@@ -58,14 +58,14 @@ rifleArray = compileFinal str
 	// Markman Rifles
 	["MXM Rifle", "arifle_MXM_F", 300],
 	["MXM Rifle (Black)", "arifle_MXM_Black_F", 325],
-	["DMR Rifle", "srifle_DMR_01_F", 375],
+	["DMR Rifle", "srifle_DMR_01_F", 400],
 	["Mk18 ABR Rifle", "srifle_EBR_F", 450],
 
 	// Sniper Rifles
 	["M320 LRR Sniper", "srifle_LRR_SOS_F", 1000],
-	["M320 LRR Sniper (Camo)", "srifle_LRR_camo_SOS_F", 1200],
-	["GM6 Lynx Sniper", "srifle_GM6_SOS_F", 1000],
-	["GM6 Lynx Sniper (camo)", "srifle_GM6_camo_SOS_F", 1200]
+	["M320 LRR Sniper (Camo)", "srifle_LRR_camo_SOS_F", 1150],
+	["GM6 Lynx Sniper", "srifle_GM6_SOS_F", 1100],
+	["GM6 Lynx Sniper (camo)", "srifle_GM6_camo_SOS_F", 1250]
 ];
 
 lmgArray = compileFinal str
@@ -84,8 +84,8 @@ shotgunArray = compileFinal str
 launcherArray = compileFinal str
 [
 	["RPG-42 Alamut", "launch_RPG32_F", 400],
-	["PCML", "launch_NLAW_F", 500],
-	["Titan MPRL Compact", "launch_Titan_short_F", 600],
+	["Titan MPRL Compact", "launch_Titan_short_F", 500],
+	["PCML", "launch_NLAW_F", 600],
 	["Titan MPRL AA", "launch_Titan_F", 600]
 ];
 
