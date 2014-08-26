@@ -35,6 +35,18 @@ _vehicle setVariable ["A3W_handleDamageHP", true, true];
 
 _vehicle addEventHandler ["HandleDamage", vehicleHandleDamage];
 
+_setRideInfo =
+{
+	_vehicle = _this select 0;
+	_unit = _this select 2;
+
+	_unit setVariable ["lastVehicleRidden", netId _vehicle, true];
+	_unit setVariable ["lastVehicleOwner", owner _vehicle == owner _unit, true];
+};
+
+_vehicle addEventHandler ["GetIn", _setRideInfo];
+_vehicle addEventHandler ["GetOut", _setRideInfo];
+
 // Wreck cleanup
 _vehicle addEventHandler ["Killed", { (_this select 0) setVariable ["processedDeath", diag_tickTime] }];
 
