@@ -10,6 +10,7 @@ A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 A3W_teamPlayersMap = 1;            // Show all friendly players on the map at all times, regardless of difficulty level (0 = no, 1 = yes)
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
 A3W_gunStoreIntruderWarning = 1;   // Warn players in gunstore areas of enemy intruders (0 = no, 1 = yes)
+A3W_remoteBombStoreRadius = 100;   // Prevent players from placing remote explosives within this distance from any store (0 = disabled)
 
 // Player settings
 A3W_startingMoney = 100;           // Amount of money that players start with

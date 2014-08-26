@@ -54,6 +54,7 @@ A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
 A3W_unlimitedStamina = compileFinal str A3W_unlimitedStamina;
 A3W_bleedingTime = compileFinal str A3W_bleedingTime;
 A3W_teamPlayersMap = compileFinal str A3W_teamPlayersMap;
+A3W_remoteBombStoreRadius = compileFinal str A3W_remoteBombStoreRadius;
 
 // Broadcast config variables
 publicVariable "A3W_startingMoney";
@@ -64,6 +65,7 @@ publicVariable "A3W_combatAbortDelay";
 publicVariable "A3W_unlimitedStamina";
 publicVariable "A3W_bleedingTime";
 publicVariable "A3W_teamPlayersMap";
+publicVariable "A3W_remoteBombStoreRadius";
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;

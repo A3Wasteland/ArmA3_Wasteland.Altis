@@ -151,7 +151,7 @@ if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 			{
 				_mag = _this select 5;
 				_bomb = _this select 6;
-				_minDist = 100;
+				_minDist = ["A3W_remoteBombStoreRadius", 100] call getPublicVar;
 
 				{
 					if (_x getVariable ["storeNPC_setupComplete", false] && {_bomb distance _x < _minDist}) exitWith
