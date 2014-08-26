@@ -7,16 +7,14 @@
 // _x select 2 = Name
 // _x select 3 = Value
 
-private ["_obj", "_sellValue", "_getHalfPrice", "_objItems", "_objMags", "_objWeapons", "_weaponArray", "_class", "_container", "_allStoreMagazines", "_allGunStoreFirearms", "_allStoreItems", "_weaponEntry", "_weaponClass", "_weaponQty", "_weaponCfg", "_weaponCfgModel", "_masterCfg", "_found", "_cfgItems", "_allObjItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemQtyArr", "_cfgCategory", "_magFullAmmo", "_magFullPrice", "_magValue", "_itemName"];
+#define GET_HALF_PRICE(PRICE) ((ceil (((PRICE) / 2) / 5)) * 5)
+
+private ["_obj", "_sellValue", "_objItems", "_objMags", "_objWeapons", "_weaponArray", "_class", "_container", "_allStoreMagazines", "_allGunStoreFirearms", "_allStoreItems", "_weaponEntry", "_weaponClass", "_weaponQty", "_weaponCfg", "_weaponCfgModel", "_masterCfg", "_found", "_cfgItems", "_allObjItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemQtyArr", "_cfgCategory", "_magFullAmmo", "_magFullPrice", "_magValue", "_itemName"];
 
 _obj = _this;
+if (isNull _obj) exitWith { [] };
 
 _sellValue = 0;
-
-_getHalfPrice =
-{
-	((ceil ((_this / 2) / 5)) * 5) // Ceil half the value to the nearest multiple of 5
-};
 
 _objItems = (getItemCargo _obj) call cargoToPairs;
 
@@ -153,7 +151,7 @@ _allObjItems = [];
 			} forEach _allStoreMagazines;
 
 			{
-				_magValue = (_itemValue * (_x / _magFullAmmo)) call _getHalfPrice; // Get selling price relative to ammo count
+				_magValue = GET_HALF_PRICE(_itemValue * (_x / _magFullAmmo)); // Get selling price relative to ammo count
 				_sellValue = _sellValue + _magValue;
 			} forEach _itemQtyArr;
 
@@ -164,7 +162,7 @@ _allObjItems = [];
 			{
 				if (_x select 1 == _itemClass) exitWith
 				{
-					_itemValue = ((_x select 2) * _itemQty) call _getHalfPrice;
+					_itemValue = GET_HALF_PRICE((_x select 2) * _itemQty);
 				};
 			} forEach _allStoreItems;
 
