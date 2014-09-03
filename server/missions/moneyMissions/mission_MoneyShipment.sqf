@@ -17,11 +17,13 @@ diag_log format["WASTELAND SERVER - Money Mission Waiting to run: %1", _missionT
 diag_log format["WASTELAND SERVER - Money Mission Resumed: %1", _missionType];
 
 //pick the vehicles for the Money Shipment 
+// In order to make this mission more challenging I Modified the array so always there's a heavy armored vehicle and two light armored within the mission (small chance of having an APC besides the tank) - Argietaco
+
 _MoneyShipmentVeh = 
 [
-	["B_MRAP_01_hmg_F", "B_MRAP_01_gmg_F"],
-	["O_MRAP_02_hmg_F", "O_MRAP_02_gmg_F"],
-	["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"]
+	["O_APC_Tracked_02_AA_F", "O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F","B_MBT_01_TUSK_F"], 
+	["B_MRAP_01_hmg_F","B_MRAP_01_gmg_F","O_MRAP_02_hmg_F","I_MRAP_03_hmg_F","O_MRAP_02_gmg_F,"B_APC_Wheeled_01_cannon_F"], 
+	["O_G_Offroad_01_armed_F","I_G_Offroad_01_armed_F,"B_G_Offroad_01_armed_F"]
 ]
 call BIS_fnc_selectRandom;
 
@@ -229,7 +231,7 @@ if ([_vehicleName, (count toArray _vehicleName) - 10] call BIS_fnc_trimString ==
 	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 11] call BIS_fnc_trimString;
 };
 
-_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> carrying a unit of soldiers transporting $10,000 is on route with assistance. Stop them! Be aware that the money is divided among both units!</t>", _missionType, _picture, _vehicleName, moneyMissionColor, subTextColor];
+_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> carrying a unit of soldiers transporting $100,000 is on route with assistance. Stop them! Be aware that the money is divided among both units!</t>", _missionType, _picture, _vehicleName, moneyMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1", _missionType];
@@ -273,12 +275,13 @@ if(_failed) then
 	};
 	
 	// give the rewards
+	// changed money from 1000 to 10000 per unit - Argietaco
 	for "_x" from 1 to 10 do
 	{
 		_cash = "Land_Money_F" createVehicle markerPos _marker;
 		_cash setPos ((markerPos _marker) vectorAdd ([[2 + random 2,0,0], random 360] call BIS_fnc_rotateVector2D));
 		_cash setDir random 360;
-		_cash setVariable["cmoney",1000,true];
+		_cash setVariable["cmoney",10000,true];
 		_cash setVariable["owner","world",true];
 	};
 	
