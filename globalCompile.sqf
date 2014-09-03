@@ -98,11 +98,5 @@ splitWeaponItems = [_serverFunc, "splitWeaponItems.sqf"] call mf_compile;
 switchMoveGlobal = [_clientFunc, "switchMoveGlobal.sqf"] call mf_compile;
 vehicleHandleDamage = [_serverFunc, "vehicleHandleDamage.sqf"] call mf_compile;
 
-"pvar_switchMoveGlobal" addPublicVariableEventHandler
-{
-	_player = (_this select 1) select 0;
-	_move = (_this select 1) select 1;
-	_player switchMove _move;
-};
-
+"pvar_switchMoveGlobal" addPublicVariableEventHandler { ((_this select 1) select 0) switchMove ((_this select 1) select 1) };
 "pvar_detachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };
