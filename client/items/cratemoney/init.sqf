@@ -20,7 +20,10 @@ mf_items_cratemoney_nearest =
 } call mf_compile;
 
 
-_condition = "call mf_items_cratemoney_can_access == ''";
-_action = ["<img image='client\icons\money.paa'/> Money Stash", mf_items_cratemoney_access, [], 2, false, true, "", _condition];
+_condition = "call mf_items_cratemoney_can_access == '' && (call mf_items_cratemoney_nearest) getVariable ['cmoney', 0] == 0";
+_action = ["<img image='client\icons\money.paa'/> Deposit Money", mf_items_cratemoney_access, [], 2, false, true, "", _condition];
+["cratemoney-access-empty", _action] call mf_player_actions_set;
 
+_condition = "call mf_items_cratemoney_can_access == '' && (call mf_items_cratemoney_nearest) getVariable ['cmoney', 0] != 0";
+_action = ["<img image='client\icons\money.paa'/> Access Money Stash", mf_items_cratemoney_access, [], 2, false, true, "", _condition];
 ["cratemoney-access", _action] call mf_player_actions_set;

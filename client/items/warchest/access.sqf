@@ -1,6 +1,6 @@
 #include "defines.sqf"
 disableSerialization;
-if (isNull findDisplay IDD_WARCHEST) then { createDialog DIALOG_WARCHEST; };
+if (isNull findDisplay IDD_WARCHEST) then { createDialog "WarchestDialog"; };
 call mf_items_warchest_refresh;
 
 [] spawn
