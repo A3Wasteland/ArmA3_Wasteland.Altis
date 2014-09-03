@@ -39,10 +39,26 @@ _player setVariable ["FAR_killerVehicle", nil];
 _player setVariable ["FAR_killerAmmo", nil];
 _player setVariable ["FAR_killerSuspects", nil];
 
-_money = _player getVariable ["cmoney", -1];
-
-if (_money != 0) then
+_player spawn
 {
+	_player = _this;
+
+	_money = _player getVariable ["cmoney", 0];
+	_player setVariable ["cmoney", 0, true];
+
+	_items = [];
+	{
+		_id = _x select 0;
+		_qty = _x select 1;
+		_type = (_id call mf_inventory_get) select 4;
+
+		_items pushBack [_id, _qty, _type];
+		[_id, _qty] call mf_inventory_remove;
+	} forEach call mf_inventory_all;
+
+	// wait until corpse stops moving before dropping stuff
+	waitUntil {(getPos _player) select 2 < 1 && vectorMagnitude velocity _player < 1};
+
 	// Drop money
 	if (_money > 0) then
 	{
@@ -52,29 +68,26 @@ if (_money != 0) then
 		_m setVariable ["owner", "world", true];
 	};
 
-	_player setVariable ["cmoney", 0, true];
-};
+	// Drop items
+	_itemsDroppedOnDeath = [];
 
-// Drop items
-_itemsDroppedOnDeath = [];
-
-{
-	_id = _x select 0;
-	_type = (_id call mf_inventory_get) select 4;
-
-	for "_i" from 1 to (_x select 1) do
 	{
-		_obj = createVehicle [_type, getPosATL _player, [], 0.5, "CAN_COLLIDE"];
-		_obj setDir random 360;
-		_obj setVariable ["mf_item_id", _id, true];
-		_itemsDroppedOnDeath pushBack netId _obj;
-	};
+		_id = _x select 0;
+		_qty = _x select 1;
+		_type = _x select 2;
 
-	[_id, _x select 1] call mf_inventory_remove;
-} forEach call mf_inventory_all;
+		for "_i" from 1 to _qty do
+		{
+			_obj = createVehicle [_type, getPosATL _player, [], 0.5, "CAN_COLLIDE"];
+			_obj setDir random 360;
+			_obj setVariable ["mf_item_id", _id, true];
+			_itemsDroppedOnDeath pushBack netId _obj;
+		};
+	} forEach _items;
 
-itemsDroppedOnDeath = _itemsDroppedOnDeath;
-publicVariableServer "itemsDroppedOnDeath";
+	itemsDroppedOnDeath = _itemsDroppedOnDeath;
+	publicVariableServer "itemsDroppedOnDeath";
+};
 
 _player spawn fn_removeAllManagedActions;
 
