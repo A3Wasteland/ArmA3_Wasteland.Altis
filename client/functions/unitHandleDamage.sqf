@@ -3,12 +3,15 @@
 
 #define IMPACT_DAMAGE_MULTIPLIER 0.5
 
+_unit = _this select 0;
+
+if (_unit getVariable ["playerSpawning", false]) exitWith {0};
+
 _selection = _this select 1;
 _damage = _this select 2;
 
 if (_selection != "?") then
 {
-	_unit = _this select 0;
 	_source = _this select 3;
 	_ammo = _this select 4;
 

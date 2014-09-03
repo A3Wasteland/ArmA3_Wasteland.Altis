@@ -9,10 +9,7 @@ if (isDedicated) exitWith {};
 if (!isServer) then
 {
 	waitUntil {!isNil "A3W_network_compileFuncs"};
-	
-	_networkCompile = [] spawn A3W_network_compileFuncs;
-	A3W_network_compileFuncs = nil;
-	
+	_networkCompile = call A3W_network_compileFuncs;
 	waitUntil {scriptDone _networkCompile};
 };
 

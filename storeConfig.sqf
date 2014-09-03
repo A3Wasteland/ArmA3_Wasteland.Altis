@@ -149,7 +149,7 @@ throwputArray = compileFinal str
 ammoArray = compileFinal str
 [
 	["9mm 16Rnd Mag", "16Rnd_9x21_Mag", 10],
-	["9mm 30Rnd Mag", "30Rnd_9x21_Mag", 20],
+	["9mm 30Rnd Mag", "30Rnd_9x21_Mag", 15],
 	[".45 ACP 6Rnd Cylinder", "6Rnd_45ACP_Cylinder", 5],
 	[".45 ACP 9Rnd Mag", "9Rnd_45ACP_Mag", 10],
 	[".45 ACP 11Rnd Mag", "11Rnd_45ACP_Mag", 15],
@@ -174,13 +174,13 @@ ammoArray = compileFinal str
 	["7.62mm 150Rnd Tracer (Green) Box", "150Rnd_762x51_Box_Tracer", 125],
 	[".408 7Rnd Cheetah Mag", "7Rnd_408_Mag", 50],
 	["12.7mm 5Rnd Mag", "5Rnd_127x108_Mag", 50],
-	["12.7mm 5Rnd APDS Mag", "5Rnd_127x108_APDS_Mag", 60],
-	["RPG-42 AT Rocket", "RPG32_F", 250],              // Direct damage: high   | Splash damage: low    | Guidance: none
-	["RPG-42 HE Rocket", "RPG32_HE_F", 250],           // Direct damage: medium | Splash damage: medium | Guidance: none
-	["PCML Missile", "NLAW_F", 350],                   // Direct damage: high   | Splash damage: low    | Guidance: laser, land vehicles
-	["Titan AT Missile", "Titan_AT", 350],             // Direct damage: high   | Splash damage: low    | Guidance: mouse, laser, land vehicles
-	["Titan Antipersonnel Missile", "Titan_AP", 350],  // Direct damage: low    | Splash damage: high   | Guidance: mouse, laser
-	["Titan AA Missile", "Titan_AA", 350],             // Direct damage: low    | Splash damage: high   | Guidance: aircraft
+	["12.7mm 5Rnd Armor-Piercing Mag", "5Rnd_127x108_APDS_Mag", 60],
+	["RPG-42 Anti-Tank Rocket", "RPG32_F", 250],              // Direct damage: high      | Splash damage: low    | Guidance: none
+	["RPG-42 High-Explosive Rocket", "RPG32_HE_F", 250],      // Direct damage: medium    | Splash damage: medium | Guidance: none
+	["PCML Anti-Tank Missile", "NLAW_F", 400],                // Direct damage: very high | Splash damage: low    | Guidance: laser, ground vehicles
+	["Titan Anti-Tank Missile", "Titan_AT", 350],             // Direct damage: high      | Splash damage: low    | Guidance: mouse, laser, ground vehicles
+	["Titan Anti-Personnel Missile", "Titan_AP", 350],        // Direct damage: low       | Splash damage: high   | Guidance: mouse, laser
+	["Titan Anti-Air Missile", "Titan_AA", 350],              // Direct damage: low       | Splash damage: medium | Guidance: aircraft
 	["40mm HE Grenade Round", "1Rnd_HE_Grenade_shell", 125],
 	["40mm 3Rnd HE Grenades", "3Rnd_HE_Grenade_shell", 250],
 	["40mm Smoke Round (White)", "1Rnd_Smoke_Grenade_shell", 50],
@@ -244,20 +244,20 @@ accessoriesArray = compileFinal str
 headArray = compileFinal str
 [
 	["ECH", "H_HelmetB", 50, "hat"],
-	["ECH (Camo net)", "H_HelmetB_camo", 50, "hat"],
+	["ECH (Ghillie)", "H_HelmetB_camo", 50, "hat"],
 	["ECH (Light)", "H_HelmetB_light", 50, "hat"],
-	// ["ECH (Spraypaint)", "H_HelmetB_paint", 50, "hat"],
+	["ECH (Spraypaint)", "H_HelmetB_paint", 50, "hat"],
 	["SF Helmet", "H_HelmetSpecB", 50, "hat"],
-	// ["SF Helmet (Black)", "H_HelmetSpecB_blk", 50, "hat"],
-	// ["SF Helmet (Light Paint)", "H_HelmetSpecB_paint1", 50, "hat"],
-	// ["SF Helmet (Dark Paint)", "H_HelmetSpecB_paint2", 50, "hat"],
-	// ["Combat Helmet (Black)", "H_HelmetB_plain_blk", 50, "hat"],
+	["SF Helmet (Black)", "H_HelmetSpecB_blk", 50, "hat"],
+	["SF Helmet (Light Paint)", "H_HelmetSpecB_paint1", 50, "hat"],
+	["SF Helmet (Dark Paint)", "H_HelmetSpecB_paint2", 50, "hat"],
+	["Combat Helmet (Black)", "H_HelmetB_plain_blk", 50, "hat"],
 	["Protector Helmet (Hex)", "H_HelmetO_ocamo", 50, "hat"],
 	["Protector Helmet (Urban)", "H_HelmetO_oucamo", 50, "hat"],
+	["Defender Helmet (Hex)", "H_HelmetLeaderO_ocamo", 50, "hat"],
+	["Defender Helmet (Urban)", "H_HelmetLeaderO_oucamo", 50, "hat"],
 	// ["Assassin Helmet (Hex)", "H_HelmetSpecO_ocamo", 50, "hat"],
 	["Assassin Helmet (Black)", "H_HelmetSpecO_blk", 50, "hat"],
-	// ["Defender Helmet (Hex)", "H_HelmetLeaderO_ocamo", 50, "hat"],
-	// ["Defender Helmet (Urban)", "H_HelmetLeaderO_oucamo", 50, "hat"],
 	["MICH", "H_HelmetIA", 50, "hat"],
 	// ["MICH (Camo)", "H_HelmetIA_net", 50, "hat"],
 	// ["MICH 2 (Camo)", "H_HelmetIA_camo", 50, "hat"],
@@ -293,10 +293,13 @@ headArray = compileFinal str
 	// ["Bandanna Mask (Khaki)", "H_BandMask_khk", 10, "hat"],
 	// ["Bandanna Mask (Reaper)", "H_BandMask_reaper", 10, "hat"],
 	["Beanie (Black)", "H_Watchcap_blk", 10, "hat"],
-	// ["Beanie (Camo)", "H_Watchcap_camo", 10, "hat"],
-	// ["Beanie (Khaki)", "H_Watchcap_khk", 10, "hat"],
-	// ["Beanie (Sage)", "H_Watchcap_sgg", 10, "hat"],
+	["Beanie (Dark blue)", "H_Watchcap_sgg", 10, "hat"],
+	["Beanie (Dark brown)", "H_Watchcap_cbr", 10, "hat"],
+	["Beanie (Dark khaki)", "H_Watchcap_khk", 10, "hat"],
+	["Beanie (Dark green)", "H_Watchcap_camo", 10, "hat"],
 	["Beret (Black)", "H_Beret_blk", 10, "hat"],
+	["Beret (Colonel)", "H_Beret_Colonel", 10, "hat"],
+	["Beret (NATO)", "H_Beret_02", 10, "hat"],
 	// ["Beret (Green)", "H_Beret_grn", 10, "hat"],
 	// ["Beret (Police)", "H_Beret_blk_POLICE", 10, "hat"],
 	// ["Beret (Red)", "H_Beret_red", 10, "hat"],
@@ -307,9 +310,9 @@ headArray = compileFinal str
 	// ["Booniehat (Dirty)", "H_Booniehat_dirty", 10, "hat"],
 	// ["Booniehat (Green)", "H_Booniehat_grn", 10, "hat"],
 	// ["Booniehat (Khaki)", "H_Booniehat_indp", 10, "hat"],
+	["Booniehat (Khaki)", "H_Booniehat_khk", 10, "hat"],
 	["Booniehat (Tan)", "H_Booniehat_tan", 10, "hat"],
 	["Booniehat (MTP)", "H_Booniehat_mcamo", 10, "hat"],
-	// ["Booniehat (Hex)", "H_Booniehat_khk", 10, "hat"],
 	["Booniehat (Digi)", "H_Booniehat_dgtl", 10, "hat"],
 	["Fedora (Blue)", "H_Hat_blue", 10, "hat"],
 	["Fedora (Brown)", "H_Hat_brown", 10, "hat"],
@@ -330,8 +333,8 @@ headArray = compileFinal str
 	["Cap (SAS)", "H_Cap_khaki_specops_UK", 10, "hat"],
 	["Cap (SF)", "H_Cap_tan_specops_US", 10, "hat"],
 	["Cap (SPECOPS)", "H_Cap_brn_SPECOPS", 10, "hat"],
-	// ["Shemag (Khaki)", "H_ShemagOpen_khk", 25, "hat"],
-	["Shemag (Tan)", "H_ShemagOpen_tan", 25, "hat"],
+	["Shemag (White)", "H_ShemagOpen_khk", 25, "hat"],
+	["Shemag (Brown)", "H_ShemagOpen_tan", 25, "hat"],
 	["Shemag mask (Khaki)", "H_Shemag_khk", 25, "hat"],
 	["Shemag mask (Olive)", "H_Shemag_olive", 25, "hat"],
 	// ["Shemag mask (Tan)", "H_Shemag_tan", 25, "hat"],

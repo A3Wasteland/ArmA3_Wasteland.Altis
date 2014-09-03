@@ -120,27 +120,27 @@ player createDiaryRecord ["credits",
 [
 "Credits",
 "
-<br/><font size='16'>Developed by Team Wasteland:</font>
-<br/>	* JoSchaap (GoT/Tweakers.net)
+<br/><font size='16' color='#BBBBBB'>Developed by Team Wasteland:</font>
 <br/>	* AgentRev (TeamPlayerGaming)
+<br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* MercyfulFate
 <br/>	* His_Shadow (KoS/KillonSight)
 <br/>	* Bewilderbeest (KoS/KillonSight)
 <br/>	* Torndeco
 <br/>	* Del1te (404Games)
 <br/>
-<br/><font size='16'>Original Arma 2 Wasteland missions by:</font>
+<br/><font size='16' color='#BBBBBB'>Original Arma 2 Wasteland missions by:</font>
 <br/>	* Tonic
 <br/>	* Sa-Matra
 <br/>	* MarKeR
 <br/>
-<br/><font size='16'>Ported to Arma 3 by 404Games:</font>
+<br/><font size='16' color='#BBBBBB'>Improved and ported to Arma 3 by 404Games:</font>
 <br/>	* Deadbeat
 <br/>	* Costlyy
 <br/>	* Pulse
 <br/>	* Domuk
 <br/>
-<br/><font size='16'>Other contributors:</font>
+<br/><font size='16' color='#BBBBBB'>Other contributors:</font>
 <br/>	* 82ndab-Bravo17 (GitHub)
 <br/>	* afroVoodo (Armaholic)
 <br/>	* Austerror (GitHub)
@@ -169,6 +169,7 @@ player createDiaryRecord ["credits",
 <br/>	* SPJESTER (404Games forums)
 <br/>	* spunFIN (BIS forums)
 <br/>	* Tonic (BIS forums)
+<br/>	* wiking.at (A3W forums)
 <br/>
 <br/><font size='16'>Thanks A LOT to everyone involved for the help and inspiration!</font>
 "

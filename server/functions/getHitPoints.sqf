@@ -3,7 +3,7 @@
 //	@file Author: AgentRev
 //	@file Created: 03/10/2013 11:51
 
-private ["_class", "_hitPoints", "_cfgVehicle", "_hitPointsCfg", "_nbHitPoints", "_hitPoint", "_i"];
+private ["_class", "_hitPoints", "_cfgVehicle", "_hitPointsCfg", "_i", "_hitPoint"];
 _class = _this;
 
 if (typeName _class == "OBJECT") then
@@ -20,9 +20,7 @@ while {isClass _cfgVehicle} do
 
 	if (isClass _hitPointsCfg) then
 	{
-		_nbHitPoints = count _hitPointsCfg;
-
-		for "_i" from 0 to (_nbHitPoints - 1) do
+		for "_i" from 0 to (count _hitPointsCfg - 1) do
 		{
 			_hitPoint = _hitPointsCfg select _i;
 

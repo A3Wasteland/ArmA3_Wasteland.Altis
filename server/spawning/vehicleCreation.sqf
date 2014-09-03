@@ -46,7 +46,7 @@ _vehicle setDamage (random 0.5); // setDamage must always be called before vehic
 // Reset wheel damage
 {
 	_hitPoint = configName _x;
-	if (["HitWheel", _hitPoint] call fn_startsWith) then
+	if (["Wheel", _hitPoint] call fn_findString != -1) then
 	{
 		_vehicle setHitPointDamage [_hitPoint, 0];
 	};
