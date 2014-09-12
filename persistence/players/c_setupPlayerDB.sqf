@@ -3,11 +3,26 @@
 
 if (isDedicated) exitWith {};
 
-fn_requestPlayerData = compileFinal "requestPlayerData = player; publicVariableServer 'requestPlayerData'";
-fn_deletePlayerData = compileFinal "deletePlayerData = player; publicVariableServer 'deletePlayerData'; playerData_gear = ''";
 fn_applyPlayerData = "persistence\players\c_applyPlayerData.sqf" call mf_compile;
 fn_applyPlayerInfo = "persistence\players\c_applyPlayerInfo.sqf" call mf_compile;
 fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
+
+fn_requestPlayerData =
+{
+	playerData_alive = nil;
+	playerData_loaded = nil;
+	playerData_resetPos = nil;
+	requestPlayerData = player;
+	publicVariableServer "requestPlayerData";
+} call mf_compile; 
+
+fn_deletePlayerData =
+{
+	deletePlayerData = player;
+	publicVariableServer "deletePlayerData";
+	playerData_gear = "";
+} call mf_compile;
+
 
 "applyPlayerData" addPublicVariableEventHandler
 {
