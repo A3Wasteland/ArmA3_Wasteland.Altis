@@ -138,14 +138,9 @@ _createTriggers = execVM "territory\server\createCaptureTriggers.sqf";
 if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 {
 	private ["_monthDay", "_startHour"];
-	_monthDay = if (["A3W_moonLight"] call isConfigOn) then { 10 } else { 25 };
+	_monthDay = if (["A3W_moonLight"] call isConfigOn) then { 9 } else { 24 };
 	_startHour = ["A3W_startHour", date select 2] call getPublicVar;
 	setDate [2035, 6, _monthDay, _startHour, 0];
-};
-
-if (!isNil "A3W_timeMultiplier") then
-{
-	setTimeMultiplier (["A3W_timeMultiplier", 1] call getPublicVar);
 };
 
 if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then 

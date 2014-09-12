@@ -6,7 +6,8 @@
 
 // General settings
 A3W_startHour = 15;                // In-game hour at mission start (0 to 23)
-A3W_timeMultiplier = 1.0;          // Sets the speed of time, for example 24.0 means a full day/night cycle will only take 1 hour (and clock hands spin like crazy)
+A3W_timeMultiplierDay = 1.0;       // Sets the speed of time between 5 AM and 8 PM (for example, 6.0 means 6 hours in-game will pass in 1 real hour)
+A3W_timeMultiplierNight = 1.0;     // Sets the speed of time between 8 PM and 5 AM
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 A3W_teamPlayersMap = 1;            // Show all friendly players on the map at all times, regardless of difficulty level (0 = no, 1 = yes)
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
