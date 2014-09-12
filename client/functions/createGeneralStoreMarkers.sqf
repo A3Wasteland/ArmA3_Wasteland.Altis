@@ -6,11 +6,11 @@
 
 //Creates the markers around general stores.
 {
-	if (!isPlayer _x && {["GenStore", name _x] call fn_startsWith}) then
+	if (!isPlayer _x && {["GenStore", vehicleVarName _x] call fn_startsWith}) then
 	{
-		_npcPos = getPos _x;
+		_npcPos = getPosATL _x;
 
-		// General store title    
+		// General store title
 		_markerName = format["marker_shop_title_%1",_x];
 		deleteMarkerLocal _markerName;
 		_marker = createMarkerLocal [_markerName, _npcPos];

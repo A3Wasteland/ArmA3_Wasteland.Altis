@@ -13,9 +13,9 @@ _col_mixed = "ColorOrange";
 
 //Creates the markers around gunstores.
 {
-	if (!isPlayer _x && {["GunStore", name _x] call fn_startsWith}) then
+	if (!isPlayer _x && {["GunStore", vehicleVarName _x] call fn_startsWith}) then
 	{
-		_npcPos = getPosASL _x;
+		_npcPos = getPosATL _x;
 
 		if (["A3W_showGunStoreStatus"] call isConfigOn) then
 		{
@@ -169,7 +169,7 @@ if (["A3W_showGunStoreStatus"] call isConfigOn) then
 				};
 			};
 		} forEach _gunStores;
-		
+
 		sleep 1;
 	};
 };
