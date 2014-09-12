@@ -29,7 +29,9 @@ if (!isNull _group && {group _player != _group}) then
 
 if (!isServer) then
 {
-	[_player, "handleCorpseOnLeave", false] spawn TPG_fnc_MP; // setup corpse deletion when leaving while alive
+	// setup corpse deletion when leaving while alive
+	pvar_handleCorpseOnLeave = _player;
+	publicVariableServer "pvar_handleCorpseOnLeave";
 };
 
 _respawnPos = markerPos "respawn_west";
