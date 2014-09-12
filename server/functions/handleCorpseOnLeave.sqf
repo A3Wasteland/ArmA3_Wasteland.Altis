@@ -10,7 +10,7 @@ _this setVariable ["corpseLocalEH", _this addEventHandler ["Local",
 	_unit = _this select 0;
 	_local = _this select 1;
 
-	if (!isPlayer _unit && !alive _unit && _local) then
+	if (!isPlayer _unit && !alive _unit && _unit getVariable ["FAR_isUnconscious", 0] == 0 && _local) then
 	{
 		deleteVehicle _unit;
 	};
