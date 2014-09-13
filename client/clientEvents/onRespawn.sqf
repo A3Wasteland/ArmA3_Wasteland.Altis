@@ -34,13 +34,13 @@ if (!isServer) then
 	publicVariableServer "pvar_handleCorpseOnLeave";
 };
 
-_respawnPos = markerPos switch (playerSide) do
+_respawnPos = markerPos (switch (playerSide) do
 {
 	case BLUFOR:      { "respawn_west" };
 	case OPFOR:       { "respawn_east" };
 	case INDEPENDENT: { "respawn_guerrila" };
 	default           { "respawn_civilian" };
-};
+});
 
 if !(_respawnPos isEqualTo [0,0,0]) then
 {
