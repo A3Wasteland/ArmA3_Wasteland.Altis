@@ -191,7 +191,7 @@ storePurchaseHandle = _this spawn
 		else
 		{
 			player setVariable ["cmoney", _playerMoney - _price, true];
-			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+			_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
 			
 			if (["A3W_playerSaving"] call isConfigOn) then
 			{

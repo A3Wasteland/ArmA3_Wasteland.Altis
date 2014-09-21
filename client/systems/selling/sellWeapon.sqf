@@ -115,7 +115,7 @@ storeSellingHandle = [] spawn
 	} forEach _itemsToSell;
 
 	// Add total sell value to confirm message
-	_confirmMsg = format ["You will obtain $%1 for:<br/><br/>", _sellValue] + _confirmMsg;
+	_confirmMsg = format ["You will obtain $%1 for:<br/><br/>", [_sellValue] call fn_numbersText] + _confirmMsg;
 
 	// Add note about removing weapon mag if the player doesn't want to sell inventory mags
 	/*if (_currMag != "") then
@@ -133,7 +133,7 @@ storeSellingHandle = [] spawn
 		//{ player removeMagazines _x } forEach _invMagsToRemove;
 
 		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
-		hint format ["You sold your gun for $%1", _sellValue];
+		hint format ["You sold your gun for $%1", [_sellValue] call fn_numbersText];
 	};
 };
 

@@ -114,16 +114,7 @@ _money = _MoneyShipment select 0;
 _convoys = _MoneyShipment select 1;
 _vehChoices = _convoys call BIS_fnc_selectRandom;
 
-_moneyKilos = floor (_money / 1000);
-_moneyUnits = floor (_money - (_moneyKilos * 1000));
-_strMoneyUnits = str _moneyUnits;
-
-while {count toArray _strMoneyUnits < 3} do
-{
-	_strMoneyUnits = "0" + _strMoneyUnits;
-};
-
-_moneyText = format ["$%1,%2", _moneyKilos, _strMoneyUnits];
+_moneyText = format ["$%1", [_money] call fn_numbersText];
 
 _vehClasses = [];
 { _vehClasses pushBack (_x call BIS_fnc_selectRandom) } forEach _vehChoices;

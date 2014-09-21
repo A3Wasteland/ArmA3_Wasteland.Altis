@@ -58,7 +58,7 @@ if (_moneyObj getVariable ["owner", "world"] == _playerUID) then
 
 	if (_money > 0) then
 	{
-		titleText [format ["You have picked up $%1", _money], "PLAIN DOWN", 0.5];
+		titleText [format ["You have picked up $%1", [_money] call fn_numbersText], "PLAIN DOWN", 0.5];
 	}
 	else
 	{

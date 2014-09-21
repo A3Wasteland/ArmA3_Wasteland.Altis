@@ -14,7 +14,7 @@ if (isNull _dialog) exitWith {};
 if (isNull _crate) exitWith { closeDialog IDD_WARCHEST };
 
 _funds = _dialog displayCtrl IDC_FUNDS;
-_funds ctrlSetText format ["$%1", _crate getVariable ["cmoney", 0]];
+_funds ctrlSetText format ["$%1", [_crate getVariable ["cmoney", 0]] call fn_numbersText];
 
 _input = _dialog displayCtrl IDC_AMOUNT;
 _amount = floor parseNumber ctrlText _input;

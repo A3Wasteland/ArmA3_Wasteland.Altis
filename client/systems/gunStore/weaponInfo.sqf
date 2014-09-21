@@ -39,7 +39,7 @@ _description = _itemConfigInfo select 2;
 _showAmmo = _itemConfigInfo select 3;
 
 // Display price and description
-_gunlisttext ctrlSetText format ["Price: $%1", _price];
+_gunlisttext ctrlSetText format ["Price: $%1", [_price] call fn_numbersText];
 _gunDesc ctrlSetStructuredText parseText _description;
 
 // If firearm, add compatible mags to ammo list

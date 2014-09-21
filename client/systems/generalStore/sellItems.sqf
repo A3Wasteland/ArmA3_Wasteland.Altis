@@ -47,7 +47,7 @@ storeSellingHandle = [] spawn
 		[_itemData, 1] call mf_inventory_remove;
 
 		player setVariable ["cmoney", _playerMoney + _price, true];
-		_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+		_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable "cmoney"] call fn_numbersText];
 		[] execVM "client\systems\generalStore\getInventory.sqf";
 	};
 };

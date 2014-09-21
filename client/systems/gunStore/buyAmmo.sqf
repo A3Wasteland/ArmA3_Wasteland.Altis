@@ -82,7 +82,7 @@ storePurchaseHandle = _this spawn
 	if (!isNil "_price" && {_price > -1}) then
 	{
 		player setVariable ["cmoney", _playerMoney - _price, true];
-		_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+		_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
 		hint "Purchase successful!";
 		playSound "FD_Finish_F";
 	};

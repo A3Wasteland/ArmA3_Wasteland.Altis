@@ -13,7 +13,7 @@ switch (playerSide) do
 };
 
 _text = _warchest displayCtrl IDC_FUNDS;
-_text ctrlSetText format ["$%1", _funds];
+_text ctrlSetText format ["$%1", [_funds] call fn_numbersText];
 
 _input = _warchest displayCtrl IDC_AMOUNT;
 _amount = floor parseNumber ctrlText _input;

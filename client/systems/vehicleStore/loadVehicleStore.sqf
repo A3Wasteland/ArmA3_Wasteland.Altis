@@ -9,7 +9,7 @@ disableSerialization;
 
 vehicleStore_noBuzzard = false;
 
-private ["_vehshopDialog", "_Dialog", "_playerMoney", "_money", "_owner", "_landButton", "_armorButton", "_tankButton", "_heliButton", "_planeButton", "_boatButton", "_subButton"];
+private ["_vehshopDialog", "_Dialog", "_playerMoney", "_owner", "_landButton", "_armorButton", "_tankButton", "_heliButton", "_planeButton", "_boatButton", "_subButton"];
 _vehshopDialog = createDialog "vehshopd";
 
 _Dialog = findDisplay vehshop_DIALOG;
@@ -21,8 +21,7 @@ _heliButton = _Dialog displayCtrl vehshop_button3;
 _planeButton = _Dialog displayCtrl vehshop_button4;
 _boatButton = _Dialog displayCtrl vehshop_button5;
 //_subButton = _Dialog displayCtrl vehshop_button6;
-_money = player getVariable "cmoney";
-_playerMoney ctrlSetText format["Cash: $%1", _money];
+_playerMoney ctrlSetText format["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
 _owner = _this select 0;
 currentOwnerName = name _owner;
 currentOwnerID = _owner;

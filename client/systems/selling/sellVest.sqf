@@ -49,7 +49,7 @@ storeSellingHandle = _this spawn
 	} forEach _allObjItems;
 
 	// Add total sell value to confirm message
-	_confirmMsg = format ["You will obtain $%1 for:<br/>", _sellValue];
+	_confirmMsg = format ["You will obtain $%1 for:<br/>", [_sellValue] call fn_numbersText];
 
 	// Add item quantities and names to confirm message
 	{

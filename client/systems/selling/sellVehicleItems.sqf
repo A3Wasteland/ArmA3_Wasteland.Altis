@@ -52,7 +52,7 @@ storeSellingHandle = _this spawn
 	} forEach _allVehItems;
 
 	// Add total sell value to confirm message
-	_confirmMsg = format ["You will obtain $%1 for:<br/>", _sellValue];
+	_confirmMsg = format ["You will obtain $%1 for:<br/>", [_sellValue] call fn_numbersText];
 
 	// Add item quantities and names to confirm message
 	{
@@ -62,7 +62,7 @@ storeSellingHandle = _this spawn
 		if (_itemQty > 0 && {count _x > 2}) then
 		{
 			_itemName = _x select 2;
-			_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", _x select 3] } else { "" }];
+			_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", [_x select 3] call fn_numbersText] } else { "" }];
 		};
 	} forEach _allVehItems;
 
