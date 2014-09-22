@@ -1,4 +1,3 @@
-
 //	@file Version: 1.0
 //	@file Name: clientFlagHandler.sqf
 //	@file Author: AgentRev
@@ -16,30 +15,16 @@ if (typeName _this == "ARRAY" && {count _this > 1}) then
 	{
 		waitUntil {time > 0.1};
 
-		setPlayerRespawnTime 1e+010;
+		0.01 fadeSound 0;
+		999999 cutText ["", "BLACK", 0.01];
+
+		setPlayerRespawnTime 1e10;
 		player setDamage 1;
 		disableUserInput true;
-		selectNoPlayer;
-		hint parseText "<t size='2' color='#FF0000'>You've met with a terrible fate, haven't you?</t>";
 
-		[] spawn
-		{
-			sleep 1;
+		sleep 3;
 
-			_call =
-			{
-				[] spawn
-				{
-					while {true} do
-					{
-						nearestObjects [[0,0], [], 1e+010];
-					};
-				};
-				_this call _this;
-			};
-
-			// baibai hacker
-			_call call _call;
-		};
+		// baibai hacker
+		call compile preprocessFile "client\functions\quit.sqf";
 	};
 };

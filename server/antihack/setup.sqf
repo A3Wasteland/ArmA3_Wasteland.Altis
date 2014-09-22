@@ -43,9 +43,6 @@ if (isNil "ahSetupDone") then
 	publicVariable "A3W_network_compileFuncs";
 	waitUntil {sleep 0.1; scriptDone _networkCompile};
 	
-	flagHandler = compileFinal (_assignChecksum + (preprocessFileLineNumbers "server\antihack\flagHandler.sqf"));
-	[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\serverSide.sqf"));
-	
 	LystoAntiAntiHack = compileFinal "false";
 	AntiAntiAntiAntiHack = compileFinal "false";
 	
