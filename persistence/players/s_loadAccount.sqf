@@ -10,7 +10,7 @@ private ["_UID", "_data", "_saveValid", "_getValue"];
 _UID = _this;
 _data = [];
 
-_saveValid = ([_UID call PDB_playerFileName, "PlayerSave", "Position", "STRING"] call iniDB_read != "");
+_saveValid = ([_UID call PDB_playerFileName, "PlayerSave", "Position", "STRING"] call PDB_read != ""); // iniDB_read
 _data pushBack ["PlayerSaveValid", _saveValid];
 
 _getValue =
@@ -18,9 +18,9 @@ _getValue =
 	private ["_name", "_type", "_section", "_value"];
 	_name = _this select 0;
 	_type = _this select 1;
-	_section = [_this, 2, "PlayerSave"] call BIS_fnc_param;
+	_section = if (count _this > 2) then { _this select 2 } else { "PlayerSave" };
 
-	_value = [_UID call PDB_playerFileName, _section, _name, _type] call iniDB_read;
+	_value = [_UID call PDB_playerFileName, _section, _name, _type] call PDB_read; // iniDB_read
 
 	if (!isNil "_value") then
 	{

@@ -10,7 +10,7 @@
 #define __scriptPath(a) __quoted(__concat4(__path,\fnc_,a,.sqf))
 #define __scriptName(a) __concat4(__autor_prefix,__addon_prefix,fnc_,a)
 #define __scriptPathHJ(a) __quoted(__concat4(__path,\CfgExplorer2\scripts\,a))
-#define __scriptPathReloader(a) __quoted(__concat4(__path,\Reloader\,a))
+#define __scriptPathReloader(a) __quoted(__concat4(__path,\reloader\,a))
 #define __preprocess compile preprocessFileLineNumbers
 #define GVAR(a) __concat3(__autor_prefix,__addon_prefix,a)
 #define PG_get(name) GVAR(name)

@@ -7,7 +7,7 @@
 
 if (!isServer) exitWith {};
 
-externalConfigFolder = "A3Wasteland_settings";
+externalConfigFolder = "\A3Wasteland_settings";
 
 vChecksum = compileFinal format ["'%1'", call generateKey];
 
@@ -15,7 +15,7 @@ vChecksum = compileFinal format ["'%1'", call generateKey];
 call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
 [] execVM "server\admins.sqf";
 [] execVM "server\functions\serverVars.sqf";
-_serverCompileHandle = [] execVM "server\functions\serverCompile.sqf";
+_serverCompileHandle = [] spawn compile preprocessFileLineNumbers "server\functions\serverCompile.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 [] execVM "server\functions\broadcaster.sqf";
 [] execVM "server\functions\relations.sqf";
 [] execVM (externalConfigFolder + "\init.sqf");
@@ -38,7 +38,7 @@ call compile preprocessFileLineNumbers "server\default_config.sqf";
 // load external config
 if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 {
-    call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
+	call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
 }
 else
 {
@@ -75,40 +75,65 @@ _warchestSavingOn = ["A3W_warchestSaving"] call isConfigOn;
 _warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
 _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
 
-_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || {_warchestSavingOn} || {_warchestMoneySavingOn} || {_beaconSavingOn});
+_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
 
 _setupPlayerDB = [] spawn {}; // blank script to feed scriptDone a non-nil value
 
 // Do we need any persistence?
 if (_playerSavingOn || _serverSavingOn) then
 {
-	// Our custom iniDB methods which fixes some issues with the current iniDB addon release
-	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
-	
-	_verIniDB = call iniDB_version;
-	
+	_verIniDB = "iniDB" callExtension "version";
+
 	if (_verIniDB == "") then
 	{
-		diag_log "[INFO] ### ERROR ### A3W NOT running with iniDB!";
-		diag_log "[INFO] ### ERROR ### Make sure iniDB.dll is in your Arma 3 folder, or otherwise that you have the @inidbi mod enabled!";
+		A3W_savingMethod = compileFinal "1";
+		A3W_savingMethodName = compileFinal "'profileNamespace'";
+
+		diag_log "[INFO] ### A3W NOT running with iniDB!";
+		diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
 	}
 	else
 	{
-		diag_log format ["[INFO] A3W running with iniDB v%1", _verIniDB];
+		A3W_savingMethod = compileFinal "2";
+
+		if (parseNumber _verIniDB > 1) then
+		{
+			A3W_savingMethodName = compileFinal "'iniDBI'";
+		}
+		else
+		{
+			A3W_savingMethodName = compileFinal "'iniDB'";
+		};
+
+		diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
 	};
+
+	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
+
+	diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
 
 	// Have we got player persistence enabled?
 	if (_playerSavingOn) then
 	{
-		_setupPlayerDB = execVM "persistence\players\s_setupPlayerDB.sqf";
+		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\players\s_setupPlayerDB.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 	};
 
-	// Have we got server persistence enabled?
-	if (_serverSavingOn) then
+	[_serverSavingOn, _playerSavingOn] spawn
 	{
-		execVM "persistence\world\oLoad.sqf";
+		_serverSavingOn = _this select 0;
+		_playerSavingOn = _this select 1;
+
+		if (_serverSavingOn) then
+		{
+			call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
+		};
+
+		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
+		{
+			execVM "persistence\world\oSave.sqf";
+		};
 	};
-	
+
 	{
 		diag_log format ["[INFO] A3W %1 = %2", _x select 0, if (_x select 1) then { "ON" } else { "OFF" }];
 	}
@@ -126,7 +151,7 @@ if (_playerSavingOn || _serverSavingOn) then
 
 call compile preprocessFileLineNumbers "server\functions\createTownMarkers.sqf";
 
-_createTriggers = execVM "territory\server\createCaptureTriggers.sqf";
+_createTriggers = [] spawn compile preprocessFileLineNumbers "territory\server\createCaptureTriggers.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 
 [_setupPlayerDB, _createTriggers] spawn
 {
@@ -143,7 +168,7 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 	setDate [2035, 6, _monthDay, _startHour, 0];
 };
 
-if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then 
+if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then
 {
 	diag_log "[INFO] A3W loot spawning is ENABLED";
 	execVM "addons\Lootspawner\Lootspawner.sqf";
@@ -153,42 +178,36 @@ if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn ||
 
 if (["A3W_serverSpawning"] call isConfigOn) then
 {
-    diag_log "WASTELAND SERVER - Initializing Server Spawning";
-	
+	diag_log "WASTELAND SERVER - Initializing Server Spawning";
+
 	if (["A3W_heliSpawning"] call isConfigOn) then
 	{
-		_heliSpawn = [] execVM "server\functions\staticHeliSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _heliSpawn};
+		call compile preprocessFileLineNumbers "server\functions\staticHeliSpawning.sqf";
 	};
-	
+
 	if (["A3W_vehicleSpawning"] call isConfigOn) then
 	{
-		_vehSpawn = [] execVM "server\functions\vehicleSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _vehSpawn};
+		call compile preprocessFileLineNumbers "server\functions\vehicleSpawning.sqf";
 	};
-	
+
 	if (["A3W_planeSpawning"] call isConfigOn) then
 	{
-		_planeSpawn = [] execVM "server\functions\planeSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _planeSpawn};
+		call compile preprocessFileLineNumbers "server\functions\planeSpawning.sqf";
 	};
-	
+
 	if (["A3W_boatSpawning"] call isConfigOn) then
 	{
-		_boatSpawn = [] execVM "server\functions\boatSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _boatSpawn};
+		call compile preprocessFileLineNumbers "server\functions\boatSpawning.sqf";
 	};
-	
+
 	if (["A3W_baseBuilding"] call isConfigOn) then
 	{
-		_objSpawn = [] execVM "server\functions\objectsSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _objSpawn};
+		call compile preprocessFileLineNumbers "server\functions\objectsSpawning.sqf";
 	};
-	
+
 	if (["A3W_boxSpawning"] call isConfigOn) then
 	{
-		_boxSpawn = [] execVM "server\functions\boxSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _boxSpawn};
+		call compile preprocessFileLineNumbers "server\functions\boxSpawning.sqf";
 	};
 };
 
@@ -208,9 +227,9 @@ else
 if (["A3W_serverMissions"] call isConfigOn) then
 {
 	diag_log "WASTELAND SERVER - Initializing Missions";
-    [] execVM "server\missions\sideMissionController.sqf";
-    sleep 5;
-    [] execVM "server\missions\mainMissionController.sqf";
+	[] execVM "server\missions\sideMissionController.sqf";
+	sleep 5;
+	[] execVM "server\missions\mainMissionController.sqf";
 	sleep 5;
 	[] execVM "server\missions\moneyMissionController.sqf";
 };

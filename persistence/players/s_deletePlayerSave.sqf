@@ -6,11 +6,12 @@ if (!isServer) exitWith {};
 private "_fileName";
 _fileName = _this call PDB_playerFileName;
 
-if (parseNumber (call iniDB_version) >= 1.2) then
+if (["A3W_savingMethod", 1] call getPublicVar == 2 && {parseNumber (call iniDB_version) < 1.2}) then
 {
-	[_fileName, "PlayerSave"] call iniDB_deleteSection;
+	// Required for iniDB v1.0
+	_fileName call iniDB_delete;
 }
 else
 {
-	_fileName call iniDB_delete;
+	[_fileName, "PlayerSave"] call PDB_deleteSection;
 };

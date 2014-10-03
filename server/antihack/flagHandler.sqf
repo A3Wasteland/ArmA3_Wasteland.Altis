@@ -28,7 +28,7 @@ if (typeName _this == "ARRAY" && {count _this > 4}) then
 		diag_log format ["ANTI-HACK 0.8.0: %1 (%2) was detected for [%3] with the value [%4]", _playerName, _playerID, _hackType, _hackValue];
 
 		// Save detection infos in iniDB file for easy retrieval
-		if (call iniDB_version != "") then
+		if (["A3W_savingMethod", 1] call getPublicVar == 2) then
 		{
 			["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write;
 		};
