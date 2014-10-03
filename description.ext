@@ -17,7 +17,7 @@ class Header
 {
 	gameType=Sandbox;
 	minPlayers=1;
-	maxPlayers=108;
+	maxPlayers=145; // 144 players, 1 headless client
 };
 author="Team Wasteland - A3Wasteland.com";
 onLoadName = "A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
@@ -56,4 +56,16 @@ class RscTitles
 	#include "addons\proving_ground\PG_rsctitles.hpp"
  	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
+};
+
+class CfgFunctions
+{
+	class A3W
+	{
+		class MissionSetup
+		{
+			class setupStoreNPC {file = "server\functions\setupStoreNPC.sqf"};
+			class setupMissionObject {file = "server\functions\setupMissionObject.sqf"};
+		};
+	};
 };

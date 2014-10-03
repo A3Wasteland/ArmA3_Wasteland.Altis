@@ -10,25 +10,37 @@
 #define SELL_VEH_CONTENTS_CONDITION "{!isNull objectFromNetId (player getVariable ['lastVehicleRidden', ''])}"
 #define SELL_BIN_CONDITION "(cursorTarget == _target)"
 
-private ["_npc", "_type", "_num", "_npcName"];
+private ["_npc", "_npcName", "_startsWith", "_building"];
 
 _npc = _this select 0;
-_type = _this select 1;
-_num = _this select 2;
+_npcName = vehicleVarName _npc;
+_npc setName _npcName;
+
+_npc allowDamage false;
+{ _npc disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
 
 if (hasInterface) then
 {
-	switch (toLower _type) do
+	_startsWith =
 	{
-		case "genstore":
+		private ["_needle", "_testArr"];
+		_needle = _this select 0;
+		_testArr = toArray (_this select 1);
+		_testArr resize count toArray _needle;
+		(toString _testArr == _needle)
+	};
+
+	switch (true) do
+	{
+		case (["GenStore", _npcName] call _startsWith):
 		{
 			_npc addAction ["<img image='client\icons\store.paa'/> Open General Store", "client\systems\generalStore\loadGenStore.sqf", [], 1, true, true, "", STORE_ACTION_CONDITION];
 		};
-		case "gunstore":
+		case (["GunStore", _npcName] call _startsWith):
 		{
 			_npc addAction ["<img image='client\icons\store.paa'/> Open Gun Store", "client\systems\gunStore\loadgunStore.sqf", [], 1, true, true, "", STORE_ACTION_CONDITION];
 		};
-		case "vehstore":
+		case (["VehStore", _npcName] call _startsWith):
 		{
 			_npc addAction ["<img image='client\icons\store.paa'/> Open Vehicle Store", "client\systems\vehicleStore\loadVehicleStore.sqf", [], 1, true, true, "", STORE_ACTION_CONDITION];
 		};
@@ -39,18 +51,31 @@ if (hasInterface) then
 	_npc addAction ["<img image='client\icons\money.paa'/> Sell last vehicle contents", "client\systems\selling\sellVehicleItems.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
 };
 
-_npcName = format ["%1%2", _type, _num];
-_npc setName _npcName;
-
-_npc allowDamage false;
-{ _npc disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
-
-private "_building";
-
 if (isServer) then
 {
 	_building = nearestBuilding _npc;
 	_npc setVariable ["storeNPC_nearestBuilding", netId _building, true];
+
+	_facesCfg = configFile >> "CfgFaces" >> "Man_A3";
+	_faces = [];
+
+	for "_i" from 0 to (count _facesCfg - 1) do
+	{
+		_faceCfg = _facesCfg select _i;
+
+		_faceTex = toArray getText (_faceCfg >> "texture");
+		_faceTex resize 1;
+		_faceTex = toString _faceTex;
+
+		if (_faceTex == "\") then
+		{
+			_faces pushBack configName _faceCfg;
+		};
+	};
+
+	_face = _faces call BIS_fnc_selectRandom;
+	_npc setFace _face;
+	_npc setVariable ["storeNPC_face", _face, true];
 }
 else
 {
@@ -78,9 +103,9 @@ _building allowDamage false; // disable building damage
 if (isServer) then
 {
 	removeAllWeapons _npc;
-	
+
 	waitUntil {!isNil "storeConfigDone"};
-	
+
 	{
 		if (_x select 0 == _npcName) exitWith
 		{
@@ -100,12 +125,12 @@ if (isServer) then
 				_deskDirMod = _deskDirMod select 0;
 			};
 
-			private "_storeOwnerAppearance";
-				
+			_storeOwnerAppearance = [];
+
 			{
 				if (_x select 0 == _npcName) exitWith
 				{
-					_storeOwnerAppearance = _x;
+					_storeOwnerAppearance = _x select 1;
 				};
 			} forEach (call storeOwnerConfigAppearance);
 
@@ -113,7 +138,7 @@ if (isServer) then
 				_type = _x select 0;
 				_classname = _x select 1;
 
-				switch (_type) do
+				switch (toLower _type) do
 				{
 					case "weapon":
 					{
@@ -140,10 +165,10 @@ if (isServer) then
 						};
 					};
 				};
-			} forEach (_storeOwnerAppearance select 1); 
+			} forEach _storeOwnerAppearance;
 
 			_pDir = getDir _npc;
-			
+
 			private "_bPos";
 			switch (toUpper typeName _npcPos) do
 			{
@@ -156,7 +181,7 @@ if (isServer) then
 					_bPos = _npcPos;
 				};
 			};
-			
+
 			_bPos = _building buildingPos _npcPos;
 
 			if (!isNil "_frontOffset") then
@@ -174,16 +199,17 @@ if (isServer) then
 			};
 
 			_desk = [_npc, _bPos, _pDir, _deskDirMod] call compile preprocessFileLineNumbers "server\functions\createStoreFurniture.sqf";
-			
+			_npc setVariable ["storeNPC_cashDesk", netId _desk, true];
+
 			sleep 1;
-			
+
 			_bbNPC = boundingBoxReal _npc;
 			_bbDesk = boundingBoxReal _desk;
 			_bcNPC = boundingCenter _npc;
 			_bcDesk = boundingCenter _desk;
-			
+
 			_npcHeightRel = (_desk worldToModel (getPosATL _npc)) select 2;
-			
+
 			// must be done twice for the direction to set properly
 			for "_i" from 1 to 2 do
 			{
@@ -192,20 +218,20 @@ if (isServer) then
 					_desk,
 					[
 						0,
-						
+
 						((_bcNPC select 1) - (_bcDesk select 1)) +
-						((_bbNPC select 1 select 1) - (_bcNPC select 1)) - 
+						((_bbNPC select 1 select 1) - (_bcNPC select 1)) -
 						((_bbDesk select 1 select 1) - (_bcDesk select 1)) + 0.1,
-						
+
 						_npcHeightRel
 					]
 				];
 				_npc setDir 180;
 			};
-			
+
 			detach _npc;
 			sleep 1;
-			
+
 			_npc enableSimulation false;
 			_desk enableSimulation false;
 		};
@@ -221,24 +247,23 @@ if (isServer) then
 // Add sell box in front of counter
 if (hasInterface) then
 {
-	private "_objs";
+	waitUntil {sleep 1; _npc getVariable ["storeNPC_setupComplete", false]};
 
-	waitUntil
+	_desk = objectFromNetId (_npc getVariable ["storeNPC_cashDesk", ""]);
+	_face = _npc getVariable ["storeNPC_face", ""];
+
+	if (_face != "") then
 	{
-		sleep 3;
-		_objs = _npc nearEntities ["Land_CashDesk_F", 10];
-		(count _objs > 0 || _npc getVariable ["storeNPC_setupComplete", false])
+		_npc setFace _face;
 	};
 
-	if (count _objs > 0) then
+	if (!isNull _desk) then
 	{
-		_desk = _objs select 0;
-
 		_sellBox = "Box_IND_Ammo_F" createVehicleLocal getPosATL _desk;
+		_sellBox allowDamage false;
 		_sellBox setVariable ["R3F_LOG_disabled", true];
 		_sellBox setVariable ["A3W_storeSellBox", true];
 		_sellBox setObjectTexture [0, ""]; // remove side marking
-		_sellBox allowDamage false;
 
 		clearBackpackCargo _sellBox;
 		clearMagazineCargo _sellBox;

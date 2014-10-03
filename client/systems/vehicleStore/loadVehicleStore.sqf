@@ -22,9 +22,12 @@ _planeButton = _Dialog displayCtrl vehshop_button4;
 _boatButton = _Dialog displayCtrl vehshop_button5;
 //_subButton = _Dialog displayCtrl vehshop_button6;
 _playerMoney ctrlSetText format["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
-_owner = _this select 0;
-currentOwnerName = name _owner;
-currentOwnerID = _owner;
+if (!isNil "_this") then { _owner = _this select 0 };
+if (!isNil "_owner") then
+{
+	currentOwnerID = _owner;
+	currentOwnerName = vehicleVarName _owner;
+};
 
 {
 	if (_x select 0 == currentOwnerName) exitWith
