@@ -2,7 +2,8 @@
 //	@file Name: salvage.sqf
 //	@file Author: Wiking, AgentRev
 //	@file Created: 27/07/2014 13:04
-//  Allows to salvage destroyed vehicles or the equipment of dead soldiers (and therefore hide bodies)
+
+// Salvaging of vehicle wrecks
 
 #define GET_ONE_TENTH_PRICE(PRICE) ((ceil (((PRICE) / 10) / 5)) * 5)
 
@@ -97,7 +98,7 @@ switch (true) do
 	case ({_vehClass isKindOf _x} count ["Quadbike_01_base_F", "Kart_01_Base_F", "Rubber_duck_base_F", "UAV_01_base_F"] > 0): // Quadbikes, karts, rubber boats, UAV_01
 	{
 		_time = 3;
-		_money = 10;
+		_money = 50;
 	};
 	default // Everything else
 	{

@@ -137,7 +137,8 @@ if (ismultiplayer && _mode == 0) then {
 				"spawnGroup",
 				"spawnVehicle",
 				"BIS_fnc_MP_packet",
-				"vChecksum"
+				"vChecksum",
+				"clientfunctionsquitsqf"
 			],
 			[str _params] call fn_filterString
 		] call fn_findString;

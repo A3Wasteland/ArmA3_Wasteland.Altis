@@ -34,13 +34,23 @@ if (!isServer) then
 	publicVariableServer "pvar_handleCorpseOnLeave";
 };
 
-_respawnPos = markerPos (switch (playerSide) do
+_respawnMarker = switch (playerSide) do
 {
 	case BLUFOR:      { "respawn_west" };
 	case OPFOR:       { "respawn_east" };
 	case INDEPENDENT: { "respawn_guerrila" };
 	default           { "respawn_civilian" };
-});
+};
+
+_respawnMarkers = [];
+{
+	if ([_respawnMarker, _x] call fn_startsWith) then
+	{
+		_respawnMarkers pushBack _x;
+	};
+} forEach allMapMarkers;
+
+_respawnPos = markerPos (_respawnMarkers call BIS_fnc_selectRandom);
 
 if !(_respawnPos isEqualTo [0,0,0]) then
 {
