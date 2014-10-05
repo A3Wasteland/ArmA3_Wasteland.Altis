@@ -84,6 +84,12 @@ _displayTerritoryActivity =
 
 _unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
 
+private ["_globalVoiceWarning", "_globalVoiceWarnTimer", "_globalVoiceMaxWarns", "_globalVoiceTimestamp"];
+
+_globalVoiceWarning = 0;
+_globalVoiceWarnTimer = ["A3W_globalVoiceWarnTimer", 5] call getPublicVar;
+_globalVoiceMaxWarns = ceil (["A3W_globalVoiceMaxWarns", 5] call getPublicVar);
+
 while {true} do
 {
 	private ["_ui","_vitals","_hudVehicle","_health","_tempString","_yOffset","_vehicle"];
@@ -253,6 +259,53 @@ while {true} do
 	// Remove unrealistic blur effects
 	if (!isNil "BIS_fnc_feedback_damageBlur" && {ppEffectCommitted BIS_fnc_feedback_damageBlur}) then { ppEffectDestroy BIS_fnc_feedback_damageBlur };
 	if (!isNil "BIS_fnc_feedback_fatigueBlur" && {ppEffectCommitted BIS_fnc_feedback_fatigueBlur}) then { ppEffectDestroy BIS_fnc_feedback_fatigueBlur };
+
+	// Global voice warning system
+	if (_globalVoiceWarnTimer > 0 && _globalVoiceMaxWarns > 0) then
+	{
+		if (!isNull findDisplay 55 && ctrlText (findDisplay 63 displayCtrl 101) == localize "str_channel_global") then
+		{
+			if (isNil "_globalVoiceTimestamp") then
+			{
+				_globalVoiceTimestamp = diag_tickTime;
+			}
+			else
+			{
+				if (diag_tickTime - _globalVoiceTimestamp >= _globalVoiceWarnTimer) then
+				{
+					_globalVoiceWarning = _globalVoiceWarning + 1;
+					_globalVoiceTimestamp = diag_tickTime;
+
+					_msgTitle = format ["Warning %1 of %2", _globalVoiceWarning, _globalVoiceMaxWarns];
+
+					if (_globalVoiceWarning < _globalVoiceMaxWarns) then
+					{
+						uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
+						["Please stop using the global voice channel, or you will be killed and crashed.", _msgTitle] spawn BIS_fnc_guiMessage;
+					}
+					else
+					{
+						_globalVoiceTimestamp = 1e11;
+						_msgTitle spawn
+						{
+							setPlayerRespawnTime 1e11;
+							player setDamage 1;
+							uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
+							["You have exceeded the tolerance limit for using the global voice channel. Goodbye.", _this] spawn BIS_fnc_guiMessage;
+							sleep 5;
+							uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
+							call compile preprocessFile "client\functions\quit.sqf"; // CTD
+						};
+					};
+				};
+			};
+		}
+		else
+		{
+			_globalVoiceTimestamp = nil;
+			_globalVoiceWarning = 0;
+		};
+	};
 
 	sleep 1;
 };
