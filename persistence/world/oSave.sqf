@@ -174,9 +174,9 @@ while {true} do
 
 					["TurretMagazines", _turretMags],
 
-					["AmmoCargo", _turretMags],
-					["FuelCargo", _turretMags],
-					["RepairCargo", _turretMags]
+					["AmmoCargo", _ammoCargo],
+					["FuelCargo", _fuelCargo],
+					["RepairCargo", _repairCargo]
 				];
 
 				sleep 0.01;
