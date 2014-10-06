@@ -1,4 +1,3 @@
-																																																												asaerw3rw3r4 = 1; Menu_Init_Lol = 1;
 //	@file Version: 1.2
 //	@file Name: init.sqf
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap
@@ -40,7 +39,7 @@ if (!isDedicated) then
 	[] spawn
 	{
 		9999 cutText ["Welcome to A3Wasteland, please wait for your client to initialize", "BLACK", 0.01];
-		
+
 		waitUntil {!isNull player};
 		removeAllWeapons player;
 		client_initEH = player addEventHandler ["Respawn", { removeAllWeapons (_this select 0) }];
