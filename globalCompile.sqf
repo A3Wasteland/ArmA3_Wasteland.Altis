@@ -21,7 +21,7 @@ mf_compile = compileFinal
 	private ["_path", "_isDebug", "_code"];
 	_path = "";
 	_isDebug = ' + _DEBUG + ';
-	
+
 	switch (toUpper typeName _this) do {
 		case "STRING": {
 			_path = _this;
@@ -35,18 +35,18 @@ mf_compile = compileFinal
 			_code set [count _code - 1, (toArray " ") select 0];
 		};
 	};
-	
+
 	if (isNil "_code") then {
 		if (_isDebug) then {
 			compile format ["call compile preProcessFileLineNumbers ""%1""", _path]
 		} else {
-			compileFinal preProcessFileLineNumbers _path
+			compileFinal preProcessFileLineNumbers _path;
 		};
 	} else {
 		if (_isDebug) then {
 			compile toString _code
 		} else {
-			compileFinal toString _code
+			compileFinal toString _code;
 		};
 	};
 ');
