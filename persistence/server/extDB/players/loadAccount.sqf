@@ -12,10 +12,11 @@ _player_uid = getPlayerUID _player;
 
 _data = [];
 
-if exists then {
+_result = [format["existPlayerInfo:%1", _player_uid],2] call extDB_async;
 
-	_result = [format["getPlayerSaveData", _player_uid],2] call extDB_async;
+if (_result select 0) then {
 
+	_result = [format["getPlayerSaveData:%1", _player_uid],2] call extDB_async;
 
 	_pos = _result select 3;
 	_playerSaveValid = false;
@@ -70,7 +71,7 @@ if exists then {
 }
 else
 {
-	[format["replacePlayerInfo:%1:%2", getPlayerUID _player, name _player], 2] call extDB_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
-}
+	[format["insertPlayerInfo:%1:%2", getPlayerUID _player, name _player], 2] call extDB_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
+};
 
 _data
