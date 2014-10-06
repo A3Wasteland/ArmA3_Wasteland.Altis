@@ -3,7 +3,21 @@
 //	@file Author: His_Shadow, AgentRev
 //	@file Created: 06/14/2013 05:13
 
+scriptName "buyVehicles";
+
 if (!isNil "storePurchaseHandle" && {typeName storePurchaseHandle == "SCRIPT"} && {!scriptDone storePurchaseHandle}) exitWith {hint "Please wait, your previous purchase is being processed"};
+
+if (!isNil "vehicleStore_lastPurchaseTime") then
+{
+	_timeLeft = (["A3W_vehiclePurchaseCooldown", 60] call getPublicVar) - (diag_tickTime - vehicleStore_lastPurchaseTime);
+	
+	if (_timeLeft > 0) then
+	{
+		hint format ["You need to wait %1s before buying another vehicle", ceil _timeLeft];
+		playSound "FD_CP_Not_Clear_F";
+		breakOut "buyVehicles";
+	};
+};
 
 #include "dialog\vehiclestoreDefines.hpp";
 
@@ -190,6 +204,8 @@ storePurchaseHandle = _this spawn
 		}
 		else
 		{
+			vehicleStore_lastPurchaseTime = diag_tickTime;
+			
 			player setVariable ["cmoney", _playerMoney - _price, true];
 			_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
 			
