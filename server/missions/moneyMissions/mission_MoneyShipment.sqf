@@ -7,7 +7,7 @@
 if (!isServer) exitwith {};
 #include "moneyMissionDefines.sqf";
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_MoneyShipment","_money","_convoys","_vehChoices","_moneyKilos","_moneyUnits","_strMoneyUnits","_moneyText","_vehClasses","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_MoneyShipment","_money","_convoys","_vehChoices","_moneyKilos","_moneyUnits","_strMoneyUnits","_moneyText","_vehClasses","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader","_markertext"];
 
 _missionMarkerName = "Money_Shipment";
 _missionType = "Money Shipment";
@@ -39,7 +39,8 @@ _MoneyShipment =
 				["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"], // Veh 1
 				["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"] // Veh 2
 			]
-		]
+		], 
+		"Easy armed Money Shipment" //Marker Text
 	],
 	// Medium
 	[
@@ -60,7 +61,8 @@ _MoneyShipment =
 				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F"], // Veh 2
 				["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"] // Veh 3
 			]
-		]
+		], 
+		"Medium armed Money Shipment" //Marker Text
 	],
 	// Hard
 	[
@@ -70,7 +72,7 @@ _MoneyShipment =
 				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F"], // Veh 1
 				["B_MBT_01_cannon_F", "B_MBT_01_TUSK_F"], // Veh 2
 				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F"] // Veh 3
-			],
+			], 
 			[ // CSAT convoy
 				["O_APC_Wheeled_02_rcws_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F"], // Veh 1
 				["O_MBT_02_cannon_F"], // Veh 2
@@ -81,7 +83,8 @@ _MoneyShipment =
 				["I_MBT_03_cannon_F"], // Veh 2
 				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F"] // Veh 3
 			]
-		]
+		], 
+		"Hard armed Money Shipment" //Marker Text
 	],
 	// Extreme
 	[
@@ -105,13 +108,15 @@ _MoneyShipment =
 				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F", "I_MBT_03_cannon_F"], // Veh 3
 				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F", "I_MBT_03_cannon_F"] // Veh 4
 			]
-		]
+		], 
+		"Extreme armed Money Shipment" //Marker Text
 	]
 ]
 call BIS_fnc_selectRandom;
 
 _money = _MoneyShipment select 0;
 _convoys = _MoneyShipment select 1;
+_markertext = _MoneyShipment select 2;
 _vehChoices = _convoys call BIS_fnc_selectRandom;
 
 _moneyText = format ["$%1", [_money] call fn_numbersText];
@@ -312,7 +317,7 @@ _marker = createMarker [_missionMarkerName, position leader _group];
 _marker setMarkerType "mil_destroy";
 _marker setMarkerSize [1.25, 1.25];
 _marker setMarkerColor "ColorRed";
-_marker setMarkerText "Armed Money Shipment";
+_marker setMarkerText _markertext;
 
 _picture = getText (configFile >> "CfgVehicles" >> _veh2 >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _veh2 >> "displayName");
