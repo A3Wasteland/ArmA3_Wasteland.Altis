@@ -7,7 +7,7 @@
 if (!isServer) exitwith {};
 #include "moneyMissionDefines.sqf";
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_MoneyShipment","_money","_convoys","_vehChoices","_moneyKilos","_moneyUnits","_strMoneyUnits","_moneyText","_vehClasses","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_MoneyShipment","_markerText","_money","_convoys","_vehChoices","_moneyKilos","_moneyUnits","_strMoneyUnits","_moneyText","_vehClasses","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader"];
 
 _missionMarkerName = "Money_Shipment";
 _missionType = "Money Shipment";
@@ -25,6 +25,7 @@ _MoneyShipment =
 [
 	// Easy
 	[
+		"Small Money Shipment", // Marker text
 		25000, // Money
 		[
 			[ // NATO convoy
@@ -43,6 +44,7 @@ _MoneyShipment =
 	],
 	// Medium
 	[
+		"Medium Money Shipment", // Marker text
 		50000, // Money
 		[
 			[ // NATO convoy
@@ -64,6 +66,7 @@ _MoneyShipment =
 	],
 	// Hard
 	[
+		"Large Money Shipment", // Marker text
 		75000, // Money
 		[
 			[ // NATO convoy
@@ -85,6 +88,7 @@ _MoneyShipment =
 	],
 	// Extreme
 	[
+		"Heavy Money Shipment", // Marker text
 		100000, // Money
 		[
 			[ // NATO convoy
@@ -110,8 +114,9 @@ _MoneyShipment =
 ]
 call BIS_fnc_selectRandom;
 
-_money = _MoneyShipment select 0;
-_convoys = _MoneyShipment select 1;
+_markerText = _MoneyShipment select 0;
+_money = _MoneyShipment select 1;
+_convoys = _MoneyShipment select 2;
 _vehChoices = _convoys call BIS_fnc_selectRandom;
 
 _moneyText = format ["$%1", [_money] call fn_numbersText];
@@ -312,7 +317,7 @@ _marker = createMarker [_missionMarkerName, position leader _group];
 _marker setMarkerType "mil_destroy";
 _marker setMarkerSize [1.25, 1.25];
 _marker setMarkerColor "ColorRed";
-_marker setMarkerText "Armed Money Shipment";
+_marker setMarkerText _markerText;
 
 _picture = getText (configFile >> "CfgVehicles" >> _veh2 >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _veh2 >> "displayName");
@@ -323,7 +328,7 @@ if ([_vehicleName, (count toArray _vehicleName) - 10] call BIS_fnc_trimString ==
 	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 11] call BIS_fnc_trimString;
 };
 
-_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> carrying a unit of soldiers transporting " + _moneyText + " is on route with assistance. Stop them! Be aware that the money is divided among both units!</t>", _missionType, _picture, _vehicleName, moneyMissionColor, subTextColor];
+_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> carrying a unit of soldiers transporting " + _moneyText + " is on route with assistance. Stop them!</t>", _markerText, _picture, _vehicleName, moneyMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1", _missionType];
@@ -353,7 +358,7 @@ if(_failed) then
 	{if (vehicle _x != _x) then { deleteVehicle vehicle _x; }; deleteVehicle _x;}forEach units _group;
 	{deleteVehicle _x;}forEach units _group;
 	deleteGroup _group; 
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
+    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _markerText, _picture, _vehicleName, failMissionColor, subTextColor];
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Money Mission Failed: %1",_missionType];
 } else {
@@ -369,14 +374,14 @@ if(_failed) then
 	// give the rewards
 	for "_x" from 1 to 10 do
 	{
-		_cash = createVehicle ["Land_Money_F", (markerPos _marker) vectorAdd ([[1 + random 2,0,0], random 360] call BIS_fnc_rotateVector2D), [], 0, "None"];
+		_cash = createVehicle ["Land_Money_F", (markerPos _marker) vectorAdd ([[3 + random 3,0,0], random 360] call BIS_fnc_rotateVector2D), [], 0, "CAN_COLLIDE"];
 		_cash setDir random 360;
 		_cash setVariable["cmoney", _money / 10, true];
 		_cash setVariable["owner","world",true];
 	};
 	
 	deleteGroup _group; 	
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The Money Shipment has been stopped, the cash is now yours to take.</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
+    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The Money Shipment has been stopped, the cash is now yours to take.</t>", _markerText, _picture, _vehicleName, successMissionColor, subTextColor];
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Money Mission Success: %1",_missionType];
 };
