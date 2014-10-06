@@ -20,6 +20,7 @@ A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (
 A3W_bleedingTime = 60;             // Time in seconds for which to allow revive after a critical injury (minimum 10 seconds)
 
 // Persistence settings
+A3W_extDB_MapID = 1;			   // extDB ServerMap ID
 A3W_extension = "";				   // Extension to use, "iniDB", "extDB", "" for None.
 A3W_playerSaving = 1;              // Save player data like position, health, inventory, etc. (0 = no, 1 = yes)
 A3W_moneySaving = 1;               // If playerSaving = 1, save player money amount (0 = no, 1 = yes)

@@ -28,7 +28,7 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 
 			{
 				// TODO Redo is Inefficent, overhead + overhead in PV
-				[format["updatePlayerSaveValue:%1:%2:%3", _player_uid, (_x select 0), (_x select 1)]] call extDB_async;
+				[format["updatePlayerSaveValue:%1:%2:%3:%4", call(A3W_extDB_MapID), _player_uid, (_x select 0), (_x select 1)]] call extDB_async;
 			} forEach _data;
 		};
 

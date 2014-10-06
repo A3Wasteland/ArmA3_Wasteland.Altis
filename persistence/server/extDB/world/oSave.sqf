@@ -36,7 +36,7 @@ while {true} do
 {
 	uiSleep 60;
 
-	_oldObjCount = ["countAllServerObjects", 2] call extDB_async;
+	_oldObjCount = (["countAllServerObjects", 2] call extDB_async) select 0;
 	_objCount = 0;
 
 	{
