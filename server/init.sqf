@@ -46,26 +46,27 @@ else
 	diag_log "[WARNING] For more information go to http://forums.a3wasteland.com/";
 };
 
-A3W_startingMoney = compileFinal str A3W_startingMoney;
-A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
-A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
-A3W_playerSaving = compileFinal str A3W_playerSaving;
-A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
-A3W_unlimitedStamina = compileFinal str A3W_unlimitedStamina;
-A3W_bleedingTime = compileFinal str A3W_bleedingTime;
-A3W_teamPlayersMap = compileFinal str A3W_teamPlayersMap;
-A3W_remoteBombStoreRadius = compileFinal str A3W_remoteBombStoreRadius;
-
-// Broadcast config variables
-publicVariable "A3W_startingMoney";
-publicVariable "A3W_showGunStoreStatus";
-publicVariable "A3W_gunStoreIntruderWarning";
-publicVariable "A3W_playerSaving";
-publicVariable "A3W_combatAbortDelay";
-publicVariable "A3W_unlimitedStamina";
-publicVariable "A3W_bleedingTime";
-publicVariable "A3W_teamPlayersMap";
-publicVariable "A3W_remoteBombStoreRadius";
+// compileFinal & broadcast client config variables
+{
+	missionNamespace setVariable [_x, compileFinal str (missionNamespace getVariable _x)];
+	publicVariable _x;
+}
+forEach
+[
+	"A3W_startingMoney",
+	"A3W_showGunStoreStatus",
+	"A3W_gunStoreIntruderWarning",
+	"A3W_playerSaving",
+	"A3W_combatAbortDelay",
+	"A3W_unlimitedStamina",
+	"A3W_bleedingTime",
+	"A3W_teamPlayersMap",
+	"A3W_remoteBombStoreRadius",
+	"A3W_vehiclePurchaseCooldown",
+	"A3W_globalVoiceWarnTimer",
+	"A3W_globalVoiceMaxWarns",
+	"A3W_antiHackMinRecoil"
+];
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;

@@ -303,7 +303,6 @@ while {true} do
 		else
 		{
 			_globalVoiceTimestamp = nil;
-			_globalVoiceWarning = 0;
 		};
 	};
 

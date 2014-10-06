@@ -14,7 +14,7 @@ if (!alive player) exitWith {};
 _wait = false;
 _pos = getPosATL player;
 
-if (_pos select 2 < 20) then
+if (_pos select 2 < 10) then
 {
 	_para = createVehicle ["NonSteerable_Parachute_F", _pos, [], 0, "FLY"];
 	_para setPosATL _pos;

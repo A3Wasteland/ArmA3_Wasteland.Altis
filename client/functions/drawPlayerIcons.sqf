@@ -47,6 +47,7 @@ drawPlayerIcons_thread = [] spawn
 				if (side group _unit == playerSide && // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
 				   {alive _unit &&
 				   (_unit != player || cameraOn != vehicle player) &&
+				   (isNil "HeadlessClient" || {_unit != HeadlessClient}) &&
 				   {!(_unit getVariable ["playerSpawning", false]) &&
 				   (vehicle _unit != getConnectedUAV player || cameraOn != vehicle _unit)}}) then // do not show UAV AI icons when controlling UAV
 				{
