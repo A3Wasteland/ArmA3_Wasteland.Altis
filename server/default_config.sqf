@@ -1,7 +1,7 @@
 // A3Wasteland config file
 // You will need to shutdown the server to edit settings in this file!
 // To enable base saving your server NEEDS to run iniDBI! Get the A3W Saving Pack at https://github.com/A3Wasteland/Release_Files
-// if you have any doubts and/or questions about the mission find us at a3wasteland.com 
+// if you have any doubts and/or questions about the mission find us at a3wasteland.com
 // This file is overriden by the external file "A3Wasteland_settings\main_config.sqf" if present
 
 // General settings
@@ -19,7 +19,8 @@ A3W_startingMoney = 100;           // Amount of money that players start with
 A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (0 = no, 1 = yes) - this also removes energy drinks from the mission
 A3W_bleedingTime = 60;             // Time in seconds for which to allow revive after a critical injury (minimum 10 seconds)
 
-// Persistence settings (requires iniDBI)
+// Persistence settings
+A3W_extension = "";				   // Extension to use, "iniDB", "extDB", "" for None.
 A3W_playerSaving = 1;              // Save player data like position, health, inventory, etc. (0 = no, 1 = yes)
 A3W_moneySaving = 1;               // If playerSaving = 1, save player money amount (0 = no, 1 = yes)
 A3W_combatAbortDelay = 60;         // If playerSaving = 1, delay in seconds for which to disable abort and respawn buttons after firing or being shot (0 = none)

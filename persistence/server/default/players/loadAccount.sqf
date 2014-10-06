@@ -1,30 +1,30 @@
 //	@file Version: 1.0
-//	@file Name: s_loadAccount.sqf
+//	@file Name: loadAccount.sqf
 //	@file Author: AgentRev
 //	@file Created: 25/02/2014 22:21
 
 if (!isServer) exitWith {};
 
-private ["_UID", "_data", "_saveValid", "_getValue"];
+private ["_player_uid", "_data", "_playerSaveValid", "_getValue"];
 
-_UID = _this;
+_player_uid = _this;
 _data = [];
 
-_saveValid = ([_UID call PDB_playerFileName, "PlayerSave", "Position", "STRING"] call PDB_read != ""); // iniDB_read
-_data pushBack ["PlayerSaveValid", _saveValid];
+_playerSaveValid = ([_player_uid call PDB_playerFileName, "PlayerSave", "Position", "STRING"] call PDB_read != ""); // iniDB_read
+_data pushBack ["PlayerSaveValid", _playerSaveValid];
 
 _getValue =
 {
-	private ["_name", "_type", "_section", "_value"];
-	_name = _this select 0;
+	private ["_key", "_type", "_section", "_value"];
+	_key = _this select 0;
 	_type = _this select 1;
 	_section = if (count _this > 2) then { _this select 2 } else { "PlayerSave" };
 
-	_value = [_UID call PDB_playerFileName, _section, _name, _type] call PDB_read; // iniDB_read
+	_value = [_player_uid call PDB_playerFileName, _section, _key, _type] call PDB_read; // iniDB_read
 
 	if (!isNil "_value") then
 	{
-		_data pushBack [_name, _value];
+		_data pushBack [_key, _value];
 	};
 };
 

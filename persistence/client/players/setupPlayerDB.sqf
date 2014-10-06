@@ -1,11 +1,11 @@
-//	@file Name: c_setupPlayerDB.sqf
+//	@file Name: setupPlayerDB.sqf
 //	@file Author: AgentRev
 
 if (isDedicated) exitWith {};
 
-fn_applyPlayerData = "persistence\players\c_applyPlayerData.sqf" call mf_compile;
-fn_applyPlayerInfo = "persistence\players\c_applyPlayerInfo.sqf" call mf_compile;
-fn_savePlayerData = "persistence\players\c_savePlayerData.sqf" call mf_compile;
+fn_applyPlayerData = "persistence\client\players\applyPlayerData.sqf" call mf_compile;
+fn_applyPlayerInfo = "persistence\client\players\applyPlayerInfo.sqf" call mf_compile;
+fn_savePlayerData = "persistence\client\players\savePlayerData.sqf" call mf_compile;
 
 fn_requestPlayerData =
 {
@@ -14,7 +14,7 @@ fn_requestPlayerData =
 	playerData_resetPos = nil;
 	requestPlayerData = player;
 	publicVariableServer "requestPlayerData";
-} call mf_compile; 
+} call mf_compile;
 
 fn_deletePlayerData =
 {
@@ -23,6 +23,11 @@ fn_deletePlayerData =
 	playerData_gear = "";
 } call mf_compile;
 
+
+"savedPlayerInfo" addPublicVariableEventHandler
+{
+	playerInfo_saved = true;
+};
 
 "applyPlayerData" addPublicVariableEventHandler
 {
@@ -82,3 +87,6 @@ fn_deletePlayerData =
 		playerData_loaded = true;
 	};
 };
+
+addPlayerInfo = player;
+publicVariableServer "addPlayerInfo";

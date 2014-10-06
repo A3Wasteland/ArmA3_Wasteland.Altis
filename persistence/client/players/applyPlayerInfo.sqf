@@ -1,4 +1,4 @@
-//	@file Name: c_applyPlayerInfo.sqf
+//	@file Name: applyPlayerInfo.sqf
 //	@file Author: AgentRev
 
 // This is where you load custom player variables that must persist between deaths, i.e. bank money amount if you have an ATM addon

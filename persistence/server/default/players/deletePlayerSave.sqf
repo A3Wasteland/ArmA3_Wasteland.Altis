@@ -1,4 +1,4 @@
-//	@file Name: s_deletePlayerSave.sqf
+//	@file Name: deletePlayerSave.sqf
 //	@file Author: AgentRev
 
 if (!isServer) exitWith {};

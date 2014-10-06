@@ -12,7 +12,6 @@ savePlayerHandle = _this spawn
 	   {!isNil "respawnDialogActive" && {!respawnDialogActive}} &&
 	   {player getVariable ["FAR_isUnconscious", 0] == 0}) then
 	{
-		_UID = getPlayerUID player;
 		_manualSave = [_this, 0, false, [false]] call BIS_fnc_param;
 
 		// In case script is triggered via menu action
@@ -20,15 +19,6 @@ savePlayerHandle = _this spawn
 		{
 			_manualSave = [_this, 3, false, [false]] call BIS_fnc_param;
 		};
-
-		_info =
-		[
-			["UID", _UID],
-			["Name", name player],
-			["LastGroupSide", str side group player],
-			["LastPlayerSide", str playerSide]/*,
-			["BankMoney", player getVariable ["bmoney", 0]]*/ // Not implemented in vanilla mission
-		];
 
 		_hitPoints = [];
 		{
@@ -161,7 +151,7 @@ savePlayerHandle = _this spawn
 
 		if (alive player) then
 		{
-			savePlayerData = [_UID, _info, _data, player];
+			savePlayerData = [player, getPlayerUID player, str side group player, str playerSide, player getVariable ["bmoney",0], _data];
 			publicVariableServer "savePlayerData";
 
 			if (_manualSave) then

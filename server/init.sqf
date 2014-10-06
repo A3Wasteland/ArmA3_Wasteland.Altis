@@ -46,6 +46,7 @@ else
 	diag_log "[WARNING] For more information go to http://forums.a3wasteland.com/";
 };
 
+A3W_extension = compileFinal str A3W_extension;
 A3W_startingMoney = compileFinal str A3W_startingMoney;
 A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
 A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
@@ -80,57 +81,95 @@ _serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _wa
 _setupPlayerDB = [] spawn {}; // blank script to feed scriptDone a non-nil value
 
 // Do we need any persistence?
+
 if (_playerSavingOn || _serverSavingOn) then
 {
-	_verIniDB = "iniDB" callExtension "version";
+	_persistence = "default";
 
-	if (_verIniDB == "") then
-	{
-		A3W_savingMethod = compileFinal "1";
-		A3W_savingMethodName = compileFinal "'profileNamespace'";
+	switch (call A3W_extension) do {
+		case "iniDB": {  // iniDB
+					_result = "iniDB" callExtension "version";
+					if (_result == "") exitWith
+					{
+					// Fall Back to ProfileNameSpace
+						A3W_savingMethod = compileFinal "1";
+						A3W_savingMethodName = compileFinal "'profileNamespace'";
+						diag_log "[INFO] ### A3W NOT running with iniDB!";
+						diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
+						call compile preProcessFileLineNumbers format["persistence\server\%1\init.sqf", _persistence];
+					};
 
-		diag_log "[INFO] ### A3W NOT running with iniDB!";
-		diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
-	}
-	else
-	{
-		A3W_savingMethod = compileFinal "2";
+					A3W_savingMethod = compileFinal "2";
+					if (parseNumber _verIniDB > 1) then
+					{
+						A3W_savingMethodName = compileFinal "'iniDBI'";
+					}
+					else
+					{
+						A3W_savingMethodName = compileFinal "'iniDB'";
+					};
+					diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
+					call compile preProcessFileLineNumbers format["persistence\server\%1\init.sqf", _persistence];
+				};
+		case "extDB": {  // extDB
+					_result = "extDB" callExtension "9:VERSION";
+					if (parseNumber _result < 19) exitWith
+					{
+						// Fall Back to ProfileNameSpace
+						A3W_savingMethod = compileFinal "1";
+						diag_log "[INFO] ### A3W NOT running with extDB!";
+						if (_result != "") then {diag_log format["[INFO] ### A3W Requires extDB v19 or later: extDB v%1 Detected", _result];};
 
-		if (parseNumber _verIniDB > 1) then
-		{
-			A3W_savingMethodName = compileFinal "'iniDBI'";
-		}
-		else
-		{
-			A3W_savingMethodName = compileFinal "'iniDB'";
-		};
+						A3W_savingMethodName = compileFinal "'profileNamespace'";
+						diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
+					};
 
-		diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
+					_persistence = "extDB";
+					_result = [] call compile preProcessFileLineNumbers format["persistence\server\%1\init.sqf", _persistence];
+
+					if (_result) then {
+						A3W_savingMethod = compileFinal "3";
+						A3W_savingMethodName = compileFinal "'extDB'";
+					}
+					else
+					{
+						_persistence = "default";
+						diag_log "[INFO] ### A3W extDB failed to start!";
+						A3W_savingMethod = compileFinal "1";
+						A3W_savingMethodName = compileFinal "'profileNamespace'";
+						diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
+						call compile preProcessFileLineNumbers format["persistence\server\%1\init.sqf", _persistence];
+					};
+				};
+		default {  // Profile Space
+					A3W_savingMethod = compileFinal "1";
+					A3W_savingMethodName = compileFinal "'profileNamespace'";
+					diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
+					call compile preProcessFileLineNumbers format["persistence\server\%1\init.sqf", _persistence];
+				};
 	};
 
-	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
-
-	diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
 
 	// Have we got player persistence enabled?
 	if (_playerSavingOn) then
 	{
-		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\players\s_setupPlayerDB.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
+		_setupPlayerDB = [_persistence] spawn compile preprocessFileLineNumbers format["persistence\server\%1\players\setupPlayerDB.sqf", _persistence]; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 	};
 
-	[_serverSavingOn, _playerSavingOn] spawn
+	[_serverSavingOn, _playerSavingOn, _persistence] spawn
 	{
 		_serverSavingOn = _this select 0;
 		_playerSavingOn = _this select 1;
+		_persistence = _this select 2;
 
 		if (_serverSavingOn) then
 		{
-			call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
+			call compile preprocessFileLineNumbers format["persistence\server\%1\world\oLoad.sqf", _persistence];
 		};
 
 		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
 		{
-			execVM "persistence\world\oSave.sqf";
+			execVM format["persistence\server\%1\world\oSave.sqf", _persistence];
 		};
 	};
 
