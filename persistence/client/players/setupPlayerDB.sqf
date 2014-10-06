@@ -24,11 +24,6 @@ fn_deletePlayerData =
 } call mf_compile;
 
 
-"savedPlayerInfo" addPublicVariableEventHandler
-{
-	playerInfo_saved = true;
-};
-
 "applyPlayerData" addPublicVariableEventHandler
 {
 	_this spawn

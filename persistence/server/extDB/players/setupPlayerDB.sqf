@@ -3,16 +3,9 @@
 
 if (!isServer) exitWith {};
 
-fn_createPlayerInfo = "persistence\server\extDB\players\createPlayerInfo.sqf" call mf_compile;
 fn_deletePlayerSave = "persistence\server\extDB\players\deletePlayerSave.sqf" call mf_compile;
 fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_compile;
 
-
-"addPlayerInfo" addPublicVariableEventHandler
-{
-	_player = _this select 1;
-	_player spawn fn_createPlayerInfo;
-};
 
 "savePlayerData" addPublicVariableEventHandler
 {
@@ -48,19 +41,8 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 "requestPlayerData" addPublicVariableEventHandler
 {
 	_player = _this select 1;
-	_player_uid = getPlayerUID _player;
 
-	_playersave_exists = [format["existPlayerSave:%1",_player_uid]] call extDB_async;
-
-	if (_playersave_exists) then // iniDB_exists
-	{
-		applyPlayerData = _player_uid call fn_loadAccount;
-	}
-	else
-	{
-		applyPlayerData = [];
-		[format["replacePlayerSave:%1", _player_uid],2] call extDB_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
-	};
+	applyPlayerData = _player call fn_loadAccount;
 
 	(owner _player) publicVariableClient "applyPlayerData";
 };

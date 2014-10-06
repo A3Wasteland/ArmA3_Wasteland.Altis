@@ -67,11 +67,8 @@ player setVariable ["cmoney", _baseMoney, true];
 // Player saving - Load from iniDB
 if (["A3W_playerSaving"] call isConfigOn) then
 {
-	savedPlayerInfo = nil;
 	call compile preprocessFileLineNumbers "persistence\client\players\setupPlayerDB.sqf";
 
-	9999 cutText ["Server Updating Player Info", "BLACK", 0.01];
-	waitUntil {sleep 0.1; !isNil "playerInfo_saved"};
 	9999 cutText ["Requesting Player Info", "BLACK", 0.01];
 	call fn_requestPlayerData;
 	9999 cutText ["Received Player Info", "BLACK", 0.01];

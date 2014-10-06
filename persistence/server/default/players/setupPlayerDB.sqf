@@ -3,16 +3,9 @@
 
 if (!isServer) exitWith {};
 
-fn_createPlayerInfo = "persistence\server\default\players\createPlayerInfo.sqf" call mf_compile;
 fn_deletePlayerSave = "persistence\server\default\players\deletePlayerSave.sqf" call mf_compile;
 fn_loadAccount = "persistence\server\default\players\loadAccount.sqf" call mf_compile;
 
-
-"addPlayerInfo" addPublicVariableEventHandler
-{
-	_player = _this select 1;
-	_player spawn fn_createPlayerInfo;
-};
 
 "savePlayerData" addPublicVariableEventHandler
 {
@@ -47,16 +40,8 @@ fn_loadAccount = "persistence\server\default\players\loadAccount.sqf" call mf_co
 "requestPlayerData" addPublicVariableEventHandler
 {
 	_player = _this select 1;
-	_player_uid = getPlayerUID _player;
 
-	if ((_player_uid call PDB_playerFileName) call PDB_exists) then // iniDB_exists
-	{
-		applyPlayerData = _player_uid call fn_loadAccount;
-	}
-	else
-	{
-		applyPlayerData = [];
-	};
+	applyPlayerData = _player call fn_loadAccount;
 
 	(owner _player) publicVariableClient "applyPlayerData";
 };
