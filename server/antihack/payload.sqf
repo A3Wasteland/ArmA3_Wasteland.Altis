@@ -5,10 +5,9 @@
 
 if (isDedicated) exitWith {};
 
-private ["_cheatFlag", "_cfgPatches", "_patchClass", "_defaultRecoil", "_currentRecoil", "_recoilDifference", "_loopCount", "_sign"];
+private ["_cheatFlag", "_cfgPatches", "_patchClass", "_minRecoil", "_currentRecoil", "_loopCount"];
 
 waitUntil {!isNull player};
-_defaultRecoil = unitRecoilCoefficient player;
 
 // diag_log "ANTI-HACK 0.8.0 starting...";
 
@@ -53,21 +52,13 @@ while { true } do
 		// diag_log "ANTI-HACK 0.8.0: Recoil hack check started!";
 		
 		_currentRecoil = unitRecoilCoefficient player;
+		_minRecoil = (["A3W_antiHackMinRecoil", 1.0] call getPublicVar) - 0.001;
 		
-		if ((_currentRecoil < _defaultRecoil - 0.001 || _currentRecoil > _defaultRecoil + 0.001) && {_defaultRecoil != -1 && _currentRecoil != -1}) then
+		if (_currentRecoil < _minRecoil && _currentRecoil != -1) then
 		{
 			// diag_log "ANTI-HACK 0.8.0: Detected recoil hack!";
 			
-			_recoilDifference = ((_currentRecoil / _defaultRecoil) - 1) * 100;
-			_sign = "";
-			
-			switch (true) do
-			{
-				case (_recoilDifference > 0): { _sign = "+" };
-				case (_recoilDifference < 0): { _sign = "-" };
-			};
-			
-			_cheatFlag = ["recoil hack", _sign + (str ceil abs _recoilDifference) + "% difference"];
+			_cheatFlag = ["recoil hack", format ["%1%2 recoil", ceil (_currentRecoil * 100), "%"]];
 		};
 	};
 	
