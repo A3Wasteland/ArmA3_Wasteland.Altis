@@ -146,7 +146,7 @@ savePlayerHandle = _this spawn
 
 		// Check if Gear needs to be updated
 		_gearStr = str _gear;
-		if (_gearStr != ["playerData_gear", ""] call getPublicVar) then
+		if (_gearStr != (["playerData_gear", ""] call getPublicVar)) then
 		{
 			playerData_gear = _gearStr;
 		}
