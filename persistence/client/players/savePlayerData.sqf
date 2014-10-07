@@ -26,47 +26,25 @@ savePlayerHandle = _this spawn
 			_hitPoints pushBack [_hitPoint, player getHitPointDamage _hitPoint];
 		} forEach (player call getHitPoints);
 
-		_data =
-		[
-			["Damage", damage player],
-			["HitPoints", _hitPoints],
-			["Hunger", ["hungerLevel", 0] call getPublicVar],
-			["Thirst", ["thirstLevel", 0] call getPublicVar],
-			["Money", player getVariable ["cmoney", 0]] // Money is always saved, but only restored if A3W_moneySaving = 1
-		];
 
+		_player_pos_info = [];
 		// Only save those when on ground or underwater (you probably wouldn't want to spawn 500m in the air if you get logged off in flight)
 		if (isTouchingGround vehicle player || {(getPos player) select 2 < 0.5 || (getPosASL player) select 2 < 0.5}) then
 		{
-			_data pushBack ["Position", getPosATL player];
-			_data pushBack ["Direction", direction player];
+			_player_pos_info pushBack getPosATL player; // "Position"
+			_player_pos_info pushBack direction player; // "Direction"
 
 			if (vehicle player == player) then
 			{
-				_data pushBack ["CurrentWeapon", format ["%1", currentMuzzle player]]; // currentMuzzle returns a number sometimes, hence the format
-				_data pushBack ["Stance", [player, ["P"]] call getMoveParams];
+				_player_pos_info pushBack format ["%1", currentMuzzle player];  // "CurrentWeapon" currentMuzzle returns a number sometimes, hence the format
+				_player_pos_info pushBack ([player, ["P"]] call getMoveParams); 	// "Stance",
+			}
+			else
+			{
+				_player_pos_info pushBack "";
+				_player_pos_info pushBack "";
 			};
 		};
-
-		_gear =
-		[
-			["Uniform", uniform player],
-			["Vest", vest player],
-			["Backpack", backpack player],
-			["Goggles", goggles player],
-			["Headgear", headgear player],
-
-			["PrimaryWeapon", primaryWeapon player],
-			["SecondaryWeapon", secondaryWeapon player],
-			["HandgunWeapon", handgunWeapon player],
-
-			["PrimaryWeaponItems", primaryWeaponItems player],
-			["SecondaryWeaponItems", secondaryWeaponItems player],
-			["HandgunItems", handgunItems player],
-
-			["AssignedItems", assignedItems player]
-		];
-
 
 		_uMags = [];
 		_vMags = [];
@@ -115,21 +93,26 @@ savePlayerHandle = _this spawn
 			};
 		} forEach magazinesAmmoFull player;
 
-		_data pushBack ["UniformWeapons", (getWeaponCargo uniformContainer player) call cargoToPairs];
-		_data pushBack ["UniformItems", (getItemCargo uniformContainer player) call cargoToPairs];
-		_data pushBack ["UniformMagazines", _uMags];
+		_player_data =
+		[
+			damage player,  											// "Damage"
+			_hitPoints, 												// "HitPoints"
+			["hungerLevel", 0] call getPublicVar, 						// "Hunger"
+			["thirstLevel", 0] call getPublicVar, 						// "Thirst"
+			player getVariable ["cmoney", 0], 							// Money is always saved, but only restored if A3W_moneySaving = 1
+			(getWeaponCargo uniformContainer player) call cargoToPairs, // UniformWeapons
+			(getItemCargo uniformContainer player) call cargoToPairs, 	// UniformItems
+			_uMags, 													// UniformMagazines
+			(getWeaponCargo vestContainer player) call cargoToPairs, 	// VestWeapons
+			(getItemCargo vestContainer player) call cargoToPairs, 		// VestItems
+			_vMags, 													// VestMagazines
+			(getWeaponCargo backpackContainer player) call cargoToPairs, // BackpackWeapons
+			(getItemCargo backpackContainer player) call cargoToPairs, 	// BackpackItems
+			_bMags 														// BackpackMagazines
+		];
 
-		_data pushBack ["VestWeapons", (getWeaponCargo vestContainer player) call cargoToPairs];
-		_data pushBack ["VestItems", (getItemCargo vestContainer player) call cargoToPairs];
-		_data pushBack ["VestMagazines", _vMags];
 
-		_data pushBack ["BackpackWeapons", (getWeaponCargo backpackContainer player) call cargoToPairs];
-		_data pushBack ["BackpackItems", (getItemCargo backpackContainer player) call cargoToPairs];
-		_data pushBack ["BackpackMagazines", _bMags];
-
-		_gear pushBack ["PartialMagazines", _partialMags];
-		_gear pushBack ["LoadedMagazines", _loadedMags];
-
+		// Create _gear array
 		_wastelandItems = [];
 		{
 			if (_x select 1 > 0) then
@@ -138,20 +121,44 @@ savePlayerHandle = _this spawn
 			};
 		} forEach call mf_inventory_all;
 
-		_gear pushBack ["WastelandItems", _wastelandItems];
+		_gear =
+		[
+			uniform player,  				// "Uniform"
+			vest player, 					// "Vest"
+			backpack player, 				// "Backpack"
+			goggles player, 				// "Goggles"
+			headgear player, 				// "Headgear"
 
+			primaryWeapon player, 			// "PrimaryWeapon"
+			secondaryWeapon player,			// "SecondaryWeapon"
+			handgunWeapon player, 			// "HandgunWeapon"
 
+			primaryWeaponItems player, 		// "PrimaryWeaponItems"
+			secondaryWeaponItems player, 	// "SecondaryWeaponItems"
+			handgunItems player, 			// "HandgunItems"
+
+			assignedItems player, 			// "AssignedItems"
+			_partialMags, 					// "PartialMagazines"
+			_loadedMags, 					// "LoadedMagazines"
+			_wastelandItems 				// "Wasteland Items"
+
+		];
+
+		// Check if Gear needs to be updated
 		_gearStr = str _gear;
-
 		if (_gearStr != ["playerData_gear", ""] call getPublicVar) then
 		{
-			{ _data pushBack _x } forEach _gear;
 			playerData_gear = _gearStr;
+		}
+		else
+		{
+			_gear = [];
 		};
 
 		if (alive player) then
 		{
-			savePlayerData = [player, getPlayerUID player, str side group player, str playerSide, player getVariable ["bmoney",0], _data];
+			_player_info = [str side group player, str playerSide, player getVariable ["bmoney",0]];
+			savePlayerData = [player, getPlayerUID player, _player_info, _player_pos_info, _player_data, _gear];
 			publicVariableServer "savePlayerData";
 
 			if (_manualSave) then
