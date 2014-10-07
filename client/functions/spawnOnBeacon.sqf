@@ -4,11 +4,14 @@
 //	@file Created: 08/12/2012 18:30
 //	@file Args: 
 
-private ["_beacon", "_pos", "_owner", "_preload", "_playerPos"];
-_beacon = _this select 0;
-_pos = _beacon select 0;
-_owner = _beacon select 1;
+private ["_data", "_beacon", "_pos", "_owner", "_preload", "_playerPos"];
+_data = _this select 0;
+_beacon = objectFromNetId (_data select 0);
+_pos = _data select 1;
+_owner = _data select 2;
 _preload = [_this, 1, false, [false]] call BIS_fnc_param;
+
+_beacon setVariable ["spawnBeacon_lastUse", diag_tickTime];
 
 _playerPos = [_pos,1,25,1,0,0,0] call findSafePos;
 if (_preload) then { waitUntil {sleep 0.1; preloadCamera _playerPos} };

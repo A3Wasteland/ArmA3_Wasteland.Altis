@@ -39,6 +39,8 @@ _missionUptimeText = _display displayCtrl respawn_MissionUptime_Text;
 _townsButton = _display displayCtrl respawn_LoadTowns_Button;
 _beaconsButton = _display displayCtrl respawn_LoadBeacons_Button;
 
+_spawnBeaconCooldown = ["A3W_spawnBeaconCooldown", 5*60] call getPublicVar;
+
 _side = switch (playerSide) do
 {
 	case BLUFOR: { "BLUFOR" };
@@ -304,7 +306,26 @@ while {respawnDialogActive} do
 		
 		if (_isBeacon) then
 		{
-			_button ctrlEnable true;
+			_lastUse = _location getVariable "spawnBeacon_lastUse";
+			
+			if (!isNil "_lastUse") then
+			{
+				_remaining = _spawnBeaconCooldown - (diag_tickTime - _lastUse);
+				
+				if (_spawnBeaconCooldown > 0 && _remaining > 0) then
+				{
+					_textStr = _textStr + format ["[<t color='#ff0000'>%1</t>] ", _remaining call fn_formatTimer];
+					_button ctrlEnable false;
+				}
+				else
+				{
+					_button ctrlEnable true;
+				};
+			}
+			else
+			{
+				_button ctrlEnable true;
+			};
 		}
 		else
 		{
@@ -358,7 +379,7 @@ while {respawnDialogActive} do
 			_owner = _location getVariable ["ownerName", "[Beacon]"];
 			
 			_button ctrlSetText format ["%1", _owner];
-			_data = format ["2,%1", [_pos, _owner]];
+			_data = format ["2,%1", [netId _location, _pos, _owner]];
 		}
 		else
 		{
