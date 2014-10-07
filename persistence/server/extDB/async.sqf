@@ -44,7 +44,7 @@ while{_loop} do
 			if(_pipe != "[3]") then {
 				_queryResult = _queryResult + _pipe;
 			} else {
-				sleep 0.35;
+				sleep 0.1;
 			};
 		};
 	}
@@ -52,7 +52,7 @@ while{_loop} do
 	{
 		if (_queryResult == "[3]") then
 		{
-			sleep 0.35;
+			sleep 0.1;
 		} else {
 			_loop = false;
 		};
