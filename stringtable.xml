@@ -1,28 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project name="Wasteland">
-	<Package name="General">
-		<Key ID="STR_WL_Gen_TeamWEST">
-			<English>BLUFOR</English>
-		</Key>
-		<Key ID="STR_WL_Gen_TeamWEST_2">
-			<English>BLUFOR</English>
-		</Key>
-		<Key ID="STR_WL_Gen_TeamEAST">
-			<English>OPFOR</English>
-		</Key>
-		<Key ID="STR_WL_Gen_TeamEAST_2">
-			<English>OPFOR</English>
-		</Key>
-		<Key ID="STR_WL_Gen_TeamGUER">
-			<English>Independent</English>
-		</Key>
-		<Key ID="STR_WL_Gen_TeamGUER_2">
-			<English>Independent</English>
-		</Key>
-		<Key ID="STR_WL_Gen_Warning">
-			<English>! Warning !</English>
-		</Key>
-	</Package>
 	<Package name="Loading">
 		<Key ID="STR_WL_Loading_Teamkiller">
 			<English>You are considered team-killer and therefore not allowed in BLUFOR or OPFOR teams. You will shortly be kicked back to the lobby where you can only join Independent and killing anyone is allowed.</English>
@@ -31,14 +8,9 @@
 			<English>You have played as %1 for too long and cannot switch to the other team. You can still play as Independent. (or if online, ask an admin to unlock you)</English>
 		</Key>
 	</Package>
-	<Package name="Gameplay">
-		<Key ID="STR_WL_Action_Refuel_DriverSeat">
-			<English>Please enter driver seat before attempting to refuel the vehicle.</English>
-		</Key>
-	</Package>
 	<Package name="WelcomeMessage">
 		<Key ID="STR_WL_WelcomeToWasteland">
-			<English>&lt;t color='#FF8000' size='2.5' &gt;A3Wasteland Altis v0.9gh &lt;/t&gt;</English>
+			<English>&lt;t color='#FF8000' size='2.5' &gt;A3Wasteland Altis v0.9h &lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_YouAreInTeam">
 			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* Attacking or stealing from other %4 players is &lt;t color="#FF1111"&gt;FORBIDDEN&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;br/&gt;* You will be locked to your team after 3 minutes.&lt;/t&gt;</English>
@@ -47,8 +19,8 @@
 			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* You are &lt;t color="#00aa00"&gt;FREE TO ATTACK ANYONE&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_MapMoreInfo">
-			<English>&lt;t color='#FFFFFF' size='1.5' &gt;Report bugs and suggestions at http://forums.a3wasteland.com/ &lt;br/&gt;Server restarts are done at the admin's discretion.&lt;br/&gt;For more info please see the map&lt;br/&gt;&lt;br/&gt;&lt;/t&gt;&lt;t size='1.3'&gt;[Revive Beta]&lt;/t&gt;&lt;br/&gt;</English>
-			<!-- &lt;br/&gt;&lt;/t&gt;&lt;t size='1.3'&gt;[Hotfix X]&lt;/t&gt;&lt;br/&gt; -->
+			<English>&lt;t color='#FFFFFF' size='1.5' &gt;Report bugs and suggestions at http://forums.a3wasteland.com/ &lt;br/&gt;Server restarts are done at the admin's discretion.&lt;br/&gt;For more info please see the map&lt;br/&gt;</English>
+			<!-- &lt;br/&gt;&lt;/t&gt;&lt;t size='1.3'&gt;[Update X]&lt;/t&gt;&lt;br/&gt; -->
 		</Key>
 	</Package>
 	<Package name="TeamKillWarningMessage">
@@ -59,29 +31,6 @@
 	<Package name="Diary">
 		<Key ID="STR_WL_Diary_RulesContent">
 			<English>&lt;br/&gt;    1. Keep bad language to a minimum. If you have a problem with another player, take it to direct.&lt;br/&gt;    2. NO VOIP IN GLOBAL. Use the channels or Teamspeak!.&lt;br/&gt;    3. Team killing when you are in BLUFOR or OPFOR is forbidden and punishable. Play as Independent if you want to be free for all.&lt;br/&gt;    4. Revealing information about your (ex)team to other teams is lame and not appreciated&lt;br/&gt;    5. Do not exploit R3F or any other add-ons or you will be banned.&lt;br/&gt;    6. Using or spamming with loud\long custom sound commands will cause punishment up to permanent ban</English>
-		</Key>
-	</Package>
-	<Package name="Shop">
-		<Key ID="STR_WL_Shop_Marker_GunStore">
-			<English>GUN-SHOP</English>
-		</Key>
-		<Key ID="STR_WL_Shop_Marker_GenStore">
-			<English>General store</English>
-		</Key>
-		<Key ID="STR_WL_Shop_Marker_Empty">
-			<English>Unoccupied</English>
-		</Key>
-		<Key ID="STR_WL_Shop_Marker_Enemy">
-			<English>Enemy players here</English>
-		</Key>
-		<Key ID="STR_WL_Shop_Marker_Friendly">
-			<English>Friendly players</English>
-		</Key>
-		<Key ID="STR_WL_Shop_Marker_Mixed">
-			<English>Enemy and friendly players</English>
-		</Key>
-		<Key ID="STR_WL_Shop_Message_EnemyApproaching">
-			<English>OMG! Enemy player just entered the area</English>
 		</Key>
 	</Package>
 	<Package name="ShopDescriptions">
@@ -123,27 +72,5 @@
 		<Key ID="STR_WL_dialog_TeamkillText">
 			<English>You got team-killed by %2 player %1&lt;br/&gt;&lt;br/&gt;If this was an accident then forgive them, otherwise they should explain their actions.&lt;br/&gt;&lt;br/&gt;If the player does not explain why then select Punish or Announce.</English>
 		</Key>
-	</Package>
-	<Package name="Actions">
-		<Key ID="STR_WL_Acts_PlayerMenu">
-			<English>Player Settings/Inventory [~]</English>
-		</Key>
-	</Package>
-	<Package name="Errors">
-		<Key ID="STR_WL_Errors_InProgress">
-			<English>You are already performing another action!</English>
-		</Key>
-		<Key ID="STR_WL_Errors_InVehicle">
-			<English>You are currently busy!</English>
-		</Key>
-		<Key ID="STR_WL_Errors_BeaconActive">
-			<English>You already have an active spawn beacon!</English>
-		</Key>
-		<Key ID="STR_WL_Errors_BeaconInVehicle">
-			<English>You cannot enter a vehicle while placing a spawn beacon!</English>
-		</Key>		
-		<Key ID="STR_WL_Errors_BeaconTooMany">
-			<English>You cannot take more spawn beacons!</English>
-		</Key>						
 	</Package>
 </Project>

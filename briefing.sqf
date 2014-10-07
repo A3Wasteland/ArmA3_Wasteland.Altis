@@ -12,7 +12,59 @@ player createDiaryRecord ["changelog",
 [
 "0.9h",
 "
-<br/> Changelog coming soon!
+<br/> [Added] Custom revive system based on Farooq's Revive
+<br/> [Added] Territory payroll at regular intervals
+<br/> [Added] Emergency eject and free parachutes (jump key)
+<br/> [Added] Player names toggled with Windows key
+<br/> [Added] Increased missile damage against tanks and helis
+<br/> [Added] Ability to stash money in weapon crates
+<br/> [Added] Ability to sell vehicle inventory at stores
+<br/> [Added] More money shipment mission variants
+<br/> [Added] Reduced wheel damage from collisions
+<br/> [Added] Wreck salvaging
+<br/> [Added] Selling bin in stores
+<br/> [Added] Karts DLC content in stores
+<br/> [Added] Camo sniper rifles in gunstore
+<br/> [Added] Repair Offroad in vehicle store
+<br/> [Added] Team players on map as server option
+<br/> [Added] Unlimited stamina server option
+<br/> [Added] Static weapon saving server option
+<br/> [Added] More push vehicle actions
+<br/> [Added] Paradrop option for airlifted vehicles
+<br/> [Added] Preload checkbox on respawn menu
+<br/> [Added] Remote explosives store distance restriction
+<br/> [Added] Server time multipliers for day and night
+<br/> [Added] Addon-less profileNamespace server persistence
+<br/> [Added] Linux server compatibility
+<br/> [Added] Basic support for headless client
+<br/> [Changed] Independent territory capture is now group-based
+<br/> [Changed] Towns blocked if more enemies than friendlies
+<br/> [Changed] Increased ammo/fuel/repair cargo for resupply trucks
+<br/> [Changed] Increased territory capture rewards for Altis
+<br/> [Changed] Increased money mission rewards
+<br/> [Changed] Weapon loot in buildings now disabled by default
+<br/> [Changed] Mission crates loot was made more random
+<br/> [Changed] Thermal imaging is now available on UAVs
+<br/> [Changed] Increased vehicle store prices
+<br/> [Changed] Increased prices for thermal optics
+<br/> [Changed] Increased player icons up to 2000m
+<br/> [Changed] Improved antihack
+<br/> [Changed] Improved FPS
+<br/> [Fixed] Vehicle store purchase errors due to server lag
+<br/> [Fixed] Corpse created when leaving with player saving
+<br/> [Fixed] Custom vehicle damage handling not working
+<br/> [Fixed] Indie-indie spawn beacon stealing
+<br/> [Fixed] Repair kit and jerrycan distance limit
+<br/> [Fixed] Spawn beacon packing and stealing restrictions
+<br/> [Fixed] Not able to lock static weapons
+<br/> [Fixed] Unbreakable store windows
+<br/> [Fixed] Stratis airbase gunstore desk glitches
+<br/> [Fixed] Missions sometimes completing instantaneously
+<br/> [Fixed] Object ammo/fuel/repair cargo not saving
+<br/> [Fixed] Respawn menu aspect ratio on some resolutions
+<br/> [Fixed] Minor bugs with group system
+<br/> [Fixed] Minor bugs with player items
+<br/> [Fixed] Various other minor bugfixes and optimizations
 "
 ]];
 
