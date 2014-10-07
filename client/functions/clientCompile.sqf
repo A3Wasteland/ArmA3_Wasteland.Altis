@@ -22,6 +22,7 @@ copilotTakeControl = "client\functions\copilotTakeControl.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
 fn_addManagedAction = "client\functions\fn_addManagedAction.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
+fn_formatTimer = "client\functions\fn_formatTimer.sqf" call mf_compile;
 fn_removeAllManagedActions = "client\functions\fn_removeAllManagedActions.sqf" call mf_compile;
 fn_removeManagedAction = "client\functions\fn_removeManagedAction.sqf" call mf_compile;
 getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;

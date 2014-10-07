@@ -313,10 +313,7 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 	{
 		if (_dmg >= 0.5 && isNil "_treatedBy") then
 		{
-			_remaining = ceil (_bleedOut - diag_tickTime);
-			_mins = floor (_remaining / 60);
-			_secs = _remaining - (_mins * 60);
-			_time = format ["%1:%2%3", _mins, if (_secs < 10) then { "0" } else { "" }, _secs];
+			_time = (_bleedOut - diag_tickTime) call fn_formatTimer;
 
 			_progBar progressSetPosition ((_bleedOut - diag_tickTime) / FAR_BleedOut);
 			_progText ctrlSetText _time;
