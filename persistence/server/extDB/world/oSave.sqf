@@ -53,7 +53,8 @@ while {true} do
 			   {_warchestSavingOn && {_obj call _isWarchest}} ||
 			   {_beaconSavingOn && {_obj call _isBeacon}}) then
 			{
-				_netId = netId _obj;
+				//_netId = netId _obj;
+				_db_id = _obj getVariable ["db_id", -1];
 				_pos = getPosATL _obj;
 				_dir = [vectorDir _obj, vectorUp _obj];
 				_damage = damage _obj;
@@ -143,28 +144,48 @@ while {true} do
 				_repairCargo = getRepairCargo _obj;
 
 				// Save data
-
-				_objCount = _objCount + 1;
-				_objName = format ["Obj%1", _objCount];
-
-				[
-					format["replaceServerObject:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11",
-						_objCount,
-						_class,
-						_pos,
-						_dir,
-						_hoursAlive,
-						"",
-						_damage,
-						_allowDamage,
-						_variables,
-						_ammoCargo,
-						_fuelCargo,
-						_repairCargo]
-				] call extDB_async;
-
-				// Using + operator to avoid 8k Limit with Format when dealing with large inventories in Vehicles / Objects
-				["updateServerObjectInventory:" + _objCount + ":" +  _weapons + ":" + _magazines + ":" + _items + ":" + _backpacks + ":" + _turretmags] call extDB_async;
+				if (_db_id == -1) then
+				{
+					_db_id = [format["insertServerObject:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15:%16",
+									call(A3W_extDB_MapID),
+									_class,
+									_pos,
+									_dir,
+									_hoursAlive,
+									_damage,
+									_allowDamage,
+									_variables,
+									_weapons,
+									_magazines,
+									_items,
+									_backpacks,
+									_turretmags,
+									_ammoCargo,
+									_fuelCargo,
+									_repairCargo
+							]] call extDB_async;
+					_obj setVariable ["db_id", _db_id];
+				}
+				else
+				{
+					_db_id = [format["updateServerObject:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15",
+									_db_id,
+									_pos,
+									_dir,
+									_hoursAlive,
+									_damage,
+									_allowDamage,
+									_variables,
+									_weapons,
+									_magazines,
+									_items,
+									_backpacks,
+									_turretmags,
+									_ammoCargo,
+									_fuelCargo,
+									_repairCargo
+							]] call extDB_async;
+				};
 
 				sleep 0.01;
 			};

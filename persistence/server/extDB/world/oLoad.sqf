@@ -27,9 +27,10 @@ _maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
 
 _savingMethod = ["A3W_savingMethod", 1] call getPublicVar;
 
-_objects = ["getAllServerObjects", 2, true] call extDB_async;
+_objects = [format["getAllServerObjects:%1", call(A3W_extDB_MapID)], 2, true] call extDB_async;
 
 {
+	_db_id = _x select 0;
 	_class = _x select 1;
 	_pos = _x select 2;
 	_hoursAlive = _x select 4;
@@ -61,6 +62,7 @@ _objects = ["getAllServerObjects", 2, true] call extDB_async;
 				_obj setVectorDirAndUp _dir;
 			};
 
+			_obj setVariable ["db_id", _db_id];
 			_obj setVariable ["baseSaving_hoursAlive", _hoursAlive];
 			_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
 			_obj setVariable ["objectLocked", true, true]; // force lock
@@ -159,7 +161,7 @@ _objects = ["getAllServerObjects", 2, true] call extDB_async;
 
 if (_warchestMoneySavingOn) then
 {
-	_serverInfo = ["getServerInfo", 2] call extDB_async;
+	_serverInfo = [format["getServerInfo:%1", call(A3W_extDB_MapID)], 2] call extDB_async;
 
 	pvar_warchest_funds_west = _serverInfo select 1;
 	publicVariable "pvar_warchest_funds_west";
