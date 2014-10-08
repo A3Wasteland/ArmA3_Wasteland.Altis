@@ -23,7 +23,7 @@ _return = false;
 
 _key = "extDB" callExtension format["%1:%2:%3",_mode,(call server_extDB_DB_CUSTOM_V3_ID),_queryStmt];
 
-if(_mode == 1) exitWith {true};
+if(_mode == 1) exitWith {diag_log format ["DEBUG ----- extDB ASync: Complete Time:%1  Input String:%2", (diag_tickTime - _tickTime), _queryStmt]; true};
 
 _key = call compile format["%1",_key];
 _key = _key select 1;
@@ -44,6 +44,7 @@ while{_loop} do
 			if(_pipe != "[3]") then {
 				_queryResult = _queryResult + _pipe;
 			} else {
+				diag_log format ["extDB: Sleep 2: %1", diag_tickTime];
 				sleep 0.1;
 			};
 		};
@@ -52,6 +53,7 @@ while{_loop} do
 	{
 		if (_queryResult == "[3]") then
 		{
+			diag_log format ["extDB: Sleep 1: %1", diag_tickTime];
 			sleep 0.1;
 		} else {
 			_loop = false;
