@@ -4,4 +4,4 @@
 if (!isServer) exitWith {};
 
 _player_uid = _this;
-[format["deletePlayerSave:%1:%2", _player_uid]] call extDB_async;
+[format["replacePlayerSave:%1:%2", call(A3W_extDB_MapID), _player_uid]] call extDB_async;
