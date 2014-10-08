@@ -21,15 +21,20 @@ removeHeadgear player;
 	_name = _x select 0;
 	_value = _x select 1;
 
+	diag_log format ["DEBUG: applyPlayerData name:%1 value:%2", _name, _value];
+
 	if (typeName _value == "STRING") then
 	{
+		diag_log "STRING TYPE DETECTED";
 		if (_value == "") then
 		{
+			diag_log "EMPTY VALUE DETECTED";
 			// Null Value
 			switch (_name) do
 			{
 				case "Backpack":
 				{
+					diag_log "Removed Backpack";
 					removeBackpack player;
 				};
 			};
@@ -71,14 +76,17 @@ removeHeadgear player;
 		case "Vest": {  player addVest _value };
 		case "Backpack":
 		{
+			diag_log "Removed Backpack";
 			removeBackpack player;
 
 			if (_value isKindOf "Weapon_Bag_Base") then
 			{
+				diag_log "Add Default Backpack";
 				player addBackpack "B_AssaultPack_rgr"; // NO SOUP FOR YOU
 			}
 			else
 			{
+				diag_log "Add Backpack";
 				player addBackpack _value;
 			};
 		};
@@ -105,7 +113,6 @@ removeHeadgear player;
 		};
 		case "LoadedMagazines":
 		{
-			player addBackpack "B_Carryall_Base"; // temporary backpack to hold mags
 			{ player addMagazine _x } forEach _value;
 		};
 		case "PrimaryWeapon": { player addWeapon _value; removeAllPrimaryWeaponItems player };
