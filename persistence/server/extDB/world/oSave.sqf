@@ -147,7 +147,7 @@ while {true} do
 				if (_db_id == -1) then
 				{
 					_db_id = [format["insertServerObject:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15:%16",
-									call(A3W_extDB_MapID),
+									call(A3W_extDB_ServerID),
 									_class,
 									_pos,
 									_dir,

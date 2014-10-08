@@ -16,11 +16,11 @@ _result = [format["existPlayerInfo:%1", _player_uid],2] call extDB_async; // Add
 
 if (_result select 0) then {
 
-	_result = [format["getPlayerSaveData:%1:%2", call(A3W_extDB_MapID), _player_uid],2] call extDB_async;
+	_result = [format["getPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_uid],2] call extDB_async;
 
 	if ((count _result) == 0) then
 	{
-		[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_MapID), _player_uid],2] call extDB_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
+		[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_uid],2] call extDB_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
 	}
 	else
 	{
@@ -82,7 +82,7 @@ else
 	_player_guid = getPlayerUID _player;
 	_player_name = name _player;
 	[format["insertPlayerInfo:%1:%2", _player_guid, _player_name], 2] call extDB_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
-	[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_MapID), _player_guid], 2] call extDB_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
+	[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_guid], 2] call extDB_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
 };
 
 _data

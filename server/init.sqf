@@ -46,7 +46,7 @@ else
 	diag_log "[WARNING] For more information go to http://forums.a3wasteland.com/";
 };
 
-A3W_extDB_MapID = compileFinal str A3W_extDB_MapID;
+A3W_extDB_ServerID = compileFinal str A3W_extDB_ServerID;
 A3W_extension = compileFinal str A3W_extension;
 A3W_startingMoney = compileFinal str A3W_startingMoney;
 A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
