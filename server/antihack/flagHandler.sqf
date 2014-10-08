@@ -6,7 +6,7 @@
 
 if (typeName _this == "ARRAY" && {count _this > 4}) then
 {
-	private ["_sentChecksum", "_A3W_savingMethod"];
+	private ["_sentChecksum", "_A3W_savingMethod", "_query"];
 	_sentChecksum = _this select 4;
 
 	if (_sentChecksum == _flagChecksum) then
@@ -31,13 +31,14 @@ if (typeName _this == "ARRAY" && {count _this > 4}) then
 		_A3W_savingMethod = ["A3W_savingMethod", 1] call getPublicVar == 2;
 		switch (_A3W_savingMethod) do
 		{
-			case 2: {["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write};
-			case 3: {["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write};
-
-		}
-		if (_A3W_savingMethod == 2) then
-		{
-
+			case 2: {
+						["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write;
+					};
+			case 3: {
+						_guid = ""; // TODO Query extDB for GUID
+						_query = "addHackerLog:" + str(call(A3W_extDB_ServerID)) + ":" + str(_playerID) + ":" + _playerGUID +  ":" + str(_playerName) + ":" + str(_hackType) + ":" + str(_hackValue);
+						[_query] call extDB_async;
+					};
 		};
 	};
 };
