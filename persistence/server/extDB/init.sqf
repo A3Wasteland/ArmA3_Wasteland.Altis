@@ -36,6 +36,6 @@ else
 	A3W_extDB_DBid = compileFinal str(uiNamespace getVariable "A3W_extDB_DBid");
 	diag_log "extDB: Already Setup";
 	_return = true;
-}
+};
 
 _return
