@@ -36,7 +36,7 @@ while {true} do
 {
 	uiSleep 60;
 
-	_oldObjCount = (["countAllServerObjects", 2] call extDB_async) select 0;
+	_oldObjCount = (["countAllServerObjects", 2] call extDB_Database_async) select 0;
 	_objCount = 0;
 
 	{
@@ -163,7 +163,7 @@ while {true} do
 									_ammoCargo,
 									_fuelCargo,
 									_repairCargo
-							]] call extDB_async;
+							]] call extDB_Database_async;
 					_obj setVariable ["db_id", _db_id];
 				}
 				else
@@ -184,7 +184,7 @@ while {true} do
 									_ammoCargo,
 									_fuelCargo,
 									_repairCargo
-							]] call extDB_async;
+							]] call extDB_Database_async;
 				};
 
 				sleep 0.01;
@@ -197,7 +197,7 @@ while {true} do
 	{
 		for "_i" from _oldObjCount to (_objCount + 1) step -1 do
 		{
-			[format["deleteServerObject:%1",_i]] call extDB_async;
+			[format["deleteServerObject:%1",_i]] call extDB_Database_async;
 		};
 	};
 
@@ -205,7 +205,7 @@ while {true} do
 	{
 		_fundsWest = ["pvar_warchest_funds_west", 0] call getPublicVar;
 		_fundsEast = ["pvar_warchest_funds_east", 0] call getPublicVar;
-		["updateWarchestMoney:" + serverID + ":" +  _fundsWest + ":" + _fundsEast] call extDB_async;
+		["updateWarchestMoney:" + serverID + ":" +  _fundsWest + ":" + _fundsEast] call extDB_Database_async;
 	};
 
 	diag_log format ["A3W - %1 baseparts and objects have been saved with %2", _objCount, ["A3W_savingMethodName", "-ERROR-"] call getPublicVar];

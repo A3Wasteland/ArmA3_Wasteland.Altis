@@ -58,7 +58,7 @@ if ((_player_uid call PDB_playerFileName) call PDB_exists) then
 
 	["AssignedItems", "ARRAY"] call _getValue;
 
-	["CurrentMuzzle", "STRING"] call _getValue;
+	["CurrentWeapon", "STRING"] call _getValue;
 	["Stance", "STRING"] call _getValue;
 
 	["Uniform", "STRING"] call _getValue;

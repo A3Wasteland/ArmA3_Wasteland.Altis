@@ -1,5 +1,5 @@
 /*
-	File: fn_asyncCall.sqf
+	File: asyncCall.sqf
 	Author: Bryan "Tonic" Boardwine
 
 	Description:
@@ -15,13 +15,14 @@
 private["_queryStmt","_queryResult","_key","_mode","_return"];
 
 _tickTime = diag_tickTime;
+
 _queryStmt = [_this,0,"",[""]] call BIS_fnc_param;
 _mode = [_this,1,1,[0]] call BIS_fnc_param;
 _multiarr = [_this,2,false,[false]] call BIS_fnc_param;
 
 _return = false;
 
-_key = "extDB" callExtension format["%1:%2:%3",_mode,(call A3W_extDB_id),_queryStmt];
+_key = "extDB" callExtension format["%1:%2:%3",_mode, (call A3W_extDB_miscID),_queryStmt];
 
 if(_mode == 1) exitWith {diag_log format ["DEBUG ----- extDB ASync: Complete Time:%1  Input String:%2", (diag_tickTime - _tickTime), _queryStmt]; true};
 

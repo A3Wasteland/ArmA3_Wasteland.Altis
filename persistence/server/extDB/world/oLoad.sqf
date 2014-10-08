@@ -27,7 +27,7 @@ _maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
 
 _savingMethod = ["A3W_savingMethod", 1] call getPublicVar;
 
-_objects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true] call extDB_async;
+_objects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true] call extDB_Database_async;
 
 {
 	_db_id = _x select 0;
@@ -161,7 +161,7 @@ _objects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true]
 
 if (_warchestMoneySavingOn) then
 {
-	_serverInfo = [format["getServerInfo:%1", call(A3W_extDB_ServerID)], 2] call extDB_async;
+	_serverInfo = [format["getServerInfo:%1", call(A3W_extDB_ServerID)], 2] call extDB_Database_async;
 
 	pvar_warchest_funds_west = _serverInfo select 1;
 	publicVariable "pvar_warchest_funds_west";

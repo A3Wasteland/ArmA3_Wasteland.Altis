@@ -52,7 +52,7 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 			_player_backpackMagazines = _player_data select 13;
 
 
-			[format["updatePlayerInfo:%1:%2:%3:%4", _player_uid, _player_lastgroupside, _player_lastPlayerside, _player_bank]] call extDB_async;
+			[format["updatePlayerInfo:%1:%2:%3:%4", _player_uid, _player_lastgroupside, _player_lastPlayerside, _player_bank]] call extDB_Database_async;
 
 			_query = "";
 			if ((count _player_gear) == 0) then {
@@ -108,7 +108,7 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 							+ ":" + str(_player_primaryWeaponItems) + ":" + str(_player_secondaryWeaponItems) + ":" + str(_player_handgunWeaponItems)
 							+ ":" + str(_player_assignedItems) + ":" + str(_player_partialMags) + ":" + str(_player_loadedMags) + ":" + str(_player_wastelandItems);
 			};
-			[_query] call extDB_async;
+			[_query] call extDB_Database_async;
 		};
 
 		if (!isNull _player && !alive _player) then
