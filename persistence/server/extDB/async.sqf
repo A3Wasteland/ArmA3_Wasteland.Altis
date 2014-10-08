@@ -21,7 +21,7 @@ _multiarr = [_this,2,false,[false]] call BIS_fnc_param;
 
 _return = false;
 
-_key = "extDB" callExtension format["%1:%2:%3",_mode,(call server_extDB_DB_CUSTOM_V3_ID),_queryStmt];
+_key = "extDB" callExtension format["%1:%2:%3",_mode,(call A3W_extDB_DBid),_queryStmt];
 
 if(_mode == 1) exitWith {diag_log format ["DEBUG ----- extDB ASync: Complete Time:%1  Input String:%2", (diag_tickTime - _tickTime), _queryStmt]; true};
 
