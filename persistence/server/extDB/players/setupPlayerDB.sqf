@@ -89,7 +89,7 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 				_player_loadedMags = 			_player_gear select 13;
 				_player_wastelandItems = 		_player_gear select 14;
 
-				_query = "updatePlayerSave:"
+				_query = "updatePlayerSaveAll:"
 							// General
 							+ str(call(A3W_extDB_MapID)) + ":" + _player_uid
 
