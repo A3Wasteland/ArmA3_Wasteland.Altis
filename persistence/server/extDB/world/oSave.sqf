@@ -160,6 +160,7 @@ while {true} do
 									str(_fuelCargo) + ":" +
 									str(_repairCargo),2] call extDB_Database_async;
 
+					_db_saved = _obj setVariable ["DB_Saved", true];
 					_objArray pushBack _db_id;
 				}
 				else
