@@ -161,11 +161,11 @@ _objects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true]
 
 if (_warchestMoneySavingOn) then
 {
-	_serverInfo = [format["getServerInfo:%1", call(A3W_extDB_ServerID)], 2] call extDB_Database_async;
+	_serverInfo = [format["getWarchestMoney:%1", call(A3W_extDB_ServerID)], 2] call extDB_Database_async;
 
-	pvar_warchest_funds_west = _serverInfo select 1;
+	pvar_warchest_funds_west = _serverInfo select 0;
 	publicVariable "pvar_warchest_funds_west";
-	pvar_warchest_funds_east = _serverInfo select 2;
+	pvar_warchest_funds_east = _serverInfo select 1;
 	publicVariable "pvar_warchest_funds_east";
 };
 

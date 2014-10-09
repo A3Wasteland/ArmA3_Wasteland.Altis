@@ -48,8 +48,8 @@ while {true} do
 			   {_warchestSavingOn && {_obj call _isWarchest}} ||
 			   {_beaconSavingOn && {_obj call _isBeacon}}) then
 			{
-				//_netId = netId _obj;
-				_db_id = _obj getVariable ["db_id", -1];
+				_netId = netId _obj;
+				_db_saved = _obj getVariable ["DB_Saved", false];
 				_pos = getPosATL _obj;
 				_dir = [vectorDir _obj, vectorUp _obj];
 				_damage = damage _obj;
@@ -139,51 +139,51 @@ while {true} do
 				_repairCargo = getRepairCargo _obj;
 
 				// Save data
-				if (_db_id == -1) then
+				diag_log format ["DEBUG SAVE OBJECT ID: %1", _db_id];
+				if (!_db_saved) then
 				{
-					_db_id = [format["insertServerObject:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15:%16",
-									call(A3W_extDB_ServerID),
-									_class,
-									_pos,
-									_dir,
-									_hoursAlive,
-									_damage,
-									_allowDamage,
-									_variables,
-									_weapons,
-									_magazines,
-									_items,
-									_backpacks,
-									_turretmags,
-									_ammoCargo,
-									_fuelCargo,
-									_repairCargo
-							]] call extDB_Database_async;
-					_obj setVariable ["db_id", _db_id];
+					_db_id = ["insertServerObject:" +
+									str(call(A3W_extDB_ServerID)) + ":" +
+									str(_class) + ":" +
+									str(_pos) + ":" +
+									str(_dir) + ":" +
+									str(_hoursAlive) + ":" +
+									str(_damage) + ":" +
+									str(_allowDamage) + ":" +
+									str(_variables) + ":" +
+									str(_weapons) + ":" +
+									str(_magazines) + ":" +
+									str(_items) + ":" +
+									str(_backpacks) + ":" +
+									str(_turretmags) + ":" +
+									str(_ammoCargo) + ":" +
+									str(_fuelCargo) + ":" +
+									str(_repairCargo) + ":" +
+									str(_netID),2] call extDB_Database_async;
 
-					_objArray pushBack _db_id;
+					_objArray pushBack _netID;
 				}
 				else
 				{
-					_db_id = [format["updateServerObject:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15",
-									_db_id,
-									_pos,
-									_dir,
-									_hoursAlive,
-									_damage,
-									_allowDamage,
-									_variables,
-									_weapons,
-									_magazines,
-									_items,
-									_backpacks,
-									_turretmags,
-									_ammoCargo,
-									_fuelCargo,
-									_repairCargo
-							]] call extDB_Database_async;
+					_db_id = ["updateServerObject:" +
+									str(call(A3W_extDB_ServerID)) + ":" +
+									str(_netID) + ":" +
+									str(_pos) + ":" +
+									str(_dir) + ":" +
+									str(_hoursAlive) + ":" +
+									str(_damage) + ":" +
+									str(_allowDamage) + ":" +
+									str(_variables) + ":" +
+									str(_weapons) + ":" +
+									str(_magazines) + ":" +
+									str(_items) + ":" +
+									str(_backpacks) + ":" +
+									str(_turretmags) + ":" +
+									str(_ammoCargo) + ":" +
+									str(_fuelCargo) + ":" +
+									str(_repairCargo)] call extDB_Database_async;
 
-					_old_objArray = _old_objArray - _db_id;
+					_old_objArray = _old_objArray - _netID;
 				};
 
 				sleep 0.01;
@@ -193,14 +193,14 @@ while {true} do
 
 	// Reverse-delete old objects
 	{
-		[format["deleteServerObject:%1", _x]] call extDB_Database_async;
+		[format["deleteServerObject:%1:%2", call(A3W_extDB_ServerID), _x]] call extDB_Database_async;
 	} forEach _old_objArray;
 
 	if (["A3W_warchestMoneySaving"] call isConfigOn) then
 	{
 		_fundsWest = ["pvar_warchest_funds_west", 0] call getPublicVar;
 		_fundsEast = ["pvar_warchest_funds_east", 0] call getPublicVar;
-		["updateWarchestMoney:" + serverID + ":" +  _fundsWest + ":" + _fundsEast] call extDB_Database_async;
+		["updateWarchestMoney:" + str(call(A3W_extDB_ServerID)) + ":" +  str(_fundsWest) + ":" + str(_fundsEast)] call extDB_Database_async;
 	};
 
 	diag_log format ["A3W - %1 baseparts and objects have been saved with %2", count(_objArray), ["A3W_savingMethodName", "-ERROR-"] call getPublicVar];
