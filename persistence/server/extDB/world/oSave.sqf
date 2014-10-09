@@ -9,36 +9,31 @@ if (!isServer) exitWith {};
 
 _saveableObjects = [];
 
-_isSaveable =
-{
-	_result = false;
-	{ if (_this == _x) exitWith { _result = true } } forEach _saveableObjects;
-	_result
-};
 
 // Add objectList & general store objects
 {
-	_index = _forEachIndex;
-
+	_obj = _x;
+	if (!(_obj isKindOf "ReammoBox_F") && {!(_obj in _saveableObjects)}) then
 	{
-		_obj = _x;
-		if (_index > 0) then { _obj = _x select 1 };
+		_saveableObjects pushBack _obj;
+	};
+} forEach objectList;
 
-		if (!(_obj isKindOf "ReammoBox_F") && {!(_obj call _isSaveable)}) then
-		{
-			_saveableObjects pushBack _obj;
-		};
-	} forEach _x;
-} forEach [objectList, call genObjectsArray];
+{
+	_obj = _x select 1;
+	if (!(_obj isKindOf "ReammoBox_F") && {!(_obj in _saveableObjects)}) then
+	{
+		_saveableObjects pushBack _obj;
+	};
+} forEach (call genObjectsArray);
 
+
+_objArray = [];
 
 while {true} do
 {
 	uiSleep 60;
-
-	_oldObjCount = (["countAllServerObjects", 2] call extDB_Database_async) select 0;
-	_objCount = 0;
-
+	_old_objArray = _objArray;
 	{
 		_obj = _x;
 
@@ -47,7 +42,7 @@ while {true} do
 			_class = typeOf _obj;
 
 			if (_obj getVariable ["objectLocked", false] &&
-			       {(_baseSavingOn && {_class call _isSaveable}) ||
+			       {(_baseSavingOn && {_class in _saveableObjects}) ||
 				    (_boxSavingOn && {_class call _isBox}) ||
 					(_staticWeaponSavingOn && {_class call _isStaticWeapon})} ||
 			   {_warchestSavingOn && {_obj call _isWarchest}} ||
@@ -165,6 +160,8 @@ while {true} do
 									_repairCargo
 							]] call extDB_Database_async;
 					_obj setVariable ["db_id", _db_id];
+
+					_objArray pushBack _db_id;
 				}
 				else
 				{
@@ -185,6 +182,8 @@ while {true} do
 									_fuelCargo,
 									_repairCargo
 							]] call extDB_Database_async;
+
+					_old_objArray = _old_objArray - _db_id;
 				};
 
 				sleep 0.01;
@@ -193,13 +192,9 @@ while {true} do
 	} forEach allMissionObjects "All";
 
 	// Reverse-delete old objects
-	if (_oldObjCount > _objCount) then
 	{
-		for "_i" from _oldObjCount to (_objCount + 1) step -1 do
-		{
-			[format["deleteServerObject:%1",_i]] call extDB_Database_async;
-		};
-	};
+		[format["deleteServerObject:%1", _x]] call extDB_Database_async;
+	} forEach _old_objArray;
 
 	if (["A3W_warchestMoneySaving"] call isConfigOn) then
 	{
@@ -208,5 +203,5 @@ while {true} do
 		["updateWarchestMoney:" + serverID + ":" +  _fundsWest + ":" + _fundsEast] call extDB_Database_async;
 	};
 
-	diag_log format ["A3W - %1 baseparts and objects have been saved with %2", _objCount, ["A3W_savingMethodName", "-ERROR-"] call getPublicVar];
+	diag_log format ["A3W - %1 baseparts and objects have been saved with %2", count(_objArray), ["A3W_savingMethodName", "-ERROR-"] call getPublicVar];
 };

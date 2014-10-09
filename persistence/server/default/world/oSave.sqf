@@ -9,27 +9,22 @@ if (!isServer) exitWith {};
 
 _saveableObjects = [];
 
-_isSaveable =
-{
-	_result = false;
-	{ if (_this == _x) exitWith { _result = true } } forEach _saveableObjects;
-	_result
-};
-
 // Add objectList & general store objects
 {
-	_index = _forEachIndex;
-
+	_obj = _x;
+	if (!(_obj isKindOf "ReammoBox_F") && {!(_obj in _saveableObjects)}) then
 	{
-		_obj = _x;
-		if (_index > 0) then { _obj = _x select 1 };
+		_saveableObjects pushBack _obj;
+	};
+} forEach objectList;
 
-		if (!(_obj isKindOf "ReammoBox_F") && {!(_obj call _isSaveable)}) then
-		{
-			_saveableObjects pushBack _obj;
-		};
-	} forEach _x;
-} forEach [objectList, call genObjectsArray];
+{
+	_obj = _x select 1;
+	if (!(_obj isKindOf "ReammoBox_F") && {!(_obj in _saveableObjects)}) then
+	{
+		_saveableObjects pushBack _obj;
+	};
+} forEach (call genObjectsArray);
 
 // If file doesn't exist, create Info section at the top
 if !(_fileName call PDB_exists) then // iniDB_exists
@@ -54,7 +49,7 @@ while {true} do
 			_class = typeOf _obj;
 
 			if (_obj getVariable ["objectLocked", false] &&
-			       {(_baseSavingOn && {_class call _isSaveable}) ||
+			       {(_baseSavingOn && {_class in _saveableObjects}) ||
 				    (_boxSavingOn && {_class call _isBox}) ||
 					(_staticWeaponSavingOn && {_class call _isStaticWeapon})} ||
 			   {_warchestSavingOn && {_obj call _isWarchest}} ||

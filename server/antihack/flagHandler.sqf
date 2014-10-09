@@ -35,8 +35,8 @@ if (typeName _this == "ARRAY" && {count _this > 4}) then
 						["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write;
 					};
 			case 3: {
-						_BEguid = [format["BEGUID:%1", _playerGUID], 2] call extDB_Misc_async;
-						_query = "addHackerLog:" + str(call(A3W_extDB_ServerID)) + ":" + str(_playerID) + ":" + _BEguid +  ":" + str(_playerName) + ":" + str(_hackType) + ":" + str(_hackValue);
+						//_BEguid = [format["BEGUID:%1", _playerGUID], 2] call extDB_Misc_async;
+						_query = "addHackerLog:" + str(call(A3W_extDB_ServerID)) + ":" + str(_playerID) + ":" + str(_playerName) + ":" + str(_hackType) + ":" + str(_hackValue);
 						[_query] call extDB_Database_async;
 					};
 		};

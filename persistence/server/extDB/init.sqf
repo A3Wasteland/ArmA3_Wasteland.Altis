@@ -2,15 +2,14 @@ private ["_result"];
 
 _return = false;
 
-
-if ( uiNamespace getVariable["A3W_extDB_ID", -1]) then
+if ( isNil {uiNamespace getVariable "A3W_extDB_ID"}) then
 {
 	_result = call compile ("extDB" callExtension "9:DATABASE:A3Wasteland");
 	if (_result select 0 == 0) exitWith {diag_log format ["extDB: Error Database: %1", _result]; false};
 	diag_log "extDB: Connected to Database";
 
 	A3W_extDB_ID = compileFinal str(round(random(999999)));
-	A3W_extDB_miscID = (call(A3W_extDB_ID)) + 1;
+	A3W_extDB_miscID = compileFinal str ((call(A3W_extDB_ID)) + 1);
 
 	_result = call compile ("extDB" callExtension ("9:ADD:DB_CUSTOM_V3:" + str(call A3W_extDB_ID) + ":a3wasteland"));
 	if (_result select 0 == 0) exitWith {diag_log format ["extDB: Error Database Setup: %1", _result]; false};
