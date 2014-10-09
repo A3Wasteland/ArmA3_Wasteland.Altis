@@ -90,6 +90,6 @@ else
 {
 	[_player_uid call PDB_playerFileName, "PlayerInfo", "UID", _player_uid] call PDB_write; // iniDB_write
 	[_player_uid call PDB_playerFileName, "PlayerInfo", "Name", name _player] call PDB_write; // iniDB_write
-}
+};
 
 _data
