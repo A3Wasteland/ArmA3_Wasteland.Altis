@@ -48,7 +48,7 @@ while {true} do
 			   {_warchestSavingOn && {_obj call _isWarchest}} ||
 			   {_beaconSavingOn && {_obj call _isBeacon}}) then
 			{
-				_netId = netId _obj;
+				//_netId = netId _obj;
 				_db_saved = _obj getVariable ["DB_Saved", false];
 				_pos = getPosATL _obj;
 				_dir = [vectorDir _obj, vectorUp _obj];
@@ -158,16 +158,14 @@ while {true} do
 									str(_turretmags) + ":" +
 									str(_ammoCargo) + ":" +
 									str(_fuelCargo) + ":" +
-									str(_repairCargo) + ":" +
-									str(_netID),2] call extDB_Database_async;
+									str(_repairCargo),2] call extDB_Database_async;
 
-					_objArray pushBack _netID;
+					_objArray pushBack _db_id;
 				}
 				else
 				{
-					_db_id = ["updateServerObject:" +
-									str(call(A3W_extDB_ServerID)) + ":" +
-									str(_netID) + ":" +
+					["updateServerObject:" +
+									str(_db_id) + ":" +
 									str(_pos) + ":" +
 									str(_dir) + ":" +
 									str(_hoursAlive) + ":" +
@@ -183,7 +181,7 @@ while {true} do
 									str(_fuelCargo) + ":" +
 									str(_repairCargo)] call extDB_Database_async;
 
-					_old_objArray = _old_objArray - _netID;
+					_old_objArray = _old_objArray - _db_id;
 				};
 
 				sleep 0.01;
@@ -193,7 +191,7 @@ while {true} do
 
 	// Reverse-delete old objects
 	{
-		[format["deleteServerObject:%1:%2", call(A3W_extDB_ServerID), _x]] call extDB_Database_async;
+		[format["deleteServerObject:%1", _x]] call extDB_Database_async;
 	} forEach _old_objArray;
 
 	if (["A3W_warchestMoneySaving"] call isConfigOn) then
