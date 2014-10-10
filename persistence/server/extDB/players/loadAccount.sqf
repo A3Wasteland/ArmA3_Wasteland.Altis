@@ -36,7 +36,7 @@ if (_result select 0) then {
 		if (["A3W_moneySaving"] call isConfigOn) then
 		{
 			_money = _result select 6;
-			_bank = [format["getPlayerInfoBank:%1", _player_uid],2] call extDB_Database_async;
+			_bank = ([format["getPlayerInfoBank:%1", _player_uid],2] call extDB_Database_async) select 0;
 		};
 
 		_data = [["Damage",    		_result select 0],
