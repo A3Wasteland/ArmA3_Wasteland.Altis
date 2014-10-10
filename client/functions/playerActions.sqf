@@ -11,7 +11,7 @@
 	//Add Salvage Feature, Add Resupply Script
 	["<img image='client\icons\repair.paa'/> Salvage", "client\actions\salvage.sqf", [], 1.1, false, false, "", "!isNull cursorTarget && !alive cursorTarget && {cursorTarget isKindOf 'AllVehicles' && !(cursorTarget isKindOf 'Man') && player distance cursorTarget <= (sizeOf typeOf cursorTarget / 3) max 2}"],
 	["Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, false, false, "", "!(vehicle player == player) and (cursortarget iskindof 'O_Truck_03_device_F') and (player distance cursortarget) < 15"], //vehicle player isKindOf 'O_Truck_03_device_F'
-	
+	["Chop Shop", "client\functions\fn_chopshop.sqf", [], 51, false, false, "", "!(vehicle player == player) and (cursortarget iskindof 'Land_Wreck_Truck_dropside_F') and (player distance cursortarget) < 15"], //vehicle player isKindOf 'Land_Wreck_Truck_dropside_F'
 	[format ["<img image='client\icons\playerMenu.paa' color='%1'/> <t color='%1'>[</t>Player Menu<t color='%1'>]</t>", "#FF8000"], "client\systems\playerMenu\init.sqf", [], -10, false], //, false, "", ""],
 
 	["<img image='client\icons\money.paa'/> Pickup Money", "client\actions\pickupMoney.sqf", [], 1, false, false, "", "{_x getVariable ['owner', ''] != 'mission'} count (player nearEntities ['Land_Money_F', 5]) > 0"],
