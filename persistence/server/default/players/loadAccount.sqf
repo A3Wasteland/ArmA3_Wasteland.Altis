@@ -35,11 +35,7 @@ if ((_player_uid call PDB_playerFileName) call PDB_exists) then
 	};
 
 	["Donator", "NUMBER", "PlayerInfo"] call _getValue;
-<<<<<<< HEAD
-	//["BankMoney", "NUMBER", "PlayerInfo"] call _getValue; // Not implemented in vanilla mission
-=======
 	["BankMoney", "NUMBER", "PlayerInfo"] call _getValue; // Not implemented in vanilla mission
->>>>>>> 1ea643bc24fef3b0bf6ecaaf6a78017825c86e4c
 
 	["Damage", "NUMBER"] call _getValue;
 	["Hunger", "NUMBER"] call _getValue;
