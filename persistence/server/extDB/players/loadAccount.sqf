@@ -72,7 +72,7 @@ if (_result select 0) then {
 				["PartialMagazines",  		_result select 30],
 				["LoadedMagazines",  		_result select 31],
 				["WastelandItems",  		_result select 32],
-				["BankMoney",		  		_bank],
+				["BankMoney",		  		_bank select 0],
 				["PlayerSaveValid", 		_playerSaveValid]];
 	}
 
