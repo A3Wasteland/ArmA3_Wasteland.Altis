@@ -36,11 +36,7 @@ if (_result select 0) then {
 		if (["A3W_moneySaving"] call isConfigOn) then
 		{
 			_money = _result select 6;
-<<<<<<< HEAD
-			_bank = [format["getPlayerInfoBank:%1", _player_uid],2] call extDB_Database_async;
-=======
 			_bank = ([format["getPlayerInfoBank:%1", _player_uid],2] call extDB_Database_async) select 0;
->>>>>>> 1ea643bc24fef3b0bf6ecaaf6a78017825c86e4c
 		};
 
 		_data = [["Damage",    		_result select 0],
@@ -76,11 +72,7 @@ if (_result select 0) then {
 				["PartialMagazines",  		_result select 30],
 				["LoadedMagazines",  		_result select 31],
 				["WastelandItems",  		_result select 32],
-<<<<<<< HEAD
-				["BankMoney",		  		_bank select 0],
-=======
 				["BankMoney",		  		_bank],
->>>>>>> 1ea643bc24fef3b0bf6ecaaf6a78017825c86e4c
 				["PlayerSaveValid", 		_playerSaveValid]];
 	}
 
