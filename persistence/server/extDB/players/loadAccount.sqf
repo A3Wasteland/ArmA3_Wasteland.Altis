@@ -10,30 +10,18 @@ private ["_player_uid", "_data", "_playerSaveValid", "_getValue"];
 _player = _this;
 _player_uid = getPlayerUID _player;
 
+_bank = 0;
+_money = 0;
+_data = [];
+
 _result = [format["existPlayerInfo:%1", _player_uid],2] call extDB_Database_async;
+
 if (!_result select 0) then
 {
 	_player_guid = getPlayerUID _player;
 	_player_name = name _player;
 	[format["insertPlayerInfo:%1:%2", _player_guid, _player_name], 2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
 	[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_guid], 2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
-};
-
-
-_bank = 0;
-_money = 0;
-if (["A3W_moneySaving"] call isConfigOn) then
-{
-	_bank = ([format["getPlayerInfoBank:%1", _player_uid],2] call extDB_Database_async) select 0;
-};
-
-_result = [format["getPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_uid],2] call extDB_Database_async;
-
-_data = [];
-if ((count _result) == 0) then
-{
-	[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_uid],2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
-
 	_data = [
 				["PlayerSaveValid", false],
 				["BankMoney", _bank]
@@ -41,67 +29,85 @@ if ((count _result) == 0) then
 }
 else
 {
-	_pos = _result select 2;
-	_playerSaveValid = false;
-	if (count _pos > 0) then
-	{
-		_playerSaveValid = true;
-	};
-
 	if (["A3W_moneySaving"] call isConfigOn) then
 	{
-		_money = _result select 6;
+		_bank = ([format["getPlayerInfoBank:%1", _player_uid],2] call extDB_Database_async) select 0;
 	};
 
-	_data = [["PlayerSaveValid", 		_playerSaveValid],
+	_result = [format["getPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_uid],2] call extDB_Database_async;
+	if ((count _result) == 0) then
+	{
+		[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_uid],2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
 
-			["HitPoints", 		_result select 1],
-			["Damage",    		_result select 0],
-			["Hunger", 	  		_result select 4],
-			["Thirst", 	  		_result select 5],
+		_data = [
+					["PlayerSaveValid", false],
+					["BankMoney", _bank]
+				];
+	}
+	else
+	{
+		_pos = _result select 2;
+		_playerSaveValid = false;
+		if (count _pos > 0) then
+		{
+			_playerSaveValid = true;
+		};
 
-			["Money", 	  		_money],
-			["BankMoney",		  		_bank],
+		if (["A3W_moneySaving"] call isConfigOn) then
+		{
+			_money = _result select 6;
+		};
 
-			["LoadedMagazines",  		_result select 31],
+		_data = [["PlayerSaveValid", 		_playerSaveValid],
 
-			["PrimaryWeapon",  			_result select 23],
-			["SecondaryWeapon",  		_result select 24],
-			["HandgunWeapon",  			_result select 25],
+				["HitPoints", 		_result select 1],
+				["Damage",    		_result select 0],
+				["Hunger", 	  		_result select 4],
+				["Thirst", 	  		_result select 5],
 
-			["PrimaryWeaponItems",  	_result select 26],
-			["SecondaryWeaponItems",	_result select 27],
-			["HandgunItems",  			_result select 28],
+				["Money", 	  		_money],
+				["BankMoney",		  		_bank],
 
-			["AssignedItems",  			_result select 29],
+				["LoadedMagazines",  		_result select 31],
 
-			["CurrentWeapon",  	_result select 7],
-			["Stance",  		_result select 8],
+				["PrimaryWeapon",  			_result select 23],
+				["SecondaryWeapon",  		_result select 24],
+				["HandgunWeapon",  			_result select 25],
 
-			["Uniform",  		_result select 11],
-			["Vest",  			_result select 12],
-			["Backpack",  			_result select 13],
-			["Goggles",  		_result select 10],
-			["Headgear",  		_result select 9],
+				["PrimaryWeaponItems",  	_result select 26],
+				["SecondaryWeaponItems",	_result select 27],
+				["HandgunItems",  			_result select 28],
 
-			["UniformWeapons",  	_result select 14],
-			["UniformItems",  		_result select 15],
-			["UniformMagazines",  	_result select 16],
+				["AssignedItems",  			_result select 29],
 
-			["VestWeapons",  		_result select 17],
-			["VestItems",  			_result select 18],
-			["VestMagazines",  		_result select 19],
+				["CurrentWeapon",  	_result select 7],
+				["Stance",  		_result select 8],
 
-			["BackpackWeapons",  	_result select 20],
-			["BackpackItems",  		_result select 21],
-			["BackpackMagazines",  	_result select 22],
+				["Uniform",  		_result select 11],
+				["Vest",  			_result select 12],
+				["Backpack",  			_result select 13],
+				["Goggles",  		_result select 10],
+				["Headgear",  		_result select 9],
 
-			["PartialMagazines",  		_result select 30],
+				["UniformWeapons",  	_result select 14],
+				["UniformItems",  		_result select 15],
+				["UniformMagazines",  	_result select 16],
 
-			["WastelandItems",  		_result select 32],
+				["VestWeapons",  		_result select 17],
+				["VestItems",  			_result select 18],
+				["VestMagazines",  		_result select 19],
 
-			["Position",  		_pos],
-			["Direction",  		_result select 3]];
+				["BackpackWeapons",  	_result select 20],
+				["BackpackItems",  		_result select 21],
+				["BackpackMagazines",  	_result select 22],
+
+				["PartialMagazines",  		_result select 30],
+
+				["WastelandItems",  		_result select 32],
+
+				["Position",  		_pos],
+				["Direction",  		_result select 3]];
+	};
 };
 
 _data
