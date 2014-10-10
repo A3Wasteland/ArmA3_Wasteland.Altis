@@ -25,10 +25,13 @@
 	</Package>
 	<Package name="Loading">
 		<Key ID="STR_WL_Loading_Teamkiller">
-			<English>You are considered team-killer and therefore not allowed in BLUFOR or OPFOR teams. You will shortly be kicked back to the lobby where you can only join Independent and killing anyone is allowed.</English>
+			<English>You are considered team-killer and therefore not allowed in BLUFOR or OPFOR teams. You will shortly be kicked back to the lobby where you can only join Independent and killing anyone is allowed. (ADMIN WILL NOT UNLOCK YOU)</English>
 		</Key>
 		<Key ID="STR_WL_Loading_Teamswitched">
-			<English>You have played as %1 for too long and cannot switch to the other team. You can still play as Independent. (or if online, ask an admin to unlock you)</English>
+			<English>You have played as %1 for too long and cannot switch to the other team. You can still play as Independent. (ADMIN WILL NOT MOVE YOU)</English>
+		</Key>
+		<Key ID="STR_WL_Loading_GlobalVoice">
+			<English>You have been kicked too many times for using voice. You can join another server or wait until server restart.</English>
 		</Key>
 	</Package>
 	<Package name="Gameplay">
@@ -38,27 +41,26 @@
 	</Package>
 	<Package name="WelcomeMessage">
 		<Key ID="STR_WL_WelcomeToWasteland">
-			<English>&lt;t color='#FF8000' size='2.5' &gt;A3Wasteland Altis v0.9gh &lt;/t&gt;</English>
+			<English>&lt;t color='#FF8000' size='2.5' &gt;TOP Wasteland Altis &lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_YouAreInTeam">
-			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* Attacking or stealing from other %4 players is &lt;t color="#FF1111"&gt;FORBIDDEN&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;br/&gt;* You will be locked to your team after 3 minutes.&lt;/t&gt;</English>
+			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* Attacking or stealing from other %4 players is &lt;t color="#FF1111"&gt;frowned upon&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_YouAreInFFA">
-			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* You are &lt;t color="#00aa00"&gt;FREE TO ATTACK ANYONE&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;/t&gt;</English>
+			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* You are &lt;t color="#00aa00"&gt;FREE TO ATTACK ANYONE&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_MapMoreInfo">
-			<English>&lt;t color='#FFFFFF' size='1.5' &gt;Report bugs and suggestions at http://forums.a3wasteland.com/ &lt;br/&gt;Server restarts are done at the admin's discretion.&lt;br/&gt;For more info please see the map&lt;br/&gt;&lt;br/&gt;&lt;/t&gt;&lt;t size='1.3'&gt;[Revive Beta]&lt;/t&gt;&lt;br/&gt;</English>
-			<!-- &lt;br/&gt;&lt;/t&gt;&lt;t size='1.3'&gt;[Hotfix X]&lt;/t&gt;&lt;br/&gt; -->
+			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* Capture A, B, C for $15,000 each. &lt;br/&gt;See Info and Help on the Map for more info &lt;br/&gt;Website: toparma.com Teamspeak: ts.toparma.com &lt;br/&gt;&lt;br/&gt;&lt;/t&gt;&lt;t size='1.3'&gt;[Revive Beta]&lt;/t&gt;&lt;br/&gt;</English>
 		</Key>
 	</Package>
 	<Package name="TeamKillWarningMessage">
 		<Key ID="STR_TK_MESSAGE">
-			<English>&lt;t size='2' color='#ff0000'&gt;Team killing is against the rules!&lt;/t&gt;&lt;br/&gt;If this was a mistake then you must explain yourself and say sorry, otherwise they will mark you as team-killer and you will get kicked.</English>
+			<English>&lt;t size='2' color='#ff0000'&gt;Team killing is frowned upon!&lt;/t&gt;&lt;br/&gt;If this was a mistake then you must explain yourself and say sorry, otherwise they will mark you as team-killer and you will get kicked.</English>
 		</Key>
 	</Package>
 	<Package name="Diary">
 		<Key ID="STR_WL_Diary_RulesContent">
-			<English>&lt;br/&gt;    1. Keep bad language to a minimum. If you have a problem with another player, take it to direct.&lt;br/&gt;    2. NO VOIP IN GLOBAL. Use the channels or Teamspeak!.&lt;br/&gt;    3. Team killing when you are in BLUFOR or OPFOR is forbidden and punishable. Play as Independent if you want to be free for all.&lt;br/&gt;    4. Revealing information about your (ex)team to other teams is lame and not appreciated&lt;br/&gt;    5. Do not exploit R3F or any other add-ons or you will be banned.&lt;br/&gt;    6. Using or spamming with loud\long custom sound commands will cause punishment up to permanent ban</English>
+			<English>&lt;br/&gt;    1. Keep bad language to a minimum. If you have a problem with another player, take it to direct.&lt;br/&gt;    2. NO VOIP IN GLOBAL. Use the channels or Teamspeak!.&lt;br/&gt;3. Do not exploit R3F or any other add-ons or you will be banned.&lt;br/&gt;4. Using or spamming with loud\long custom sound commands will cause punishment up to permanent ban</English>
 		</Key>
 	</Package>
 	<Package name="Shop">
@@ -127,6 +129,23 @@
 	<Package name="Actions">
 		<Key ID="STR_WL_Acts_PlayerMenu">
 			<English>Player Settings/Inventory [~]</English>
+		</Key>
+	</Package>
+	<Package name="ATM_Menu">
+		<Key ID="STR_ATM_Title">
+			<Original>Bank Account Management</Original>
+		</Key>
+		<Key ID="STR_ATM_Withdraw">
+			<Original>Withdraw</Original>
+		</Key>
+		<Key ID="STR_ATM_Deposit">
+			<Original>Deposit</Original>
+		</Key>
+		<Key ID="STR_ATM_Transfer">
+			<Original>Transfer</Original>
+		</Key>
+		<Key ID="STR_ATM_Close">
+			<Original>Close</Original>
 		</Key>
 	</Package>
 	<Package name="Errors">

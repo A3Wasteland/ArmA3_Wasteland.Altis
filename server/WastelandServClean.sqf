@@ -7,9 +7,9 @@
 // configure cleanup below this line
 
 #define CLEANUP_INTERVAL (5*60) // Interval to run the cleanup
-#define ITEM_CLEANUP_TIME (30*60) // Time an item has to have been dropped before deleting it
-#define WRECK_CLEANUP_TIME (10*60) // Time a vehicle has to have been destroyed before deleting it
-#define CORPSE_CLEANUP_TIME (30*60) // Time a corpse has to have been dead before deleting it
+#define ITEM_CLEANUP_TIME (5*60) // Time an item has to have been dropped before deleting it
+#define WRECK_CLEANUP_TIME (5*60) // Time a vehicle has to have been destroyed before deleting it
+#define CORPSE_CLEANUP_TIME (10*60) // Time a corpse has to have been dead before deleting it
 
 _cleanupCode =
 {

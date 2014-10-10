@@ -6,7 +6,7 @@
 
 if (typeName _this == "ARRAY" && {count _this > 4}) then
 {
-	private ["_sentChecksum"];
+	private ["_sentChecksum", "_A3W_savingMethod", "_query"];
 	_sentChecksum = _this select 4;
 
 	if (_sentChecksum == _flagChecksum) then
@@ -28,9 +28,17 @@ if (typeName _this == "ARRAY" && {count _this > 4}) then
 		diag_log format ["ANTI-HACK 0.8.0: %1 (%2) was detected for [%3] with the value [%4]", _playerName, _playerID, _hackType, _hackValue];
 
 		// Save detection infos in iniDB file for easy retrieval
-		if (["A3W_savingMethod", 1] call getPublicVar == 2) then
+		_A3W_savingMethod = ["A3W_savingMethod", 1] call getPublicVar == 2;
+		switch (_A3W_savingMethod) do
 		{
-			["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write;
+			case 2: {
+						["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write;
+					};
+			case 3: {
+						//_BEguid = [format["BEGUID:%1", _playerGUID], 2] call extDB_Misc_async;
+						_query = "addHackerLog:" + str(call(A3W_extDB_ServerID)) + ":" + str(_playerID) + ":" + str(_playerName) + ":" + str(_hackType) + ":" + str(_hackValue);
+						[_query] call extDB_Database_async;
+					};
 		};
 	};
 };

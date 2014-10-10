@@ -28,10 +28,17 @@ _player unlinkItem "ItemGPS";
 if (hmd _player != "") then { _player unlinkItem hmd _player };
 
 // Add NVG
-//_player linkItem "NVGoggles";
+_player linkItem "NVGoggles";
 
 _player addBackpack "B_AssaultPack_rgr";
-
+switch (typeOf _player) do {
+	case "B_medic_F": { _player addItem "MediKit" };
+	case "O_medic_F": { _player addItem "MediKit" };
+	case "I_medic_F": { _player addItem "MediKit" }; 
+	case "B_engineer_F": { _player addItem "ToolKit" };
+	case "O_engineer_F": { _player addItem "ToolKit" };
+	case "I_engineer_F": { _player addItem "ToolKit" };
+};
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addWeapon "hgun_ACPC2_F";
 _player addMagazine "9Rnd_45ACP_Mag";

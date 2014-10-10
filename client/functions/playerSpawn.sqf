@@ -4,9 +4,41 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-private ["_kickTeamKiller", "_kickTeamSwitcher", "_side"];
+private ["_kickTeamKiller", "_kickTeamSwitcher", "_side", "_kickVoice"];
 
 playerSpawning = true;
+
+_kickVoice = false;
+
+if (!isNil "pvar_voiceBanPlayerArray") then
+{
+	{
+		if (_x select 0 == getPlayerUID player ) then
+		{
+			_kickVoice = ((A3W_NoGlobalVoiceBan > 0 && {(_x select 1) >= A3W_NoGlobalVoiceBan}) 
+				|| (A3W_NoSideVoiceBan > 0 && {(_x select 2) >= A3W_NoSideVoiceBan}) 
+				|| (A3W_NoCommandVoiceBan > 0 && {(_x select 3) >= A3W_NoCommandVoiceBan}));
+				
+			
+			
+			if (_kickVoice) exitWith
+			{
+				axeDiagLog = format ["%1 got kicked for using voice", name player];
+				publicVariable "axeDiagLog";
+				_text = localize "STR_WL_Loading_GlobalVoice";
+				9999 cutText [_text, "BLACK"];
+				titleText [_text, "BLACK"];
+				removeAllWeapons player;
+				
+				[] spawn
+				{
+					sleep 10;
+					endMission "LOSER";
+				};
+			};
+		};
+	} forEach pvar_voiceBanPlayerArray;
+};
 
 _kickTeamKiller = false;
 _kickTeamSwitcher = false;

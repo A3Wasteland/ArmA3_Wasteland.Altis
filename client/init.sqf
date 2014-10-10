@@ -67,11 +67,14 @@ player setVariable ["cmoney", _baseMoney, true];
 // Player saving - Load from iniDB
 if (["A3W_playerSaving"] call isConfigOn) then
 {
-	call compile preprocessFileLineNumbers "persistence\players\c_setupPlayerDB.sqf";
+	call compile preprocessFileLineNumbers "persistence\client\players\setupPlayerDB.sqf";
+
+	9999 cutText ["Requesting Player Info", "BLACK", 0.01];
 	call fn_requestPlayerData;
-	
+	9999 cutText ["Received Player Info", "BLACK", 0.01];
+
 	waitUntil {!isNil "playerData_loaded"};
-	
+
 	[] spawn
 	{
 		// Save player every 60s
@@ -116,6 +119,13 @@ A3W_scriptThreads pushBack execVM "client\systems\hud\playerHud.sqf";
 [] execVM "client\functions\initSurvival.sqf";
 [] spawn updateMissionsMarkers;
 // [] call updateRadarMarkers;
+
+_novoice = "client\functions\novoice.sqf" call mf_compile;
+
+if (A3W_NoGlobalVoice > 0) then
+{
+	[A3W_NoGlobalVoice, A3W_NoSideVoice, A3W_NoCommandVoice] spawn _novoice;
+};
 
 [] spawn
 {

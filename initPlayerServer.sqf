@@ -3,7 +3,7 @@
 
 _this spawn
 {
-	waitUntil {!isNil "A3W_serverSetupComplete"};
+	waitUntil {sleep 0.1; !isNil "A3W_serverSetupComplete"};
 	(_this select 0) call handleCorpseOnLeave;
 	_this call updateConnectingClients;
 };

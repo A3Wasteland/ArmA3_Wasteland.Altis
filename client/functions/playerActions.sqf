@@ -5,6 +5,13 @@
 
 { [player, _x] call fn_addManagedAction } forEach
 [
+	//Holster+Unholster
+	["Holster Weapon", "player action ['SwitchWeapon', player, player, 100];", [], -11, false, false, "", "currentWeapon player != '' && vehicle player == player"],
+	["Unholster Weapon", "player action ['SwitchWeapon', player, player, 0];", [], -11, false, false, "", "currentWeapon player == '' && vehicle player == player"],			
+	//Add Salvage Feature, Add Resupply Script
+	["<img image='client\icons\repair.paa'/> Salvage", "client\actions\salvage.sqf", [], 1.1, false, false, "", "!isNull cursorTarget && !alive cursorTarget && {cursorTarget isKindOf 'AllVehicles' && !(cursorTarget isKindOf 'Man') && player distance cursorTarget <= (sizeOf typeOf cursorTarget / 3) max 2}"],
+	["Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, false, false, "", "!(vehicle player == player) and (cursortarget iskindof 'O_Truck_03_device_F') and (player distance cursortarget) < 15"], //vehicle player isKindOf 'O_Truck_03_device_F'
+	
 	[format ["<img image='client\icons\playerMenu.paa' color='%1'/> <t color='%1'>[</t>Player Menu<t color='%1'>]</t>", "#FF8000"], "client\systems\playerMenu\init.sqf", [], -10, false], //, false, "", ""],
 
 	["<img image='client\icons\money.paa'/> Pickup Money", "client\actions\pickupMoney.sqf", [], 1, false, false, "", "{_x getVariable ['owner', ''] != 'mission'} count (player nearEntities ['Land_Money_F', 5]) > 0"],
