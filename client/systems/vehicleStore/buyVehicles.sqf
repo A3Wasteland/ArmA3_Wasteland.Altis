@@ -25,7 +25,7 @@ storePurchaseHandle = _this spawn
 {
 	disableSerialization;
 	
-	private ["_switch", "_playerMoney", "_price", "_dialog", "_playerMoneyText", "_itemlist", "_itemIndex", "_itemText", "_itemData", "_colorlist", "_colorIndex", "_colorText", "_applyVehProperties", "_class", "_price", "_requestKey", "_vehicle"];
+	private ["_switch", "_playerMoney", "_price", "_dialog", "_playerMoneyText", "_itemlist", "_itemIndex", "_itemText", "_itemData", "_colorlist", "_colorIndex", "_colorText", "_colorData", "_applyVehProperties", "_class", "_price", "_requestKey", "_vehicle"];
 
 	//Initialize Values
 	_switch = _this select 0;
@@ -44,6 +44,7 @@ storePurchaseHandle = _this spawn
 	_colorlist = _dialog displayCtrl vehshop_color_list;
 	_colorIndex = lbCurSel vehshop_color_list;
 	_colorText = _colorlist lbText _colorIndex;
+	_colorData = _colorlist lbData _colorIndex;
 	
 	_showInsufficientFundsError = 
 	{
@@ -70,75 +71,21 @@ storePurchaseHandle = _this spawn
 
 	_applyVehProperties = 
 	{
-		private ["_vehicle", "_colorText", "_rgbString", "_textureFilename", "_texture", "_playerItems", "_playerAssignedItems", "_uavTerminal", "_allUAV"];
+		private ["_vehicle", "_colorText", "_playerItems", "_playerAssignedItems", "_uavTerminal", "_allUAV"];
 		_vehicle = _this select 0;
 		_colorText = _this select 1;
+		_colorData = _this select 2;
+		_texArray  = [];
 
-		//if they chose a color set the color
-		switch (toLower _colorText) do
+		if (_colorData != "") then
 		{
-			case "black":       { _rgbString = "#(argb,8,8,3)color(0.1,0.1,0.1,0.1)" };
-			case "grey":        { _rgbString = "#(argb,8,8,3)color(0.5,0.51,0.512,0.3)" };
-			case "blue":        { _rgbString = "#(argb,8,8,3)color(0,0.2,1,0.75)" };
-			case "dark blue":   { _rgbString = "#(argb,8,8,3)color(0,0.3,0.6,0.05)" };
-			case "green":       { _rgbString = "#(argb,8,8,3)color(0,1,0,0.15)" };
-			case "orange":      { _rgbString = "#(argb,8,8,3)color(1,0.5,0,0.4)" };
-			case "pink":        { _rgbString = "#(argb,8,8,3)color(1,0.06,0.6,0.5)" };
-			case "purple":      { _rgbString = "#(argb,8,8,3)color(0.8,0,1,0.1)" };
-			case "red":         { _rgbString = "#(argb,8,8,3)color(1,0.1,0,0.3)" };
-			case "teal":        { _rgbString = "#(argb,8,8,3)color(0,1,1,0.15)" };
-			case "white":       { _rgbString = "#(argb,8,8,3)color(1,1,1,0.5)" };
-			case "yellow":      { _rgbString = "#(argb,8,8,3)color(1,0.8,0,0.4)" };
-
-			case "nato tan":    { _rgbString = "#(argb,8,8,3)color(0.584,0.565,0.515,0.3)" };
-			case "csat brown":  { _rgbString = "#(argb,8,8,3)color(0.624,0.512,0.368,0.3)" };
-			case "aaf green":   { _rgbString = "#(argb,8,8,3)color(0.546,0.59,0.363,0.2)" };
-
-			case "orange camo": { _textureFilename = "camo_fack.jpg" };
-			case "pink camo":   { _textureFilename = "camo_pank.jpg" };
-			case "red camo":    { _textureFilename = "camo_deser.jpg" };
-			case "yellow camo": { _textureFilename = "camo_fuel.jpg" };
-		};
-
-		if (_vehicle isKindOf "Kart_01_Base_F") then
-		{
-			_oldTexDir = _textureDir;
-			_textureDir = "\A3\Soft_F_Kart\Kart_01\Data";
-
-			switch (toLower _colorText) do
-			{
-				case "black":  { _textureFilename = "Kart_01_base_black_CO.paa" };
-				case "blue":   { _textureFilename = "Kart_01_base_blue_CO.paa" };
-				case "green":  { _textureFilename = "Kart_01_base_green_CO.paa" };
-				case "yellow": { _textureFilename = "Kart_01_base_yellow_CO.paa" };
-				case "orange": { _textureFilename = "Kart_01_base_orange_CO.paa" };
-				case "red":    { _textureFilename = "Kart_01_base_red_CO.paa" };
-				case "white":  { _textureFilename = "Kart_01_base_white_CO.paa" };
-				default        { _textureDir = _oldTexDir };
-			};
-		};
-
-		// If its a straight RGBA string, we can apply it directly
-		if (!isNil "_rgbString") then
-		{
-			_texture = _rgbString;
-		};
-
-		// If its a texture, get the right directory
-		if (!isNil "_textureFilename") then
-		{
-			_texture = format ["%1\%2", _textureDir, _textureFilename];
-		};
-
-		if (!isNil "_texture") then
-		{
-			[_vehicle, _texture] call applyVehicleTexture;
+			[_vehicle, _colorData] call applyVehicleTexture;
 		};
 
 		// If UAV or UGV, fill vehicle with UAV AI, give UAV terminal to our player, and connect it to the vehicle
 		if ({_vehicle isKindOf _x} count (call uavArray) > 0) then
 		{
-			switch (side player) do
+			switch (playerSide) do
 			{
 				case BLUFOR: { _uavTerminal = "B_UavTerminal" };
 				case OPFOR:	 { _uavTerminal = "O_UavTerminal" };
@@ -183,7 +130,7 @@ storePurchaseHandle = _this spawn
 			
 			if (!isNil "_vehicle" && {!isNull _vehicle}) then
 			{
-				[_vehicle, _colorText] call _applyVehProperties;
+				[_vehicle, _colorText, _colorData] call _applyVehProperties;
 			};
 		};
 	} forEach (call allVehStoreVehicles);
