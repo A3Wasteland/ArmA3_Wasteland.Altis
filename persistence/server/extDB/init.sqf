@@ -27,8 +27,8 @@ if ( isNil {uiNamespace getVariable "A3W_extDB_ID"}) then
 	"extDB" callExtension "9:LOCK";
 	diag_log "extDB: Locked";
 
-	uiNamespace setVariable ["A3W_extDB_ID", A3W_extDB_ID];
-	uiNamespace setVariable ["A3W_extDB_miscID", A3W_extDB_miscID];
+	uiNamespace setVariable ["A3W_extDB_ID", str(call(A3W_extDB_ID))];
+	uiNamespace setVariable ["A3W_extDB_miscID", str(call(A3W_extDB_miscID))];
 
 	if  (["A3W_extDB_Debug"] call isConfigOn) then
 	{

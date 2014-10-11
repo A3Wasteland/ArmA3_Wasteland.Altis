@@ -137,12 +137,24 @@ while {true} do
 						_turretMags = magazinesAmmo _obj;
 					};
 
+					// Don't ask why this seams to work
+					//	And no >= is not a mistake just weird behaviour *shrugs*
 					_ammoCargo = getAmmoCargo _obj;
+					if (_ammoCargo >= 0) then
+					{
+					} else {_ammoCargo = 0};
+
 					_fuelCargo = getFuelCargo _obj;
+					if (_fuelCargo >= 0) then
+					{
+					} else {_fuelCargo = 0};
+
 					_repairCargo = getRepairCargo _obj;
+					if (_repairCargo >= 0) then
+					{
+					} else {_repairCargo = 0};
 
 					// Save data
-					diag_log format ["DEBUG SAVE OBJECT ID: %1", _db_id];
 					if (_db_id == -1) then
 					{
 						_db_id = (["insertServerObject:" +
@@ -163,7 +175,7 @@ while {true} do
 										str(_fuelCargo) + ":" +
 										str(_repairCargo),2] call extDB_Database_async) select 0;
 
-						_db_saved = _obj setVariable ["db_id", _db_id];
+						_obj setVariable ["db_id", _db_id];
 						_serverObjectsIDs pushBack _db_id;
 					}
 					else

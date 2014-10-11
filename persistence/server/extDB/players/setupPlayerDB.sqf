@@ -28,12 +28,6 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 			_player_lastplayerside = 	_player_info select 1;
 			_player_bank = 				_player_info select 2;
 
-			// Player Position Info
-			_player_pos = 			_player_pos_info select 0;
-			_player_dir = 			_player_pos_info select 1;
-			_player_cur_weapon = 	_player_pos_info select 2;
-			_player_stance = 		_player_pos_info select 3;
-
 			// Data
 			_player_damage = 	_player_data select 0;
 			_player_hitpoints = _player_data select 1;
@@ -56,7 +50,15 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 
 			_query = "";
 			if ((count _player_gear) == 0) then {
-				_query = "updatePlayerSaveNoGear:"
+				if ((count _player_pos_info) == 4) then
+				{
+					// Player Position Info
+					_player_pos = 			_player_pos_info select 0;
+					_player_dir = 			_player_pos_info select 1;
+					_player_cur_weapon = 	_player_pos_info select 2;
+					_player_stance = 		_player_pos_info select 3;
+
+					_query = "updatePlayerSaveNoGear:"
 							// General
 							+ str(call(A3W_extDB_PlayerSave_ServerID)) + ":" + _player_uid
 
@@ -68,6 +70,19 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 
 							+ ":" + str(_player_uniformWeapons) + ":" + str(_player_uniformItems) + ":" + str(_player_uniformMagazines) + ":" + str(_player_vestWeapons) + ":" + str(_player_vestItems)
 							+ ":" + str(_player_vestMagazines) + ":" + str(_player_backpackWeapons) + ":" + str(_player_backpackItems) + ":" + str(_player_backpackMagazines);
+				}
+				else
+				{
+					_query = "updatePlayerSaveNoGearNoPos:"
+							// General
+							+ str(call(A3W_extDB_PlayerSave_ServerID)) + ":" + _player_uid
+
+							// Player Data
+							+ ":" + str(_player_damage) + ":" + str(_player_hitpoints) + ":" + str(_player_hunger) + ":" + str(_player_thirst) + ":" + str(_player_money)
+
+							+ ":" + str(_player_uniformWeapons) + ":" + str(_player_uniformItems) + ":" + str(_player_uniformMagazines) + ":" + str(_player_vestWeapons) + ":" + str(_player_vestItems)
+							+ ":" + str(_player_vestMagazines) + ":" + str(_player_backpackWeapons) + ":" + str(_player_backpackItems) + ":" + str(_player_backpackMagazines);
+				};
 			}
 			else
 			{
@@ -89,7 +104,15 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 				_player_loadedMags = 			_player_gear select 13;
 				_player_wastelandItems = 		_player_gear select 14;
 
-				_query = "updatePlayerSaveAll:"
+				if ((count _player_pos_info) == 4) then
+				{
+					// Player Position Info
+					_player_pos = 			_player_pos_info select 0;
+					_player_dir = 			_player_pos_info select 1;
+					_player_cur_weapon = 	_player_pos_info select 2;
+					_player_stance = 		_player_pos_info select 3;
+
+					_query = "updatePlayerSaveAll:"
 							// General
 							+ str(call(A3W_extDB_PlayerSave_ServerID)) + ":" + _player_uid
 
@@ -107,6 +130,25 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 							+ ":" + _player_primaryWeapon + ":" + _player_secondaryWeapon + ":" + _player_handgunWeapon
 							+ ":" + str(_player_primaryWeaponItems) + ":" + str(_player_secondaryWeaponItems) + ":" + str(_player_handgunWeaponItems)
 							+ ":" + str(_player_assignedItems) + ":" + str(_player_partialMags) + ":" + str(_player_loadedMags) + ":" + str(_player_wastelandItems);
+				}
+				else
+				{
+					_query = "updatePlayerSaveAllNoPos:"
+							// General
+							+ str(call(A3W_extDB_PlayerSave_ServerID)) + ":" + _player_uid
+
+							// Player Data
+							+ ":" + str(_player_damage) + ":" + str(_player_hitpoints) + ":" + str(_player_hunger) + ":" + str(_player_thirst) + ":" + str(_player_money)
+
+							+ ":" + str(_player_uniformWeapons) + ":" + str(_player_uniformItems) + ":" + str(_player_uniformMagazines) + ":" + str(_player_vestWeapons) + ":" + str(_player_vestItems)
+							+ ":" + str(_player_vestMagazines) + ":" + str(_player_backpackWeapons) + ":" + str(_player_backpackItems) + ":" + str(_player_backpackMagazines)
+
+							// Player Gear
+							+ ":" + _player_uniform + ":" + _player_vest + ":" + _player_backpack + ":" + _player_goggles + ":" + _player_headgear
+							+ ":" + _player_primaryWeapon + ":" + _player_secondaryWeapon + ":" + _player_handgunWeapon
+							+ ":" + str(_player_primaryWeaponItems) + ":" + str(_player_secondaryWeaponItems) + ":" + str(_player_handgunWeaponItems)
+							+ ":" + str(_player_assignedItems) + ":" + str(_player_partialMags) + ":" + str(_player_loadedMags) + ":" + str(_player_wastelandItems);
+				};
 			};
 			[_query] call extDB_Database_async;
 		};
