@@ -7,37 +7,50 @@
 
 if !([getPlayerUID player, 3] call isAdmin) exitWith {};
 
-private ["_value", "_displayStr", "_message"];
-_value = [_this, 0, "", ["",0]] call BIS_fnc_param;
+private ["_action", "_value", "_cfg", "_displayStr", "_message"];
 
-if (typeName _value == "SCALAR" && {_value > 0}) then
+_action = [_this, 0, "", [""]] call BIS_fnc_param;
+_value = [_this, 1, "", [0,"",[]]] call BIS_fnc_param;
+
+switch (toLower _action) do
 {
-	_message = format ["[NOTICE] %1 used the admin menu to obtain $%2", name player, _value];
-}
-else
-{
-	if (isClass (configFile >> "CfgVehicles" >> _value)) then
+	case "money":
 	{
-		_displayStr = getText (configFile >> "CfgVehicles" >> _value >> "displayName");
+		if (_value > 0) then
+		{
+			_message = format ["[NOTICE] %1 used the admin menu to obtain $%2", name player, _value];
+		};
 	};
-
-	if (isClass (configFile >> "CfgWeapons" >> _value)) then
+	case "teleport":
 	{
-		_displayStr = getText (configFile >> "CfgWeapons" >> _value >> "displayName");
+		_value resize 2;
+		{ _value set [_forEachIndex, round _x] } forEach _value;
 	};
-
-	if (isClass (configFile >> "CfgMagazines" >> _value)) then
+	case "vehicle":
 	{
-		_displayStr = getText (configFile >> "CfgMagazines" >> _value >> "displayName");
+		_cfg = configFile >> "CfgVehicles" >> _value;
 	};
-	
-	if (!isNil "_displayStr") then
+	case "weapon":
 	{
-		_message = format ['[NOTICE] %1 used the admin menu to obtain a "%2"', name player, _displayStr];
+		_cfg = configFile >> "CfgWeapons" >> _value;
+	};
+	case "ammo":
+	{
+		_cfg = configFile >> "CfgMagazines" >> _value;
 	};
 };
 
-if (!isNil "_message") then
+if (!isNil "_cfg" && {isClass _cfg}) then
 {
-	[[_message, getPlayerUID player, _flagChecksum, true], "chatBroadcast", true, false] call TPG_fnc_MP;
+	_displayStr = getText (_cfg >> "displayName");
+	if (_displayStr == "") then { _displayStr = _value } else { _value = _displayStr };
+
+	_message = format ['[NOTICE] %1 used the admin menu to obtain a "%2"', profileName, _displayStr];
 };
+
+if (!isNil "_message" && {_message != ""}) then
+{
+	[[_message, getPlayerUID player, _flagChecksum, true], "A3W_fnc_chatBroadcast", true] call A3W_fnc_MP;
+};
+
+[[profileName, getPlayerUID player, _action, _value, _flagChecksum], "A3W_fnc_adminMenuLog", false] call A3W_fnc_MP;

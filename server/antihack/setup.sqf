@@ -15,6 +15,7 @@ if (isNil "ahSetupDone") then
 	for "_x" from 0 to (floor random 50) do { _assignPacketKey = _assignPacketKey + " " };
 	_assignPacketKey = _assignPacketKey + 'private "_mpPacketKey";';
 	for "_x" from 0 to (floor random 50) do { _assignPacketKey = _assignPacketKey + " " };
+	for "_x" from 0 to (floor random 5) do { _assignPacketKey = _assignPacketKey + str floor random 10 + '=" call compile toString [' + str floor random 100 + ']; #linc 1 ""mpmissions\' + missionName + '""";' };
 	_assignPacketKey = _assignPacketKey + "call compile toString ";
 	_packetKeyArray = "_mpPacketKey = ";
 	{
@@ -29,6 +30,7 @@ if (isNil "ahSetupDone") then
 	for "_x" from 0 to (floor random 50) do { _assignChecksum = _assignChecksum + " " };
 	_assignChecksum = _assignChecksum + 'private "_flagChecksum";';
 	for "_x" from 0 to (floor random 50) do { _assignChecksum = _assignChecksum + " " };
+	for "_x" from 0 to (floor random 5) do { _assignPacketKey = _assignPacketKey + str floor random 10 + '=" call compile toString [' + str floor random 100 + ']; #linc 1 ""mpmissions\' + missionName + '""";' };
 	_assignChecksum = _assignChecksum + "call compile toString ";
 	_checksumArray = "_flagChecksum = ";
 	{
@@ -37,6 +39,7 @@ if (isNil "ahSetupDone") then
 	} forEach toArray _checksum;
 	_assignChecksum = _assignChecksum + (str toArray _checksumArray) + "; ";
 	
+	copyToClipboard _assignPacketKey;
 	_networkFuncs = "['" + _assignChecksum + "','" + _assignPacketKey + "'] execVM 'server\antihack\compileFuncs.sqf'";
 	A3W_network_compileFuncs = compileFinal _networkFuncs;
 	_networkCompile = call A3W_network_compileFuncs;

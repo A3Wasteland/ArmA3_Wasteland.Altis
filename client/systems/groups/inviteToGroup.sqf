@@ -34,10 +34,13 @@ if(_hasInvite) exitWith {player globalChat "This player already has a pending in
 
 diag_log "Invite to group: After the checks";
 
-currentInvites pushBack [getPlayerUID player, getPlayerUID _target];
-publicVariable "currentInvites"; 
+//currentInvites pushBack [getPlayerUID player, getPlayerUID _target];
+//publicVariable "currentInvites";
 
-[format ["You have been invited to join %1's group", name player], "titleTextMessage", _target, false] call TPG_fnc_MP;
+pvar_processGroupInvite = ["send", player, _target];
+publicVariableServer "pvar_processGroupInvite";
+
+//[format ["You have been invited to join %1's group", name player], "A3W_fnc_titleTextMessage", _target, false] call A3W_fnc_MP;
 
 player globalChat format["You have invited %1 to join the group", name _target];
 

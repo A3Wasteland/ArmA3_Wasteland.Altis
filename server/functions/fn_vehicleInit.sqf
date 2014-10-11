@@ -71,4 +71,4 @@ if (typeName _customInit == "STRING") then
 	_customInit = compile _customInit;
 };
 
-[[[netId _vehicle, _customInit], {(objectFromNetId (_this select 0)) call (_this select 1)}], "BIS_fnc_spawn", _target, _persistence] call TPG_fnc_MP;
+[[[netId _vehicle, _customInit], {(objectFromNetId (_this select 0)) call (_this select 1)}], "BIS_fnc_spawn", _target, _persistence] call A3W_fnc_MP;

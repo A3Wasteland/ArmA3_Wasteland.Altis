@@ -6,9 +6,9 @@
 # @@Function:
 #*********************************************************/
 
-// Called with [_message, _money(optional)], "territoryActivityHandler", side, false] call TPG_fnc_MP;
+// Called with [_message, _money(optional)], "A3W_fnc_territoryActivityHandler", side, false] call A3W_fnc_MP;
 
-diag_log format["territoryActivityHandler called with %1", _this];
+diag_log format["A3W_fnc_territoryActivityHandler called with %1", _this];
 
 if (typeName _this == "ARRAY" && {count _this >= 1}) then {
 	_msg = _this select 0;

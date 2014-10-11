@@ -64,8 +64,13 @@ class CfgFunctions
 	{
 		class MissionSetup
 		{
-			class setupStoreNPC {file = "server\functions\setupStoreNPC.sqf"};
-			class setupMissionObject {file = "server\functions\setupMissionObject.sqf"};
+			class setupStoreNPC {file = "server\functions\setupStoreNPC.sqf";};
+			class setupMissionObject {file = "server\functions\setupMissionObject.sqf";};
 		};
 	};
+};
+
+class CfgNotifications
+{
+	#include "client\CfgNotifications.hpp"
 };

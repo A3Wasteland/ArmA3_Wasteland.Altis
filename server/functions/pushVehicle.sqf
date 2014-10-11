@@ -57,7 +57,7 @@ if (_vel != 0) then
 		}
 		else
 		{
-			[[netId _veh, _caller, _actionID, _params], "pushVehicle", _veh, false] call TPG_fnc_MP;
+			[[netId _veh, _caller, _actionID, _params], "A3W_fnc_pushVehicle", _veh, false] call A3W_fnc_MP;
 		};
 	};
 };

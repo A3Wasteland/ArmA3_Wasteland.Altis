@@ -36,3 +36,4 @@ publicVariable "currentInvites";
 "pvar_handleCorpseOnLeave" addPublicVariableEventHandler { (_this select 1) call handleCorpseOnLeave };
 "pvar_parachuteLiftedVehicle" addPublicVariableEventHandler { (_this select 1) spawn parachuteLiftedVehicle };
 "pvar_spawnStoreObject" addPublicVariableEventHandler { (_this select 1) call spawnStoreObject };
+"pvar_processGroupInvite" addPublicVariableEventHandler { (_this select 1) call processGroupInvite };

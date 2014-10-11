@@ -14,11 +14,12 @@ onKeyPress = "client\clientEvents\onKeyPress.sqf" call mf_compile;
 onKeyRelease = "client\clientEvents\onKeyRelease.sqf" call mf_compile;
 
 // Functions
+A3W_fnc_copilotTakeControl = "client\functions\copilotTakeControl.sqf" call mf_compile;
+A3W_fnc_titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
 addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
 canPushPlaneBack = "client\functions\canPushPlaneBack.sqf" call mf_compile;
 canPushVehicleOnFoot = "client\functions\canPushVehicleOnFoot.sqf" call mf_compile;
 canPushWatercraft = "client\functions\canPushWatercraft.sqf" call mf_compile;
-copilotTakeControl = "client\functions\copilotTakeControl.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
 fn_addManagedAction = "client\functions\fn_addManagedAction.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
@@ -29,13 +30,13 @@ getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;
 getFullMove = "client\functions\getFullMove.sqf" call mf_compile;
 getMoveParams = "client\functions\getMoveParams.sqf" call mf_compile;
 getPushPlaneAction = "client\functions\getPushPlaneAction.sqf" call mf_compile;
+groupNotify = "client\functions\groupNotify.sqf" call mf_compile;
 isAdmin = "client\systems\adminPanel\isAdmin.sqf" call mf_compile;
 isAssignableBinocular = "client\functions\isAssignableBinocular.sqf" call mf_compile;
 isPVarTarget = "client\functions\isPVarTarget.sqf" call mf_compile;
 isWeaponType = "client\functions\isWeaponType.sqf" call mf_compile;
 parseMove = "client\functions\parseMove.sqf" call mf_compile;
 serverMessage = "client\functions\serverMessage.sqf" call mf_compile;
-titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
 uniformConverter = "client\functions\uniformConverter.sqf" call mf_compile;
 unitHandleDamage = "client\functions\unitHandleDamage.sqf" call mf_compile;
 updateTerritoryMarkers = "territory\client\updateTerritoryMarkers.sqf" call mf_compile;
@@ -81,8 +82,8 @@ requestStoreObject = "client\functions\requestStoreObject.sqf" call mf_compile;
 // Custom paint/textures on vehicles
 applyVehicleTexture = "client\systems\vehicleStore\applyVehicleTexture.sqf" call mf_compile;
 
-if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = compile preprocessFileLineNumbers "\A3\functions_f\MP\fn_MP.sqf" };
-if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = compile preprocessFileLineNumbers "\A3\functions_f\MP\fn_MPexec.sqf" };
+if (isNil "A3W_fnc_MP") then { A3W_fnc_MP = compile preprocessFileLineNumbers "\A3\functions_f\MP\fn_MP.sqf" };
+if (isNil "A3W_fnc_MPexec") then { A3W_fnc_MPexec = compile preprocessFileLineNumbers "\A3\functions_f\MP\fn_MPexec.sqf" };
 
 player groupChat "Wasteland - Client Compile Complete";
 sleep 1;

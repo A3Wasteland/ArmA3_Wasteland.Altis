@@ -1,4 +1,3 @@
-
 //	@file Version: 1.0
 //	@file Name: flagHandler.sqf
 //	@file Author: AgentRev
@@ -24,7 +23,7 @@ if (typeName _this == "ARRAY" && {count _this > 4}) then
 
 		sleep 0.5;
 
-		[[format ["[ANTI-HACK] %1 is using cheating scripts. (%2)", _playerName, _hackType], _playerID, _flagChecksum], "chatBroadcast", true, false] call TPG_fnc_MP;
+		[[format ["[ANTI-HACK] %1 is using cheating scripts. (%2)", _playerName, _hackType], _playerID, _flagChecksum], "A3W_fnc_chatBroadcast", true, false] call A3W_fnc_MP;
 		diag_log format ["ANTI-HACK 0.8.0: %1 (%2) was detected for [%3] with the value [%4]", _playerName, _playerID, _hackType, _hackValue];
 
 		// Save detection infos in iniDB file for easy retrieval

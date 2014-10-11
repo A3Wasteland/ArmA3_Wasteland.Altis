@@ -8,21 +8,21 @@
 #define adminMenu_option 50001
 disableSerialization;
 
-private ["_panelType","_displayAdmin","_displayDebug","_adminSelect","_debugSelect"];
+private ["_panelType","_displayAdmin","_displayDebug","_adminSelect","_debugSelect","_money"];
 _uid = getPlayerUID player;
 if (_uid call isAdmin) then
 {
 	_panelType = _this select 0;
-	
+
 	_displayAdmin = uiNamespace getVariable ["AdminMenu", displayNull];
 	_displayDebug = uiNamespace getVariable ["DebugMenu", displayNull];
-	
+
 	switch (true) do
 	{
 	    case (!isNull _displayAdmin): //Admin panel
 	    {
 			_adminSelect = _displayAdmin displayCtrl adminMenu_option;
-			
+
 			switch (lbCurSel _adminSelect) do
 			{
 			    case 0: //Player Menu
@@ -41,22 +41,29 @@ if (_uid call isAdmin) then
 			    };
 			    case 3: //Teleport
 			    {
-	                closeDialog 0;    
-	                hint "Click on map to teleport";
-	                onMapSingleClick "vehicle player setPos _pos; onMapSingleClick '';true;";
+	                closeDialog 0;
+					["A3W_teleport", "onMapSingleClick",
+					{
+						vehicle player setPos _pos;
+						if (!isNil "notifyAdminMenu") then { ["teleport", _pos] spawn notifyAdminMenu };
+						["A3W_teleport", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+						true
+					}] call BIS_fnc_addStackedEventHandler;
+					hint "Click on map to teleport";
 			    };
 	            case 4: //Money
-			    {      
-					player setVariable ["cmoney", (player getVariable "cmoney") + 5000, true];
-					if (!isNil "notifyAdminMenu") then { 5000 call notifyAdminMenu };
+			    {
+					_money = 5000;
+					player setVariable ["cmoney", (player getVariable ["cmoney",0]) + _money, true];
+					if (!isNil "notifyAdminMenu") then { ["money", _money] call notifyAdminMenu };
 			    };
 	            case 5: //Debug Menu
-			    {   
-	            	closeDialog 0;   
+			    {
+	            	closeDialog 0;
 	                execVM "client\systems\adminPanel\loadDebugMenu.sqf";
 			    };
 				case 6: //Object search menu
-			    {   
+			    {
 	            	closeDialog 0;
 	                execVM "client\systems\adminPanel\loadObjectSearch.sqf";
 			    };
@@ -69,7 +76,7 @@ if (_uid call isAdmin) then
 	    case (!isNull _displayDebug): //Debug panel
 	    {
 			_debugSelect = _displayDebug displayCtrl debugMenu_option;
-			
+
 			switch (lbCurSel _debugSelect) do
 			{
 			    case 0: //Access Gun Store
@@ -94,18 +101,18 @@ if (_uid call isAdmin) then
 			    };
 			    case 4: //Access Proving Grounds
 			    {
-	                closeDialog 0;      
+	                closeDialog 0;
 					createDialog "balca_debug_main";
 			    };
 	            case 5: //Show server FPS function
-			    {      
+			    {
 					hint format["Server FPS: %1",serverFPS];
 			    };
 	            case 6: //Test Function
 			    {
                     _group = createGroup civilian;
 					_leader = _group createunit ["C_man_polo_1_F", getPos player, [], 0.5, "Form"];
-                    
+
 					_leader addMagazine "RPG32_HE_F";
 					_leader addMagazine "RPG32_HE_F";
 					_leader addWeapon "launch_RPG32_F";
@@ -114,7 +121,7 @@ if (_uid call isAdmin) then
 					_leader addMagazine "30Rnd_556x45_Stanag";
 					_leader addWeapon "arifle_TRG20_F";
 			    };
-			};		
+			};
 	    };
 	};
 };

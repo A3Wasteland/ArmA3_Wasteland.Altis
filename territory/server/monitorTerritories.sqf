@@ -115,7 +115,7 @@ _onCaptureStarted =
         _sideObject = [_ownerTeam] call _sideObjectForSideStr;
         _descriptiveTeamName = [_ownerTeam] call _getTeamName;
         _msg = format["Your territory at %1 is being captured by %2!", _territoryDescriptiveName, _descriptiveTeamName];
-        [[_msg], "territoryActivityHandler", _sideObject, false] call TPG_fnc_MP;
+        [[_msg], "A3W_fnc_territoryActivityHandler", _sideObject, false] call A3W_fnc_MP;
     };
 	*/
 };

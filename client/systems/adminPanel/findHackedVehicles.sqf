@@ -6,7 +6,7 @@
 private ["_requestKey", "_hackedVehicles"];
 _requestKey = call generateKey;
 
-[[player, _requestKey], "checkHackedVehicles", false, false] call TPG_fnc_MP;
+[[player, _requestKey], "A3W_fnc_checkHackedVehicles", false, false] call A3W_fnc_MP;
 	
 waitUntil {!isNil _requestKey};
 

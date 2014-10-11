@@ -1,19 +1,20 @@
 //	@file Name: convertTerritoryOwner.sqf
 //	@file Author: AgentRev
 
-private ["_oldGroup", "_newGroup", "_currentTeam"];
+private ["_newTerritories", "_newGroup", "_territory"];
 
-_oldGroup = _this select 0;
+_newTerritories = _this select 0;
 _newGroup = _this select 1;
 
 if (isNil "currentTerritoryDetails") exitWith {};
 
 {
-	_currentTeam = _x select 2;
-	
-	if (typeName _currentTeam == typeName _oldGroup && {_currentTeam == _oldGroup}) then
+	_territory = _x;
 	{
-		_x set [2, _newGroup];
-		_x set [3, 0]; // reset chrono
-	};
-} forEach currentTerritoryDetails;
+		if (_x select 0 == _territory) exitWith
+		{
+			_x set [2, _newGroup];
+			_x set [3, 0]; // reset chrono
+		};
+	} forEach currentTerritoryDetails;
+} forEach _newTerritories;

@@ -67,8 +67,8 @@ deleteClientMarker = [_path, "deleteClientMarker.sqf"] call mf_compile;
 
 //Function Compiles
 _path = "server\functions";
+A3W_fnc_checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
 addMilCap = [_path, "addMilCap.sqf"] call mf_compile;
-checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
 cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
 convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_compile;
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
@@ -83,6 +83,7 @@ fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile
 handleCorpseOnLeave = [_path, "handleCorpseOnLeave.sqf"] call mf_compile;
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
 parachuteLiftedVehicle = [_path, "parachuteLiftedVehicle.sqf"] call mf_compile;
+processGroupInvite = [_path, "processGroupInvite.sqf"] call mf_compile;
 processItems = [_path, "processItems.sqf"] call mf_compile;
 refillPrimaryAmmo = [_path, "refillPrimaryAmmo.sqf"] call mf_compile;
 setMissionSkill = [_path, "setMissionSkill.sqf"] call mf_compile;
@@ -104,6 +105,3 @@ randomWeapons = [_path, "randomWeapon.sqf"] call mf_compile;
 // staticGunCreation = [_path, "staticGunCreation.sqf"] call mf_compile;
 staticHeliCreation = [_path, "staticHeliCreation.sqf"] call mf_compile;
 vehicleCreation = [_path, "vehicleCreation.sqf"] call mf_compile;
-
-if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = "\A3\functions_f\MP\fn_MP.sqf" call mf_compile };
-if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = "\A3\functions_f\MP\fn_MPexec.sqf" call mf_compile };

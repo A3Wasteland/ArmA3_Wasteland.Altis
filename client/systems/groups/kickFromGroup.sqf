@@ -24,7 +24,8 @@ if (isNil "_target") exitWith {player globalChat "you must select someone to kic
 if (_target == player) exitWith {player globalChat "you can't kick yourself"};
 
 _group = group _target;
-[[_group getVariable ["currentTerritories", []], false, _group, false], "updateTerritoryMarkers", _target, false] call TPG_fnc_MP;
+pvar_updateTerritoryMarkers = [_target, [_group getVariable ["currentTerritories", []], false, _group, false]];
+publicVariable "pvar_updateTerritoryMarkers";
 [_target] join grpNull;
 
 _target setVariable ["currentGroupRestore", grpNull, true];
