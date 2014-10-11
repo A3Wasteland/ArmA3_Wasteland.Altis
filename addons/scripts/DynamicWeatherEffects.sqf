@@ -64,7 +64,7 @@ _maximumOvercast = 1;
 
 // When raining, rain intensity never falls below this value. Must be between 0 and 1 and less than or equal to _maximumRain
 // (0 = no rain, 1 = maximum rain intensity). (Suggested value: 0);
-_minimumRain = 0;
+_minimumRain = 0.01;
 
 // When raining, rain intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumRain
 // (0 = no rain, 1 = maximum rain intensity). (Suggested value: 0.8);
@@ -89,7 +89,7 @@ _windChangeProbability = 25;
 // Probability in percent (0-100) for rain to start at every rain interval. Set this to 0 if you don't want rain at all. Set this to 100 
 // if you want it to rain constantly when overcast is greater than 0.75. In short: if you think that it generally rains to often then 
 // lower this value and vice versa. (Suggested value: 50).
-_rainIntervalRainProbability = 20;
+_rainIntervalRainProbability = 50;
 
 // Minimum time in minutes for rain intervals. Must be greater or equal to 0 and less than or equal to _maxRainIntervalTimeMin.
 // (Suggested value: 0).
