@@ -5,7 +5,7 @@
 
 if (!isServer) exitWith {};
 
-//#include "functions.sqf"
+#include "functions.sqf"
 
 _strToSide =
 {
@@ -27,10 +27,14 @@ _maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
 
 _savingMethod = ["A3W_savingMethod", 1] call getPublicVar;
 
-_objects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true] call extDB_Database_async;
+_serverObjects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true] call extDB_Database_async;
+
+_serverObjectsIDs = [];
 
 {
 	_db_id = _x select 0;
+	_serverObjectsIDs pushBack _db_id;
+
 	_class = _x select 1;
 	_pos = _x select 2;
 	_hoursAlive = _x select 4;
@@ -51,8 +55,8 @@ _objects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true]
 		if (_allowed) then
 		{
 			_dir = _x select 3;
-			_damage = _x select 6;
-			_allowDamage = _x select 7;
+			_damage = _x select 5;
+			_allowDamage = _x select 6;
 
 			_obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
 			_obj setPosATL _pos;
@@ -107,36 +111,6 @@ _objects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true]
 				_obj setVariable ["objectLocked", false, true];
 			};
 
-			if (_boxSavingOn && {_class call _isBox}) then
-			{
-				_weapons = _x select 9;
-				_magazines = _x select 10;
-				_items = _x select 11;
-				_backpacks = _x select 12;
-
-				if (!isNil "_weapons") then
-				{
-					{ _obj addWeaponCargoGlobal _x } forEach _weapons;
-				};
-				if (!isNil "_magazines") then
-				{
-					{ _obj addMagazineCargoGlobal _x } forEach _magazines;
-				};
-				if (!isNil "_items") then
-				{
-					{ _obj addItemCargoGlobal _x } forEach _items;
-				};
-				if (!isNil "_backpacks") then
-				{
-					{
-						if !((_x select 0) isKindOf "Weapon_Bag_Base") then
-						{
-							_obj addBackpackCargoGlobal _x;
-						};
-					} forEach _backpacks;
-				};
-			};
-
 			if (_staticWeaponSavingOn && {_class call _isStaticWeapon}) then
 			{
 				_turretMags = _x select 13;
@@ -155,13 +129,15 @@ _objects = [format["getAllServerObjects:%1", call(A3W_extDB_ServerID)], 2, true]
 			_obj setAmmoCargo _ammoCargo;
 			_obj setFuelCargo _fuelCargo;
 			_obj setRepairCargo _repairCargo;
+		};
 	};
-
-} forEach _objects;
+} forEach _serverObjects;
 
 if (_warchestMoneySavingOn) then
 {
 	_serverInfo = [format["getWarchestMoney:%1", call(A3W_extDB_ServerID)], 2] call extDB_Database_async;
+
+	diag_log format ["WAR CHEST MONEY:%1", _serverInfo];
 
 	pvar_warchest_funds_west = _serverInfo select 0;
 	publicVariable "pvar_warchest_funds_west";
@@ -169,4 +145,7 @@ if (_warchestMoneySavingOn) then
 	publicVariable "pvar_warchest_funds_east";
 };
 
-diag_log format ["A3Wasteland - world persistence loaded %1 objects from %2", _objectsCount, ["A3W_savingMethodName", "a rip in the fabric of space-time"] call getPublicVar];
+
+diag_log format ["A3Wasteland - world persistence loaded %1 objects from %2", count _serverObjectsIDs, ["A3W_savingMethodName", "a rip in the fabric of space-time"] call getPublicVar];
+
+_serverObjectsIDs

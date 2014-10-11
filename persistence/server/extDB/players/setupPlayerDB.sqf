@@ -58,7 +58,7 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 			if ((count _player_gear) == 0) then {
 				_query = "updatePlayerSaveNoGear:"
 							// General
-							+ str(call(A3W_extDB_ServerID)) + ":" + _player_uid
+							+ str(call(A3W_extDB_PlayerSave_ServerID)) + ":" + _player_uid
 
 							// Player Position Info
 							+ ":" + str(_player_pos) + ":" + str(_player_dir) + ":" + str(_player_cur_weapon) + ":" + str(_player_stance)
@@ -91,7 +91,7 @@ fn_loadAccount = "persistence\server\extDB\players\loadAccount.sqf" call mf_comp
 
 				_query = "updatePlayerSaveAll:"
 							// General
-							+ str(call(A3W_extDB_ServerID)) + ":" + _player_uid
+							+ str(call(A3W_extDB_PlayerSave_ServerID)) + ":" + _player_uid
 
 							// Player Position Info
 							+ ":" + str(_player_pos) + ":" + str(_player_dir) + ":" +str(_player_cur_weapon) + ":" + str(_player_stance)

@@ -47,6 +47,7 @@ else
 };
 
 A3W_extDB_ServerID = compileFinal str A3W_extDB_ServerID;
+A3W_extDB_PlayerSave_ServerID = compileFinal str A3W_extDB_PlayerSave_ServerID;
 A3W_extension = compileFinal str A3W_extension;
 A3W_startingMoney = compileFinal str A3W_startingMoney;
 A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
@@ -174,15 +175,16 @@ if (_playerSavingOn || _serverSavingOn) then
 		_serverSavingOn = _this select 0;
 		_playerSavingOn = _this select 1;
 		_persistence = _this select 2;
+		_serverObjectsIDs = [];
 
 		if (_serverSavingOn) then
 		{
-			call compile preprocessFileLineNumbers format["persistence\server\%1\world\oLoad.sqf", _persistence];
+			_serverObjectsIDs = [] call compile preprocessFileLineNumbers format["persistence\server\%1\world\oLoad.sqf", _persistence];
 		};
 
 		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
 		{
-			execVM format["persistence\server\%1\world\oSave.sqf", _persistence];
+			[_serverObjectsIDs] execVM format["persistence\server\%1\world\oSave.sqf", _persistence];
 		};
 	};
 

@@ -14,13 +14,15 @@
 
 private["_queryStmt","_queryResult","_key","_mode","_return"];
 
+_tickTime = diag_tickTime;
+
 _queryStmt = [_this,0,"",[""]] call BIS_fnc_param;
 _mode = [_this,1,1,[0]] call BIS_fnc_param;
 _multiarr = [_this,2,false,[false]] call BIS_fnc_param;
 
 _key = "extDB" callExtension format["%1:%2:%3",_mode, (call A3W_extDB_miscID),_queryStmt];
 
-if(_mode == 1) exitWith {true};
+if(_mode == 1) exitWith {diag_log format ["DEBUG ----- extDB ASync: Complete Time:%1  Input String:%2", (diag_tickTime - _tickTime), _queryStmt]; true};
 
 _key = call compile format["%1",_key];
 _key = _key select 1;
@@ -58,8 +60,10 @@ while{_loop} do
 	};
 };
 
+diag_log format ["DEBUG ASYNC: %1", _queryResult];
 _queryResult = call compile _queryResult;
 
+diag_log format ["DEBUG ----- extDB ASync: Complete Time:%1  Input String:%2", (diag_tickTime - _tickTime), _queryStmt];
 
 // Not needed, its SQF Code incase extDB ever returns error message i.e Database Died
 if ((_queryResult select 0) == 0) exitWith {diag_log format ["extDB: Error: %1", _queryResult]; []};

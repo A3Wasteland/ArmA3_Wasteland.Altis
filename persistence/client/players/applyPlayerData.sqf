@@ -114,6 +114,7 @@ removeHeadgear player;
 		};
 		case "LoadedMagazines":
 		{
+			player addBackpack "B_Carryall_Base"; // temporary backpack to hold mags
 			{ player addMagazine _x } forEach _value;
 		};
 		case "PrimaryWeapon": { player addWeapon _value; removeAllPrimaryWeaponItems player };

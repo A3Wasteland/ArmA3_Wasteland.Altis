@@ -31,7 +31,9 @@ A3W_NoCommandVoiceBan = 3; //ban player for getting kicked x times, 0 to disable
 A3W_VoiceKickTimeout = 5*60; //time in seconds where using voice a second time will get you kicked. After this has ellapsed, you will get a warning again instead of a kick
 
 // Persistence settings
-A3W_extDB_ServerID = 1;			   // extDB ServerMap ID
+A3W_extDB_ServerID = 1;			   // extDB Server ID
+A3W_extDB_PlayerSave_ServerID = 1; // extDB Server ID to use for Player Saves.
+A3W_extDB_Debug = 0;			   // Enables extra Debug Output for extDB ASync Results etc
 A3W_extension = "";				   // Extension to use, "iniDB", "extDB", "" for None.
 A3W_playerSaving = 1;              // Save player data like position, health, inventory, etc. (0 = no, 1 = yes)
 A3W_moneySaving = 1;               // If playerSaving = 1, save player money amount (0 = no, 1 = yes)

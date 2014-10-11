@@ -14,14 +14,13 @@ _bank = 0;
 _money = 0;
 _data = [];
 
-_result = [format["existPlayerInfo:%1", _player_uid],2] call extDB_Database_async;
+_result = ([format["existPlayerInfo:%1", _player_uid],2] call extDB_Database_async) select 0;
 
-if (!_result select 0) then
+if (!_result) then
 {
 	_player_guid = getPlayerUID _player;
 	_player_name = name _player;
-	[format["insertPlayerInfo:%1:%2", _player_guid, _player_name], 2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
-	[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_guid], 2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
+	[format["insertPlayerInfo+Save:%1:%2:%3", call(A3W_extDB_PlayerSave_ServerID), _player_guid, _player_name], 2] call extDB_Database_async;
 	_data = [
 				["PlayerSaveValid", false],
 				["BankMoney", _bank]
@@ -34,10 +33,16 @@ else
 		_bank = ([format["getPlayerInfoBank:%1", _player_uid],2] call extDB_Database_async) select 0;
 	};
 
-	_result = [format["getPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_uid],2] call extDB_Database_async;
-	if ((count _result) == 0) then
+	_result = [format["getPlayerSaveData:%1:%2", call(A3W_extDB_PlayerSave_ServerID), _player_uid],2] call extDB_Database_async;
+
+	_pos = "";
+	if ((count _result) > 0) then // Check if There is a PlayerSaveData
 	{
-		[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_ServerID), _player_uid],2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
+		_pos = _result select 2;
+	};
+	if (typeName _pos != "ARRAY") then
+	{
+		[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_PlayerSave_ServerID), _player_uid],2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
 
 		_data = [
 					["PlayerSaveValid", false],
@@ -48,7 +53,7 @@ else
 	{
 		_pos = _result select 2;
 		_playerSaveValid = false;
-		if (count _pos > 0) then
+		if ((count _pos) > 0) then
 		{
 			_playerSaveValid = true;
 		};
@@ -60,12 +65,12 @@ else
 
 		_data = [["PlayerSaveValid", 		_playerSaveValid],
 
-				["HitPoints", 		_result select 1],
-				["Damage",    		_result select 0],
-				["Hunger", 	  		_result select 4],
-				["Thirst", 	  		_result select 5],
+				["HitPoints", 				_result select 1],
+				["Damage",    				_result select 0],
+				["Hunger", 	  				_result select 4],
+				["Thirst", 	  				_result select 5],
 
-				["Money", 	  		_money],
+				["Money", 			  		_money],
 				["BankMoney",		  		_bank],
 
 				["LoadedMagazines",  		_result select 31],
@@ -80,33 +85,33 @@ else
 
 				["AssignedItems",  			_result select 29],
 
-				["CurrentWeapon",  	_result select 7],
-				["Stance",  		_result select 8],
+				["CurrentWeapon",  			_result select 7],
+				["Stance",  				_result select 8],
 
-				["Uniform",  		_result select 11],
-				["Vest",  			_result select 12],
-				["Backpack",  			_result select 13],
-				["Goggles",  		_result select 10],
-				["Headgear",  		_result select 9],
+				["Uniform",  				_result select 11],
+				["Vest",  					_result select 12],
+				["Backpack",  				_result select 13],
+				["Goggles",  				_result select 10],
+				["Headgear",  				_result select 9],
 
-				["UniformWeapons",  	_result select 14],
-				["UniformItems",  		_result select 15],
-				["UniformMagazines",  	_result select 16],
+				["UniformWeapons",  		_result select 14],
+				["UniformItems",  			_result select 15],
+				["UniformMagazines",  		_result select 16],
 
-				["VestWeapons",  		_result select 17],
-				["VestItems",  			_result select 18],
-				["VestMagazines",  		_result select 19],
+				["VestWeapons",  			_result select 17],
+				["VestItems",  				_result select 18],
+				["VestMagazines",  			_result select 19],
 
-				["BackpackWeapons",  	_result select 20],
-				["BackpackItems",  		_result select 21],
-				["BackpackMagazines",  	_result select 22],
+				["BackpackWeapons",  		_result select 20],
+				["BackpackItems",  			_result select 21],
+				["BackpackMagazines",  		_result select 22],
 
 				["PartialMagazines",  		_result select 30],
 
 				["WastelandItems",  		_result select 32],
 
-				["Position",  		_pos],
-				["Direction",  		_result select 3]];
+				["Position",  				_pos],
+				["Direction",  				_result select 3]];
 	};
 };
 
