@@ -8,8 +8,7 @@
 	//Holster+Unholster
 	["Holster Weapon", "player action ['SwitchWeapon', player, player, 100];", [], -11, false, false, "", "currentWeapon player != '' && vehicle player == player"],
 	["Unholster Weapon", "player action ['SwitchWeapon', player, player, 0];", [], -11, false, false, "", "currentWeapon player == '' && vehicle player == player"],			
-	//Add Salvage Feature, Add Resupply Script
-	["<img image='client\icons\repair.paa'/> Salvage", "client\actions\salvage.sqf", [], 1.1, false, false, "", "!isNull cursorTarget && !alive cursorTarget && {cursorTarget isKindOf 'AllVehicles' && !(cursorTarget isKindOf 'Man') && player distance cursorTarget <= (sizeOf typeOf cursorTarget / 3) max 2}"],
+	//Add Resupply Script
 	["Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, false, false, "", "!(vehicle player == player) and (cursortarget iskindof 'O_Truck_03_device_F') and (player distance cursortarget) < 15"], //vehicle player isKindOf 'O_Truck_03_device_F'
 	["Chop Shop", "client\functions\fn_chopshop.sqf", [], 51, false, false, "", "!(vehicle player == player) and (cursortarget iskindof 'Land_Wreck_Truck_dropside_F') and (player distance cursortarget) < 15"], //vehicle player isKindOf 'Land_Wreck_Truck_dropside_F'
 	[format ["<img image='client\icons\playerMenu.paa' color='%1'/> <t color='%1'>[</t>Player Menu<t color='%1'>]</t>", "#FF8000"], "client\systems\playerMenu\init.sqf", [], -10, false], //, false, "", ""],
