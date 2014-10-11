@@ -37,7 +37,7 @@ mapEH_drawPlayerMarkers = _mapCtrl ctrlAddEventHandler ["Draw",
 			_veh = vehicle _x;
 			_pos = if (_mapIconsEnabled) then { DEFAULT_ICON_POS(_veh) } else { visiblePositionASL _x };
 
-			_mapCtrl drawIcon ["\A3\UI_F_Curator\Data\CfgMarkers\kia_ca.paa", [0,0,0,0.6], _pos, 22, 22, 0]; // draw skull
+			_mapCtrl drawIcon ["\A3\ui_f_curator\Data\CfgMarkers\kia_ca.paa", [0,0,0,0.6], _pos, 22, 22, 0]; // draw skull
 		};
 	} forEach _allDeadMen;
 
@@ -69,6 +69,6 @@ mapEH_drawPlayerMarkers = _mapCtrl ctrlAddEventHandler ["Draw",
 	if (!_mapIconsEnabled) then
 	{
 		_veh = vehicle player;
-		_mapCtrl drawIcon ["\A3\UI_F\Data\IGUI\Cfg\IslandMap\iconplayer_ca.paa", [1,0,0,1], visiblePositionASL _veh, 26, 26, getDir _veh]; // draw player circle
+		_mapCtrl drawIcon ["\A3\ui_f\Data\IGUI\Cfg\IslandMap\iconplayer_ca.paa", [1,0,0,1], visiblePositionASL _veh, 26, 26, getDir _veh]; // draw player circle
 	};
 }];

@@ -21,7 +21,7 @@
 #define respawn_Preload_Checkbox 3416
 
 // Check if both players are on the same side, and that our player is BLUFOR or OPFOR, or that both are in the same group
-#define FRIENDLY_CONDITION (side _x == playerSide && {playerSide in [BLUFOR,OPFOR] || group _x == group player})
+#define FRIENDLY_CONDITION (side group _x == playerSide && {playerSide in [BLUFOR,OPFOR] || group _x == group player})
 
 #define BEACON_CHECK_RADIUS 250
 

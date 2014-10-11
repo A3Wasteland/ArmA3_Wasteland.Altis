@@ -14,7 +14,7 @@ private ["_npc", "_npcName", "_startsWith", "_building"];
 
 _npc = _this select 0;
 _npcName = vehicleVarName _npc;
-_npc setName _npcName;
+_npc setName [_npcName,"",""];
 
 _npc allowDamage false;
 { _npc disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
@@ -96,8 +96,11 @@ if (isNil "_building" || {isNull _building}) then
 	_building = nearestBuilding _npc;
 };
 
-_building allowDamage true;
-for "_i" from 1 to 99 do { _building setHit ["glass_" + str _i, 1] }; // pre-break the windows so people can shoot thru them
+if (isServer) then
+{
+	for "_i" from 1 to 99 do { _building setHit ["glass_" + str _i, 1] }; // pre-break the windows so people can shoot thru them
+};
+
 _building allowDamage false; // disable building damage
 
 if (isServer) then

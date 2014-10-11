@@ -7,7 +7,7 @@
 if (!isServer) exitWith {};
 
 scopeName "spawnStoreObject";
-private ["_player", "_class", "_marker", "_key", "_isGenStore", "_isGunStore", "_isVehStore", "_timeoutKey", "_objectID", "_objectsArray", "_itemEntry", "_itemPrice", "_safePos", "_object"];
+private ["_player", "_class", "_marker", "_key", "_isGenStore", "_isGunStore", "_isVehStore", "_timeoutKey", "_objectID", "_playerSide", "_objectsArray", "_itemEntry", "_itemPrice", "_safePos", "_object"];
 
 _player = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _class = [_this, 1, "", [""]] call BIS_fnc_param;
@@ -22,7 +22,8 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 {
 	_timeoutKey = _key + "_timeout";
 	_objectID = "";
-	
+	_playerSide = side group _player;
+
 	if (_isGenStore || _isGunStore) then
 	{
 		_marker = _marker + "_objSpawn";
@@ -130,17 +131,19 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				//assign AI to the vehicle so it can actually be used
 				createVehicleCrew _object;
 				
-				[_object, _player] spawn
+				[_object, _playerSide] spawn
 				{
-					_object = _this select 0;
-					_player = _this select 1;
+					_veh = _this select 0;
+					_side = _this select 1;
 
-					waitUntil {!isNull driver _object};
+					waitUntil {!isNull driver _veh};
 
 					//assign AI to player's side to allow terminal connection
-					(crew _object) joinSilent (createGroup side _player);
+					(crew _veh) joinSilent createGroup _side;
 
-					[_object, { {_x setName ["AI","",""]} forEach crew _this }, true, false] call fn_vehicleInit;
+					{
+						[[_x, ["AI","",""]], "A3W_fnc_setName", true] call A3W_fnc_MP;
+					} forEach crew _veh;
 				};
 			};
 			
@@ -215,7 +218,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 		};
 	};
 	
-	// [compile format ["%1 = '%2'", _key, _objectID], "BIS_fnc_spawn", _player, false] call TPG_fnc_MP;
+	// [compile format ["%1 = '%2'", _key, _objectID], "BIS_fnc_spawn", _player, false] call A3W_fnc_MP;
 	
 	if (_player getVariable [_timeoutKey, true]) then // Timeout
 	{

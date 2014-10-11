@@ -25,7 +25,7 @@ waitUntil {scriptDone _serverCompileHandle};
 // Broadcast server rules
 if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
 {
-	[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call TPG_fnc_MP;
+	[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call A3W_fnc_MP;
 };
 
 diag_log "WASTELAND SERVER - Server Compile Finished";
@@ -223,6 +223,18 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 else
 {
 	diag_log "[INFO] A3W territory capturing is DISABLED";
+};
+
+// Consolidate all store NPCs in a single group
+[] spawn
+{
+	_storeGroup = createGroup sideLogic;
+	{
+		if (!isPlayer _x && {[["GenStore","GunStore","VehStore"], vehicleVarName _x] call fn_startsWith}) then
+		{
+			[_x] joinSilent _storeGroup;
+		};
+	} forEach entities "CAManBase";
 };
 
 //Execute Server Missions.

@@ -84,10 +84,11 @@ _displayTerritoryActivity =
 
 _unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
 
-private ["_globalVoiceWarning", "_globalVoiceWarnTimer", "_globalVoiceMaxWarns", "_globalVoiceTimestamp"];
+private ["_globalVoiceTimer", "_globalVoiceWarnTimer", "_globalVoiceWarning", "_globalVoiceMaxWarns", "_globalVoiceTimestamp"];
 
-_globalVoiceWarning = 0;
+_globalVoiceTimer = 0;
 _globalVoiceWarnTimer = ["A3W_globalVoiceWarnTimer", 5] call getPublicVar;
+_globalVoiceWarning = 0;
 _globalVoiceMaxWarns = ceil (["A3W_globalVoiceMaxWarns", 5] call getPublicVar);
 
 while {true} do
@@ -271,10 +272,13 @@ while {true} do
 			}
 			else
 			{
-				if (diag_tickTime - _globalVoiceTimestamp >= _globalVoiceWarnTimer) then
+				_globalVoiceTimer = _globalVoiceTimer + (diag_tickTime - _globalVoiceTimestamp);
+
+				if (_globalVoiceTimer >= _globalVoiceWarnTimer) then
 				{
 					_globalVoiceWarning = _globalVoiceWarning + 1;
 					_globalVoiceTimestamp = diag_tickTime;
+					_globalVoiceTimer = 0;
 
 					_msgTitle = format ["Warning %1 of %2", _globalVoiceWarning, _globalVoiceMaxWarns];
 
@@ -291,10 +295,11 @@ while {true} do
 							setPlayerRespawnTime 1e11;
 							player setDamage 1;
 							uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-							["You have exceeded the tolerance limit for using the global voice channel. Goodbye.", _this] spawn BIS_fnc_guiMessage;
-							sleep 5;
-							uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-							call compile preprocessFile "client\functions\quit.sqf"; // CTD
+							_msgBox = ["You have exceeded the tolerance limit for using the global voice channel. Goodbye.", _this] spawn BIS_fnc_guiMessage;
+							_time = diag_tickTime;
+							waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 5};
+							waitUntil {closeDialog 0; !dialog};
+							preprocessFile "client\functions\quit.sqf"; // CTD
 						};
 					};
 				};

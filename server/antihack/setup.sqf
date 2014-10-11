@@ -39,7 +39,6 @@ if (isNil "ahSetupDone") then
 	} forEach toArray _checksum;
 	_assignChecksum = _assignChecksum + (str toArray _checksumArray) + "; ";
 	
-	copyToClipboard _assignPacketKey;
 	_networkFuncs = "['" + _assignChecksum + "','" + _assignPacketKey + "'] execVM 'server\antihack\compileFuncs.sqf'";
 	A3W_network_compileFuncs = compileFinal _networkFuncs;
 	_networkCompile = call A3W_network_compileFuncs;

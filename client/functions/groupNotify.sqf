@@ -19,7 +19,7 @@ switch (_type) do
 			}
 			else
 			{
-				_msg = format ["%1 sent you<br/>a group invite", name _sender];
+				_msg = ([name _sender] call fn_encodeText) + "<br/>sent you a group invite";
 			};
 
 			["GroupInvite", [_msg]] call BIS_fnc_showNotification;

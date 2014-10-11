@@ -144,3 +144,12 @@ if (["A3W_teamPlayersMap"] call isConfigOn) then
 		_x setVariable ["side", playerSide, true];
 	};
 } forEach pvar_spawn_beacons;
+
+{
+	{
+		if (!isPlayer _x) then
+		{
+			_x setName ["AI","",""];
+		};
+	} forEach crew _x;
+} forEach allUnitsUAV;

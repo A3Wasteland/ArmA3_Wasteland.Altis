@@ -92,7 +92,7 @@ _player spawn
 _player spawn fn_removeAllManagedActions;
 
 // Same-side kills
-if (_player == player && (playerSide == side _killer) && (player != _killer) && (vehicle player != vehicle _killer)) then
+if (_player == player && (playerSide == side group _killer) && (player != _killer) && (vehicle player != vehicle _killer)) then
 {
 	// Handle teamkills
 	if (playerSide in [BLUFOR,OPFOR]) then
