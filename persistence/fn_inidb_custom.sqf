@@ -26,191 +26,17 @@ PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', 
 
 PDB_databaseNameCompiler = PDB_objectFileName;
 
-iniDB_version = compileFinal str ("iniDB" callExtension "version");
 
-iniDB_HashFunction = {
-	private["_mode", "_data", "_cdata"];
-	_mode = _this select 0;
-	_data = _this select 1;
-	
-	if((typeName _data) == "STRING") then {	
-		_data = "iniDB" callExtension format["%1;%2", _mode, _data];
-		_cdata = call compile _data;
-
-		if((_cdata select 0)) then {
-			_cdata select 1
-		} else {
-			nil
-		};
-	} else {
-		nil
-	};
+if (("sock" callExtension "version") != "") then
+{
+  //sock-rpc-stats pretending to be iniDB 1.2
+  call compile preProcessFileLineNumbers "addons\sock\inidb_adapter.sqf";
 }
-call mf_compile;
-
-iniDB_CRC32 = {
-	_this = ["crc", _this] call iniDB_HashFunction;
-	_this
-}
-call mf_compile;
-
-iniDB_MD5 = {
-	_this = ["md5", _this] call iniDB_HashFunction;
-	_this
-}
-call mf_compile;
-
-iniDB_Base64Encode = {
-	_this = ["b64_enc", _this] call iniDB_HashFunction;
-	_this
-}
-call mf_compile;
-
-iniDB_Base64Decode = {
-	_this = ["b64_dec", _this] call iniDB_HashFunction;
-	_this
-}
-call mf_compile;
-
-iniDB_exists = {
-	private ["_data", "_cdata"];
-	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_exists called with %1", _this]; };
-	_data = "iniDB" callExtension format["exists;%1", _this];
-	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_exists returned %1", _data]; };
-	_cdata = call compile _data;
-	
-	if((_cdata select 0) && (_cdata select 1)) then {
-		true
-	} else {
-		false
-	};
-}
-call mf_compile;
-
-
-iniDB_delete = {
-	private ["_data", "_cdata"];
-	_data = "iniDB" callExtension format["delete;%1", _this select 0]; //############################
-	_cdata = call compile _data;
-	
-	if((_cdata select 0)) then {
-		true
-	} else {
-		false
-	};
-}
-call mf_compile;
-
-iniDB_deleteSection = {
-	private ["_data", "_cdata"];
-	_data = "iniDB" callExtension format["deletesection;%1;%2", _this select 0, _this select 1];
-	_cdata = call compile _data;
-	
-	if((_cdata select 0)) then {
-		true
-	} else {
-		false
-	};
-}
-call mf_compile;
-
-// =======================================================================
-
-iniDB_readRaw = {
-	private["_file", "_sec", "_key", "_data", "_cdata"];
-	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_readRaw called with %1", _this]; };
-	_file = _this select 0;
-	_sec = _this select 1;
-	_key = _this select 2;
-	_data = "iniDB" callExtension format["read;%1;%2;%3", _file, _sec, _key];
-	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_readRaw returned '%1'", _data]; };
-	_cdata = [false];
-	// Better handling of empty strings which don't compile well
-	if (_data != "") then {
-		_cdata = call compile _data;
-	};
-	
-	if((_cdata select 0)) then {
-		_cdata select 1
-	} else {
-		""
-	};
-}
-call mf_compile;
-
-iniDB_writeRaw = {
-	private["_file", "_sec", "_key", "_val", "_data", "_cdata"];
-	if (__DEBUG_INIDB_CALLS__ == 1) then {diag_log format["iniDB_writeRaw called with %1", _this];};
-
-	_file = _this select 0;
-	_sec = _this select 1;
-	_key = _this select 2;
-	_val = _this select 3;
-	_data = "iniDB" callExtension format["write;%1;%2;%3;%4", _file, _sec, _key, _val];
-	_cdata = call compile _data;
-
-	if((_cdata select 0)) then {
-		true
-	} else {
-		false
-	};
-}
-call mf_compile;
-
-// =======================================================================
-
-iniDB_Datarizer = {
-	private["_string", "_type", "_return"];
-	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_Datarizer called with %1", _this]; };
-	_string = _this select 0;
-	_type = _this select 1;
-	
-	if(_type == "ARRAY") then {
-		_return = call compile _string;
-	} else {
-		if((_type == "SCALAR") || (_type == "NUMBER")) then { // "NUMBER" is less confusing for new folks
-			_return = parseNumber _string;
-		} else {
-			_return = _string;
-		};
-	};
-	
-	_return
-}
-call mf_compile;
-
-iniDB_read = {
-	private["_file", "_sec", "_key", "_type", "_data"];
-	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_read called with %1", _this]; };
-
-	_file = _this select 0;
-	_sec = _this select 1;
-	_key = _this select 2;
-	_data = [_file, _sec, _key] call iniDB_readRaw;
-	
-	if (count _this > 3) then {
-		_type = _this select 3;
-		_data = [_data, _type] call iniDB_Datarizer;
-	};
-	
-	_data
-}
-call mf_compile;
-
-iniDB_write = {
-	private["_file", "_sec", "_key", "_data"];
-	if (__DEBUG_INIDB_CALLS__ == 1) then {diag_log format["iniDB_write called with %1", _this];};
-
-	_file = _this select 0;
-	_sec = _this select 1;
-	_key = _this select 2;
-	_data = _this select 3;
-	
-	_data = format['"%1"', _data];
-	_data = [_file, _sec, _key, _data] call iniDB_writeRaw;
-	_data
-}
-call mf_compile;
+else
+{
+  //actual iniDB functions
+  call compile preProcessFileLineNumbers "persistence\fn_inidb_custom_api.sqf";
+};
 
 PDB_defaultValue = {
 	private ["_type", "_data"];
@@ -227,6 +53,7 @@ PDB_defaultValue = {
 	};
 }
 call mf_compile;
+
 
 // Server-side profileNamespace saving if iniDB is disabled or unavailable
 
