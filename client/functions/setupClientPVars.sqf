@@ -13,6 +13,8 @@ if ((_params select 0) call isPVarTarget) then { _value = _params select 1; CODE
 "publicVar_teamkillMessage" addPublicVariableEventHandler {if (local (_this select 1)) then { [] spawn teamkillMessage }};
 "pvar_groupNotify" addPublicVariableEventHandler { (_this select 1) spawn groupNotify };
 "pvar_disableCollision" addPublicVariableEventHandler { (_this select 1) call fn_disableCollision };
+"pvar_notifyClient" addPublicVariableEventHandler { (_this select 1) spawn mf_notify_client };
+"pvar_playerEventServer" addPublicVariableEventHandler { (_this select 1) spawn playerEventServer };
 
 "pvar_territoryActivityHandler" addPublicVariableEventHandler { PVAR_TARGET(_value call A3W_fnc_territoryActivityHandler) };
 "pvar_updateTerritoryMarkers" addPublicVariableEventHandler { PVAR_TARGET(_value call updateTerritoryMarkers) };

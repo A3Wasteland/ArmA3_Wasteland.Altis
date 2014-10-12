@@ -38,6 +38,7 @@ isAssignableBinocular = "client\functions\isAssignableBinocular.sqf" call mf_com
 isPVarTarget = "client\functions\isPVarTarget.sqf" call mf_compile;
 isWeaponType = "client\functions\isWeaponType.sqf" call mf_compile;
 parseMove = "client\functions\parseMove.sqf" call mf_compile;
+playerEventServer = "client\functions\playerEventServer.sqf" call mf_compile;
 serverMessage = "client\functions\serverMessage.sqf" call mf_compile;
 uniformConverter = "client\functions\uniformConverter.sqf" call mf_compile;
 unitHandleDamage = "client\functions\unitHandleDamage.sqf" call mf_compile;
