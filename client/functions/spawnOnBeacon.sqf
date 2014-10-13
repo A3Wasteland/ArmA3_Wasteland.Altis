@@ -13,6 +13,7 @@ _preload = [_this, 1, false, [false]] call BIS_fnc_param;
 _playerPos = [_pos,1,25,1,0,0,0] call findSafePos;
 if (_preload) then { waitUntil {sleep 0.1; preloadCamera _playerPos} };
 player setPos _playerPos;
+player setPosATL [ getPosATL player select 0, getPosATL player select 1, (getPosATL player select 2) + 1000];
 
 respawnDialogActive = false;
 closeDialog 0;
