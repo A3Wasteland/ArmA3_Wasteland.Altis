@@ -2322,7 +2322,7 @@ class Mission
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_2";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",false];";
+			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
 			description="Service";
 		};
 		class Item38
@@ -2337,7 +2337,7 @@ class Mission
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_1";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",false];";
+			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
 			description="Service";
 		};
 		class Item39
@@ -2352,7 +2352,7 @@ class Mission
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_3";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",false];";
+			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
 			description="Service";
 		};
 		class Item40
@@ -2367,7 +2367,7 @@ class Mission
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_4";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",false];";
+			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
 			description="Service";
 		};
 		class Item41
@@ -2382,7 +2382,7 @@ class Mission
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_5";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",false];";
+			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
 			description="Service";
 		};
 		class Item42
@@ -2397,7 +2397,7 @@ class Mission
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_6";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",false];";
+			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
 			description="Service";
 		};
 		class Item43
@@ -2412,7 +2412,7 @@ class Mission
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_7";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",false];";
+			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
 			description="Service";
 		};
 		class Item44
