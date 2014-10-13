@@ -40,14 +40,12 @@
 		mutexScriptInProgress = false;
 	};
 
-	_chopshopThread = _vehicle spawn
-	{
 		_vehicle = _this;
 		_vehClass = typeOf _vehicle;
 		_vehicleCfg = configFile >> "CfgVehicles" >> _vehClass;
 		_vehName = getText (_vehicleCfg >> "displayName");
 
-		scopeName "fn_chopShop";
+	
 
 		_price = 1000; // price = 500 for vehicles not found in vehicle store (e.g. static weapons)
 		{	
@@ -57,39 +55,6 @@
 				_price = round (_price / PRICE_RELATIONSHIP);
 			};
 		} forEach (call allVehStoreVehicles);
-		_checkAbortConditions =
-		{
-			// Abort everything if vehicle is no longer local, otherwise commands won't do anything
-			if (!local _vehicle) then
-			{
-				_crew = crew _vehicle;
-				_text = format ["Vehicle chopping aborted by %1", if (count _crew > 0) then { name (_crew select 0) } else { "another player" }];
-				titleText [_text, "PLAIN DOWN", 0.5];
-				mutexScriptInProgress = false;
-				breakOut "fn_chopShop";
-			};
-
-			// Abort everything if no Truck Wreck in proximity
-			if ({alive _x} count (_vehicle nearEntities ["Land_Wreck_Truck_dropside_F", CHOPSHOP_TRUCK_DISTANCE]) == 0) then
-			{
-				if (_started) then { titleText ["Vehicle chopping aborted", "PLAIN DOWN", 0.5] };
-				mutexScriptInProgress = false;
-				breakOut "fn_chopShop";
-			};
-			// Abort everything if player gets out of vehicle
-			if (vehicle player != _vehicle) then
-			{
-				if (_started) then { titleText ["Vehicle chopping aborted", "PLAIN DOWN", 0.5] };
-			mutexScriptInProgress = false;
-			breakOut "fn_chopShop";
-			};
-		
-		};
-
-		_started = false;
-		call _checkAbortConditions;
-		_started = true;
-
 		player setVariable["cmoney",(player getVariable "cmoney")+_price,true];
 		player setVariable["timesync",(player getVariable "timesync")+(_price * 3),true];
 		[] call fn_savePlayerData;
@@ -116,6 +81,6 @@
 
 		_text = format ["%1 has been chopped.", _type];
 		[_text, 10] call mf_notify_client;
-		if (true) exitWith {};
 		mutexScriptInProgress = false;
-	};
+		if (true) exitWith {};
+	
