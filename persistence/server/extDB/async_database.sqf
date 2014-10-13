@@ -12,7 +12,7 @@
 		3: BOOL (False to return a single array, True to return multiple entries mainly for garage).
 */
 
-private["_queryStmt","_queryResult","_key","_mode","_return"];
+private["_queryStmt","_queryResult","_key","_mode","_return","_loop"];
 
 _tickTime = diag_tickTime;
 
@@ -37,6 +37,7 @@ while{_loop} do
 	_queryResult = "extDB" callExtension format["4:%1", _key];
 	if (_queryResult == "[5]") then {
 		// extDB returned that result is Multi-Part Message
+		_queryResult = "";
 		while{true} do {
 			_pipe = "extDB" callExtension format["5:%1", _key];
 			if(_pipe == "") exitWith {_loop = false};

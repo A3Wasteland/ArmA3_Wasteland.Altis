@@ -23,9 +23,9 @@ if (!_result) then
 
 	_player_name = toArray _player_name;
 	{
-		if (_x == ":") then
+		if (_x == 58) then
 		{
-			_string set[_forEachIndex, -1];
+			_player_name set[_forEachIndex, -1];
 		};
 	} foreach _player_name;
 	_player_name = _player_name - [-1];
@@ -53,7 +53,7 @@ else
 	};
 	if (typeName _pos != "ARRAY") then
 	{
-		[format["insertPlayerSaveData:%1:%2", call(A3W_extDB_PlayerSave_ServerID), _player_uid],2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
+		[format["replacePlayerSaveData:%1:%2", call(A3W_extDB_PlayerSave_ServerID), _player_uid],2] call extDB_Database_async; //ASYNC METHOD 2 to prevent any possible race condition of INSERT / UPDATE
 
 		_data = [
 					["PlayerSaveValid", false],

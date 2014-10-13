@@ -33,7 +33,6 @@ _serverObjectsIDs = [];
 
 {
 	_db_id = _x select 0;
-	_serverObjectsIDs pushBack _db_id;
 
 	_class = _x select 1;
 	_pos = _x select 2;
@@ -41,7 +40,7 @@ _serverObjectsIDs = [];
 
 	if (!isNil "_class" && {!isNil "_pos"} && {_maxLifetime <= 0 || {_hoursAlive < _maxLifetime}}) then
 	{
-		_variables = _x select 8;
+		_variables = _x select 7;
 
 		_allowed = switch (true) do
 		{
@@ -66,6 +65,7 @@ _serverObjectsIDs = [];
 				_obj setVectorDirAndUp _dir;
 			};
 
+			_serverObjectsIDs pushBack _db_id;
 			_obj setVariable ["db_id", _db_id];
 			_obj setVariable ["baseSaving_hoursAlive", _hoursAlive];
 			_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
@@ -81,6 +81,11 @@ _serverObjectsIDs = [];
 				_obj allowDamage false;
 			};
 
+			clearWeaponCargoGlobal _obj;
+			clearMagazineCargoGlobal _obj;
+			clearItemCargoGlobal _obj;
+			clearBackpackCargoGlobal _obj;
+
 			{
 				_var = _x select 0;
 				_value = _x select 1;
@@ -93,6 +98,35 @@ _serverObjectsIDs = [];
 
 				_obj setVariable [_var, _value, true];
 			} forEach _variables;
+
+			if (_boxSavingOn && {_class call _isBox}) then
+			{
+				_weapons = _x select 8;
+				_magazines = _x select 9;
+				_items = _x select 10;
+				_backpacks = _x select 11;
+				if (!isNil "_weapons") then
+				{
+					{ _obj addWeaponCargoGlobal _x } forEach _weapons;
+				};
+				if (!isNil "_magazines") then
+				{
+					{ _obj addMagazineCargoGlobal _x } forEach _magazines;
+				};
+				if (!isNil "_items") then
+				{
+					{ _obj addItemCargoGlobal _x } forEach _items;
+				};
+				if (!isNil "_backpacks") then
+				{
+					{
+						if !((_x select 0) isKindOf "Weapon_Bag_Base") then
+						{
+							_obj addBackpackCargoGlobal _x;
+						};
+					} forEach _backpacks;
+				};
+			};
 
 			_unlock = switch (true) do
 			{
@@ -113,7 +147,7 @@ _serverObjectsIDs = [];
 
 			if (_staticWeaponSavingOn && {_class call _isStaticWeapon}) then
 			{
-				_turretMags = _x select 13;
+				_turretMags = _x select 12;
 
 				if (!isNil "_turretMags") then
 				{
