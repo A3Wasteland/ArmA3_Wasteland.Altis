@@ -30,8 +30,6 @@ if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
 
 diag_log "WASTELAND SERVER - Server Compile Finished";
 
-"requestCompensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
-
 // load default config
 call compile preprocessFileLineNumbers "server\default_config.sqf";
 

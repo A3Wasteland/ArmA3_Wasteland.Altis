@@ -31,6 +31,7 @@ publicVariable "currentInvites";
 };
 
 "PlayerCDeath" addPublicVariableEventHandler { (_this select 1) call server_playerDied };
+"pvar_removeNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 "pvar_convertTerritoryOwner" addPublicVariableEventHandler { (_this select 1) call convertTerritoryOwner };
 "pvar_enableSimulationGlobal" addPublicVariableEventHandler { (_this select 1) call fn_enableSimulationGlobal };
 "pvar_handleCorpseOnLeave" addPublicVariableEventHandler { (_this select 1) call handleCorpseOnLeave };
@@ -38,3 +39,4 @@ publicVariable "currentInvites";
 "pvar_spawnStoreObject" addPublicVariableEventHandler { (_this select 1) call spawnStoreObject };
 "pvar_processGroupInvite" addPublicVariableEventHandler { (_this select 1) call processGroupInvite };
 "pvar_processMoneyPickup" addPublicVariableEventHandler { (_this select 1) call processMoneyPickup };
+"pvar_punishTeamKiller" addPublicVariableEventHandler { (_this select 1) call punishTeamKiller };

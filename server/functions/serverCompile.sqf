@@ -86,6 +86,7 @@ parachuteLiftedVehicle = [_path, "parachuteLiftedVehicle.sqf"] call mf_compile;
 processGroupInvite = [_path, "processGroupInvite.sqf"] call mf_compile;
 processItems = [_path, "processItems.sqf"] call mf_compile;
 processMoneyPickup = [_path, "processMoneyPickup.sqf"] call mf_compile;
+punishTeamKiller = [_path, "punishTeamKiller.sqf"] call mf_compile;
 refillPrimaryAmmo = [_path, "refillPrimaryAmmo.sqf"] call mf_compile;
 setMissionSkill = [_path, "setMissionSkill.sqf"] call mf_compile;
 spawnStoreObject = [_path, "spawnStoreObject.sqf"] call mf_compile;
