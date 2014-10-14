@@ -15,7 +15,7 @@ if (call compile (_assignChecksum + "isNil {missionNamespace getVariable _flagCh
 		_assign = _x select 1;
 		_path = _x select 2;
 
-		_finalVal = compileFinal (_assign + (preprocessFileLineNumbers _path));
+		_finalVal = compileFinal (_assign + (preprocessFile _path));
 
 		missionNamespace setVariable [_func, _finalVal];
 
@@ -26,8 +26,8 @@ if (call compile (_assignChecksum + "isNil {missionNamespace getVariable _flagCh
 			_msgBox = ["The antihack failed to compile.<br/>Please restart the game."] spawn BIS_fnc_guiMessage;
 			_time = diag_tickTime;
 			waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 5};
-			waitUntil {closeDialog 0; !dialog};
 			endMission "LOSER";
+			waitUntil {uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; closeDialog 0; false};
 		};
 	}
 	forEach

@@ -15,7 +15,7 @@ if (isNil "ahSetupDone") then
 	for "_x" from 0 to (floor random 50) do { _assignPacketKey = _assignPacketKey + " " };
 	_assignPacketKey = _assignPacketKey + 'private "_mpPacketKey";';
 	for "_x" from 0 to (floor random 50) do { _assignPacketKey = _assignPacketKey + " " };
-	for "_x" from 0 to (floor random 5) do { _assignPacketKey = _assignPacketKey + str floor random 10 + '=" call compile toString [' + str floor random 100 + ']; #linc 1 ""mpmissions\' + missionName + '""";' };
+	for "_x" from 0 to (floor random 5) do { _assignPacketKey = _assignPacketKey + str floor random 10 + '=" private ""_packetKey""; call compile toString [' + str floor random 100 + ']; #linc 1 ""mpmissions\' + missionName + '""";' };
 	_assignPacketKey = _assignPacketKey + "call compile toString ";
 	_packetKeyArray = "_mpPacketKey = ";
 	{
@@ -30,7 +30,7 @@ if (isNil "ahSetupDone") then
 	for "_x" from 0 to (floor random 50) do { _assignChecksum = _assignChecksum + " " };
 	_assignChecksum = _assignChecksum + 'private "_flagChecksum";';
 	for "_x" from 0 to (floor random 50) do { _assignChecksum = _assignChecksum + " " };
-	for "_x" from 0 to (floor random 5) do { _assignPacketKey = _assignPacketKey + str floor random 10 + '=" call compile toString [' + str floor random 100 + ']; #linc 1 ""mpmissions\' + missionName + '""";' };
+	for "_x" from 0 to (floor random 5) do { _assignChecksum = _assignChecksum + str floor random 10 + '=" private ""_checksum""; call compile toString [' + str floor random 100 + ']; #linc 1 ""mpmissions\' + missionName + '""";' };
 	_assignChecksum = _assignChecksum + "call compile toString ";
 	_checksumArray = "_flagChecksum = ";
 	{
