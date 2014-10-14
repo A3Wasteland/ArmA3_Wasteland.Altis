@@ -9,7 +9,7 @@ if (isNil "ahSetupDone") then
 {
 	private ["_packetKey", "_assignPacketKey", "_packetKeyArray", "_checksum", "_assignChecksum", "_checksumArray", "_networkCompile"];
 	
-	_packetKey = call generateKey;
+	_packetKey = call A3W_fnc_generateKey;
 	
 	_assignPacketKey = "";
 	for "_x" from 0 to (floor random 50) do { _assignPacketKey = _assignPacketKey + " " };
@@ -24,7 +24,7 @@ if (isNil "ahSetupDone") then
 	} forEach toArray _packetKey;
 	_assignPacketKey = _assignPacketKey + (str toArray _packetKeyArray) + "; ";
 	
-	_checksum = call generateKey;
+	_checksum = call A3W_fnc_generateKey;
 	
 	_assignChecksum = "";
 	for "_x" from 0 to (floor random 50) do { _assignChecksum = _assignChecksum + " " };

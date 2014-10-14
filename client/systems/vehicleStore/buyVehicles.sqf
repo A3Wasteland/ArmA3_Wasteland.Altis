@@ -123,7 +123,7 @@ storePurchaseHandle = _this spawn
 				[_itemText] call _showInsufficientFundsError;
 			};
 			
-			_requestKey = call generateKey;
+			_requestKey = call A3W_fnc_generateKey;
 			call requestStoreObject;
 			
 			_vehicle = objectFromNetId (missionNamespace getVariable _requestKey);

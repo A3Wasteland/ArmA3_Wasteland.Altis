@@ -9,8 +9,7 @@ if ((_params select 0) call isPVarTarget) then { _value = _params select 1; CODE
 "messageSystem" addPublicVariableEventHandler {[] spawn serverMessage};
 "clientMissionMarkers" addPublicVariableEventHandler {[] spawn updateMissionsMarkers};
 // "clientRadarMarkers" addPublicVariableEventHandler {[] spawn updateRadarMarkers};
-"pvar_teamKillList" addPublicVariableEventHandler {[] spawn updateTeamKiller};
-"publicVar_teamkillMessage" addPublicVariableEventHandler {if (local (_this select 1)) then { [] spawn teamkillMessage }};
+"pvar_warnTeamKiller" addPublicVariableEventHandler { (_this select 1) spawn updateTeamKiller };
 "pvar_groupNotify" addPublicVariableEventHandler { (_this select 1) spawn groupNotify };
 "pvar_disableCollision" addPublicVariableEventHandler { (_this select 1) call fn_disableCollision };
 "pvar_notifyClient" addPublicVariableEventHandler { (_this select 1) spawn mf_notify_client };

@@ -9,7 +9,7 @@ if (!isServer) exitWith {};
 
 externalConfigFolder = "\A3Wasteland_settings";
 
-vChecksum = compileFinal format ["'%1'", call generateKey];
+vChecksum = compileFinal str call A3W_fnc_generateKey;
 
 //Execute Server Side Scripts.
 call compile preprocessFileLineNumbers "server\antihack\setup.sqf";

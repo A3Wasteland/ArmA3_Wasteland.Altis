@@ -62,11 +62,7 @@ class CfgFunctions
 {
 	class A3W
 	{
-		class MissionSetup
-		{
-			class setupStoreNPC {file = "server\functions\setupStoreNPC.sqf";};
-			class setupMissionObject {file = "server\functions\setupMissionObject.sqf";};
-		};
+		#include "server\CfgFunctions.hpp"
 	};
 };
 
