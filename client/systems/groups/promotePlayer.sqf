@@ -47,7 +47,7 @@ if (alive _target) then
 if (!_inCombat) then
 {
 	(group player) selectLeader _target;
-	["You have been promoted to group leader.", "titleTextMessage", _target] call TPG_fnc_MP;
+	["You have been promoted to group leader.", "A3W_fnc_titleTextMessage", _target] call A3W_fnc_MP;
 
 	player globalChat format ["You have promoted %1 to group leader", name _target];
 	player setVariable ["currentGroupIsLeader", false, true];

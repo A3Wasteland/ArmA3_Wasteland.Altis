@@ -17,7 +17,7 @@ if ((getPlayerUID player) call isAdmin) then
 			[] spawn
 			{
 				sleep 1;
-				closeDialog 911;
+				closeDialog 27911; // ReviveGUI_IDD
 			};
 		};
 

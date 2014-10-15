@@ -1,8 +1,9 @@
 // A3Wasteland config file
 // You will need to shutdown the server to edit settings in this file!
-// To enable base saving your server NEEDS to run iniDBI! Get the A3W Saving Pack at https://github.com/A3Wasteland/Release_Files
-// if you have any doubts and/or questions about the mission find us at a3wasteland.com
-// This file is overriden by the external file "A3Wasteland_settings\main_config.sqf" if present
+
+// All saving is done via the server's profileNamespace by default; iniDBI will be automatically used if you have if installed
+// if you have any doubts and/or questions about the mission find us at a3wasteland.com 
+// This file is overridden by the external file "A3Wasteland_settings\main_config.sqf" if present
 
 // General settings
 A3W_startHour = 15;                // In-game hour at mission start (0 to 23)
@@ -10,25 +11,24 @@ A3W_timeMultiplierDay = 1.0;       // Sets the speed of time between 5 AM and 8 
 A3W_timeMultiplierNight = 1.0;     // Sets the speed of time between 8 PM and 5 AM
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 A3W_teamPlayersMap = 1;            // Show all friendly players on the map at all times, regardless of difficulty level (0 = no, 1 = yes)
-A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
-A3W_gunStoreIntruderWarning = 1;   // Warn players in gunstore areas of enemy intruders (0 = no, 1 = yes)
-A3W_remoteBombStoreRadius = 100;   // Prevent players from placing remote explosives within this distance from any store (0 = disabled)
+A3W_globalVoiceWarnTimer = 5;      // Number of seconds for which global voice chat must be active before triggering a warning (0 = disabled)
+A3W_globalVoiceMaxWarns = 5;       // Number of global voice warnings after which the player will be killed and crashed (0 = disabled)
+A3W_antiHackMinRecoil = 1.0;       // Minimum recoil coefficient enforced by the antihack (recommended values: default = 1.0, TMR Mod = 0.5, VTS Weapon Resting = 0.25)
+A3W_spawnBeaconCooldown = 5*60;    // Number of seconds to wait between each use of an individual spawn beacon (0 = disabled)
 A3W_vehicleThermals = 0;		   // Allow vehicles to use thermals (0 = disabled)
 A3W_resupplyCostPR = 4;			   // Determine resupply cost by vehicle store cost / A3W_resupplyCostPR. (4 = default, %25 percent)
+
+// Store settings
+A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
+A3W_gunStoreIntruderWarning = 1;   // Warn players in gunstore areas of enemy intruders (0 = no, 1 = yes)
+A3W_remoteBombStoreRadius = 75;    // Prevent players from placing remote explosives within this distance from any store (0 = disabled)
+A3W_vehiclePurchaseCooldown = 60;  // Number of seconds to wait before allowing someone to purchase another vehicle, don't bother setting it too high because it can be bypassed by rejoining
+
 
 // Player settings
 A3W_startingMoney = 100;           // Amount of money that players start with
 A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (0 = no, 1 = yes) - this also removes energy drinks from the mission
 A3W_bleedingTime = 60;             // Time in seconds for which to allow revive after a critical injury (minimum 10 seconds)
-
-//Voice
-A3W_NoGlobalVoice = 3;
-A3W_NoSideVoice = 0;
-A3W_NoCommandVoice = 0;
-A3W_NoGlobalVoiceBan = 3; //ban player for getting kicked x times, 0 to disable
-A3W_NoSideVoiceBan = 3; //ban player for getting kicked x times, 0 to disable
-A3W_NoCommandVoiceBan = 3; //ban player for getting kicked x times, 0 to disable
-A3W_VoiceKickTimeout = 5*60; //time in seconds where using voice a second time will get you kicked. After this has ellapsed, you will get a warning again instead of a kick
 
 // Persistence settings
 A3W_extDB_ServerID = 1;			   // extDB Server ID

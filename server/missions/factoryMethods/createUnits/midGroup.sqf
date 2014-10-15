@@ -21,9 +21,9 @@ _leader addMagazine "30Rnd_556x45_Stanag";
 _leader addWeapon "arifle_TRG21_F";
 _leader addMagazine "30Rnd_556x45_Stanag";
 _leader addMagazine "30Rnd_556x45_Stanag";
-_leader addMagazine "RPG32_F";
-_leader addWeapon "launch_RPG32_F";
-_leader addMagazine "RPG32_F";
+_leader addMagazine "Titan_AT";
+_leader addWeapon "launch_Titan_short_F";
+_leader addMagazine "Titan_AT";
 
 // Rifleman
 _man2 = _group createUnit ["C_man_polo_2_F", [(_pos select 0) - 30, _pos select 1, 0], [], 1, "Form"];

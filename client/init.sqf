@@ -100,7 +100,7 @@ diag_log format ["Player starting with $%1", player getVariable ["cmoney", 0]];
 // Territory system enabled?
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
-	territoryActivityHandler = "territory\client\territoryActivityHandler.sqf" call mf_compile;
+	A3W_fnc_territoryActivityHandler = "territory\client\territoryActivityHandler.sqf" call mf_compile;
 	[] execVM "territory\client\setupCaptureTriggers.sqf";
 };
 
@@ -154,3 +154,12 @@ if (["A3W_teamPlayersMap"] call isConfigOn) then
 		_x setVariable ["side", playerSide, true];
 	};
 } forEach pvar_spawn_beacons;
+
+{
+	{
+		if (!isPlayer _x) then
+		{
+			_x setName ["AI","",""];
+		};
+	} forEach crew _x;
+} forEach allUnitsUAV;

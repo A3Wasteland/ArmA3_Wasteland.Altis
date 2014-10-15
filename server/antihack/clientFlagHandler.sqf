@@ -15,16 +15,21 @@ if (typeName _this == "ARRAY" && {count _this > 1}) then
 	{
 		waitUntil {time > 0.1};
 
-		0.01 fadeSound 0;
-		999999 cutText ["", "BLACK", 0.01];
-
-		setPlayerRespawnTime 1e10;
-		player setDamage 1;
 		disableUserInput true;
+		setPlayerRespawnTime 1e11;
+		player setDamage 1;
 
-		sleep 3;
+		1 fadeSound 0;
+		sleep 1;
+
+		0 fadeMusic 0;
+		2 fadeMusic 1;
+		playMusic "RadioAmbient1";
+
+		999999 cutText ["", "BLACK", 5];
+		sleep 5;
 
 		// baibai hacker
-		call compile preprocessFile "client\functions\quit.sqf";
+		preprocessFile "client\functions\quit.sqf";
 	};
 };

@@ -25,12 +25,15 @@ _objectCenterX = (_objectMinBB select 0) + (((_objectMaxBB select 0) - (_objectM
 _objectCenterY = (_objectMinBB select 1) + (((_objectMaxBB select 1) - (_objectMinBB select 1)) / 2);
 
 _vel = velocity _veh;
-[_veh, {detach _this}, false, false, _veh] call fn_vehicleInit;
+[["detach", netId _veh], "A3W_fnc_towingHelper", _veh] call A3W_fnc_MP;
 waitUntil {isNull attachedTo _veh};
-sleep 0.01;
+uiSleep 0.01;
 //_veh setVelocity _vel;
 
 _para = createVehicle [format ["%1_parachute_02_F", _type], [0,0,999999], [], 0, ""];
+
+pvar_disableCollision = [netId _para, netId _heli];
+(owner _heli) publicVariableClient "pvar_disableCollision";
 
 _para disableCollisionWith _heli;
 _para disableCollisionWith _veh;
@@ -45,7 +48,7 @@ uiSleep 2;
 detach _para;
 _veh attachTo [_para, [0 - _objectCenterX, 0 - _objectCenterY, 0]];
 
-while {(getPos _veh) select 2 > 2 && {attachedTo _veh == _para}} do
+while {(getPos _veh) select 2 > 3 && attachedTo _veh == _para} do
 {
 	_para setVectorUp [0,0,1];
 	_para setVelocity [0, 0, (velocity _para) select 2];
@@ -54,12 +57,12 @@ while {(getPos _veh) select 2 > 2 && {attachedTo _veh == _para}} do
 
 if (attachedTo _veh == _para) then
 {
-	[_veh, {detach _this}, false, false, _veh] call fn_vehicleInit;
+	[["detach", netId _veh], "A3W_fnc_towingHelper", _veh] call A3W_fnc_MP;
 	waitUntil {isNull attachedTo _veh};
 	_veh setVectorUp [0,0,1];
 };
 
 _delTime = diag_tickTime + 5;
-waitUntil {sleep 0.1; isNull _para || {diag_tickTime >= _delTime}};
+waitUntil {uiSleep 0.1; isNull _para || {diag_tickTime >= _delTime}};
 
 deleteVehicle _para;

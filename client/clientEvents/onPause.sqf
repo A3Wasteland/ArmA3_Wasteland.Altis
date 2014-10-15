@@ -66,10 +66,7 @@ if (alive player && !isNil "_getPublicVar" && !isNil "_isConfigOn") then
 							}
 							else
 							{
-								_remaining = ceil (_abortDelay - (diag_tickTime - _timeStamp));
-								_mins = floor (_remaining / 60);
-								_secs = _remaining - (_mins * 60);
-								_time = format ["%1:%2%3", _mins, if (_secs < 10) then { "0" } else { "" }, _secs];
+								_time = with missionNamespace do { (_abortDelay - (diag_tickTime - _timeStamp)) call fn_formatTimer };
 
 								_text = format ["\nCannot pussy out during combat! (%1)", _time];
 							};

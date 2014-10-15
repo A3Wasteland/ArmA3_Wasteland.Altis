@@ -103,7 +103,7 @@ while{groupManagmentActive} do
     
     //Update player list  
 	{
-		if (side _x == playerSide && _x != player) then
+		if (side group _x == playerSide && _x != player) then
 	    {
 	        //Add to list
 			if (isStreamFriendlyUIEnabled) then {

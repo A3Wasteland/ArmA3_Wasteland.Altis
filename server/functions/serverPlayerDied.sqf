@@ -14,7 +14,6 @@ _unit setVariable ["processedDeath", diag_tickTime];
 if (isPlayer _unit && {["A3W_playerSaving"] call isConfigOn}) then
 {
 	(getPlayerUID _unit) call fn_deletePlayerSave;
-	_unit removeEventHandler ["Local", _unit getVariable ["corpseLocalEH", -1]]; // remove corpse deletion on leave since it was a legit kill
 };
 
 _killer = if (count _this > 1) then { _this select 1 } else { objNull };

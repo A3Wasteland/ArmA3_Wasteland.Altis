@@ -8,6 +8,7 @@
 if (isDedicated) exitWith {};
 
 #include "FAR_defines.sqf"
+#include "gui_defines.hpp"
 
 call compile preprocessFile "addons\far_revive\FAR_revive_funcs.sqf";
 
@@ -132,8 +133,8 @@ FAR_findKiller = "addons\far_revive\FAR_findKiller.sqf" call mf_compile;
 			if (!isNil "FAR_Player_Unconscious_thread" && {!scriptDone FAR_Player_Unconscious_thread}) then
 			{
 				terminate FAR_Player_Unconscious_thread;
-				closeDialog 910;
-				closeDialog 911;
+				closeDialog ReviveBlankGUI_IDD;
+				closeDialog ReviveGUI_IDD;
 				FAR_cutTextLayer cutText ["", "PLAIN"];
 				//(FAR_cutTextLayer + 1) cutText ["", "PLAIN"];
 			};

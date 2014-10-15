@@ -64,7 +64,7 @@ if (!isNil "_exists" && {_exists}) then
 					_allowDamage = [_fileName, _objName, "AllowDamage", "NUMBER"] call PDB_read; // iniDB_read
 
 					_obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
-					_obj setPosATL _pos;
+					_obj setPosWorld ATLtoASL _pos;
 
 					if (!isNil "_dir") then
 					{

@@ -2,6 +2,7 @@
 //	@file Author: Farooq, AgentRev
 
 #include "FAR_defines.sqf"
+#include "gui_defines.hpp"
 
 disableSerialization;
 
@@ -15,7 +16,7 @@ if (_unit == player) then
 {
 	if (createDialog "ReviveBlankGUI") then
 	{
-		//(findDisplay 910) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
+		//(findDisplay ReviveBlankGUI_IDD) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
 	};
 
 	[100] call BIS_fnc_bloodEffect;
@@ -145,7 +146,7 @@ _unit spawn
 					if (_pilot == _unit) then
 					{
 						_unit action ["UnlockVehicleControl", _veh];
-						[[_copilot, netId _veh], "copilotTakeControl", _copilot] call TPG_fnc_MP;
+						[[_copilot, netId _veh], "A3W_fnc_copilotTakeControl", _copilot] call A3W_fnc_MP;
 					};
 
 					// Give control back to pilot if appropriate
@@ -195,11 +196,11 @@ if (isPlayer _unit) then
 	if (_unit == player) then
 	{
 		FAR_cutTextLayer cutText ["", "BLACK IN"];
-		closeDialog 910;
+		closeDialog ReviveBlankGUI_IDD;
 
 		if (createDialog "ReviveGUI") then
 		{
-			(findDisplay 911) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
+			(findDisplay ReviveGUI_IDD) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
 		};
 	};
 
@@ -227,10 +228,10 @@ private ["_reviveGUI", "_progBar", "_progText", "_reviveText", "_bleedPause", "_
 
 if (_unit == player) then
 {
-	_reviveGUI = findDisplay 911;
-	_progBar = _reviveGUI displayCtrl 9110;
-	_progText = _reviveGUI displayCtrl 9111;
-	_reviveText = _reviveGUI displayCtrl 9113;
+	_reviveGUI = findDisplay ReviveGUI_IDD;
+	_progBar = _reviveGUI displayCtrl RevProgBar_IDC;
+	_progText = _reviveGUI displayCtrl RevBarText_IDC;
+	_reviveText = _reviveGUI displayCtrl RevText_IDC;
 };
 
 while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
@@ -312,10 +313,7 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 	{
 		if (_dmg >= 0.5 && isNil "_treatedBy") then
 		{
-			_remaining = ceil (_bleedOut - diag_tickTime);
-			_mins = floor (_remaining / 60);
-			_secs = _remaining - (_mins * 60);
-			_time = format ["%1:%2%3", _mins, if (_secs < 10) then { "0" } else { "" }, _secs];
+			_time = (_bleedOut - diag_tickTime) call fn_formatTimer;
 
 			_progBar progressSetPosition ((_bleedOut - diag_tickTime) / FAR_BleedOut);
 			_progText ctrlSetText _time;
@@ -389,5 +387,5 @@ else // Player bled out
 
 if (_unit == player) then
 {
-	closeDialog 911;
+	closeDialog ReviveGUI_IDD;
 };

@@ -48,6 +48,8 @@ if (!isNull _veh && _texture != "") then
 
 		case (_veh isKindOf "Plane_Base_F"):              { [0,1] };
 
+		case (_veh isKindOf "UGV_01_rcws_base_F"):        { [0,2] };
+
 		default                                           { [0] };
 	};
 

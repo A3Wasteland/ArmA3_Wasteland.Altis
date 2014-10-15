@@ -1,18 +1,20 @@
 //	@file Name: revive_gui.hpp
 //	@file Author: AgentRev
 
+#include "gui_defines.hpp"
+
 // To block input without showing anything
 class ReviveBlankGUI
 {
-	idd = 910;
+	idd = ReviveBlankGUI_IDD;
 	movingEnabled = false;
 };
 
 class ReviveGUI : IGUIBack
 {
-	idd = 911;
+	idd = ReviveGUI_IDD;
 	movingEnabled = false;
-	controls[] = {RevProgBar, RevBarText, RevSuicideBtn, RevTextBG, RevText};
+	controls[] = {RevProgBar, RevBarText, RevSuicideBtn, RevTextBG, RevText, RevLastResortBtn};
 	controlsBackground[] = {RevBG};
 
 	class RevBG : IGUIBack
@@ -35,7 +37,7 @@ class ReviveGUI : IGUIBack
 
 	class RevProgBar : RscProgressBar
 	{
-		idc = 9110;
+		idc = RevProgBar_IDC;
 		colorFrame[] = {1,1,1,1};
 		colorBar[] = {0.75,0,0,1};
 		texture = "#(argb,8,8,3)color(0.75,0,0,1)";
@@ -54,7 +56,7 @@ class ReviveGUI : IGUIBack
 
 	class RevBarText : RscStructuredText
 	{
-		idc = 9111;
+		idc = RevBarText_IDC;
 		text = "1:00";
 		size = 0.04 * TEXT_SCALE;
 
@@ -74,7 +76,7 @@ class ReviveGUI : IGUIBack
 
 	class RevSuicideBtn : w_RscButton
 	{
-		idc = 9112;
+		idc = RevSuicideBtn_IDC;
 		text = "Suicide";
 		sizeEx = 0.04 * TEXT_SCALE;
 		action = "execVM 'client\functions\confirmSuicide.sqf'";
@@ -114,7 +116,7 @@ class ReviveGUI : IGUIBack
 
 	class RevText : RscStructuredText
 	{
-		idc = 9113;
+		idc = RevText_IDC;
 		text = "";
 		size = 0.04 * TEXT_SCALE;
 
@@ -132,5 +134,27 @@ class ReviveGUI : IGUIBack
 		y = RevText_Y;
 		w = RevText_W;
 		h = RevText_H;
+	};
+
+	class RevLastResortBtn : w_RscButton
+	{
+		idc = RevLastResortBtn_IDC;
+		action = "execVM 'addons\far_revive\FAR_lastResort.sqf'";
+
+		colorFocused[] = {0,0,0,0};
+		colorBackground[] = {0,0,0,0};
+		colorBackgroundActive[] = {1,0,0,1};
+		colorShadow[] = {0,0,0,0};
+
+		// top right
+		#define RevLastResortBtn_W (0.02 * X_SCALE)
+		#define RevLastResortBtn_H (0.02 * Y_SCALE)
+		#define RevLastResortBtn_X ((safeZoneXAbs + safeZoneWAbs) - (RevLastResortBtn_W / 2))
+		#define RevLastResortBtn_Y (SZ_TOP - (RevLastResortBtn_H / 2))
+
+		x = RevLastResortBtn_X;
+		y = RevLastResortBtn_Y;
+		w = RevLastResortBtn_W;
+		h = RevLastResortBtn_H;
 	};
 };

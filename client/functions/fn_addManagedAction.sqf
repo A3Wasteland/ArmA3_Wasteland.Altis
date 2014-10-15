@@ -23,7 +23,7 @@ if (count _params > 7) then
 	{
 		while {isNil "_conditionPvar" || {!isNil {missionNamespace getVariable _conditionPvar}}} do
 		{
-			_conditionPvar = "managedAction_pvar_" + call generateKey;
+			_conditionPvar = "managedAction_pvar_" + call A3W_fnc_generateKey;
 		};
 
 		missionNamespace setVariable [_conditionPvar, false];

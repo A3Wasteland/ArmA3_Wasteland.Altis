@@ -47,13 +47,13 @@ drawPlayerIcons_thread = [] spawn
 				if (side group _unit == playerSide && // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
 				   {alive _unit &&
 				   (_unit != player || cameraOn != vehicle player) &&
+				   (isNil "HeadlessClient" || {_unit != HeadlessClient}) &&
 				   {!(_unit getVariable ["playerSpawning", false]) &&
 				   (vehicle _unit != getConnectedUAV player || cameraOn != vehicle _unit)}}) then // do not show UAV AI icons when controlling UAV
 				{
 					_dist = _unit distance  positionCameraToWorld [0,0,0];
 
-					_pos = visiblePositionASL _unit;
-					_pos set [2, ((_unit modelToWorld [0,0,0]) select 2) + 1.35]; // Torso height
+					_pos = _unit modelToWorldVisual [0,0,0];
 
 					// only draw players inside range and screen
 					if (_dist < ICON_limitDistance && {count worldToScreen _pos > 0}) then

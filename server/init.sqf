@@ -9,7 +9,17 @@ if (!isServer) exitWith {};
 
 externalConfigFolder = "\A3Wasteland_settings";
 
-vChecksum = compileFinal format ["'%1'", call generateKey];
+vChecksum = compileFinal str call A3W_fnc_generateKey;
+
+// Corpse deletion on disconnect if player alive and player saving on
+addMissionEventHandler ["HandleDisconnect",
+{
+	if (isNil "isConfigOn" || {["A3W_playerSaving"] call isConfigOn}) then
+	{
+		_unit = _this select 0;
+		if (alive _unit) then { deleteVehicle _unit };
+	};
+}];
 
 //Execute Server Side Scripts.
 call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
@@ -25,12 +35,10 @@ waitUntil {scriptDone _serverCompileHandle};
 // Broadcast server rules
 if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
 {
-	[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call TPG_fnc_MP;
+	[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call A3W_fnc_MP;
 };
 
 diag_log "WASTELAND SERVER - Server Compile Finished";
-
-"requestCompensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 
 // load default config
 call compile preprocessFileLineNumbers "server\default_config.sqf";
@@ -46,39 +54,32 @@ else
 	diag_log "[WARNING] For more information go to http://forums.a3wasteland.com/";
 };
 
-A3W_extDB_ServerID = compileFinal str A3W_extDB_ServerID;
-A3W_extDB_PlayerSave_ServerID = compileFinal str A3W_extDB_PlayerSave_ServerID;
-A3W_extension = compileFinal str A3W_extension;
-A3W_startingMoney = compileFinal str A3W_startingMoney;
-A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
-A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
-A3W_playerSaving = compileFinal str A3W_playerSaving;
-A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
-A3W_unlimitedStamina = compileFinal str A3W_unlimitedStamina;
-A3W_bleedingTime = compileFinal str A3W_bleedingTime;
-A3W_teamPlayersMap = compileFinal str A3W_teamPlayersMap;
-A3W_remoteBombStoreRadius = compileFinal str A3W_remoteBombStoreRadius;
+// compileFinal & broadcast client config variables
+{
+	missionNamespace setVariable [_x, compileFinal str (missionNamespace getVariable _x)];
+	publicVariable _x;
+}
+forEach
+[
+	"A3W_startingMoney",
+	"A3W_showGunStoreStatus",
+	"A3W_gunStoreIntruderWarning",
+	"A3W_playerSaving",
+	"A3W_combatAbortDelay",
+	"A3W_unlimitedStamina",
+	"A3W_bleedingTime",
+	"A3W_teamPlayersMap",
+	"A3W_remoteBombStoreRadius",
+	"A3W_vehiclePurchaseCooldown",
+	"A3W_globalVoiceWarnTimer",
+	"A3W_globalVoiceMaxWarns",
+	"A3W_antiHackMinRecoil",
+	"A3W_spawnBeaconCooldown",
+	"A3W_vehicleThermals",
+	"A3W_resupplyCostPR",
+	"A3W_serverNumber"
+];
 
-// Broadcast config variables
-publicVariable "A3W_startingMoney";
-publicVariable "A3W_showGunStoreStatus";
-publicVariable "A3W_gunStoreIntruderWarning";
-publicVariable "A3W_playerSaving";
-publicVariable "A3W_combatAbortDelay";
-publicVariable "A3W_unlimitedStamina";
-publicVariable "A3W_bleedingTime";
-publicVariable "A3W_teamPlayersMap";
-publicVariable "A3W_remoteBombStoreRadius";
-publicVariable "A3W_serverNumber";
-publicVariable "A3W_NoGlobalVoice";
-publicVariable "A3W_NoSideVoice";
-publicVariable "A3W_NoCommandVoice";
-publicVariable "A3W_NoGlobalVoiceBan";
-publicVariable "A3W_NoSideVoiceBan";
-publicVariable "A3W_NoCommandVoiceBan";
-publicVariable "A3W_VoiceKickTimeout";
-publicVariable "A3W_vehicleThermals";
-publicVariable "A3W_resupplyCostPR";
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
@@ -92,7 +93,7 @@ vehicleThermalsOn = ["A3W_vehicleThermals"] call isConfigOn;
 
 _serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
 
-_setupPlayerDB = [] spawn {}; // blank script to feed scriptDone a non-nil value
+_setupPlayerDB = scriptNull;
 
 // Do we need any persistence?
 
@@ -275,6 +276,18 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 else
 {
 	diag_log "[INFO] A3W territory capturing is DISABLED";
+};
+
+// Consolidate all store NPCs in a single group
+[] spawn
+{
+	_storeGroup = createGroup sideLogic;
+	{
+		if (!isPlayer _x && {[["GenStore","GunStore","VehStore"], vehicleVarName _x] call fn_startsWith}) then
+		{
+			[_x] joinSilent _storeGroup;
+		};
+	} forEach entities "CAManBase";
 };
 
 //Execute Server Missions.

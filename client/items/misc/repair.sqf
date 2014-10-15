@@ -42,7 +42,7 @@ _checks = {
 _success = [DURATION, ANIMATION, _checks, [_vehicle]] call a3w_actions_start;
 
 if (_success) then {
-	[[netId _vehicle], "mf_remote_repair", _vehicle] call TPG_fnc_MP;
+	[[netId _vehicle], "mf_remote_repair", _vehicle] call A3W_fnc_MP;
 	["Repairing complete!", 5] call mf_notify_client;
 };
 _success;

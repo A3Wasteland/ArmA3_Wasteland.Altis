@@ -41,7 +41,7 @@ else
 			}
 			else
 			{
-				[_objet, {_this lockDriver true}, false, false, _objet] call fn_vehicleInit;
+				[["lockDriver", netId _objet], "A3W_fnc_towingHelper", _objet] call A3W_fnc_MP;
 			};
 			
 			_towerBB = _remorqueur call fn_boundingBoxReal;

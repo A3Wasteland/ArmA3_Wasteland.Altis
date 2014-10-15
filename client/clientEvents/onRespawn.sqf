@@ -27,13 +27,6 @@ if (!isNull _group && {group _player != _group}) then
 	};
 };
 
-if (!isServer) then
-{
-	// setup corpse deletion when leaving while alive
-	pvar_handleCorpseOnLeave = _player;
-	publicVariableServer "pvar_handleCorpseOnLeave";
-};
-
 _respawnMarker = switch (playerSide) do
 {
 	case BLUFOR:      { "respawn_west" };
