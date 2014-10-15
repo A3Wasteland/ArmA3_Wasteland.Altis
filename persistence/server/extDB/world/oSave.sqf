@@ -28,10 +28,10 @@ _saveableObjects = [];
 	};
 } forEach (call genObjectsArray);
 
-_diag_tickTime = diag_tickTime; // Doesn't Need to be accurate... once its close enough
-
 while {true} do
 {
+	_diag_tickTime = diag_tickTime; // Doesn't Need to be accurate... once its close enough
+
 	_old_serverObjectsIDs = + _serverObjectsIDs;
 
 	uiSleep 60;
