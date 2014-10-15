@@ -21,8 +21,7 @@ if (_sentChecksum == _flagChecksum) then
 					["AdminLog" call PDB_objectFileName, "AdminLog", _uid, [_name, _action, _value]] call iniDB_write;
 				};
 		case 3: {
-					_query = "addAdminLog:" + str(call(A3W_extDB_ServerID)) + ":" + str(_uid) + ":" + str(_name) + ":" + str(_action) + ":" + str(_value);
-					[_query] call extDB_Database_async;
+					[format["addAdminLog:%1:%2:%3:%4", call(A3W_extDB_ServerID), _uid, str(_action), str(_value)],2] call extDB_Database_async;
 				};
 	};
 };
