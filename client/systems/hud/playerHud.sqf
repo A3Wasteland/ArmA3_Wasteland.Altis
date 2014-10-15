@@ -298,7 +298,6 @@ while {true} do
 							_msgBox = ["You have exceeded the tolerance limit for using the global voice channel. Goodbye.", _this] spawn BIS_fnc_guiMessage;
 							_time = diag_tickTime;
 							waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 5};
-							waitUntil {closeDialog 0; !dialog};
 							preprocessFile "client\functions\quit.sqf"; // CTD
 						};
 					};
