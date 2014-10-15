@@ -101,4 +101,4 @@ switchMoveGlobal = [_clientFunc, "switchMoveGlobal.sqf"] call mf_compile;
 vehicleHandleDamage = [_serverFunc, "vehicleHandleDamage.sqf"] call mf_compile;
 
 "pvar_switchMoveGlobal" addPublicVariableEventHandler { ((_this select 1) select 0) switchMove ((_this select 1) select 1) };
-"pvar_detachTowedObject" addPublicVariableEventHandler { (_this select 1) call detachTowedObject };
+"pvar_detachTowedObject" addPublicVariableEventHandler { (_this select 1) spawn detachTowedObject };
