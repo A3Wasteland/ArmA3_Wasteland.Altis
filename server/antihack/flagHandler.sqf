@@ -27,14 +27,13 @@ if (typeName _this == "ARRAY" && {count _this > 4}) then
 		diag_log format ["ANTI-HACK 0.8.0: %1 (%2) was detected for [%3] with the value [%4]", _playerName, _playerID, _hackType, _hackValue];
 
 		// Save detection infos in iniDB file for easy retrieval
-		_A3W_savingMethod = ["A3W_savingMethod", 1] call getPublicVar == 2;
+		_A3W_savingMethod = ["A3W_savingMethod", 1] call getPublicVar;
 		switch (_A3W_savingMethod) do
 		{
 			case 2: {
 						["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write;
 					};
 			case 3: {
-						//_BEguid = [format["BEGUID:%1", _playerGUID], 2] call extDB_Misc_async;
 						_query = "addHackerLog:" + str(call(A3W_extDB_ServerID)) + ":" + str(_playerID) + ":" + str(_playerName) + ":" + str(_hackType) + ":" + str(_hackValue);
 						[_query] call extDB_Database_async;
 					};
