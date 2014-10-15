@@ -11,6 +11,16 @@ externalConfigFolder = "\A3Wasteland_settings";
 
 vChecksum = compileFinal str call A3W_fnc_generateKey;
 
+// Corpse deletion on disconnect if player alive and player saving on
+addMissionEventHandler ["HandleDisconnect",
+{
+	if (isNil "isConfigOn" || {["A3W_playerSaving"] call isConfigOn}) then
+	{
+		_unit = _this select 0;
+		if (alive _unit) then { deleteVehicle _unit };
+	};
+}];
+
 //Execute Server Side Scripts.
 call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
 [] execVM "server\admins.sqf";
@@ -77,7 +87,7 @@ _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
 
 _serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
 
-_setupPlayerDB = [] spawn {}; // blank script to feed scriptDone a non-nil value
+_setupPlayerDB = scriptNull;
 
 // Do we need any persistence?
 if (_playerSavingOn || _serverSavingOn) then
