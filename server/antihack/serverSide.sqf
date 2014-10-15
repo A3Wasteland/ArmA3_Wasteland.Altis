@@ -34,7 +34,7 @@ while { true } do
 						_cheatFlag = [];
 					};
 					
-					_cheatFlag set [count _cheatFlag, ["hacked unit", typeOf _unit, [owner _unit] call findClientPlayer]];
+					_cheatFlag pushBack ["hacked unit", typeOf _unit, [owner _unit] call findClientPlayer];
 					
 					for [{_i = 0}, {_i < 10 && vehicle _unit != _unit}, {_i = _i + 1}] do
 					{
@@ -56,9 +56,9 @@ while { true } do
 			
 			if (isPlayer _player) then
 			{
-				[[getPlayerUID _player, _flagChecksum], "clientFlagHandler", _player, false] call TPG_fnc_MP;
+				[[getPlayerUID _player, _flagChecksum], "A3W_fnc_clientFlagHandler", _player, false] call A3W_fnc_MP;
 				
-				[name _player, getPlayerUID _player, _x select 0, _x select 1, _flagChecksum] call flagHandler;
+				[name _player, getPlayerUID _player, _x select 0, _x select 1, _flagChecksum] call A3W_fnc_flagHandler;
 			};
 		} forEach _cheatFlag;
 		

@@ -74,7 +74,7 @@ else
 							_minZ = (_heliMinBB select 2) - (_objectMaxBB select 2) - 0.5;
 							
 							// Attacher sous l'héliporteur au ras du sol
-							_objet enableSimulationGlobal true;
+							[_objet, true] call fn_enableSimulationGlobal;
 							_objet attachTo [_heliporteur,
 							[
 								0 - _objectCenterX,

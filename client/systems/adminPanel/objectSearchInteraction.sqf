@@ -62,7 +62,7 @@ if (_uid call isAdmin) then
 				_marker setMarkerPosLocal _objPos;
 				_marker setMarkerColorLocal "ColorBlue";
 				_marker setMarkerTextLocal _name;
-				objectSearchMapMarkers set [count objectSearchMapMarkers, _marker];
+				objectSearchMapMarkers pushBack _marker;
 			} forEach _objects;
 
 			if (count _objects > 0) then {

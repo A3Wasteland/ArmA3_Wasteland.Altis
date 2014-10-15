@@ -92,7 +92,7 @@ for "_i" from 0 to (count _hitPoints - 1) do
 	_hitPoint = configName (_hitPoints select _i);
 	if ([["Wheel","Track"], _hitPoint] call fn_findString != -1) then
 	{
-		_wheels set [count _wheels, _hitPoint];
+		_wheels pushBack _hitPoint;
 	};
 };
 
@@ -141,7 +141,7 @@ while {_run} do
 		// Check if the vehicle is deserted, or if something was taken from it
 		
 		if (_deserted > 0 && 
-		   {getPosASL _veh distance _position > 10 || _veh getVariable ["itemTakenFromVehicle", false]} &&
+		   {(getPosASL _veh) vectorDistance _position > 10 || _veh getVariable ["itemTakenFromVehicle", false]} &&
 		   {{alive _veh} count crew _veh == 0}) then 
 		{
 			if (_desertedTimeout == 0) then {
@@ -195,7 +195,8 @@ while {_run} do
 				}
 				else
 				{
-					[_towedVeh, {[_this] call detachTowedObject}, false, false, _towedVeh] call fn_vehicleInit;
+					pvar_detachTowedObject = [netId _towedVeh];
+					publicVariable "pvar_detachTowedObject";
 				};
 			};
 			

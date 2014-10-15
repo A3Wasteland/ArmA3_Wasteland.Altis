@@ -41,23 +41,23 @@ if (isNil "_est_deplace_par") then
 _objet addEventHandler ["GetIn",
 {
 	_veh = _this select 0;
+	_seat = _this select 1;
+	_unit = _this select 2;
+
 	_movedBy = _veh getVariable ["R3F_LOG_est_deplace_par", objNull];
 	_towedBy = _veh getVariable ["R3F_LOG_est_transporte_par", objNull];
-	
-	if (_this select 2 == player && (_this select 1 == "DRIVER" || _towedBy isKindOf "Helicopter")) then
+
+	if (_unit == player && _seat == "DRIVER" && (!isNull _towedBy || alive _movedBy)) then
 	{
-		if (!isNull _towedBy || {!isNull _movedBy && alive _movedBy}) then
-		{
-			player action ["eject", _veh];
-			player globalChat STR_R3F_LOG_transport_en_cours;
-		};
+		player action ["Eject", _veh];
+		player globalChat STR_R3F_LOG_transport_en_cours;
 	};
 }];
 
 if ({_objet isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 {
 	_objet addAction [("<img image='client\icons\r3f_lift.paa' color='#ffff00'/> <t color='#ffff00'>" + STR_R3F_LOG_action_deplacer_objet + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\deplacer.sqf", nil, 5, false, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_deplacer_objet_valide && !(_target getVariable ['objectLocked', false])"];
-	_objet addAction [("<img image='client\icons\r3f_lock.paa' color='#ff0000'/> <t color='#ff0000'>" + STR_LOCK_OBJECT + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\objectLockStateMachine.sqf", _doLock, -5, false, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_deplacer_objet_valide && Object_canLock && !(_target isKindOf 'AllVehicles')"];
+	_objet addAction [("<img image='client\icons\r3f_lock.paa' color='#ff0000'/> <t color='#ff0000'>" + STR_LOCK_OBJECT + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\objectLockStateMachine.sqf", _doLock, -5, false, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_deplacer_objet_valide && Object_canLock && (!(_target isKindOf 'AllVehicles') || {_target isKindOf 'StaticWeapon'})"];
 	_objet addAction [("<img image='client\icons\r3f_unlock.paa' color='#06ef00'/> <t color='#06ef00'>" + STR_UNLOCK_OBJECT + "</t>"), "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\objectLockStateMachine.sqf", _doUnlock, -5, false, true, "", "R3F_LOG_objet_addAction == _target && R3F_LOG_action_deplacer_objet_valide && !Object_canLock"];
 };
 

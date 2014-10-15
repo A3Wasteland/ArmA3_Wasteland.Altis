@@ -27,6 +27,6 @@ _itemData = _itemlist lbData _itemIndex;
 	if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
 	{
 		_price = _x select 5;
-		_itemlisttext ctrlSetText format ["Value: $%1", _price];
+		_itemlisttext ctrlSetText format ["Value: $%1", [_price] call fn_numbersText];
 	}
 } forEach (call customPlayerItems);

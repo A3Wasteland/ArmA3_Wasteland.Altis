@@ -13,7 +13,7 @@ _hasFailed = {
 	_text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player) : {}; // player is dead, not need for a error message
+		case (!alive player) : {}; // player is dead, not need for a error message
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED;};
 		default {
 			_failed = false;
@@ -28,16 +28,23 @@ if (_success) then
 {
 	[] spawn
 	{
-		player enableFatigue false;
-		player setVariable ["energy_drink_active", true];
-		["You have unlimited stamina for 5 minutes", 5] call mf_notify_client;
-		
-		sleep (5*60);
-		
-		player enableFatigue true;
-		player setVariable ["energy_drink_active", false];
-        ["The effects of the energy drink are wearing off", 5] call mf_notify_client;
-    };
+		if (["A3W_unlimitedStamina"] call isConfigOn) then
+		{
+			["The energy drink had no effect on your superhuman stamina.", 5] call mf_notify_client;
+		}
+		else
+		{
+			player enableFatigue false;
+			player setVariable ["energy_drink_active", true];
+			["You have unlimited stamina for 5 minutes", 5] call mf_notify_client;
+			
+			sleep (5*60);
+			
+			player enableFatigue true;
+			player setVariable ["energy_drink_active", false];
+			["The effects of the energy drink are wearing off", 5] call mf_notify_client;
+		};
+	};
 };
 
 _success

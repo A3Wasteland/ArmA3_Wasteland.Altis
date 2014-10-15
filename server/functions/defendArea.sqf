@@ -66,27 +66,18 @@ _staticWeapons = [];
 private ["_wp1", "_wp2"];
 
 _wp1 = _grp addWaypoint [_pos, 0];
-_wp1 setWaypointType "GUARD";
-[_grp, 1] setWaypointStatements ["true",
-'
-	(group this) spawn
-	{
-		sleep 60;
-		_this setCurrentWaypoint [_this, 2];
-	};
-'];
+_wp1 setWaypointType "SAD"; // Seek And Destroy
+[_grp, 1] setWaypointBehaviour "SAFE";
+[_grp, 1] setWaypointCombatMode "GREEN";
+[_grp, 1] setWaypointCompletionRadius 75;
+[_grp, 1] setWaypointStatements ["true", "(group this) setCurrentWaypoint [group this, 2]"];
 
 _wp2 = _grp addWaypoint [_pos, 0];
-_wp2 setWaypointType "CYCLE";
-[_grp, 2] setWaypointStatements ["true",
-'
-	(group this) spawn
-	{
-		_this setCurrentWaypoint [_this, 1];
-	};
-'];
-
-_grp setCurrentWaypoint [_grp, 1];
+_wp2 setWaypointType "DISMISS";
+[_grp, 2] setWaypointBehaviour "SAFE";
+[_grp, 2] setWaypointCombatMode "GREEN";
+[_grp, 2] setWaypointCompletionRadius 75;
+[_grp, 2] setWaypointStatements ["true", "(group this) setCurrentWaypoint [group this, 1]"];
 
 {
 	// Prevent units from wandering too far and from going prone
@@ -94,9 +85,9 @@ _grp setCurrentWaypoint [_grp, 1];
 	{
 		private ["_unit", "_unitPos", "_targetPos", "_doMove"];
 		_unit = _this select 0;
-		_targetPos = _this select 1;
+		_targetPos = ATLtoASL (_this select 1);
 		
-		while { alive _unit } do
+		while {alive _unit} do
 		{
 			if ((toUpper behaviour _unit) in ["COMBAT","STEALTH"]) then
 			{
@@ -117,12 +108,12 @@ _grp setCurrentWaypoint [_grp, 1];
 			
 			if (!isNull _unit) then
 			{
-				_unitPos = getPos _unit;
+				_unitPos = getPosASL _unit;
 				
-				if (_unitPos distance _targetPos > 75) then
+				if (_unitPos vectorDistance _targetPos > 75) then
 				{
-					_doMove = [[5 + random 65, 0], ([_targetPos, _unitPos] call BIS_fnc_dirTo) + (random 90) - 45] call BIS_fnc_rotateVector2D;
-					_unit moveTo ([_targetPos, _doMove] call BIS_fnc_vectorAdd);
+					_doMove = [[5 + random 65, 0, 0], ([_targetPos, _unitPos] call BIS_fnc_dirTo) + (random 90) - 45] call BIS_fnc_rotateVector2D;
+					_unit moveTo (_targetPos vectorAdd _doMove);
 					sleep 3;
 				};
 			};

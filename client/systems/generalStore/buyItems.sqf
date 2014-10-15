@@ -202,7 +202,25 @@ storePurchaseHandle = _this spawn
 					};
 					case "nvg":
 					{
-						if ({["NVGoggles", _x] call fn_findString != -1} count assignedItems player == 0) then
+						if ({["NVGoggles", _x] call fn_startsWith} count assignedItems player == 0) then
+						{
+							player linkItem _class;
+						}
+						else
+						{
+							if ([player, _class] call fn_fitsInventory) then
+							{
+								player addItem _class;
+							}
+							else
+							{
+								[_itemText] call _showInsufficientSpaceError;
+							};
+						};
+					};
+					case "gps":
+					{
+						if ({_x in ["ItemGPS", "B_UavTerminal", "O_UavTerminal", "I_UavTerminal"]} count assignedItems player == 0) then
 						{
 							player linkItem _class;
 						}
@@ -258,7 +276,7 @@ storePurchaseHandle = _this spawn
 					[_itemText] call _showInsufficientFundsError;
 				};
 				
-				_requestKey = call generateKey;
+				_requestKey = call A3W_fnc_generateKey;
 				call requestStoreObject;
 			};
 		} forEach (call genObjectsArray);
@@ -426,7 +444,7 @@ storePurchaseHandle = _this spawn
 		else
 		{
 			player setVariable ["cmoney", _playerMoney - _price, true];
-			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+			_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
 			if (_successHint) then { hint "Purchase successful!" };
 			playSound "FD_Finish_F";
 		};

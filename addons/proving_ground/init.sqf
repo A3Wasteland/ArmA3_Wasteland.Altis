@@ -56,7 +56,7 @@ __prepFnc(ArrayToString);
 __prepFnc(onConfigChange);
 //init functions for Reloader
 #define __addon_prefix proving_ground_reloader_
-#define __scriptPath(a) __quoted(__concat4(__path,\Reloader\fnc_,a,.sqf))
+#define __scriptPath(a) __quoted(__concat4(__path,\reloader\fnc_,a,.sqf))
 #define __scriptName(a) __concat4(__autor_prefix,__addon_prefix,fnc_,a)
 __prepFnc(act_open_dialog);
 __prepFnc(add_magazine);

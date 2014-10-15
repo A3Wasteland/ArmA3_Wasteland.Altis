@@ -23,7 +23,7 @@ _trueName = [];
 {
 	if ((_x > 32 && _x < 127) || (_x > 160 && _x < 383)) then
 	{
-		_trueName set [count _trueName, _x];
+		_trueName pushBack _x;
 	}
 } forEach toArray _name;
 

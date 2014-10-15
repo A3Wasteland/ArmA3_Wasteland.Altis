@@ -44,20 +44,13 @@ else
 					// On mémorise aussi sur le réseau que le canon est attaché en remorque
 					_objet setVariable ["R3F_LOG_est_transporte_par", _remorqueur, true];
 					
-					_disableDriving =
-					{
-						_this lockDriver true;
-						_this enableCopilot false;
-						player action ["EngineOff", _this];
-					};
-					
 					if (local _objet) then
 					{
-						_objet call _disableDriving;
+						["disableDriving", _objet] call A3W_fnc_towingHelper;
 					}
 					else
 					{
-						[_objet, _disableDriving, false, false, _objet] call fn_vehicleInit;
+						[["disableDriving", netId _objet], "A3W_fnc_towingHelper", _objet] call A3W_fnc_MP;
 					};
 					
 					player switchMove "AinvPknlMstpSlayWrflDnon_medic";
@@ -103,8 +96,8 @@ else
 					sleep 2;
 					
 					// Attacher à l'arrière du véhicule au ras du sol
-					_remorqueur enableSimulationGlobal true;
-					_objet enableSimulationGlobal true;
+					[_remorqueur, true] call fn_enableSimulationGlobal;
+					[_objet, true] call fn_enableSimulationGlobal;
 					_objet attachTo [_remorqueur,
 					[
 						_towerCenterX - _objectCenterX,

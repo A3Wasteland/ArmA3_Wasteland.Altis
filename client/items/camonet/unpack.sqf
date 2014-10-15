@@ -23,8 +23,8 @@ _hasFailed = {
 	_text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player): {}; // player dead, no error msg needed
-		case not(vehicle player == player): {_text = ERR_IN_VEHICLE};
+		case (!alive player): {}; // player dead, no error msg needed
+		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
 		case (MF_ITEMS_CAMO_NET call mf_inventory_count <= 0): {_text = ERR_NO_NETS};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED};
 		default {

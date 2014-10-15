@@ -3,11 +3,28 @@
 //	@file Author: [404] Deadbeat, AgentRev
 //	@file Created: 20/11/2012 05:19
 
-private ["_date", "_minsDiff"];
-_date = date;
-_minsDiff = abs (((currentDate select 3) * 60 + (currentDate select 4)) - ((_date select 3) * 60 + (_date select 4)));
+private ["_clientDate", "_serverDate", "_clientYear", "_clientMonth", "_clientDay", "_clientHour", "_clientMin", "_serverYear", "_serverMonth", "_serverDay", "_serverHour", "_serverMin", "_minsDiff"];
 
-if (currentDate select 0 != _date select 0 || {currentDate select 1 != _date select 1} || {currentDate select 2 != _date select 2} || {_minsDiff >= 10}) then
+_clientDate = date;
+_serverDate = currentDate;
+
+if (count _serverDate < 5) exitWith {}; // could be a hacker trying to alter time
+
+_clientYear = _clientDate select 0;
+_clientMonth = _clientDate select 1;
+_clientDay = _clientDate select 2;
+_clientHour = _clientDate select 3;
+_clientMin = _clientDate select 4;
+
+_serverYear = _serverDate select 0;
+_serverMonth = _serverDate select 1;
+_serverDay = _serverDate select 2;
+_serverHour = _serverDate select 3;
+_serverMin = _serverDate select 4;
+
+_minsDiff = abs ((_serverMin + _serverHour * 60) - (_clientMin + _clientHour * 60));
+
+if (_clientYear != _serverYear || _clientMonth != _serverMonth || _clientDay != _serverDay || _minsDiff >= 10) then
 {
-	setDate currentDate;
+	setDate _serverDate;
 };

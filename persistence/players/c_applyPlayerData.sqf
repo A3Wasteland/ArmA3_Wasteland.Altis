@@ -1,6 +1,8 @@
 //	@file Name: c_applyPlayerData.sqf
 //	@file Author: AgentRev
 
+// This is where you load player status & inventory data which will be wiped upon death, for persistent variables use c_applyPlayerInfo.sqf instead
+
 if (isDedicated) exitWith {};
 
 private ["_data", "_name", "_value"];
@@ -21,19 +23,19 @@ removeHeadgear player;
 
 	switch (_name) do
 	{
-		case "Donator": { player setVariable ["isDonator", _value > 0] };
 		case "Damage": { player setDamage _value };
+		case "HitPoints": { { player setHitPointDamage _x } forEach _value };
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
 		case "Money": { player setVariable ["cmoney", _value, true] };
-		case "Position": { waitUntil {sleep 0.1; preloadCamera _value}; player setPosATL _value };
+		case "Position": { if (count _value == 3) then { player setPosATL _value } };
 		case "Direction": { player setDir _value };
 		case "Uniform":
 		{
 			// If uniform cannot be worn by player due to different team, try to convert it, else give default instead
 			if (_value != "") then
 			{
-				if ([player, _value] call canWear) then
+				if (player isUniformAllowed _value) then
 				{
 					player addUniform _value;
 				}
@@ -41,7 +43,7 @@ removeHeadgear player;
 				{
 					_newUniform = [player, _value] call uniformConverter;
 
-					if ([player, _newUniform] call canWear) then
+					if (player isUniformAllowed _newUniform) then
 					{
 						player addUniform _newUniform;
 					}
@@ -53,7 +55,22 @@ removeHeadgear player;
 			};
 		};
 		case "Vest": { if (_value != "") then { player addVest _value } };
-		case "Backpack": { if (_value != "") then { player addBackpack _value } };
+		case "Backpack":
+		{
+			removeBackpack player;
+
+			if (_value != "") then
+			{
+				if (_value isKindOf "Weapon_Bag_Base") then
+				{
+					player addBackpack "B_AssaultPack_rgr"; // NO SOUP FOR YOU
+				}
+				else
+				{
+					player addBackpack _value;
+				};
+			};
+		};
 		case "Goggles": { if (_value != "") then { player addGoggles _value } };
 		case "Headgear":
 		{
@@ -78,7 +95,11 @@ removeHeadgear player;
 				};
 			};
 		};
-		case "LoadedMagazines": { { player addMagazine _x } forEach _value };
+		case "LoadedMagazines":
+		{
+			player addBackpack "B_Carryall_Base"; // temporary backpack to hold mags
+			{ player addMagazine _x } forEach _value;
+		};
 		case "PrimaryWeapon": { player addWeapon _value; removeAllPrimaryWeaponItems player };
 		case "SecondaryWeapon": { player addWeapon _value };
 		case "HandgunWeapon": { player addWeapon _value; removeAllHandgunItems player };
@@ -99,7 +120,7 @@ removeHeadgear player;
 			} forEach _value;
 		};
 		case "CurrentWeapon": { player selectWeapon _value };
-		case "Stance": { player switchMove ([player, _value] call getFullMove) };
+		case "Stance": { [player, [player, _value] call getFullMove] call switchMoveGlobal };
 		case "UniformWeapons": { { (uniformContainer player) addWeaponCargoGlobal _x } forEach _value };
 		case "UniformItems": { { (uniformContainer player) addItemCargoGlobal _x } forEach _value };
 		case "UniformMagazines": { { (uniformContainer player) addMagazineCargoGlobal _x } forEach _value };

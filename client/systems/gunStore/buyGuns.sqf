@@ -213,7 +213,7 @@ storePurchaseHandle = _this spawn
 							[_itemText] call _showInsufficientFundsError;
 						};
 						
-						_requestKey = call generateKey;
+						_requestKey = call A3W_fnc_generateKey;
 						call requestStoreObject;
 					};
 				} forEach (call staticGunsArray);
@@ -238,7 +238,7 @@ storePurchaseHandle = _this spawn
 		else
 		{
 			player setVariable ["cmoney", _playerMoney - _price, true];
-			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+			_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
 			if (_successHint) then { hint "Purchase successful!" };
 			playSound "FD_Finish_F";
 		};

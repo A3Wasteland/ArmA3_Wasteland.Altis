@@ -15,7 +15,7 @@ _obj allowDamage false;
 
 switch (_Objtype) do
 {
-	case "Land_WaterBarrel_F":
+	case "Land_BarrelWater_F":
 	{
 		_obj setVariable["water",50,true];
 	};

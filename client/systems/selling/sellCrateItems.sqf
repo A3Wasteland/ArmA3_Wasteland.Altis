@@ -1,164 +1,131 @@
-//	@file Version: 1.0
 //	@file Name: sellCrateItems.sqf
 //	@file Author: AgentRev
 //	@file Created: 31/12/2013 22:12
-//	@file Args:
 
-#define PRICE_DEBUGGING false
+#define CONTAINER_SELL_PRICE 50 // price for the crate itself (do not price higher than "Empty Ammo Crate" from general store)
 
-if (!isNil "storeSellingHandle" && {typeName storeSellingHandle == "SCRIPT"} && {!scriptDone storeSellingHandle}) exitWith {hint "Please wait, your previous sale is being processed"};
+#include "sellIncludesStart.sqf";
 
-_crate = missionNamespace getVariable ["R3F_LOG_joueur_deplace_objet", objNull];
-
-/*if !(_crate isKindOf "ReammoBox_F") then
+storeSellingHandle = _this spawn
 {
-	hint "You aren't holding a valid crate!";
-}
-else
-{*/
-	storeSellingHandle = _crate spawn
-	{
-		private ["_getHalfPrice", "_crate", "_sellValue", "_crateItems", "_allStoreItems", "_weaponEntry", "_weaponCfg", "_parentCfg", "_found", "_cfgItems", "_allCrateItems", "_item", "_itemClass", "_itemQty", "_itemValue", "_itemName", "_confirmMsg"];
+	_params = [_this, 3, [], [[]]] call BIS_fnc_param;
+	_storeSellBox = [_params, 0, false, [false]] call BIS_fnc_param;
+	_forceSell = [_params, 1, false, [false]] call BIS_fnc_param;
+	_deleteObject = [_params, 2, false, [false]] call BIS_fnc_param;
 
-		_getHalfPrice = 
-		{
-			((ceil ((_this / 2) / 5)) * 5) // Ceil half the value to the nearest multiple of 5
-		};
-		
-		_crate = _this;
-		_sellValue = 0;
-		
-		// Get all the items
-		_crateWeapons = (getWeaponCargo _crate) call cargoToPairs;
-		_crateMags = (getMagazineCargo _crate) call cargoToPairs;
-		_crateItems = (getItemCargo _crate) call cargoToPairs;
-		
-		_allStoreItems = [call allRegularStoreItems, call ammoArray] call BIS_fnc_arrayPushStack;
-		
-		// Find parent equivalents to weapons which aren't listed in the gunstore, and add possible attachments to crate items array
-		{
-			_weaponEntry = _x;
-			_weaponCfg = configFile >> "CfgWeapons" >> (_weaponEntry select 0);
-			_parentCfg = _weaponCfg;
-			_found = false;
-			
-			while {!_found && {isClass _parentCfg} && {getText (_weaponCfg >> "model") == getText (_parentCfg >> "model")}} do
-			{
-				{
-					if (_x select 1 == configName _parentCfg) exitWith
-					{
-						_found = true;
-					};
-				} forEach _allStoreItems;
-				
-				if (!_found) then
-				{
-					_parentCfg = inheritsFrom _parentCfg;
-				};
-			};
-			
-			if (_found && {isClass (_weaponCfg >> "LinkedItems")}) then
-			{
-				_cfgItems = _weaponCfg >> "LinkedItems";
-				
-				for "_i" from 0 to (count _cfgItems - 1) do
-				{
-					[_crateItems, getText ((_cfgItems select _i) >> "item"), 1] call BIS_fnc_addToPairs;
-				};
-			};
-			
-			if (_parentCfg != _weaponCfg) then
-			{
-				_crateWeapons set [_forEachIndex, [_weaponEntry select 0, 0]]; // I wanted to use BIS_fnc_removeFromPairs but is not implemented yet :(
-				
-				if (_found) then
-				{
-					[_crateWeapons, configName _parentCfg, _weaponEntry select 1] call BIS_fnc_addToPairs;
-				};
-			};
-		} forEach (+_crateWeapons);
-		
-		// Combine all items in new array
-		_allCrateItems = [];
-		[_allCrateItems, _crateWeapons] call BIS_fnc_arrayPushStack;
-		[_allCrateItems, _crateMags] call BIS_fnc_arrayPushStack;
-		[_allCrateItems, _crateItems] call BIS_fnc_arrayPushStack;
-		
-		if (count _allCrateItems == 0) exitWith
+	_crate = if (_storeSellBox) then
+	{
+		[_this, 0, objNull, [objNull]] call BIS_fnc_param
+	}
+	else
+	{
+		missionNamespace getVariable ["R3F_LOG_joueur_deplace_objet", objNull]
+	};
+
+	_sellValue = 0;
+	_originalCargo = CARGO_STRING(_crate);
+
+	// Get all the items
+	_allCrateItems = _crate call getSellPriceList;
+
+	_objClass = typeOf _crate;
+	_objName = getText (configFile >> "CfgVehicles" >> _objClass >> "displayName");
+
+	// Include crate in item list if it's to be deleted
+	if (_deleteObject) then
+	{
+		_allCrateItems = [[_objClass, 1, _objName, CONTAINER_SELL_PRICE]] + _allCrateItems;
+	};
+
+	if (count _allCrateItems == 0) exitWith
+	{
+		if (!_forceSell) then
 		{
 			playSound "FD_CP_Not_Clear_F";
-			["This object does not contain valid items to sell.", "Error"] call BIS_fnc_guiMessage;
+			[format ['"%1" does not contain valid items to sell.', _objName], "Error"] call BIS_fnc_guiMessage;
 		};
-		
-		// Add value of each item to sell value, and acquire item display name
+	};
+
+	// Calculate total value
+	{
+		if (count _x > 3) then
 		{
-			_item = _x;
-			_itemClass = _x select 0;
-			_itemQty = _x select 1;
-			_itemValue = 10;
-			
-			if (_itemQty > 0) then
-			{
-				{
-					if (_x select 1 == _itemClass) exitWith
-					{
-						_itemValue = ((_x select 2) * _itemQty) call _getHalfPrice;
-					};
-				} forEach _allStoreItems;
-				
-				_sellValue = _sellValue + _itemValue;
-				
-				if (isClass (configFile >> "CfgWeapons" >> _itemClass)) then
-				{
-					_itemName = getText (configFile >> "CfgWeapons" >> _itemClass >> "displayName");
-				}
-				else
-				{
-					_itemName = getText (configFile >> "CfgMagazines" >> _itemClass >> "displayName");
-				};
-				
-				_item set [2, _itemName];
-				if (PRICE_DEBUGGING) then { _item set [3, _itemValue] };
-				_allCrateItems set [_forEachIndex, _item];
-			};
-		} forEach _allCrateItems;
-		
+			_sellValue = _sellValue + (_x select 3);
+		};
+	} forEach _allCrateItems;
+
+	if (_forceSell) then
+	{
+		clearBackpackCargoGlobal _crate;
+		clearMagazineCargoGlobal _crate;
+		clearWeaponCargoGlobal _crate;
+		clearItemCargoGlobal _crate;
+
+		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+		hint format [format ['The inventory of "%1" was sold for $%2', _objName, _sellValue]];
+		playSound "FD_Finish_F";
+	}
+	else
+	{
 		// Add total sell value to confirm message
-		_confirmMsg = format ["You will obtain $%1 for:<br/>", _sellValue];
+		_confirmMsg = format ["You will obtain $%1 for:<br/>", [_sellValue] call fn_numbersText];
 
 		// Add item quantities and names to confirm message
 		{
 			_item = _x select 0;
 			_itemQty = _x select 1;
-			
+
 			if (_itemQty > 0 && {count _x > 2}) then
 			{
 				_itemName = _x select 2;
-			
-				_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", _x select 3] } else { "" }];
+				_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", [_x select 3] call fn_numbersText] } else { "" }];
 			};
-			
 		} forEach _allCrateItems;
 
 		// Display confirmation
 		if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then
 		{
-			clearMagazineCargoGlobal _crate;
-			clearWeaponCargoGlobal _crate;
-			clearItemCargoGlobal _crate;
+			// Check if somebody else manipulated the cargo since the start
+			if (CARGO_STRING(_crate) == _originalCargo) then
+			{
+				// Have to spawn clearing commands due to mysterious game crash...
+				_clearing = _crate spawn
+				{
+					clearBackpackCargoGlobal _this;
+					clearMagazineCargoGlobal _this;
+					clearWeaponCargoGlobal _this;
+					clearItemCargoGlobal _this;
+				};
 
-			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
-			hint format ["You sold the contents for $%1", _sellValue];
-			playSound "FD_Finish_F";
+				waitUntil {scriptDone _clearing};
+
+				if (_deleteObject) then
+				{
+					if (_crate getVariable ["R3F_LOG_est_deplace_par", objNull] == player) then
+					{
+						[_crate, player, -1, false] execVM "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\relacher.sqf";
+						waitUntil {_crate getVariable ["R3F_LOG_est_deplace_par", objNull] != player};
+					};
+
+					if (isNull (_crate getVariable ["R3F_LOG_est_deplace_par", objNull])) then
+					{
+						deleteVehicle _crate;
+					};
+				};
+
+				player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+
+				_hintMsg = if (_deleteObject) then { 'You sold "%1" for $%2' } else { 'You sold the inventory of "%1" for $%2' };
+				hint format [_hintMsg, _objName, _sellValue];
+				playSound "FD_Finish_F";
+			}
+			else
+			{
+				playSound "FD_CP_Not_Clear_F";
+				[format ['The contents of "%1" have changed, please restart the selling process.', _objName], "Error"] call BIS_fnc_guiMessage;
+			};
 		};
 	};
-	
-	if (typeName storeSellingHandle == "SCRIPT") then
-	{
-		private "_storeSellingHandle";
-		_storeSellingHandle = storeSellingHandle;
-		waitUntil {scriptDone _storeSellingHandle};
-	};
-	
-	storeSellingHandle = nil;
-//};
+};
+
+#include "sellIncludesEnd.sqf";

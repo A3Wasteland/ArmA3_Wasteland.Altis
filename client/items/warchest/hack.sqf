@@ -19,10 +19,10 @@ _checks = {
 	_text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player): {}; //player is dead, not need to notify them
+		case (!alive player): {}; //player is dead, not need to notify them
 		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
 		case (player distance _warchest > 3): {_text = ERR_TOO_FAR_AWAY};
-		case (_warchest getVariable "side" == playerSide): {_text = ERR_HACKED};
+		case (_warchest getVariable ["side", sideUnknown] == playerSide): {_text = ERR_HACKED};
 		case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};
 		default {
 			_text = format["Warchest Hacking %1%2 Complete", round(100 * _progress), "%"];
@@ -38,13 +38,13 @@ _success = [DURATION, ANIMATION, _checks, [_warchest]] call a3w_actions_start;
 MUTEX_UNLOCK;
 if (_success) then {
 	_amount = 0;
-	switch (_warchest getVariable 'side') do {
-		case (east): {
+	switch (_warchest getVariable ["side", sideUnknown]) do {
+		case EAST: {
 			_amount = round(pvar_warchest_funds_east/4);
 			pvar_warchest_funds_east = pvar_warchest_funds_east - _amount;
 			publicVariable "pvar_warchest_funds_east";
 		};
-		case (west): {
+		case WEST: {
 			_amount = round(pvar_warchest_funds_west/4);
 			pvar_warchest_funds_west = pvar_warchest_funds_west - _amount;
 			publicVariable "pvar_warchest_funds_west";
@@ -52,6 +52,6 @@ if (_success) then {
 	};
 	_money = (player getVariable ["cmoney", 0]) + _amount;
 	player setVariable ["cmoney", _money, true];
-	[format["Warchest Hacking Complete! You stole $%1", _amount], 5] call mf_notify_client;
+	[format["Warchest Hacking Complete! You stole $%1", [_amount] call fn_numbersText], 5] call mf_notify_client;
 };
 _success;

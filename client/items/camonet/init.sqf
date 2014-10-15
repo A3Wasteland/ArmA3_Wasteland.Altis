@@ -22,7 +22,7 @@ mf_items_camo_net_nearest = {
         _camonet = _camonets select 0;
     };
     _camonet;
-};
+} call mf_compile;
 
 [MF_ITEMS_CAMO_NET, "Camo Net", _unpack, _ground_type, _icon, 1] call mf_inventory_create;
 

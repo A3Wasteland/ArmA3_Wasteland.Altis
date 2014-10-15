@@ -8,26 +8,7 @@ if (!isServer) exitWith {};
 
 diag_log "WASTELAND SERVER - Initializing Server Vars";
 
-pvar_teamSwitchList = [];
-publicVariable "pvar_teamSwitchList";
-pvar_teamKillList = [];
-publicVariable "pvar_teamKillList";
-pvar_spawn_beacons = [];
-publicVariable "pvar_spawn_beacons";
-pvar_warchest_funds_east = 0;
-publicVariable "pvar_warchest_funds_east";
-pvar_warchest_funds_west = 0;
-publicVariable "pvar_warchest_funds_west";
-clientMissionMarkers = [];
-publicVariable "clientMissionMarkers";
-clientRadarMarkers = [];
-publicVariable "clientRadarMarkers";
-currentDate = [];
-publicVariable "currentDate";
-currentInvites = [];
-publicVariable "currentInvites";
-
-"PlayerCDeath" addPublicVariableEventHandler { [_this select 1] spawn server_playerDied };
+#include "setupServerPVars.sqf"
 
 currentStaticHelis = []; // Storage for the heli marker numbers so that we don't spawn wrecks on top of live helis
 
@@ -135,7 +116,7 @@ objectList =
 	"Land_RampConcreteHigh_F",
 	"Land_Sacks_goods_F",
 	"Land_Shoot_House_Wall_F",
-	"Land_WaterBarrel_F"
+	"Land_BarrelWater_F"
 ];
 
 //Object List - Random Spawns.
@@ -188,7 +169,7 @@ vehicleWeapons =
 	"arifle_MX_GL_F",
 	"arifle_MX_SW_F",
 	"arifle_MXM_F",
-//	"srifle_EBR_F",
+	"srifle_EBR_F",
 	"LMG_Mk200_F",
 	"LMG_Zafir_F"
 ];
@@ -227,8 +208,8 @@ vehicleAddition2 =
 
 MissionSpawnMarkers = [];
 {
-	if (["Mission_", _x] call fn_findString == 0) then
+	if (["Mission_", _x] call fn_startsWith) then
 	{
-		MissionSpawnMarkers set [count MissionSpawnMarkers, [_x, false]];
+		MissionSpawnMarkers pushBack [_x, false];
 	};
 } forEach allMapMarkers;

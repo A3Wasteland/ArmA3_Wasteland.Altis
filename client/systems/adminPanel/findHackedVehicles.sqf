@@ -4,9 +4,9 @@
 //	@file Created: 09/06/2013 16:56
 
 private ["_requestKey", "_hackedVehicles"];
-_requestKey = call generateKey;
+_requestKey = call A3W_fnc_generateKey;
 
-[[player, _requestKey], "checkHackedVehicles", false, false] call TPG_fnc_MP;
+[[player, _requestKey], "A3W_fnc_checkHackedVehicles", false, false] call A3W_fnc_MP;
 	
 waitUntil {!isNil _requestKey};
 

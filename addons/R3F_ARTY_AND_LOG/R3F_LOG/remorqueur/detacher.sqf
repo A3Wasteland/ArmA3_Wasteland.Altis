@@ -65,11 +65,12 @@ else
 		
 		if (local _objet) then
 		{
-			_objet call detachTowedObject;
+			[_objet] call detachTowedObject;
 		}
 		else
 		{
-			[_objet, {_this call detachTowedObject}, false, false, _objet] call fn_vehicleInit;
+			pvar_detachTowedObject = [netId _objet];
+			publicVariable "pvar_detachTowedObject";
 		};
 		
 		sleep 4;

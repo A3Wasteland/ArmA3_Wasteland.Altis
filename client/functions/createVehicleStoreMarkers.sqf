@@ -6,11 +6,11 @@
 
 //Creates the markers around vehicle stores.
 {
-	if (["VehStore", name _x] call fn_findString == 0) then
+	if (!isPlayer _x && {["VehStore", vehicleVarName _x] call fn_startsWith}) then
 	{
-		_npcPos = getPos _x;
-		
-		// Vehicle store title    
+		_npcPos = getPosATL _x;
+
+		// Vehicle store title
 		_markerName = format["marker_shop_title_%1",_x];
 		deleteMarkerLocal _markerName;
 		_marker = createMarkerLocal [_markerName, _npcPos];

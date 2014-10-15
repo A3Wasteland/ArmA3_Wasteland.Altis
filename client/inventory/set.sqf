@@ -20,13 +20,13 @@ _new = [];
 _done = false;
 {
 	if (_x select 0 == (_this select 0)) then {
-		_new set [count _new, _this];
+		_new pushBack _this;
 		_done = true;
 	} else {
-		_new set [count _new, _x];	
+		_new pushBack _x;	
 	};
 } forEach mf_inventory;
 
-if not _done then { _new set [count _new, _this]};
+if (!_done) then { _new pushBack _this };
 
 mf_inventory = _new;

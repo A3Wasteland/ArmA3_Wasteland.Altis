@@ -7,11 +7,10 @@
 #include "dialog\vehiclestoreDefines.hpp";
 
 disableSerialization;
-private ["_veh_type", "_price", "_dialog", "_vehlist", "_vehText", "_picture", "_colorlist", "_itemIndex", "_itemText", "_itemData", "_weap_type", "_noColorVehicles", "_rgbOnlyVehicles", "_isRGB", "_onlyRGB", "_colorlistIndex"];
+private ["_vehClass", "_price", "_dialog", "_vehlist", "_vehText", "_colorlist", "_itemIndex", "_itemText", "_itemData", "_colorsArray", "_colorlistIndex"];
 
 //Initialize Values
-_veh_type = "";
-_picture = "";
+_vehClass = "";
 _price = 0;
 
 // Grab access to the controls
@@ -29,25 +28,28 @@ _itemData = _vehlist lbData _itemIndex;
 
 _vehText ctrlSetText "";
 
-{	
+{
 	if (_itemText == _x select 0 && _itemData == _x select 1) then
 	{
-		_weap_type = _x select 1; 
+		_vehClass = _x select 1; 
 		_price = _x select 2;
-		_vehText ctrlSetText format ["Price: $%1", _price];	
+		_vehText ctrlSetText format ["Price: $%1", [_price] call fn_numbersText];	
 	};
 } forEach (call allVehStoreVehicles);
 
-if ({_itemData isKindOf _x} count (call noColorVehicles) == 0) then
+_colorsArray  = [];
+
 {
-	_onlyRGB = {_itemData isKindOf _x} count (call rgbOnlyVehicles) > 0;
-	
+	if (_x select 0 == "All" || {_vehClass isKindOf (_x select 0)}) then
 	{
-		_isRGB = _x select 1;
-		
-		if (_isRGB || !_onlyRGB) then
 		{
-			_colorlist lbAdd format ["%1", _x select 0];
-		};
-	} forEach (call colorsArray);
-};
+			[_colorsArray, _x select 0, _x select 1] call fn_setToPairs;
+		} forEach (_x select 1);
+	};
+} forEach call colorsArray;
+
+{
+	_colorlistIndex = _colorlist lbAdd (_x select 0);
+	_colorlist lbSetPicture [_colorlistIndex, _x select 1];
+	_colorlist lbSetData [_colorlistIndex, _x select 1];
+} forEach _colorsArray;

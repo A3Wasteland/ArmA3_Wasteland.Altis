@@ -10,6 +10,66 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"0.9h",
+"
+<br/> [Added] Custom revive system based on Farooq's Revive
+<br/> [Added] Territory payroll at regular intervals
+<br/> [Added] Emergency eject and free parachutes (jump key)
+<br/> [Added] Player names toggled with Windows key
+<br/> [Added] Increased missile damage against tanks and helis
+<br/> [Added] Ability to stash money in weapon crates
+<br/> [Added] Ability to sell vehicle inventory at stores
+<br/> [Added] More money shipment mission variants
+<br/> [Added] Reduced wheel damage from collisions
+<br/> [Added] Wreck salvaging
+<br/> [Added] Selling bin in stores
+<br/> [Added] Karts DLC content in stores
+<br/> [Added] Camo sniper rifles in gunstore
+<br/> [Added] Repair Offroad in vehicle store
+<br/> [Added] Team players on map as server option
+<br/> [Added] Unlimited stamina server option
+<br/> [Added] Static weapon saving server option
+<br/> [Added] More push vehicle actions
+<br/> [Added] Paradrop option for airlifted vehicles
+<br/> [Added] Preload checkbox on respawn menu
+<br/> [Added] Remote explosives store distance restriction
+<br/> [Added] Server time multipliers for day and night
+<br/> [Added] Addon-less profileNamespace server persistence
+<br/> [Added] Linux server compatibility
+<br/> [Added] Basic support for headless client
+<br/> [Changed] Independent territory capture is now group-based
+<br/> [Changed] Towns blocked if more enemies than friendlies
+<br/> [Changed] Increased ammo/fuel/repair cargo for resupply trucks
+<br/> [Changed] Increased territory capture rewards for Altis
+<br/> [Changed] Increased money mission rewards
+<br/> [Changed] Weapon loot in buildings now disabled by default
+<br/> [Changed] Mission crates loot was made more random
+<br/> [Changed] Thermal imaging is now available on UAVs
+<br/> [Changed] Increased vehicle store prices
+<br/> [Changed] Increased prices for thermal optics
+<br/> [Changed] Increased player icons up to 2000m
+<br/> [Changed] Improved antihack
+<br/> [Changed] Improved FPS
+<br/> [Fixed] Vehicle store purchase errors due to server lag
+<br/> [Fixed] Corpse created when leaving with player saving
+<br/> [Fixed] Custom vehicle damage handling not working
+<br/> [Fixed] Indie-indie spawn beacon stealing
+<br/> [Fixed] Repair kit and jerrycan distance limit
+<br/> [Fixed] Spawn beacon packing and stealing restrictions
+<br/> [Fixed] Not able to lock static weapons
+<br/> [Fixed] Unbreakable store windows
+<br/> [Fixed] Stratis airbase gunstore desk glitches
+<br/> [Fixed] Missions sometimes completing instantaneously
+<br/> [Fixed] Object ammo/fuel/repair cargo not saving
+<br/> [Fixed] Respawn menu aspect ratio on some resolutions
+<br/> [Fixed] Minor bugs with group system
+<br/> [Fixed] Minor bugs with player items
+<br/> [Fixed] Various other minor bugfixes and optimizations
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "0.9g",
 "
 <br/> [Added] - Vehicle stores
@@ -112,34 +172,36 @@ player createDiaryRecord ["credits",
 [
 "Credits",
 "
-<br/><font size='16'>Developed by Team Wasteland:</font>
-<br/>	* JoSchaap (GoT/Tweakers.net)
+<br/><font size='16' color='#BBBBBB'>Developed by Team Wasteland:</font>
 <br/>	* AgentRev (TeamPlayerGaming)
+<br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* MercyfulFate
 <br/>	* His_Shadow (KoS/KillonSight)
 <br/>	* Bewilderbeest (KoS/KillonSight)
 <br/>	* Torndeco
 <br/>	* Del1te (404Games)
 <br/>
-<br/><font size='16'>Original Arma 2 Wasteland missions by:</font>
+<br/><font size='16' color='#BBBBBB'>Original Arma 2 Wasteland missions by:</font>
 <br/>	* Tonic
 <br/>	* Sa-Matra
 <br/>	* MarKeR
 <br/>
-<br/><font size='16'>Ported to Arma 3 by 404Games:</font>
+<br/><font size='16' color='#BBBBBB'>Improved and ported to Arma 3 by 404Games:</font>
 <br/>	* Deadbeat
 <br/>	* Costlyy
 <br/>	* Pulse
 <br/>	* Domuk
 <br/>
-<br/><font size='16'>Other contributors:</font>
+<br/><font size='16' color='#BBBBBB'>Other contributors:</font>
 <br/>	* 82ndab-Bravo17 (GitHub)
 <br/>	* afroVoodo (Armaholic)
+<br/>	* Austerror (GitHub)
 <br/>	* AWA (OpenDayZ)
 <br/>	* bodybag (Gameaholic.se)
 <br/>	* code34 (iniDBI)
 <br/>	* Das Attorney (Jump MF)
 <br/>	* Ed! (404Games forums)
+<br/>	* Farooq (GitHub)
 <br/>	* HatchetHarry (GitHub)
 <br/>	* Hub (TeamPlayerGaming)
 <br/>	* k4n30 (GitHub)
@@ -154,10 +216,12 @@ player createDiaryRecord ["credits",
 <br/>	* Sa-Matra (BIS forums)
 <br/>	* Sanjo (GitHub)
 <br/>	* SCETheFuzz (GitHub)
+<br/>	* Shockwave (A3W forums)
 <br/>	* SicSemperTyrannis (iniDB)
 <br/>	* SPJESTER (404Games forums)
 <br/>	* spunFIN (BIS forums)
 <br/>	* Tonic (BIS forums)
+<br/>	* wiking.at (A3W forums)
 <br/>
 <br/><font size='16'>Thanks A LOT to everyone involved for the help and inspiration!</font>
 "

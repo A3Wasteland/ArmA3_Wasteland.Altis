@@ -52,7 +52,8 @@ switch (_mode) do {
 		};
 	};
 	case 4: {//exec globally
-		GET_CTRL(balca_debug_console_result_IDC) ctrlSetText '';
+		["This feature has been disabled."] spawn BIS_fnc_guiMessage;
+		/*GET_CTRL(balca_debug_console_result_IDC) ctrlSetText '';
 		_command = ctrlText balca_debug_console_edit_IDC;
 		_console_history = __uiGet(balca_console_history);
 		if (({_x==_command} count _console_history)<1) then {
@@ -61,11 +62,12 @@ switch (_mode) do {
 			GET_CTRL(balca_debug_console_history_IDC) lbAdd str _command;
 			GET_CTRL(balca_debug_console_history_IDC) lbSetData [(lbSize GET_CTRL(balca_debug_console_history_IDC))-1,_command];
 		};
-		[player, _command] call fn_vehicleInit;
+		[player, _command] call fn_vehicleInit;*/
 		// processInitCommands;
 	};
 	case 5: {//exec on server
-		GET_CTRL(balca_debug_console_result_IDC) ctrlSetText '';
+		["This feature has been disabled."] spawn BIS_fnc_guiMessage;
+		/*GET_CTRL(balca_debug_console_result_IDC) ctrlSetText '';
 		_command = ctrlText balca_debug_console_edit_IDC;
 		_console_history = __uiGet(balca_console_history);
 		if (({_x==_command} count _console_history)<1) then {
@@ -86,7 +88,7 @@ switch (_mode) do {
 			_res = player getVariable ['PG_result',[""]];
 			GET_CTRL(balca_debug_console_result_IDC) ctrlSetText str(_res select 0);
 			player setVariable ['PG_result',[]];
-		};
+		};*/
 	};
 	case 6: {//run tracker
 		GET_CTRL(balca_debug_console_result_IDC) ctrlSetText '';

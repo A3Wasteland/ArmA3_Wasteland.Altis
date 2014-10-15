@@ -7,15 +7,25 @@
 
 if (!isServer) exitWith {};
 
-externalConfigFolder = "A3Wasteland_settings";
+externalConfigFolder = "\A3Wasteland_settings";
 
-vChecksum = compileFinal format ["'%1'", call generateKey];
+vChecksum = compileFinal str call A3W_fnc_generateKey;
+
+// Corpse deletion on disconnect if player alive and player saving on
+addMissionEventHandler ["HandleDisconnect",
+{
+	if (isNil "isConfigOn" || {["A3W_playerSaving"] call isConfigOn}) then
+	{
+		_unit = _this select 0;
+		if (alive _unit) then { deleteVehicle _unit };
+	};
+}];
 
 //Execute Server Side Scripts.
 call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
 [] execVM "server\admins.sqf";
 [] execVM "server\functions\serverVars.sqf";
-_serverCompileHandle = [] execVM "server\functions\serverCompile.sqf";
+_serverCompileHandle = [] spawn compile preprocessFileLineNumbers "server\functions\serverCompile.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 [] execVM "server\functions\broadcaster.sqf";
 [] execVM "server\functions\relations.sqf";
 [] execVM (externalConfigFolder + "\init.sqf");
@@ -25,12 +35,10 @@ waitUntil {scriptDone _serverCompileHandle};
 // Broadcast server rules
 if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
 {
-	[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call TPG_fnc_MP;
+	[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call A3W_fnc_MP;
 };
 
 diag_log "WASTELAND SERVER - Server Compile Finished";
-
-"requestCompensateNegativeScore" addPublicVariableEventHandler { (_this select 1) call removeNegativeScore };
 
 // load default config
 call compile preprocessFileLineNumbers "server\default_config.sqf";
@@ -38,76 +46,126 @@ call compile preprocessFileLineNumbers "server\default_config.sqf";
 // load external config
 if (loadFile (externalConfigFolder + "\main_config.sqf") != "") then
 {
-    call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
+	call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
 }
 else
 {
 	diag_log format["[WARNING] A3W configuration file '%1\main_config.sqf' was not found. Using default settings!", externalConfigFolder];
-	diag_log "[WARNING] For more information go to http://a3wasteland.com/";
+	diag_log "[WARNING] For more information go to http://forums.a3wasteland.com/";
 };
 
-A3W_showGunStoreStatus = compileFinal str A3W_showGunStoreStatus;
-A3W_gunStoreIntruderWarning = compileFinal str A3W_gunStoreIntruderWarning;
-A3W_combatAbortDelay = compileFinal str A3W_combatAbortDelay;
-
-// Broadcast config variables
-publicVariable "A3W_startingMoney";
-publicVariable "A3W_showGunStoreStatus";
-publicVariable "A3W_gunStoreIntruderWarning";
-publicVariable "A3W_playerSaving";
-publicVariable "A3W_combatAbortDelay";
+// compileFinal & broadcast client config variables
+{
+	missionNamespace setVariable [_x, compileFinal str (missionNamespace getVariable _x)];
+	publicVariable _x;
+}
+forEach
+[
+	"A3W_startingMoney",
+	"A3W_showGunStoreStatus",
+	"A3W_gunStoreIntruderWarning",
+	"A3W_playerSaving",
+	"A3W_combatAbortDelay",
+	"A3W_unlimitedStamina",
+	"A3W_bleedingTime",
+	"A3W_teamPlayersMap",
+	"A3W_remoteBombStoreRadius",
+	"A3W_vehiclePurchaseCooldown",
+	"A3W_globalVoiceWarnTimer",
+	"A3W_globalVoiceMaxWarns",
+	"A3W_antiHackMinRecoil",
+	"A3W_spawnBeaconCooldown"
+];
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
 _boxSavingOn = ["A3W_boxSaving"] call isConfigOn;
+_staticWeaponSavingOn = ["A3W_staticWeaponSaving"] call isConfigOn;
 _warchestSavingOn = ["A3W_warchestSaving"] call isConfigOn;
 _warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
 _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
-_serverSavingOn = (_baseSavingOn || {_boxSavingOn} || {_warchestSavingOn} || {_warchestMoneySavingOn} || {_beaconSavingOn});
 
-_setupPlayerDB = [] spawn {}; // blank script to feed scriptDone a non-nil value
+_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
+
+_setupPlayerDB = scriptNull;
 
 // Do we need any persistence?
-if (_playerSavingOn || {_serverSavingOn}) then
+if (_playerSavingOn || _serverSavingOn) then
 {
-	// Our custom iniDB methods which fixes some issues with the current iniDB addon release
-	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
-	
-	_verIniDB = call iniDB_version;
-	
+	_verIniDB = "iniDB" callExtension "version";
+
 	if (_verIniDB == "") then
 	{
-		diag_log "[INFO] ### ERROR ### A3W NOT running with iniDB!";
-		diag_log "[INFO] ### ERROR ### Make sure iniDB.dll is in your Arma 3 folder, or otherwise that you have the @inidbi mod enabled!";
+		A3W_savingMethod = compileFinal "1";
+		A3W_savingMethodName = compileFinal "'profileNamespace'";
+
+		diag_log "[INFO] ### A3W NOT running with iniDB!";
+		diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
 	}
 	else
 	{
-		diag_log format ["[INFO] A3W running with iniDB v%1", _verIniDB];
+		A3W_savingMethod = compileFinal "2";
+
+		if (parseNumber _verIniDB > 1) then
+		{
+			A3W_savingMethodName = compileFinal "'iniDBI'";
+		}
+		else
+		{
+			A3W_savingMethodName = compileFinal "'iniDB'";
+		};
+
+		diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
 	};
+
+	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
+
+	diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
 
 	// Have we got player persistence enabled?
 	if (_playerSavingOn) then
 	{
-		_setupPlayerDB = execVM "persistence\players\s_setupPlayerDB.sqf";
+		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\players\s_setupPlayerDB.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 	};
 
-	// Have we got server persistence enabled?
-	if (_serverSavingOn) then
+	[_serverSavingOn, _playerSavingOn] spawn
 	{
-		execVM "persistence\world\oLoad.sqf";
+		_serverSavingOn = _this select 0;
+		_playerSavingOn = _this select 1;
+
+		if (_serverSavingOn) then
+		{
+			call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
+		};
+
+		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
+		{
+			execVM "persistence\world\oSave.sqf";
+		};
 	};
-	
-	diag_log format ["[INFO] A3W player saving is %1", if (_playerSavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W base saving is %1", if (_baseSavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W box saving is %1", if (_boxSavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W warchest saving is %1", if (_warchestSavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W warchest money saving is %1", if (_warchestMoneySavingOn) then { "ENABLED" } else { "DISABLED" }];
-	diag_log format ["[INFO] A3W spawn beacon saving is %1", if (_beaconSavingOn) then { "ENABLED" } else { "DISABLED" }];
+
+	{
+		diag_log format ["[INFO] A3W %1 = %2", _x select 0, if (_x select 1) then { "ON" } else { "OFF" }];
+	}
+	forEach
+	[
+		["playerSaving", _playerSavingOn],
+		["baseSaving", _baseSavingOn],
+		["boxSaving", _boxSavingOn],
+		["staticWeaponSaving", _staticWeaponSavingOn],
+		["warchestSaving", _warchestSavingOn],
+		["warchestMoneySaving", _warchestMoneySavingOn],
+		["spawnBeaconSaving", _beaconSavingOn]
+	];
 };
 
-_setupPlayerDB spawn
+call compile preprocessFileLineNumbers "server\functions\createTownMarkers.sqf";
+
+_createTriggers = [] spawn compile preprocessFileLineNumbers "territory\server\createCaptureTriggers.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
+
+[_setupPlayerDB, _createTriggers] spawn
 {
-	waitUntil {sleep 0.1; scriptDone _this};
+	waitUntil {sleep 0.1; {scriptDone _x} count _this == count _this};
 	A3W_serverSetupComplete = compileFinal "true";
 	publicVariable "A3W_serverSetupComplete";
 };
@@ -115,16 +173,14 @@ _setupPlayerDB spawn
 if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 {
 	private ["_monthDay", "_startHour"];
-	_monthDay = if (["A3W_moonLight"] call isConfigOn) then { 10 } else { 25 };
+	_monthDay = if (["A3W_moonLight"] call isConfigOn) then { 9 } else { 24 };
 	_startHour = ["A3W_startHour", date select 2] call getPublicVar;
 	setDate [2035, 6, _monthDay, _startHour, 0];
 };
 
-if (["A3W_buildingLoot"] call isConfigOn) then 
+if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then
 {
 	diag_log "[INFO] A3W loot spawning is ENABLED";
-	fn_getBuildingstospawnLoot = "addons\Lootspawner\fn_LSgetBuildingstospawnLoot.sqf" call mf_compile; 
-	LSdeleter = "addons\Lootspawner\LSdeleter.sqf" call mf_compile;
 	execVM "addons\Lootspawner\Lootspawner.sqf";
 };
 
@@ -132,47 +188,40 @@ if (["A3W_buildingLoot"] call isConfigOn) then
 
 if (["A3W_serverSpawning"] call isConfigOn) then
 {
-    diag_log "WASTELAND SERVER - Initializing Server Spawning";
-	
+	diag_log "WASTELAND SERVER - Initializing Server Spawning";
+
 	if (["A3W_heliSpawning"] call isConfigOn) then
 	{
-		_heliSpawn = [] execVM "server\functions\staticHeliSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _heliSpawn};
+		call compile preprocessFileLineNumbers "server\functions\staticHeliSpawning.sqf";
 	};
-	
+
 	if (["A3W_vehicleSpawning"] call isConfigOn) then
 	{
-		_vehSpawn = [] execVM "server\functions\vehicleSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _vehSpawn};
+		call compile preprocessFileLineNumbers "server\functions\vehicleSpawning.sqf";
 	};
-	
+
 	if (["A3W_planeSpawning"] call isConfigOn) then
 	{
-		_planeSpawn = [] execVM "server\functions\planeSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _planeSpawn};
+		call compile preprocessFileLineNumbers "server\functions\planeSpawning.sqf";
 	};
-	
+
 	if (["A3W_boatSpawning"] call isConfigOn) then
 	{
-		_boatSpawn = [] execVM "server\functions\boatSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _boatSpawn};
+		call compile preprocessFileLineNumbers "server\functions\boatSpawning.sqf";
 	};
-	
+
 	if (["A3W_baseBuilding"] call isConfigOn) then
 	{
-		_objSpawn = [] execVM "server\functions\objectsSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _objSpawn};
+		call compile preprocessFileLineNumbers "server\functions\objectsSpawning.sqf";
 	};
-	
+
 	if (["A3W_boxSpawning"] call isConfigOn) then
 	{
-		_boxSpawn = [] execVM "server\functions\boxSpawning.sqf";
-		waitUntil {sleep 0.1; scriptDone _boxSpawn};
+		call compile preprocessFileLineNumbers "server\functions\boxSpawning.sqf";
 	};
 };
 
-// Hooks for new players connecting, in case we need to manually update state
-["A3W_onPlayerConnected", "onPlayerConnected", { [_id, _name] execVM "server\functions\onPlayerConnected.sqf" }] call BIS_fnc_addStackedEventHandler;
+["A3W_quit", "onPlayerDisconnected", { [_id, _uid, _name] spawn fn_onPlayerDisconnected }] call BIS_fnc_addStackedEventHandler;
 
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
@@ -184,13 +233,25 @@ else
 	diag_log "[INFO] A3W territory capturing is DISABLED";
 };
 
+// Consolidate all store NPCs in a single group
+[] spawn
+{
+	_storeGroup = createGroup sideLogic;
+	{
+		if (!isPlayer _x && {[["GenStore","GunStore","VehStore"], vehicleVarName _x] call fn_startsWith}) then
+		{
+			[_x] joinSilent _storeGroup;
+		};
+	} forEach entities "CAManBase";
+};
+
 //Execute Server Missions.
 if (["A3W_serverMissions"] call isConfigOn) then
 {
 	diag_log "WASTELAND SERVER - Initializing Missions";
-    [] execVM "server\missions\sideMissionController.sqf";
-    sleep 5;
-    [] execVM "server\missions\mainMissionController.sqf";
+	[] execVM "server\missions\sideMissionController.sqf";
+	sleep 5;
+	[] execVM "server\missions\mainMissionController.sqf";
 	sleep 5;
 	[] execVM "server\missions\moneyMissionController.sqf";
 };

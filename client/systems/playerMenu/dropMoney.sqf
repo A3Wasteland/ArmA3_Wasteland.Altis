@@ -15,7 +15,7 @@ if(mutexScriptInProgress) exitWith {
 private["_money","_pos","_cash"];
 _money = parsenumber(GET_SELECTED_DATA(money_value));
 
-if((player getVariable "cmoney" < _money) OR (player getVariable "cmoney" < 0)) exitwith {hint format["You don't have $%1 to drop", _money];};
+if((player getVariable "cmoney" < _money) OR (player getVariable "cmoney" < 0)) exitwith {hint format["You don't have $%1 to drop", [_money] call fn_numbersText];};
 
 mutexScriptInProgress = true;
 player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);

@@ -42,8 +42,8 @@ else
 		_objets_charges = _objets_charges - [_objet_a_decharger];
 		_transporteur setVariable ["R3F_LOG_objets_charges", _objets_charges, true];
 		_objet_a_decharger setVariable ["R3F_LOG_est_transporte_par", objNull, true];
-		_objet_a_decharger enableSimulationGlobal true;
-		R3F_LOG_PUBVAR_point_attache enableSimulationGlobal true;
+		[_objet_a_decharger, true] call fn_enableSimulationGlobal;
+		[R3F_LOG_PUBVAR_point_attache, true] call fn_enableSimulationGlobal;
 		
 		detach _objet_a_decharger;
 		

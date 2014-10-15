@@ -8,6 +8,12 @@ _player setSkill 0;
 {_player disableAI _x} foreach ["move","anim","target","autotarget"];
 _player setVariable ["BIS_noCoreConversations", true];
 _player allowDamage false;
+//_player enableSimulation false;
+
+if (["A3W_unlimitedStamina"] call isConfigOn) then
+{
+	_player enableFatigue false;
+};
 
 enableSentences false;
 

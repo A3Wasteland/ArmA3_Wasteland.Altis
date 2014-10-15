@@ -19,7 +19,7 @@ _takeable = objNull;
 {
 	private ["_objectPos", "_playerPos", "_lineOfSightBroken"];
 	// Check to see if the player can see the object with "lineIntersectsWith"
-	_objectPos = getPosASL _x;
+	_objectPos = visiblePositionASL _x;
 	// Make the point of intersection a little higher to prevent any ground clipping issues
 	_objectPos set [2, (_objectPos select 2) + 0.2];
 	_playerPos = eyePos player;

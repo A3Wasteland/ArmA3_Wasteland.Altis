@@ -3,21 +3,22 @@
 //	@file Author: [404] Deadbeat
 //	@file Created: 20/11/2012 05:19
 
-if (playerSide in [BLUFOR,OPFOR]) then
+if (_this < 2) exitWith
 {
-	{
-		if (_x select 0 == getPlayerUID player && {_x select 1 > 1}) exitWith
-		{
-			_text = localize "STR_WL_Loading_Teamkiller";
-			9999 cutText [_text, "BLACK"];
-			titleText [_text, "BLACK"];
-			removeAllWeapons player;
-			
-			[] spawn
-			{
-				sleep 20;
-				endMission "LOSER";
-			};
-		};
-	} forEach pvar_teamKillList;
+	call teamkillMessage;
 };
+
+setPlayerRespawnTime 1e11;
+player setDamage 1;
+sleep 1;
+
+9999 cutText ["", "BLACK", 3];
+sleep 3;
+
+uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
+_msgBox = [localize "STR_WL_Punish_Teamkiller"] spawn BIS_fnc_guiMessage;
+_time = diag_tickTime;
+
+waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 20};
+endMission "LOSER";
+waitUntil {uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; closeDialog 0; false};

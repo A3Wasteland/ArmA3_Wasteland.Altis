@@ -86,6 +86,7 @@ R3F_LOG_CFG_transporteurs =
 	["MRAP_01_base_F", 20],
 	["MRAP_02_base_F", 20],
 	["MRAP_03_base_F", 20],
+	["B_Truck_01_box_F", 150],
 	["Truck_F", 75],
 	["Wheeled_APC_F", 30],
 	["Tank_F", 30],
@@ -105,8 +106,10 @@ R3F_LOG_CFG_transporteurs =
 R3F_LOG_CFG_objets_transportables = 
 [
 	["StaticWeapon", 5],
+	["Box_NATO_AmmoVeh_F", 10],
 	["B_supplyCrate_F", 5],
 	["ReammoBox_F", 3],
+	["Kart_01_Base_F", 5],
 	["Quadbike_01_base_F", 10],
 	["Rubber_duck_base_F", 10],
 	["UAV_01_base_F", 2],
@@ -153,7 +156,7 @@ R3F_LOG_CFG_objets_transportables =
 	["Land_Shoot_House_Wall_F", 3],
 	["Land_Stone_8m_F", 5],
 	["Land_ToiletBox_F", 2],
-	["Land_WaterBarrel_F", 2]
+	["Land_BarrelWater_F", 2]
 ];
 
 /****** MOVABLE-BY-PLAYER OBJECTS / OBJETS DEPLACABLES PAR LE JOUEUR ******/
@@ -162,6 +165,7 @@ R3F_LOG_CFG_objets_deplacables =
 [
 	"StaticWeapon",
 	"ReammoBox_F",
+	"Kart_01_Base_F",
 	"Quadbike_01_base_F",
 	"Rubber_duck_base_F",
 	"SDV_01_base_F",
@@ -209,5 +213,5 @@ R3F_LOG_CFG_objets_deplacables =
 	"Land_Shoot_House_Wall_F",
 	"Land_Stone_8m_F",
 	"Land_ToiletBox_F",
-	"Land_WaterBarrel_F"
+	"Land_BarrelWater_F"
 ];

@@ -1,45 +1,33 @@
 /*********************************************************#
 # @@ScriptName: updateConnectingClients.sqf
-# @@Author: Nick 'Bewilderbeest' Ludlam <bewilder@recoil.org>
+# @@Author: Nick 'Bewilderbeest' Ludlam <bewilder@recoil.org>, AgentRev
 # @@Create Date: 2013-09-15 16:26:38
 # @@Modify Date: 2013-09-15 17:22:37
 # @@Function: Updates JIP players with the correct territory colours
 #*********************************************************/
 
-// Exit early if we're not enabled
-if (count (["config_territory_markers", []] call getPublicVar) == 0) exitWith { diag_log "[INFO] Territory system not enabled, not synchronising territory colors"; };
+if (!isServer) exitWith {};
 
-_markerColorForSide =
-{
-    private['_side', '_markerColor'];
-    _side = _this select 0;
-    //diag_log format["_markerColorForSide called with %1", _this];
+// Exit if territories are not set
+if (isNil "currentTerritoryDetails" || {count currentTerritoryDetails == 0}) exitWith {};
 
-    _markerColor = "";
-    switch (_side) do
-	{
-        case "WEST": { _markerColor = "colorblue" };
-        case "EAST": { _markerColor = "colorred" };
-        case "GUER": { _markerColor = "colorgreen" };
-        default { _markerColor = "coloryellow" };
-    };
+private ["_player", "_JIP", "_markers", "_markerName", "_markerTeam"];
 
-    //diag_log format["_markerColorForSide returning %1", _markerColor];
+_player = _this select 0;
+_JIP = _this select 1;
 
-    _markerColor
-};
-
-// MAIN
+_markers = [];
 
 {
-	private ['_markerName', '_markerOwnerSide', '_color'];
-    _markerName = _x select 0;
-    _markerOwnerSide = _x select 3;
-	
-    if (_markerOwnerSide != "") then
+	_markerName = _x select 0;
+	_markerTeam = _x select 2;
+
+	if (typeName _markerTeam == "GROUP" || {_markerTeam != sideUnknown}) then
 	{
-	    _color = [_markerOwnerSide] call _markerColorForSide;
-   	 	_markerName setMarkerColor _color;
-    	diag_log format ["Client setting territory marker %1 to %2", _markerName, _color];
-    };
+		_markers pushBack [_markerName, _markerTeam];
+	};
 } forEach currentTerritoryDetails;
+
+diag_log format ["updateConnectingClients [Player: %1] [JIP: %2]", _player, _JIP];
+
+[[[_markers, true], "territory\client\updateTerritoryMarkers.sqf"], "BIS_fnc_execVM", _player, false] call BIS_fnc_MP;

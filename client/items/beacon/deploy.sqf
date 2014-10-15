@@ -14,9 +14,9 @@ _hasFailed = {
     _progress = _this select 0;
     _failed = true;
     switch (true) do {
-        case not(alive player):{};
+        case (!alive player): {};
         case (doCancelAction) :{doCancelAction = false; _text = ERR_CANCELLED;};
-        case not(vehicle player == player): {_text = ERR_IN_VEHICLE};
+        case (vehicle player != player): {_text = ERR_IN_VEHICLE};
         default {
             _text = format["Spawn Beacon %1%2 Deployed", round(_progress*100), "%"];
             _failed = false;
@@ -45,7 +45,7 @@ if (_success) then {
         };
     } forEach pvar_spawn_beacons;
 	
-	[pvar_spawn_beacons, _beacon] call BIS_fnc_arrayPush;
+	pvar_spawn_beacons pushBack _beacon;
     publicVariable "pvar_spawn_beacons";
 	["You placed the Spawn Beacon successfully!", 5] call mf_notify_client;
 };

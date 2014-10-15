@@ -3,18 +3,18 @@
 //	@file Author: [404] Deadbeat
 //	@file Created: 26/1/2013 15:19
 
-if(!isServer) exitwith {};
+if (!isServer) exitwith {};
 
-private["_markerName"];
-
+private "_markerName";
 _markerName = _this select 0;
 
-//Remove marker from client marker array.
+// Remove marker from client marker array.
 {
-    if(_x select 0 == _markerName) then
-    {
-    	clientMissionMarkers set [_forEachIndex, "REMOVETHISCRAP"];
-		clientMissionMarkers = clientMissionMarkers - ["REMOVETHISCRAP"];
-        publicVariable "clientMissionMarkers";    
-    };
-}forEach clientMissionMarkers;
+	if (_x select 0 == _markerName) then
+	{
+		clientMissionMarkers set [_forEachIndex, -1];
+	};
+} forEach clientMissionMarkers;
+
+clientMissionMarkers = clientMissionMarkers - [-1];
+publicVariable "clientMissionMarkers";

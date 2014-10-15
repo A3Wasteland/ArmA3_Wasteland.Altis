@@ -118,11 +118,21 @@ else
 		}
 		else
 		{
-			_objet attachTo [player, [
+			_objectBB = _objet call fn_boundingBoxReal;
+			_objectMinBB = _objectBB select 0;
+			_objectMaxBB = _objectBB select 1;
+			
+			_corner1 = [_objectMinBB select 0, _objectMinBB select 1, 0] vectorDistance [0,0,0];
+			_corner2 = [_objectMinBB select 0, _objectMaxBB select 1, 0] vectorDistance [0,0,0];
+			_corner3 = [_objectMaxBB select 0, _objectMinBB select 1, 0] vectorDistance [0,0,0];
+			_corner4 = [_objectMaxBB select 0, _objectMaxBB select 1, 0] vectorDistance [0,0,0];
+			
+			_objet attachTo [player,
+			[
 				0,
-				(((boundingBox _objet select 1 select 1) max (-(boundingBox _objet select 0 select 1))) max ((boundingBox _objet select 1 select 0) max (-(boundingBox _objet select 0 select 0)))) + 1,
-				1]
-			];
+				1 + (_corner1 max _corner2 max _corner3 max _corner4),
+				0.1 - (_objectMinBB select 2)
+			]];
 			
 			if (count (weapons _objet) > 0) then
 			{
@@ -208,7 +218,7 @@ else
 			else
 			{
 				_objectPos = getPos _objet;
-				_objectPos set [2, ((player call fn_getPos3D) select 2) + _zOffset];
+				_objectPos set [2, ((getPosATL player) select 2) + _zOffset];
 				_objet setPos _objectPos;
 			};
 			

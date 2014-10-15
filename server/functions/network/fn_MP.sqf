@@ -35,7 +35,7 @@ with missionnamespace do {
 	//--- Local execution
 	if (isServer || !isMultiplayer) then
 	{
-		[_mpPacketKey, _packet] spawn TPG_fnc_MPexec;
+		[_mpPacketKey, _packet] spawn A3W_fnc_MPexec;
 	}
 	else //--- Send to server
 	{

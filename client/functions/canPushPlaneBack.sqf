@@ -2,8 +2,8 @@
 //	@file Author: AgentRev
 
 private ["_isDriver", "_veh", "_uav", "_uavCtrl"];
-
 _isDriver = false;
+_veh = objNull;
 
 switch (_this select 0) do
 {
@@ -18,9 +18,9 @@ switch (_this select 0) do
 		
 		_uav = getConnectedUav player;
 		
-		if (!isNull _uav && {isNil {_uav getVariable "uavAction_pushPlane"}}) then
+		if (!isNull _uav && {_uav isKindOf "Plane" && isNil {_uav getVariable "uavAction_pushPlane"}}) then
 		{
-			_uav setVariable ["uavAction_pushPlane", [_uav, "[1, _target]"] call addPushPlaneAction];
+			_uav setVariable ["uavAction_pushPlane", [_uav, ["[1, _target]"] call getPushPlaneAction] call fn_addManagedAction];
 		};
 	};
 	case 1:
@@ -36,4 +36,12 @@ switch (_this select 0) do
 	};
 };
 
-(_veh != player && {_isDriver} && {_veh isKindOf "Plane"} && {isTouchingGround _veh} && {isEngineOn _veh} && {_veh call getFwdVelocity < 0.1})
+(
+	_veh != player &&
+	_isDriver &&
+	isEngineOn _veh &&
+	{isTouchingGround _veh} &&
+	{_veh isKindOf "Plane"} &&
+	{vectorMagnitude velocity _veh <= 10} &&
+	{_veh call getFwdVelocity < 0.1}
+)

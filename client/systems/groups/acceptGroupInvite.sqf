@@ -1,37 +1,73 @@
 //	@file Version: 1.0
 //	@file Name: acceptGroupInvite.sqf
-//	@file Author: [404] Deadbeat
+//	@file Author: [404] Deadbeat, AgentRev
 //	@file Created: 20/11/2012 05:19
 
-private["_inviterUID","_inviter"];
+private ["_playerUID", "_senderUID", "_sender", "_newGroup"];
 
-//Get the inviters UID
-_groupExists = false;
+_playerUID = getPlayerUID player;
+
+// Find the sender's UID
 {
-	if(getPlayerUID player == _x select 1) then
+	if (_x select 1 == _playerUID) exitWith
 	{
-    	_inviterUID = _x select 0;
-        currentInvites set [_forEachIndex,"REMOVETHISCRAP"];
-        currentInvites = currentInvites - ["REMOVETHISCRAP"];
-        publicVariableServer "currentInvites";       
+		_senderUID = _x select 0;
 	};
-}forEach currentInvites;
+} forEach currentInvites;
 
-//Get the inviter with their UID
-if (!isNil "_inviterUID") then {
-	{
-		if(getPlayerUID _x == _inviterUID) then
-	    {
-    		_inviter = _x;
-			_groupExists = true;	    
-		};   
-	};
-}forEach playableUnits;
-
-if(_groupExists) then
+// Find the sender
+if (!isNil "_senderUID") then
 {
-	[player] join (group _inviter);
-    player globalChat format["you have accepted the invite"];
-} else {
-	player globalChat format["The group no longer exists or the leader disconnected"];    
-}; 
+	{
+		if (getPlayerUID _x == _senderUID) exitWith
+		{
+			_sender = _x;
+			_newGroup = group _sender;
+		};
+	} forEach call allPlayers;
+};
+
+if (!isNil "_sender" && {side _newGroup == playerSide}) then
+{
+	_oldGroup = group player;
+
+	_oldTerritories = _oldGroup getVariable ["currentTerritories", []];
+	_newTerritories = _newGroup getVariable ["currentTerritories", []];
+
+	{ _newTerritories pushBack _x } forEach _oldTerritories;
+
+	[player] join _newGroup;
+	waitUntil {_newGroup = group player; _newGroup != _oldGroup};
+
+	_newGroup setVariable ["currentTerritories", _newTerritories, true];
+
+	if (_newGroup == group _sender) then
+	{
+		pvar_processGroupInvite = ["accept", _playerUID];
+		publicVariableServer "pvar_processGroupInvite";
+	};
+
+	if (!isNull _oldGroup) then
+	{
+		_oldGroup setVariable ["currentTerritories", [], true];
+	};
+
+	pvar_convertTerritoryOwner = [_newTerritories, _newGroup];
+	publicVariableServer "pvar_convertTerritoryOwner";
+
+	[_newTerritories, false, _newGroup, true] call updateTerritoryMarkers;
+
+	player globalChat "You have accepted the invite.";
+	player setVariable ["currentGroupRestore", _newGroup, true];
+	player setVariable ["currentGroupIsLeader", false, true];
+}
+else
+{
+	if (!isNil "_senderUID") then
+	{
+		pvar_processGroupInvite = ["decline", _senderUID, _playerUID];
+		publicVariableServer "pvar_processGroupInvite";
+	};
+
+	player globalChat "The group no longer exists or the leader disconnected / changed sides";
+};

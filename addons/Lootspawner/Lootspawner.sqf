@@ -15,7 +15,6 @@ swSpZadjust = false;				//needed for ArmA 2 and older Maps/Buildings -> true
 #define LOOT_SPAWN_INTERVAL 30*60	//Time (in sec.) to pass before an building spawns new loot (must also change in LSclientScan.sqf)
 #define CHANCES_FULL_FUEL_CAN 35	//Chance (in %) of a spawned fuelcan to be full instead of empty
 #define LOOT_Z_ADJUST -0.1			//High adjustment thats generally added to every spawnpoint
-#define CHANCES_LOOT_PER_SPOT 50	//Chance (in %) if a spot gets loot. Will be considered before 'spawnClassChance_list'
 
 _tmpTstPlace = [14730, 16276, 0];	//Coord's, in [x,y,z] of a preferably flat and unocupied piece of land
 
@@ -33,6 +32,23 @@ spawnClassChance_list = [
 [1.0, 1.5, 3.0, 0, 0]	// research
 ];
 
+if (["A3W_buildingLootWeapons", 1] call getPublicVar == 0) then
+{
+	{
+		_x set [0, 0];
+		_x set [1, 0];
+		_x set [2, 0];
+	} forEach spawnClassChance_list;
+};
+
+if (["A3W_buildingLootSupplies", 1] call getPublicVar == 0) then
+{
+	{
+		_x set [3, 0];
+		_x set [4, 0];
+	} forEach spawnClassChance_list;
+};
+
 //"exclcontainer_list" single array of container classnames to NOT to delete if filled
 exclcontainer_list = ["ReammoBox_F"];
 
@@ -44,6 +60,14 @@ LSusedclass_list = ["GroundWeaponHolder"];
 //DONT change these, will be filled in MAIN -------------------------------------------
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
+fn_getBuildingstospawnLoot = {
+	#include "fn_LSgetBuildingstospawnLoot.sqf"
+} call mf_compile;
+
+LSdeleter = {
+	#include "LSdeleter.sqf"
+} call mf_compile;
+
 //Buildings that can spawn loot go in this list
 #include "LSlootBuildings.sqf"
 //Loot goes in these lists
@@ -54,7 +78,7 @@ LSusedclass_list = ["GroundWeaponHolder"];
 //fill spawnBuilding_list with buildingnames only
 getListBuildingnames = {
 	{
-		spawnBuilding_list set [count spawnBuilding_list, (_x select 0)];
+		spawnBuilding_list pushBack (_x select 0);
 		//diag_log format["-- LOOTSPAWNER DEBUG add to spawnBuilding_list: %1 ", (_x select 0)];
 	}forEach Buildingstoloot_list;
 };
@@ -66,7 +90,7 @@ getUsedclasses = {
 	for "_class" from 0 to ((count lootworldObject_list) - 1) do {
 		for "_item" from 0 to ((count ((lootworldObject_list select _class) select 1)) - 1) do {
 			if !((((lootworldObject_list select _class) select 1) select _item) in LSusedclass_list) then {
-				LSusedclass_list set [count LSusedclass_list, (((lootworldObject_list select _class) select 1) select _item)];
+				LSusedclass_list pushBack (((lootworldObject_list select _class) select 1) select _item);
 			};
 			sleep 0.001;
 		};
@@ -109,10 +133,10 @@ getListBuildingPositionjunction = {
 					} else {
 						_posViable = true;
 					};
-					_tmpPoslist set [count _tmpPoslist, _pos];
+					_tmpPoslist pushBack _pos;
 					//get Z adjustment for position
 					if (_posViable) then {
-						_posIdxlist set [count _posIdxlist, _poscount];
+						_posIdxlist pushBack _poscount;
 						_posAdjustZ = 0;
 						if (swSpZadjust) then {
 							if(_pos select 2 < 0) then {
@@ -133,9 +157,9 @@ getListBuildingPositionjunction = {
 							_posnew = [_posnew select 0, _posnew select 1, (_posnew select 2) + 0.05];
 							_posAdjustZ = (_posOrg select 2) - (_posnew select 2);
 //							diag_log format["-- LOOTSPAWNER DEBUG adjusted %1 times", _z];
-							_posAdjustZlist set [count _posAdjustZlist, _posAdjustZ];
+							_posAdjustZlist pushBack _posAdjustZ;
 						} else {
-							_posAdjustZlist set [count _posAdjustZlist, _posAdjustZ];
+							_posAdjustZlist pushBack _posAdjustZ;
 						};
 					};
 					_poscount = _poscount + 1;
@@ -146,10 +170,10 @@ getListBuildingPositionjunction = {
 			//save final position Index & adjustments to list
 			if (_poscount != 0) then {
 				//diag_log format["-- LOOTSPAWNER DEBUG add to Buildingpositions_list: v%1v v%2v v%3v added", _buildingname, _posIdxlist, _posAdjustZlist];
-				Buildingpositions_list set [count Buildingpositions_list, [_buildingname, _posIdxlist, _posAdjustZlist]];
+				Buildingpositions_list pushBack [_buildingname, _posIdxlist, _posAdjustZlist];
 			} else {
 				diag_log format["-- !!LOOTSPAWNER WARNING!! in Buildingstoloot_list: %1 has no building positions --", _buildingname];
-				Buildingpositions_list set [count Buildingpositions_list, [_buildingname, [0], [0]]];
+				Buildingpositions_list pushBack [_buildingname, [0], [0]];
 			};
 		};
 		deleteVehicle _tmpBuild;
@@ -196,24 +220,17 @@ if ((count Buildingstoloot_list) == 0) then {
 		_buildings = [];
 		
 		{
-			_class = [_x, 0, "", [""]] call BIS_fnc_param;
-			_pos = [_x, 1, [], [[]]] call BIS_fnc_param;
+			_building = objectFromNetId _x;
 			
-			if (_class != "" && {count _pos == 3}) then
+			if (!isNull _building) then
 			{
-				_nearBuilds = nearestObjects [_pos, [_class], 0.1];
-				_building = [_nearBuilds, 0, objNull, [objNull]] call BIS_fnc_param;
-				
-				if (!isNull _building) then
-				{
-					[_buildings, _building] call BIS_fnc_arrayPush;
-				};
+				_buildings pushBack _building;
 			};
 		} forEach (_this select 1);
 		
 		if (count _buildings > 0) then
 		{
-			[_buildings, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, CHANCES_LOOT_PER_SPOT] spawn fn_getBuildingstospawnLoot;
+			[_buildings, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, ["A3W_buildingLootChances", 25] call getPublicVar] spawn fn_getBuildingstospawnLoot;
 		};
 	};
 	
@@ -238,7 +255,7 @@ if ((count Buildingstoloot_list) == 0) then {
 					_BaP_list = nearestObjects [_posPlayer, spawnBuilding_list, _spawnradius];
 					if ((count _BaP_list) > 0) then {
 						//give to spawn function
-						_hndl = [_BaP_list, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, CHANCES_LOOT_PER_SPOT] spawn fn_getBuildingstospawnLoot;
+						_hndl = [_BaP_list, LOOT_SPAWN_INTERVAL, CHANCES_FULL_FUEL_CAN, LOOT_Z_ADJUST, ["A3W_buildingLootChances", 25] call getPublicVar] spawn fn_getBuildingstospawnLoot;
 						waitUntil{scriptDone _hndl};
 					};
 				};

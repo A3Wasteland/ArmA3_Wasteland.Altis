@@ -23,6 +23,6 @@ _dialog = findDisplay tkDialog;
 (_dialog displayCtrl tkDialogPunish); 
 //(_dialog displayCtrl tkDialogAnnounce);
 (_dialog displayCtrl tkDialogText) ctrlSetStructuredText parseText (format [localize "STR_WL_dialog_TeamkillText",
-	format ["<t color=""#aaaaaa"">%1</t>", name pDialogTeamkiller],
+	format ["<t color='#FF8000'>%1</t>", name pDialogTeamkiller],
 	localize format ["STR_WL_Gen_Team%1_2", str playerSide]
 ]);

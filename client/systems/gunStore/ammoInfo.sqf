@@ -30,6 +30,6 @@ _ammoText ctrlSetText "";
 	{
 		_weap_type = _x select 1;
 		_price = _x select 2;
-		_ammoText ctrlSetText format ["Price: $%1", _price];
+		_ammoText ctrlSetText format ["Price: $%1", [_price] call fn_numbersText];
 	};
 } forEach (call ammoArray);

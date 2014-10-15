@@ -5,11 +5,12 @@
 
 STR_R3F_LOG_action_heliporter = "Lift the object";
 STR_R3F_LOG_action_heliporter_fait = "Object ""%1"" attached.";
-STR_R3F_LOG_action_heliporter_deja_transporte = "The object ""%1"" is already transported by a vehicle.";
+STR_R3F_LOG_action_heliporter_deja_transporte = "The object ""%1"" is already being transported by a vehicle.";
 STR_R3F_LOG_action_heliporter_deplace_par_joueur = "The object ""%1"" is being moved by a player.";
 STR_R3F_LOG_action_heliporter_joueur_dans_objet = "There is a player in the object ""%1"".";
-STR_R3F_LOG_action_heliporter_objet_remorque = "Can't lift the object ""%1"" because it's towing another object.";
+STR_R3F_LOG_action_heliporter_objet_remorque = "Can't lift ""%1"" because it's towing another object.";
 STR_R3F_LOG_action_heliport_larguer = "Drop the object";
+STR_R3F_LOG_action_heliport_parachute = "Paradrop the object";
 STR_R3F_LOG_action_heliport_larguer_fait = "Object ""%1"" dropped.";
 
 STR_R3F_LOG_action_deplacer_objet = "Move this object";
@@ -21,7 +22,7 @@ STR_UNLOCK_OBJECT = "Unlock this object";
 STR_RELEASE_HORIZONTAL = "Release the object horizontally";
 
 STR_R3F_LOG_action_selectionner_objet_charge = "Load in...";
-STR_R3F_LOG_action_selectionner_objet_charge_fait = "Now select the vehicle in which to load the object ""%1""...";
+STR_R3F_LOG_action_selectionner_objet_charge_fait = "Now select the vehicle in which to load ""%1""...";
 
 STR_R3F_LOG_action_charger_selection = "... load the selected object in this vehicle";
 STR_R3F_LOG_action_charger_selection_en_cours = "Loading in progress...";
@@ -36,7 +37,7 @@ STR_R3F_LOG_action_charger_deplace_fait = "The object has been loaded in the veh
 STR_R3F_LOG_action_charger_deplace_pas_assez_de_place = "There is not enough space in this vehicle.";
 
 STR_R3F_LOG_action_selectionner_objet_remorque = "Tow to a vehicle";
-STR_R3F_LOG_action_selectionner_objet_remorque_fait = "Now select the vehicle in which to load the object ""%1""...";
+STR_R3F_LOG_action_selectionner_objet_remorque_fait = "Now select the vehicle which will tow ""%1""...";
 
 STR_R3F_LOG_action_remorquer_selection = "... tow the selected object to this vehicle";
 STR_R3F_LOG_action_cancel_remorquer = "... cancel towing";

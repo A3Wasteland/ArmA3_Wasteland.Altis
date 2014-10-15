@@ -1,81 +1,75 @@
-
 //	@file Version: 1.0
 //	@file Name: onKeyPress.sqf
-//	@file Author: [404] Deadbeat, [404] Costlyy
+//	@file Author: [404] Deadbeat, [404] Costlyy, AgentRev
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
+private ["_key", "_handled"];
 
-private["_handled", "_faceCP", "_faceVP"];
-
-_key     = _this select 1;
-_shift   = _this select 2;
+_key = _this select 1;
 _handled = false;
 
-if(isstunned) exitwith
-
+switch (true) do
+{
+	// U key
+	case (_key == 22):
 	{
-
-	if(_key == 50)then{_handled = true};
-	if(_key == 11)then{_handled = true};
-
-	_handled
-
+		execVM "client\systems\adminPanel\checkAdmin.sqf";
 	};
 
-switch _key do
-{      
-    //U key
-    case 22:
-    {
-		execVM "client\systems\adminPanel\checkAdmin.sqf";
-    };
-    
-    //tilde ~
-    case 41:
-    {
-        [] call loadPlayerMenu;
-    };
-    
-    //E key
-	case 18:
-    {
-    	if (dialog) exitwith { closeDialog 0; }; // Check a current dialog is not already active.
-        if(vehicle player != player) exitwith{};  // Check the player is not a car.
-        
-        private ["_storeInteractionBuffer","_storeInteractionZone","_currPos","_store","_relativeDir","_absoluteDir"];
-        
-        _storeInteractionBuffer = 10; // The acceptable +/- look direction for interacting with stores. Higher = wider look angle.
-        _storeInteractionZone = 3; // The furthest away the player can be from a store to interact with it. Higher = further.
-        _currPos = getPosATL player;
-        
-        _gunStore = nearestObjects [_currPos, ["C_man_1_1_F"], _storeInteractionZone];    
-        _genStore = nearestObjects [_currPos, ["C_man_polo_6_F"], _storeInteractionZone];   
-        
-        if (!isNull (_gunStore select 0)) then {
-        	_relativeDir = [player, _gunStore select 0] call BIS_fnc_relativeDirTo;
-       		_absoluteDir = abs _relativeDir;
-            
-            if (_absoluteDir < _storeInteractionBuffer OR _absoluteDir > (360 - _storeInteractionBuffer)) then {
-				//Great success! Player is actually looking at the store keeper and is close by.
-            	[] spawn loadGunStore;
-        	};   
-        };
-        
-        if (!isNull (_genStore select 0)) then {
-        	_relativeDir = [player, _genStore select 0] call BIS_fnc_relativeDirTo;
-       		_absoluteDir = abs _relativeDir;
-            
-            if (_absoluteDir < _storeInteractionBuffer OR _absoluteDir > (360 - _storeInteractionBuffer)) then {
-				//Great success! Player is actually looking at the store keeper and is close by.
-            	[] spawn loadGeneralStore;
-        	};   
-        };  
-        
-    };
+	// Tilde (key above Tab)
+	case (_key == 41):
+	{
+		[] spawn loadPlayerMenu;
+		_handled = true;
+	};
+
+	// Left & right Windows key
+	case (_key in [219,220]):
+	{
+		if (isNil "showPlayerNames") then
+		{
+			showPlayerNames = true;
+		}
+		else
+		{
+			showPlayerNames = !showPlayerNames;
+		};
+	};
+
+	case (_key in actionKeys "GetOver"):
+	{
+		if (alive player) then
+		{
+			_veh = vehicle player;
+
+			if (_veh == player) then
+			{
+				if ((getPos player) select 2 > 2.5) then
+				{
+					openParachuteTimestamp = diag_tickTime;
+					execVM "client\actions\openParachute.sqf";
+					_handled = true;
+				};
+			}
+			else
+			{
+				if (_veh isKindOf "ParachuteBase") then
+				{
+					// 1s cooldown after parachute is deployed so you don't start falling again if you double-tap the key
+					if (isNil "openParachuteTimestamp" || {diag_tickTime - openParachuteTimestamp >= 1}) then
+					{
+						moveOut player;
+						_veh spawn
+						{
+							sleep 1;
+							deleteVehicle _this;
+						};
+					};
+				};
+			};
+		};
+	};
 };
 
-_handled;
-
-
-
+_handled

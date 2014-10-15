@@ -69,8 +69,8 @@ switch((_rand)) do
 */
 
 _treas0 = createVehicle ["Land_Money_F", _posRand, [], 0, "None"];
-_treas0 setVariable["cmoney",10000,true];
-_treas0 setVariable["owner","world",true];
+_treas0 setVariable["cmoney",25000,true];
+_treas0 setVariable["owner","mission",true];
 
 _fix = [_posRand select 0, _posRand select 1, getTerrainHeightASL _posRand];
 _treas0 setPos _fix;
@@ -97,7 +97,7 @@ _createVehicle = {
     
     _group addVehicle _vehicle;
     
-    [_group,_moneyp] spawn createSmallDivers;
+    [_group,_moneyp] call createSmallDivers;
     _soldier1 = [_group, _moneyp] call createRandomAquaticSoldier; 
     _soldier1 moveInDriver _vehicle;
     _soldier2 = [_group, _moneyp] call createRandomAquaticSoldier;
@@ -108,23 +108,19 @@ _createVehicle = {
 _vehicles = [];
 _vehicles set [0, ["O_Boat_Armed_01_hmg_F", [_fix select 0, _fix select 1, 0], _fix, random 360, _group] call _createVehicle];
 
-["SunkenTreasure0", _fix, _missionType] call createClientMarker;
+_marker = "SunkenTreasure0";
+[_marker, _fix, _missionType] call createClientMarker;
 
-_hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>$10,000 in sunken treasure has been located. Go get it!</t>", _missionType,  moneyMissionColor, subTextColor];
+_hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>$25,000 in sunken treasure has been located. Go get it!</t>", _missionType,  moneyMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1",_missionType];
-_startTime = floor(time);
+_startTime = diag_tickTime;
 waitUntil
 {
-    sleep 10; 
-	_playerPresent = false;
-    _currTime = floor(time);
-    if(_currTime - _startTime >= moneyMissionTimeout) then {_result = 1;};
-	//if(alive _cash0) then {_allMoneyUp = 0;}
-	if(alive _treas0)then {_allMoneyUp = 0;}
-	else {_allMoneyUp = 1;};
-    (_result == 1) || (_allMoneyUp == 1)
+    sleep 10;
+    if (diag_tickTime - _startTime >= moneyMissionTimeout || !alive _treas0) then {_result = 1 };
+	(_result == 1 || {alive _x} count units _group == 0)
 };
 
 if(_result == 1) then
@@ -140,14 +136,15 @@ if(_result == 1) then
 } else {
 	//Mission Complete.
 		_unitsAlive = { alive _x } count units _group;
+	_treas0 setVariable ["owner","world",true];
 	if(_unitsAlive == 0) then
 	{
 		private ["_ammobox", "_ammobox2"];
-		_ammobox = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
+		_ammobox = createVehicle ["Box_NATO_Wps_F", markerPos _marker, [], 5, "None"];
 		clearMagazineCargoGlobal _ammobox;
 		clearWeaponCargoGlobal _ammobox; 
 		[_ammobox,"mission_USSpecial2"] call fn_refillbox;
-		_ammobox2 = "Box_East_Wps_F" createVehicle getMarkerPos _marker;
+		_ammobox2 = createVehicle ["Box_East_Wps_F", markerPos _marker, [], 5, "None"];
 		clearMagazineCargoGlobal _ammobox2;
 		clearWeaponCargoGlobal _ammobox2; 
 		[_ammobox2,"mission_USLaunchers"] call fn_refillbox;

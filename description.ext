@@ -1,12 +1,15 @@
 respawn="BASE";
 respawnDelay=15;
 disabledAI=1;
-disableChannels[] = {}; // {0} to disable global
+disableChannels[] = {2}; // {0} to disable global, {2} for command channel
 joinUnassigned = 0;
 enableItemsDropping = 0;
 weaponPool = 0;
+corpseLimit = 20;
+corpseManagerMode = 1;
 corpseRemovalMinTime = 15*60;
-corpseRemovalMaxTime = 15*60;
+corpseRemovalMaxTime = 30*60;
+wreckManagerMode = 1;
 wreckRemovalMinTime = 5*60;
 wreckRemovalMaxTime = 10*60;
 enableDebugConsole = 1;
@@ -16,10 +19,10 @@ class Header
 {
 	gameType=Sandbox;
 	minPlayers=1;
-	maxPlayers=108;
+	maxPlayers=145; // 144 players, 1 headless client
 };
 author="Team Wasteland - A3Wasteland.com";
-onLoadName = "A3Wasteland Altis";
+onLoadName = "A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
 onLoadMission = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewText = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
@@ -30,8 +33,10 @@ overviewPicture = "Loading.jpg";
 #include "client\gui_base.hpp"
 #include "addons\R3F_ARTY_AND_LOG\desc_include.h"
 #include "client\systems\common.hpp"
+#include "client\systems\ui_toolkit.hpp"
 #include "client\items\warchest\dialog.hpp"
 #include "client\actions\gui.hpp"
+#include "addons\far_revive\revive_gui.hpp"
 #include "client\systems\playerMenu\dialog\player_settings.hpp"
 #include "client\systems\groups\dialog\groupManagement.hpp"
 #include "client\systems\gunStore\dialog\gunshop_settings.hpp"
@@ -42,7 +47,7 @@ overviewPicture = "Loading.jpg";
 #include "client\systems\adminPanel\dialog\serverAdminMenu.hpp"
 #include "client\systems\adminPanel\dialog\debugMenu.hpp"
 #include "client\systems\adminPanel\dialog\playerMenu.hpp"
-#include "client\systems\adminPanel\dialog\VehicleManagement.hpp"
+#include "client\systems\adminPanel\dialog\vehicleManagement.hpp"
 #include "client\systems\adminPanel\dialog\objectSearch.hpp"
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
@@ -53,4 +58,17 @@ class RscTitles
 	#include "addons\proving_ground\PG_rsctitles.hpp"
  	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
+};
+
+class CfgFunctions
+{
+	class A3W
+	{
+		#include "server\CfgFunctions.hpp"
+	};
+};
+
+class CfgNotifications
+{
+	#include "client\CfgNotifications.hpp"
 };

@@ -17,18 +17,14 @@ _hackedVehicles = [];
 	if ((_x isKindOf "ReammoBox_F" && {owner _x > 1}) || {!(_x isKindOf "ReammoBox_F") && {typeName _check == "BOOL"} && {!_check}}) then
 	{
 		_owner = [owner _x] call findClientPlayer;
+		_name = if (isPlayer _owner) then { name _owner } else { "" };
 		
-		if (isPlayer _owner) then
-		{
-			_name = name _owner;
-		}
-		else
-		{
-			_name = "";
-		};
-		
-		_hackedVehicles set [count _hackedVehicles, [netId _x, toArray _name]];
+		_hackedVehicles pushBack [netId _x, toArray _name];
 	};
 } forEach vehicles;
 
-[[[_hackedVehicles], compile format ["%1 = _this select 0", _key]], "BIS_fnc_spawn", _client, false] call TPG_fnc_MP;
+//[[[_hackedVehicles], compile format ["%1 = _this select 0", _key]], "BIS_fnc_spawn", _client, false] call A3W_fnc_MP;
+
+missionNamespace setVariable [_key, _hackedVehicles];
+(owner _client) publicVariableClient _key;
+missionNamespace setVariable [_key, nil];

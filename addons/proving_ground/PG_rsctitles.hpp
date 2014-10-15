@@ -17,7 +17,7 @@
 			style = 128;
 			sizeEx = ( 16 / 408 );
 			x = 0;
-			y = safezoneY;
+			y = safezoneY_PG;
 			h = 0.08;
 			w = 0.38;
 		};
@@ -36,6 +36,6 @@
 		
 		class balca_hint_text2 : balca_hint_text {
 			idc = balca_hint_text2_IDC;
-			y = safezoneY + 0.033;
+			y = safezoneY_PG + 0.033;
 		};
 	};

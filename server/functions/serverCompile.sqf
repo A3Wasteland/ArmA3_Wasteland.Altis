@@ -67,22 +67,31 @@ deleteClientMarker = [_path, "deleteClientMarker.sqf"] call mf_compile;
 
 //Function Compiles
 _path = "server\functions";
+A3W_fnc_checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
 addMilCap = [_path, "addMilCap.sqf"] call mf_compile;
-checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
 cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
+convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_compile;
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
 findClientPlayer = [_path, "findClientPlayer.sqf"] call mf_compile;
+fn_onPlayerDisconnected = [_path, "fn_onPlayerDisconnected.sqf"] call mf_compile;
+fn_publicVariableAll = [_path, "fn_publicVariableAll.sqf"] call mf_compile;
 fn_refillBox = [_path, "fn_refillbox.sqf"] call mf_compile;
 fn_refillTruck = [_path, "fn_refilltruck.sqf"] call mf_compile;
 fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;
 fn_replaceWeapons = [_path, "fn_replaceWeapons.sqf"] call mf_compile;
 fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile;
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
+parachuteLiftedVehicle = [_path, "parachuteLiftedVehicle.sqf"] call mf_compile;
+processGroupInvite = [_path, "processGroupInvite.sqf"] call mf_compile;
 processItems = [_path, "processItems.sqf"] call mf_compile;
+processMoneyPickup = [_path, "processMoneyPickup.sqf"] call mf_compile;
+punishTeamKiller = [_path, "punishTeamKiller.sqf"] call mf_compile;
 refillPrimaryAmmo = [_path, "refillPrimaryAmmo.sqf"] call mf_compile;
 setMissionSkill = [_path, "setMissionSkill.sqf"] call mf_compile;
 spawnStoreObject = [_path, "spawnStoreObject.sqf"] call mf_compile;
+updateConnectingClients = "territory\client\updateConnectingClients.sqf" call mf_compile;
 vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
+vehicleRespawnCheck = [_path, "vehicle.sqf"] call mf_compile;
 vehicleSetup = [_path, "vehicleSetup.sqf"] call mf_compile;
 
 //Player Management
@@ -97,6 +106,3 @@ randomWeapons = [_path, "randomWeapon.sqf"] call mf_compile;
 // staticGunCreation = [_path, "staticGunCreation.sqf"] call mf_compile;
 staticHeliCreation = [_path, "staticHeliCreation.sqf"] call mf_compile;
 vehicleCreation = [_path, "vehicleCreation.sqf"] call mf_compile;
-
-if (isNil "TPG_fnc_MP") then { TPG_fnc_MP = "\A3\functions_f\MP\fn_MP.sqf" call mf_compile };
-if (isNil "TPG_fnc_MPexec") then { TPG_fnc_MPexec = "\A3\functions_f\MP\fn_MPexec.sqf" call mf_compile };

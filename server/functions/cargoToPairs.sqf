@@ -9,7 +9,7 @@ _array = [];
 if (count _this > 1) then
 {
 	{
-		_array set [count _array, [_x, (_this select 1) select _forEachIndex]];
+		_array pushBack [_x, (_this select 1) select _forEachIndex];
 	} forEach (_this select 0);
 };
 

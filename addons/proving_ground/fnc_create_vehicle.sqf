@@ -90,7 +90,7 @@ case 3: {
 		_veh = createVehicle [_veh_type, _pos, [], 0, "CAN_COLLIDE"];
 		_veh spawn vehicleRepair;
 		_veh setDir _dir;
-		if (!isNil "notifyAdminMenu") then { _veh_type call notifyAdminMenu };
+		if (!isNil "notifyAdminMenu") then { ["vehicle", _veh_type] call notifyAdminMenu };
 	};
 
 case 4: {//class to clipboard

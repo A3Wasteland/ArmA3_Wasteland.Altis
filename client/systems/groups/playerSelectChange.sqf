@@ -18,25 +18,13 @@ _groupInvite = _dialog displayCtrl groupManagementInviteButton;
 
 _index = lbCurSel _playerListBox;
 _playerData = _playerListBox lbData _index;
-_check = 0;
-			
-{if (str(_x) == _playerData) then {_target = _x;_check = 1;};}forEach playableUnits;
-if (_check == 0) exitWith{};
 
-_unitCount = count units group _target;
+{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call allPlayers);
+if (isNil "_target") exitWith {};
 
-if(_unitCount == 1) then
+if (!isStreamFriendlyUIEnabled && player == leader player && count units _target == 1) then //streamfriendly users cannot create groups themselves only accept invites
 {
-    if(player == leader group player) then
-    {
-    	if(isStreamFriendlyUIEnabled) then {
-			_groupInvite ctrlShow false; //streamfriendly users cannot create groups themselves only accept invites
-		} else {
-			_groupInvite ctrlShow true;
-		};
-    } else {
-		_groupInvite ctrlShow false;   
-    };		    
+    _groupInvite ctrlShow true;
 } else {
 	_groupInvite ctrlShow false;	    
 };

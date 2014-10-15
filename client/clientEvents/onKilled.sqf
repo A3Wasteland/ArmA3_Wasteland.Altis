@@ -4,120 +4,114 @@
 //	@file Created: 20/11/2012 05:19
 
 _player = _this select 0;
-_killer = _this select 1;
+_presumedKiller = effectiveCommander (_this select 1);
+_killer = _player getVariable ["FAR_killerPrimeSuspect", objNull];
 
-if (isServer) then
-{
-	[_player] spawn server_PlayerDied; 
-}
-else
-{
-	PlayerCDeath = _player;
-	publicVariableServer "PlayerCDeath";
-};
+if (isNull _killer) then { _killer = _presumedKiller };
+if (_killer == _player) then { _killer = objNull };
 
-closeDialog 2001; // Close Gunstore
-closeDialog 2009; // Close Genstore
-closeDialog 5285; // Close Vehstore
-
-// If killer is UAV, designate UAV owner as actual killer
-if (isUavConnected vehicle _killer) then
+[_player, _killer, _presumedKiller] spawn
 {
-	_uavOwner = (uavControl vehicle _killer) select 0;
-	
-	if (!isNull _uavOwner) then
+	if (isServer) then
 	{
-		_killer = _uavOwner;
+		_this call server_PlayerDied;
+	}
+	else
+	{
+		PlayerCDeath = _this;
+		publicVariableServer "PlayerCDeath";
 	};
 };
 
-// Reset gear data, combat abort timer, and revive stuff
 if (_player == player) then
 {
-	playerData_gear = "";
-	combatTimestamp = -1;
+	closeDialog 2001; // Close Gunstore
+	closeDialog 2009; // Close Genstore
+	closeDialog 5285; // Close Vehstore
+	uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; // close message boxes
+
+	playerData_gear = ""; // Reset gear data
+	//combatTimestamp = -1; // Reset abort timer
 };
 
-if (isNil {_player getVariable "cmoney"}) then { _player setVariable ["cmoney", 0, true] };
+_player setVariable ["FAR_killerPrimeSuspect", nil];
+_player setVariable ["FAR_killerVehicle", nil];
+_player setVariable ["FAR_killerAmmo", nil];
+_player setVariable ["FAR_killerSuspects", nil];
 
-// Drop money & items
-if (_player getVariable "cmoney" > 0) then
+_player spawn
 {
-	_m = createVehicle ["Land_Money_F", _player call fn_getPos3D, [], 0.5, "CAN_COLLIDE"];
-	_m setVariable ["cmoney", _player getVariable "cmoney", true];
-	_m setVariable ["owner", "world", true];
+	_player = _this;
+
+	_money = _player getVariable ["cmoney", 0];
 	_player setVariable ["cmoney", 0, true];
+
+	_items = [];
+	{
+		_id = _x select 0;
+		_qty = _x select 1;
+		_type = (_id call mf_inventory_get) select 4;
+
+		_items pushBack [_id, _qty, _type];
+		[_id, _qty] call mf_inventory_remove;
+	} forEach call mf_inventory_all;
+
+	// wait until corpse stops moving before dropping stuff
+	waitUntil {(getPos _player) select 2 < 1 && vectorMagnitude velocity _player < 1};
+
+	// Drop money
+	if (_money > 0) then
+	{
+		_m = createVehicle ["Land_Money_F", getPosATL _player, [], 0.5, "CAN_COLLIDE"];
+		_m setDir random 360;
+		_m setVariable ["cmoney", _money, true];
+		_m setVariable ["owner", "world", true];
+	};
+
+	// Drop items
+	_itemsDroppedOnDeath = [];
+
+	{
+		_id = _x select 0;
+		_qty = _x select 1;
+		_type = _x select 2;
+
+		for "_i" from 1 to _qty do
+		{
+			_obj = createVehicle [_type, getPosATL _player, [], 0.5, "CAN_COLLIDE"];
+			_obj setDir random 360;
+			_obj setVariable ["mf_item_id", _id, true];
+			_itemsDroppedOnDeath pushBack netId _obj;
+		};
+	} forEach _items;
+
+	itemsDroppedOnDeath = _itemsDroppedOnDeath;
+	publicVariableServer "itemsDroppedOnDeath";
 };
 
-{
-	for "_i" from 1 to (_x select 1) do
-	{
-		(_x select 0) call mf_inventory_drop;
-	};
-} forEach call mf_inventory_all;
-
-[_player, objNull] call mf_player_actions_refresh;
-
+_player spawn fn_removeAllManagedActions;
 
 // Same-side kills
-if (_player == player && (playerSide == side _killer) && (player != _killer) && (vehicle player != vehicle _killer)) then
+if (_player == player && (playerSide == side group _killer) && (player != _killer) && (vehicle player != vehicle _killer)) then
 {
 	// Handle teamkills
 	if (playerSide in [BLUFOR,OPFOR]) then
 	{
-		pvar_PlayerTeamKiller = objNull;
-		
 		if (_killer isKindOf "CAManBase") then
 		{
 			pvar_PlayerTeamKiller = _killer;
 		}
 		else
 		{
-			_veh = (_killer);
-			_trts = configFile >> "CfgVehicles" >> typeof _veh >> "turrets";
-			_paths = [[-1]];
-			if (count _trts > 0) then {
-				for "_i" from 0 to (count _trts - 1) do {
-					_trt = _trts select _i;
-					_trts2 = _trt >> "turrets";
-					_paths = _paths + [[_i]];
-					for "_j" from 0 to (count _trts2 - 1) do {
-						_trt2 = _trts2 select _j;
-						_paths = _paths + [[_i, _j]];
-					};
-				};
-			};
-			_ignore = ["SmokeLauncher", "FlareLauncher", "CMFlareLauncher", "CarHorn", "BikeHorn", "TruckHorn", "TruckHorn2", "SportCarHorn", "MiniCarHorn", "Laserdesignator_mounted"];
-			_suspects = [];
-			{
-				_weps = (_veh weaponsTurret _x) - _ignore;
-				if(count _weps > 0) then {
-					_unt = objNull;
-					if(_x select 0 == -1) then {_unt = driver _veh;}
-					else {_unt = _veh turretUnit _x;};
-					if(!isNull _unt) then {
-						[_suspects, _unt] call BIS_fnc_arrayPush;
-					};
-				};
-			} forEach _paths;
-
-			if(count _suspects == 1) then {
-				pvar_PlayerTeamKiller = _suspects select 0;
-			};
+			pvar_PlayerTeamKiller = objNull;
 		};
 	}
 	else // Compensate negative score for indie-indie kills
 	{
 		if (isPlayer _killer) then
 		{
-			requestCompensateNegativeScore = _killer;
-			publicVariableServer "requestCompensateNegativeScore";
+			pvar_removeNegativeScore = _killer;
+			publicVariableServer "pvar_removeNegativeScore";
 		};
 	};
-};
-
-if (isPlayer pvar_PlayerTeamKiller) then
-{
-	publicVar_teamkillMessage = pvar_PlayerTeamKiller;
-	publicVariable "publicVar_teamkillMessage";
 };

@@ -14,17 +14,16 @@
 private ["_vehicle", "_error"];
 _vehicle = objNull;
 if (count _this == 0) then { // if array empty
-    _vehicle = call mf_jerrycan_nearest_vehicle;
+	_vehicle = call mf_jerrycan_nearest_vehicle;
 } else {
-    _vehicle = _this select 0;
+	_vehicle = _this select 0;
 };
 
 _error = "";
 switch (true) do {
-    case (vehicle player != player):{_error = ERR_IN_VEHICLE};
 	case (isNull _vehicle): {_error = ERR_NO_VEHICLE};
+	case (vehicle player != player):{_error = ERR_IN_VEHICLE};
 	case (fuel _vehicle > 0.95): {_error = ERR_FULL};
 	case (ITEM_COUNT(MF_ITEMS_JERRYCAN_FULL) <= 0): {_error = ERR_NO_FUEL};
-    default {};
 };
 _error;

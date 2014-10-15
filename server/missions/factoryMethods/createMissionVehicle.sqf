@@ -16,13 +16,14 @@ _state = _this select 5;
 
 _veh = createVehicle [_vehicleClass,_randomPos,[], 0, _state];
 
+_veh setDamage _damage; // setDamage must always be called before vehicleSetup
+
 [_veh] call vehicleSetup;
 
-_veh setPosATL [_randomPos select 0, _randomPos select 1, 0.01];
+_veh setPosATL [_randomPos select 0, _randomPos select 1, 0.1];
 _veh setVelocity [0,0,0.01];
 _veh setFuel _fuel;
 _veh setVehicleAmmo _ammo;
-_veh setDamage _damage;
 
 _veh setVehicleLock "LOCKED";
 _veh setVariable ["R3F_LOG_disabled", true, true];

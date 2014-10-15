@@ -18,10 +18,10 @@ _hasFailed = {
 	_text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player): {}; // player dead, no error msg needed
+		case (!alive player): {}; // player dead, no error msg needed
 		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
 		case (isNull _warchest): {_text = ERR_SOMEONE_ELSE};
-		case (player distance _warchest >= 5): {_text = ERR_TOO_FAR_AWAY};
+		case (player distance _warchest > 5): {_text = ERR_TOO_FAR_AWAY};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED};
 		default {
 			_text = format["Warchest %1%2 Packed", round(_progress*100), "%"];

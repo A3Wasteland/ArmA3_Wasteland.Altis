@@ -13,14 +13,14 @@ _count = 0;
 {
 	_marker = _x;
 	
-	if (["heliSpawn_", _marker] call fn_findString == 0) then
+	if (["heliSpawn_", _marker] call fn_startsWith) then
 	{
 		if (!(_marker in currentStaticHelis) && {random 1 < 0.75}) then // 75% chance spawning
 		{
 			_position = markerPos _marker;
 			[0, _position] call staticHeliCreation;
 			
-			currentStaticHelis set [count currentStaticHelis, _marker];
+			currentStaticHelis pushBack _marker;
 			
 			_count = _count + 1;
 		};

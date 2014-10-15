@@ -12,76 +12,48 @@ if(player != leader group player) exitWith {player globalChat format["you are no
 
 disableSerialization;
 
-private["_dialog","_groupListBox","_playerListBox","_groupInvite","_target","_index","_playerData","_check","_unitCount","_isLeader","_side1","_side2","_dist","_do","_cont","_destPlayerUID","_msg"];
+private ["_dialog", "_groupListBox", "_target", "_index", "_playerData", "_inCombat", "_isIndie"];
 
 _dialog = findDisplay groupManagementDialog;
 _groupListBox = _dialog displayCtrl groupManagementGroupList;
 
 _index = lbCurSel _groupListBox;
 _playerData = _groupListBox lbData _index;
-_isLeader = false;
-_check = 0;
 
 //Check selected data is valid
-{
-	if (str(_x) == _playerData) then 
-	{
-		_target = _x;
-		_check = 1;
-	};
-}forEach playableUnits;
-diag_log "Promote to leader: Before the checks";
+{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call allPlayers);
+//diag_log "Promote to leader: Before the checks";
 
 //Checks
-_cont = 1;
-if(_check == 0) then
-{
-	player globalChat "You must select someone to promote first.";
-	_cont = 0;
-};
-if(_target == player) then 
-{
-	player globalChat "You can't promote yourself.";
-	_cont = 0;
-};
+if (isNil "_target") exitWith { player globalChat "You must select someone to promote first." };
 
-if(_cont == 1) then
+if (_target == player) exitWith { player globalChat "You can't promote yourself." };
+
+_inCombat = false;
+
+if (alive _target) then
 {
-	//setting up basic variables
-	_side1 = side _target;
-	_side2 = side _target;
-	_dist = _target distance _target;
-	_do = 1;
+	_isIndie = !((side group _target) in [BLUFOR,OPFOR]);
+
 	//check to see how close to the enemy the target leader is
 	{
-		_side1 = side _x;
-		_side2 = side _target;
-		_dist = _x distance _target;
-		_value = (_x in units group _target);
-
-		if((_side1 != _side2) AND (_dist <=100)) then
+		if (_x distance _target < 100 && {side group _x != side group _target || (_isIndie && group _x != group _target)}) exitWith
 		{
-			_do = 0;
+			_inCombat = true;
 		};
-	}forEach playableUnits;
-		
-	if(_do == 1) then
-	{
-		diag_log "Promote to leader: After the checks";
-		[player] join grpNull;
-		(group _target) selectLeader _target;
-		[player] join (group _target);
-		
-		//notify the clients
-		_destPlayerUID = getPlayerUID _target;
-		_msg = "You have been promoted to group leader.";
-		//if(X_Server) then {call serverRelayHandler};
-		serverRelaySystem = [MESSAGE_BROADCAST_MSG_TO_PLAYER, MESSAGE_BROADCAST_MSG_TYPE_GCHAT, _destPlayerUID, _msg];
-		publicVariable "serverRelaySystem";
-		player globalChat format["You have promoted %1 to group leader",name _target];
-	}
-	else
-	{
-		player globalChat "This player is in combat. You can't make them leader.";
-	};
+	} forEach allUnits;
+};
+
+if (!_inCombat) then
+{
+	(group player) selectLeader _target;
+	["You have been promoted to group leader.", "A3W_fnc_titleTextMessage", _target] call A3W_fnc_MP;
+
+	player globalChat format ["You have promoted %1 to group leader", name _target];
+	player setVariable ["currentGroupIsLeader", false, true];
+	_target setVariable ["currentGroupIsLeader", true, true];
+}
+else
+{
+	player globalChat "This player is in combat. You can't make it leader right now";
 };

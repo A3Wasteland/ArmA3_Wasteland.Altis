@@ -25,7 +25,7 @@ mf_items_spawn_beacon_nearest = {
         };
     } forEach _beacons;
     _beacon;
-};
+} call mf_compile;
 
 mf_items_spawn_beacon_can_pack = build("can_pack.sqf");
 mf_items_spawn_beacon_can_steal = build("can_steal.sqf");

@@ -78,22 +78,26 @@ if (_uid call isAdmin) then
 		{
 			_warnText = ctrlText _warnMessage;
 	        _playerName = name player;
-			[format ["Message from Admin: %1", _warnText], "titleTextMessage", _target, false] call TPG_fnc_MP;
+			[format ["Message from Admin: %1", _warnText], "A3W_fnc_titleTextMessage", _target, false] call A3W_fnc_MP;
 		};
 	    case 2: //Slay
 	    {
-			[{player setDamage 1; endMission "LOSER"; deleteVehicle player}, "BIS_fnc_spawn", _target, false] call TPG_fnc_MP;
+			//[{player setDamage 1; endMission "LOSER"; deleteVehicle player}, "BIS_fnc_spawn", _target, false] call A3W_fnc_MP;
+			["This option has been disabled due to exploiting by hackers."] spawn BIS_fnc_guiMessage;
 	    };
 	    case 3: //Unlock Team Switcher
 	    {      
 			_targetUID = getPlayerUID _target;
 	        {
-			    if(_x select 0 == _targetUID) then
+			    if(_x select 0 == _targetUID) exitWith
 			    {
 			    	pvar_teamSwitchList = [pvar_teamSwitchList, _forEachIndex] call BIS_fnc_removeIndex;
 			        publicVariable "pvar_teamSwitchList";
 	                
-					[{client_firstSpawn = nil}, "BIS_fnc_spawn", _target, false] call TPG_fnc_MP;
+					/*_client_firstSpawn = if (!isNil "client_firstSpawn") then { client_firstSpawn } else { nil };
+					client_firstSpawn = nil;
+					(owner _target) publicVariableClient "client_firstSpawn";
+					client_firstSpawn = if (!isNil "_client_firstSpawn" && _target != player) then { _client_firstSpawn } else { nil };*/
 			    };
 			}forEach pvar_teamSwitchList;			
 	    };

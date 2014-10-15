@@ -6,7 +6,7 @@
 //@file Argument: [_vehicle] the vehicle to test
 //@file Argument: [] automatically find the nearest vehicle
 
-#define ERR_NO_VEHICLE "No vehicle close enough."
+#define ERR_NO_VEHICLE "You are not close enough to a vehicle that needs repairing"
 #define ERR_IN_VEHICLE "You can't do this while in a vehicle."
 #define ERR_FULL_HEALTH "The vehicle is already fully repaired"
 #define ERR_DESTROYED "The vehicle is too damaged to repair"
@@ -25,11 +25,11 @@ _hitPoints = (typeOf _vehicle) call getHitPoints;
 
 _error = "";
 switch (true) do {
+    case (isNull _vehicle): {_error = ERR_NO_VEHICLE};
     case (vehicle player != player):{_error = ERR_IN_VEHICLE};
-	case (isNull _vehicle): {_error = ERR_NO_VEHICLE};
+	case (player distance _vehicle > (sizeOf typeOf _vehicle / 3) max 2): {_error = ERR_NO_VEHICLE};
 	case (!alive _vehicle): {_error = ERR_DESTROYED};
 	case (damage _vehicle < 0.05 && {{_vehicle getHitPointDamage (configName _x) > 0.05} count _hitPoints == 0}): {_error = ERR_FULL_HEALTH}; // 0.2 is the threshold at which wheel damage causes slower movement
 	case (ITEM_COUNT(MF_ITEMS_REPAIR_KIT) <= 0): {_error = ERR_NO_REPAIR_KITS};
-    default {};
 };
 _error;

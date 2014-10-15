@@ -1,40 +1,56 @@
 //	@file Name: WastelandServClean.sqf
+//	@file Author: AgentRev, Wiking, JoSchaap
 
-// Based off AgentRev's cleanup
-// runs every X minutes to cleanup dead bodies and clutterred items arround them
-// if you set Death-time to 15 minutes (900 sec), after killing you got 15-19 minutes (depending on the interval) to get the loot from your kill
+// runs every X minutes to cleanup items dropped on death over the map
 // you can change the intervals below, be aware to use SECONDS :)
-
-private ["_runInt", "_deathTime"];
 
 // configure cleanup below this line
 
-_runInt = 5*60;		// Interval to run the cleanup 
-_deathTime = 15*60;	// Time a body has to have been dead before cleaning it up
+#define CLEANUP_INTERVAL (5*60) // Interval to run the cleanup
+#define ITEM_CLEANUP_TIME (30*60) // Dropped player items cleanup time
+#define DEBRIS_CLEANUP_TIME (10*60) // Vehicle crash crater/debris cleanup time (actual vehicle wreck cleanup is handled through description.ext parameters)
 
-// you should not change code below this line :)
+// Corpse cleanup is handled through description.ext parameters
+
+_cleanupCode =
+{
+	private ["_obj", "_isWreck", "_processedDeath", "_timeLimit"];
+	_obj = _this select 0;
+	_isWreck = if (count _this > 1) then { _this select 1 } else { false };
+
+	_processedDeath = _obj getVariable ["processedDeath", 0];
+
+	if (_isWreck) then
+	{
+		_timeLimit = DEBRIS_CLEANUP_TIME;
+
+		if (_processedDeath == 0) then
+		{
+			_obj setVariable ["processedDeath", diag_tickTime];
+		};
+	}
+	else
+	{
+		_timeLimit = ITEM_CLEANUP_TIME;
+	};
+
+	if (_processedDeath > 0 && diag_tickTime - _processedDeath >= ITEM_CLEANUP_TIME) then
+	{
+		deleteVehicle _x;
+		_delQtyO = _delQtyO + 1;
+	};
+
+	sleep 0.01;
+};
 
 while { true } do
 {
-	sleep _runInt;
-	
+	sleep CLEANUP_INTERVAL;
+
 	_delQtyO = 0;
-	
-	{
-		if (diag_tickTime - (_x getVariable ["processedDeath", diag_tickTime]) >= _deathTime) then
-		{
-			deleteVehicle _x;
-			_delQtyO = _delQtyO + 1;
-		};
-		sleep 0.01;
-	} forEach entities "All";
-	
+
+	{ [_x] call _cleanupCode } forEach entities "All";
+	{ { [_x, true] call _cleanupCode } forEach allMissionObjects _x } forEach ["CraterLong", "#destructioneffects"];
+
 	diag_log format ["SERVER CLEANUP: Deleted %1 expired objects", _delQtyO];
-	
-	{
-		if (count units _x == 0) then
-		{
-			deleteGroup _x;
-		};
-	} forEach allGroups;
 };

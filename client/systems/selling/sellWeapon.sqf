@@ -1,170 +1,140 @@
-//	@file Version: 1.0
 //	@file Name: sellWeapon.sqf
 //	@file Author: AgentRev
 //	@file Created: 20/11/2013 05:13
-//	@file Args:
 
-if (!isNil "storeSellingHandle" && {typeName storeSellingHandle == "SCRIPT"} && {!scriptDone storeSellingHandle}) exitWith {hint "Please wait, your previous sale is being processed"};
+#define DEFAULT_WEAPON_SELL_VALUE 50
+#define DEFAULT_MAG_SELL_VALUE 10
+#define DEFAULT_ITEM_SELL_VALUE 25
 
-if (currentWeapon player == "") then
+#include "sellIncludesStart.sqf";
+
+if (currentWeapon player == "") exitWith
 {
-	hint "You currently don't have a weapon in your hands to sell!";
-}
-else
+	playSound "FD_CP_Not_Clear_F";
+	hint "You don't have a weapon in your hands to sell!";
+};
+
+storeSellingHandle = [] spawn
 {
-	storeSellingHandle = [] spawn
+	_currWep = currentWeapon player;
+	_currMag = currentMagazine player;
+	_sellValue = DEFAULT_WEAPON_SELL_VALUE; // This is the default value for weapons that aren't listed in the store
+	_itemsToSell = [];
+	_currMags = [];
+
 	{
-		private ["_primary", "_muzzle", "_sellValue", "_getHalfPrice", "_weaponMags", "_magazines", "_currMag", "_currMagAmmo", "_mag", "_magAmmo", "_magFullAmmo", "_magValue", "_magAdded", "_magsToSell", "_confirmMsg", "_wepItems", "_wepItem", "_itemName", "_itemValue", "_magQty"];
-
-		_primary = currentWeapon player;
-		_muzzle = currentMuzzle player;
-		_sellValue = 50; // This is the default value for items that aren't listed in the store
-		_magsToSell = [];
-		
-		_getHalfPrice = 
+		if (_x select 0 == _currWep) exitWith
 		{
-			((ceil ((_this / 2) / 5)) * 5) // Ceil half the value to the nearest multiple of 5
+			_arr = _x call splitWeaponItems;
+			_itemsToSell = _arr select 1;
+			_currMags = _arr select 2;
 		};
-		
-		// Calculating weapon sell value
-		{
-			if (_x select 1 == _primary) exitWith
-			{
-				_sellValue = (_x select 2) call _getHalfPrice;
-			};
-		} forEach (call allGunStoreFirearms);
+	} forEach weaponsItems player;
 
-		_weaponMags = if (_primary != _muzzle) then {
-			getArray (configFile >> "CfgWeapons" >> _primary >> _muzzle >> "magazines")
-		} else {
-			getArray (configFile >> "CfgWeapons" >> _primary >> "magazines")
+	// Calculating weapon sell value
+	{
+		if (_x select 1 == _currWep) exitWith
+		{
+			_sellValue = GET_HALF_PRICE(_x select 2);
 		};
-		_magazines = magazinesAmmo player;
-		_currMag = currentMagazine player;
-		
-		if (isNil "_currMag") then { _currMag = "" };
+	} forEach (call allGunStoreFirearms);
 
-		// If a magazine is loaded in the weapon, add its value to sell value based on ammo count, and add value of each identical magazine in inventory to sell value, also based on ammo count
-		// TODO: Add value of magazine loaded in other muzzle if present (e.g. grenade in grenade launcher)
-		if (_currMag != "") then
-		{
-			_currMagAmmo = player ammo _primary;
-			
-			_magazines set [count _magazines, [_currMag, _currMagAmmo]];
-			
-			_magFullAmmo = getNumber (configFile >> "CfgMagazines" >> _currMag >> "count");
-			_magValue = 10;
-			
-			{
-				if (_x select 1 == _currMag) exitWith
-				{
-					_magValue = _x select 2;
-				};
-			} forEach (call ammoArray);
-			
-			_currMag = _currMag call getBallMagazine;
+	_magsToSell = [];
 
-			{
-				_mag = _x select 0;
-				_magAmmo = _x select 1;
-				
-				if (_mag call getBallMagazine == _currMag) then
-				{
-					_sellValue = _sellValue + ((_magValue * (_magAmmo / _magFullAmmo)) call _getHalfPrice); // Get selling price relative to ammo count
-					
-					_magAdded = false;
-					
-					{
-						if (_x select 0 == _mag) exitWith
-						{
-							_magsToSell set [_forEachIndex, [_x select 0, (_x select 1) + 1]];
-							_magAdded = true;
-						};
-					} forEach _magsToSell;
-					
-					if (!_magAdded) then
-					{
-						_magsToSell set [count _magsToSell, [_mag, 1]];
-					};
-				};
-			} forEach _magazines;
-		};
+	{
+		[_magsToSell, _x select 0, [_x select 1]] call fn_addToPairs;
+	} forEach _currMags;
 
-		// Add total sell value to confirm message
-		_confirmMsg = format ["You will obtain $%1 for:<br/><br/>", _sellValue];
-		
-		// Add weapon name to confirm message
-		_confirmMsg = _confirmMsg + format ["<t font='EtelkaMonospaceProBold'>1</t> x %1", getText (configFile >> "CfgWeapons" >> _primary >> "displayName")];
+	//_invMagsToRemove = [];
 
-		switch (true) do
-		{
-			case ([_primary, 1] call isWeaponType): { _wepItems = primaryWeaponItems player };
-			case ([_primary, 2] call isWeaponType): { _wepItems = handgunItems player };
-			case ([_primary, 4] call isWeaponType): { _wepItems = secondaryWeaponItems player };
-			default                                 { _wepItems = [] };
-		};
+	// If a magazine is loaded in the weapon, add each identical magazine in the inventory to the list of magazines to sell
+	/*if (_currMag != "") then
+	{
+		_currMag = _currMag call getBallMagazine;
 
-		// Add weapon attachment names to confirm message
-		{
-			if (_x != "") then
-			{
-				_wepItem = _x;
-				_itemName = getText (configFile >> "CfgWeapons" >> _wepItem >> "displayName");
-				_itemValue = 25;
-				
-				{
-					if (_x select 1 == _wepItem) exitWith
-					{
-						_itemName = _x select 0;
-						_itemValue = (_x select 2) call _getHalfPrice;
-					};
-				} forEach (call accessoriesArray);
-				
-				_sellValue = _sellValue + _itemValue;
-				_confirmMsg = _confirmMsg + "<br/><t font='EtelkaMonospaceProBold'>1</t> x " + _itemName;
-			};	
-		} forEach _wepItems;
-
-		// Add magazine quantities and names to confirm message
 		{
 			_mag = _x select 0;
-			_magQty = _x select 1;
-			
-			_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x ", _magQty] + getText (configFile >> "CfgMagazines" >> _mag >> "displayName");
-			
-		} forEach _magsToSell;
+			_magAmmo = _x select 1;
 
-		// Add note about removing weapon mag if the player doesn't want to sell inventory mags
-		if (_currMag != "") then
-		{
-			_confirmMsg = _confirmMsg + "<br/><br/>If you don't want to sell your ammo, simply remove the magazine from your weapon.";
-		};
-
-		// Display confirmation
-		if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then
-		{
-			// Remove weapon if sale confirmed by player
-			player removeWeapon _primary;
-			
-			// Remove magazines identical to loaded mag from inventory
+			if (_mag call getBallMagazine == _currMag) then
 			{
-				if (_x call getBallMagazine == _currMag) then
-				{
-					player removeMagazines _x;
-				};
-			} forEach _weaponMags;
+				[_magsToSell, _mag, [_magAmmo]] call fn_addToPairs;
+				[_invMagsToRemove, _mag, 1] call fn_addToPairs;
+			};
+		} forEach magazinesAmmo player;
+	};*/
 
-			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
-			hint format ["You sold your gun for $%1", _sellValue];
-		};
-	};
-	
-	if (typeName storeSellingHandle == "SCRIPT") then
+	// Add weapon name to confirm message
+	_confirmMsg = format ["<t font='EtelkaMonospaceProBold'>1</t> x %1", getText (configFile >> "CfgWeapons" >> _currWep >> "displayName")];
+
+	// Add ammo-based price of magazines to total sell value, and their names to confirm message
 	{
-		private "_storeSellingHandle";
-		_storeSellingHandle = storeSellingHandle;
-		waitUntil {scriptDone _storeSellingHandle};
+		_mag = _x select 0;
+		_magAmmos = _x select 1;
+		_magValue = DEFAULT_MAG_SELL_VALUE;
+
+		_magCfg = configFile >> "CfgMagazines" >> _mag;
+		_magName = getText (_magCfg >> "displayName");
+		_magFullAmmo = getNumber (_magCfg >> "count");
+
+		{
+			if (_x select 1 == _currMag) exitWith
+			{
+				_magValue = _x select 2;
+			};
+		} forEach (call ammoArray);
+
+		{
+			_sellValue = _sellValue + GET_HALF_PRICE(_magValue * (_x / _magFullAmmo)); // Get selling price relative to ammo count
+		} forEach _magAmmos;
+
+		_confirmMsg = _confirmMsg + "<br/><t font='EtelkaMonospaceProBold'>" + str count _magAmmos + "</t> x " + _magName;
+
+	} forEach _magsToSell;
+
+
+	// Add weapon attachments to total sell value and their names to confirm message
+	{
+		if (_x != "") then
+		{
+			_wepItem = _x;
+			_itemName = getText (configFile >> "CfgWeapons" >> _wepItem >> "displayName");
+			_itemValue = DEFAULT_ITEM_SELL_VALUE;
+
+			{
+				if (_x select 1 == _wepItem) exitWith
+				{
+					_itemName = _x select 0;
+					_itemValue = GET_HALF_PRICE(_x select 2);
+				};
+			} forEach (call accessoriesArray);
+
+			_sellValue = _sellValue + _itemValue;
+			_confirmMsg = _confirmMsg + "<br/><t font='EtelkaMonospaceProBold'>1</t> x " + _itemName;
+		};
+	} forEach _itemsToSell;
+
+	// Add total sell value to confirm message
+	_confirmMsg = format ["You will obtain $%1 for:<br/><br/>", [_sellValue] call fn_numbersText] + _confirmMsg;
+
+	// Add note about removing weapon mag if the player doesn't want to sell inventory mags
+	/*if (_currMag != "") then
+	{
+		_confirmMsg = _confirmMsg + "<br/><br/>If you don't want to sell your ammo, simply remove the magazine from your weapon.";
+	};*/
+
+	// Display confirmation
+	if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then
+	{
+		// Remove weapon if sale confirmed by player
+		player removeWeapon _currWep;
+
+		// Remove sold inventory magazines
+		//{ player removeMagazines _x } forEach _invMagsToRemove;
+
+		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+		hint format ["You sold your gun for $%1", [_sellValue] call fn_numbersText];
 	};
-	
-	storeSellingHandle = nil;
 };
+
+#include "sellIncludesEnd.sqf";

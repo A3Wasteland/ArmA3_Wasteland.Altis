@@ -17,18 +17,30 @@ _repair = [_path, "repair.sqf"] call mf_compile;
 _icon = "client\icons\repair.paa";
 [MF_ITEMS_REPAIR_KIT, "Repair Kit", _repair, "Land_SuitCase_F",_icon,2] call mf_inventory_create;
 
+mf_nearest_vehicle = {
+	private ["_types", "_obj", "_dist"];
+	_types = _this;
+	_obj = cursorTarget;
+	if (!isNull _obj && {{_obj isKindOf _x} count _types == 0}) then { _obj = objNull };
+	_obj
+} call mf_compile;
+
 mf_repair_nearest_vehicle = {
-    _objects = nearestObjects[player, ["LandVehicle", "Air", "Ship"], 5];
-    _object = objNull;
-    if (count _objects > 0) then {_object = _objects select 0;};
-    _object;
-};
+	["LandVehicle", "Air", "Ship"] call mf_nearest_vehicle
+} call mf_compile;
+
+mf_remote_repair = {
+	private "_vehicle";
+	_vehicle = objectFromNetId (_this select 0);
+	_vehicle setDamage 0;
+	if (_vehicle isKindOf "Boat_Armed_01_base_F" && count (_vehicle magazinesTurret [0]) == 0) then { _vehicle setHitPointDamage ["HitTurret", 1] }; // disable front GMG on speedboats
+} call mf_compile;
 
 // Setting up repairing action.
-_can_repair = compile preProcessFileLineNumbers format["%1\can_repair.sqf", _path];
+mf_repair_can_repair = [_path, "can_repair.sqf"] call mf_compile;
 private ["_label1", "_execute1", "_condition1", "_action1"];
 _label1 = format["<img image='%1'/> Repair Vehicle", _icon];
 _execute1 = {MF_ITEMS_REPAIR_KIT call mf_inventory_use};
-_condition1 = format["[] call %1 == ''", _can_repair];
+_condition1 = "[] call mf_repair_can_repair == ''";
 _action1 = [_label1, _execute1, [], 1, false, false, "", _condition1];
 ["repairkit-use", _action1] call mf_player_actions_set;

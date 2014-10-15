@@ -3,7 +3,21 @@
 //	@file Author: His_Shadow, AgentRev
 //	@file Created: 06/14/2013 05:13
 
+scriptName "buyVehicles";
+
 if (!isNil "storePurchaseHandle" && {typeName storePurchaseHandle == "SCRIPT"} && {!scriptDone storePurchaseHandle}) exitWith {hint "Please wait, your previous purchase is being processed"};
+
+if (!isNil "vehicleStore_lastPurchaseTime") then
+{
+	_timeLeft = (["A3W_vehiclePurchaseCooldown", 60] call getPublicVar) - (diag_tickTime - vehicleStore_lastPurchaseTime);
+	
+	if (_timeLeft > 0) then
+	{
+		hint format ["You need to wait %1s before buying another vehicle", ceil _timeLeft];
+		playSound "FD_CP_Not_Clear_F";
+		breakOut "buyVehicles";
+	};
+};
 
 #include "dialog\vehiclestoreDefines.hpp";
 
@@ -11,7 +25,7 @@ storePurchaseHandle = _this spawn
 {
 	disableSerialization;
 	
-	private ["_switch", "_playerMoney", "_price", "_dialog", "_playerMoneyText", "_itemlist", "_itemIndex", "_itemText", "_itemData", "_colorlist", "_colorIndex", "_colorText", "_applyVehProperties", "_class", "_price", "_requestKey", "_vehicle"];
+	private ["_switch", "_playerMoney", "_price", "_dialog", "_playerMoneyText", "_itemlist", "_itemIndex", "_itemText", "_itemData", "_colorlist", "_colorIndex", "_colorText", "_colorData", "_applyVehProperties", "_class", "_price", "_requestKey", "_vehicle"];
 
 	//Initialize Values
 	_switch = _this select 0;
@@ -30,6 +44,7 @@ storePurchaseHandle = _this spawn
 	_colorlist = _dialog displayCtrl vehshop_color_list;
 	_colorIndex = lbCurSel vehshop_color_list;
 	_colorText = _colorlist lbText _colorIndex;
+	_colorData = _colorlist lbData _colorIndex;
 	
 	_showInsufficientFundsError = 
 	{
@@ -56,53 +71,21 @@ storePurchaseHandle = _this spawn
 
 	_applyVehProperties = 
 	{
-		private ["_vehicle", "_colorText", "_rgbString", "_textureFilename", "_texture", "_playerItems", "_playerAssignedItems", "_uavTerminal", "_allUAV"];
+		private ["_vehicle", "_colorText", "_playerItems", "_playerAssignedItems", "_uavTerminal", "_allUAV"];
 		_vehicle = _this select 0;
 		_colorText = _this select 1;
+		_colorData = _this select 2;
+		_texArray  = [];
 
-		//if they chose a color set the color
-		switch (toLower _colorText) do
+		if (_colorData != "") then
 		{
-			case "black":       { _rgbString = "#(argb,8,8,3)color(0.1,0.1,0.1,0.1)" };
-			case "grey":        { _rgbString = "#(argb,8,8,3)color(0.5,0.51,0.512,0.3)" };
-			case "blue":        { _rgbString = "#(argb,8,8,3)color(0,0.2,1,0.75)" };
-			case "dark blue":   { _rgbString = "#(argb,8,8,3)color(0,0.3,0.6,0.05)" };
-			case "green":       { _rgbString = "#(argb,8,8,3)color(0,1,0,0.15)" };
-			case "orange":      { _rgbString = "#(argb,8,8,3)color(1,0.5,0,0.4)" };
-			case "pink":        { _rgbString = "#(argb,8,8,3)color(1,0.06,0.6,0.5)" };
-			case "purple":      { _rgbString = "#(argb,8,8,3)color(0.8,0,1,0.1)" };
-			case "red":         { _rgbString = "#(argb,8,8,3)color(1,0.1,0,0.3)" };
-			case "teal":        { _rgbString = "#(argb,8,8,3)color(0,1,1,0.15)" };
-			case "white":       { _rgbString = "#(argb,8,8,3)color(1,1,1,0.5)" };
-			case "yellow":      { _rgbString = "#(argb,8,8,3)color(1,0.9,0,0.3)" };
-			
-			case "orange camo": { _textureFilename = "camo_fack.jpg" };
-			case "pink camo":   { _textureFilename = "camo_pank.jpg" };
-			case "red camo":    { _textureFilename = "camo_deser.jpg" };
-			case "yellow camo": { _textureFilename = "camo_fuel.jpg" };
-		};
-
-		// If its a texture, get the right directory
-		if (!isNil "_textureFilename") then
-		{
-			_texture = format ["%1\%2", _textureDir, _textureFilename];
-		};
-
-		// If its a straight RGBA string, we can apply it directly
-		if (!isNil "_rgbString") then
-		{
-			_texture = _rgbString;
-		};
-
-		if (!isNil "_texture") then
-		{
-			[_vehicle, _texture] call applyVehicleTexture;
+			[_vehicle, _colorData] call applyVehicleTexture;
 		};
 
 		// If UAV or UGV, fill vehicle with UAV AI, give UAV terminal to our player, and connect it to the vehicle
 		if ({_vehicle isKindOf _x} count (call uavArray) > 0) then
 		{
-			switch (side player) do
+			switch (playerSide) do
 			{
 				case BLUFOR: { _uavTerminal = "B_UavTerminal" };
 				case OPFOR:	 { _uavTerminal = "O_UavTerminal" };
@@ -123,10 +106,7 @@ storePurchaseHandle = _this spawn
 				};
 			};
 
-			if (isNull getConnectedUav player) then
-			{
-				player connectTerminalToUav _vehicle;
-			};
+			player connectTerminalToUav _vehicle;
 		};
 		
 		_vehicle
@@ -143,14 +123,14 @@ storePurchaseHandle = _this spawn
 				[_itemText] call _showInsufficientFundsError;
 			};
 			
-			_requestKey = call generateKey;
+			_requestKey = call A3W_fnc_generateKey;
 			call requestStoreObject;
 			
 			_vehicle = objectFromNetId (missionNamespace getVariable _requestKey);
 			
 			if (!isNil "_vehicle" && {!isNull _vehicle}) then
 			{
-				[_vehicle, _colorText] call _applyVehProperties;
+				[_vehicle, _colorText, _colorData] call _applyVehProperties;
 			};
 		};
 	} forEach (call allVehStoreVehicles);
@@ -171,8 +151,15 @@ storePurchaseHandle = _this spawn
 		}
 		else
 		{
+			vehicleStore_lastPurchaseTime = diag_tickTime;
+			
 			player setVariable ["cmoney", _playerMoney - _price, true];
-			_playerMoneyText ctrlSetText format ["Cash: $%1", player getVariable "cmoney"];
+			_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
+			
+			if (["A3W_playerSaving"] call isConfigOn) then
+			{
+				[] spawn fn_savePlayerData;
+			};
 		};
 	};
 	

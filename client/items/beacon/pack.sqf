@@ -23,10 +23,10 @@ _hasFailed = {
 	_text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player): {}; // player dead, no error msg needed
-		case not(vehicle player == player): {};
+		case (!alive player): {}; // player dead, no error msg needed
+		case (vehicle player != player): {};
         case (isNull _beacon): {_text = ERR_SOMEONE_ELSE_TAKEN};
-		case not(player distance _beacon < 5): {_text = ERR_TOO_FAR_AWAY};
+		case (player distance _beacon > 5): {_text = ERR_TOO_FAR_AWAY};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED};
 		default {
 			_text = format["Spawn Beacon is %1%2 Packed", round(_progress*100), "%"];

@@ -11,12 +11,12 @@ private ["_car", "_additionArray", "_nightTime", "_weapon", "_mag", "_additionOn
 //Grabs car object from array in execVM
 _car = _this select 0;
 _additionArray = vehicleAddition;
-_nightTime = (date select 3 >= 18 || {date select 3 < 5}); // spawn night items between 18:00 and 05:00 (sunlight is completely gone by 20:00)
+_nightTime = (date select 3 >= 18 || date select 3 < 5); // spawn night items between 18:00 and 05:00 (sunlight is completely gone by 20:00)
 
 // If night is falling, add flashlight, IR pointers, and NV goggles to loot possibilities
 if (_nightTime) then
 {
-	[_additionArray, ["acc_flashlight", "acc_pointer_IR"]] call BIS_fnc_arrayPushStack;
+	{ _additionArray pushBack _x} forEach ["acc_flashlight", "acc_pointer_IR"];
 	if (random 1 < 0.15) then { _car addItemCargoGlobal ["NVGoggles", 1]};
 };
 
@@ -29,10 +29,10 @@ _mag = ((getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select
 _additionOne = _additionArray call BIS_fnc_selectRandom;
 _additionArray = _additionArray - [_additionOne];
 _additionTwo = _additionArray call BIS_fnc_selectRandom;
-_additionArray = _additionArray - [_additionTwo];
+//_additionArray = _additionArray - [_additionTwo];
 _additionThree = vehicleAddition2 call BIS_fnc_selectRandom;
 
-_buildingLootOn = ["A3W_buildingLoot"] call isConfigOn;
+_buildingLootOn = (["A3W_buildingLootWeapons"] call isConfigOn && (isNil "A3W_buildingLoot" || {["A3W_buildingLoot"] call isConfigOn}));
 
 // A3W_vehicleloot
 //Add guns and magazines, note the Global at the end
@@ -44,12 +44,12 @@ switch (["A3W_vehicleLoot", 1] call getPublicVar) do
 		_random = random 1;
 		
 		// If building loot is turned off, give everything, otherwise 50/50 chance between gun or items
-        if (_random < 0.5 || {!_buildingLootOn}) then
+        if (_random < 0.5 || !_buildingLootOn) then
 		{
             _car addWeaponCargoGlobal [_weapon, 1];
             _car addMagazineCargoGlobal [_mag, 2 + floor random 3];
         };
-		if (_random >= 0.5 || {!_buildingLootOn}) then
+		if (_random >= 0.5 || !_buildingLootOn) then
 		{
             _car addItemCargoGlobal [_additionTwo, 1];
             if (_nightTime) then { _car addMagazineCargoGlobal [_additionThree, 1] };

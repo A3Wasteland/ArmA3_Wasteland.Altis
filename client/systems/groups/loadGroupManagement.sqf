@@ -7,6 +7,7 @@
 #define groupManagementDialog 55510
 #define groupManagementPlayerList 55511
 #define groupManagementGroupList 55512
+#define groupManagementPromoteButton 55513
 #define groupManagementInviteButton 55514
 #define groupManagementKickButton 55515
 #define groupManagementDisbandButton 55516
@@ -17,16 +18,17 @@
             
 disableSerialization;
 				
-private ["_start","_dialog","_myGroup","_playerListBox","_groupListBox","_uid","_namestr","_index","_groupCreate","_groupInvite","_groupKick","_groupDisband","_groupLeaveButton","_inGroup","_isLeader","_name"];
+private ["_start","_dialog","_myGroup","_playerListBox","_groupListBox","_uid","_namestr","_allPlayers","_index","_groupCreate","_groupPromote","_groupInvite","_groupKick","_groupDisband","_groupLeaveButton","_inGroup","_isLeader","_name"];
 
 closeDialog 0;
 _start = createDialog "GroupManagement";	
 waitUntil{!isNull(findDisplay groupManagementDialog)};		
 _dialog = findDisplay groupManagementDialog;
-_dialog displayAddEventHandler ["KeyDown", "_return = false; if(groupManagmentActive && (_this select 1) == 1) then {_return = true;}; _return"];
+//_dialog displayAddEventHandler ["KeyDown", "_return = false; if(groupManagmentActive && (_this select 1) == 1) then {_return = true;}; _return"];
 groupManagmentActive = true;
 _playerListBox = _dialog displayCtrl groupManagementPlayerList;
 _groupListBox = _dialog displayCtrl groupManagementGroupList;
+_groupPromote = _dialog displayCtrl groupManagementPromoteButton;
 _groupInvite = _dialog displayCtrl groupManagementInviteButton;
 _groupKick = _dialog displayCtrl groupManagementKickButton;
 _groupDisband = _dialog displayCtrl groupManagementDisbandButton;
@@ -44,13 +46,15 @@ _groupAcceptInvite ctrlShow false;
 _hasInvite = false;
 while{groupManagmentActive} do
 {
+	_groupPromote ctrlShow (player == leader player);
+
     //Check if player has invite.
-    {if(_x select 1 == getPlayerUID player) then {_hasInvite = true};}forEach currentInvites;
+    { if (_x select 1 == getPlayerUID player) exitWith { _hasInvite = true } } forEach currentInvites;
     
     //Member Controls
-    if(count units group player > 1) then 
+    if(count units player > 1) then 
     {
-        if(player == leader group player) then
+        if(player == leader player) then
         {
 			_groupDisband ctrlShow true;
             _groupKick ctrlShow true;
@@ -64,55 +68,65 @@ while{groupManagmentActive} do
 		_groupLeaveButton ctrlShow false;    
     };
     
+	_allPlayers = call allPlayers;
+	
     //Sort Invite Controls
     if(_hasInvite) then
     {
         _groupInviteText ctrlShow true;
         _groupAcceptInvite ctrlShow true;
         _groupDeclineInvite ctrlShow true; 
-        	  	
+
         //Get Invite Text and Set it.
-        {_invite = _x;if(_invite select 1 == getPlayerUID player) then {{if(_invite select 0 == getPlayerUID _x) then {_name = name(_x);};}forEach playableUnits;};}forEach currentInvites;
-        if(isStreamFriendlyUIEnabled) then {
-			_groupInviteText ctrlSetStructuredText parseText (format ["Group Invite From<br/>Censored(StreamFriendly:ON)"]);
-        } else {
-			_groupInviteText ctrlSetStructuredText parseText (format ["Group Invite From<br/>%1",_name]);
-		};
+        {
+			_invite = _x;
+			if (_invite select 1 == getPlayerUID player) then
+			{
+				{
+					if (_invite select 0 == getPlayerUID _x) exitWith
+					{
+						_name = name _x;
+					};
+				} forEach _allPlayers;
+			};
+		} forEach currentInvites;
+
+        if (isStreamFriendlyUIEnabled) then {
+			_name = "Censored(StreamFriendly:ON)";
+        };
+		_groupInviteText ctrlSetStructuredText parseText (format ["Group Invite From<br/>%1",_name]);
     } else {
     	_groupAcceptInvite ctrlShow false;
         _groupDeclineInvite ctrlShow false;
-        _groupInviteText ctrlShow false;  	    
+        _groupInviteText ctrlShow false;
     };
     
     //Update player list  
 	{
-		if(str(side _x) == str(playerSide)) then
+		if (side group _x == playerSide && _x != player) then
 	    {
-	        if(getPlayerUID _x != getPlayerUID player) then
-	        {
-			    //Add to list
-			    if(isStreamFriendlyUIEnabled) then {
-					_namestr = "[PLAYER]";
-				} else {
-					_namestr = name(_x);
-				};
-				_index = _playerListBox lbAdd _namestr;
-				_playerListBox lbSetData [_index, str(_x)];  
-	        };
-	    };	    
-	}forEach playableUnits;
+	        //Add to list
+			if (isStreamFriendlyUIEnabled) then {
+				_namestr = "[PLAYER]";
+			} else {
+				_namestr = name _x;
+			};
+			_index = _playerListBox lbAdd _namestr;
+			_playerListBox lbSetData [_index, getPlayerUID _x];
+	    };
+	} forEach _allPlayers;
     
     //Update group player list
     {
-    	if(isStreamFriendlyUIEnabled) then {
+    	if (isStreamFriendlyUIEnabled) then {
 			_namestr = "[PLAYER]";
 		} else {
-			_namestr = name(_x);
+			_namestr = name _x;
 		};             
 		_index = _groupListBox lbAdd _namestr;
-		_groupListBox lbSetData [_index, str(_x)];	    
-    }forEach units group player;
-     
+		_groupListBox lbSetData [_index, getPlayerUID _x];
+    } forEach units player;
+
 	sleep 0.5;
     _hasInvite = false;
     lbClear _playerListBox;

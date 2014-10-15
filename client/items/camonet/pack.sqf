@@ -25,10 +25,10 @@ _hasFailed = {
 	_text = "";
 	_failed = true;
 	switch (true) do {
-		case not(alive player): {}; // player dead, no error msg needed
+		case (!alive player): {}; // player dead, no error msg needed
         case (isNull _netting): {_text = ERR_ALREADY_TAKEN}; //someone has already taken it.
-		case not(vehicle player == player): {_text = ERR_IN_VEHICLE};
-		case not(player distance _netting < 5): {_text = ERR_TOO_FAR_AWAY};
+		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
+		case (player distance _netting > 5): {_text = ERR_TOO_FAR_AWAY};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED};
 		default {
 			_text = format["Camouflage Netting %1%2 Packed", round(_progress*100), "%"];

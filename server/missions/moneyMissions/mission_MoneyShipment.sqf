@@ -1,13 +1,13 @@
 //	@file Version: 2
 //	@file Name: mission_MoneyShipment.sqf
-//	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo)
+//	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo), AgentRev
 //	@file Created: 31/08/2013 18:19
 //	@file Args: none
 
 if (!isServer) exitwith {};
 #include "moneyMissionDefines.sqf";
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_MoneyShipmentVeh","_veh1","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader"];
+private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_MoneyShipment","_markerText","_money","_convoys","_vehChoices","_moneyKilos","_moneyUnits","_strMoneyUnits","_moneyText","_vehClasses","_veh2","_rn","_waypoints","_starts","_startdirs","_group","_vehicles","_marker","_failed","_startTime","_numWaypoints","_cash1","_cash2","_createVehicle","_leader"];
 
 _missionMarkerName = "Money_Shipment";
 _missionType = "Money Shipment";
@@ -16,17 +16,113 @@ diag_log format["WASTELAND SERVER - Money Mission Waiting to run: %1", _missionT
 [moneyMissionDelayTime] call createWaitCondition;
 diag_log format["WASTELAND SERVER - Money Mission Resumed: %1", _missionType];
 
-//pick the vehicles for the Money Shipment 
-_MoneyShipmentVeh = 
+// Money Shipments settings
+// Difficulties : Min = 1, Max = infinite
+// Convoys per difficulty : Min = 1, Max = infinite
+// Vehicles per convoy : Min = 1, Max = infinite
+// Choices per vehicle : Min = 1, Max = infinite
+_MoneyShipment = 
 [
-	["B_MRAP_01_hmg_F", "B_MRAP_01_gmg_F"],
-	["O_MRAP_02_hmg_F", "O_MRAP_02_gmg_F"],
-	["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"]
+	// Easy
+	[
+		"Small Money Shipment", // Marker text
+		25000, // Money
+		[
+			[ // NATO convoy
+				["B_MRAP_01_hmg_F", "B_MRAP_01_gmg_F"], // Veh 1
+				["B_MRAP_01_hmg_F", "B_MRAP_01_gmg_F"] // Veh 2
+			],
+			[ // CSAT convoy
+				["O_MRAP_02_hmg_F", "O_MRAP_02_gmg_F"], // Veh 1
+				["O_MRAP_02_hmg_F", "O_MRAP_02_gmg_F"] // Veh 2
+			],
+			[ // AAF convoy
+				["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"], // Veh 1
+				["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"] // Veh 2
+			]
+		]
+	],
+	// Medium
+	[
+		"Medium Money Shipment", // Marker text
+		50000, // Money
+		[
+			[ // NATO convoy
+				["B_MRAP_01_hmg_F", "B_MRAP_01_gmg_F"], // Veh 1
+				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F"], // Veh 2
+				["B_MRAP_01_hmg_F", "B_MRAP_01_gmg_F"] // Veh 3
+			],
+			[ // CSAT convoy
+				["O_MRAP_02_hmg_F", "O_MRAP_02_gmg_F"], // Veh 1
+				["O_APC_Wheeled_02_rcws_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F"], // Veh 2
+				["O_MRAP_02_hmg_F", "O_MRAP_02_gmg_F"] // Veh 3
+			],
+			[ // AAF convoy
+				["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"], // Veh 1
+				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F"], // Veh 2
+				["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"] // Veh 3
+			]
+		]
+	],
+	// Hard
+	[
+		"Large Money Shipment", // Marker text
+		75000, // Money
+		[
+			[ // NATO convoy
+				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F"], // Veh 1
+				["B_MBT_01_cannon_F", "B_MBT_01_TUSK_F"], // Veh 2
+				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F"] // Veh 3
+			],
+			[ // CSAT convoy
+				["O_APC_Wheeled_02_rcws_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F"], // Veh 1
+				["O_MBT_02_cannon_F"], // Veh 2
+				["O_APC_Wheeled_02_rcws_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F"] // Veh 3
+			],
+			[ // AAF convoy
+				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F"], // Veh 1
+				["I_MBT_03_cannon_F"], // Veh 2
+				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F"] // Veh 3
+			]
+		]
+	],
+	// Extreme
+	[
+		"Heavy Money Shipment", // Marker text
+		100000, // Money
+		[
+			[ // NATO convoy
+				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F", "B_MBT_01_cannon_F", "B_MBT_01_TUSK_F"], // Veh 1
+				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F", "B_MBT_01_cannon_F", "B_MBT_01_TUSK_F"], // Veh 2
+				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F", "B_MBT_01_cannon_F", "B_MBT_01_TUSK_F"], // Veh 3
+				["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F", "B_MBT_01_cannon_F", "B_MBT_01_TUSK_F"] // Veh 4
+			],
+			[ // CSAT convoy
+				["O_APC_Wheeled_02_rcws_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F", "O_MBT_02_cannon_F"], // Veh 1
+				["O_APC_Wheeled_02_rcws_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F", "O_MBT_02_cannon_F"], // Veh 2
+				["O_APC_Wheeled_02_rcws_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F", "O_MBT_02_cannon_F"], // Veh 3
+				["O_APC_Wheeled_02_rcws_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F", "O_MBT_02_cannon_F"] // Veh 4
+			],
+			[ // AAF convoy
+				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F", "I_MBT_03_cannon_F"], // Veh 1
+				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F", "I_MBT_03_cannon_F"], // Veh 2
+				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F", "I_MBT_03_cannon_F"], // Veh 3
+				["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F", "I_MBT_03_cannon_F"] // Veh 4
+			]
+		]
+	]
 ]
 call BIS_fnc_selectRandom;
 
-_veh1 = _MoneyShipmentVeh select 0;
-_veh2 = _MoneyShipmentVeh select 1;
+_markerText = _MoneyShipment select 0;
+_money = _MoneyShipment select 1;
+_convoys = _MoneyShipment select 2;
+_vehChoices = _convoys call BIS_fnc_selectRandom;
+
+_moneyText = format ["$%1", [_money] call fn_numbersText];
+
+_vehClasses = [];
+{ _vehClasses pushBack (_x call BIS_fnc_selectRandom) } forEach _vehChoices;
 
 // available routes to add a route. If you add more routes append ,4 to the array and so on
 _routes = [1,2,3];
@@ -192,8 +288,11 @@ _createVehicle = {
 };
 
 _vehicles = [];
-_vehicles set [0, [_veh1, (_starts select 0), (_startdirs select 0), _group] call _createVehicle];
-_vehicles set [1, [_veh2, (_starts select 1), (_startdirs select 1), _group] call _createVehicle];
+{
+	_vehicles pushBack ([_x, _starts select 0, _startdirs select 0, _group] call _createVehicle);
+} forEach _vehClasses;
+
+_veh2 = _vehClasses select (1 min (count _vehClasses - 1));
 
 _leader = driver (_vehicles select 0);
 _group selectLeader _leader;
@@ -218,7 +317,7 @@ _marker = createMarker [_missionMarkerName, position leader _group];
 _marker setMarkerType "mil_destroy";
 _marker setMarkerSize [1.25, 1.25];
 _marker setMarkerColor "ColorRed";
-_marker setMarkerText "Armed Money Shipment";
+_marker setMarkerText _markerText;
 
 _picture = getText (configFile >> "CfgVehicles" >> _veh2 >> "picture");
 _vehicleName = getText (configFile >> "cfgVehicles" >> _veh2 >> "displayName");
@@ -229,7 +328,7 @@ if ([_vehicleName, (count toArray _vehicleName) - 10] call BIS_fnc_trimString ==
 	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 11] call BIS_fnc_trimString;
 };
 
-_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> carrying a unit of soldiers transporting $5,000 is on route with assistance. Stop them! Be aware that the money is divided among both units!</t>", _missionType, _picture, _vehicleName, moneyMissionColor, subTextColor];
+_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> carrying a unit of soldiers transporting " + _moneyText + " is on route with assistance.<br/>Stop them!</t>", _markerText, _picture, _vehicleName, moneyMissionColor, subTextColor];
 [_hint] call hintBroadcast;
 
 diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1", _missionType];
@@ -259,7 +358,7 @@ if(_failed) then
 	{if (vehicle _x != _x) then { deleteVehicle vehicle _x; }; deleteVehicle _x;}forEach units _group;
 	{deleteVehicle _x;}forEach units _group;
 	deleteGroup _group; 
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
+    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time</t>", _markerText, _picture, _vehicleName, failMissionColor, subTextColor];
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Money Mission Failed: %1",_missionType];
 } else {
@@ -273,17 +372,16 @@ if(_failed) then
 	};
 	
 	// give the rewards
-	for "_x" from 1 to 5 do
+	for "_x" from 1 to 10 do
 	{
-		_cash = "Land_Money_F" createVehicle markerPos _marker;
-		_cash setPos ([markerPos _marker, [[2 + random 2,0,0], random 360] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd);
+		_cash = createVehicle ["Land_Money_F", (markerPos _marker) vectorAdd ([[3 + random 3,0,0], random 360] call BIS_fnc_rotateVector2D), [], 0, "CAN_COLLIDE"];
 		_cash setDir random 360;
-		_cash setVariable["cmoney",1000,true];
+		_cash setVariable["cmoney", _money / 10, true];
 		_cash setVariable["owner","world",true];
 	};
 	
 	deleteGroup _group; 	
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The Money Shipment has been stopped. The Money is now yours to take. Goodluck finding it!</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
+    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The Money Shipment has been stopped, the cash is now yours to take.</t>", _markerText, _picture, _vehicleName, successMissionColor, subTextColor];
     [_hint] call hintBroadcast;
     diag_log format["WASTELAND SERVER - Money Mission Success: %1",_missionType];
 };

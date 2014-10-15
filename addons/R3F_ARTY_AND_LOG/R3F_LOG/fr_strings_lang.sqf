@@ -10,6 +10,7 @@ STR_R3F_LOG_action_heliporter_deplace_par_joueur = "L'objet ""%1"" est en train 
 STR_R3F_LOG_action_heliporter_joueur_dans_objet = "Un joueur se trouve dans l'objet ""%1"".";
 STR_R3F_LOG_action_heliporter_objet_remorque = "Impossible d'héliporter l'objet ""%1"" car il est en train de remorquer un autre objet.";
 STR_R3F_LOG_action_heliport_larguer = "Larguer l'objet";
+STR_R3F_LOG_action_heliport_parachute = "Parachuter l'objet";
 STR_R3F_LOG_action_heliport_larguer_fait = "Objet ""%1"" largué.";
 
 STR_R3F_LOG_action_deplacer_objet = "Prendre cet objet";

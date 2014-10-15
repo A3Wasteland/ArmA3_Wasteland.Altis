@@ -64,7 +64,7 @@ _maximumOvercast = 1;
 
 // When raining, rain intensity never falls below this value. Must be between 0 and 1 and less than or equal to _maximumRain
 // (0 = no rain, 1 = maximum rain intensity). (Suggested value: 0);
-_minimumRain = 0;
+_minimumRain = 0.01;
 
 // When raining, rain intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumRain
 // (0 = no rain, 1 = maximum rain intensity). (Suggested value: 0.8);
@@ -89,7 +89,7 @@ _windChangeProbability = 25;
 // Probability in percent (0-100) for rain to start at every rain interval. Set this to 0 if you don't want rain at all. Set this to 100 
 // if you want it to rain constantly when overcast is greater than 0.75. In short: if you think that it generally rains to often then 
 // lower this value and vice versa. (Suggested value: 50).
-_rainIntervalRainProbability = 20;
+_rainIntervalRainProbability = 50;
 
 // Minimum time in minutes for rain intervals. Must be greater or equal to 0 and less than or equal to _maxRainIntervalTimeMin.
 // (Suggested value: 0).
@@ -163,14 +163,27 @@ drn_fnc_overcastOdds =
 
 drn_fnc_fogOdds =
 {
-	if (_this < 1/3) then
+	private ["_currFog", "_maxFog", "_fogVal"];
+	_currFog = _this select 0;
+	_maxFog = _this select 1;
+
+	if (_maxFog > 0) then
 	{
-		0
+		_fogVal = _currFog / _maxFog;
+
+		if (_fogVal < 1/3) then
+		{
+			0
+		}
+		else
+		{
+			(9/4) * (_fogVal - (1/3)) ^ 2
+		};
 	}
 	else
 	{
-		(9/4) * (_this - (1/3)) ^ 2
-	}
+		0
+	};
 };
 
 drn_fnc_DynamicWeather_SetWeatherLocal = {
@@ -207,10 +220,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 	
 	if (!isNil "drn_JIPWeatherSync") then
 	{
-		sleep 0.5;
-		skipTime 1;
-		sleep 0.5;
-		skipTime -1;
+		forceWeatherChange;
 		drn_JIPWeatherSync = nil;
 	};
     
@@ -294,7 +304,7 @@ if (isServer) then {
         };
     };
 	
-	0 setFog [(((_initialFog / _maximumFog) call drn_fnc_fogOdds) * _maximumFog) max (rain / 4), 0.001, 1000];
+	0 setFog [(([_initialFog, _maximumFog] call drn_fnc_fogOdds) * _maximumFog) max (rain / 4), 0.001, 1000];
 	
     if (_initialOvercast == -1) then {
         _initialOvercast = (_minimumOvercast + random (_maximumOvercast - _minimumOvercast));
@@ -356,10 +366,7 @@ if (isServer) then {
 	
 	if (!isNil "drn_JIPWeatherSync") then
 	{
-		sleep 0.5;
-		skipTime 1;
-		sleep 0.5;
-		skipTime -1;
+		forceWeatherChange;
 		drn_JIPWeatherSync = nil;
 	};
     
@@ -448,7 +455,7 @@ if (isServer) then {
                     _fogValue = _minimumFog + (_maximumFog - _minimumFog) * (0.55 + random 0.45);
                 };
 				
-				drn_DynamicWeather_WeatherTargetValue = [((_fogValue / _maximumFog) call drn_fnc_fogOdds) * _maximumFog, _fogDecay, _fogBase];
+				drn_DynamicWeather_WeatherTargetValue = [([_fogValue, _maximumFog] call drn_fnc_fogOdds) * _maximumFog, _fogDecay, _fogBase];
                 
                 drn_DynamicWeather_WeatherChangeStartedTime = time;
                 _weatherChangeTimeSek = _minWeatherChangeTimeMin * 60 + random ((_maxWeatherChangeTimeMin - _minWeatherChangeTimeMin) * 60);

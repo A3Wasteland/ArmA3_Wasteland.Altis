@@ -1,6 +1,6 @@
 _beacon = _this select 0;
 
-_side = _beacon getVariable ["side", ""];
+_side = _beacon getVariable ["side", sideUnknown];
 _isGroupOnly = _beacon getVariable ["groupOnly", false];
 _ownerUID = _beacon getVariable ["ownerUID", ""];
 
