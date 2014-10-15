@@ -58,7 +58,7 @@ _serverObjectsIDs = [];
 			_allowDamage = _x select 6;
 
 			_obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
-			_obj setPosATL _pos;
+			_obj setPosWorld ATLtoASL _pos;
 
 			if (!isNil "_dir") then
 			{
