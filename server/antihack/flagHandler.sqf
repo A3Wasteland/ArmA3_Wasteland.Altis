@@ -34,7 +34,16 @@ if (typeName _this == "ARRAY" && {count _this > 4}) then
 						["Hackers" call PDB_objectFileName, "Hackers", _playerID, [_playerName, _hackType, _hackValue]] call iniDB_write;
 					};
 			case 3: {
-						_query = "addHackerLog:" + str(call(A3W_extDB_ServerID)) + ":" + str(_playerID) + ":" + str(_playerName) + ":" + str(_hackType) + ":" + str(_hackValue);
+						_player_name = toArray _player_name;
+						{
+							if (_x == 58) then
+							{
+								_player_name set[_forEachIndex, -1];
+							};
+						} foreach _player_name;
+						_player_name = _player_name - [-1];
+						_player_name = toString _player_name;
+						_query = "addHackerLog:" + str(call(A3W_extDB_ServerID)) + ":" + _playerID + ":" + str(_playerName) + ":" + str(_hackType) + ":" + str(_hackValue);
 						[_query] call extDB_Database_async;
 					};
 		};
