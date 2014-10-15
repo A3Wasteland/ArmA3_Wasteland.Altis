@@ -120,13 +120,6 @@ A3W_scriptThreads pushBack execVM "client\systems\hud\playerHud.sqf";
 [] spawn updateMissionsMarkers;
 // [] call updateRadarMarkers;
 
-_novoice = "client\functions\novoice.sqf" call mf_compile;
-
-if (A3W_NoGlobalVoice > 0) then
-{
-	[A3W_NoGlobalVoice, A3W_NoSideVoice, A3W_NoCommandVoice] spawn _novoice;
-};
-
 [] spawn
 {
 	[] execVM "client\functions\createGunStoreMarkers.sqf";
