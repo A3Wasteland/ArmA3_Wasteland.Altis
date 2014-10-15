@@ -54,11 +54,7 @@ if (UNCONSCIOUS(_unit)) then
 {
 	//if (_selection != "?") then
 	//{
-		_oldDamage = if (_selection == "") then {
-			damage _unit
-		} else {
-			_unit getHitPointDamage (_unit getVariable ["A3W_hitPoint_" + _selection, ""]) // returns nil if hitpoint doesn't exist
-		};
+		_oldDamage = if (_selection == "") then { damage _unit } else { _unit getHit _selection };
 
 		if (!isNil "_oldDamage") then
 		{

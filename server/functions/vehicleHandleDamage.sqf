@@ -16,11 +16,7 @@ _ammo = _this select 4;
 
 if (_selection != "?") then
 {
-	_oldDamage = if (_selection == "") then {
-		damage _vehicle
-	} else {
-		_vehicle getHitPointDamage (_vehicle getVariable ["A3W_hitPoint_" + _selection, ""]) // returns nil if hitpoint doesn't exist
-	};
+	_oldDamage = if (_selection == "") then { damage _vehicle } else { _vehicle getHit _selection };
 
 	if (!isNil "_oldDamage") then
 	{

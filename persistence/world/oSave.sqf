@@ -61,7 +61,7 @@ while {true} do
 			   {_beaconSavingOn && {_obj call _isBeacon}}) then
 			{
 				_netId = netId _obj;
-				_pos = getPosATL _obj;
+				_pos = ASLtoATL getPosWorld _obj;
 				_dir = [vectorDir _obj, vectorUp _obj];
 				_damage = damage _obj;
 				_allowDamage = if (_obj getVariable ["allowDamage", false]) then { 1 } else { 0 };

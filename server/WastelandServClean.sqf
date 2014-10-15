@@ -7,21 +7,22 @@
 // configure cleanup below this line
 
 #define CLEANUP_INTERVAL (5*60) // Interval to run the cleanup
-#define ITEM_CLEANUP_TIME (30*60) // Time an item has to have been dropped before deleting it
-#define WRECK_CLEANUP_TIME (10*60) // Time a vehicle has to have been destroyed before deleting it
-#define CORPSE_CLEANUP_TIME (30*60) // Time a corpse has to have been dead before deleting it
+#define ITEM_CLEANUP_TIME (30*60) // Dropped player items cleanup time
+#define DEBRIS_CLEANUP_TIME (10*60) // Vehicle crash crater/debris cleanup time (actual vehicle wreck cleanup is handled through description.ext parameters)
+
+// Corpse cleanup is handled through description.ext parameters
 
 _cleanupCode =
 {
-	private ["_obj", "_isDead", "_processedDeath", "_timeLimit"];
+	private ["_obj", "_isWreck", "_processedDeath", "_timeLimit"];
 	_obj = _this select 0;
-	_isDead = if (count _this > 1) then { _this select 1 } else { !alive _obj && {_obj isKindOf "AllVehicles"} };
+	_isWreck = if (count _this > 1) then { _this select 1 } else { false };
 
 	_processedDeath = _obj getVariable ["processedDeath", 0];
 
-	if (_isDead) then
+	if (_isWreck) then
 	{
-		_timeLimit = if (_obj isKindOf "CAManBase") then { CORPSE_CLEANUP_TIME } else { WRECK_CLEANUP_TIME };
+		_timeLimit = DEBRIS_CLEANUP_TIME;
 
 		if (_processedDeath == 0) then
 		{
@@ -33,7 +34,7 @@ _cleanupCode =
 		_timeLimit = ITEM_CLEANUP_TIME;
 	};
 
-	if (_processedDeath > 0 && diag_tickTime - _processedDeath >= _timeLimit) then
+	if (_processedDeath > 0 && diag_tickTime - _processedDeath >= ITEM_CLEANUP_TIME) then
 	{
 		deleteVehicle _x;
 		_delQtyO = _delQtyO + 1;
