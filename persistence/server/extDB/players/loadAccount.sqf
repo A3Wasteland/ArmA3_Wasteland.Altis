@@ -18,7 +18,7 @@ _result = ([format["existPlayerInfo:%1", _player_uid],2] call extDB_Database_asy
 
 if (!_result) then
 {
-	_player_guid = getPlayerUID _player;
+	_player_uid = getPlayerUID _player;
 	_player_name = name _player;
 
 	_player_name = toArray _player_name;
@@ -31,7 +31,7 @@ if (!_result) then
 	_player_name = _player_name - [-1];
 	_player_name = toString _player_name;
 
-	[format["insertPlayerInfo+Save:%1:%2:%3", call(A3W_extDB_PlayerSave_ServerID), _player_guid, _player_name], 2] call extDB_Database_async;
+	[format["insertPlayerInfo+Save:%1:%2:%3", call(A3W_extDB_PlayerSave_ServerID), _player_uid, _player_name], 2] call extDB_Database_async;
 	_data = [
 				["PlayerSaveValid", false],
 				["BankMoney", _bank]
