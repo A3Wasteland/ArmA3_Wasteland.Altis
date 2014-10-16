@@ -239,9 +239,9 @@ accessoriesArray = compileFinal str
 	["LRPS", "optic_LRPS", 175, "item"],
 	["SOS", "optic_SOS", 200, "item"],
 	["NVS", "optic_NVS", 500, "item"],
-	["TWS", "optic_tws", 1500, "item"],
-	["TWS MG", "optic_tws_mg", 2000, "item"],
-	["Nightstalker", "optic_Nightstalker", 2500, "item"]
+	["TWS", "optic_tws", 4000, "item"],
+	["TWS MG", "optic_tws_mg", 4500, "item"],
+	["Nightstalker", "optic_Nightstalker", 7500, "item"]
 ];
 
 // If commented, means the color/camo isn't implemented or is a duplicate of another hat
@@ -494,12 +494,12 @@ backpackArray = compileFinal str
 
 genItemArray = compileFinal str
 [
-	//["Quadrotor UAV (NATO)", "B_UAV_01_backpack_F", 500, "backpack"],
-	//["Quadrotor UAV (CSAT)", "O_UAV_01_backpack_F", 500, "backpack"],
-	//["Quadrotor UAV (AAF)", "I_UAV_01_backpack_F", 500, "backpack"],
-	//["UAV Terminal (NATO)", "B_UavTerminal", 150, "gps"],
-	//["UAV Terminal (CSAT)", "O_UavTerminal", 150, "gps"],
-	//["UAV Terminal (AAF)", "I_UavTerminal", 150, "gps"],
+	["Quadrotor UAV (NATO)", "B_UAV_01_backpack_F", 500, "backpack"],
+	["Quadrotor UAV (CSAT)", "O_UAV_01_backpack_F", 500, "backpack"],
+	["Quadrotor UAV (AAF)", "I_UAV_01_backpack_F", 500, "backpack"],
+	["UAV Terminal (NATO)", "B_UavTerminal", 150, "gps"],
+	["UAV Terminal (CSAT)", "O_UavTerminal", 150, "gps"],
+	["UAV Terminal (AAF)", "I_UavTerminal", 150, "gps"],
 	["GPS", "ItemGPS", 100, "gps"],
 	["First Aid Kit", "FirstAidKit", 25, "item"],
 	["Medikit", "Medikit", 150, "item"],
@@ -614,15 +614,15 @@ landArray = compileFinal str
 	["Zamak Covered", "I_Truck_02_covered_F", 5000, "vehicle"],
 	["Zamak Fuel", "I_Truck_02_fuel_F", 7500, "vehicle"],
 	["Zamak Medical", "I_Truck_02_medical_F", 9000, "vehicle"],
-	["Zamak Repair", "I_Truck_02_box_F", 10000, "vehicle"]
+	["Zamak Repair", "I_Truck_02_box_F", 10000, "vehicle"],
 	// ["Zamak Ammo", "I_Truck_02_ammo_F", 25000, "vehicle"],
 
-	// ["UGV Stomper (NATO)", "B_UGV_01_F", 2500, "vehicle"],
-	// ["UGV Stomper RCWS (NATO)", "B_UGV_01_rcws_F", 15000, "vehicle"],
-	// ["UGV Stomper (AAF)", "I_UGV_01_F", 2500, "vehicle"],
-	// ["UGV Stomper RCWS (AAF)", "I_UGV_01_rcws_F", 15000, "vehicle"],
-	// ["UGV Saif (CSAT)", "O_UGV_01_F", 2500, "vehicle"],
-	// ["UGV Saif RCWS (CSAT)", "O_UGV_01_rcws_F", 15000, "vehicle"]
+	["UGV Stomper (NATO)", "B_UGV_01_F", 2500, "vehicle"],
+	["UGV Stomper RCWS (NATO)", "B_UGV_01_rcws_F", 15000, "vehicle"],
+	["UGV Stomper (AAF)", "I_UGV_01_F", 2500, "vehicle"],
+	["UGV Stomper RCWS (AAF)", "I_UGV_01_rcws_F", 15000, "vehicle"],
+	["UGV Saif (CSAT)", "O_UGV_01_F", 2500, "vehicle"],
+	["UGV Saif RCWS (CSAT)", "O_UGV_01_rcws_F", 15000, "vehicle"]
 ];
 
 armoredArray = compileFinal str
@@ -675,10 +675,10 @@ helicoptersArray = compileFinal str
 
 planesArray = compileFinal str
 [
-	["A-143 Buzzard AA", "I_Plane_Fighter_03_AA_F", 40000, "vehicle"],
-	["A-143 Buzzard CAS", "I_Plane_Fighter_03_CAS_F", 45000, "vehicle"],
-	["A-164 Wipeout CAS", "B_Plane_CAS_01_F", 60000, "vehicle"],
-	["To-199 Neophron CAS", "O_Plane_CAS_02_F", 60000, "vehicle"],
+	//["A-143 Buzzard AA", "I_Plane_Fighter_03_AA_F", 40000, "vehicle"],
+	//["A-143 Buzzard CAS", "I_Plane_Fighter_03_CAS_F", 45000, "vehicle"],
+	//["A-164 Wipeout CAS", "B_Plane_CAS_01_F", 60000, "vehicle"],
+	//["To-199 Neophron CAS", "O_Plane_CAS_02_F", 60000, "vehicle"],
 	["MQ4A Greyhawk Bomber UAV", "B_UAV_02_CAS_F", 10000, "vehicle"], // Bomber UAVs are a lot harder to use, hence why they are cheaper than ATGMs
 	["MQ4A Greyhawk ATGM UAV", "B_UAV_02_F", 15000, "vehicle"],
 	["K40 Ababil-3 Bomber UAV (CSAT)", "O_UAV_02_CAS_F", 10000, "vehicle"],
@@ -804,10 +804,10 @@ storeOwnerConfig = compileFinal str
 
 	// Boats = disable Boats button
 	// Planes = disable Planes button
-	["VehStore1", 1, 75, ["Planes"]],
-	["VehStore2", 6, 45, ["Planes","Boats"]],
-	["VehStore3", 4, 250, ["Planes","Boats"]],
-	["VehStore4", 5, 155, ["Planes","Boats"]],
+	["VehStore1", 1, 75, []],
+	["VehStore2", 6, 45, ["Boats"]],
+	["VehStore3", 4, 250, ["Boats"]],
+	["VehStore4", 5, 155, ["Boats"]],
 	["VehStore5", 0, 190, ["Planes"]]
 ];
 
