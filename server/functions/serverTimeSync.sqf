@@ -13,9 +13,7 @@ while {true} do
 	currentDate = date;
 	publicVariable "currentDate";
 
-	_hour = date select 3;
-
-	if (_hour >= 20 || _hour < 5) then
+	if (daytime >= 20 || daytime < 5) then
 	{
 		if (timeMultiplier != _timeMultiNight) then
 		{

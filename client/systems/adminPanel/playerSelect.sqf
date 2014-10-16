@@ -87,19 +87,8 @@ if (_uid call isAdmin) then
 	    };
 	    case 3: //Unlock Team Switcher
 	    {      
-			_targetUID = getPlayerUID _target;
-	        {
-			    if(_x select 0 == _targetUID) exitWith
-			    {
-			    	pvar_teamSwitchList = [pvar_teamSwitchList, _forEachIndex] call BIS_fnc_removeIndex;
-			        publicVariable "pvar_teamSwitchList";
-	                
-					/*_client_firstSpawn = if (!isNil "client_firstSpawn") then { client_firstSpawn } else { nil };
-					client_firstSpawn = nil;
-					(owner _target) publicVariableClient "client_firstSpawn";
-					client_firstSpawn = if (!isNil "_client_firstSpawn" && _target != player) then { _client_firstSpawn } else { nil };*/
-			    };
-			}forEach pvar_teamSwitchList;			
+			pvar_teamSwitchUnlock = getPlayerUID _target;
+			publicVariableServer "pvar_teamSwitchUnlock";	
 	    };
 		case 4: //Unlock Team Killer
 	    {      
@@ -124,23 +113,25 @@ if (_uid call isAdmin) then
 	    };
         case 6: //Remove All Weapons
 	    {      
-			_targetUID = getPlayerUID _target;
+			/*_targetUID = getPlayerUID _target;
 	        {
 			    if(getPlayerUID _x == _targetUID) exitWith
 			    {
   					removeAllWeapons _x;
 			    };
-			}forEach playableUnits;       		
+			}forEach playableUnits;*/
+			["This option has been disabled due to having never worked at all in the first place."] spawn BIS_fnc_guiMessage;
 	    };
         case 7: //Check Player Gear
 	    {      
-			_targetUID = getPlayerUID _target;
+			/*_targetUID = getPlayerUID _target;
 	        {
 			    if(getPlayerUID _x == _targetUID) exitWith
 			    {
   					createGearDialog [_x, "RscDisplayInventory"];
 			    };
-			}forEach playableUnits;        		
+			}forEach playableUnits;*/
+			["This option has been disabled due to having never worked at all in the first place."] spawn BIS_fnc_guiMessage;
 	    };
 	};
 };
