@@ -4,7 +4,7 @@
 //	@file Created: 07/09/2013 15:19
 
 #define moneyMissionTimeout (60*60)
-#define moneyMissionDelayTime (15*60)
+#define moneyMissionDelayTime (6*60)
 
 #define missionRadiusTrigger 50
 #define moneyMissionColor "#00de00"
