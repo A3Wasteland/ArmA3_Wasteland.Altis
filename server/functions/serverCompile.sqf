@@ -89,6 +89,7 @@ punishTeamKiller = [_path, "punishTeamKiller.sqf"] call mf_compile;
 refillPrimaryAmmo = [_path, "refillPrimaryAmmo.sqf"] call mf_compile;
 setMissionSkill = [_path, "setMissionSkill.sqf"] call mf_compile;
 spawnStoreObject = [_path, "spawnStoreObject.sqf"] call mf_compile;
+teamSwitchLock = [_path, "teamSwitchLock.sqf"] call mf_compile;
 updateConnectingClients = "territory\client\updateConnectingClients.sqf" call mf_compile;
 vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
 vehicleRespawnCheck = [_path, "vehicle.sqf"] call mf_compile;

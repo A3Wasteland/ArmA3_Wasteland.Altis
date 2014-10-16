@@ -39,3 +39,4 @@ publicVariable "currentInvites";
 "pvar_processGroupInvite" addPublicVariableEventHandler { (_this select 1) call processGroupInvite };
 "pvar_processMoneyPickup" addPublicVariableEventHandler { (_this select 1) call processMoneyPickup };
 "pvar_punishTeamKiller" addPublicVariableEventHandler { (_this select 1) call punishTeamKiller };
+"pvar_teamSwitchLock" addPublicVariableEventHandler { (_this select 1) call teamSwitchLock };
