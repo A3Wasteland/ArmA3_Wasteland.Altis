@@ -116,7 +116,13 @@ sock_json = {
   };
 
   if (_type == typeName 0) exitWith {
-    (format["%1", _data])
+    def(_val);
+    _val = (format["%1", _data]);
+    //if value is indefinite or infinite, default to 0
+    if (_val == "-1.#IND" || {_val == "-1.#INF"}) then {
+      _val = (format["%1", 0]);
+    };
+    _val
   };
 
   if (_type == typeName objNull) exitWith {
