@@ -12,9 +12,9 @@ _serverID = owner bis_functions_mainscope;
 
 "BIS_fnc_MP_packet" addPublicVariableEventHandler compileFinal "_this execVM 'server\antihack\filterExecAttempt.sqf'";
 
-// diag_log "ANTI-HACK 0.8.0: Starting loop!";
+// diag_log "ANTI-HACK: Starting loop!";
 
-// diag_log "ANTI-HACK 0.8.0: Detection of hacked units!";
+// diag_log "ANTI-HACK: Detection of hacked units!";
 
 while { true } do
 {			
