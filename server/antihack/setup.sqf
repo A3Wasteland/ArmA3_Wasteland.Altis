@@ -49,5 +49,5 @@ if (isNil "ahSetupDone") then
 	AntiAntiAntiAntiHack = compileFinal "false";
 	
 	ahSetupDone = compileFinal "true";
-	diag_log "ANTI-HACK 0.8.0: Started.";
+	diag_log "ANTI-HACK: Started.";
 };

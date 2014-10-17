@@ -4,8 +4,6 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-private ["_kickTeamKiller", "_kickTeamSwitcher", "_side", "_kickVoice"];
-
 playerSpawning = true;
 
 //Teamkiller Kick
@@ -28,7 +26,7 @@ if (!isNil "pvar_teamKillList") then
 	};
 };
 //Teamswitcher Kick
-if (!isNil "pvar_teamSwitchList") then
+if (!isNil "pvar_teamSwitchList" && playerSide in [BLUFOR,OPFOR]) then
 {
 	if ([pvar_teamSwitchList, getPlayerUID player, playerSide] call fn_getFromPairs != playerSide) exitWith
 	{
@@ -38,7 +36,7 @@ if (!isNil "pvar_teamSwitchList") then
 		0 fadeSound 0;
 
 		uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-		_msgBox = [localize "STR_WL_Loading_Teamkiller"] spawn BIS_fnc_guiMessage;
+		_msgBox = [localize "STR_WL_Loading_Teamswitched"] spawn BIS_fnc_guiMessage;
 		_time = diag_tickTime;
 
 		waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 20};
