@@ -9,7 +9,7 @@ private ["_cheatFlag", "_cfgPatches", "_patchClass", "_ctrlCfg", "_ctrlText", "_
 
 waitUntil {!isNull player};
 
-// diag_log "ANTI-HACK 0.8.0 starting...";
+// diag_log "ANTI-HACK starting...";
 
 _cfgPatches = configFile >> "CfgPatches";
 
@@ -181,7 +181,7 @@ if (isNil "_cheatFlag") then
 	};
 };
 
-// diag_log "ANTI-HACK 0.8.0: Starting loop!";
+// diag_log "ANTI-HACK: Starting loop!";
 
 _loopCount = 24; // _loopCount >= 24 means every 2 minutes
 
@@ -196,7 +196,7 @@ while { true } do
 		{
 			if (!isNil _x) exitWith
 			{
-				// diag_log "ANTI-HACK 0.8.0: Found a hack variable!";
+				// diag_log "ANTI-HACK: Found a hack variable!";
 
 				_cheatFlag = ["hack variable", _x];
 			};
@@ -250,14 +250,14 @@ while { true } do
 
 	if (isNil "_cheatFlag") then
 	{
-		// diag_log "ANTI-HACK 0.8.0: Recoil hack check started!";
+		// diag_log "ANTI-HACK: Recoil hack check started!";
 
 		_currentRecoil = unitRecoilCoefficient player;
 		_minRecoil = (["A3W_antiHackMinRecoil", 1.0] call getPublicVar) - 0.001;
 
 		if (_currentRecoil < _minRecoil && _currentRecoil != -1) then
 		{
-			// diag_log "ANTI-HACK 0.8.0: Detected recoil hack!";
+			// diag_log "ANTI-HACK: Detected recoil hack!";
 
 			_cheatFlag = ["recoil hack", str ceil (_currentRecoil * 100) + "% recoil"];
 		};

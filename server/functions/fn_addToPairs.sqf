@@ -5,6 +5,7 @@
 // with no key type restriction (can be anything except array and nil/null),
 // and no length restriction on sub-arrays ([key, value, ...])
 
+scopeName "fn_addToPairs";
 private ["_arr", "_key", "_val", "_added", "_keyType", "_valType", "_x0", "_x1", "_x1Type"];
 
 _arr = _this select 0;
@@ -19,7 +20,7 @@ if (_keyType != "ARRAY") then
 	_valType = typeName _val;
 
 	{
-		if (typeName _x == "ARRAY" && {count _x > 0}) then
+		if (typeName _x == "ARRAY") then
 		{
 			_x0 = _x select 0;
 
@@ -70,10 +71,9 @@ if (_keyType != "ARRAY") then
 				};
 
 				_added = true;
+				breakTo "fn_addToPairs";
 			};
 		};
-
-		if (_added) exitWith {};
 	} forEach _arr;
 
 	if (!_added) then
