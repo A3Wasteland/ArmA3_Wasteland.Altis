@@ -31,6 +31,7 @@ sock_log_set_level = {
 //Set default logging level for this component
 LOG_INFO_LEVEL call sock_log_set_level;
 
+#define BACKSLASH (toString [92])
 
 /**
 * This function escapes all instances of {@code _char} within the
@@ -112,7 +113,9 @@ sock_json = {
   init(_data,_this);
 
   if (_type == typeName "") exitWith {
-    str([_data, """"] call sock_json_string_escape)
+    def(_val);
+    _val = ([_data, """"] call sock_json_string_escape);
+    str([_val, BACKSLASH] call sock_json_string_escape)
   };
 
   if (_type == typeName 0) exitWith {
