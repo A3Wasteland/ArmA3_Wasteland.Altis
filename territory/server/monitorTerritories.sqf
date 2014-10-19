@@ -96,7 +96,7 @@ _isInTeam =
 	_player = _this select 0;
 	_team = _this select 1;
 	_playerTeam = group _player;
-	if (typeName _team == "SIDE") then { side _playerTeam };
+	if (typeName _team == "SIDE") then { _playerTeam = side _playerTeam };
 
 	(_playerTeam == _team)
 };
