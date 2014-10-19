@@ -7,7 +7,9 @@
 private ["_player", "_corpse"];
 
 playerSetupComplete = false;
+
 9999 cutText ["", "BLACK", 0.01];
+9123 cutRsc ["RscEmpty", "PLAIN"];
 
 _player = _this select 0;
 _corpse = _this select 1;

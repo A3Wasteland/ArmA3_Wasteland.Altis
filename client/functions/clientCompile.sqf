@@ -75,8 +75,10 @@ teamkillMessage = "client\functions\showTeamKillMessage.sqf" call mf_compile;
 
 // Dialog compiles
 client_respawnDialog = "client\functions\loadRespawnDialog.sqf" call mf_compile;
+fn_respawnTimer = "client\systems\scoreboard\fn_respawnTimer.sqf" call mf_compile;
 loadGeneralStore = "client\systems\generalStore\loadGenStore.sqf" call mf_compile;
 loadGunStore = "client\systems\gunStore\loadGunStore.sqf" call mf_compile;
+loadScoreboard = "client\systems\scoreboard\loadScoreboard.sqf" call mf_compile;
 gearProperties = "client\functions\gearProperties.sqf" call mf_compile;
 getCapacity = "client\functions\getCapacity.sqf" call mf_compile;
 getItemInfo = "client\functions\getItemInfo.sqf" call mf_compile;

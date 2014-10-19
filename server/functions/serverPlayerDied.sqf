@@ -22,48 +22,26 @@ _presumedKiller = if (count _this > 2) then { _this select 2 } else { objNull };
 if !(_killer isKindOf "Man") then { _killer = effectiveCommander _killer };
 
 // Score handling
-if (!isNull _killer) then
+if (isPlayer _killer) then
 {
 	_playerSide = side group _unit;
 	_killerSide = side group _killer;
 	_indyIndyKill = (_playerSide == _killerSide) && !(_playerSide in [BLUFOR,OPFOR]) && (group _unit != group _killer);
 
-	if (_killer == _presumedKiller) then
-	{
-		if (_indyIndyKill) then
-		{
-			_killer addScore 2; // Compensate teamkill
-		};
-	}
-	else
-	{
-		if (_killerSide getFriend _playerSide < 0.6 || _indyIndyKill) then
-		{
-			_killer addScore 1; // Kill
-		}
-		else
-		{
-			// Ignore mission NPC "teamkills"
-			if (isPlayer _unit) then
-			{
-				_killer addScore -1; // Teamkill
-			};
-		};
+	_scoreColumn = if (isPlayer _unit) then { "playerKills" } else { "aiKills" };
+	_scoreValue = if (_killerSide getFriend _playerSide < 0.6 || _indyIndyKill || (!isPlayer _unit && _playerSide == CIVILIAN)) then { 1 } else { -1 };
 
-		if (!isNull _presumedKiller && _presumedKiller != _unit) then
-		{
-			_presumedKillerSide = side group _presumedKiller;
+	[_killer, _scoreColumn, _scoreValue] call fn_addScore;
 
-			if (_presumedKillerSide getFriend _playerSide < 0.6) then
-			{
-				_presumedKiller addScore -1; // Cancel kill
-			}
-			else
-			{
-				_presumedKiller addScore 1; // Cancel teamkill
-			};
-		};
+	if (isPlayer _presumedKiller && _presumedKiller != _unit) then
+	{
+		[_presumedKiller, "playerKills", 0] call fn_addScore; // sync Steam score
 	};
+};
+
+if (isPlayer _unit) then
+{
+	[_unit, "deathCount", 1] call fn_addScore;
 };
 
 _backpack = unitBackpack _unit;

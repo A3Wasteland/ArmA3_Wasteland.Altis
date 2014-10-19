@@ -13,6 +13,7 @@ wreckManagerMode = 1;
 wreckRemovalMinTime = 5*60;
 wreckRemovalMaxTime = 10*60;
 enableDebugConsole = 1;
+respawnDialog = 0; // do not enable this, otherwise the default scoreboard will overlap with the new one
 loadScreen = "Loading.jpg";
 onPauseScript = "client\clientEvents\onPause.sqf";
 class Header
@@ -32,8 +33,8 @@ overviewPicture = "Loading.jpg";
 
 #include "client\gui_base.hpp"
 #include "addons\R3F_ARTY_AND_LOG\desc_include.h"
-#include "client\systems\common.hpp"
 #include "client\systems\ui_toolkit.hpp"
+#include "client\systems\common.hpp"
 #include "client\items\warchest\dialog.hpp"
 #include "client\actions\gui.hpp"
 #include "addons\far_revive\revive_gui.hpp"
@@ -58,6 +59,7 @@ class RscTitles
 	#include "addons\proving_ground\PG_rsctitles.hpp"
  	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
+	#include "client\systems\scoreboard\score_gui.hpp"
 };
 
 class CfgFunctions

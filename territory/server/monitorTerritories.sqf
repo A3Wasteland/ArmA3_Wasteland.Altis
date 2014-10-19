@@ -72,6 +72,8 @@ currentTerritoryDetails = [];
 	currentTerritoryDetails pushBack [_markerName, [], sideUnknown, 0, 0];
 } forEach (["config_territory_markers", []] call getPublicVar);
 
+A3W_currentTerritoryOwners = [];
+
 // This will track how long each loop takes, to monitor how long it really ends up taking when
 // the server is lagging to shit
 _realLoopTime = BASE_SLEEP_INTERVAL;
@@ -486,6 +488,14 @@ _handleCapPointTick = {
 
 					[_currentTerritoryOwner, _newDominantTeam, _value, _currentTerritoryName, _territoryDescriptiveName] call _onCaptureFinished;
 					_currentTerritoryOwner = _newDominantTeam;
+
+					// Increase capture score
+					{
+						if ([_x, _newDominantTeam] call _isInTeam) then
+						{
+							[_x, "captureCount", 1] call fn_addScore;
+						};
+					} forEach _currentTerritoryOccupiers;
 				};
 
 				[_currentTerritoryOwner, _newTerritoryOccupiers, _newDominantTeam, _action] call _updatePlayerTerritoryActivity;
@@ -584,6 +594,15 @@ while {true} do
 	_newCapturePointDetails = [_territoryOccupiersMapConsolidated, currentTerritoryDetails] call _handleCapPointTick;
 	// _the above _handleCapPointTick returns our new set of last iteration info
 	currentTerritoryDetails = _newCapturePointDetails;
+
+	_newTerritoryOwners = [];
+	{ _newTerritoryOwners pushBack [_x select 0, _x select 2] } forEach _newCapturePointDetails;
+
+	if !(A3W_currentTerritoryOwners isEqualTo _newTerritoryOwners) then
+	{
+		A3W_currentTerritoryOwners = _newTerritoryOwners;
+		publicVariable "A3W_currentTerritoryOwners";
+	};
 
 
 	// Reconcile old/new contested occupiers

@@ -50,6 +50,8 @@ FAR_HandleRevive =
 		{
 			_target setVariable ["FAR_isUnconscious", 0, true];
 
+			[player, "reviveCount", 1] call fn_addScore;
+
 			// [Debugging] Code below is only relevant if revive script is enabled for AI
 			if (!isPlayer _target) then
 			{
