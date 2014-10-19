@@ -10,6 +10,14 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.0",
+"
+Coming soon!
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "0.9h",
 "
 <br/> [Added] Custom revive system based on Farooq's Revive

@@ -110,7 +110,7 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 //Setup Key Handler
 waitUntil {!isNull findDisplay 46};
 (findDisplay 46) displayAddEventHandler ["KeyDown", onKeyPress];
-//(findDisplay 46) displayAddEventHandler ["KeyUp", onKeyRelease];
+(findDisplay 46) displayAddEventHandler ["KeyUp", onKeyRelease];
 
 call compile preprocessFileLineNumbers "client\functions\setupClientPVars.sqf";
 

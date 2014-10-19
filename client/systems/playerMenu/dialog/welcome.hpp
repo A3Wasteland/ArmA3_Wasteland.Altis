@@ -49,7 +49,8 @@ class TeamKillWarningMessage {
 
 class RscEmpty {
 	idd = -1;
-	duration = 1;
-	name= "RscEmpty";
-	onLoad = "";
+	name = "RscEmpty";
+	fadeIn = 0;
+	fadeOut = 0;
+	duration = 0;
 };
