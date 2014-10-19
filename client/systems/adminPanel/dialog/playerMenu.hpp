@@ -167,7 +167,7 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 
-		class SlayButton: w_RscButton
+		/*class SlayButton: w_RscButton
 		{
 			idc = -1;
 			text = "Slay";
@@ -176,7 +176,7 @@ class PlayersMenu
 			y = 0.748 * safezoneH + safezoneY;
 			w = 0.05 * safezoneW;
 			h = 0.04 * safezoneH;
-		};
+		};*/
 
 		class UnlockTeamSwitchButton: w_RscButton
 		{
@@ -211,7 +211,7 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 
-		class RemoveAllWeaponsButton: w_RscButton
+		/*class RemoveAllWeaponsButton: w_RscButton
 		{
 			idc = -1;
 			text = "Remove Weapons";
@@ -220,9 +220,9 @@ class PlayersMenu
 			y = 0.748 * safezoneH + safezoneY;
 			w = 0.105 * safezoneW;
 			h = 0.04 * safezoneH;
-		};
+		};*/
 
-		class CheckPlayerGearButton: w_RscButton
+		/*class CheckPlayerGearButton: w_RscButton
 		{
 			idc = -1;
 			text = "Gear";
@@ -231,7 +231,7 @@ class PlayersMenu
 			y = 0.748 * safezoneH + safezoneY;
 			w = 0.05 * safezoneW;
 			h = 0.04 * safezoneH;
-		};
+		};*/
 
 		class WarnButton: w_RscButton
 		{
@@ -243,8 +243,8 @@ class PlayersMenu
 			w = 0.05 * safezoneW;
 			h = 0.04 * safezoneH;
 		};
-		
-		class DonationButton: w_RscButton
+
+		/*class DonationButton: w_RscButton
 		{
 			idc = -1;
 			text = "Donation";
@@ -253,7 +253,7 @@ class PlayersMenu
 			y = 0.70  * safezoneH + safezoneY;
 			w = 0.05 * safezoneW;
 			h = 0.04 * safezoneH;
-		};
+		};*/
 	};
 };
 

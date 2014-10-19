@@ -1,124 +1,136 @@
 #include "vehiclestoreDefines.hpp"
 
-class vehshopd {
+#define VehStoreButton_textSize (0.04 * TEXT_SCALE)
 
+class vehshopd
+{
 	idd = vehshop_DIALOG;
 	movingEnable = true;
 	enableSimulation = true;
 	onLoad = "[0] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
 
-	class controlsBackground {
-		
-		class MainBackground: w_RscPicture
+	class ControlsBackground
+	{
+		#define VehStoreMainBG_W (0.7333 * SZ_SCALE)
+		#define VehStoreMainBG_H (0.65 * SZ_SCALE)
+		#define VehStoreMainBG_X CENTER(1, VehStoreMainBG_W)
+		#define VehStoreMainBG_Y CENTER(1, VehStoreMainBG_H)
+
+		class MainBackground: IGUIBack
 		{
 			idc = -1;
-			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0};
-			text = "#(argb,8,8,3)color(0,0,0,0.6)";
+			colorBackground[] = {0, 0, 0, 0.6};
+			moving = true;
 
-			x = 0.1875 * safezoneW + safezoneX;
-			y = 0.15 * safezoneH + safezoneY;
-			w = 0.55 * safezoneW;
-			h = 0.65 * safezoneH;
+			x = VehStoreMainBG_X;
+			y = VehStoreMainBG_Y;
+			w = VehStoreMainBG_W;
+			h = VehStoreMainBG_H;
 		};
 
-		class TopBar: w_RscPicture
+		class TopBar: IGUIBack
 		{
 			idc = -1;
-			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0};
-			text = "#(argb,8,8,3)color(0.25,0.51,0.96,0.8)";
+			colorBackground[] = {0.25, 0.51, 0.96, 0.8};
 
-			x = 0.1875 * safezoneW + safezoneX;
-			y = 0.15 * safezoneH + safezoneY;
-			w = 0.55 * safezoneW;
-			h = 0.05 * safezoneH;
+			#define VehStoreTopBar_H (0.05 * SZ_SCALE)
+
+			x = VehStoreMainBG_X;
+			y = VehStoreMainBG_Y;
+			w = VehStoreMainBG_W;
+			h = VehStoreTopBar_H;
 		};
 
 		class ItemSelectedPrice: w_RscStructuredTextLeft
 		{
 			idc = vehshop_veh_TEXT;
-			text = "";
+			size = 0.04 * TEXT_SCALE;
 
-			x = 0.299 * safezoneW + safezoneX;
-			y = 0.664 * safezoneH + safezoneY;
-			w = 0.0891667 * safezoneW;
-			h = 0.068889 * safezoneH;
+			x = VehStoreMainBG_X + (0.15 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.514 * SZ_SCALE);
+			w = 0.119 * SZ_SCALE;
+			h = 0.0689 * SZ_SCALE;
 		};
 
-		class DialogTitleText: w_RscText
+		class DialogTitleText: w_RscTextCenter
 		{
 			idc = -1;
-			text = "Vehicle Store Menu";
+			text = "Vehicle Store";
+			sizeEx = 0.06 * TEXT_SCALE;
 
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.155 * safezoneH + safezoneY;
-			w = 0.19 * safezoneW;
-			h = 0.0448148 * safezoneH;
+			x = VehStoreMainBG_X;
+			y = VehStoreMainBG_Y;
+			w = VehStoreMainBG_W;
+			h = VehStoreTopBar_H;
 		};
 
+		/*
 		class PlayerMoneyText: w_RscText
 		{
 			idc = vehshop_money;
 			text = "Cash:";
-			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			x = 0.640 * safezoneW + safezoneX;
-			y = 0.155 * safezoneH + safezoneY;
-			w = 0.0844792 * safezoneW;
-			h = 0.0448148 * safezoneH;
+			sizeEx = 0.04 * TEXT_SCALE;
+
+			x = VehStoreMainBG_X + (0.6033 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.005 * SZ_SCALE);
+			w = 0.1126 * SZ_SCALE;
+			h = 0.0448 * SZ_SCALE;
 		};
+		*/
 	};
-	
-	class controls {
-		
+
+	class Controls
+	{
 		class SelectionList: w_RscList
 		{
 			idc = vehshop_veh_list;
-			onLBSelChanged = "[] execvm 'client\systems\vehicleStore\vehicleInfo.sqf'";
-			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			x = 0.3025 * safezoneW + safezoneX;
-			y = 0.225 * safezoneH + safezoneY;
-			w = 0.207 * safezoneW;
-			h = 0.422222 * safezoneH;
+			onLBSelChanged = "[] execVM 'client\systems\vehicleStore\vehicleInfo.sqf'";
+			sizeEx = 0.04 * TEXT_SCALE;
+			rowHeight = 0.04 * TEXT_SCALE;
+
+			x = VehStoreMainBG_X + (0.1533 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.075 * SZ_SCALE);
+			w = 0.276 * SZ_SCALE;
+			h = 0.4222 * SZ_SCALE;
 		};
-		
+
 		class ColorList: w_RscList
 		{
 			idc = vehshop_color_list;
-			onLBSelChanged = "[] execvm 'client\systems\vehicleStore\colorInfo.sqf'";
-			font = "PuristaMedium";
-			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			x = 0.520 * safezoneW + safezoneX;
-			y = 0.225 * safezoneH + safezoneY;
-			w = 0.207 * safezoneW;
-			h = 0.422222 * safezoneH;
+			onLBSelChanged = "[] execVM 'client\systems\vehicleStore\colorInfo.sqf'";
+			sizeEx = 0.04 * TEXT_SCALE;
+			rowHeight = 0.04 * TEXT_SCALE;
+
+			x = VehStoreMainBG_X + (0.4433 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.075 * SZ_SCALE);
+			w = 0.276 * SZ_SCALE;
+			h = 0.4222 * SZ_SCALE;
 		};
 
-		class BuVehicle: w_RscButton
+		class BuyVehicle: w_RscButton
 		{
 			idc = -1;
 			onButtonClick = "[0] execVM 'client\systems\vehicleStore\buyVehicles.sqf'";
 			text = "Buy";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.438 * safezoneW + safezoneX;
-			y = 0.657 * safezoneH + safezoneY;
-			w = 0.072 * safezoneW;
-			h = 0.040 * safezoneH;
+			x = VehStoreMainBG_X + (0.334 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.507 * SZ_SCALE);
+			w = 0.096 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
 
 		class CancelButton: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "closeDialog 0;";
+			onButtonClick = "closeDialog 0";
 			text = "Cancel";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.740 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
+			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.59 * SZ_SCALE);
+			w = 0.096 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
 
 		class StoreButton0: w_RscButton
@@ -126,11 +138,12 @@ class vehshopd {
 			idc = vehshop_button0;
 			onButtonClick = "[0] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
 			text = "Land";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.225 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;	
+			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.075 * SZ_SCALE);
+			w = 0.1173 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
 
 		class StoreButton1: w_RscButton
@@ -138,59 +151,64 @@ class vehshopd {
 			idc = vehshop_button1;
 			onButtonClick = "[1] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
 			text = "Armored";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.275 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
+			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.125 * SZ_SCALE);
+			w = 0.1173 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
-		
+
 		class StoreButton2: w_RscButton
 		{
 			idc = vehshop_button2;
 			onButtonClick = "[2] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
 			text = "Tanks";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.325 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
+			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.175 * SZ_SCALE);
+			w = 0.1173 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
-		
+
 		class StoreButton3: w_RscButton
 		{
 			idc = vehshop_button3;
 			onButtonClick = "[3] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
 			text = "Helicopters";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.375 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
+			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.225 * SZ_SCALE);
+			w = 0.1173 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
-		
+
 		class StoreButton4: w_RscButton
 		{
 			idc = vehshop_button4;
 			onButtonClick = "[4] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
 			text = "Planes";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.425 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
+			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.275 * SZ_SCALE);
+			w = 0.1173 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
-		
+
 		class StoreButton5: w_RscButton
 		{
 			idc = vehshop_button5;
 			onButtonClick = "[5] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
 			text = "Boats";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.475 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
+			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.325 * SZ_SCALE);
+			w = 0.1173 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
 
 		// Submarines transferred in Boats
@@ -200,11 +218,12 @@ class vehshopd {
 			idc = vehshop_button6;
 			onButtonClick = "[6] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
 			text = "Submarines";
+			sizeEx = VehStoreButton_textSize;
 
-			x = 0.20 * safezoneW + safezoneX;
-			y = 0.525 * safezoneH + safezoneY;
-			w = 0.088 * safezoneW;
-			h = 0.040 * safezoneH;
+			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.375 * SZ_SCALE);
+			w = 0.1173 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
 		};
 		*/
 	};
