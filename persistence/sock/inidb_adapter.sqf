@@ -1,7 +1,7 @@
 diag_log format["loading sock-rpc-stats iniDB API adapter ..."];
 
 //load the iniDB adapter library
-call compile preProcessFileLineNumbers "addons\sock\main.sqf";
+call compile preProcessFileLineNumbers "persistence\sock\main.sqf";
 
 #include "macro.h"
 

@@ -30,7 +30,7 @@ PDB_databaseNameCompiler = PDB_objectFileName;
 if (("sock" callExtension "version") != "") then
 {
   //sock-rpc-stats pretending to be iniDB 1.2
-  call compile preProcessFileLineNumbers "addons\sock\inidb_adapter.sqf";
+  call compile preProcessFileLineNumbers "persistence\sock\inidb_adapter.sqf";
 }
 else
 {
