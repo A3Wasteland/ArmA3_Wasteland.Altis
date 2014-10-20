@@ -1,17 +1,8 @@
 //	@file Name: s_deletePlayerSave.sqf
-//	@file Author: AgentRev
+//	@file Author: micovery
 
 if (!isServer) exitWith {};
+#include "macro.h"
 
-private "_fileName";
-_fileName = _this call PDB_playerFileName;
-
-if (["A3W_savingMethod", 1] call getPublicVar == 2 && {parseNumber (call iniDB_version) < 1.2}) then
-{
-	// Required for iniDB v1.0
-	_fileName call iniDB_delete;
-}
-else
-{
-	[_fileName, "PlayerSave"] call PDB_deleteSection;
-};
+init(_scope,_this call PDB_playerFileName);
+[_scope] call stats_wipe;
