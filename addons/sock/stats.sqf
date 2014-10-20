@@ -442,7 +442,7 @@ stats_read = {
 */
 stats_flush = {
   if (isNil "_this") exitWith {};
-  format["%1 stats_get;", _this] call stats_log_fine;
+  format["%1 stats_flush;", _this] call stats_log_fine;
 
   if (!isARRAY(_this)) exitWith {nil};
 
@@ -462,6 +462,51 @@ stats_flush = {
   if (not(isSCALAR(_result))) exitWith {
     format["protocol error: was expecting _result of typeName %1, but instead got typeName %2", typeName 0, typeName _result] call stats_log_severe;
     nil
+  };
+
+  _result
+};
+
+
+
+
+/**
+* This function wipes all keys within a specific scope
+*
+*
+* e.g.
+*
+*  //wipe all keys for "scope1"
+*  stats_wipe("scope1");
+*
+* @param {String} _scope Scope to wipe
+* @return
+*
+* True on success, false on failure
+*
+*/
+stats_wipe = {
+  if (isNil "_this") exitWith {fale};
+  format["%1 stats_wipe;", _this] call stats_log_fine;
+
+  if (!isARRAY(_this)) exitWith {false};
+
+  init(_method, "wipe");
+  init(_params,_this);
+
+  def(_result);
+  _result = [_method, _params] call sock_rpc;
+  if (undefined(_result)) exitWith {false};
+
+
+  if (isSTRING(_result)) exitWith {
+    _result call stats_log_severe;
+    false
+  };
+
+  if (not(isSCALAR(_result))) exitWith {
+    format["protocol error: was expecting _result of typeName %1, but instead got typeName %2", typeName 0, typeName _result] call stats_log_severe;
+    false
   };
 
   _result

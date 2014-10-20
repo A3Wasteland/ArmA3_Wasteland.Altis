@@ -140,12 +140,10 @@ if (_playerSavingOn || _serverSavingOn) then
 		if (_serverSavingOn) then
 		{
 			call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
+			call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
 		};
 
-		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
-		{
-			execVM "persistence\world\oSave.sqf";
-		};
+
 	};
 
 	{
