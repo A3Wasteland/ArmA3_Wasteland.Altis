@@ -24,8 +24,14 @@ _moneytext ctrlSetText format["%1", [player getVariable ["cmoney", 0]] call fn_n
 	_mvalue lbSetData [_mvalue lbAdd format ["$%1", [_x] call fn_numbersText], str _x];
 } forEach [5, 15, 20, 25, 50, 75, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000, 15000, 20000, 25000, 50000];
 
-//  enabled groups for bluefor/opfor for sthud usage (uncomment this to undo it) - JoSchaap
-// if(str(playerSide) == "west" || str(playerSide) == "east") then
-// {
-// 	_groupButton ctrlShow false;    
-// };
+[] spawn
+{
+	disableSerialization;
+	_dialog = findDisplay playersys_DIALOG;
+	while {!isNull _dialog} do
+	{
+		_escMenu = findDisplay 49;
+		if (!isNull _escMenu) exitWith { _escMenu closeDisplay 0 }; // Force close Esc menu if open
+		sleep 0.1;
+	};
+};

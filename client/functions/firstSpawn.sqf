@@ -179,23 +179,21 @@ if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 	}];
 };
 
-_startTime = diag_tickTime;
-waitUntil {sleep 1; diag_tickTime - _startTime >= 180};
+_uid = getPlayerUID player;
 
-if (playerSide in [BLUFOR,OPFOR]) then
+if (playerSide in [BLUFOR,OPFOR] && {{_x select 0 == _uid} count pvar_teamSwitchList == 0}) then
 {
-	if ({_x select 0 == getPlayerUID player} count pvar_teamSwitchList == 0) then
+	_startTime = diag_tickTime;
+	waitUntil {sleep 1; diag_tickTime - _startTime >= 180};
+
+	pvar_teamSwitchLock = [_uid, playerSide];
+	publicVariableServer "pvar_teamSwitchLock";
+
+	_side = switch (playerSide) do
 	{
-		pvar_teamSwitchList pushBack [getPlayerUID player, playerSide];
-		publicVariable "pvar_teamSwitchList";
-		
-		_side = switch (playerSide) do
-		{
-			case BLUFOR: { "BLUFOR" };
-			case OPFOR:  { "OPFOR" };
-			default      { "" };
-		};
-		
-		titleText [format["You have been locked to %1",_side],"PLAIN",0];
+		case BLUFOR: { "BLUFOR" };
+		case OPFOR:  { "OPFOR" };
 	};
+
+	titleText [format ["You have been locked to %1", _side], "PLAIN", 0.5];
 };
