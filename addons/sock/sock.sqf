@@ -122,7 +122,7 @@ sock_json = {
     def(_val);
     _val = (format["%1", _data]);
     //if value is indefinite or infinite, default to 0
-    if (_val == "-1.#IND" || {_val == "-1.#INF"}) then {
+    if (_val == "-1.#IND" || {_val == "-1.#INF" || {_val == "nan" || {_val == "-nan" || _val == "+nan"}}}) then {
       _val = (format["%1", 0]);
     };
     _val
