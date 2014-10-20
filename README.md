@@ -6,7 +6,7 @@ For defects related to the mission please visit their [forums](http://forums.a3w
 
 For defects related to persistence, use the [issue tracker](https://github.com/micovery/ArmA3_Wasteland.Altis/issues) in this repository.
 
-If you are looking for the prebuilt PBO files head over to the [Releas_Files repository](https://github.com/micovery/Release_Files/tree/master/sock-rpc-stats). There also instructions, and a video of how to setup the mission.
+If you are looking for the prebuilt PBO files head over to the [Release_Files repository](https://github.com/micovery/Release_Files/tree/master/sock-rpc-stats). There also instructions, and a video of how to setup the mission.
 
 
 
