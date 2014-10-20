@@ -504,8 +504,8 @@ stats_wipe = {
     false
   };
 
-  if (not(isSCALAR(_result))) exitWith {
-    format["protocol error: was expecting _result of typeName %1, but instead got typeName %2", typeName 0, typeName _result] call stats_log_severe;
+  if (not(isBOOLEAN(_result))) exitWith {
+    format["protocol error: was expecting _result of typeName %1, but instead got typeName %2", typeName false, typeName _result] call stats_log_severe;
     false
   };
 
