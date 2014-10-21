@@ -112,6 +112,49 @@ sock_json = {
 
   init(_data,_this);
 
+  if (_type == typeName false) exitWith {
+    def(_val);
+    _val = if (_data) then {"true"} else {"false"};
+    (_val)
+  };
+
+  if (_type == typeName {}) exitWith {
+    def(_val);
+    _val = call _data;
+    if (isNil "_val" || {typeName _val != typeName []}) exitWith {
+      (str(_data) call sock_json)
+    };
+
+    private["_object_json", "_i", "_count", "_element", "_element_json", "_el_key", "_el_val"];
+    _object_json = "{";
+    _count = count(_val);
+    _i = 0;
+    while {_i < _count} do {
+      if (true) then {
+        _element = _val select _i;
+        if (isNil "_element" || {typeName _element != typeName [] || {count(_element) < 2}}) exitWith {};
+
+        _el_key = _element select 0;
+        if (isNil "_el_key" || {typeName _el_key != typeName ""}) exitWith {};
+        _el_key = _el_key call sock_json;
+
+        _el_val = (_element select 1) call sock_json;
+
+        _element_json = _el_key + ":" + _el_val;
+
+        if (_i == 0) then {
+          _object_json = _object_json + _element_json;
+        }
+        else {
+          _object_json = _object_json + "," + _element_json;
+        };
+      };
+      _i = _i + 1;
+    };
+    _object_json = _object_json + "}";
+    (_object_json)
+  };
+
   if (_type == typeName "") exitWith {
     def(_val);
     _val = ([_data, """"] call sock_json_string_escape);
