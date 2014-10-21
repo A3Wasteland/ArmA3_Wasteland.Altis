@@ -6,11 +6,13 @@ if (!isServer) exitWith {};
 diag_log "Loading s_setupPlayerDB ...";
 
 #include "macro.h"
-fn_deletePlayerSave = "persistence\players\s_deletePlayerSave.sqf" call mf_compile;
-fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 
-"savePlayerData" addPublicVariableEventHandler
-{
+fn_deletePlayerSave = {
+  init(_scope,_this call PDB_playerFileName);
+  [_scope] call stats_wipe;
+};
+
+"savePlayerData" addPublicVariableEventHandler {
   ARGVX3(1,_this,[]);
   ARGVX3(0,_UID,"");
   ARGVX3(1,_info,[]);
@@ -28,25 +30,7 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
   };
 };
 
-"requestPlayerData" addPublicVariableEventHandler
-{
-  _player = _this select 1;
-  _UID = getPlayerUID _player;
-
-  if ((_UID call PDB_playerFileName) call PDB_exists) then // iniDB_exists
-  {
-    applyPlayerData = _UID call fn_loadAccount;
-  }
-  else
-  {
-    applyPlayerData = [];
-  };
-
-  (owner _player) publicVariableClient "applyPlayerData";
-};
-
-"deletePlayerData" addPublicVariableEventHandler
-{
+"deletePlayerData" addPublicVariableEventHandler {
   _player = _this select 1;
   (getPlayerUID _player) call fn_deletePlayerSave;
 };

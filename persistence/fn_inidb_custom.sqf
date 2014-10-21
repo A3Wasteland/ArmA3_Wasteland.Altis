@@ -26,17 +26,9 @@ PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', 
 
 PDB_databaseNameCompiler = PDB_objectFileName;
 
+call compile preProcessFileLineNumbers "persistence\sock\inidb_adapter.sqf";
+publicVariable "PDB_ServerID";
 
-if (("sock" callExtension "version") != "") then
-{
-  //sock-rpc-stats pretending to be iniDB 1.2
-  call compile preProcessFileLineNumbers "persistence\sock\inidb_adapter.sqf";
-}
-else
-{
-  //actual iniDB functions
-  call compile preProcessFileLineNumbers "persistence\fn_inidb_custom_api.sqf";
-};
 
 PDB_defaultValue = {
 	private ["_type", "_data"];
