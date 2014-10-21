@@ -9,7 +9,7 @@ diag_log "Loading s_setupPlayerDB ...";
 
 fn_deletePlayerSave = {
   init(_scope,_this call PDB_playerFileName);
-  [_scope] call stats_wipe;
+  [_scope, "PlayerSave", nil] call stats_set;
 };
 
 "savePlayerData" addPublicVariableEventHandler {
