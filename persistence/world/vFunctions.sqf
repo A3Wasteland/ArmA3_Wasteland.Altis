@@ -116,7 +116,7 @@ v_isVehicle = {
   (_result)
 };
 
-v_maxLifetime = ["A3W_vehicleLifetime", 0] call getPublicVar;
+v_maxLifetime = A3W_vehicleLifetime;
 
 v_restoreVehicle = {_this spawn {
   //diag_log format["%1 call v_restoreVehicle", _this];
@@ -173,8 +173,8 @@ v_restoreVehicle = {_this spawn {
     diag_log format["No class or position available for vehicle: %1", _vehicle_key];
   };
 
-  if (v_maxLifetime <= 0 || {_hours_alive > v_maxLifetime}) exitWith {
-    diag_log format["vehicle %1(%2) has exceeded max lifetime, skipping it", _vehicle_key, _class];
+  if (isSCALAR(v_maxLifetime) && {v_maxLifetime <= 0 || {_hours_alive > v_maxLifetime}}) exitWith {
+    diag_log format["vehicle %1(%2) has exceeded max lifetime of %3, skipping it", _vehicle_key, _class, v_maxLifetime];
   };
 
   
