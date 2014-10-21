@@ -116,7 +116,6 @@ v_isVehicle = {
   (_result)
 };
 
-def(_maxLifetime);
 v_maxLifetime = ["A3W_vehicleLifetime", 0] call getPublicVar;
 
 v_restoreVehicle = {_this spawn {
@@ -173,6 +172,11 @@ v_restoreVehicle = {_this spawn {
   if (not(isSTRING(_class)) || {not(isARRAY(_pos))}) exitWith {
     diag_log format["No class or position available for vehicle: %1", _vehicle_key];
   };
+
+  if (v_maxLifetime <= 0 || {_hours_alive > v_maxLifetime}) exitWith {
+    diag_log format["vehicle %1(%2) has exceeded max lifetime, skipping it", _vehicle_key, _class];
+  };
+
   
   def(_obj);
   _obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
