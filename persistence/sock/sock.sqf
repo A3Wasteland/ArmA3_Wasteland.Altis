@@ -32,6 +32,7 @@ sock_log_set_level = {
 LOG_INFO_LEVEL call sock_log_set_level;
 
 #define BACKSLASH (toString [92])
+#define DOUBLE_QUOTE """"
 
 /**
 * This function escapes all instances of {@code _char} within the
@@ -101,14 +102,19 @@ sock_json_string_escape = {
 *
 */
 
+
 sock_json = {
-  if (undefined(_this)) exitWith {
+  if (isNil "_this") exitWith {
     "null"
   };
 
-
   def(_type);
-  _type =  typeName _this;
+  _type = typeName _this;
+
+  //diag_log format["---->%1<----->%2<----", str(_type),_this];
+  if (format["%1",str(_type)] == "") exitWith { //handle Nothing, and Anything ...
+    "null"
+  };
 
   init(_data,_this);
 
@@ -119,46 +125,11 @@ sock_json = {
   };
 
   if (_type == typeName {}) exitWith {
-    def(_val);
-    _val = call _data;
-    if (isNil "_val" || {typeName _val != typeName []}) exitWith {
-      (str(_data) call sock_json)
-    };
-
-    private["_object_json", "_i", "_count", "_element", "_element_json", "_el_key", "_el_val"];
-    _object_json = "{";
-    _count = count(_val);
-    _i = 0;
-    while {_i < _count} do {
-      if (true) then {
-        _element = _val select _i;
-        if (isNil "_element" || {typeName _element != typeName [] || {count(_element) < 2}}) exitWith {};
-
-        _el_key = _element select 0;
-        if (isNil "_el_key" || {typeName _el_key != typeName ""}) exitWith {};
-        _el_key = _el_key call sock_json;
-
-        _el_val = (_element select 1) call sock_json;
-
-        _element_json = _el_key + ":" + _el_val;
-
-        if (_i == 0) then {
-          _object_json = _object_json + _element_json;
-        }
-        else {
-          _object_json = _object_json + "," + _element_json;
-        };
-      };
-      _i = _i + 1;
-    };
-    _object_json = _object_json + "}";
-    (_object_json)
+    ((call _data) call sock_json_hash)
   };
 
   if (_type == typeName "") exitWith {
-    def(_val);
-    _val = ([_data, """"] call sock_json_string_escape);
-    str([_val, BACKSLASH] call sock_json_string_escape)
+    (_data call sock_json_string)
   };
 
   if (_type == typeName 0) exitWith {
@@ -176,6 +147,11 @@ sock_json = {
   };
 
   if (_type == typeName []) exitWith {
+    //special case for arrays that represent hash [{}, [["key","value"],...]]
+    if (count(_data) > 1 && {typeName (_data select 0) == typeName {}}) exitWith {
+       ((_data select 1) call sock_json_hash)
+    };
+
     private["_array_json", "_i", "_count", "_element", "_element_json"];
     _array_json = "[";
     _count = count(_data);
@@ -197,8 +173,86 @@ sock_json = {
     (_array_json)
   };
 
+
   //other types, just convert to string
   (str(_data) call sock_json)
+};
+
+sock_json_string = {
+  if(isNil "_this") exitWith {};
+  init(_val,_this);
+
+  _val = [_val, DOUBLE_QUOTE] call sock_json_string_escape;
+  if (isNil "_val") exitWith {'""'};
+
+  _val =[_val, BACKSLASH] call sock_json_string_escape;
+  if (isNil "_val") exitWith {'""'};
+
+   str(_val)
+};
+
+sock_json_hash = {
+  if (isNil "_this" || {typeName _this != typeName []}) exitWith {
+    ((OR(_this,nil)) call sock_json)
+  };
+
+  init(_val,_this);
+
+  private["_json", "_i", "_count", "_el", "_el_json", "_el_key", "_el_val","_el_key_json", "_el_val_json"];
+  _json = "{";
+  _count = count(_val);
+  _i = 0;
+  while {_i < _count} do {
+    if (true) then {
+      _el = _val select _i;
+      if (isNil "_el" || {typeName _el != typeName [] || {count(_el) < 2}}) exitWith {};
+
+      _el_key = (_el select 0);
+      _el_val = (_el select 1);
+
+      if (isNil "_el_key") exitWith {};
+      _el_key_json = _el_key call sock_json;
+      _el_val_json = if (isNil "_el_val") then {"null"} else {_el_val call sock_json};
+
+
+      if ((isNil "_el_key_json" || {typeName _el_key_json != typeName ""}) ||
+          (isNil "_el_val_json" || {typeName _el_val_json != typeName ""})) exitWith {
+        diag_log format["=== JSON Serialization Error ==="];
+        diag_log format["_el=%1",_el];
+        diag_log format["(_el select 0) = %1",(_el select 0)];
+        diag_log format["(_el select 1) = %1",(_el select 1)];
+        diag_log format["typeName _el_key_json = %1",typeName _el_key_json];
+        diag_log format["typeName _el_val_json = %1",typeName _el_val_json];
+        diag_log format["_el_key_json = %1",OR(_el_key_json,nil)];
+        diag_log format["_el_val_json = %1",OR(_el_val_json,nil)];
+        diag_log format["================================"];
+      };
+
+      _el_json = _el_key_json + ":" + _el_val_json;
+
+      if (_i == 0) then {
+        _json = _json + _el_json;
+      }
+      else {
+        _json = _json + "," + _el_json;
+      };
+    };
+    _i = _i + 1;
+  };
+  _json = _json + "}";
+  (_json)
+};
+
+/**
+* This function is used for creating JSON hash/object from an array with a set of key-value pairs
+*
+* @param _key_value_pairs (Array type) - An array containing key-value pairs e.g. [["key1", "val1"], ...]
+* @return
+*
+* Returns the hash representation.
+*/
+sock_hash = {
+  ([{},OR(_this,nil)])
 };
 
 /**
