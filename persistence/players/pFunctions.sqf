@@ -252,8 +252,8 @@ fn_savePlayerData = {
         ["UID", _UID],
         ["Name", name player],
         ["LastGroupSide", str side group player],
-        ["LastPlayerSide", str playerSide]/*,
-        ["BankMoney", player getVariable ["bmoney", 0]]*/ // Not implemented in vanilla mission
+        ["LastPlayerSide", str playerSide],
+        ["BankMoney", player getVariable ["bmoney", 0]]
       ];
 
       _hitPoints = [];
@@ -425,7 +425,7 @@ fn_applyPlayerInfo = {
     switch (_name) do
     {
       case "Donator": { player setVariable ["isDonator", _value > 0] };
-      //case "BankMoney": { player setVariable ["bmoney", _value max 0] }; // Not implemented in vanilla mission
+      case "BankMoney": { player setVariable ["bmoney", _value max 0] };
     };
   } forEach _data;
 };
