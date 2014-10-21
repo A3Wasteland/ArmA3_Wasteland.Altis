@@ -287,20 +287,23 @@ def(_obj);
   v_skipList pushBack _obj;
 } forEach [civilianVehicles, call allVehStoreVehicles];
 
+v_vehicleIsSaveble = {
+  ARGVX4(0,_obj,objNull,false);
+
+  if (not([_obj] call v_isVehicle)) exitWith {false};
+  if (not(isNil{_obj getVariable "vehicle_key"})) exitWith {true};
+  if (not(isNil{_obj getVariable "A3W_purchasedStoreObject"})) exitWith {true};
+
+  false
+};
+
 v_addSaveVehicle = {
   ARGVX3(0,_list,[]);
   ARGVX3(1,_obj,objNull);
-    
+
+  if (not([_obj] call v_vehicleIsSaveble)) exitWith {};
+
   def(_class);
-  def(_ownerUID);
-  
-  _class = typeOf _obj;
-	_ownerUID = _obj getVariable "ownerUID";
-  
-  if (!isSTRING(_ownerUID) || {_ownerUID == ""}) exitWith {};
-  if (not([_obj] call v_isVehicle)) exitWith {};
-  if ((v_skipList find _obj) >= 0) exitWith {};
-  
   def(_netId);
   def(_pos);
   def(_dir);
@@ -309,8 +312,10 @@ v_addSaveVehicle = {
   def(_texture);
   def(_spawnTime);
   def(_hoursAlive);
-  def(_hoursSinceSpawn);  
-  
+  def(_hoursSinceSpawn);
+  def(_ownerUID);
+
+  _class = typeOf _obj;
   _netId = netId _obj;
   _pos = ASLtoATL getPosWorld _obj;
   _value = (_pos select 2) + 0.3;
@@ -321,6 +326,7 @@ v_addSaveVehicle = {
   _texture = _obj getVariable ["A3W_objectTexture", ""];
   _spawnTime = _obj getVariable "baseSaving_spawningTime";
   _hoursAlive = _obj getVariable "baseSaving_hoursAlive";
+  _ownerUID = _obj getVariable ["ownerUID",""];
   
   if (isNil "_spawnTime") then {
     _spawnTime = diag_tickTime;
