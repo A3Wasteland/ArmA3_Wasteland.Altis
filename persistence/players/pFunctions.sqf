@@ -411,6 +411,7 @@ fn_deletePlayerData = {
 
 
 fn_applyPlayerInfo = {
+  diag_log format["%1 call fn_applyPlayerInfo;",_this];
   init(_data,_this);
   def(_name);
   def(_value);

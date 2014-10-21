@@ -28,6 +28,14 @@ VLOAD_LOCKED =
 	"Plane"
 ];
 
+v_isStaticWeapon = {
+  ARGVX4(0,_class,"",false);
+  (_class isKindOf "StaticWeapon")
+};
+
+v_isStaticWeaponSavingOn = {
+  (["A3W_staticWeaponSaving"] call isConfigOn)
+};
 
 v_isWarchest = { 
   _this getVariable ["a3w_warchest", false] && {(_this getVariable ["side", sideUnknown]) in [WEST,EAST]} 
@@ -111,12 +119,12 @@ v_isVehicle = {
     if (_obj isKindOf _x) exitWith {
       _result = true;
     };
-  } forEach ["Helicopter", "Plane", "Boat_F", "Car", "Motorcycle", "Tank"];
+  } forEach ["Helicopter", "Plane", "Boat_F", "Car", "Motorcycle", "Tank", "StaticWeapon"];
   
   (_result)
 };
 
-v_maxLifetime = A3W_vehicleLifetime;
+v_maxLifetime = OR(A3W_vehicleLifetime,nil);
 
 v_restoreVehicle = {_this spawn {
   //diag_log format["%1 call v_restoreVehicle", _this];
@@ -145,8 +153,14 @@ v_restoreVehicle = {_this spawn {
   def(_cargo_magazines);
   def(_cargo_backpacks);
   def(_cargo_items);
+  def(_turret_magazines);
+  def(_cargo_ammo);
+  def(_cargo_fuel);
+  def(_cargo_repair);
+
   def(_key);
   def(_value);
+
   
   {
     _key = _x select 0;
@@ -164,6 +178,10 @@ v_restoreVehicle = {_this spawn {
       case "Backpacks": { _cargo_backpacks = OR(_value,nil);};
       case "HoursAlive": { _hours_alive = OR(_value,nil);};
       case "Variables": { _variables = OR(_value,nil);};
+      case "AmmoCargo": { _cargo_ammo = OR(_value,nil);};
+      case "FuelCargo": { _cargo_fuel = OR(_value,nil);};
+      case "RepairCargo": { _cargo_repair = OR(_value,nil);};
+      case "TurretMagazines": { _turret_magazines = OR(_value,nil);};
 
     };
   } forEach _vehicle_data;
@@ -253,6 +271,7 @@ v_restoreVehicle = {_this spawn {
   clearMagazineCargoGlobal _obj;
   clearItemCargoGlobal _obj;
   clearBackpackCargoGlobal _obj;
+  _obj setVehicleAmmo 0;
           
   if (isARRAY(_cargo_weapons)) then {
     { _obj addWeaponCargoGlobal _x } forEach _cargo_weapons;
@@ -268,6 +287,22 @@ v_restoreVehicle = {_this spawn {
   
   if (isARRAY(_cargo_magazines)) then {
     { _obj addMagazineCargoGlobal _x } forEach _cargo_magazines;
+  };
+
+  if (isARRAY(_turret_magazines)) then {
+    { _obj addMagazine _x } forEach _turret_magazines;
+  };
+
+  if (isSCALAR(_cargo_ammo)) then {
+    _obj setAmmoCargo _cargo_ammo;
+  };
+
+  if (isSCALAR(_cargo_fuel)) then {
+    _obj setFuelCargo _cargo_fuel;
+  };
+
+  if (isSCALAR(_cargo_repair)) then {
+    _obj setRepairCargo _cargo_repair;
   };
   
   //some vehicles need to be always unlocked
@@ -367,6 +402,15 @@ v_addSaveVehicle = {
   _items = (getItemCargo _obj) call cargoToPairs;
   _backpacks = (getBackpackCargo _obj) call cargoToPairs;
 
+  init(_turretMags,[]);
+  if ((call v_isStaticWeaponSavingOn) && {[_class] call v_isStaticWeapon}) then {
+    _turretMags = magazinesAmmo _obj;
+  };
+
+  init(_ammoCargo,getAmmoCargo _obj);
+  init(_fuelCargo,getFuelCargo _obj);
+  init(_repairCargo,getRepairCargo _obj);
+
   def(_objName);
   _objName = _obj getVariable ["vehicle_key", nil];
 
@@ -387,6 +431,10 @@ v_addSaveVehicle = {
   _list pushBack [ _objName + "." + "Magazines", _magazines];
   _list pushBack [ _objName + "." + "Items", _items];
   _list pushBack [ _objName + "." + "Backpacks", _backpacks];
+  _list pushBack [ _objName + "." + "TurretMagazines", _turretMags];
+  _list pushBack [ _objName + "." + "AmmoCargo", _ammoCargo];
+  _list pushBack [ _objName + "." + "FuelCargo", _fuelCargo];
+  _list pushBack [ _objName + "." + "RepairCargo", _repairCargo];
   
   true
 };
