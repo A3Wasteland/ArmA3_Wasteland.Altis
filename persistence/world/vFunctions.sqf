@@ -278,7 +278,11 @@ v_restoreVehicle = {_this spawn {
   };
   
   if (isARRAY(_cargo_backpacks)) then {
-    { _obj addBackpackCargoGlobal _x } forEach _cargo_backpacks;
+    {
+      if (not((_x select 0) isKindOf "Weapon_Bag_Base")) then {
+        _obj addBackpackCargoGlobal _x
+      };
+    } forEach _cargo_backpacks;
   };
   
   if (isARRAY(_cargo_items)) then {
