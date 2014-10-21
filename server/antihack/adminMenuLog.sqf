@@ -13,6 +13,12 @@ if (_sentChecksum == _flagChecksum) then {
 	_action = [_this, 2, "", [""]] call BIS_fnc_param;
 	_value = [_this, 3, "", [0,"",[]]] call BIS_fnc_param;
 
-	["AdminLog2" call PDB_objectFileName, _uid + ".records", [_name, _action, _value]] call stats_push;
+  private["_record"];
+  _record = {[
+    ["name",_name],
+    ["action",_action],
+    ["value",_value]
+  ]};
 
+	["AdminLog2" call PDB_objectFileName, _uid + ".records", _record] call stats_push;
 };
