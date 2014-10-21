@@ -422,23 +422,26 @@ v_addSaveVehicle = {
     _objName = format["veh_%1_%2",ceil(time), ceil(random 10000)];
     _obj setVariable ["vehicle_key", _objName, true];
   };
-    
-  _list pushBack [ _objName + "." + "Class", _class];
-  _list pushBack [ _objName + "." + "Position", _pos];
-  _list pushBack [ _objName + "." + "Direction", _dir];
-  _list pushBack [ _objName + "." + "HoursAlive", _totalHours];
-  _list pushBack [ _objName + "." + "Damage", _damage];
-  _list pushBack [ _objName + "." + "AllowDamage", _allowDamage];
-  _list pushBack [ _objName + "." + "Variables", _variables];
-  _list pushBack [ _objName + "." + "Texture", _texture];
-  _list pushBack [ _objName + "." + "Weapons", _weapons];
-  _list pushBack [ _objName + "." + "Magazines", _magazines];
-  _list pushBack [ _objName + "." + "Items", _items];
-  _list pushBack [ _objName + "." + "Backpacks", _backpacks];
-  _list pushBack [ _objName + "." + "TurretMagazines", _turretMags];
-  _list pushBack [ _objName + "." + "AmmoCargo", _ammoCargo];
-  _list pushBack [ _objName + "." + "FuelCargo", _fuelCargo];
-  _list pushBack [ _objName + "." + "RepairCargo", _repairCargo];
+
+  _list pushBack [_objName, ([
+    ["Class", _class],
+    ["Position", _pos],
+    ["Direction", _dir],
+    ["HoursAlive", _totalHours],
+    ["Damage", _damage],
+    ["AllowDamage", _allowDamage],
+    ["Variables", _variables],
+    ["Texture", _texture],
+    ["Weapons", _weapons],
+    ["Magazines", _magazines],
+    ["Items", _items],
+    ["Backpacks", _backpacks],
+    ["TurretMagazines", _turretMags],
+    ["AmmoCargo", _ammoCargo],
+    ["FuelCargo", _fuelCargo],
+    ["RepairCargo", _repairCargo]
+  ] call sock_hash)];
+
   
   true
 };

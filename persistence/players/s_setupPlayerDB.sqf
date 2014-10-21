@@ -25,8 +25,8 @@ fn_deletePlayerSave = {
 
   if (alive _player && {_player getVariable ["FAR_isUnconscious", 0] == 0})  exitWith {
     init(_scope,_UID call PDB_playerFileName);
-	[_scope, "PlayerInfo", _info] call stats_hash_set;
-	[_scope, "PlayerSave", _data] call stats_hash_set;
+    [_scope, "PlayerInfo", (_info call sock_hash)] call stats_set;
+    [_scope, "PlayerSave", (_data call sock_hash)] call stats_set;
   };
 };
 

@@ -14,11 +14,11 @@ if (_sentChecksum == _flagChecksum) then {
 	_value = [_this, 3, "", [0,"",[]]] call BIS_fnc_param;
 
   private["_record"];
-  _record = {[
+  _record = [
     ["name",_name],
     ["action",_action],
     ["value",_value]
-  ]};
+  ];
 
-	["AdminLog2" call PDB_objectFileName, _uid + ".records", _record] call stats_push;
+	["AdminLog2" call PDB_objectFileName, _uid + ".records", (_record call sock_hash)] call stats_push;
 };
