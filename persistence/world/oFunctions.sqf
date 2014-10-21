@@ -25,7 +25,8 @@ o_isBaseSavingOn = {
 };
 
 o_isStaticWeapon = {
-  ARGVX4(0,_class,"",false);
+  ARGVX4(0,_obj,objNull,false);
+  init(_class,typeOf _obj);
   (_class isKindOf "StaticWeapon")
 };
 
@@ -43,7 +44,8 @@ o_isBeaconSavingOn = {
 };
 
 o_isBox = {
-  ARGVX4(0,_class,"",false);
+  ARGVX4(0,_obj,objNull,false);
+  init(_class,typeOf _obj);
   (_class isKindOf "ReammoBox_F")
 };
 
@@ -91,30 +93,41 @@ o_hasInventory = {
 };
          
 o_isSaveable = {
-  ARGVX3(0,_class,"");
-  ARGV4(1,_obj,objNull);
+  //diag_log format["%1 call o_isSaveable", _this];
+  ARGVX3(0,_obj,objNull);
+
+  init(_class, typeOf _obj);
+
+  if (!(alive _obj)) exitWith {false};
+  if ([_obj] call o_isVehicle) exitWith {false};
+  if ([_obj] call o_isInSaveList) exitWith {true};
+
 
   init(_boxSavingOn, call o_isBoxSavingOn);
-  
-  if (isNil "_class") exitWith {_boxSavingOn};
-    
+
   if ([_obj] call o_isBeacon) exitWith {
-    call o_isBeaconSavingOn;
+    diag_log format["%1 is beacon", _obj];
+    (call o_isBeaconSavingOn)
   };
   
   if ([_obj] call o_isWarchest) exitWith {
-    call o_isWarchestSavingOn;
+    //diag_log format["%1 is warchest", _obj];
+    (call o_isWarchestSavingOn)
   };
   
-  if ([_class] call o_isStaticWeapon) exitWith {
-    call o_isStaticWeaponSavingOn;
+  if ([_obj] call o_isStaticWeapon) exitWith {
+    //diag_log format["%1 is static weapon", _obj];
+    (call o_isStaticWeaponSavingOn)
   };
-  
-  if ([_class] call o_isBox) exitWith {
-    (_boxSavingOn)
+
+  def(_locked);
+  _locked = _obj getVariable ["objectLocked", false];
+
+  if ([_obj] call o_isBox) exitWith {
+    (_boxSavingOn && _locked)
   };
-  
-  (_boxSavingOn)
+
+  (_boxSavingOn && _locked)
 };
 
 o_isVehicle = {
@@ -240,13 +253,12 @@ o_restoreObject = {_this spawn {
     } forEach _variables;
   };
   
-  
-  if (not([_class,_obj] call o_isSaveable)) exitWith {
+  _obj setVariable ["objectLocked", true, true]; // force lock
+
+  if (not([_obj] call o_isSaveable)) exitWith {
     diag_log format["%1(%2) has been deleted, it is not saveable", _object_key, _class];
     deleteVehicle _obj;
   };
-  
-  
 
   
   _obj setPosWorld ATLtoASL _pos;
@@ -259,8 +271,7 @@ o_restoreObject = {_this spawn {
     _obj setVariable ["baseSaving_hoursAlive", _hours_alive];
   };
   
-  _obj setVariable ["objectLocked", true, true]; // force lock
-  
+
   if (isSCALAR(_damage)) then {
     _obj setDamage _damage;
   };
@@ -349,7 +360,6 @@ o_isInSaveList = {
   ((o_saveList find _obj) >= 0)
 };
 
-
 o_fillVariables = {
   ARGVX3(0,_obj,objNull);
   ARGVX3(1,_variables,[]);
@@ -398,36 +408,18 @@ o_addSaveObject = {
   ARGVX3(0,_list,[]);
   ARGVX3(1,_obj,objNull);
   
-  if (!(alive _obj)) exitWith {};
-  
-  def(_class);
-  def(_locked);
-  _class = typeOf _obj;
-  _locked = _obj getVariable ["objectLocked", false];
-  
-  if (not(_locked)) exitWith {};
-  
-  if ([_obj] call o_isVehicle) exitWith {};
-  
-  def(_inSaveList);
-  def(_isSaveable);
-  
-  _inSaveList = [_obj] call o_isInSaveList;
-  _isSaveable = [_class,_obj] call o_isSaveable;
-  
-  diag_log format["[%1] call o_inSaveList = %2", _obj, _inSaveList];
-  diag_log format["[%1] call o_isSaveable = %2", _obj, _isSaveable];
 
-  if (not(_inSaveList || {_isSaveable})) exitWith {};
-  
+  if (not([_obj] call o_isSaveable)) exitWith {};
+
   diag_log format["will save %1", _obj];
-  
+  def(_class);
   def(_netId);
   def(_pos);
   def(_dir);
   def(_damage);
   def(_allowDamage);
- 
+
+  _class = typeOf _obj;
  	_netId = netId _obj;
   _pos = ASLtoATL getPosWorld _obj;
   _dir = [vectorDir _obj, vectorUp _obj];
@@ -455,7 +447,7 @@ o_addSaveObject = {
  
   
   init(_variables,[]);
-  [_class, _obj,_variables] call o_fillVariables;
+  [_obj,_variables] call o_fillVariables;
  
  
   init(_weapons,[]);
@@ -472,7 +464,7 @@ o_addSaveObject = {
   };
   
   init(_turretMags,[]);
-  if ((call o_isStaticWeaponSavingOn) && {[_class] call o_isStaticWeapon}) then {
+  if ((call o_isStaticWeaponSavingOn) && {[_obj] call o_isStaticWeapon}) then {
     _turretMags = magazinesAmmo _obj;
 	};
 
@@ -536,7 +528,7 @@ o_saveAllObjects = {_this spawn {
   init(_count,0);
   init(_request,[_scope]);
   
-  //[_scope] call stats_wipe;
+  [_scope] call stats_wipe;
   init(_bulk_size,5);
   
   {
