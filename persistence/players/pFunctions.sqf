@@ -396,6 +396,8 @@ fn_savePlayerData = {
 
       _gear pushBack ["WastelandItems", _wastelandItems];
 
+      //FIXME: re-enable this optimization once stats_merge is implement 
+      /*
       _gearStr = str _gear;
 
       if (_gearStr != ["playerData_gear", ""] call getPublicVar) then
@@ -403,6 +405,8 @@ fn_savePlayerData = {
         { _data pushBack _x } forEach _gear;
         playerData_gear = _gearStr;
       };
+      */
+      { _data pushBack _x } forEach _gear;
 
       if (alive player) then
       {
