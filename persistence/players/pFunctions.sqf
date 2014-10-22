@@ -7,6 +7,27 @@ diag_log "pFunctions.sqf loading ...";
 
 #include "macro.h"
 
+//Some wrappers for logging
+p_log_severe = {
+  ["p_functions", _this] call log_severe;
+};
+p_log_info = {
+  ["p_functions", _this] call log_info;
+};
+p_log_fine = {
+  ["p_functions", _this] call log_fine;
+};
+p_log_finer = {
+  ["p_functions", _this] call log_finer;
+};
+p_log_finest = {
+  ["p_functions", _this] call log_finest;
+};
+p_log_set_level = {
+  ["p_functions", _this] call log_set_level;
+};
+//Set default logging level for this component
+LOG_INFO_LEVEL call p_log_set_level;
 p_resetPlayerData = {
   removeAllWeapons player;
   removeAllAssignedItems player;
@@ -111,8 +132,8 @@ p_copy_pairs = {
 
 
 fn_applyPlayerData = {
-  diag_log format["%1 call fn_applyPlayerData",_this];
   ARGVX3(0,_data,[]);
+  format["%1 call fn_applyPlayerData;", _this] call p_log_finest;
 
   def(_loaded_magazines);
   def(_backpack_class);
@@ -434,6 +455,7 @@ fn_applyPlayerInfo = {
 p_restoreInfo = {
   ARGVX2(0,_hash);
   if (!isCODE(_hash)) exitWith {};
+  format["%1 call p_restoreInfo;", _this] call p_log_finest;
   def(_data);
   _data = call _hash;
 
@@ -460,6 +482,7 @@ p_firstSpawn = {
   player enableSimulation true;
   player allowDamage true;
   player setVelocity [0,0,0];
+  format["%1 call p_firstSpawn;", _this] call p_log_finest;
 
   execVM "client\functions\firstSpawn.sqf";
 };
@@ -467,6 +490,7 @@ p_firstSpawn = {
 p_restoreData = {
   diag_log format["%1 call p_restoreData",_this];
   ARGV2(0,_hash);
+  format["%1 call p_restoreData;", _this] call p_log_finest;
 
   def(_exit);
   _exit = {
@@ -480,6 +504,7 @@ p_restoreData = {
   _dataValid = (isARRAY(_data) && {count(_data) > 0});
 
   if (!_dataValid) exitWith {
+    format["saved data for %1 is not valid;", player] call p_log_finest;
     playerData_resetPos = true;
     call p_firstSpawn;
     call _exit;
@@ -492,6 +517,7 @@ p_restoreData = {
 
 p_getScope = {
   ARGVX3(0,_id,"");
+  format["%1 call p_getScope;", _this] call p_log_finest;
   waitUntil {not(isNil "PDB_PlayerFileID")};
   (format["%1%2",PDB_PlayerFileID,_id])
 };
@@ -500,6 +526,7 @@ fn_requestPlayerData = {[] spawn {
   init(_player,player);
   init(_uid,getPlayerUID player);
   init(_scope,[_uid] call p_getScope);
+  format["%1 call fn_requestPlayerData;", _this] call p_log_finest;
 
 
   playerData_alive = nil;

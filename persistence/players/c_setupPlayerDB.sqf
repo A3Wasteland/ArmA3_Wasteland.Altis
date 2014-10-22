@@ -3,8 +3,8 @@
 
 if (isDedicated) exitWith {};
 
+call compile preProcessFileLineNumbers "persistence\sock\main.sqf";
 #include "pFunctions.sqf"
 
-call compile preProcessFileLineNumbers "persistence\sock\main.sqf";
 
 
