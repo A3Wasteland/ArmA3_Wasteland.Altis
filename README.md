@@ -1,25 +1,61 @@
-This is a fork of the Wasteland mission with persistence support using the Node.js module [sock-rpc-stats](https://www.npmjs.org/package/sock-rpc-stats), and the [sock.dll / sock.so](https://bitbucket.org/micovery/sock.dll) Arma 3 extension.
+###Wasteland.Altis (Sock-RPC-Stats fork) ###
+
+This is a fork of the Wasteland mission with persistence support using the [sock-rpc-stats Node.js module](https://www.npmjs.org/package/sock-rpc-stats), and the [sock.dll / sock.so](https://bitbucket.org/micovery/sock.dll) Arma 3 extension.
 
 The main mission itself is maintained by "Team Wasteland".
+
+
+###Demo video tutorial (dedicated server)###
+
+
+[![Demo Video](http://img.youtube.com/vi/-NIziTcKwok/0.jpg)](http://www.youtube.com/watch?v=-NIziTcKwok)
+
+### Prerequisites ###
+  * Download and install [Node.js](http://nodejs.org/download/)
+  * Install Arma 3 dedicated server by following [these instructions](https://community.bistudio.com/wiki/Arma_3_Dedicated_Server) from the BIS Wiki
+  
+
+###Linux Setup Instructions (dedicated server)###
+
+0. Install the stats server packages using npm
+<pre>npm install -g sock-rpc-stats</pre>
+0. Start the Stats server (example below using file system storage)
+<pre>sock-rpc-stats --url=file://./stats --repl</pre>
+0. Open a new terminal, and switch to the Arma 3 server directory
+<pre>cd ~/steamcmd/arma3</pre>
+0. Download and unzip the Wasteland saving pack  
+<pre>wget https://github.com/micovery/Release_Files/raw/master/sock-rpc-stats/A3W_Saving_Pack-sock.zip</pre>
+<pre>unzip A3W_Saving_Pack-sock.zip</pre>
+0. Download misison file, and put it in the mpmissions directory
+<pre>wget https://github.com/micovery/Release_Files/raw/master/sock-rpc-stats/ArmA3_Wasteland_v0.9h-sock.Altis.pbo</pre>
+<pre>mv ArmA3_Wasteland_v0.9h-sock.Altis.pbo mpmissions/</pre>
+0. Modify your server config file to reference the Wasteland mission
+<pre>
+  //excerpt from server.cfg
+  class Missions {
+    class Test {
+      template="ArmA3_Wasteland_v0.9h-sock.Altis";
+      difficulty="regular";
+    };
+  };
+</pre>
+0. Start the Arma 3 server
+<pre>./arma3server -sock_host=127.0.0.1 -sock_port=1337 -profiles=server -config=server/server.cfg -cfg=server/arma3.cfg -port=2302</pre>
+
+### PBOs ###
+
+If you are looking for the prebuilt PBO files head over to the [Release Files](https://github.com/micovery/ArmA3_Wasteland.Altis/releases/). 
+
+###Help###
+
 
 For defects related to the mission please visit their [forums](http://forums.a3wasteland.com/), or submit issues directly to their [github repository](https://github.com/A3Wasteland/ArmA3_Wasteland.Altis/issues)
 
 For defects related to persistence, use the [issue tracker](https://github.com/micovery/ArmA3_Wasteland.Altis/issues) in this repository.
 
-If you are looking for the prebuilt PBO files head over to the [Release_Files repository](https://github.com/micovery/Release_Files/tree/master/sock-rpc-stats). There also instructions, and a video of how to setup the mission.
 
 
-
-*Wasteland.Altis* by Team Wasteland!
-===================
-
-ArmA 3 Wasteland is a harsh survival sandbox mission where 2 teams and independent players fight for survival.
-
-
-The mission is not ready yet, so for now it's just a placeholder :)
-
-
-*Team Wasteland* collaborators:
+### *Team Wasteland* ###
 
        GoT - JoSchaap
        TPG - AgentRev
