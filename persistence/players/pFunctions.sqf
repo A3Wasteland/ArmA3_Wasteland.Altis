@@ -499,6 +499,7 @@ p_restoreData = {
   def(_exit);
   _exit = {
     playerData_loaded = true;
+    player allowDamage true;
   };
 
   def(_data);
@@ -515,7 +516,7 @@ p_restoreData = {
   };
 
    playerData_alive = true;
-   [_data] spawn fn_applyPlayerData;
+   [_data] call fn_applyPlayerData;
    call _exit;
 };
 
