@@ -14,7 +14,7 @@ _markerText = _this select 2;
 clientMissionMarkers pushBack [_markerName, _randomPos, _markerText];
 publicVariable "clientMissionMarkers";
 
-if (!isDedicated) then
+if (!isDedicated && !isNil "updateMissionsMarkers") then
 {
   [] spawn updateMissionsMarkers;
 };

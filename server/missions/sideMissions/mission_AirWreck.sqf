@@ -29,7 +29,7 @@ diag_log format["WASTELAND SERVER - Side Mission Resumed: %1",_missionType];
 [_missionMarkerName,_randomPos,_missionType] call createClientMarker;
 
 //Vehicle Class, Posistion, Fuel, Ammo, Damage
-_vehicle = ["O_Heli_Light_02_unarmed_F",[(_randomPos select 0) + 50, (_randomPos select 1) + 50,0],0,0,1,"NONE"] call createMissionVehicle;
+_vehicle = ["O_Heli_Light_02_unarmed_F", _randomPos vectorAdd ([[25 + random 25, 0, 0], random 360] call BIS_fnc_rotateVector2D),0,0,1,"NONE"] call createMissionVehicle;
 
 _box = createVehicle ["Box_East_WpsSpecial_F",[(_randomPos select 0), (_randomPos select 1),0],[], 0, "NONE"];
 [_box,"mission_USLaunchers"] call fn_refillbox;
