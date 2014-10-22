@@ -473,10 +473,14 @@ v_saveAllVechiles = {_this spawn {
   diag_log format ["A3W - %1 vehicles have been saved", _count];
 };};
 
+v_saveLoop_interval = OR(A3W_vehicle_saveInterval,60);
+diag_log format["config: A3W_vehicle_saveInterval = %1", v_saveLoop_interval];
+
+
 v_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
-    sleep 60;
+    sleep v_saveLoop_interval;
     [_scope] call v_saveAllVechiles;
   };  
 };

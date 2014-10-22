@@ -552,10 +552,14 @@ o_saveAllObjects = {_this spawn {
   diag_log format ["A3W - %1 objects have been saved", _count];
 };};
 
+
+o_saveLoop_interval = OR(A3W_object_saveInterval,60);
+diag_log format["config: A3W_object_saveInterval = %1", o_saveLoop_interval];
+
 o_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
-    sleep 30;
+    sleep o_saveLoop_interval;
     diag_log format["saving all objects"];
     [_scope] call o_saveInfo;
     [_scope] call o_saveAllObjects;
