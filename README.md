@@ -4,6 +4,9 @@ This is a fork of the Wasteland mission with persistence support using the [sock
 
 The main mission itself is maintained by "Team Wasteland".
 
+### PBOs ###
+
+If you are looking for the prebuilt PBO files head over to the [Release Files](https://github.com/micovery/ArmA3_Wasteland.Altis/releases/). 
 
 ###Demo video tutorial (dedicated server)###
 
@@ -42,9 +45,6 @@ The main mission itself is maintained by "Team Wasteland".
 0. Start the Arma 3 server
 <pre>./arma3server -sock_host=127.0.0.1 -sock_port=1337 -profiles=server -config=server/server.cfg -cfg=server/arma3.cfg -port=2302</pre>
 
-### PBOs ###
-
-If you are looking for the prebuilt PBO files head over to the [Release Files](https://github.com/micovery/ArmA3_Wasteland.Altis/releases/). 
 
 ###Help###
 
