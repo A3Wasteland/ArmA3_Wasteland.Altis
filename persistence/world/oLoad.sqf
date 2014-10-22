@@ -63,6 +63,8 @@ if (!isNil "_exists" && {_exists}) then
 					_damage = [_fileName, _objName, "Damage", "NUMBER"] call PDB_read; // iniDB_read
 					_allowDamage = [_fileName, _objName, "AllowDamage", "NUMBER"] call PDB_read; // iniDB_read
 
+					{ if (typeName _x == "STRING") then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
+
 					_obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
 					_obj setPosWorld ATLtoASL _pos;
 

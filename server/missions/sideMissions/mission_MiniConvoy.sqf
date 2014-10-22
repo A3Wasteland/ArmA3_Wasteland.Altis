@@ -183,6 +183,8 @@ _createVehicle = {
     _vehicle = createVehicle [_type, _position, [], 0, "None"];
 	_vehicle setVariable ["BIS_enableRandomization", false, true];
 	[_vehicle] call vehicleSetup;
+	_vehicle setVariable ["R3F_LOG_disabled", true, true];
+	_vehicle setVariable ["A3W_missionVehicle", true];
     _vehicle setDir _direction;
     _groupsm addVehicle _vehicle;
     

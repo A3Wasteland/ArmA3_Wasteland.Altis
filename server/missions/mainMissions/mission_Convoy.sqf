@@ -181,6 +181,8 @@ _createVehicle = {
     
     _vehicle = _type createVehicle _position;
 	[_vehicle] call vehicleSetup;
+	_vehicle setVariable ["R3F_LOG_disabled", true, true];
+	_vehicle setVariable ["A3W_missionVehicle", true];
     _vehicle setDir _direction;
     _group addVehicle _vehicle;
     

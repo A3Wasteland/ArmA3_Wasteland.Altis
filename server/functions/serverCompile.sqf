@@ -72,6 +72,7 @@ addMilCap = [_path, "addMilCap.sqf"] call mf_compile;
 cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
 convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_compile;
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
+getMagazineDetailAmmo = [_path, "getMagazineDetailAmmo.sqf"] call mf_compile;
 findClientPlayer = [_path, "findClientPlayer.sqf"] call mf_compile;
 fn_onPlayerDisconnected = [_path, "fn_onPlayerDisconnected.sqf"] call mf_compile;
 fn_publicVariableAll = [_path, "fn_publicVariableAll.sqf"] call mf_compile;

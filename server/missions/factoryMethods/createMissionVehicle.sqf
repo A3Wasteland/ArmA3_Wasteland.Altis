@@ -27,6 +27,7 @@ _veh setVehicleAmmo _ammo;
 
 _veh setVehicleLock "LOCKED";
 _veh setVariable ["R3F_LOG_disabled", true, true];
+_veh setVariable ["A3W_missionVehicle", true];
 
 // _veh spawn cleanVehicleWreck;
 

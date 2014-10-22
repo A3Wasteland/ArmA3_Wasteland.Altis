@@ -47,6 +47,7 @@ _createVehicle = {
     _grouphf = _this select 3;
     _vehicle = _type createVehicle _position;
 	[_vehicle] call vehicleSetup;
+	_vehicle setVariable ["A3W_missionVehicle", true];
     _vehicle setDir _direction;
     _grouphf addVehicle _vehicle;
     // create units
