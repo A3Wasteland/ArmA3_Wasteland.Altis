@@ -492,8 +492,8 @@ p_restoreData = {
 
 p_getScope = {
   ARGVX3(0,_id,"");
-  waitUntil {not(isNil "PDB_ServerID")};
-  (format["%1%2",PDB_ServerID,_id])
+  waitUntil {not(isNil "PDB_PlayerFileID")};
+  (format["%1%2",PDB_PlayerFileID,_id])
 };
 
 fn_requestPlayerData = {[] spawn {

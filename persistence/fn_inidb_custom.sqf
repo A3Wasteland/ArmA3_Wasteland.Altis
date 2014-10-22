@@ -27,7 +27,7 @@ PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', 
 PDB_databaseNameCompiler = PDB_objectFileName;
 
 call compile preProcessFileLineNumbers "persistence\sock\inidb_adapter.sqf";
-publicVariable "PDB_ServerID";
+publicVariable "PDB_PlayerFileID";
 
 
 PDB_defaultValue = {
