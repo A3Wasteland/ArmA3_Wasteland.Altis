@@ -64,6 +64,9 @@ spawnRandom = "client\functions\spawnRandom.sqf" call mf_compile;
 // refuelVehicle = "client\systems\playerMenu\refuel.sqf" call mf_compile;
 // repairVehicle = "client\systems\playerMenu\repair.sqf" call mf_compile;
 
+//AJ Functions
+fn_cameracheck = "addons\cameracheck\cameracheck.sqf" call mf_compile;
+
 // Sync client with server time
 timeSync = "client\functions\clientTimeSync.sqf" call mf_compile;
 
