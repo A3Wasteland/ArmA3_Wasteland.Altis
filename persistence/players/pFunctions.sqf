@@ -498,8 +498,9 @@ p_restoreData = {
 
   def(_exit);
   _exit = {
-    playerData_loaded = true;
     player allowDamage true;
+    call p_firstSpawn;
+    playerData_loaded = true;
   };
 
   def(_data);
@@ -511,7 +512,6 @@ p_restoreData = {
   if (!_dataValid) exitWith {
     format["saved data for %1 is not valid;", player] call p_log_finest;
     playerData_resetPos = true;
-    call p_firstSpawn;
     call _exit;
   };
 
