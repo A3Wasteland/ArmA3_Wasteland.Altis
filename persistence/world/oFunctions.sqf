@@ -177,7 +177,7 @@ o_restoreObject = {_this spawn {
   def(_class);
   def(_dir);
   def(_damage);
-  def(_allow_damage);
+  def(_allowDamage);
   def(_texture);
   def(_variables);
   def(_cargo_weapons);
@@ -200,7 +200,7 @@ o_restoreObject = {_this spawn {
       case "Position": { _pos = OR(_value,nil);};
       case "Direction": { _dir = OR(_value,nil);};
       case "Damage": { _damage = OR(_value,nil);};
-      case "AllowDamage": { _allow_damage = OR(_value,nil);};
+      case "AllowDamage": { _allowDamage = OR(_value,nil);};
       case "Texture": { _texture = OR(_value,nil);};
       case "Weapons": { _cargo_weapons = OR(_value,nil);};
       case "Items": { _cargo_items = OR(_value,nil);};
@@ -276,7 +276,7 @@ o_restoreObject = {_this spawn {
     _obj setDamage _damage;
   };
   
-  _allowDamage = if(isSCALAR(_allowDamage) && {_allowDamage > 0}) then { true } else { false};
+  _allowDamage = if(isSCALAR(_allowDamage) && {_allowDamage <= 0}) then { false } else { true };
   _obj setVariable ["allowDamage", _allowDamage];
   _obj allowDamage _allowDamage;
 
@@ -376,6 +376,12 @@ o_fillVariables = {
   _ownerUID = _obj getVariable "ownerUID";
   if (isSTRING(_ownerUID)) then {
     _variables pushBack ["ownerUID", _ownerUID];
+  };
+
+  def(_ownerN);
+  _ownerN = _obj getVariable "ownerN";
+  if (isSTRING(_ownerN)) then {
+    _variables pushBack ["ownerN", _ownerN];
   };
   
   if ([_obj] call o_isBox) then {
