@@ -126,7 +126,6 @@ v_restoreVehicle = {_this spawn {
   def(_class);
   def(_dir);
   def(_damage);
-  def(_allow_damage);
   def(_texture);
   def(_variables);
   def(_cargo_weapons);
@@ -137,11 +136,13 @@ v_restoreVehicle = {_this spawn {
   def(_cargo_ammo);
   def(_cargo_fuel);
   def(_cargo_repair);
+  def(_fuel);
+  def(_hitPoints);
+
 
   def(_key);
   def(_value);
 
-  
   {
     _key = _x select 0;
     _value = _x select 1;
@@ -150,7 +151,6 @@ v_restoreVehicle = {_this spawn {
       case "Position": { _pos = OR(_value,nil);};
       case "Direction": { _dir = OR(_value,nil);};
       case "Damage": { _damage = OR(_value,nil);};
-      case "AllowDamage": { _allow_damage = OR(_value,nil);};
       case "Texture": { _texture = OR(_value,nil);};
       case "Weapons": { _cargo_weapons = OR(_value,nil);};
       case "Items": { _cargo_items = OR(_value,nil);};
@@ -161,8 +161,9 @@ v_restoreVehicle = {_this spawn {
       case "AmmoCargo": { _cargo_ammo = OR(_value,nil);};
       case "FuelCargo": { _cargo_fuel = OR(_value,nil);};
       case "RepairCargo": { _cargo_repair = OR(_value,nil);};
-      case "TurretMagazines": { _turret_magazines = OR(_value,nil);};
-
+      //case "TurretMagazines": { _turret_magazines = OR(_value,nil);};
+      case "Fuel": { _fuel = OR(_value,nil);};
+      case "Hitpoints": { _hitPoints = OR(_value,nil);};
     };
   } forEach _vehicle_data;
 
@@ -223,10 +224,15 @@ v_restoreVehicle = {_this spawn {
   if (isSCALAR(_damage)) then {
     _obj setDamage _damage;
   };
+
+  if (isSCALAR(_fuel)) then {
+    _obj setFuel _fuel;
+  };
+
+  if (isARRAY(_hitPoints)) then {
+    { _obj setHitPointDamage _x } forEach _hitPoints;
+  };
    
-  _allowDamage = if(isSCALAR(_allowDamage) && {_allowDamage > 0}) then { true } else { false};
-  _obj setVariable ["allowDamage", _allowDamage];
-  _obj allowDamage _allowDamage;
 
   //restore vehicle variables
   if (isARRAY(_variables)) then {
@@ -251,7 +257,7 @@ v_restoreVehicle = {_this spawn {
   clearMagazineCargoGlobal _obj;
   clearItemCargoGlobal _obj;
   clearBackpackCargoGlobal _obj;
-  _obj setVehicleAmmo 0;
+  //_obj setVehicleAmmo 0;
           
   if (isARRAY(_cargo_weapons)) then {
     { _obj addWeaponCargoGlobal _x } forEach _cargo_weapons;
@@ -331,12 +337,10 @@ v_addSaveVehicle = {
   def(_pos);
   def(_dir);
   def(_damage);
-  def(_allowDamage);
   def(_texture);
   def(_spawnTime);
   def(_hoursAlive);
   def(_hoursSinceSpawn);
-  def(_ownerUID);
 
   _class = typeOf _obj;
   _netId = netId _obj;
@@ -345,12 +349,10 @@ v_addSaveVehicle = {
   _pos set [2, ((_pos select 2) + 0.3)];
   _dir = [vectorDir _obj, vectorUp _obj];
   _damage = damage _obj;
-  _allowDamage = 1;
   _texture = _obj getVariable ["A3W_objectTexture", ""];
   _spawnTime = _obj getVariable "baseSaving_spawningTime";
   _hoursAlive = _obj getVariable "baseSaving_hoursAlive";
-  _ownerUID = _obj getVariable ["ownerUID",""];
-  
+
   if (isNil "_spawnTime") then {
     _spawnTime = diag_tickTime;
     _obj setVariable ["baseSaving_spawningTime", _spawnTime, true];
@@ -366,8 +368,12 @@ v_addSaveVehicle = {
   
   def(_variables);
   _variables = [];
-  
-  _variables pushBack ["ownerUID", _ownerUID];
+
+  def(_ownerUID);
+  _ownerUID = _obj getVariable ["ownerUID", nil];
+  if (isSTRING(_ownerUID) && {_ownerUID != ""}) then {
+    _variables pushBack ["ownerUID", _ownerUID];;
+  };
  
   def(_ownerN);
   _ownerN = _obj getVariable ["ownerN", nil];
@@ -391,9 +397,16 @@ v_addSaveVehicle = {
     _turretMags = magazinesAmmo _obj;
   };
 
+  init(_hitPoints,[]);
+  {
+    _hitPoint = configName _x;
+    _hitPoints pushBack [_hitPoint, _obj getHitPointDamage _hitPoint];
+  } forEach (_obj call getHitPoints);
+
   init(_ammoCargo,getAmmoCargo _obj);
   init(_fuelCargo,getFuelCargo _obj);
   init(_repairCargo,getRepairCargo _obj);
+  init(_fuel, fuel _obj);
 
   def(_objName);
   _objName = _obj getVariable ["vehicle_key", nil];
@@ -409,7 +422,7 @@ v_addSaveVehicle = {
     ["Direction", _dir],
     ["HoursAlive", _totalHours],
     ["Damage", _damage],
-    ["AllowDamage", _allowDamage],
+    ["Fuel", _fuel],
     ["Variables", _variables],
     ["Texture", _texture],
     ["Weapons", _weapons],
@@ -419,7 +432,8 @@ v_addSaveVehicle = {
     ["TurretMagazines", _turretMags],
     ["AmmoCargo", _ammoCargo],
     ["FuelCargo", _fuelCargo],
-    ["RepairCargo", _repairCargo]
+    ["RepairCargo", _repairCargo],
+    ["Hitpoints", _hitPoints]
   ] call sock_hash)];
 
   
