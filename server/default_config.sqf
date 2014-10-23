@@ -42,6 +42,7 @@ PDB_ObjectFileID = "A3W_";         // Object savefile prefix (change this in cas
 A3W_vehicle_saveInterval = 60;     // Number of seconds between vehicle saves
 A3W_object_saveInterval = 60;      // Number of seconds between object saves
 A3W_locked_vehicles_list = [];     // List of class names for vehicles that should be automatically locked unpon restore
+A3W_vehicleLifetime = 36;          // Maximum lifetime in hours for saved vehicles (leave it unset, or set to 0 for no limit)
 
 // Spawning settings
 A3W_serverSpawning = 1;            // Vehicle, object, and loot spawning (0 = no, 1 = yes)
