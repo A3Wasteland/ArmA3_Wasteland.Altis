@@ -12,10 +12,22 @@ var options = {
   port: {
     default: 1337,
     describe: "port number of the stats server to connect to"
+  },
+  wait: {
+    default: 120,
+    describe: "Maximum number of seconds to wait for server response"
   }
 };
 
-var ctx = {};
+var id = new Date().getTime().toString();
+var ctx = {
+  msg: {
+    id: id,
+    from: id,
+    to: "server",
+    subject: "restart"
+  }
+};
 
 var processCommandLine = function(cb) {
   try {
@@ -37,6 +49,7 @@ var connectToStatsServer = function(cb) {
   try {
     var client = new Client(ctx.argv);
     client.connect(function(err) {
+      console.log("connected");
       ctx.client = client;
       return cb(err);
     });
@@ -70,19 +83,31 @@ var findMessageQueue = function(cb) {
   }
 };
 
-var sendMessageToServer = function(cb) {
+var flushReceiveQueue = function(cb) {
   try {
-    var message = {
-      id: new Date().getTime().toString(),
-      from: "server-restart",
-      to: "server",
-      subject: "restart"
-    };
-
-    ctx.client.push(ctx.scope, "server.recv", message, function(err) {
+    ctx.send = ctx.msg.to + ".recv";
+    ctx.recv = ctx.msg.from + ".recv";
+    console.log("scope=%s, send=%s, recv=%s", JSON.stringify(ctx.scope), JSON.stringify(ctx.send),JSON.stringify(ctx.recv));
+    ctx.client.set(ctx.scope, ctx.send, [], function(err) {
       try {
         if (err) throw err;
-        ctx.message = message;
+        cb(null);
+      }
+      catch(ex) {
+        cb(ex);
+      }
+    });
+  }
+  catch(ex) {
+    cb(ex);
+  };
+};
+
+var sendMessageToServer = function(cb) {
+  try {
+    ctx.client.push(ctx.scope, ctx.send, ctx.msg, function(err) {
+      try {
+        if (err) throw err;
         return cb(null);
       }
       catch(ex) {
@@ -99,34 +124,34 @@ var waitForServerResponse = function(cb) {
   try {
     var delay = 10;
     var attempts = 0;
+    var maxAttempts = Math.ceil(ctx.argv.wait / delay);
     var waitResponse = function(){
       attempts++;
-      if (attempts > 6) {
-        return cb(new Error(util.format("Did not receive response form server after %s contact attempts", attempts -1)));
+      if (attempts > maxAttempts) {
+        attempts--;
+        return cb(new Error(util.format("attempt(%s/%s): no response form server, giving up",attempts, maxAttempts, attempts)));
       }
 
-      var key = ctx.message.from + ".recv";
-      console.log("Waiting for server response at %s.%s", ctx.scope, key);
-      ctx.client.pop(ctx.scope, key, function(err, result) {
+
+      ctx.client.pop(ctx.scope, ctx.recv, function(err, result) {
         if (err) {
-          console.log("Remote error, will try again in %s seconds", delay);
+          console.log("attempt(%s/%s): remote error, will try again in %s seconds", attempts, maxAttempts, delay);
           console.log(err);
           return setTimeout(waitResponse,delay*1000);
         }
 
         if (!result) {
-          console.log("No response from server yet, will try again in %s seconds", delay);
+          console.log("attempt(%s/%s): no response from server, will try again in %s seconds", attempts, maxAttempts, delay);
+          return setTimeout(waitResponse,delay*1000);
+        }
+
+        if (!result.id || result.id != ctx.msg.id) {
+          console.log("attempt(%s/%s): protocol error, invalid response from server: %s, will try again in %s seconds", attempts, maxAttempts, JSON.stringify(result), delay);
           console.log(err);
           return setTimeout(waitResponse,delay*1000);
         }
 
-        if (!result.id || result.id != ctx.message.id) {
-          console.log("Protocol error, server sent invalid response: %s, will try again in %s seconds", JSON.stringify(result), delay);
-          console.log(err);
-          return setTimeout(waitResponse,delay*1000);
-        }
-
-        console.log("Server responded with: %s", JSON.stringify(result));
+        console.log("attempt(%s/%s): server response: %s", attempts, maxAttempts, JSON.stringify(result));
         return cb(null);
       });
     };
@@ -155,6 +180,7 @@ async.waterfall(
     processCommandLine,
     connectToStatsServer,
     findMessageQueue,
+    flushReceiveQueue,
     sendMessageToServer,
     waitForServerResponse
   ],

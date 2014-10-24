@@ -103,7 +103,7 @@ s_processMessage = {
 
 
   diag_log format["message queue: process(id:%1): {from: %2, to: %3, subject: %4}", str(_id), str(_from), str(_to), str(_subject)];
-  if (_subject == "restart" && _to == "server") exitWith {
+  if (_subject == "restart" && _to == "server" && _from != "server") exitWith {
     ([_scope,_id,_from,_to,_subject, OR(_body,nil)] call s_processRestartMessage)
   };
   diag_log format["message queue: process(id:%1): complete"];
