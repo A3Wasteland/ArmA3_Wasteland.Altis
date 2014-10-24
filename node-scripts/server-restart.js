@@ -16,6 +16,10 @@ var options = {
   wait: {
     default: 120,
     describe: "Maximum number of seconds to wait for server response"
+  },
+  name: {
+    default: "A3W",
+    describe: "Prefix name of the server to communicate with"
   }
 };
 
@@ -66,7 +70,7 @@ var findMessageQueue = function(cb) {
         if (err) throw err;
         for(var i = 0; i < result.length; i++) {
           var key = result[i];
-          if (key.match(/_Messages/)) {
+          if (key.match(new RegExp(ctx.argv.name + "_Messages$"))) {
             ctx.scope = key;
             return cb(null);
           }

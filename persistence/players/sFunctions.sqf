@@ -141,6 +141,11 @@ s_processMessages = {
 
 s_messageLoop = {
   ARGVX3(0,_scope,"");
+
+  //cleanup the message queue
+  diag_log format["message queue: cleaning up old messages"];
+  [_scope, "server.recv",[]] call stats_set;
+
   while {true} do {
     sleep 30;
     def(_script);
