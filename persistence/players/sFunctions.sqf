@@ -3,7 +3,7 @@
 //	@file Author: micovery
 //	@file Description: server functions
 
-diag_log "pFunctions.sqf loading ...";
+diag_log "sFunctions.sqf loading ...";
 
 #include "macro.h"
 
@@ -48,7 +48,7 @@ s_processRestartMessage = {
 
   diag_log format["Sending restart message ack"];
   //send ack that the message has been processed
-  def(_res_body);
+  def(_res);
   _res =
   [
     ["id", _id],
@@ -167,4 +167,4 @@ s_handleSaveEvent = { _this spawn {
   };
 };};
 
-diag_log "pFunctions.sqf loading complete";
+diag_log "sFunctions.sqf loading complete";
