@@ -56,6 +56,8 @@ switch (_lockState) do
 		{
 			_object setVariable ["objectLocked", true, true];
 			_object setVariable ["ownerUID", getPlayerUID player, true];
+			_object setVariable ["ownerN", name player, true];
+
 			
 			["Object locked!", 5] call mf_notify_client;
 		};

@@ -93,6 +93,10 @@ _setupPlayerDB = scriptNull;
 if (_playerSavingOn || _serverSavingOn) then
 {
 	_verIniDB = "iniDB" callExtension "version";
+	if (("sock" callExtension "version") != "") then {
+	  //sock-rpc-stats pretending to be iniDB 1.2
+	  _verIniDB = "1.2";
+	};
 
 	if (_verIniDB == "") then
 	{
@@ -136,12 +140,10 @@ if (_playerSavingOn || _serverSavingOn) then
 		if (_serverSavingOn) then
 		{
 			call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
+			call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
 		};
 
-		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
-		{
-			execVM "persistence\world\oSave.sqf";
-		};
+
 	};
 
 	{
