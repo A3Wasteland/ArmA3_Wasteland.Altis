@@ -15,11 +15,11 @@ if (!isServer) exitWith {};
 
 _savingMethod = ["A3W_savingMethod", 1] call getPublicVar;
 
-if (!isNil "PDB_ServerID") then
-{
-	PDB_PlayerFileID = PDB_ServerID;
-	PDB_ObjectFileID = PDB_ServerID;
-};
+
+PDB_ServerID = if (isNil "PDB_ServerID") then {"A3W"} else {PDB_ServerID};
+PDB_PlayerFileID = if (isNil "PDB_PlayerFileID") then {PDB_ServerID} else {PDB_PlayerFileID};
+PDB_ObjectFileID = if (isNil "PDB_ObjectFileID") then {PDB_ServerID} else {PDB_ObjectFileID};
+
 
 PDB_playerFileName = compileFinal ("format ['%1%2', '" + PDB_PlayerFileID + "', _this]");
 PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', _this]");

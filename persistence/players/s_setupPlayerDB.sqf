@@ -5,7 +5,7 @@ if (!isServer) exitWith {};
 
 diag_log "Loading s_setupPlayerDB ...";
 
-#include "macro.h"
+#include "sFunctions.sqf"
 
 fn_deletePlayerSave = {
   init(_scope,_this call PDB_playerFileName);
@@ -13,26 +13,16 @@ fn_deletePlayerSave = {
 };
 
 "savePlayerData" addPublicVariableEventHandler {
-  ARGVX3(1,_this,[]);
-  ARGVX3(0,_UID,"");
-  ARGVX3(1,_info,[]);
-  ARGVX3(2,_data,[]);
-  ARGVX3(3,_player,objNull);
-  
-  if (!alive _player) exitWith {
-    _UID call fn_deletePlayerSave;
-  };
-
-  if (alive _player && {_player getVariable ["FAR_isUnconscious", 0] == 0})  exitWith {
-    init(_scope,_UID call PDB_playerFileName);
-    [_scope, "PlayerInfo", (_info call sock_hash)] call stats_set;
-    [_scope, "PlayerSave", (_data call sock_hash)] call stats_set;
-  };
+  _this call s_handleSaveEvent;
 };
+
 
 "deletePlayerData" addPublicVariableEventHandler {
   _player = _this select 1;
   (getPlayerUID _player) call fn_deletePlayerSave;
 };
+
+
+[format["%1Messages", PDB_ServerID]] spawn s_messageLoop;
 
 diag_log "Loading s_setupPlayerDB complete";

@@ -476,7 +476,9 @@ v_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
     sleep v_saveLoop_interval;
-    [_scope] call v_saveAllVechiles;
+    if (not(isBOOLEAN(v_saveLoopActive) && {!v_saveLoopActive})) then {
+      [_scope] call v_saveAllVechiles;
+    };
   };  
 };
 

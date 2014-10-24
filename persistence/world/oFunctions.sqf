@@ -566,9 +566,11 @@ o_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
     sleep o_saveLoop_interval;
-    diag_log format["saving all objects"];
-    [_scope] call o_saveInfo;
-    [_scope] call o_saveAllObjects;
+    if (not(isBOOLEAN(o_saveLoopActive) && {!o_saveLoopActive})) then {
+      diag_log format["saving all objects"];
+      [_scope] call o_saveInfo;
+      [_scope] call o_saveAllObjects;
+    };
   };
 };
 
