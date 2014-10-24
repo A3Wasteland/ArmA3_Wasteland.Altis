@@ -42,5 +42,16 @@ if (isPlayer _player) then
 
 		// sync Steam scoreboard
 		_player addScore (([_player, "playerKills"] call fn_getScore) - score _player);
+		
+		// Log Scores to DB
+		if (["A3W_savingMethod", 1] call getPublicVar == 3) then
+		{
+			if (!isNil "_column") then
+			{
+				_playerUID = getPlayerUID _player;
+				_query = "updatePlayerStat:" + _playerUID + ":" + str call A3W_extDB_ServerID + ":" + _column + ":" + str _score;
+				[_query] spawn extDB_Database_async;
+			};
+		};
 	};
 };
