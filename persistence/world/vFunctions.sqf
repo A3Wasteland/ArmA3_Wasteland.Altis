@@ -319,6 +319,7 @@ def(_obj);
 v_vehicleIsSaveble = {
   ARGVX4(0,_obj,objNull,false);
 
+  if (not(alive _obj)) exitWith {false};
   if (not([_obj] call v_isVehicle)) exitWith {false};
   if (not(isNil{_obj getVariable "vehicle_key"})) exitWith {true};
   if (not(isNil{_obj getVariable "A3W_purchasedStoreObject"})) exitWith {true};
