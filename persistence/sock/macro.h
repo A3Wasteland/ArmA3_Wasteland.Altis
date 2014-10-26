@@ -2,27 +2,27 @@
 #define _undefined objNull
 
 #define isARRAY(x) \
-(not(isNil {x}) && {typeName x == typeName []})
+(not(isNil {x}) && {typeName (x) == typeName []})
 
 #define isSTRING(x) \
-(not(isNil {x}) && {typeName x == typeName ""})
+(not(isNil {x}) && {typeName (x) == typeName ""})
 
 #define isSCALAR(x) \
-(not(isNil {x}) && {typeName x == typeName 0})
+(not(isNil {x}) && {typeName (x) == typeName 0})
 
 #define isBOOLEAN(x) \
-(not(isNil {x}) && {typeName x == typeName true})
+(not(isNil {x}) && {typeName (x) == typeName true})
 
 #define isOBJECT(x) \
-(not(isNil {x}) && {typeName x == typeName objNull})
+(not(isNil {x}) && {typeName (x) == typeName objNull})
 
 #define isCODE(x) \
-(not(isNil {x}) && {typeName x == typeName {}})
+(not(isNil {x}) && {typeName (x) == typeName {}})
 
 #define isNullable(x) (false ||{ \
   not(isNil {x}) &&{ \
   private["_t"]; \
-  _t = typeName x; \
+  _t = typeName (x); \
   _t == typeName controlNull ||{ \
   _t == typeName displayNull ||{ \
   _t == typeName locationNull ||{ \
