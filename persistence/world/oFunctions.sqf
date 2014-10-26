@@ -228,6 +228,7 @@ o_restoreObject = {_this spawn {
   
   def(_obj);
   _obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
+  _obj allowDamage false; //set damage to false immediately to avoid taking fall damage
   if (!isOBJECT(_obj)) exitWith {
     diag_log format["%1(%2) could not be created.", _object_key, _class];
   };
@@ -277,8 +278,14 @@ o_restoreObject = {_this spawn {
   };
   
   _allowDamage = if(isSCALAR(_allowDamage) && {_allowDamage <= 0}) then { false } else { true };
+  [_obj, _allowDamage] spawn {
+    ARGVX3(0,_obj,objNull);
+    ARGVX3(1,_allowDamage,false);
+    //delay the allow damage to allow the box to settle
+    sleep 5;
   _obj setVariable ["allowDamage", _allowDamage];
   _obj allowDamage _allowDamage;
+  };
 
   //broadcast the spawn beacon
   if ([_obj] call o_isBeacon) then {
