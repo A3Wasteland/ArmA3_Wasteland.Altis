@@ -26,12 +26,15 @@ else
 
 	R3F_LOG_objet_selectionne = objNull;
 
-	private ["_objet", "_est_calculateur", "_arme_principale", "_arme_principale_accessoires", "_arme_principale_magasines", "_action_menu_release_relative", "_action_menu_release_horizontal" , "_action_menu_45", "_action_menu_90", "_action_menu_180", "_azimut_canon", "_muzzles", "_magazine", "_ammo", "_adjustPOS"];
+	private ["_objet", "_isSwimming", "_est_calculateur", "_arme_principale", "_arme_principale_accessoires", "_arme_principale_magasines", "_action_menu_release_relative", "_action_menu_release_horizontal" , "_action_menu_45", "_action_menu_90", "_action_menu_180", "_azimut_canon", "_muzzles", "_magazine", "_ammo", "_adjustPOS"];
 
 	_objet = _this select 0;
 	if(isNil {_objet getVariable "R3F_Side"}) then {
 		_objet setVariable ["R3F_Side", (playerSide), true];
 	};
+
+	_isSwimming = { [["Aswm","Assw","Absw","Adve","Asdv","Abdv"], animationState _this] call fn_startsWith };
+
 	_tempVar = false;
 	if(!isNil {_objet getVariable "R3F_Side"}) then {
 		if(playerSide != (_objet getVariable "R3F_Side")) then {
@@ -57,53 +60,16 @@ else
 		R3F_LOG_joueur_deplace_objet = _objet;
 
 		// Sauvegarde et retrait de l'arme primaire
-		_arme_principale = primaryWeapon player;
+		/*_arme_principale = primaryWeapon player;
 		_arme_principale_accessoires = [];
-		_arme_principale_magasines = [];
+		_arme_principale_magasines = [];*/
 
-		if (_arme_principale != "") then
-		{
-			_arme_principale_accessoires = primaryWeaponItems player;
+		_arme_principale = currentMuzzle player;
 
-			player selectWeapon _arme_principale;
-			_arme_principale_magasines set [count _arme_principale_magasines, [currentMagazine player, player ammo _arme_principale]];
+		player forceWalk true;
+		player action ["SwitchWeapon", player, player, 100];
 
-			{ // add one mag for each muzzle
-				if (_x != "this") then {
-					player selectWeapon _x;
-					_arme_principale_magasines set [count _arme_principale_magasines, [currentMagazine player, player ammo _x]];
-				};
-			} forEach getArray(configFile>>"CfgWeapons">>_arme_principale>>"muzzles");
-
-			_currAction = [player, ["A"]] call getMoveParams;
-			_isSwimming = {_currAction == _x} count ["Aswm","Assw","Absw","Adve","Asdv","Abdv"] > 0;
-
-			if (_isSwimming) then
-			{
-				sleep 0.5;
-			}
-			else
-			{
-				if (handgunWeapon player == "") then
-				{
-					player playMove "AmovPercMstpSnonWnonDnon";
-				}
-				else
-				{
-					player playMove "AmovPercMstpSrasWpstDnon";
-				};
-
-				sleep 1;
-			};
-
-			player removeWeapon _arme_principale;
-
-			if (_isSwimming) then
-			{
-				player switchMove "";
-			};
-		}
-		else {sleep 0.5;};
+		sleep 0.5;
 
 		// Si le joueur est mort pendant le sleep, on remet tout comme avant
 		if (!alive player) then
@@ -168,12 +134,19 @@ else
 					player globalChat STR_R3F_LOG_ne_pas_monter_dans_vehicule;
 					player action ["eject", vehicle player];
 					sleep 1;
+				}
+				else
+				{
+					if (currentWeapon player != "" && {!(player call _isSwimming)}) then
+					{
+						player action ["SwitchWeapon", player, player, 100];
+					};
 				};
 
 				if ([(velocity player) select 0,(velocity player) select 1,0] call BIS_fnc_magnitude > 3.5) then
 				{
 					player globalChat STR_R3F_LOG_courir_trop_vite;
-					player playMove "AmovPpneMstpSrasWpstDnon";
+					player playMove "AmovPpneMstpSnonWnonDnon";
 					sleep 1;
 				};
 
@@ -217,8 +190,8 @@ else
 			}
 			else
 			{
-				_objectPos = getPos _objet;
-				_objectPos set [2, ((getPosATL player) select 2) + _zOffset];
+				_objectPos = _objet call fn_getPos3D;
+				_objectPos set [2, ((player call fn_getPos3D) select 2) + _zOffset];
 				_objet setPos _objectPos;
 			};
 
@@ -233,8 +206,11 @@ else
 
 			_objet setVariable ["R3F_LOG_est_deplace_par", objNull, true];
 
+			player forceWalk false;
+			player selectWeapon _arme_principale;
+
 			// Restauration de l'arme primaire
-			if (alive player && _arme_principale != "") then
+			/*if (alive player && _arme_principale != "") then
 			{
 				if(primaryWeapon player != "") then {
 					_o = createVehicle ["WeaponHolder", player modelToWorld [0,0,0], [], 0, "NONE"];
@@ -257,7 +233,7 @@ else
 					player selectWeapon _arme_principale;
 					//player selectWeapon (getArray (configFile >> "cfgWeapons" >> _arme_principale >> "muzzles") select 0);
 				};
-			};
+			};*/
 		};
 	};
 };
