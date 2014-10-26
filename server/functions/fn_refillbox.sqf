@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: fn_refillbox.sqf  "fn_refillbox"
 //	@file Author: [404] Pulse , [404] Costlyy , [404] Deadbeat, AgentRev
@@ -15,6 +18,7 @@ _boxType = _this select 1;
 _box allowDamage false; // No more fucking busted crates
 
 // Clear pre-existing cargo first
+//clearBackpackCargoGlobal _box;
 clearMagazineCargoGlobal _box;
 clearWeaponCargoGlobal _box;
 clearItemCargoGlobal _box;
@@ -23,19 +27,19 @@ if (_boxType == "mission_USSpecial2") then { _boxType = "mission_USSpecial" };
 
 switch (_boxType) do
 {
-    case "mission_USLaunchers":
+	case "mission_USLaunchers":
 	{
-    	_boxItems =
+		_boxItems =
 		[
 			// Item type, Item class(es), # of items, # of magazines per weapon
 			["wep", ["launch_RPG32_F", "launch_NLAW_F", "launch_Titan_short_F"], RANDOM_BETWEEN(3,5), RANDOM_BETWEEN(1,2)],
 			["wep", "launch_Titan_F", RANDOM_BETWEEN(1,2), RANDOM_BETWEEN(1,2)],
-			["mag", ["ClaymoreDirectionalMine_Remote_Mag", "SLAMDirectionalMine_Wire_Mag", "ATMine_Range_Mag", "DemoCharge_Remote_Mag", "SatchelCharge_Remote_Mag"], RANDOM_BETWEEN(5,10)]
+			["mag", ["ClaymoreDirectionalMine_Remote_Mag", "SLAMDirectionalMine_Wire_Mag", "ATMine_Range_Mag", "DemoCharge_Remote_Mag", "SatchelCharge_Remote_Mag"], RANDOM_BETWEEN(3,8)]
 		];
-    };
-    case "mission_USSpecial":
+	};
+	case "mission_USSpecial":
 	{
-    	_boxItems =
+		_boxItems =
 		[
 			// Item type, Item class(es), # of items, # of magazines per weapon
 			//["itm", "NVGoggles", 5],
@@ -52,10 +56,10 @@ switch (_boxType) do
 			["mag", "30Rnd_65x39_caseless_green", RANDOM_BETWEEN(4,8)],
 			["mag", "9Rnd_45ACP_Mag", RANDOM_BETWEEN(1,5)]
 		];
-    };
+	};
 	case "mission_Main_A3snipers":
 	{
-    	_boxItems =
+		_boxItems =
 		[
 			// Item type, Item class(es), # of items, # of magazines per weapon
 			["wep", ["srifle_LRR_SOS_F", "srifle_LRR_camo_SOS_F", "srifle_GM6_SOS_F", "srifle_GM6_camo_SOS_F"], RANDOM_BETWEEN(1,3), RANDOM_BETWEEN(4,6)],
@@ -63,7 +67,7 @@ switch (_boxType) do
 			["wep", ["Binocular", "Rangefinder"], RANDOM_BETWEEN(1,3)],
 			["itm", "optic_DMS", RANDOM_BETWEEN(1,2)]
 		];
-    };
+	};
 };
 
 [_box, _boxItems] call processItems;

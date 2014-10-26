@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define playerMenuDialog 55500
 #define playerMenuPlayerSkin 55501
 #define playerMenuPlayerGun 55502
@@ -17,7 +20,7 @@ class PlayersMenu
 	enableSimulation = true;
 
 	class controlsBackground {
-		
+
 		class MainBackground: w_RscPicture
 		{
 			idc = -1;
@@ -55,7 +58,7 @@ class PlayersMenu
 			w = 0.0844792 * safezoneW;
 			h = 0.0448148 * safezoneH;
 		};
-		
+
 		class PlayerUIDText: w_RscText
 		{
 			idc = playerMenuPlayerUID;
@@ -133,7 +136,7 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 	};
-	
+
 	class controls {
 
 		class PlayerEditBox:w_RscEdit

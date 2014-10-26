@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: uniformConverter.sqf
 //	@file Author: AgentRev
@@ -13,7 +16,7 @@ _uniform = _this select 1;
 
 if !(_unit isUniformAllowed _uniform) then
 {
-	_uniforms = 
+	_uniforms =
 	[
 		["U_B_CombatUniform_mcam", "U_O_CombatUniform_ocamo", "U_I_CombatUniform"],
 		["U_B_GhillieSuit", "U_O_GhillieSuit", "U_I_GhillieSuit"],
@@ -32,7 +35,7 @@ if !(_unit isUniformAllowed _uniform) then
 
 	{
 		_uniArray = _x;
-		
+
 		if ({_uniform == _x} count _uniArray > 0) exitWith
 		{
 			{

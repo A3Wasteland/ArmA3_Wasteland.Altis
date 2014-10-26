@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define serverAdminMenu_dialog 50006
 #define serverAdminMenu_option 50007
 
@@ -67,4 +70,5 @@ class ServerAdminMenu
 			h=0.071;
 		};
 	};
-};
+};
+

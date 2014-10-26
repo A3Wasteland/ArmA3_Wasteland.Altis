@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: sellCrateItems.sqf
 //	@file Author: AgentRev
 //	@file Created: 31/12/2013 22:12

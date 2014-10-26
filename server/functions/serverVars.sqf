@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.1
 //	@file Name: serverVars.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, [404] Pulse, [GoT] JoSchaap, MercyfulFate, AgentRev
@@ -40,7 +43,7 @@ lightMilitaryVehicles =
 ];
 
 //Medium Military Vehicle List - Random Spawns
-mediumMilitaryVehicles = 
+mediumMilitaryVehicles =
 [
 //	"I_Truck_02_Fuel_F",
 //	"O_Truck_02_Fuel_F",
@@ -120,7 +123,7 @@ objectList =
 ];
 
 //Object List - Random Spawns.
-staticWeaponsList = 
+staticWeaponsList =
 [
 	"B_Mortar_01_F",
 	"O_Mortar_01_F",
@@ -129,7 +132,7 @@ staticWeaponsList =
 ];
 
 //Object List - Random Helis.
-staticHeliList = 
+staticHeliList =
 [
 	"B_Heli_Light_01_F",
 	"B_Heli_Light_01_F",
@@ -138,7 +141,7 @@ staticHeliList =
 ];
 
 //Object List - Random Planes.
-staticPlaneList = 
+staticPlaneList =
 [
 	"B_Plane_CAS_01_F",
 	"O_Plane_CAS_02_F",
@@ -205,11 +208,3 @@ vehicleAddition2 =
 	"Chemlight_yellow",
 	"Chemlight_red"
 ];
-
-MissionSpawnMarkers = [];
-{
-	if (["Mission_", _x] call fn_startsWith) then
-	{
-		MissionSpawnMarkers pushBack [_x, false];
-	};
-} forEach allMapMarkers;

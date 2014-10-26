@@ -1,8 +1,11 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: addWeaponInventory.sqf
 //	@file Author: AgentRev
 //	@file Created: 16/11/2013 19:20
-//	@file Args: 
+//	@file Args:
 
 private ["_player", "_weapon", "_return"];
 

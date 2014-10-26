@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: onKeyPress.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, AgentRev
@@ -76,7 +79,7 @@ switch (true) do
 	};
 
 	// Scoreboard
-	case (_key in actionKeys "NetworkStats" && !_shift):
+	case (_key in actionKeys "NetworkStats" && {!_shift && (!_ctrl || isNil "TFAR_fnc_TaskForceArrowheadRadioInit")}):
 	{
 		if (alive player && isNull (uiNamespace getVariable ["ScoreGUI", displayNull])) then
 		{

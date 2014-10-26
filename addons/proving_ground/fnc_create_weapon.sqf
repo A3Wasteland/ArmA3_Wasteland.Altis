@@ -38,13 +38,13 @@ case 0: {//fill weapon list
 					GET_CTRL(balca_WC_weaplist_IDC) lbAdd _display_name;
 					GET_CTRL(balca_WC_weaplist_IDC) lbSetData [(lbSize GET_CTRL(balca_WC_weaplist_IDC))-1,_weap_type];
 					GET_CTRL(balca_WC_weaplist_IDC) lbSetPicture [(lbSize GET_CTRL(balca_WC_weaplist_IDC))-1,getText(_weapon >> "picture")];
-				
-				
-				
+
+
+
 				};
 			};
 		};
-		lbSort GET_CTRL(balca_WC_weaplist_IDC);		
+		lbSort GET_CTRL(balca_WC_weaplist_IDC);
 
 
 	};

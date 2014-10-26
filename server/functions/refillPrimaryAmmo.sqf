@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: refillPrimaryAmmo.sqf
 //	@file Author: AgentRev
@@ -25,12 +28,12 @@ if (local _unit && !isPlayer _unit) then
 		while {alive _unit} do
 		{
 			_magCount = {_x == _magType} count magazines _unit;
-			
+
 			if (_magCount < _minMags) then
 			{
 				_unit addMagazines [_magType, _minMags - _magCount];
 			};
-			
+
 			sleep 3;
 		};
 	};

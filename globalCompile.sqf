@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: globalCompile.sqf
 //	@file Author: AgentRev, MercyfulFate
@@ -21,7 +24,7 @@ mf_compile = compileFinal
 	private ["_path", "_isDebug", "_code"];
 	_path = "";
 	_isDebug = ' + _DEBUG + ';
-	
+
 	switch (toUpper typeName _this) do {
 		case "STRING": {
 			_path = _this;
@@ -35,7 +38,7 @@ mf_compile = compileFinal
 			_code set [count _code - 1, (toArray " ") select 0];
 		};
 	};
-	
+
 	if (isNil "_code") then {
 		if (_isDebug) then {
 			compile format ["call compile preProcessFileLineNumbers ""%1""", _path]
@@ -71,6 +74,7 @@ A3W_fnc_pushVehicle = [_serverFunc, "pushVehicle.sqf"] call mf_compile;
 A3W_fnc_setName = [_clientFunc, "fn_setName.sqf"] call mf_compile;
 A3W_fnc_towingHelper = [_serverFunc, "towingHelper.sqf"] call mf_compile;
 allPlayers = [_serverFunc, "allPlayers.sqf"] call mf_compile;
+applyVehicleTexture = "client\systems\vehicleStore\applyVehicleTexture.sqf" call mf_compile;
 cargoToPairs = [_serverFunc, "cargoToPairs.sqf"] call mf_compile;
 detachTowedObject = [_serverFunc, "detachTowedObject.sqf"] call mf_compile;
 findSafePos = [_serverFunc, "findSafePos.sqf"] call mf_compile;
@@ -85,6 +89,7 @@ fn_getPos3D = [_serverFunc, "fn_getPos3D.sqf"] call mf_compile;
 fn_getScore = [_serverFunc, "fn_getScore.sqf"] call mf_compile;
 fn_getTeamScore = [_serverFunc, "fn_getTeamScore.sqf"] call mf_compile;
 fn_numbersText = [_serverFunc, "fn_numbersText.sqf"] call mf_compile;
+fn_numToStr = [_serverFunc, "fn_numToStr.sqf"] call mf_compile;
 fn_removeFromPairs = [_serverFunc, "fn_removeFromPairs.sqf"] call mf_compile;
 fn_setToPairs = [_serverFunc, "fn_setToPairs.sqf"] call mf_compile;
 fn_splitString = [_serverFunc, "fn_splitString.sqf"] call mf_compile;

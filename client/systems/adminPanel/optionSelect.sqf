@@ -1,8 +1,10 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: optionSelect.sqf
 //	@file Author: [404] Deadbeat
 //	@file Created: 20/11/2012 05:19
-//	@file Args:
 
 #define debugMenu_option 50003
 #define adminMenu_option 50001
@@ -19,29 +21,29 @@ if (_uid call isAdmin) then
 
 	switch (true) do
 	{
-	    case (!isNull _displayAdmin): //Admin panel
-	    {
+		case (!isNull _displayAdmin): //Admin panel
+		{
 			_adminSelect = _displayAdmin displayCtrl adminMenu_option;
 
 			switch (lbCurSel _adminSelect) do
 			{
-			    case 0: //Player Menu
+				case 0: //Player Menu
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\adminPanel\playerMenu.sqf";
 				};
 				case 1: //Full Vehicle Management
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\adminPanel\vehicleManagement.sqf";
 				};
-			    case 2: //Tags
-			    {
+				case 2: //Tags
+				{
 					execVM "client\systems\adminPanel\playerTags.sqf";
-			    };
-			    case 3: //Teleport
-			    {
-	                closeDialog 0;
+				};
+				case 3: //Teleport
+				{
+					closeDialog 0;
 					["A3W_teleport", "onMapSingleClick",
 					{
 						vehicle player setPos _pos;
@@ -50,67 +52,67 @@ if (_uid call isAdmin) then
 						true
 					}] call BIS_fnc_addStackedEventHandler;
 					hint "Click on map to teleport";
-			    };
-	            case 4: //Money
-			    {
+				};
+				case 4: //Money
+				{
 					_money = 5000;
 					player setVariable ["cmoney", (player getVariable ["cmoney",0]) + _money, true];
 					if (!isNil "notifyAdminMenu") then { ["money", _money] call notifyAdminMenu };
-			    };
-	            case 5: //Debug Menu
-			    {
-	            	closeDialog 0;
-	                execVM "client\systems\adminPanel\loadDebugMenu.sqf";
-			    };
+				};
+				case 5: //Debug Menu
+				{
+					closeDialog 0;
+					execVM "client\systems\adminPanel\loadDebugMenu.sqf";
+				};
 				case 6: //Object search menu
-			    {
-	            	closeDialog 0;
-	                execVM "client\systems\adminPanel\loadObjectSearch.sqf";
-			    };
-			    case 7: // toggle God mode
-			    {
-			    	execVM "client\systems\adminPanel\toggleGodMode.sqf";
-			    };
+				{
+					closeDialog 0;
+					execVM "client\systems\adminPanel\loadObjectSearch.sqf";
+				};
+				case 7: // toggle God mode
+				{
+					execVM "client\systems\adminPanel\toggleGodMode.sqf";
+				};
 			};
-	    };
-	    case (!isNull _displayDebug): //Debug panel
-	    {
+		};
+		case (!isNull _displayDebug): //Debug panel
+		{
 			_debugSelect = _displayDebug displayCtrl debugMenu_option;
 
 			switch (lbCurSel _debugSelect) do
 			{
-			    case 0: //Access Gun Store
+				case 0: //Access Gun Store
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\gunStore\loadGunStore.sqf";
 				};
 				case 1: //Access General Store
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\generalStore\loadGenStore.sqf";
 				};
 				case 2: //Access Vehicle Store
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\vehicleStore\loadVehicleStore.sqf";
 				};
-			    case 3: //Access Respawn Dialog
-			    {
-	                closeDialog 0;
+				case 3: //Access Respawn Dialog
+				{
+					closeDialog 0;
 					true spawn client_respawnDialog;
-			    };
-			    case 4: //Access Proving Grounds
-			    {
-	                closeDialog 0;
+				};
+				case 4: //Access Proving Grounds
+				{
+					closeDialog 0;
 					createDialog "balca_debug_main";
-			    };
-	            case 5: //Show server FPS function
-			    {
+				};
+				case 5: //Show server FPS function
+				{
 					hint format["Server FPS: %1",serverFPS];
-			    };
-	            case 6: //Test Function
-			    {
-                    _group = createGroup civilian;
+				};
+				case 6: //Test Function
+				{
+					_group = createGroup civilian;
 					_leader = _group createunit ["C_man_polo_1_F", getPos player, [], 0.5, "Form"];
 
 					_leader addMagazine "RPG32_HE_F";
@@ -120,8 +122,8 @@ if (_uid call isAdmin) then
 					_leader addMagazine "30Rnd_556x45_Stanag";
 					_leader addMagazine "30Rnd_556x45_Stanag";
 					_leader addWeapon "arifle_TRG20_F";
-			    };
+				};
 			};
-	    };
+		};
 	};
 };

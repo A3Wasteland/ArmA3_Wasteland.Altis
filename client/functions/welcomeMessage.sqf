@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define welcomeText 3200
 
 10 cutrsc["WelcomeMessage", "PLAIN"];
@@ -10,7 +13,7 @@ _control = _display displayCtrl welcomeText;
 private ["_teamrules", "_teamicon", "_teamcol"];
 
 switch (playerSide) do {
-	case BLUFOR: { 
+	case BLUFOR: {
 		_teamrules = "STR_WL_YouAreInTeam";
 		_teamicon = "client\icons\igui_side_blufor_ca.paa";
 		_teamcol = "#0066ff";
@@ -25,7 +28,7 @@ switch (playerSide) do {
 		_teamicon = "client\icons\igui_side_indep_ca.paa";
 		_teamcol = "#00ff00";
 	};
-	case sideEnemy: { 
+	case sideEnemy: {
 		_teamrules = "STR_WL_YouAreInFFA";
 		_teamicon = "client\icons\igui_side_indep_ca.paa";
 		_teamcol = "#00ff00";
@@ -35,11 +38,11 @@ switch (playerSide) do {
 _message = format ["<t shadow=""1"">%1<br/>%2<br/>%3<br/></t>",
 	localize "STR_WL_WelcomeToWasteland",
 	localize "STR_WL_MapMoreInfo",
-	format [localize _teamrules, 
+	format [localize _teamrules,
 		_teamicon,
 		_teamcol,
 		localize format ["STR_WL_Gen_Team%1", str playerSide],
-		localize format ["STR_WL_Gen_Team%1_2", str playerSide] 
+		localize format ["STR_WL_Gen_Team%1_2", str playerSide]
 	]
 ];
 

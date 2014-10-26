@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //@file Version: 1.0
 //@file Name: init.sqf
 //@file Author: MercyfulFate
@@ -17,14 +20,14 @@ _deploy = build("deploy.sqf");
 [MF_ITEMS_SPAWN_BEACON, "Spawn Beacon", _deploy, "Land_SuitCase_F", "client\icons\briefcase.paa", 1] call mf_inventory_create;
 
 mf_items_spawn_beacon_nearest = {
-    _beacon = objNull;
-    _beacons = nearestObjects [player, [MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE], 3];
-    {
-        if (_x getVariable ["a3w_spawnBeacon", false]) exitWith {
-            _beacon = _x;
-        };
-    } forEach _beacons;
-    _beacon;
+	_beacon = objNull;
+	_beacons = nearestObjects [player, [MF_ITEMS_SPAWN_BEACON_DEPLOYED_TYPE], 3];
+	{
+		if (_x getVariable ["a3w_spawnBeacon", false]) exitWith {
+			_beacon = _x;
+		};
+	} forEach _beacons;
+	_beacon;
 } call mf_compile;
 
 mf_items_spawn_beacon_can_pack = build("can_pack.sqf");

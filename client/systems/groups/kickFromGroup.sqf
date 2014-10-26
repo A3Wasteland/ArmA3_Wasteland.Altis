@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: kickFromGroup.sqf
 //	@file Author: [404] Deadbeat
@@ -16,7 +19,7 @@ _groupListBox = _dialog displayCtrl groupManagementGroupList;
 _index = lbCurSel _groupListBox;
 _playerData = _groupListBox lbData _index;
 
-//Check selected data is valid            			
+//Check selected data is valid
 { if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call allPlayers);
 
 //Checks

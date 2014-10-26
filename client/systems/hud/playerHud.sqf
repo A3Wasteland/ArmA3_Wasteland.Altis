@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: playerHud.sqf
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap, [KoS] Bewilderbeest
@@ -90,6 +93,9 @@ _globalVoiceTimer = 0;
 _globalVoiceWarnTimer = ["A3W_globalVoiceWarnTimer", 5] call getPublicVar;
 _globalVoiceWarning = 0;
 _globalVoiceMaxWarns = ceil (["A3W_globalVoiceMaxWarns", 5] call getPublicVar);
+
+private "_uavMapCtrl";
+_uavMapCtrl = controlNull;
 
 while {true} do
 {
@@ -310,5 +316,20 @@ while {true} do
 		};
 	};
 
-	sleep 1;
+	// Add player markers to UAV Terminal
+	if (isNull _uavMapCtrl) then
+	{
+		_uavTerminal = findDisplay 160;
+
+		if (!isNull _uavTerminal) then
+		{
+			_uavMapCtrl = _uavTerminal displayCtrl 51;
+			_uavMapCtrl ctrlAddEventHandler ["Draw",
+			{
+				{ (_this select 0) drawIcon _x } forEach drawPlayerMarkers_array;
+			}];
+		};
+	};
+
+	uiSleep 1;
 };

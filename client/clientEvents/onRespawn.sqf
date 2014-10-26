@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: onRespawn.sqf
 //	@file Author: [404] Deadbeat
@@ -22,7 +25,7 @@ _group = _player getVariable ["currentGroupRestore", grpNull];
 if (!isNull _group && {group _player != _group}) then
 {
 	[_player] join _group;
-	
+
 	if (_player getVariable ["currentGroupIsLeader", false] && leader _group != _player) then
 	{
 		_group selectLeader _player;

@@ -1,7 +1,7 @@
 /**
- * Sélectionne un objet à charger dans un transporteur
- * 
- * @param 0 l'objet à sélectionner
+ * SÃ©lectionne un objet Ã  charger dans un transporteur
+ *
+ * @param 0 l'objet Ã  sÃ©lectionner
  */
 
 if (R3F_LOG_mutex_local_verrou) then
@@ -19,9 +19,9 @@ else
 	if(_tempVar) exitwith {hint format["This object belongs to %1 and they're nearby you cannot take this.", (_this select 0) getVariable "R3F_Side"]; R3F_LOG_mutex_local_verrou = false;};
 
 	R3F_LOG_mutex_local_verrou = true;
-	
+
 	R3F_LOG_objet_selectionne = _this select 0;
 	player globalChat format [STR_R3F_LOG_action_selectionner_objet_charge_fait, getText (configFile >> "CfgVehicles" >> (typeOf R3F_LOG_objet_selectionne) >> "displayName")];
-	
+
 	R3F_LOG_mutex_local_verrou = false;
 };

@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: vehicleInfo.sqf
 //	@file Author: [KoS] His_Shadow, AgentRev
@@ -31,9 +34,9 @@ _vehText ctrlSetText "";
 {
 	if (_itemText == _x select 0 && _itemData == _x select 1) then
 	{
-		_vehClass = _x select 1; 
+		_vehClass = _x select 1;
 		_price = _x select 2;
-		_vehText ctrlSetText format ["Price: $%1", [_price] call fn_numbersText];	
+		_vehText ctrlSetText format ["Price: $%1", [_price] call fn_numbersText];
 	};
 } forEach (call allVehStoreVehicles);
 

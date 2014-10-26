@@ -1,21 +1,24 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 /** Create and Register a new Item in the Inventory System
- * 
+ *
  * This function the initial setup of each item, allowing the Inventory
  * to automate most of it.
- * 
+ *
  * To see a simple example, see the init.sqf
- * 
+ *
  * @author MercyfulFate
  * @param [id, name, use, object, icon, max]
  *      id {string} - a unique item id.
  *      name {string} - the Text that the player sees.
  *      use {function} - the function that is called when the item is used.
- * 			Note: MUST return true or false... see "use.sqf" for details.
+ *          Note: MUST return true or false... see "use.sqf" for details.
  *      object {string} - the object type to place on the gound when dropped.
  *      icon {string} - the icon to use for the item
- * 		max {integer | function} - the maximum qty of this item a player can
- * 			carry, either a number or a function returning a number.
- * 			see "is_full.sqf" for details.
+ *      max {integer | function} - the maximum qty of this item a player can
+ *          carry, either a number or a function returning a number.
+ *          see "is_full.sqf" for details.
  */
 
 #include "define.sqf"

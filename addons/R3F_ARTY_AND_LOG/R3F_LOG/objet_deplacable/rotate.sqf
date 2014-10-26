@@ -1,7 +1,7 @@
 /*
 	@file Author: [404] Costlyy
 	@file Version: 1.0
-   	@file Date:	20/11/2012	
+	@file Date:	20/11/2012
 	@file Description: Rotates an object by x degrees depending on args
 	@file Args: [rotation amount(int)]
 */
@@ -22,8 +22,3 @@ if (R3F_LOG_mutex_local_verrou) then {
 	publicVariable "R3F_ARTY_AND_LOG_PUBVAR_setDir";
 	R3F_LOG_mutex_local_verrou = false;
 };
-
-
-
-
-
