@@ -1582,5 +1582,5 @@ class balca_environment
 };
 
 
-#include "CfgExplorer2\config.cpp"
-#include "reloader\config.cpp"
+#include "CfgExplorer2\config.hpp"
+#include "reloader\config.hpp"
