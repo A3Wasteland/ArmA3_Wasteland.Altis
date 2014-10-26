@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define DURATION MF_ITEMS_WARCHEST_DEPLOY_DURATION
 #define ANIMATION "AinvPknlMstpSlayWrflDnon_medic"
 #define ERR_IN_VEHICLE "Deploying Warchest Failed! You can't do that in a vehicle."

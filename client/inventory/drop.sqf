@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 /** Drop an Item
  * 
  * The Inventory System takes care of all the logic around dropping an item,

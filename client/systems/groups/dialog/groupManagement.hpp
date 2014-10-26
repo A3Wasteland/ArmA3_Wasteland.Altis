@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define groupManagementDialog 55510
 #define groupManagementPlayerList 55511
 #define groupManagementGroupList 55512

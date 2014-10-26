@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 /** Simple Inventory System for Arma 3 Wasteland
  * 
  * This Inventory system allows the creation on standard "items"

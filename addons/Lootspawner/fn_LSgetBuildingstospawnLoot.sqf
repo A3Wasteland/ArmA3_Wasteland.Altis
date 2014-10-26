@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	Lootspawner spawn script
 //	Author: Na_Palm (BIS forums)
 //  Note by AgentRev: This script is a very good example of bad coding. If you are learning how to code, do NOT do it that way.

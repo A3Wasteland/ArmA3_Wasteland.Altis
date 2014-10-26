@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define objectSearchDialog 55600
 #define objectSearchFindButton 55601
 #define objectSearchFindTexteditBox 55602

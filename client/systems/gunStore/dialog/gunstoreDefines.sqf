@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define gunshop_DIALOG 2001
 #define gunshop_gun_TEXT 2002
 #define gunshop_ammo_TEXT 2010

@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //@file Author: [404] Costlyy, [GoT] JoSchaap (Original concept by Sa-Matra)
 //@file Version: 1.1
 //@file Date:	21/11/2012	

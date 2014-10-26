@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define respawn_dialog 3400
 #define respawn_Content_Text 3401
 #define respawn_MissionUptime_Text 3402

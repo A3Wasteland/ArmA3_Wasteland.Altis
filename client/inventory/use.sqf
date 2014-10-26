@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 /** Use an Item
  * This executes the item's "use" function that was passed into "create.sqf".
  * It expects that "use" function to return true or false.... if it returns

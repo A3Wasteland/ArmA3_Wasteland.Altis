@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 /*********************************************************#
 # @@ScriptName: updateConnectingClients.sqf
 # @@Author: Nick 'Bewilderbeest' Ludlam <bewilder@recoil.org>, AgentRev

@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: ConvoyMission_1.sqf
 //	@file Author: [GoT] JoSchaap, [404] Del1te, AgentRev

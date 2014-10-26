@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 2.1
 //	@file Name: mission_MoneyShipment.sqf
 //	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo), AgentRev

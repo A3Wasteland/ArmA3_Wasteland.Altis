@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 // ARMA3 function fn_vehicleInit v0.5 - by SPUn / lostvar & AgentRev
 // Function to set custom init commands for units & vehicles
 // Call this from another scripts with syntax:

@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define TIME_DELTA 0.1
 assert (count _this == 2);
 if not(isNil "MF_MSG_HANDLER") then {

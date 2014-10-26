@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 /** Create and Register a new Item in the Inventory System
  * 
  * This function the initial setup of each item, allowing the Inventory

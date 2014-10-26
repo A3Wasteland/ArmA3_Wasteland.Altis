@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define vehshop_DIALOG 5285
 #define vehshop_veh_TEXT 5286
 #define vehshop_veh_list 5287

@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define ERR_IN_VEHICLE "Can't do that while in a vehicle"
 #define ERR_TOO_FAR "You are too far away"
 #define ERR_WRONG_SIDE "The Warchest is not owned by your team"

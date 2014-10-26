@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #include "defines.sqf"
 disableSerialization;
 private ["_warchest", "_funds", "_text", "_input", "_amount"];

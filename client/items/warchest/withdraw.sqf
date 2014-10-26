@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #include "defines.sqf"
 #define ERR_NOT_ENOUGH_FUNDS "There are not enough funds in the warchest."
 #define ERR_LESS_THAN_ONE "The amount must be at least $1"

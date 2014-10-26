@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 /** Set a item (definition and data) in the inventory system.
  * 
  * This "saves" the internal data structure for a single item.

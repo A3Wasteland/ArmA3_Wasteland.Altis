@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define BUILD(x) format["%1\%2", _this, x] call mf_compile
 private ["_path"];
 _path = _this;
