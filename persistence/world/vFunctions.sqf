@@ -345,9 +345,6 @@ v_addSaveVehicle = {
 
   _class = typeOf _obj;
   _netId = netId _obj;
-  _pos = ASLtoATL getPosWorld _obj;
-  _value = (_pos select 2) + 0.3;
-  _pos set [2, ((_pos select 2) + 0.3)];
   _dir = [vectorDir _obj, vectorUp _obj];
   _damage = damage _obj;
   _texture = _obj getVariable ["A3W_objectTexture", ""];
@@ -415,6 +412,15 @@ v_addSaveVehicle = {
   if (isNil "_objName") then {
     _objName = format["veh_%1_%2",ceil(time), ceil(random 10000)];
     _obj setVariable ["vehicle_key", _objName, true];
+  };
+  _pos = ASLtoATL getPosWorld _obj;
+  _pos set [2, ((_pos select 2) + 0.3)];
+  //force the Z-axis if the vehicle is high above ground
+  if (!(isTouchingGround _obj || {(getPos _obj) select 2 < 0.5 || (getPosASL _obj) select 2 < 0.5})) then {
+    _pos set [2, 0];
+    if (surfaceIsWater _posATL) then {
+      _posATL = ASLToATL (_posATL);
+    };
   };
 
   _list pushBack [_objName, ([
