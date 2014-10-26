@@ -91,7 +91,7 @@ lootMagazine_list =
 [
 	[ // CIVIL
 		0,
-		
+		[
 			//"16Rnd_9x21_Mag",
 			"9Rnd_45ACP_Mag",
 			"30Rnd_9x21_Mag",
