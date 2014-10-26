@@ -539,6 +539,7 @@ o_saveAllObjects = {
   [_scope] call stats_wipe;
   init(_bulk_size,100);
   init(_start_time, diag_tickTime);
+  init(_last_save, diag_tickTime);
   {
     if (!isNil{[_request, _x] call o_addSaveObject}) then {
       _count = _count + 1;
@@ -550,7 +551,8 @@ o_saveAllObjects = {
       _request call stats_set;
       init(_save_end, diag_tickTime);
       _request = [_scope];
-      diag_log format["Bulk of %1 objects saved in %2 ticks, save call took %3 ticks", (_bulk_size), (diag_tickTime - _start_time), (_save_end - _save_start)];
+      diag_log format["o_saveLoop: %1 objects saved in %2 ticks, save call took %3 ticks", (_bulk_size), (diag_tickTime - _start_time), (_save_end - _save_start)];
+      _last_save = _save_end;
     };
   } forEach (allMissionObjects "All");
   
@@ -558,8 +560,11 @@ o_saveAllObjects = {
     init(_save_start, diag_tickTime);
     _request call stats_set;
     init(_save_end, diag_tickTime);
-    diag_log format["Total of %1 objects saved in %2 ticks, last save call took %3 ticks", (_count), (diag_tickTime - _start_time), (_save_end - _save_start)];
+    diag_log format["o_saveLoop: %1 objects saved in %2 ticks, save call took %3 ticks", (count(_request) -1), (_save_end - _last_save), (_save_end - _save_start)];
   };
+
+  diag_log format["o_saveLoop: total of %1 objects saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
+
   
 };
 
