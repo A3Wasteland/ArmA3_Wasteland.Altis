@@ -81,15 +81,15 @@ while {true} do
 				_damage = damage _obj;
 				_allowDamage = if (_obj getVariable ["allowDamage", false]) then { 1 } else { 0 };
 
-				_spawningTime = _veh getVariable "baseSaving_spawningTime";
+				_spawningTime = _obj getVariable "baseSaving_spawningTime";
 
 				if (isNil "_spawningTime") then
 				{
 					_spawningTime = diag_tickTime;
-					_veh setVariable ["baseSaving_spawningTime", _spawningTime];
+					_obj setVariable ["baseSaving_spawningTime", _spawningTime];
 				};
 
-				_hoursAlive = (_veh getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - _spawningTime) / 3600);
+				_hoursAlive = (_obj getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - _spawningTime) / 3600);
 
 				_variables = [];
 

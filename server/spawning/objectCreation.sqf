@@ -43,7 +43,7 @@ switch (true) do
 	};
 	default
 	{
-		_object setVariable ["allowDamage", true];
+		_obj setVariable ["allowDamage", true];
 	};
 };
 
