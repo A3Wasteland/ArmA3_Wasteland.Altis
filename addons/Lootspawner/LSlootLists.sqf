@@ -163,7 +163,7 @@ lootMagazine_list =
 			"SatchelCharge_Remote_Mag",
 			"SLAMDirectionalMine_Wire_Mag"
 		]
-	]
+	],
 	[ // INDUSTRIAL
 		2,
 		[
