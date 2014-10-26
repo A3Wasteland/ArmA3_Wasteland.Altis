@@ -180,7 +180,7 @@ player createDiaryRecord ["credits",
 [
 "Credits",
 "
-<br/><font size='16' color='#BBBBBB'>Developed by Team Wasteland:</font>
+<br/><font size='16' color='#BBBBBB'>Developed by A3Wasteland.com:</font>
 <br/>	* AgentRev (TeamPlayerGaming)
 <br/>	* JoSchaap (GoT/Tweakers.net)
 <br/>	* MercyfulFate
@@ -270,7 +270,7 @@ player createDiaryRecord ["infos",
 <br/>Q. Where can I get a gun?
 <br/>A. Weapons are found in one of three places, first in ammo crates that come as rewards from missions, inside and outside buildings, and second, in the gear section of the vehicles, which also randomly spawn around the map. The last place to find a gun would be at the gunshops located throughout the map. You can also find them on dead players whose bodies have not yet been looted.
 <br/>
-<br/>Q. What are the grey circles on the map?
+<br/>Q. What are the blue circles on the map?
 <br/>A. The circles represent town limits. If friendly soldiers are in a town, you can spawn there from the re-spawn menu; however if there is an enemy presence, you will not be able to spawn there.
 <br/>
 <br/>Q. Why is it so dark, I cant see.

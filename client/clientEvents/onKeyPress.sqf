@@ -76,7 +76,7 @@ switch (true) do
 	};
 
 	// Scoreboard
-	case (_key in actionKeys "NetworkStats" && !_shift):
+	case (_key in actionKeys "NetworkStats" && {!_shift && (!_ctrl || isNil "TFAR_fnc_TaskForceArrowheadRadioInit")}):
 	{
 		if (alive player && isNull (uiNamespace getVariable ["ScoreGUI", displayNull])) then
 		{

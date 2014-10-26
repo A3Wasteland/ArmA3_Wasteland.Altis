@@ -34,8 +34,9 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 
 "requestPlayerData" addPublicVariableEventHandler
 {
-	_player = _this select 1;
-	_UID = getPlayerUID _player;
+	_array = _this select 1;
+	_player = _array select 0;
+	_UID = _array select 1;
 
 	if ((_UID call PDB_playerFileName) call PDB_exists) then // iniDB_exists
 	{

@@ -28,5 +28,6 @@ _success = [5, ANIMATION, _hasFailed, []] call a3w_actions_start;
 if (_success) then {
 	thirstLevel = (thirstLevel + _this) min 100;
 	["Your thirst has eased", 5] call mf_notify_client;
+	hint "";
 };
 _success;

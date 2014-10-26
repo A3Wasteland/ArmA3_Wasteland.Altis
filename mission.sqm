@@ -122,7 +122,7 @@ class Mission
 					id=0;
 					side="WEST";
 					vehicle="C_man_w_worker_F";
-					player="PLAY CDG"; // If you want to disable the headless client slot, just remove this line
+					//player="PLAY CDG"; // If you want to enable the headless client slot, just uncomment this line
 					forceHeadlessClient=1;
 					leader=1;
 					skill=0.60000002;

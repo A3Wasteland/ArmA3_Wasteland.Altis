@@ -44,7 +44,7 @@ if (!isNil "_exists" && {_exists}) then
 			_pos = [_fileName, _objName, "Position", "ARRAY"] call PDB_read; // iniDB_read
 			_hoursAlive = [_fileName, _objName, "HoursAlive", "NUMBER"] call PDB_read; // iniDB_read
 
-			if (!isNil "_class" && {!isNil "_pos"} && {_maxLifetime <= 0 || {_hoursAlive < _maxLifetime}}) then
+			if (!isNil "_class" && !isNil "_pos" && {_maxLifetime <= 0 || {_hoursAlive < _maxLifetime}}) then
 			{
 				_variables = [_fileName, _objName, "Variables", "ARRAY"] call PDB_read; // iniDB_read
 
@@ -72,6 +72,8 @@ if (!isNil "_exists" && {_exists}) then
 					{
 						_obj setVectorDirAndUp _dir;
 					};
+
+					[_obj] call vehicleSetup;
 
 					_obj setVariable ["baseSaving_hoursAlive", _hoursAlive];
 					_obj setVariable ["baseSaving_spawningTime", diag_tickTime];

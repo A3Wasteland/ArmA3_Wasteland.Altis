@@ -9,7 +9,8 @@ if (!hasInterface) exitWith {};
 #define ICON_limitDistance 2000
 #define ICON_sizeScale 0.75
 
-showPlayerNames = false;
+if (isNil "showPlayerNames") then { showPlayerNames = false };
+
 hudPlayerIcon_uiScale = (0.55 / (getResolution select 5)) * ICON_sizeScale; // 0.55 = Interface size "Small"
 drawPlayerIcons_array = [];
 

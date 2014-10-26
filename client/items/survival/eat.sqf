@@ -28,5 +28,6 @@ _success = [5, ANIMATION, _checks, []] call a3w_actions_start;
 if (_success) then {
 	hungerLevel = (hungerLevel + _this) min 100;
 	["Your hunger has eased", 5] call mf_notify_client;
+	hint "";
 };
 _success;
