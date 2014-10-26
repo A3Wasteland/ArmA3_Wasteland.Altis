@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 //@file Version: 1.0
 //@file Name: init.sqf
@@ -33,4 +33,5 @@ private ["_label", "_condition", "_action"];
 _label = format["<img image='%1' /> Pack up Camouflage Netting", _icon];
 _condition = "'' == [] call mf_items_camo_net_can_pack;";
 _action = [_label, _pack, [], 1, true, false, "", _condition];
-["camonet-pack", _action] call mf_player_actions_set;
+["camonet-pack", _action] call mf_player_actions_set;
+

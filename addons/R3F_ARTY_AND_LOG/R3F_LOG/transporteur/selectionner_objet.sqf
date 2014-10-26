@@ -1,7 +1,7 @@
 /**
- * Sélectionne un objet à charger dans un transporteur
+ * SÃ©lectionne un objet Ã  charger dans un transporteur
  * 
- * @param 0 l'objet à sélectionner
+ * @param 0 l'objet Ã  sÃ©lectionner
  */
 
 if (R3F_LOG_mutex_local_verrou) then

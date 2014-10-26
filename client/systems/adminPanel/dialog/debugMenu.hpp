@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 #define debugMenu_dialog 50002
 #define debugMenu_option 50003
@@ -70,4 +70,5 @@ class DebugMenu
 			h=0.071;
 		};
 	};
-};
+};
+

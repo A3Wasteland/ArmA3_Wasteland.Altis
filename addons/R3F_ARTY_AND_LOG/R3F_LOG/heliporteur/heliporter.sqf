@@ -1,7 +1,7 @@
 /**
- * Héliporte un objet avec un héliporteur
+ * HÃ©liporte un objet avec un hÃ©liporteur
  * 
- * @param 0 l'héliporteur
+ * @param 0 l'hÃ©liporteur
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -22,7 +22,7 @@ else
 	
 	_heliporteur = _this select 0;
 	_objet = nearestObjects [_heliporteur, R3F_LOG_CFG_objets_heliportables, 20];
-	// Parce que l'héliporteur peut être un objet héliportable
+	// Parce que l'hÃ©liporteur peut Ãªtre un objet hÃ©liportable
 	_objet = _objet - [_heliporteur];
 	
 	if (count _objet > 0) then
@@ -35,11 +35,11 @@ else
 			{
 				if (count crew _objet == 0) then
 				{
-					// Si l'objet n'est pas en train d'être déplacé par un joueur
+					// Si l'objet n'est pas en train d'Ãªtre dÃ©placÃ© par un joueur
 					if (isNull (_objet getVariable "R3F_LOG_est_deplace_par") || (!alive (_objet getVariable "R3F_LOG_est_deplace_par"))) then
 					{
 						private ["_ne_remorque_pas", "_remorque"];
-						// Ne pas héliporter quelque chose qui remorque autre chose
+						// Ne pas hÃ©liporter quelque chose qui remorque autre chose
 						_ne_remorque_pas = true;
 						_remorque = _objet getVariable "R3F_LOG_remorque";
 						if !(isNil "_remorque") then
@@ -52,9 +52,9 @@ else
 						
 						if (_ne_remorque_pas) then
 						{
-							// On mémorise sur le réseau que l'héliporteur remorque quelque chose
+							// On mÃ©morise sur le rÃ©seau que l'hÃ©liporteur remorque quelque chose
 							_heliporteur setVariable ["R3F_LOG_heliporte", _objet, true];
-							// On mémorise aussi sur le réseau que l'objet est attaché à un véhicule
+							// On mÃ©morise aussi sur le rÃ©seau que l'objet est attachÃ© Ã  un vÃ©hicule
 							_objet setVariable ["R3F_LOG_est_transporte_par", _heliporteur, true];
 							
 							_heliBB = _heliporteur call fn_boundingBoxReal;
@@ -73,7 +73,7 @@ else
 							
 							_minZ = (_heliMinBB select 2) - (_objectMaxBB select 2) - 0.5;
 							
-							// Attacher sous l'héliporteur au ras du sol
+							// Attacher sous l'hÃ©liporteur au ras du sol
 							[_objet, true] call fn_enableSimulationGlobal;
 							_objet attachTo [_heliporteur,
 							[

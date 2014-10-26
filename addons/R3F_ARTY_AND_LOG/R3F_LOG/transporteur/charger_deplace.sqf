@@ -1,5 +1,5 @@
 /**
- * Charger l'objet déplacé par le joueur dans un transporteur
+ * Charger l'objet dÃ©placÃ© par le joueur dans un transporteur
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -21,7 +21,7 @@ else
 	_objet = R3F_LOG_joueur_deplace_objet;
 	
 	_transporteur = nearestObjects [_objet, R3F_LOG_classes_transporteurs, 22];
-	// Parce que le transporteur peut être un objet transportable
+	// Parce que le transporteur peut Ãªtre un objet transportable
 	_transporteur = _transporteur - [_objet];
 	
 	if (count _transporteur > 0) then
@@ -46,7 +46,7 @@ else
 				};
 			} forEach _objets_charges;
 			
-			// Recherche de la capacité de l'objet
+			// Recherche de la capacitÃ© de l'objet
 			_cout_capacite_objet = 99999;
 			for [{_i = 0}, {_i < count R3F_LOG_CFG_objets_transportables}, {_i = _i + 1}] do
 			{
@@ -56,7 +56,7 @@ else
 				};
 			};
 			
-			// Recherche de la capacité maximale du transporteur
+			// Recherche de la capacitÃ© maximale du transporteur
 			_chargement_maxi = 0;
 			for [{_i = 0}, {_i < count R3F_LOG_CFG_transporteurs}, {_i = _i + 1}] do
 			{
@@ -66,10 +66,10 @@ else
 				};
 			};
 			
-			// Si l'objet loge dans le véhicule
+			// Si l'objet loge dans le vÃ©hicule
 			if (_chargement_actuel + _cout_capacite_objet <= _chargement_maxi) then
 			{
-				// On mémorise sur le réseau le nouveau contenu du véhicule
+				// On mÃ©morise sur le rÃ©seau le nouveau contenu du vÃ©hicule
 				_objets_charges = _objets_charges + [_objet];
 				_transporteur setVariable ["R3F_LOG_objets_charges", _objets_charges, true];
 				_objet setVariable ["R3F_LOG_est_transporte_par", _transporteur, true];
@@ -81,7 +81,7 @@ else
 				R3F_LOG_joueur_deplace_objet = objNull;
 				sleep 2;
 				
-				// Choisir une position dégagée (sphère de 50m de rayon) dans le ciel dans un cube de 9km^3
+				// Choisir une position dÃ©gagÃ©e (sphÃ¨re de 50m de rayon) dans le ciel dans un cube de 9km^3
 				private ["_nb_tirage_pos", "_position_attache"];
 				_position_attache = [random 3000, random 3000, (10000 + (random 3000))];
 				_nb_tirage_pos = 1;

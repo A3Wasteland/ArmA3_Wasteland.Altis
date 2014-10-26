@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 /*********************************************************#
 # @@ScriptName: territoryActivityHandler.sqf
@@ -23,4 +23,5 @@ if (typeName _this == "ARRAY" && {count _this >= 1}) then {
 	};
 
 	playSound 'FD_Finish_F'; // Nice sound effect to draw players attention to the notification
-};
+};
+

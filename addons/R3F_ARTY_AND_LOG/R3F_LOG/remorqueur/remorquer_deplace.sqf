@@ -1,5 +1,5 @@
 /**
- * Remorque l'objet déplacé par le joueur avec un remorqueur
+ * Remorque l'objet dÃ©placÃ© par le joueur avec un remorqueur
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -21,7 +21,7 @@ else
 	_objet = R3F_LOG_joueur_deplace_objet;
 	
 	_remorqueur = nearestObjects [_objet, R3F_LOG_CFG_remorqueurs, 22];
-	// Parce que le remorqueur peut être un objet remorquable
+	// Parce que le remorqueur peut Ãªtre un objet remorquable
 	_remorqueur = _remorqueur - [_objet];
 	
 	if (count _remorqueur > 0) then
@@ -30,9 +30,9 @@ else
 		
 		if (alive _remorqueur && isNull (_remorqueur getVariable "R3F_LOG_remorque") && ((velocity _remorqueur) call BIS_fnc_magnitude < 6) && (getPos _remorqueur select 2 < 2) && !(_remorqueur getVariable "R3F_LOG_disabled")) then
 		{
-			// On mémorise sur le réseau que le véhicule remorque quelque chose
+			// On mÃ©morise sur le rÃ©seau que le vÃ©hicule remorque quelque chose
 			_remorqueur setVariable ["R3F_LOG_remorque", _objet, true];
-			// On mémorise aussi sur le réseau que le canon est attaché en remorque
+			// On mÃ©morise aussi sur le rÃ©seau que le canon est attachÃ© en remorque
 			_objet setVariable ["R3F_LOG_est_transporte_par", _remorqueur, true];
 			
 			if (local _objet) then
@@ -59,7 +59,7 @@ else
 			
 			if ((getPosASL player) select 2 > 0) then
 			{
-				// On place le joueur sur le côté du véhicule, ce qui permet d'éviter les blessure et rend l'animation plus réaliste
+				// On place le joueur sur le cÃ´tÃ© du vÃ©hicule, ce qui permet d'Ã©viter les blessure et rend l'animation plus rÃ©aliste
 				player attachTo [_remorqueur,
 				[
 					(_towerMinBB select 0) - 0.25,
@@ -78,7 +78,7 @@ else
 			player playMove "AinvPknlMstpSlayWrflDnon_medic";
 			sleep 2;
 			
-			// Attacher à l'arrière du véhicule au ras du sol
+			// Attacher Ã  l'arriÃ¨re du vÃ©hicule au ras du sol
 			[_remorqueur, true] call fn_enableSimulationGlobal;
 			[_objet, true] call fn_enableSimulationGlobal;
 			_objet attachTo [_remorqueur,
@@ -97,13 +97,13 @@ else
 				
 				_azimut_canon = ((_objet weaponDirection (weapons _objet select 0)) select 0) atan2 ((_objet weaponDirection (weapons _objet select 0)) select 1);
 				
-				// Seul le D30 a le canon pointant vers le véhicule
+				// Seul le D30 a le canon pointant vers le vÃ©hicule
 				if !(_objet isKindOf "D30_Base") then
 				{
 					_azimut_canon = _azimut_canon + 180;
 				};
 				
-				// On est obligé de demander au serveur de tourner l'objet pour nous
+				// On est obligÃ© de demander au serveur de tourner l'objet pour nous
 				R3F_ARTY_AND_LOG_PUBVAR_setDir = [_objet, (getDir _objet)-_azimut_canon];
 				if (isServer) then
 				{

@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 /*********************************************************#
 # @@ScriptName: toggle_spawn_permissions.sqf
@@ -57,4 +57,5 @@ if (_success) then {
 		["The Spawn Beacon is now limited to your group", 5] call mf_notify_client;
 		_beacon setVariable ['groupOnly', true, true];
 	};
-};
+};
+

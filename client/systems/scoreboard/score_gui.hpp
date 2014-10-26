@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 //	@file Name: score_gui.hpp
 //	@file Author: AgentRev
@@ -113,7 +113,7 @@ class ScoreGUI : IGUIBack
 		class PListHead_PKills : w_RscStructuredText
 		{
 			idc = -1;
-			text = "<t underline='true' shadow='0'>P. kills</t>"; // Alt + 255
+			text = "<t underline='true' shadow='0'>P.Â kills</t>"; // Alt + 255
 			size = PListHead_textSize;
 
 			x = PListHead_PKills_X;
@@ -128,7 +128,7 @@ class ScoreGUI : IGUIBack
 		class PListHead_AIKills : w_RscStructuredText
 		{
 			idc = -1;
-			text = "<t underline='true' shadow='0'>AI kills</t>"; // Alt + 255
+			text = "<t underline='true' shadow='0'>AIÂ kills</t>"; // Alt + 255
 			size = PListHead_textSize;
 
 			x = PListHead_AIKills_X;
@@ -458,7 +458,7 @@ class ScoreGUI : IGUIBack
 		class TListHead_PKills : w_RscStructuredText
 		{
 			idc = -1;
-			text = "<t underline='true' shadow='0'>P. kills</t>"; // Alt + 255
+			text = "<t underline='true' shadow='0'>P.Â kills</t>"; // Alt + 255
 			size = TListHead_textSize;
 
 			x = TListHead_PKills_X;

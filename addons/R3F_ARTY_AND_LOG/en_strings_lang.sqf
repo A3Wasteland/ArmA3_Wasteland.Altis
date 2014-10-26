@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Alternative to stringtable.csv which is simpler to install for the mission maker.
  * Alternative au stringtable.csv qui est plus simple à installer pour le créateur de mission.
  */

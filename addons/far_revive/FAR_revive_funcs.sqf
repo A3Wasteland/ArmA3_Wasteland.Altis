@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 #include "FAR_defines.sqf"
 
@@ -287,7 +287,7 @@ FAR_CheckFriendlies =
 	private ["_units", "_msg", "_medics", "_dir", "_cardinal"];
 
 	_units = player nearEntities ["AllVehicles", 1000];
-	_msg = "<t underline='true'>Nearby medics</t>";
+	_msg = "<t underline='true'>NearbyÂ medics</t>";
 	_medics = "";
 
 	{

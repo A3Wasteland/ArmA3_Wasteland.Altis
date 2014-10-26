@@ -1,7 +1,7 @@
 /**
- * Ouvre la boîte de dialogue du contenu du véhicule et la prérempli en fonction de véhicule
+ * Ouvre la boÃ®te de dialogue du contenu du vÃ©hicule et la prÃ©rempli en fonction de vÃ©hicule
  * 
- * @param 0 le véhicule dont il faut afficher le contenu
+ * @param 0 le vÃ©hicule dont il faut afficher le contenu
  * 
  * Copyright (C) 2010 madbull ~R3F~
  * 
@@ -31,14 +31,14 @@ else
 	
 	_contenu = _transporteur getVariable "R3F_LOG_objets_charges";
 	
-	/** Liste des noms de classe des objets contenu dans le véhicule, sans doublon */
+	/** Liste des noms de classe des objets contenu dans le vÃ©hicule, sans doublon */
 	_tab_objets = [];
-	/** Quantité associé (par l'index) aux noms de classe dans _tab_objets */
+	/** QuantitÃ© associÃ© (par l'index) aux noms de classe dans _tab_objets */
 	_tab_quantite = [];
 	
 	_chargement_actuel = 0;
 	
-	// Préparation de la liste du contenu et des quantités associées aux objets
+	// PrÃ©paration de la liste du contenu et des quantitÃ©s associÃ©es aux objets
 	for [{_i = 0}, {_i < count _contenu}, {_i = _i + 1}] do
 	{
 		private ["_objet"];
@@ -66,7 +66,7 @@ else
 		};
 	};
 	
-	// Recherche de la capacité maximale du transporteur
+	// Recherche de la capacitÃ© maximale du transporteur
 	_chargement_maxi = 0;
 	for [{_i = 0}, {_i < count R3F_LOG_CFG_transporteurs}, {_i = _i + 1}] do
 	{
@@ -107,7 +107,7 @@ else
 			
 			_icone = getText (configFile >> "CfgVehicles" >> (_tab_objets select _i) >> "icon");
 			
-			// Si l'icône est valide
+			// Si l'icÃ´ne est valide
 			if (toString ([toArray _icone select 0]) == "\") then
 			{
 				_index = _ctrl_liste lbAdd (getText (configFile >> "CfgVehicles" >> (_tab_objets select _i) >> "displayName") + format [" (%1x)", _tab_quantite select _i]);
@@ -115,7 +115,7 @@ else
 			}
 			else
 			{
-				// Si le téléphone satellite est utilisé pour un PC d'artillerie
+				// Si le tÃ©lÃ©phone satellite est utilisÃ© pour un PC d'artillerie
 				if (!(isNil "R3F_ARTY_active") && (_tab_objets select _i) == "SatPhone") then
 				{
 					_index = _ctrl_liste lbAdd ("     " + STR_R3F_LOG_nom_pc_arti + format [" (%1x)", _tab_quantite select _i]);

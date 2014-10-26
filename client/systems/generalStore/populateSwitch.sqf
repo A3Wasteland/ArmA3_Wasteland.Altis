@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 
 //	@file Version: 1.0
@@ -21,4 +21,5 @@ if(_switchText == "Inventory") then
 	[] execVM "client\systems\generalStore\getInventory.sqf";
 } else {	
 	[0] execVM "client\systems\generalStore\populateGenStore.sqf";
-};
+};
+

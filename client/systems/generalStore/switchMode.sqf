@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 
 //	@file Version: 1.0
@@ -40,4 +40,5 @@ if(_switchText == "Sell Items") then
 	_buysell ctrlSetText "Buy";
 	_iteminv ctrlSetText "Items";
 	[0] execVM "client\systems\generalStore\populateGenStore.sqf";
-};
+};
+

@@ -1,5 +1,5 @@
 /**
- * Initialise un véhicule remorqueur
+ * Initialise un vÃ©hicule remorqueur
  * 
  * @param 0 le remorqueur
  */
@@ -14,7 +14,7 @@ if (isNil "_est_desactive") then
 	_remorqueur setVariable ["R3F_LOG_disabled", false];
 };
 
-// Définition locale de la variable si elle n'est pas définie sur le réseau
+// DÃ©finition locale de la variable si elle n'est pas dÃ©finie sur le rÃ©seau
 _remorque = _remorqueur getVariable "R3F_LOG_remorque";
 if (isNil "_remorque") then
 {

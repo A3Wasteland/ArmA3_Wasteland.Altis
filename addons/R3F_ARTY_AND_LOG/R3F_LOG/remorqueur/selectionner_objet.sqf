@@ -1,7 +1,7 @@
 /**
- * Sélectionne un objet à remorquer
+ * SÃ©lectionne un objet Ã  remorquer
  * 
- * @param 0 l'objet à sélectionner
+ * @param 0 l'objet Ã  sÃ©lectionner
  */
 
 if (R3F_LOG_mutex_local_verrou) then

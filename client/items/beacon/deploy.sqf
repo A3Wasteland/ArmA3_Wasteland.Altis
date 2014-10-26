@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 //@file Version: 1.0
 //@file Name: deploy.sqf
@@ -52,4 +52,5 @@ if (_success) then {
     publicVariable "pvar_spawn_beacons";
 	["You placed the Spawn Beacon successfully!", 5] call mf_notify_client;
 };
-_success;
+_success;
+

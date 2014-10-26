@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 #define BUILD(x) format["%1\%2", _this, x] call mf_compile
 private ["_path"];
@@ -42,4 +42,5 @@ _action = ["Pack Warchest", mf_items_warchest_pack, nil, 1, true, false, "", _co
 
 _condition = "'' == [] call mf_items_warchest_can_hack;";
 _action = ["Hack Warchest", mf_items_warchest_hack, nil, 2, true, false, "", _condition];
-["warchest-hack", _action] call mf_player_actions_set;
+["warchest-hack", _action] call mf_player_actions_set;
+

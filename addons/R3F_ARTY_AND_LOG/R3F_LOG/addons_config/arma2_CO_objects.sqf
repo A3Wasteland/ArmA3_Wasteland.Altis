@@ -1,19 +1,19 @@
 /**
  * English and French comments
- * Commentaires anglais et français
+ * Commentaires anglais et franÃ§ais
  * 
  * This file adds the ArmA 2 and Arrowhead objetcs in the configuration variables of the logistics system.
- * Fichier ajoutant les objets d'ArmA 2 et Arrowhead dans la configuration du système de logistique.
+ * Fichier ajoutant les objets d'ArmA 2 et Arrowhead dans la configuration du systÃ¨me de logistique.
  * 
  * Important note : All the classes names which inherits from the ones used in configuration variables will be also available.
- * Note importante : Tous les noms de classes dérivant de celles utilisées dans les variables de configuration seront aussi valables.
+ * Note importante : Tous les noms de classes dÃ©rivant de celles utilisÃ©es dans les variables de configuration seront aussi valables.
  */
 
 /****** TOW WITH VEHICLE / REMORQUER AVEC VEHICULE ******/
 
 /**
  * List of class names of vehicles which can tow towable objects.
- * Liste des noms de classes des véhicules terrestres pouvant remorquer des objets remorquables.
+ * Liste des noms de classes des vÃ©hicules terrestres pouvant remorquer des objets remorquables.
  */
 R3F_LOG_CFG_remorqueurs = R3F_LOG_CFG_remorqueurs +
 [
@@ -34,7 +34,7 @@ R3F_LOG_CFG_objets_remorquables = R3F_LOG_CFG_objets_remorquables +
 
 /**
  * List of class names of air vehicles which can lift liftable objects.
- * Liste des noms de classes des véhicules aériens pouvant héliporter des objets héliportables.
+ * Liste des noms de classes des vÃ©hicules aÃ©riens pouvant hÃ©liporter des objets hÃ©liportables.
  */
 R3F_LOG_CFG_heliporteurs = R3F_LOG_CFG_heliporteurs +
 [
@@ -43,7 +43,7 @@ R3F_LOG_CFG_heliporteurs = R3F_LOG_CFG_heliporteurs +
 
 /**
  * List of class names of liftable objects.
- * Liste des noms de classes des objets héliportables.
+ * Liste des noms de classes des objets hÃ©liportables.
  */
 R3F_LOG_CFG_objets_heliportables = R3F_LOG_CFG_objets_heliportables +
 [
@@ -58,7 +58,7 @@ R3F_LOG_CFG_objets_heliportables = R3F_LOG_CFG_objets_heliportables +
  * The arbitrary referencial used is : an ammo box of type USSpecialWeaponsBox "weights" 5 units.
  * 
  * Cette section utilise une quantification du volume et/ou poids des objets.
- * Le référentiel arbitraire utilisé est : une caisse de munition de type USSpecialWeaponsBox "pèse" 5 unités.
+ * Le rÃ©fÃ©rentiel arbitraire utilisÃ© est : une caisse de munition de type USSpecialWeaponsBox "pÃ¨se" 5 unitÃ©s.
  * 
  * Note : the priority of a declaration of capacity to another corresponds to their order in the tables.
  *   For example : the "Truck" class is in the "Car" class (see http://community.bistudio.com/wiki/ArmA_2:_CfgVehicles).
@@ -66,19 +66,19 @@ R3F_LOG_CFG_objets_heliportables = R3F_LOG_CFG_objets_heliportables +
  *   Then all the sub-classes in "Truck" will have a capacity of 140. And all the sub-classes of "Car", excepted the ones
  *   in "Truck", will have a capacity of 40.
  * 
- * Note : la priorité d'une déclaration de capacité sur une autre correspond à leur ordre dans les tableaux.
- *   Par exemple : la classe "Truck" appartient à la classe "Car" (voir http://community.bistudio.com/wiki/ArmA_2:_CfgVehicles).
- *   Si "Truck" est déclaré avec une capacité de 140 avant "Car". Et que "Car" est déclaré après "Truck" avec une capacité de 40,
- *   Alors toutes les sous-classes appartenant à "Truck" auront une capacité de 140. Et toutes les sous-classes appartenant
- *   à "Car", exceptées celles de "Truck", auront une capacité de 40.
+ * Note : la prioritÃ© d'une dÃ©claration de capacitÃ© sur une autre correspond Ã  leur ordre dans les tableaux.
+ *   Par exemple : la classe "Truck" appartient Ã  la classe "Car" (voir http://community.bistudio.com/wiki/ArmA_2:_CfgVehicles).
+ *   Si "Truck" est dÃ©clarÃ© avec une capacitÃ© de 140 avant "Car". Et que "Car" est dÃ©clarÃ© aprÃ¨s "Truck" avec une capacitÃ© de 40,
+ *   Alors toutes les sous-classes appartenant Ã  "Truck" auront une capacitÃ© de 140. Et toutes les sous-classes appartenant
+ *   Ã  "Car", exceptÃ©es celles de "Truck", auront une capacitÃ© de 40.
  */
 
 /**
  * List of class names of (ground or air) vehicles which can transport transportable objects.
  * The second element of the arrays is the load capacity (in relation with the capacity cost of the objects).
  * 
- * Liste des noms de classes des véhicules (terrestres ou aériens) pouvant transporter des objets transportables.
- * Le deuxième élément des tableaux est la capacité de chargement (en relation avec le coût de capacité des objets).
+ * Liste des noms de classes des vÃ©hicules (terrestres ou aÃ©riens) pouvant transporter des objets transportables.
+ * Le deuxiÃ¨me Ã©lÃ©ment des tableaux est la capacitÃ© de chargement (en relation avec le coÃ»t de capacitÃ© des objets).
  */
 R3F_LOG_CFG_transporteurs = R3F_LOG_CFG_transporteurs +
 [
@@ -90,7 +90,7 @@ R3F_LOG_CFG_transporteurs = R3F_LOG_CFG_transporteurs +
  * The second element of the arrays is the cost capacity (in relation with the capacity of the vehicles).
  * 
  * Liste des noms de classes des objets transportables.
- * Le deuxième élément des tableaux est le coût de capacité (en relation avec la capacité des véhicules).
+ * Le deuxiÃ¨me Ã©lÃ©ment des tableaux est le coÃ»t de capacitÃ© (en relation avec la capacitÃ© des vÃ©hicules).
  */
 R3F_LOG_CFG_objets_transportables = R3F_LOG_CFG_objets_transportables +
 [

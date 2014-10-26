@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 
 #define vehicleManagementDialog 12000
@@ -206,4 +206,5 @@ class VehicleManagement {
 			color[] = {0.95,0.1,0.1,1};
 		};
 	};
-};
+};
+

@@ -1,5 +1,5 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: spawnAction.sqf
@@ -74,7 +74,7 @@ _header = _dialog displayCtrl respawn_Content_Text;
 
 if (cbChecked (_dialog displayCtrl respawn_Preload_Checkbox)) then
 {
-	_header ctrlSetStructuredText parseText "<t size='0.5'> <br/></t><t size='1.33'>Preloading spawn...</t>";
+	_header ctrlSetStructuredText parseText "<t size='0.5'>Â <br/></t><t size='1.33'>Preloading spawn...</t>";
 };
 
 if (typeName spawnActionHandle == "SCRIPT") then
