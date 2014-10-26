@@ -99,11 +99,8 @@ if (isNil "_building" || {isNull _building}) then
 	_building = nearestBuilding _npc;
 };
 
-if (isServer) then
-{
-	for "_i" from 1 to 99 do { _building setHit ["glass_" + str _i, 1] }; // pre-break the windows so people can shoot thru them
-};
-
+_building allowDamage true;
+for "_i" from 1 to 99 do { _building setHit ["glass_" + str _i, 1] }; // pre-break the windows so people can shoot thru them
 _building allowDamage false; // disable building damage
 
 if (isServer) then
