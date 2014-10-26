@@ -447,7 +447,10 @@ v_saveAllVechiles = {
   init(_request,[_scope]);
   
   [_scope] call stats_wipe;
-  init(_bulk_size,25);
+  init(_bulk_size,100);
+  init(_start_time, diag_tickTime);
+  init(_last_save, diag_tickTime);
+
   
   {
     if (!isNil{[_request, _x] call v_addSaveVehicle}) then {
@@ -456,16 +459,24 @@ v_saveAllVechiles = {
     
     //save vehicles in bulks
     if ((_count % _bulk_size) == 0 && {count(_request) > 1}) then {
+      init(_save_start, diag_tickTime);
       _request call stats_set;
+      init(_save_end, diag_tickTime);
       _request = [_scope];
+      diag_log format["v_saveLoop: %1 vehicles saved in %2 ticks, save call took %3 ticks", (_bulk_size), (diag_tickTime - _start_time), (_save_end - _save_start)];
+      _last_save = _save_end;
     };
   } forEach (allMissionObjects "All");
   
   if (count(_request) > 1) then {
+    init(_save_start, diag_tickTime);
     _request call stats_set;
+    init(_save_end, diag_tickTime);
+    diag_log format["v_saveLoop: %1 vehicles saved in %2 ticks, save call took %3 ticks", (count(_request) -1), (_save_end - _last_save), (_save_end - _save_start)];
   };
   
-  diag_log format ["A3W - %1 vehicles have been saved", _count];
+  diag_log format["v_saveLoop: total of %1 vehicles saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
+
 };
 
 v_saveLoop_interval = OR(A3W_vehicle_saveInterval,60);
