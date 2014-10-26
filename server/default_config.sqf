@@ -38,7 +38,9 @@ A3W_staticWeaponSaving = 1;        // Save locked static weapons and their magaz
 A3W_warchestSaving = 1;            // Save warchest objects deployed by players between server restarts (0 = no, 1 = yes)
 A3W_warchestMoneySaving = 1;       // Save warchest team money between server restarts (0 = no, 1 = yes)
 A3W_spawnBeaconSaving = 1;         // Save spawn beacons between server restarts (0 = no, 1 = yes)
-A3W_objectLifetime = 5*24;         // Maximum lifetime in hours for saved objects (baseparts, crates, vehicles, etc.) across server restarts (0 = no time limit)
+A3W_objectLifetime = 5*24;         // Maximum lifetime in hours for saved objects (baseparts, crates, etc. except vehicles) across server restarts (0 = no time limit)
+A3W_vehicleLifetime = 0;           // Maximum lifetime in hours for saved vehicles across server restarts, regardless of usage (0 = no time limit)
+A3W_vehicleMaxUnusedTime = 2*24;   // Maximum parking time in hours after which unused saved vehicles will be marked for deletion (0 = no time limit)
 PDB_PlayerFileID = "A3W_";         // Player savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_ObjectFileID = "A3W_";         // Object savefile prefix (change this in case you run multiple servers from the same folder)
 
@@ -69,12 +71,12 @@ A3W_serverMissions = 1;            // Enable server missions (0 = no, 1 = yes)
 A3W_missionsDifficulty = 0;        // Missions difficulty (0 = normal, 1 = hard)
 
 // Work-in-progress to be included in v1:
-// A3W_heliPatrolMissions = 1;        // Enable missions involving flying helicopters piloted by AI (0 = no, 1 = yes)
-// A3W_underWaterMissions = 1;        // Enable underwater missions which require diving gear (0 = no, 1 = yes)
-// A3W_mainMissionTimeout = 60*60;    // Time in seconds that a Main Mission will run for, unless completed
-// A3W_mainMissionDelay = 10*60;      // Time in seconds between Main Missions
-// A3W_sideMissionTimeout = 45*60;    // Time in seconds that a Side Mission will run for, unless completed
-// A3W_sideMissionDelay = 5*60;       // Time in seconds between Side Missions
-// A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
-// A3W_moneyMissionDelay = 15*60;     // Time in seconds between Money Missions
-// A3W_missionCompleteRadius = 99999; // Radius from a mission in which a player must be present in order mark it as complete after AIs are killed
+A3W_missionsQuantity = 6;          // Number of missions running at the same time (0 to 6)
+A3W_heliPatrolMissions = 1;        // Enable missions involving flying helicopters piloted by AI (0 = no, 1 = yes)
+A3W_underWaterMissions = 1;        // Enable underwater missions which require diving gear (0 = no, 1 = yes)
+A3W_mainMissionDelay = 6; //10*60;      // Time in seconds between Main Missions
+A3W_mainMissionTimeout = 60*60;    // Time in seconds that a Main Mission will run for, unless completed
+A3W_sideMissionDelay = 6; //5*60;       // Time in seconds between Side Missions
+A3W_sideMissionTimeout = 45*60;    // Time in seconds that a Side Mission will run for, unless completed
+A3W_moneyMissionDelay = 6; //15*60;     // Time in seconds between Money Missions
+A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed

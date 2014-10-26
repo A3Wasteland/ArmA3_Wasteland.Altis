@@ -78,12 +78,15 @@ while {true} do
 				_damage = damage _obj;
 				_allowDamage = if (_obj getVariable ["allowDamage", false]) then { 1 } else { 0 };
 
-				if (isNil {_obj getVariable "baseSaving_spawningTime"}) then
+				_spawningTime = _veh getVariable "baseSaving_spawningTime";
+
+				if (isNil "_spawningTime") then
 				{
-					_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
+					_spawningTime = diag_tickTime;
+					_veh setVariable ["baseSaving_spawningTime", _spawningTime];
 				};
 
-				_hoursAlive = (_obj getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - (_obj getVariable "baseSaving_spawningTime")) / 3600);
+				_hoursAlive = (_veh getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - _spawningTime) / 3600);
 
 				_variables = [];
 
@@ -265,12 +268,25 @@ while {true} do
 						_hitPoints set [count _hitPoints, [_hitPoint, _veh getHitPointDamage _hitPoint]];
 					} forEach (_class call getHitPoints);
 
-					if (isNil {_veh getVariable "vehSaving_spawningTime"}) then
+					_spawningTime = _veh getVariable "vehSaving_spawningTime";
+
+					if (isNil "_spawningTime") then
 					{
-						_veh setVariable ["vehSaving_spawningTime", diag_tickTime];
+						_spawningTime = diag_tickTime;
+						_veh setVariable ["vehSaving_spawningTime", _spawningTime];
 					};
 
-					_hoursAlive = (_veh getVariable ["vehSaving_hoursAlive", 0]) + ((diag_tickTime - (_veh getVariable "vehSaving_spawningTime")) / 3600);
+					_lastUse = _veh getVariable ["vehSaving_lastUse", _spawningTime];
+
+					if ({isPlayer _x} count crew _veh > 0 || isPlayer ((uavControl _veh) select 0)) then
+					{
+						_lastUse = diag_tickTime;
+						_veh setVariable ["vehSaving_lastUse", _lastUse];
+						_veh setVariable ["vehSaving_hoursUnused", 0];
+					};
+
+					_hoursAlive = (_veh getVariable ["vehSaving_hoursAlive", 0]) + ((diag_tickTime - _spawningTime) / 3600);
+					_hoursUnused = (_veh getVariable ["vehSaving_hoursUnused", 0]) + ((diag_tickTime - _lastUse) / 3600);
 
 					_variables = [];
 
@@ -293,7 +309,10 @@ while {true} do
 						};
 					};
 
-					_texture = _veh getVariable ["A3W_objectTexture", ""];
+					_textures = [];
+					{
+						[_textures, _x select 1, [_x select 0]] call fn_addToPairs;
+					} forEach (_veh getVariable ["A3W_objectTextures", []]);
 
 					_weapons = [];
 					_magazines = [];
@@ -312,15 +331,15 @@ while {true} do
 					_turretMags = magazinesAmmo _veh;
 					_turretMags2 = [];
 					_turretMags3 = [];
-					_isGhostHawk = _class isKindOf "Heli_Transport_01_base_F";
+					_hasDoorGuns = isClass (configFile >> "CfgVehicles" >> _class >> "Turrets" >> "RightDoorGun");
 
-					_turrets = if (_isGhostHawk) then { [[-1],[2]] } else { [[-1]] + ([_veh, []] call BIS_fnc_getTurrets) };
+					_turrets = if (_hasDoorGuns) then { [[-1],[2]] } else { [[-1]] + ([_veh, []] call BIS_fnc_getTurrets) };
 
 					{
 						_path = _x;
 
 						{
-							if ([_turretMags, _x, -1] call fn_getFromPairs == -1 || _isGhostHawk) then
+							if ([_turretMags, _x, -1] call fn_getFromPairs == -1 || _hasDoorGuns) then
 							{
 								if (_veh currentMagazineTurret _path == _x && {count _turretMags3 == 0}) then
 								{
@@ -357,11 +376,12 @@ while {true} do
 						["Position", _pos],
 						["Direction", _dir],
 						["HoursAlive", _hoursAlive],
+						["HoursUnused", _hoursUnused],
 						["Fuel", _fuel],
 						["Damage", _damage],
 						["HitPoints", _hitPoints],
 						["Variables", _variables],
-						["Texture", _texture],
+						["Textures", _textures],
 
 						["Weapons", _weapons],
 						["Magazines", _magazines],

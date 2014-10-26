@@ -7,7 +7,8 @@ if (!isServer) exitWith {};
 
 _vehFileName = "Vehicles" call PDB_objectFileName;
 
-_maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
+_maxLifetime = ["A3W_vehicleLifetime", 0] call getPublicVar;
+_maxUnusedTime = ["A3W_vehicleMaxUnusedTime", 0] call getPublicVar;
 
 _exists = _vehFileName call PDB_exists; // iniDB_exists
 _vehCount = 0;
@@ -27,19 +28,20 @@ if (!isNil "_exists" && {_exists}) then
 			_class = [_vehFileName, _vehName, "Class", "STRING"] call PDB_read; // iniDB_read
 			_pos = [_vehFileName, _vehName, "Position", "ARRAY"] call PDB_read; // iniDB_read
 			_hoursAlive = [_vehFileName, _vehName, "HoursAlive", "NUMBER"] call PDB_read; // iniDB_read
+			_hoursUnused = [_vehFileName, _vehName, "HoursUnused", "NUMBER"] call PDB_read; // iniDB_read
 
-			if (!isNil "_class" && {!isNil "_pos"} && {_maxLifetime <= 0 || {_hoursAlive < _maxLifetime}}) then
+			if (!isNil "_class" && !isNil "_pos" && {(_maxLifetime <= 0 || _hoursAlive < _maxLifetime) && (_maxUnusedTime <= 0 || _hoursUnused < _maxUnusedTime)}) then
 			{
 				_variables = [_vehFileName, _vehName, "Variables", "ARRAY"] call PDB_read; // iniDB_read
 				_dir = [_vehFileName, _vehName, "Direction", "ARRAY"] call PDB_read; // iniDB_read
 				_fuel = [_vehFileName, _vehName, "Fuel", "NUMBER"] call PDB_read; // iniDB_read
 				_damage = [_vehFileName, _vehName, "Damage", "NUMBER"] call PDB_read; // iniDB_read
 				_hitPoints = [_vehFileName, _vehName, "HitPoints", "ARRAY"] call PDB_read; // iniDB_read
-				_texture = [_vehFileName, _vehName, "Texture", "STRING"] call PDB_read; // iniDB_read
+				_textures = [_vehFileName, _vehName, "Textures", "ARRAY"] call PDB_read; // iniDB_read
 
 				{ if (typeName _x == "STRING") then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
 
-				_veh = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
+				_veh = createVehicle [_class, _pos, [], 0, "None"];
 				_veh setPosWorld ATLtoASL _pos;
 
 				if (!isNil "_dir") then
@@ -47,15 +49,33 @@ if (!isNil "_exists" && {_exists}) then
 					_veh setVectorDirAndUp _dir;
 				};
 
+				[_veh] call vehicleSetup;
+
 				_veh setVariable ["vehSaving_hoursAlive", _hoursAlive];
 				_veh setVariable ["vehSaving_spawningTime", diag_tickTime];
+				_veh setVariable ["vehSaving_hoursUnused", _hoursUnused];
+				_veh setVariable ["vehSaving_lastUse", diag_tickTime];
 
 				_veh setDamage _damage;
 				{ _veh setHitPointDamage _x } forEach _hitPoints;
 
 				_veh setFuel _fuel;
 
-				[_veh, _texture] call applyVehicleTexture;
+				if (!isNil "_textures") then
+				{
+					_veh setVariable ["BIS_enableRandomization", false, true];
+
+					_objTextures = [];
+					{
+						_texture = _x select 0;
+						{
+							_veh setObjectTextureGlobal [_x, _texture];
+							[_objTextures, _x, _texture] call fn_setToPairs;
+						} forEach (_x select 1);
+					} forEach _textures;
+
+					_veh setVariable ["A3W_objectTextures", _objTextures, true];
+				};
 
 				{ _veh setVariable [_x select 0, _x select 1] } forEach _variables;
 

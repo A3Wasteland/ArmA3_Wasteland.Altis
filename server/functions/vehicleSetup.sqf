@@ -33,6 +33,9 @@ _getInOut =
 
 	_unit setVariable ["lastVehicleRidden", netId _vehicle, true];
 	_unit setVariable ["lastVehicleOwner", owner _vehicle == owner _unit, true];
+
+	_vehicle setVariable ["vehSaving_hoursUnused", 0];
+	_vehicle setVariable ["vehSaving_lastUse", diag_tickTime];
 };
 
 _vehicle addEventHandler ["GetIn", _getInOut];
