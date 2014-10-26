@@ -182,7 +182,9 @@ v_restoreVehicle = {_this spawn {
   if (!isOBJECT(_obj)) exitWith {
     diag_log format["Could not create vehicle of class: %1", _class];
   };
-  
+
+  [_obj, false] call vehicleSetup;
+
   _obj setVariable ["vehicle_key", _vehicle_key, true];
   
   _obj setPosWorld ATLtoASL _pos;
