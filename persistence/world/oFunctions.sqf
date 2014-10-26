@@ -94,7 +94,7 @@ o_hasInventory = {
          
 o_isSaveable = {
   //diag_log format["%1 call o_isSaveable", _this];
-  ARGVX3(0,_obj,objNull);
+  ARGVX4(0,_obj,objNull,false);
 
   init(_class, typeOf _obj);
 
@@ -106,17 +106,17 @@ o_isSaveable = {
   init(_boxSavingOn, call o_isBoxSavingOn);
 
   if ([_obj] call o_isBeacon) exitWith {
-    diag_log format["%1 is beacon", _obj];
+    //diag_log format["box5(%1): o_isBeaconSavingOn = %2", _obj, (call o_isBeaconSavingOn)];
     (call o_isBeaconSavingOn)
   };
   
   if ([_obj] call o_isWarchest) exitWith {
-    //diag_log format["%1 is warchest", _obj];
+    //diag_log format["box4(%1): o_isWarchestSavingOn = %2", _obj, (call o_isWarchestSavingOn)];
     (call o_isWarchestSavingOn)
   };
   
   if ([_obj] call o_isStaticWeapon) exitWith {
-    //diag_log format["%1 is static weapon", _obj];
+    //diag_log format["box3(%1): o_isStaticWeaponSavingOn = %2", _obj, (call o_isStaticWeaponSavingOn)];
     (call o_isStaticWeaponSavingOn)
   };
 
@@ -124,10 +124,12 @@ o_isSaveable = {
   _locked = _obj getVariable ["objectLocked", false];
 
   if ([_obj] call o_isBox) exitWith {
-    (_boxSavingOn && _locked)
+    //diag_log format["box2(%1): _boxSavingOn = %2, _locked = %3", _obj, _boxSavingOn, _locked];
+    (_boxSavingOn && {_locked})
   };
 
-  (_boxSavingOn && _locked)
+  //diag_log format["box1(%1): _boxSavingOn = %2, _locked = %3",_obj, _boxSavingOn, _locked];
+  (_boxSavingOn && {_locked})
 };
 
 o_isVehicle = {
@@ -228,6 +230,7 @@ o_restoreObject = {_this spawn {
   
   def(_obj);
   _obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
+  _obj allowDamage false; //set damage to false immediately to avoid taking fall damage
   if (!isOBJECT(_obj)) exitWith {
     diag_log format["%1(%2) could not be created.", _object_key, _class];
   };
@@ -277,8 +280,14 @@ o_restoreObject = {_this spawn {
   };
   
   _allowDamage = if(isSCALAR(_allowDamage) && {_allowDamage <= 0}) then { false } else { true };
+  [_obj, _allowDamage] spawn {
+    ARGVX3(0,_obj,objNull);
+    ARGVX3(1,_allowDamage,false);
+    //delay the allow damage to allow the box to settle
+    sleep 5;
   _obj setVariable ["allowDamage", _allowDamage];
   _obj allowDamage _allowDamage;
+  };
 
   //broadcast the spawn beacon
   if ([_obj] call o_isBeacon) then {
