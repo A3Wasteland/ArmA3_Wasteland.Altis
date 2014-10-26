@@ -3301,63 +3301,63 @@ class Mission
 		class Item146
 		{
 			position[]={18295.152,-6.7252245,8136.5732};
-			name="Treasure_0";
+			name="SunkenMission_0";
 			type="Empty";
 			colorName="ColorWhite";
 		};
 		class Item147
 		{
 			position[]={16985.289,-0.27175087,13616.465};
-			name="Treasure_1";
+			name="SunkenMission_1";
 			type="Empty";
 			colorName="ColorWhite";
 		};
 		class Item148
 		{
 			position[]={9866.0479,0.014741103,11111.971};
-			name="Treasure_2";
+			name="SunkenMission_2";
 			type="Empty";
 			colorName="ColorWhite";
 		};
 		class Item149
 		{
 			position[]={4992.7637,-0.020654676,9908.2881};
-			name="Treasure_3";
+			name="SunkenMission_3";
 			type="Empty";
 			colorName="ColorWhite";
 		};
 		class Item150
 		{
 			position[]={3505.4102,-0.023277842,11439.938};
-			name="Treasure_4";
+			name="SunkenMission_4";
 			type="Empty";
 			colorName="ColorWhite";
 		};
 		class Item151
 		{
 			position[]={3849.9155,0.00057628582,15028.444};
-			name="Treasure_5";
+			name="SunkenMission_5";
 			type="Empty";
 			colorName="ColorWhite";
 		};
 		class Item152
 		{
 			position[]={5281.2344,0.23328479,22658.328};
-			name="Treasure_6";
+			name="SunkenMission_6";
 			type="Empty";
 			colorName="ColorWhite";
 		};
 		class Item153
 		{
 			position[]={21207.197,0.20755874,20124.484};
-			name="Treasure_7";
+			name="SunkenMission_7";
 			type="Empty";
 			colorName="ColorWhite";
 		};
 		class Item154
 		{
 			position[]={24573.881,-0.0090859979,16154.248};
-			name="Treasure_8";
+			name="SunkenMission_8";
 			type="Empty";
 			colorName="ColorWhite";
 		};

@@ -205,11 +205,3 @@ vehicleAddition2 =
 	"Chemlight_yellow",
 	"Chemlight_red"
 ];
-
-MissionSpawnMarkers = [];
-{
-	if (["Mission_", _x] call fn_startsWith) then
-	{
-		MissionSpawnMarkers pushBack [_x, false];
-	};
-} forEach allMapMarkers;

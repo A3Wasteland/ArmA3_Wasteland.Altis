@@ -23,8 +23,6 @@ respawnDialogActive = false;
 groupManagmentActive = false;
 pvar_PlayerTeamKiller = objNull;
 doCancelAction = false;
-currentMissionsMarkers = [];
-currentRadarMarkers = [];
 
 //Initialization Variables
 playerCompiledScripts = false;
@@ -114,8 +112,6 @@ call compile preprocessFileLineNumbers "client\functions\setupClientPVars.sqf";
 //client Executes
 A3W_scriptThreads pushBack execVM "client\systems\hud\playerHud.sqf";
 [] execVM "client\functions\initSurvival.sqf";
-[] spawn updateMissionsMarkers;
-// [] call updateRadarMarkers;
 
 [] spawn
 {

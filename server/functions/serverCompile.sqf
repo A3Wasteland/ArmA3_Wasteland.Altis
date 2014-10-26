@@ -8,62 +8,28 @@ if (!isServer) exitWith {};
 
 diag_log "WASTELAND SERVER - Initializing Server Compile";
 
-// Do not add missions here, put their name directly in the mission controllers
-
-/*
-//Main Mission Compiles
-
-mission_ArmedHeli = "server\missions\mainMissions\mission_ArmedHeli.sqf" call mf_compile;
-mission_LightArmVeh = "server\missions\mainMissions\mission_LightArmVeh.sqf" call mf_compile;
-mission_CivHeli = "server\missions\mainMissions\mission_CivHeli.sqf" call mf_compile;
-mission_HostileHeliFormation = "server\missions\mainMissions\mission_HostileHeliFormation.sqf" call mf_compile;
-mission_Convoy = "server\missions\mainMissions\mission_Convoy.sqf" call mf_compile;
-mission_ArmedDiversquad = "server\missions\mainMissions\mission_ArmedDiversquad.sqf" call mf_compile;
-mission_APC = "server\missions\mainMissions\mission_APC.sqf" call mf_compile;
-mission_Outpost = "server\missions\mainMissions\mission_Outpost.sqf" call mf_compile;
-mission_Coastal_Convoy = "server\missions\mainMissions\mission_Coastal_Convoy.sqf" call mf_compile;
-*/
-
-/*
-mission_LightTank = "server\missions\mainMissions\mission_LightTank.sqf" call mf_compile;
-mission_MBT = "server\missions\mainMissions\mission_MBT.sqf" call mf_compile;
-mission_RadarTruck = "server\missions\mainMissions\mission_RadarTruck.sqf" call mf_compile;
-mission_SupplyDrop = "server\missions\mainMissions\mission_SupplyDrop.sqf" call mf_compile;
-*/
-
-/*
-//Side Mission Compiles
-
-mission_AirWreck = "server\missions\sideMissions\mission_AirWreck.sqf" call mf_compile;
-mission_WepCache = "server\missions\sideMissions\mission_WepCache.sqf" call mf_compile;
-mission_MiniConvoy = "server\missions\sideMissions\mission_MiniConvoy.sqf" call mf_compile;
-mission_SunkenSupplies = "server\missions\sideMissions\mission_SunkenSupplys.sqf" call mf_compile;
-mission_HostileHelicopter = "server\missions\sideMissions\mission_HostileHelicopter.sqf" call mf_compile;
-mission_Truck = "server\missions\sideMissions\mission_Truck.sqf" call mf_compile;
-*/
-
-/*
-mission_ReconVeh = "server\missions\sideMissions\mission_ReconVeh.sqf" call mf_compile;
-*/
-
 //Factory Compiles
 _path = "server\missions\factoryMethods";
-createCargoItem = [_path, "createCargoItem.sqf"] call mf_compile;
-createClientMarker = [_path, "createClientMarker.sqf"] call mf_compile;
+attemptCompileMissions = [_path, "attemptCompileMissions.sqf"] call mf_compile;
+checkMissionVehicleLock = [_path, "checkMissionVehicleLock.sqf"] call mf_compile;
+cleanLocationObjects = [_path, "cleanLocationObjects.sqf"] call mf_compile;
+createCustomGroup = [_path, "createUnits\customGroup.sqf"] call mf_compile;
 createLargeDivers = [_path, "createUnits\largeDivers.sqf"] call mf_compile;
-createLargeGroup = [_path, "createUnits\largeGroup.sqf"] call mf_compile;
-createMidGroup = [_path, "createUnits\midGroup.sqf"] call mf_compile;
 createMissionLocation = [_path, "createMissionLocation.sqf"] call mf_compile;
+createMissionMarker = [_path, "createMissionMarker.sqf"] call mf_compile;
 createMissionVehicle = [_path, "createMissionVehicle.sqf"] call mf_compile;
 createMissionVehicle2 = [_path, "createMissionVehicle2.sqf"] call mf_compile;
+createOutpost = [_path, "createOutpost.sqf"] call mf_compile;
 createRandomSoldier = [_path, "createUnits\createRandomSoldier.sqf"] call mf_compile;
 createRandomSoldierC = [_path, "createUnits\createRandomSoldierC.sqf"] call mf_compile;
-createRandomAquaticSoldier = [_path, "createUnits\createRandomAquaticSoldier.sqf"] call mf_compile;
 createSmallDivers = [_path, "createUnits\smallDivers.sqf"] call mf_compile;
-createSmallGroup = [_path, "createUnits\smallGroup.sqf"] call mf_compile;
-createSupplyDrop = [_path, "createSupplyDrop.sqf"] call mf_compile;
-createWaitCondition = [_path, "createWaitCondition.sqf"] call mf_compile;
-deleteClientMarker = [_path, "deleteClientMarker.sqf"] call mf_compile;
+generateMissionWeights = [_path, "generateMissionWeights.sqf"] call mf_compile;
+mission_VehicleCapture = "server\missions\mainMissions\mission_VehicleCapture.sqf" call mf_compile;
+missionHint = [_path, "missionHint.sqf"] call mf_compile;
+removeDisabledMissions = [_path, "removeDisabledMissions.sqf"] call mf_compile;
+setLocationObjects = [_path, "setLocationObjects.sqf"] call mf_compile;
+setLocationState = [_path, "setLocationState.sqf"] call mf_compile;
+setMissionState = [_path, "setMissionState.sqf"] call mf_compile;
 
 //Function Compiles
 _path = "server\functions";

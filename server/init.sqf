@@ -169,6 +169,7 @@ if (_playerSavingOn || _serverSavingOn) then
 	];
 };
 
+call compile preprocessFileLineNumbers "server\missions\setupMissionArrays.sqf";
 call compile preprocessFileLineNumbers "server\functions\createTownMarkers.sqf";
 
 _createTriggers = [] spawn compile preprocessFileLineNumbers "territory\server\createCaptureTriggers.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
@@ -259,11 +260,7 @@ else
 if (["A3W_serverMissions"] call isConfigOn) then
 {
 	diag_log "WASTELAND SERVER - Initializing Missions";
-	[] execVM "server\missions\sideMissionController.sqf";
-	sleep 5;
-	[] execVM "server\missions\mainMissionController.sqf";
-	sleep 5;
-	[] execVM "server\missions\moneyMissionController.sqf";
+	[] execVM "server\missions\masterController.sqf";
 };
 
 // Start clean-up loop

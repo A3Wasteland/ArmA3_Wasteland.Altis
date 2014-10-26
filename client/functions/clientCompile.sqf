@@ -65,8 +65,6 @@ spawnRandom = "client\functions\spawnRandom.sqf" call mf_compile;
 timeSync = "client\functions\clientTimeSync.sqf" call mf_compile;
 
 // Update scripts
-updateMissionsMarkers = "client\functions\updatePlayerMissionMarkers.sqf" call mf_compile;
-updateRadarMarkers = "client\functions\updatePlayerRadarMarkers.sqf" call mf_compile;
 updateTeamKiller = "client\functions\updateTeamKiller.sqf" call mf_compile;
 
 // Team-kill system
