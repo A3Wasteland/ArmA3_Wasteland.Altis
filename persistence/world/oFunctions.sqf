@@ -417,7 +417,7 @@ o_addSaveObject = {
 
   if (not([_obj] call o_isSaveable)) exitWith {};
 
-  diag_log format["will save %1", _obj];
+  //diag_log format["will save %1", _obj];
   def(_class);
   def(_netId);
   def(_pos);
@@ -531,14 +531,14 @@ o_saveInfo = {
 };	
 
 
-o_saveAllObjects = {_this spawn {
+o_saveAllObjects = {
   ARGVX3(0,_scope,"");
   init(_count,0);
   init(_request,[_scope]);
   
   [_scope] call stats_wipe;
-  init(_bulk_size,5);
-  
+  init(_bulk_size,100);
+  init(_start_time, diag_tickTime);
   {
     if (!isNil{[_request, _x] call o_addSaveObject}) then {
       _count = _count + 1;
@@ -546,17 +546,22 @@ o_saveAllObjects = {_this spawn {
     
     //save objects in bulks
     if ((_count % _bulk_size) == 0 && {count(_request) > 1}) then {
+      init(_save_start, diag_tickTime);
       _request call stats_set;
+      init(_save_end, diag_tickTime);
       _request = [_scope];
+      diag_log format["Bulk of %1 objects saved in %2 ticks, save call took %3 ticks", (_bulk_size), (diag_tickTime - _start_time), (_save_end - _save_start)];
     };
   } forEach (allMissionObjects "All");
   
   if (count(_request) > 1) then {
+    init(_save_start, diag_tickTime);
     _request call stats_set;
+    init(_save_end, diag_tickTime);
+    diag_log format["Total of %1 objects saved in %2 ticks, last save call took %3 ticks", (_count), (diag_tickTime - _start_time), (_save_end - _save_start)];
   };
   
-  diag_log format ["A3W - %1 objects have been saved", _count];
-};};
+};
 
 
 o_saveLoop_interval = OR(A3W_object_saveInterval,60);

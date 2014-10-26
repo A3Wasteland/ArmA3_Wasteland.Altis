@@ -441,13 +441,13 @@ v_addSaveVehicle = {
   true
 };
 
-v_saveAllVechiles = {_this spawn {
+v_saveAllVechiles = {
   ARGVX3(0,_scope,"");
   init(_count,0);
   init(_request,[_scope]);
   
   [_scope] call stats_wipe;
-  init(_bulk_size,5);
+  init(_bulk_size,25);
   
   {
     if (!isNil{[_request, _x] call v_addSaveVehicle}) then {
@@ -466,7 +466,7 @@ v_saveAllVechiles = {_this spawn {
   };
   
   diag_log format ["A3W - %1 vehicles have been saved", _count];
-};};
+};
 
 v_saveLoop_interval = OR(A3W_vehicle_saveInterval,60);
 diag_log format["config: A3W_vehicle_saveInterval = %1", v_saveLoop_interval];

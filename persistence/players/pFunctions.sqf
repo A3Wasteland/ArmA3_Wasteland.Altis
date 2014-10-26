@@ -543,6 +543,10 @@ fn_requestPlayerData = {[] spawn {
 
   def(_pData);
   _pData = [_scope, [_dataKey, nil], [_infoKey, nil]] call stats_get;
+  if (not(isARRAY(_pData))) exitWith {
+    //player data did not load, force him back to lobby
+    endMission "LOSER";
+  };
 
   def(_key);
   {

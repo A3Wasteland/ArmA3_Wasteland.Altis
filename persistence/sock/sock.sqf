@@ -31,217 +31,53 @@ sock_log_set_level = {
 //Set default logging level for this component
 LOG_INFO_LEVEL call sock_log_set_level;
 
-#define BACKSLASH (toString [92])
-#define DOUBLE_QUOTE """"
-
-/**
-* This function escapes all instances of {@code _char} within the
-* specified string {@code _str}
-*
-* @param _str (String type)
-* @param _char (String type)
-* @return
-*
-* Returns the same {@code _str} value, but with all intances  of {@code _char}
-* escaped with a back-slash character '\'. If the string already contains
-* back-slashes, they are also escaped.
-*
-*/
-
-sock_json_string_escape = {
-  ARGV2(0,_str);
-  ARGV2(1,_char);
-
-  private["_str_data", "_new_str_data", "_target_char"];
-  _str_data = toArray(_str);
-  _new_str_data = [];
-  _target_char = (toArray(_char)) select 0;
-
-  private["_escape_char", "_escaped", "_count", "_i"];
-  _escape_char = 92; // ASCII value for back-slash
-  _escaped = false;
-  _count = count(_str_data);
-  _i = 0;
-  while {_i < _count} do {
-    _current_char = _str_data select _i;
-    if (_escaped) then {
-      _escaped = false;
-      _new_str_data set [count(_new_str_data), _current_char];
-    }
-    else { if (_current_char == _target_char) then {
-      _new_str_data set [count(_new_str_data), _escape_char];
-      _new_str_data set [count(_new_str_data), _current_char];
-    }
-    else { if ( _current_char == _escape_char) then {
-      _escaped = true;
-      _new_str_data set [count(_new_str_data), _escape_char];
-    }
-    else {
-      _new_str_data set [count(_new_str_data), _current_char];
-    };};};
-    _i = _i + 1;
-  };
-
-  toString(_new_str_data)
-};
-
-/**
-* This function recursively converts an SQF value into its equivalent JSON representation.
-*
-* @param _data (Any type) - Data to be converted to JSON
-* @return
-*
-* Returns the JSON representation of {@code data}.
-*
-* SQF array, is mapped directly to JSON array
-* SQF number, is mapped directly to JSON number
-* SQF string, is escaped so that it does not have nested double-quotes, and then mapped to JSON string
-* SQF nil, is mapped to JSON null
-* SQF objNull, is mapped to JSON null
-* SQF objects, are mapped to a simplified JSON object with the netId, and the name of the SQF object
-*
-*/
 
 
-sock_json = {
-  if (isNil "_this") exitWith {
-    "null"
-  };
+sock_raw = {
+  _this = _this select 0;
 
-  def(_type);
-  _type = typeName _this;
+  private["_stack","_holder"];
+  _holder = [];
+  _stack = [[0,_holder,_this]]; //seed the stack
 
-  //diag_log format["---->%1<----->%2<----", str(_type),_this];
-  if (format["%1",str(_type)] == "") exitWith { //handle Nothing, and Anything ...
-    "null"
-  };
+  while {count(_stack) > 0} do {
+    private["_current","_parent","_index", "_params"];
+    _params = _stack deleteAt (count(_stack)-1);
+    _index = _params select 0;
+    _parent = _params select 1;
+    _current = _params select 2;
 
-  init(_data,_this);
+    private["_clone"];
+    _clone = [];
 
-  if (_type == typeName false) exitWith {
-    def(_val);
-    _val = if (_data) then {"true"} else {"false"};
-    (_val)
-  };
-
-  if (_type == typeName {}) exitWith {
-    ((call _data) call sock_json_hash)
-  };
-
-  if (_type == typeName "") exitWith {
-    (_data call sock_json_string)
-  };
-
-  if (_type == typeName 0) exitWith {
-    def(_val);
-    _val = (format["%1", _data]);
-    //if value is indefinite or infinite, default to 0
-    if (_val == "-1.#IND" || {_val == "-1.#INF" || {_val == "nan" || {_val == "-nan" || _val == "+nan"}}}) then {
-      _val = (format["%1", 0]);
-    };
-    _val
-  };
-
-  if (_type == typeName objNull) exitWith {
-    ('{"netId":' + ((netId _data) call sock_json) + ',"name":' + ((name _data) call sock_json) + '}')
-  };
-
-  if (_type == typeName []) exitWith {
-    //special case for arrays that represent hash [{}, [["key","value"],...]]
-    if (count(_data) > 1 && {typeName (_data select 0) == typeName {}}) exitWith {
-       ((_data select 1) call sock_json_hash)
-    };
-
-    private["_array_json", "_i", "_count", "_element", "_element_json"];
-    _array_json = "[";
-    _count = count(_data);
-    _i = 0;
-    while {_i < _count} do {
-
-      _element = _data select _i;
-      _element_json = if (isNil "_element") then { "null" } else {_element call sock_json};
-
-      if (_i == 0) then {
-        _array_json = _array_json + _element_json;
+    {
+      if (isNil "_x") then {
+        _clone pushBack {nil};
+      }
+      else {private["_type"]; _type = typeName _x; if( _type == "STRING") then {
+        _clone pushBack ([toArray _x,{}]);
+      }
+      else { if(_type == "SCALAR" || {_type == "BOOL"}) then {
+        _clone pushBack _x;
+      }
+      else { if(_type == "CODE") then {
+        _clone pushBack {};
+      }
+      else { if (_type == "ARRAY") then {
+        _stack pushBack [_forEachIndex,_clone,_x];
       }
       else {
-        _array_json = _array_json + "," + _element_json;
-      };
-      _i = _i + 1;
-    };
-    _array_json = _array_json + "]";
-    (_array_json)
+        _clone pushBack {nil};
+      };};};};};
+    } forEach _current;
+
+    _parent set [_index, _clone];
+
   };
 
-
-  //other types, just convert to string
-  (str(_data) call sock_json)
+  ("RAW:" + str(_holder select 0))
 };
 
-sock_json_string = {
-  if(isNil "_this") exitWith {};
-  init(_val,_this);
-
-  _val = [_val, DOUBLE_QUOTE] call sock_json_string_escape;
-  if (isNil "_val") exitWith {'""'};
-
-  _val =[_val, BACKSLASH] call sock_json_string_escape;
-  if (isNil "_val") exitWith {'""'};
-
-   str(_val)
-};
-
-sock_json_hash = {
-  if (isNil "_this" || {typeName _this != typeName []}) exitWith {
-    ((OR(_this,nil)) call sock_json)
-  };
-
-  init(_val,_this);
-
-  private["_json", "_i", "_count", "_el", "_el_json", "_el_key", "_el_val","_el_key_json", "_el_val_json"];
-  _json = "{";
-  _count = count(_val);
-  _i = 0;
-  while {_i < _count} do {
-    if (true) then {
-      _el = _val select _i;
-      if (isNil "_el" || {typeName _el != typeName [] || {count(_el) < 2}}) exitWith {};
-
-      _el_key = (_el select 0);
-      _el_val = (_el select 1);
-
-      if (isNil "_el_key") exitWith {};
-      _el_key_json = _el_key call sock_json;
-      _el_val_json = if (isNil "_el_val") then {"null"} else {_el_val call sock_json};
-
-
-      if ((isNil "_el_key_json" || {typeName _el_key_json != typeName ""}) ||
-          (isNil "_el_val_json" || {typeName _el_val_json != typeName ""})) exitWith {
-        diag_log format["=== JSON Serialization Error ==="];
-        diag_log format["_el=%1",_el];
-        diag_log format["(_el select 0) = %1",(_el select 0)];
-        diag_log format["(_el select 1) = %1",(_el select 1)];
-        diag_log format["typeName _el_key_json = %1",typeName _el_key_json];
-        diag_log format["typeName _el_val_json = %1",typeName _el_val_json];
-        diag_log format["_el_key_json = %1",OR(_el_key_json,nil)];
-        diag_log format["_el_val_json = %1",OR(_el_val_json,nil)];
-        diag_log format["================================"];
-      };
-
-      _el_json = _el_key_json + ":" + _el_val_json;
-
-      if (_i == 0) then {
-        _json = _json + _el_json;
-      }
-      else {
-        _json = _json + "," + _el_json;
-      };
-    };
-    _i = _i + 1;
-  };
-  _json = _json + "}";
-  (_json)
-};
 
 /**
 * This function is used for creating JSON hash/object from an array with a set of key-value pairs
@@ -354,7 +190,7 @@ sock_rpc_remote = {
 
 
   def(_response);
-  init(_end_time, time + 5);
+  init(_end_time, time + 60);
   while {true} do {
     _response = missionNamespace getVariable [_var_name, nil];
     if (!isNil "_response") exitWith {};
@@ -425,15 +261,12 @@ sock_rpc_local = {
   ARGV2(2,_default)
 
   if (undefined(_method)) exitWith {nil};
-  initIf(defined(_params),_params_str,(_params call sock_json),'[]');
 
-  private["_json_rpc"];
-  _json_rpc = '{"method":' + str(_method) + ', "params":' + _params_str + '}';
-  //format["_json_rpc = %1;", _json_rpc] call sock_log_finest;
+  private["_raw_rpc"];
+  _raw_rpc = [([["method",_method],["params",OR(_params,[])]] call sock_hash)] call sock_raw;
 
   private["_result_container"];
-  _result_container = call compile(_json_rpc call sock_get_response);
-
+  _result_container = call compile(_raw_rpc call sock_get_response);
 
   if (isNil "_result_container") exitWith {
     (format["protocol error: Was expecting response of typeName of %1, but got %2", (typeName []), "nil"]) call sock_log_severe;
