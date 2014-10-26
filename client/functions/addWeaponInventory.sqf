@@ -5,7 +5,7 @@
 //	@file Name: addWeaponInventory.sqf
 //	@file Author: AgentRev
 //	@file Created: 16/11/2013 19:20
-//	@file Args: 
+//	@file Args:
 
 private ["_player", "_weapon", "_return"];
 

@@ -25,7 +25,7 @@ _group = _player getVariable ["currentGroupRestore", grpNull];
 if (!isNull _group && {group _player != _group}) then
 {
 	[_player] join _group;
-	
+
 	if (_player getVariable ["currentGroupIsLeader", false] && leader _group != _player) then
 	{
 		_group selectLeader _player;

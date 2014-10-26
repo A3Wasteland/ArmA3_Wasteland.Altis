@@ -15,7 +15,7 @@ while {alive _vehicle && _vehicle getVariable ["R3F_LOG_disabled", false]} do
 {
 	if ({alive _x && group _x == _group} count crew _vehicle > 0) then
 	{
-		if (locked _vehicle < 3) then { _vehicle lock 3 }; 
+		if (locked _vehicle < 3) then { _vehicle lock 3 };
 	}
 	else
 	{

@@ -4,13 +4,13 @@
 class PlayersMenu
 {
 	idd=-1;
-    name="PlayersMenu";       
+	name="PlayersMenu";
 	movingEnable=1;
 	controlsBackground[]={PlayersMenu_background};
 	objects[]={};
 	controls[]={PlayersMenu_playerName, PlayersMenu_options, PlayersMenu_editbox, PlayersMenu_activate1, PlayersMenu_activate2, PlayersMenu_activate3, PlayersMenu_1,PlayersMenu_2,PlayersMenu_3,PlayersMenu_4};
-        
-        
+
+
 	class PlayersMenu_playerName:w_RscText
 	{
 		idc=-1;

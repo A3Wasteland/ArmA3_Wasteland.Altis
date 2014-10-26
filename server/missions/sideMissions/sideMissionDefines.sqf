@@ -6,7 +6,7 @@
 //	@file Author: [404] Deadbeat, AgentRev
 //	@file Created: 08/12/2012 15:19
 
-// Side Mission Color = #4BC9B0 - Turquoise 
+// Side Mission Color = #4BC9B0 - Teal
 // Fail Mission Color = #FF1717 - Light red
 // Success Mission Color = #17FF41 - Light green
 
@@ -19,4 +19,4 @@
 #define AI_GROUP_MEDIUM 7
 #define AI_GROUP_LARGE 10
 
-#define missionDifficultyHard (["A3W_missionsDifficulty", 0] call getPublicVar > 0)
+#define missionDifficultyHard (["A3W_missionsDifficulty", 0] call getPublicVar >= 1)

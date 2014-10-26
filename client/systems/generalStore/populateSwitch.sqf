@@ -19,7 +19,7 @@ _switchText = ctrlText _iteminv;
 if(_switchText == "Inventory") then
 {
 	[] execVM "client\systems\generalStore\getInventory.sqf";
-} else {	
+} else {
 	[0] execVM "client\systems\generalStore\populateGenStore.sqf";
 };
 

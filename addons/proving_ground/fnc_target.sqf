@@ -112,7 +112,7 @@ case 0: {//init;
 		};
 	};
 case 1: {
-		
+
 		_kindOf = ["TargetBase"];
 		_filter = [];
 		switch (_opt) do {
@@ -140,8 +140,8 @@ case 1: {
 					}else{
 						GET_CTRL(balca_target_vehlist_IDC) lbSetPicture [(lbSize GET_CTRL(balca_target_vehlist_IDC))-1,getText(_vehicle >> "icon")];
 					};
-				
-				
+
+
 				};
 			};
 		};

@@ -26,7 +26,7 @@ switch (_type) do
 			_containerClass = getText (configFile >> "CfgWeapons" >> uniform player >> "ItemInfo" >> "containerClass");
 			_currentCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
 		};
-		
+
 		_containerClass = getText (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "containerClass");
 		_newCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
 	};
@@ -38,7 +38,7 @@ switch (_type) do
 			_currentCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
 			_currentArmor = getNumber (configFile >> "CfgWeapons" >> vest player >> "ItemInfo" >> "armor");
 		};
-		
+
 		_containerClass = getText (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "containerClass");
 		_newCapacity = getNumber (configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
 		_newArmor = getNumber (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "armor");
@@ -49,7 +49,7 @@ switch (_type) do
 		{
 			_currentCapacity = getNumber (configFile >> "CfgVehicles" >> backpack player >> "maximumLoad");
 		};
-		
+
 		_newCapacity = getNumber (configFile >> "CfgVehicles" >> _item >> "maximumLoad");
 	};
 	case "headgear":
@@ -58,7 +58,7 @@ switch (_type) do
 		{
 			_currentArmor = getNumber (configFile >> "CfgWeapons" >> headgear player >> "ItemInfo" >> "armor");
 		};
-		
+
 		_newArmor = getNumber (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "armor");
 	};
 };
@@ -75,7 +75,7 @@ if (_type in ["uniform","vest","backpack"]) then
 	{
 		case (_diffCapacity > 0): { _text = _text + (str _newCapacity) + " (<t color='#00ff00'>+" + (str abs _diffCapacity) + "</t>)" };
 		case (_diffCapacity < 0): { _text = _text + (str _newCapacity) + " (<t color='#ff0000'>-" + (str abs _diffCapacity) + "</t>)" };
-		default           		  { _text = _text + (str _newCapacity) + " (<t color='#a0a0a0'>+0</t>)" };
+		default                   { _text = _text + (str _newCapacity) + " (<t color='#a0a0a0'>+0</t>)" };
 	};
 
 	_text = _text + "<br/>";
@@ -88,12 +88,12 @@ if (_type in ["vest","headgear"]) then
 
 	_diffArmor = _newArmor - _currentArmor;
 	_text = _text + "Armor: ";
-	
+
 	switch (true) do
 	{
 		case (_diffArmor > 0): { _text = _text + (str _newArmor) + " (<t color='#00ff00'>+" + (str abs _diffArmor) + "</t>)" };
 		case (_diffArmor < 0): { _text = _text + (str _newArmor) + " (<t color='#ff0000'>-" + (str abs _diffArmor) + "</t>)" };
-		default           	   { _text = _text + (str _newArmor) + " (<t color='#a0a0a0'>+0</t>)" };
+		default                { _text = _text + (str _newArmor) + " (<t color='#a0a0a0'>+0</t>)" };
 	};
 };
 

@@ -50,7 +50,7 @@ spawnActionHandle = [_this select 1, _this select 2] spawn
 		profileNamespace setVariable ["A3W_preloadSpawn", false];
 	};
 
-	switch (_switch) do 
+	switch (_switch) do
 	{
 		case 1: { _data call spawnInTown };
 		case 2: { _data call spawnOnBeacon };

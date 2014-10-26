@@ -1,9 +1,9 @@
 /**
  * Recherche périodiquement les nouveaux objets pour leur ajouter les fonctionnalités d'artillerie et de logistique si besoin
  * Script à faire tourner dans un fil d'exécution dédié
- * 
+ *
  * Copyright (C) 2010 madbull ~R3F~
- * 
+ *
  * This program is free software under the terms of the GNU General Public License version 3.
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
@@ -31,17 +31,17 @@ while {true} do
 	{
 		// Récupération des tout les nouveaux véhicules de la carte et des nouveaux objets dérivant de "Static" (caisse de mun, drapeau, ...) proches du joueur
 		_liste_vehicules = nearestObjects [player, ["LandVehicle", "Ship", "Air", "Thing", "Static"], 75];
-		
+
 		_count_liste_vehicules = count _liste_vehicules;
-		
+
 		if (_count_liste_vehicules > 0) then
 		{
 			_sleepDelay = 10 / _count_liste_vehicules;
-			
+
 			// On parcoure tout les véhicules présents dans le jeu en 18 secondes
 			{
 				_objet = _x;
-				
+
 				if !(_objet getVariable ["R3F_LOG_init_done", false]) then
 				{
 					#ifdef R3F_LOG_enable
@@ -50,7 +50,7 @@ while {true} do
 					{
 						[_objet] spawn R3F_LOG_FNCT_objet_init;
 					};
-					
+
 					// If vehicle can airlift
 					if ({_objet isKindOf _x} count R3F_LOG_CFG_heliporteurs > 0) then
 					{
@@ -62,22 +62,22 @@ while {true} do
 					{
 						[_objet] spawn R3F_LOG_FNCT_transporteur_init;
 					};
-					
+
 					// If vehicle can tow
 					if ({_objet isKindOf _x} count R3F_LOG_CFG_remorqueurs > 0) then
 					{
 						[_objet] spawn R3F_LOG_FNCT_remorqueur_init;
 					};
-					
-					_objet setVariable ["R3F_LOG_init_done", true]; 
+
+					_objet setVariable ["R3F_LOG_init_done", true];
 					if (!local _objet && !simulationEnabled _objet) then { _objet enableSimulation true };
 					#endif
 				};
-				
+
 				sleep _sleepDelay;
-				
+
 			} forEach _liste_vehicules;
-			
+
 			/*
 			// Les objets ont été initialisés, on les mémorise pour ne plus les ré-initialiser
 			{

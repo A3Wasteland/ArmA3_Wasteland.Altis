@@ -35,8 +35,8 @@
 // Controls whether iniDB is used to persist player data
 #define __DISABLE_INIDB__
 
-// Easy cash at start 
-#define __SPAWN_WITH_PLENTY_DOLLA__ 1	
+// Easy cash at start
+#define __SPAWN_WITH_PLENTY_DOLLA__ 1
 
 // Do we skip from night to morning? serverTimeSync.sqf
 #define __SERVER_SKIP_NIGHT__ 1

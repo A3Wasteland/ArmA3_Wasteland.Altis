@@ -35,7 +35,7 @@ if(_switchText == "Sell Items") then
 	_buysell ctrlSetText "Sell";
 	_iteminv ctrlSetText "Inventory";
 	[] execVM "client\systems\generalStore\getInventory.sqf";
-} else {	
+} else {
 	_switch ctrlSetText "Sell Items";
 	_buysell ctrlSetText "Buy";
 	_iteminv ctrlSetText "Items";

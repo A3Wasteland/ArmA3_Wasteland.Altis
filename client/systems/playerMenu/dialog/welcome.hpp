@@ -9,7 +9,7 @@ class WelcomeMessage {
 	duration = 1e+011;
 	name= "WelcomeMessage";
 	onLoad = "uiNamespace setVariable ['WelcomeMessage', _this select 0]";
-	
+
 	class controlsBackground {
 		class WelcomeMessage_Text:w_RscText
 		{
@@ -30,7 +30,7 @@ class TeamKillWarningMessage {
 	duration = 1e+011;
 	name= "TeamKillWarningMessage";
 	onLoad = "uiNamespace setVariable ['TeamKillWarningMessage', _this select 0]";
-	
+
 	class controlsBackground {
 		class TeamKillWarningMessage:w_RscText
 		{

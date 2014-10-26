@@ -11,7 +11,7 @@ if (isServer) exitWith {};
 private ["_bannedNames", "_name", "_trueName"];
 
 waitUntil {sleep 1; !isNil "bannedPlayerNames"};
-	
+
 _bannedNames = call bannedPlayerNames;
 _name = profileName;
 _trueName = [];

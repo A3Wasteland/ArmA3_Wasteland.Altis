@@ -6,7 +6,7 @@
 //	@file Author: AgentRev
 //	@file Created: 04/05/2013 17:00
 //	@file Args: container (Object), oldMagazineName (String), newMagazineName (String)
-//	
+//
 //	NOTE: Only use during mission init, as it ignores ammo and will replace all magazines with full ones.
 
 if (!isServer) exitWith {};
@@ -34,7 +34,7 @@ if (_magIndex != -1) then
 	{
 		_magazines set [_magIndex, _newMagazineName];
 	};
-	
+
 	clearMagazineCargoGlobal _container;
 
 	{

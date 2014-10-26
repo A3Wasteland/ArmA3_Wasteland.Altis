@@ -5,7 +5,7 @@
 //	@file Name: getCapacity.sqf
 //	@file Author: AgentRev
 //	@file Created: 12/10/2013 22:45
-//	@file Args: 
+//	@file Args:
 
 private ["_item", "_capacity", "_containerClass"];
 _item = _this select 0;

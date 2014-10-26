@@ -20,7 +20,7 @@ _setupVars =
 	// Convoys per difficulty : Min = 1, Max = infinite
 	// Vehicles per convoy : Min = 1, Max = infinite
 	// Choices per vehicle : Min = 1, Max = infinite
-	_MoneyShipment = 
+	_MoneyShipment =
 	[
 		// Easy
 		[

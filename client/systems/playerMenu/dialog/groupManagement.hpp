@@ -15,22 +15,22 @@ class GroupManagement {
 	idd = groupManagementDialog;
 	movingEnable = true;
 	enableSimulation = true;
-	
+
 	class controlsBackground {
-		
+
 		class MainBG : w_RscPicture {
 			idc = -1;
-			text = "client\ui\ui_background_controlers_ca.paa";		
+			text = "client\ui\ui_background_controlers_ca.paa";
 			moving = true;
 			x = 0.0; y = 0.1;
 			w = 1.0; h = 0.65;
 		};
-		
+
 		class MainTitle : w_RscText {
 			idc = -1;
 			text = "Group Management";
 			sizeEx = 0.04;
-			shadow = 2;		
+			shadow = 2;
 			x = 0.260; y = 0.112;
 			w = 0.3; h = 0.05;
 		};
@@ -39,7 +39,7 @@ class GroupManagement {
 			idc = -1;
 			text = "Players";
 			sizeEx = 0.025;
-			shadow = 2;		
+			shadow = 2;
 			x = 0.0875; y = 0.155;
 			w = 0.3; h = 0.050;
 		};
@@ -48,12 +48,12 @@ class GroupManagement {
 			idc = -1;
 			text = "Your Group";
 			sizeEx = 0.025;
-			shadow = 2;		
+			shadow = 2;
 			x = 0.5575; y = 0.155;
 			w = 0.3; h = 0.050;
 		};
 	};
-	
+
 	class controls {
 
 		class PlayerListBox : w_Rsclist {
@@ -85,7 +85,7 @@ class GroupManagement {
 		//	w = 0.125; h = 0.033 * safezoneH;
 		//	color[] = {0.1,0.95,0.1,1};
 		//};
-		
+
 		class PromotePlayerButton : w_RscButton {
 			idc = groupManagementPromoteButton;
 			text = "Promote";

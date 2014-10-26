@@ -1,7 +1,7 @@
 /**
  * English and French comments
  * Commentaires anglais et français
- * 
+ *
  * This file contains the common configuration variables of the artillery and the logistics system
  * Fichier contenant les variables de configuration communes aux systèmes d'artillerie et de logistique
  */

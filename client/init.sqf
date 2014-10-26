@@ -70,9 +70,9 @@ if (["A3W_playerSaving"] call isConfigOn) then
 {
 	call compile preprocessFileLineNumbers "persistence\players\c_setupPlayerDB.sqf";
 	call fn_requestPlayerData;
-	
+
 	waitUntil {!isNil "playerData_loaded"};
-	
+
 	[] spawn
 	{
 		// Save player every 60s

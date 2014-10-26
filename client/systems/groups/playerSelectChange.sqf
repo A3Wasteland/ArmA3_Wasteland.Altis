@@ -27,7 +27,7 @@ if (isNil "_target") exitWith {};
 
 if (!isStreamFriendlyUIEnabled && player == leader player && count units _target == 1) then //streamfriendly users cannot create groups themselves only accept invites
 {
-    _groupInvite ctrlShow true;
+	_groupInvite ctrlShow true;
 } else {
-	_groupInvite ctrlShow false;	    
+	_groupInvite ctrlShow false;
 };

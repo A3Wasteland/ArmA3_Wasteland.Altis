@@ -15,12 +15,12 @@ storeSellingHandle = [] spawn
 {
 	disableSerialization;
 	private ["_getHalfPrice", "_playerMoney", "_size", "_dialog", "_itemlist", "_totalText", "_playerMoneyText", "_itemIndex", "_itemText", "_itemData", "_price"];
-	
-	_getHalfPrice = 
+
+	_getHalfPrice =
 	{
 		((ceil ((_this / 2) / 5)) * 5) // Ceil half the value to the nearest multiple of 5
 	};
-	
+
 	//Initialize Values
 	_playerMoney = player getVariable "cmoney";
 	_size = 0;

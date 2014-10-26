@@ -29,24 +29,24 @@ _hasFailed = {
 	_failed = true;
 	switch (true) do {
 		case (!alive player): {}; // player dead, no error msg needed
-        case (isNull _netting): {_text = ERR_ALREADY_TAKEN}; //someone has already taken it.
+		case (isNull _netting): {_text = ERR_ALREADY_TAKEN}; //someone has already taken it.
 		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
 		case (player distance _netting > 5): {_text = ERR_TOO_FAR_AWAY};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED};
 		default {
 			_text = format["Camouflage Netting %1%2 Packed", round(_progress*100), "%"];
 			_failed = false;
-        };
-    };
-    [_failed, _text];
+		};
+	};
+	[_failed, _text];
 };
 
 MUTEX_LOCK_OR_FAIL;
 _success =  [DURATION, ANIM, _hasFailed, [_netting]] call a3w_actions_start;
 MUTEX_UNLOCK;
-    
+
 if (_success) then {
-    deleteVehicle _netting;
+	deleteVehicle _netting;
 	[MF_ITEMS_CAMO_NET, 1] call mf_inventory_add;
-    ["You successfully packed the Camouflage Netting", 5] call mf_notify_client;
+	["You successfully packed the Camouflage Netting", 5] call mf_notify_client;
 };

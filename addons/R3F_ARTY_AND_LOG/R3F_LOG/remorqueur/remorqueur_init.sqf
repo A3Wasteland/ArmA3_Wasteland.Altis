@@ -1,6 +1,6 @@
 /**
  * Initialise un véhicule remorqueur
- * 
+ *
  * @param 0 le remorqueur
  */
 

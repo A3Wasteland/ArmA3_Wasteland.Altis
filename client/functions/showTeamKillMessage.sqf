@@ -3,10 +3,10 @@
 // ******************************************************************************************
 //@file Author: [404] Costlyy, [GoT] JoSchaap (Original concept by Sa-Matra)
 //@file Version: 1.1
-//@file Date:	21/11/2012	
+//@file Date:	21/11/2012
 //@file Description: Shows the team killer a message to warn them about their team kill.
 //@file Args: []
-//@file Notes: Everyone is free to use / redistribute / modify this file. 
+//@file Notes: Everyone is free to use / redistribute / modify this file.
 
 
 #define tkWarningText 3500

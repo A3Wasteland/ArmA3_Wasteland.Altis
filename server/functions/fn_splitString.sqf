@@ -5,7 +5,7 @@
 	File: fn_splitString.sqf
 	Author: Karel Moricky
 	Modified by AgentRev to not remove empty strings (e.g. expected behavior of any split function)
-	
+
 	Description:
 	Split spring according to given separators
 

@@ -10,7 +10,7 @@ private ["_requestKey", "_hackedVehicles"];
 _requestKey = call A3W_fnc_generateKey;
 
 [[player, _requestKey], "A3W_fnc_checkHackedVehicles", false, false] call A3W_fnc_MP;
-	
+
 waitUntil {!isNil _requestKey};
 
 _hackedVehicles = missionNamespace getVariable [_requestKey, []];

@@ -5,7 +5,7 @@
 //	@file Name: spawnInTown.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, AgentRev
 //	@file Created: 20/11/2012 05:19
-//	@file Args: 
+//	@file Args:
 
 private ["_marker", "_preload", "_pos", "_rad", "_townName", "_playerPos"];
 _marker = _this select 0;
@@ -17,7 +17,7 @@ _preload = [_this, 1, false, [false]] call BIS_fnc_param;
 		_pos = getMarkerPos _marker;
 		_rad = _x select 1;
 		_townName = _x select 2;
-		
+
 		_playerPos = [_pos,5,_rad,1,0,0,0] call findSafePos;
 		if (_preload) then { waitUntil {sleep 0.1; preloadCamera _playerPos} };
 		player setPos _playerPos;

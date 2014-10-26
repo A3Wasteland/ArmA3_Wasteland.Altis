@@ -22,7 +22,7 @@ class VehicleManagement {
 	onLoad = "[4] execVM 'client\systems\adminPanel\populateVehicles.sqf'";
 
 	class controlsBackground {
-		
+
 		class MainBackground: w_RscPicture
 		{
 			idc = -1;
@@ -114,9 +114,9 @@ class VehicleManagement {
 			h = 0.030 * safezoneH;
 		};
 	};
-	
+
 	class controls {
-		
+
 		class vehicleListBox: w_RscList
 		{
 			idc = vehicleManagementListBox;
@@ -126,7 +126,7 @@ class VehicleManagement {
 			w = 0.32875 * safezoneW;
 			h = 0.250 * safezoneH;
 		};
-		
+
 		class civButton: w_RscButton
 		{
 			idc = vehicleManagementCivButton;

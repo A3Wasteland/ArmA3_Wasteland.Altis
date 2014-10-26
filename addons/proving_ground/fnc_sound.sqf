@@ -22,7 +22,7 @@ case 0: {//fill sound list
 			GET_CTRL(balca_soundlist_IDC) lbSetData [(lbSize GET_CTRL(balca_soundlist_IDC))-1,_soundName];
 			};
 		};
-		lbSort GET_CTRL(balca_soundlist_IDC);		
+		lbSort GET_CTRL(balca_soundlist_IDC);
 	};
 case 1: {//play
 	deleteVehicle PG_get(SOUNDSOURCE);

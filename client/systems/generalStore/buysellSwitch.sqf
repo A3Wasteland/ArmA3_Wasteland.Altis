@@ -19,8 +19,8 @@ _switchText = ctrlText _buysell;
 if(_switchText == "Buy") then
 {
 	[] execVM "client\systems\generalStore\buyItems.sqf";
-	
-} else {	
+
+} else {
 	[] execVM "client\systems\generalStore\sellItems.sqf";
 };
 

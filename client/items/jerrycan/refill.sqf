@@ -22,22 +22,22 @@ if (_error != "") exitWith {[_error, 5] call mf_notify_client; false;};
 private ["_duration", "_anim", "_args", "_checks", "_success"];
 _args = [_container]; // arguments to pass in to _check.
 _checks = {
-    private ["_progress","_container","_failed", "_text"];
-    _progress = _this select 0;
-    _container = _this select 1;
-    _text = "";
-    _failed = true;
-    switch (true) do {
-        case (!alive player): {}; // player is dead, no need for a notification
-        case (vehicle player != player): {_text = ERR_IN_VEHICLE};
-        case (player distance _container > 5): {_text = ERR_TOO_FAR_AWAY};
-        case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};
-        default {
-            _text = format["Refilling Jerrycan %1%2 Complete", round(100 * _progress), "%"];
-            _failed = false;
-        };
-    };
-    [_failed, _text];
+	private ["_progress","_container","_failed", "_text"];
+	_progress = _this select 0;
+	_container = _this select 1;
+	_text = "";
+	_failed = true;
+	switch (true) do {
+		case (!alive player): {}; // player is dead, no need for a notification
+		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
+		case (player distance _container > 5): {_text = ERR_TOO_FAR_AWAY};
+		case (doCancelAction): {_text = ERR_CANCELLED; doCancelAction = false;};
+		default {
+			_text = format["Refilling Jerrycan %1%2 Complete", round(100 * _progress), "%"];
+			_failed = false;
+		};
+	};
+	[_failed, _text];
 };
 _success = [DURATION, ANIMATION, _checks, [_container]] call a3w_actions_start;
 if (_success) then {

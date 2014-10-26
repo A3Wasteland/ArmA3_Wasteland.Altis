@@ -19,7 +19,7 @@ _groupListBox = _dialog displayCtrl groupManagementGroupList;
 _index = lbCurSel _groupListBox;
 _playerData = _groupListBox lbData _index;
 
-//Check selected data is valid            			
+//Check selected data is valid
 { if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call allPlayers);
 
 //Checks

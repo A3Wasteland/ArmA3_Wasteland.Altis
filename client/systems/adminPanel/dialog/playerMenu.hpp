@@ -20,7 +20,7 @@ class PlayersMenu
 	enableSimulation = true;
 
 	class controlsBackground {
-		
+
 		class MainBackground: w_RscPicture
 		{
 			idc = -1;
@@ -58,7 +58,7 @@ class PlayersMenu
 			w = 0.0844792 * safezoneW;
 			h = 0.0448148 * safezoneH;
 		};
-		
+
 		class PlayerUIDText: w_RscText
 		{
 			idc = playerMenuPlayerUID;
@@ -136,7 +136,7 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 	};
-	
+
 	class controls {
 
 		class PlayerEditBox:w_RscEdit

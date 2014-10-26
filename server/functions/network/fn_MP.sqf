@@ -19,7 +19,7 @@
 			NUMBER - the function will be executed only on client with the given ID
 			ARRAY - array of previous data types
 		3 (Optional): BOOL - true for persistent call (will be called now and for every JIP client) [default: false]
-	
+
 	Returns:
 	Nothing (Previously ARRAY - sent packet)
 */
@@ -27,12 +27,12 @@
 with missionnamespace do {
 	private ["_params","_functionName","_target","_isPersistent","_isCall","_packet"];
 
-	_params = 	[_this,0,[]] call bis_fnc_param;
-	_functionName =	[_this,1,"",[""]] call bis_fnc_param;
-	_target =	[_this,2,true,[objnull,true,0,[],sideUnknown,grpnull]] call bis_fnc_param;
-	_isPersistent =	[_this,3,false,[false]] call bis_fnc_param;
-	_isCall =	[_this,4,false,[false]] call bis_fnc_param;
-	
+	_params = [_this,0,[]] call bis_fnc_param;
+	_functionName = [_this,1,"",[""]] call bis_fnc_param;
+	_target = [_this,2,true,[objnull,true,0,[],sideUnknown,grpnull]] call bis_fnc_param;
+	_isPersistent = [_this,3,false,[false]] call bis_fnc_param;
+	_isCall = [_this,4,false,[false]] call bis_fnc_param;
+
 	_packet = [0,_params,_functionName,_target,_isPersistent,_isCall];
 
 	//--- Local execution

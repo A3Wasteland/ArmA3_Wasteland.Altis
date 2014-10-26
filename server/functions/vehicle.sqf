@@ -5,9 +5,9 @@
   Simple Vehicle Respawn Script v1.90 for Arma 3
   by Tophe of Östgöta Ops [OOPS]
   Updated by SPJESTER & modded by AgentRev
-  
+
   vehicle.sqf is an example of the name of the file, name it whatever you would like
-  
+
   Put this in the vehicles init line:
   veh = [this] execVM "vehicle.sqf"
   _______
@@ -15,32 +15,32 @@
   ¯¯¯¯¯¯¯
   There are some optional settings. The format for these are:
   veh = [object, Delay, Deserted timer, Respawns, Effect, Dynamic, Init commands] execVM "vehicle.sqf"
-  
-  Delay: Default respawn delay is 30 seconds, to set a custom respawn delay time, put that in the init as well. 
 
-  Deserted timer: Default respawn time when vehicle is deserted, but not broken is 120 seconds. To set a custom timer for this 
-                  first set respawn delay, then the deserted vehicle timer. (0 = disabled) 
-  
-  Proximity deserted timer: Respawn time when the last driver is within the defined proximity distance. Default is 240 seconds. (0 = disabled) 
-  
-  Proximity distance: Distance from the vehicle within which the last vehicle driver triggers the proximity deserted timer. Default is 200m. (0 = disabled) 
-  
+  Delay: Default respawn delay is 30 seconds, to set a custom respawn delay time, put that in the init as well.
+
+  Deserted timer: Default respawn time when vehicle is deserted, but not broken is 120 seconds. To set a custom timer for this
+				  first set respawn delay, then the deserted vehicle timer. (0 = disabled)
+
+  Proximity deserted timer: Respawn time when the last driver is within the defined proximity distance. Default is 240 seconds. (0 = disabled)
+
+  Proximity distance: Distance from the vehicle within which the last vehicle driver triggers the proximity deserted timer. Default is 200m. (0 = disabled)
+
   Respawns: By default the number of respawns is infinite. To set a limit first set preceding values then the number of respawns you want (0 = infinite).
 
   Effect: Set this value to TRUE to add a special explosion effect to the wreck when respawning.
-          Default value is FALSE, which will simply have the wreck disappear.
-  
+		  Default value is FALSE, which will simply have the wreck disappear.
+
   Static: By default the vehicle will respawn at the position where it was destroyed (dynamic).
-          This can be changed to static. Then the vehicle will respawn at the specified position (static).
-          First set all preceding values then set a respawn position for static, or FALSE for dynamic.
-  
+		  This can be changed to static. Then the vehicle will respawn at the specified position (static).
+		  First set all preceding values then set a respawn position for static, or FALSE for dynamic.
+
   Example with all parameters:
   veh = [this, 15, 30, 60, 100, 5, TRUE, getPosASL this] execVM "vehicle.sqf"
-  
+
   Default values of all settings are:
   veh = [this, 30, 120, 240, 100, 0, FALSE, FALSE] execVM "vehicle.sqf"
-  
-	
+
+
 Contact & Bugreport: cwadensten@gmail.com
 Ported for new update "call compile" by SPJESTER: mhowell34@gmail.com
 Converted to server-side, junk removed, and modded for 404 Wasteland by AgentRev: agentrevo@gmail.com
@@ -100,10 +100,10 @@ for "_i" from 0 to (count _hitPoints - 1) do
 };
 
 // Start monitoring the vehicle
-while {_run} do 
-{	
+while {_run} do
+{
 	sleep _sleepTime;
-	
+
 	// Check if vehicle is not being towed or moved
 	if (isNull (_veh getVariable ["R3F_LOG_est_transporte_par", objNull]) &&
 	    isNull (_veh getVariable ["R3F_LOG_est_deplace_par", objNull])) then
@@ -113,7 +113,7 @@ while {_run} do
 			_blownTire = false;
 			{ _blownTire = (_blownTire || {_veh getHitPointDamage _x == 1}) } forEach _wheels;
 		};
-		
+
 		if ((_blownTire || {!canMove _veh}) && {{alive _veh} count crew _veh == 0}) then
 		{
 			if (_delay > 0) then
@@ -139,22 +139,22 @@ while {_run} do
 				_brokenTimeout = 0;
 			};
 		};
-		
-		
+
+
 		// Check if the vehicle is deserted, or if something was taken from it
-		
-		if (_deserted > 0 && 
+
+		if (_deserted > 0 &&
 		   {(getPosASL _veh) vectorDistance _position > 10 || _veh getVariable ["itemTakenFromVehicle", false]} &&
-		   {{alive _veh} count crew _veh == 0}) then 
+		   {{alive _veh} count crew _veh == 0}) then
 		{
 			if (_desertedTimeout == 0) then {
 				_desertedTimeout = diag_tickTime + _deserted;
 			};
-			
+
 			if (_proxyExtra > 0 && {owner _veh > 1}) then
 			{
 				_lastDriver = [owner _veh] call findClientPlayer;
-				
+
 				if (isPlayer _lastDriver && {_lastDriver distance _veh <= _proxyDistance}) then
 				{
 					if (_desertedExtra == 0) then {
@@ -168,7 +168,7 @@ while {_run} do
 					};
 				};
 			};
-		
+
 			if (_desertedTimeout + _desertedExtra <= diag_tickTime) then {
 				_dead = true;
 			};
@@ -179,19 +179,19 @@ while {_run} do
 				_desertedTimeout = 0;
 			};
 		};
-		
+
 		// Respawn vehicle
-		if (_dead) then 
+		if (_dead) then
 		{
 			// Clean-up if vehicle is towing via R3F
-			
+
 			_towedVeh = _veh getVariable ["R3F_LOG_remorque", objNull];
-			
+
 			if (!isNil "_towedVeh" && {!isNull _towedVeh}) then
 			{
 				_towedVeh setVariable ["R3F_LOG_est_transporte_par", objNull, true];
 				_veh setVariable ["R3F_LOG_remorque", objNull, true];
-				
+
 				if (local _towedVeh) then
 				{
 					[_towedVeh] call detachTowedObject;
@@ -202,25 +202,25 @@ while {_run} do
 					publicVariable "pvar_detachTowedObject";
 				};
 			};
-			
+
 			_position =	if (typeName _static == "ARRAY") then { _static } else { getPosATL _veh };
-			
+
 			if (_explode) then
 			{
 				_vehPos = getPosATL _veh;
 				_exp = createVehicle ["M_AT", _vehPos, [], 0, "CAN_COLLIDE"];
 				_exp setPosATL _vehPos;
 			};
-			
+
 			sleep 0.1;
 			_carType = typeOf _veh;
 			deleteVehicle _veh;
 			sleep 0.1;
-			
+
 			// A3Wasteland vehicle spawn script
 			[_position, _carType] call vehicleCreation;
-			
-			sleep 0.1;		
+
+			sleep 0.1;
 			_run = false;
 		};
 	};

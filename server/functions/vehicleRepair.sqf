@@ -25,17 +25,17 @@ _previousDmg = 0;
 while { alive _vehicle } do
 {
 	_currentDmg = 0;
-	
+
 	{
 		_currentDmg = _currentDmg + (_vehicle getHitPointDamage _x);
 	} forEach _hitPoints;
-	
+
 	if (_currentDmg < _previousDmg - 0.01) then
 	{
 		_vehicle setDamage 0;
 		if (_vehicle isKindOf "Boat_Armed_01_base_F") then { _vehicle setHitPointDamage ["HitTurret", 1] }; // disable front GMG on boats
 	};
-	
+
 	_previousDmg = _currentDmg;
 	sleep 5;
 };

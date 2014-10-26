@@ -77,7 +77,7 @@
 
 #define SL_TEXTURES       0x10
 
-// progress bar 
+// progress bar
 #define ST_VERTICAL       0x01
 #define ST_HORIZONTAL     0
 
@@ -181,7 +181,7 @@ class RscEdit
 	colorBackground[] = {0, 0, 0, 1};
 	colorText[] = {0.95, 0.95, 0.95, 1};
 	colorDisabled[] = {1, 1, 1, 0.25};
-	colorSelection[] = 
+	colorSelection[] =
 	{
 		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
 		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
@@ -284,7 +284,7 @@ class RscButton
 	text = "";
 	colorText[] = {1, 1, 1, 1};
 	colorDisabled[] = {0.4, 0.4, 0.4, 1};
-	colorBackground[] = 
+	colorBackground[] =
 	{
 		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
 		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
@@ -292,14 +292,14 @@ class RscButton
 		0.7
 	};
 	colorBackgroundDisabled[] = {0.95, 0.95, 0.95, 1};
-	colorBackgroundActive[] = 
+	colorBackgroundActive[] =
 	{
 		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
 		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
 		"(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])",
 		1
 	};
-	colorFocused[] = 
+	colorFocused[] =
 	{
 		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
 		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
@@ -352,7 +352,7 @@ class RscShortcutButton
 		right = 0.005;
 		bottom = 0;
 	};
-	shortcuts[] = 
+	shortcuts[] =
 	{
 	};
 	textureNoShortcut = "#(argb,8,8,3)color(0,0,0,0)";
@@ -360,7 +360,7 @@ class RscShortcutButton
 	color2[] = {0.95, 0.95, 0.95, 1};
 	colorFocused[] = {1, 1, 1, 1};
 	colorDisabled[] = {1, 1, 1, 0.25};
-	colorBackground[] = 
+	colorBackground[] =
 	{
 		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
 		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
@@ -368,7 +368,7 @@ class RscShortcutButton
 		1
 	};
 	colorBackground2[] = {1, 1, 1, 1};
-	colorBackgroundFocused[] = 
+	colorBackgroundFocused[] =
 	{
 		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
 		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
@@ -506,7 +506,7 @@ class IGUIBack
 	y = 0.1;
 	w = 0.1;
 	h = 0.1;
-	colorbackground[] = 
+	colorbackground[] =
 	{
 		"(profilenamespace getvariable ['IGUI_BCG_RGB_R',0])",
 		"(profilenamespace getvariable ['IGUI_BCG_RGB_G',1])",
@@ -527,7 +527,7 @@ class RscCheckbox
 	color[] = {0, 0, 0, 0};
 	colorBackground[] = {0, 0, 1, 1};
 	colorTextSelect[] = {0, 0.8, 0, 1};
-	colorSelectedBg[] = 
+	colorSelectedBg[] =
 	{
 		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
 		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
@@ -541,11 +541,11 @@ class RscCheckbox
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	rows = 1;
 	columns = 1;
-	strings[] = 
+	strings[] =
 	{
 		"UNCHECKED"
 	};
-	checked_strings[] = 
+	checked_strings[] =
 	{
 		"CHECKED"
 	};
@@ -607,7 +607,7 @@ class RscButtonMenu
 class RscButtonMenuOK
 {
 	idc = 1;
-	shortcuts[] = 
+	shortcuts[] =
 	{
 		"0x00050000 + 0",
 		28,
@@ -621,7 +621,7 @@ class RscButtonMenuOK
 class RscButtonMenuCancel
 {
 	idc = 2;
-	shortcuts[] = 
+	shortcuts[] =
 	{
 		"0x00050000 + 1"
 	};

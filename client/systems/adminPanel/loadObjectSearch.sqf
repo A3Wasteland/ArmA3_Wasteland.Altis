@@ -9,7 +9,7 @@
 #define objectSearchCancelButton 55605
 
 disableSerialization;
-				
+
 if (isNil "objectSearchMapMarkers") then {
 	// This is the global we use to keep track of map markers
 	objectSearchMapMarkers = [];
@@ -32,4 +32,4 @@ if (_uid call isAdmin) then
 	} else {
 		diag_log "objectSearchLastTermEntered was nil!";
 	};
-};  
+};

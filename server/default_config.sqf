@@ -4,7 +4,7 @@
 // A3Wasteland config file
 // You will need to shutdown the server to edit settings in this file!
 // All saving is done via the server's profileNamespace by default; iniDBI will be automatically used if you have if installed
-// if you have any doubts and/or questions about the mission find us at a3wasteland.com 
+// if you have any doubts and/or questions about the mission find us at a3wasteland.com
 // This file is overriden by the external file "A3Wasteland_settings\main_config.sqf" if present
 
 // General settings

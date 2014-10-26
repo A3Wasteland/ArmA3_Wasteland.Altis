@@ -29,17 +29,17 @@ _hasFailed = {
 		default {
 			_text = format["Warchest %1%2 Packed", round(_progress*100), "%"];
 			_failed = false;
-        };
-    };
-    [_failed, _text];
+		};
+	};
+	[_failed, _text];
 };
 
 private "_success";
 _success =  [DURATION, ANIM, _hasFailed, [_warchest]] call a3w_actions_start;
 MUTEX_UNLOCK;
-    
+
 if (_success) then {
-    deleteVehicle _warchest;
+	deleteVehicle _warchest;
 	[MF_ITEMS_WARCHEST, 1] call mf_inventory_add;
-    ["You successfully packed the Warchest", 5] call mf_notify_client;
+	["You successfully packed the Warchest", 5] call mf_notify_client;
 };

@@ -13,7 +13,7 @@ if (!isNil "storePurchaseHandle" && {typeName storePurchaseHandle == "SCRIPT"} &
 if (!isNil "vehicleStore_lastPurchaseTime") then
 {
 	_timeLeft = (["A3W_vehiclePurchaseCooldown", 60] call getPublicVar) - (diag_tickTime - vehicleStore_lastPurchaseTime);
-	
+
 	if (_timeLeft > 0) then
 	{
 		hint format ["You need to wait %1s before buying another vehicle", ceil _timeLeft];
@@ -27,7 +27,7 @@ if (!isNil "vehicleStore_lastPurchaseTime") then
 storePurchaseHandle = _this spawn
 {
 	disableSerialization;
-	
+
 	private ["_switch", "_playerMoney", "_price", "_dialog", "_playerMoneyText", "_itemlist", "_itemIndex", "_itemText", "_itemData", "_colorlist", "_colorIndex", "_colorText", "_colorData", "_applyVehProperties", "_class", "_price", "_requestKey", "_vehicle"];
 
 	//Initialize Values
@@ -38,26 +38,26 @@ storePurchaseHandle = _this spawn
 	// Grab access to the controls
 	_dialog = findDisplay vehshop_DIALOG;
 	_playerMoneyText = _dialog displayCtrl vehshop_money;
-	
+
 	_itemlist = _dialog displayCtrl vehshop_veh_list;
 	_itemIndex = lbCurSel vehshop_veh_list;
 	_itemText = _itemlist lbText _itemIndex;
 	_itemData = _itemlist lbData _itemIndex;
-	
+
 	_colorlist = _dialog displayCtrl vehshop_color_list;
 	_colorIndex = lbCurSel vehshop_color_list;
 	_colorText = _colorlist lbText _colorIndex;
 	_colorData = _colorlist lbData _colorIndex;
-	
-	_showInsufficientFundsError = 
+
+	_showInsufficientFundsError =
 	{
 		_itemText = _this select 0;
 		hint parseText format ["Not enough money for<br/>""%1""", _itemText];
 		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
-	
-	_showItemSpawnTimeoutError = 
+
+	_showItemSpawnTimeoutError =
 	{
 		_itemText = _this select 0;
 		hint parseText format ["<t color='#ffff00'>An unknown error occurred.</t><br/>The purchase of ""%1"" has been cancelled.", _itemText];
@@ -65,14 +65,14 @@ storePurchaseHandle = _this spawn
 		_price = -1;
 	};
 
-	_showItemSpawnedOutsideMessage = 
+	_showItemSpawnedOutsideMessage =
 	{
 		_itemText = _this select 0;
 		hint format ["""%1"" has been spawned outside, in front of the store.", _itemText];
 		playSound "FD_Finish_F";
 	};
 
-	_applyVehProperties = 
+	_applyVehProperties =
 	{
 		private ["_vehicle", "_colorText", "_playerItems", "_playerAssignedItems", "_uavTerminal", "_allUAV"];
 		_vehicle = _this select 0;
@@ -98,7 +98,7 @@ storePurchaseHandle = _this spawn
 			if !(_uavTerminal in assignedItems player) then
 			{
 				{ player unassignItem _x } forEach ["ItemGPS", "B_UavTerminal", "O_UavTerminal", "I_UavTerminal"]; // Unassign any GPS slot item
-				
+
 				if (_uavTerminal in items player) then
 				{
 					player assignItem _uavTerminal;
@@ -111,7 +111,7 @@ storePurchaseHandle = _this spawn
 
 			player connectTerminalToUav _vehicle;
 		};
-		
+
 		_vehicle
 	};
 	{
@@ -119,29 +119,29 @@ storePurchaseHandle = _this spawn
 		{
 			_class = _x select 1;
 			_price = _x select 2;
-			
+
 			// Ensure the player has enough money
 			if (_price > _playerMoney) exitWith
 			{
 				[_itemText] call _showInsufficientFundsError;
 			};
-			
+
 			_requestKey = call A3W_fnc_generateKey;
 			call requestStoreObject;
-			
+
 			_vehicle = objectFromNetId (missionNamespace getVariable _requestKey);
-			
+
 			if (!isNil "_vehicle" && {!isNull _vehicle}) then
 			{
 				[_vehicle, _colorText, _colorData] call _applyVehProperties;
 			};
 		};
 	} forEach (call allVehStoreVehicles);
-	
+
 	if (!isNil "_price" && {_price > -1}) then
 	{
 		_playerMoney = player getVariable ["cmoney", 0];
-		
+
 		// Re-check for money after purchase
 		if (_price > _playerMoney) then
 		{
@@ -149,28 +149,28 @@ storePurchaseHandle = _this spawn
 			{
 				deleteVehicle objectFromNetId (missionNamespace getVariable _requestKey);
 			};
-			
+
 			[_itemText] call _showInsufficientFundsError;
 		}
 		else
 		{
 			vehicleStore_lastPurchaseTime = diag_tickTime;
-			
+
 			player setVariable ["cmoney", _playerMoney - _price, true];
 			_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
-			
+
 			if (["A3W_playerSaving"] call isConfigOn) then
 			{
 				[] spawn fn_savePlayerData;
 			};
 		};
 	};
-	
+
 	if (!isNil "_requestKey" && {!isNil _requestKey}) then
 	{
 		missionNamespace setVariable [_requestKey, nil];
 	};
-	
+
 	sleep 0.5; // double-click protection
 };
 

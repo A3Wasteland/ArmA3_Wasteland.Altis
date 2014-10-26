@@ -2,16 +2,16 @@
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
 /** Drop an Item
- * 
+ *
  * The Inventory System takes care of all the logic around dropping an item,
  * and as such, is quite simplistic. At the moment, you only need to tell it
  * what object to create on the ground, which is done when you create/define
  * the item. see init.sqf for a simple example.
- * 
- * 
+ *
+ *
  * This operates under the wasteland mutex.
  * This only drops 1 item at a time
- * 
+ *
  * @author MercyfulFate
  * @param id {string} - the id of the item
  */

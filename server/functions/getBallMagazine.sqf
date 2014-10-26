@@ -20,7 +20,7 @@ if (isClass _magCfg) then
 	{
 		_magCfg = inheritsFrom _magCfg;
 	};
-	
+
 	if (isClass _magCfg) then
 	{
 		_mag = configName (_magCfg);

@@ -18,14 +18,14 @@
 #define groupManagementAcceptButton 55518
 #define groupManagementDeclineButton 55519
 #define groupManagementInviteText 55520
-            
+
 disableSerialization;
-				
+
 private ["_start","_dialog","_myGroup","_playerListBox","_groupListBox","_uid","_namestr","_allPlayers","_index","_groupCreate","_groupPromote","_groupInvite","_groupKick","_groupDisband","_groupLeaveButton","_inGroup","_isLeader","_name"];
 
 closeDialog 0;
-_start = createDialog "GroupManagement";	
-waitUntil{!isNull(findDisplay groupManagementDialog)};		
+_start = createDialog "GroupManagement";
+waitUntil{!isNull(findDisplay groupManagementDialog)};
 _dialog = findDisplay groupManagementDialog;
 //_dialog displayAddEventHandler ["KeyDown", "_return = false; if(groupManagmentActive && (_this select 1) == 1) then {_return = true;}; _return"];
 groupManagmentActive = true;
@@ -51,37 +51,37 @@ while{groupManagmentActive} do
 {
 	_groupPromote ctrlShow (player == leader player);
 
-    //Check if player has invite.
-    { if (_x select 1 == getPlayerUID player) exitWith { _hasInvite = true } } forEach currentInvites;
-    
-    //Member Controls
-    if(count units player > 1) then 
-    {
-        if(player == leader player) then
-        {
-			_groupDisband ctrlShow true;
-            _groupKick ctrlShow true;
-			_groupLeaveButton ctrlShow true;    
-        } else {
-			_groupLeaveButton ctrlShow true;    
-        };
-    } else {
-    	_groupKick ctrlShow false;
-		_groupDisband ctrlShow false;
-		_groupLeaveButton ctrlShow false;    
-    };
-    
-	_allPlayers = call allPlayers;
-	
-    //Sort Invite Controls
-    if(_hasInvite) then
-    {
-        _groupInviteText ctrlShow true;
-        _groupAcceptInvite ctrlShow true;
-        _groupDeclineInvite ctrlShow true; 
+	//Check if player has invite.
+	{ if (_x select 1 == getPlayerUID player) exitWith { _hasInvite = true } } forEach currentInvites;
 
-        //Get Invite Text and Set it.
-        {
+	//Member Controls
+	if(count units player > 1) then
+	{
+		if(player == leader player) then
+		{
+			_groupDisband ctrlShow true;
+			_groupKick ctrlShow true;
+			_groupLeaveButton ctrlShow true;
+		} else {
+			_groupLeaveButton ctrlShow true;
+		};
+	} else {
+		_groupKick ctrlShow false;
+		_groupDisband ctrlShow false;
+		_groupLeaveButton ctrlShow false;
+	};
+
+	_allPlayers = call allPlayers;
+
+	//Sort Invite Controls
+	if(_hasInvite) then
+	{
+		_groupInviteText ctrlShow true;
+		_groupAcceptInvite ctrlShow true;
+		_groupDeclineInvite ctrlShow true;
+
+		//Get Invite Text and Set it.
+		{
 			_invite = _x;
 			if (_invite select 1 == getPlayerUID player) then
 			{
@@ -94,17 +94,17 @@ while{groupManagmentActive} do
 			};
 		} forEach currentInvites;
 
-        if (isStreamFriendlyUIEnabled) then {
+		if (isStreamFriendlyUIEnabled) then {
 			_name = "Censored(StreamFriendly:ON)";
-        };
+		};
 		_groupInviteText ctrlSetStructuredText parseText (format ["Group Invite From<br/>%1",_name]);
-    } else {
-    	_groupAcceptInvite ctrlShow false;
-        _groupDeclineInvite ctrlShow false;
-        _groupInviteText ctrlShow false;
-    };
-    
-    //Update player list  
+	} else {
+		_groupAcceptInvite ctrlShow false;
+		_groupDeclineInvite ctrlShow false;
+		_groupInviteText ctrlShow false;
+	};
+
+	//Update player list
 	{
 		if (side group _x == playerSide && _x != player) then
 	    {
@@ -118,20 +118,20 @@ while{groupManagmentActive} do
 			_playerListBox lbSetData [_index, getPlayerUID _x];
 	    };
 	} forEach _allPlayers;
-    
-    //Update group player list
-    {
-    	if (isStreamFriendlyUIEnabled) then {
+
+	//Update group player list
+	{
+		if (isStreamFriendlyUIEnabled) then {
 			_namestr = "[PLAYER]";
 		} else {
 			_namestr = name _x;
-		};             
+		};
 		_index = _groupListBox lbAdd _namestr;
 		_groupListBox lbSetData [_index, getPlayerUID _x];
-    } forEach units player;
+	} forEach units player;
 
 	sleep 0.5;
-    _hasInvite = false;
-    lbClear _playerListBox;
-    lbClear _groupListBox;
+	_hasInvite = false;
+	lbClear _playerListBox;
+	lbClear _groupListBox;
 }

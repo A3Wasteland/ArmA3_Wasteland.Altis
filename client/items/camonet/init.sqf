@@ -19,12 +19,12 @@ _pack = [_path, "pack.sqf"] call mf_compile;
 _unpack = [_path, "unpack.sqf"] call mf_compile;
 mf_items_camo_net_can_pack = [_path, "can_pack.sqf"] call mf_compile;
 mf_items_camo_net_nearest = {
-    _camonet = objNull;
-    _camonets = nearestObjects [player, [MF_ITEMS_CAMO_NET_TYPE], 3];
-    if (count _camonets > 0) then {
-        _camonet = _camonets select 0;
-    };
-    _camonet;
+	_camonet = objNull;
+	_camonets = nearestObjects [player, [MF_ITEMS_CAMO_NET_TYPE], 3];
+	if (count _camonets > 0) then {
+		_camonet = _camonets select 0;
+	};
+	_camonet;
 } call mf_compile;
 
 [MF_ITEMS_CAMO_NET, "Camo Net", _unpack, _ground_type, _icon, 1] call mf_inventory_create;

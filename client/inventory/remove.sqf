@@ -2,13 +2,13 @@
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
 /** Remove a certian quantity of a certian item
- * 
+ *
  * Warning: This function does NOT prevent negative item quantities.
- * 
+ *
  * @author MercyfulFate
  * @param [id, qty]
- * 		id {string} - the id of the item to remove
- * 		qty {integer} - the amount to remove.
+ *      id {string} - the id of the item to remove
+ *      qty {integer} - the amount to remove.
  */
 #include "define.sqf"
 

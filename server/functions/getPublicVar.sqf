@@ -11,7 +11,7 @@ _varName = _this select 0;
 _defaultValue = _this select 1;
 
 _varValue = missionNamespace getVariable [_varName, _defaultValue];
-	
+
 if (typeName _varValue == "CODE") then
 {
 	call _varValue

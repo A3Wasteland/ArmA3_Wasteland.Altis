@@ -43,7 +43,7 @@ lightMilitaryVehicles =
 ];
 
 //Medium Military Vehicle List - Random Spawns
-mediumMilitaryVehicles = 
+mediumMilitaryVehicles =
 [
 //	"I_Truck_02_Fuel_F",
 //	"O_Truck_02_Fuel_F",
@@ -123,7 +123,7 @@ objectList =
 ];
 
 //Object List - Random Spawns.
-staticWeaponsList = 
+staticWeaponsList =
 [
 	"B_Mortar_01_F",
 	"O_Mortar_01_F",
@@ -132,7 +132,7 @@ staticWeaponsList =
 ];
 
 //Object List - Random Helis.
-staticHeliList = 
+staticHeliList =
 [
 	"B_Heli_Light_01_F",
 	"B_Heli_Light_01_F",
@@ -141,7 +141,7 @@ staticHeliList =
 ];
 
 //Object List - Random Planes.
-staticPlaneList = 
+staticPlaneList =
 [
 	"B_Plane_CAS_01_F",
 	"O_Plane_CAS_02_F",

@@ -30,13 +30,13 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 	if (_isGenStore || _isGunStore) then
 	{
 		_marker = _marker + "_objSpawn";
-		
-		switch (true) do 
+
+		switch (true) do
 		{
 			case _isGenStore: { _objectsArray = genObjectsArray };
 			case _isGunStore: { _objectsArray = staticGunsArray };
 		};
-		
+
 		if (!isNil "_objectsArray") then
 		{
 			{
@@ -47,7 +47,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			} forEach (call _objectsArray);
 		};
 	};
-	
+
 	if (_isVehStore) then
 	{
 		// LAND VEHICLES
@@ -60,7 +60,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				};
 			} forEach (call _x);
 		} forEach [landArray, armoredArray, tanksArray];
-		
+
 		// SEA VEHICLES
 		if (isNil "_itemEntry") then
 		{
@@ -72,7 +72,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				};
 			} forEach (call boatsArray);
 		};
-		
+
 		// HELICOPTERS
 		if (isNil "_itemEntry") then
 		{
@@ -84,7 +84,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				};
 			} forEach (call helicoptersArray);
 		};
-		
+
 		// AIRPLANES
 		if (isNil "_itemEntry") then
 		{
@@ -97,11 +97,11 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			} forEach (call planesArray);
 		};
 	};
-	
+
 	if (!isNil "_itemEntry" && {{_x == _marker} count allMapMarkers > 0}) then
 	{
 		_itemPrice = _itemEntry select 2;
-		
+
 		/*if (_class isKindOf "Box_NATO_Ammo_F") then
 		{
 			switch (side _player) do
@@ -110,22 +110,22 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				case INDEPENDENT: { _class = "Box_IND_Ammo_F" };
 			};
 		};*/
-		
+
 		if (_player getVariable ["cmoney", 0] >= _itemPrice) then
 		{
 			_safePos = (markerPos _marker) findEmptyPosition [0, 50, _class];
 			if (count _safePos == 0) then { _safePos = markerPos _marker };
-			
+
 			if (_player getVariable [_timeoutKey, true]) then { breakOut "spawnStoreObject" }; // Timeout
-			
+
 			_object = createVehicle [_class, _safePos, [], 0, "None"];
-			
+
 			if (_player getVariable [_timeoutKey, true]) then // Timeout
 			{
 				deleteVehicle _object;
 				breakOut "spawnStoreObject";
 			};
-			
+
 			_objectID = netId _object;
 			_object setVariable ["A3W_purchasedStoreObject", true];
 
@@ -133,7 +133,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			{
 				//assign AI to the vehicle so it can actually be used
 				createVehicleCrew _object;
-				
+
 				[_object, _playerSide] spawn
 				{
 					_veh = _this select 0;
@@ -149,26 +149,26 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 					} forEach crew _veh;
 				};
 			};
-			
+
 			if (_player getVariable [_timeoutKey, true]) then // Timeout
 			{
 				deleteVehicle _object;
 				breakOut "spawnStoreObject";
 			};
-			
+
 			// Spawn remaining calls to speed up delivery confirmation
 			[_object, _safePos, _marker] spawn
 			{
 				_object = _this select 0;
 				_safePos = _this select 1;
 				_marker = _this select 2;
-				
+
 				_isDamageable = !(_object isKindOf "ReammoBox_F"); // ({_object isKindOf _x} count ["AllVehicles", "Lamps_base_F", "Cargo_Patrol_base_F", "Cargo_Tower_base_F"] > 0);
-				
+
 				[_object, false] call vehicleSetup;
 				_object allowDamage _isDamageable;
 				_object setVariable ["allowDamage", _isDamageable];
-				
+
 				if (_object isKindOf "AllVehicles" && !(_object isKindOf "StaticWeapon")) then
 				{
 					_object setPosATL [_safePos select 0, _safePos select 1, 0.05];
@@ -176,7 +176,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 					// _object spawn cleanVehicleWreck;
 					_object setVariable ["A3W_purchasedVehicle", true];
 				};
-				
+
 				if (_object isKindOf "Plane") then
 				{
 					_object setDir markerDir _marker;
@@ -221,15 +221,15 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			};
 		};
 	};
-	
+
 	// [compile format ["%1 = '%2'", _key, _objectID], "BIS_fnc_spawn", _player, false] call A3W_fnc_MP;
-	
+
 	if (_player getVariable [_timeoutKey, true]) then // Timeout
 	{
 		if (!isNil "_object") then { deleteVehicle _object };
 		breakOut "spawnStoreObject";
 	};
-	
+
 	if (isPlayer _player) then
 	{
 		_player setVariable [_key, _objectID, true];

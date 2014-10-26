@@ -69,7 +69,7 @@ while {true} do
 		_created = _x select 3;
 
 		_isSpawning = _unit getVariable ["playerSpawning", false];
-		
+
 		_isPlayer = if (_unit == player) then
 		{
 			_unit = vehicle player;

@@ -6,7 +6,7 @@ class balca_loader_main
 	idd = balca_loader_main_IDD;
 	name = "balca_loader_main";
 	movingEnable = false;
-	
+
 	controlsBackground[] = {balca_loader_background_veh,balca_loader_background_ammo};
 	objects[] = {};
 	controls[] =
@@ -32,7 +32,7 @@ class balca_loader_main
 		balca_loader_unload_btn,
 		balca_loader_close_btn
 	};
-	
+
 //background
 	class balca_loader_background_veh
 	{
@@ -96,19 +96,19 @@ class balca_loader_main
 		idc = -1;
 		type = 16;
 		style = 0;
-		
+
 		text = "btn";
 		action = "";
-		
+
 		x = 0;
 		y = 0;
-		
+
 		w = 0.23;
 		h = 0.11;
-		
+
 		size = 0.03921;
 		sizeEx = 0.03921;
-		
+
 		color[] = {0.543, 0.5742, 0.4102, 1.0};
 		color2[] = {0.95, 0.95, 0.95, 1};
 		colorBackground[] = {1, 1, 1, 1};
@@ -116,31 +116,31 @@ class balca_loader_main
 		colorDisabled[] = {1, 1, 1, 0.25};
 		periodFocus = 1.2;
 		periodOver = 0.8;
-		
-		class HitZone 
+
+		class HitZone
 		{
 			left = 0.004;
 			top = 0.029;
 			right = 0.004;
 			bottom = 0.029;
 		};
-		
-		class ShortcutPos 
+
+		class ShortcutPos
 		{
 			left = 0.0145;
 			top = 0.026;
 			w = 0.0392157;
 			h = 0.0522876;
 		};
-		
-		class TextPos 
+
+		class TextPos
 		{
 			left = 0.05;
 			top = 0.034;
 			right = 0.005;
 			bottom = 0.005;
 		};
-		
+
 		textureNoShortcut = "";
 		animTextureNormal = "\ca\ui\data\ui_button_normal_ca.paa";
 		animTextureDisabled = "\ca\ui\data\ui_button_disabled_ca.paa";
@@ -150,21 +150,21 @@ class balca_loader_main
 		animTextureDefault = "\ca\ui\data\ui_button_default_ca.paa";
 		period = 0.4;
 		font = "TahomaB";
-		
+
 		soundEnter[] = {"\ca\ui\data\sound\mouse2", 0.09, 1};
 		soundPush[] = {"\ca\ui\data\sound\new1", 0.09, 1};
 		soundClick[] = {"\ca\ui\data\sound\mouse3", 0.07, 1};
 		soundEscape[] = {"\ca\ui\data\sound\mouse1", 0.09, 1};
-		
-		class Attributes 
+
+		class Attributes
 		{
 			font = "TahomaB";
 			color = "#E5E5E5";
 			align = "left";
 			shadow = "true";
 		};
-		
-		class AttributesImage 
+
+		class AttributesImage
 		{
 			font = "TahomaB";
 			color = "#E5E5E5";
@@ -233,9 +233,9 @@ class balca_loader_main
 
 	class balca_loader_vehicle_list_desc : balca_loader_text
 	{
-		x = safezoneX_PG + border_offsetX + column_weight; 
+		x = safezoneX_PG + border_offsetX + column_weight;
 		w = column_weight - border_offsetX;
-		y = safezoneY_PG + border_offsetY; 
+		y = safezoneY_PG + border_offsetY;
 		h = str_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -244,9 +244,9 @@ class balca_loader_main
 
 	class balca_loader_turret_list_desc : balca_loader_text
 	{
-		x = safezoneX_PG + border_offsetX + column_weight*2; 
+		x = safezoneX_PG + border_offsetX + column_weight*2;
 		w = column_weight - border_offsetX;
-		y = safezoneY_PG + border_offsetY; 
+		y = safezoneY_PG + border_offsetY;
 		h = str_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -255,9 +255,9 @@ class balca_loader_main
 
 	class balca_loader_weapon_list_desc : balca_loader_text
 	{
-		x = safezoneX_PG + border_offsetX + column_weight*3; 
+		x = safezoneX_PG + border_offsetX + column_weight*3;
 		w = column_weight - border_offsetX;
-		y = safezoneY_PG + border_offsetY; 
+		y = safezoneY_PG + border_offsetY;
 		h = str_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -267,9 +267,9 @@ class balca_loader_main
 	class balca_loader_capacity : balca_loader_text
 	{
 		idc = balca_loader_capacity_IDC;
-		x = safezoneX_PG + border_offsetX + column_weight*3; 
+		x = safezoneX_PG + border_offsetX + column_weight*3;
 		w = column_weight - border_offsetX;
-		y = display_height/2 - str_height; 
+		y = display_height/2 - str_height;
 		h = str_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -278,9 +278,9 @@ class balca_loader_main
 
 	class balca_loader_default_loadout_desc : balca_loader_text
 	{
-		x = safezoneX_PG + border_offsetX; 
+		x = safezoneX_PG + border_offsetX;
 		w = column_weight - border_offsetX;
-		y = display_height/2 + border_offsetY*2; 
+		y = display_height/2 + border_offsetY*2;
 		h = str_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -290,9 +290,9 @@ class balca_loader_main
 
 	class balca_loader_compatible_magazines_desc : balca_loader_text
 	{
-		x = safezoneX_PG + border_offsetX + column_weight*1; 
+		x = safezoneX_PG + border_offsetX + column_weight*1;
 		w = column_weight - border_offsetX;
-		y = display_height/2 + border_offsetY*2; 
+		y = display_height/2 + border_offsetY*2;
 		h = str_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -301,9 +301,9 @@ class balca_loader_main
 
 	class balca_loader_current_magazines_desc : balca_loader_text
 	{
-		x = safezoneX_PG + border_offsetX + column_weight*2; 
+		x = safezoneX_PG + border_offsetX + column_weight*2;
 		w = column_weight - border_offsetX;
-		y = display_height/2 + border_offsetY*2; 
+		y = display_height/2 + border_offsetY*2;
 		h = str_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -312,9 +312,9 @@ class balca_loader_main
 
 	class balca_loader_ammo_info_desc : balca_loader_text
 	{
-		x = safezoneX_PG + border_offsetX + column_weight*3; 
+		x = safezoneX_PG + border_offsetX + column_weight*3;
 		w = column_weight - border_offsetX;
-		y = display_height/2 + border_offsetY*2; 
+		y = display_height/2 + border_offsetY*2;
 		h = str_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -326,9 +326,9 @@ class balca_loader_main
 		idc = balca_loader_ammo_info_IDC;
 		type = CT_STRUCTURED_TEXT;
 		size = 0.023;
-		x = safezoneX_PG + border_offsetX + column_weight*3; 
+		x = safezoneX_PG + border_offsetX + column_weight*3;
 		w = column_weight - border_offsetX;
-		y = display_height/2 + border_offsetY*2 + offset_top; 
+		y = display_height/2 + border_offsetY*2 + offset_top;
 		h = display_height/2 - offset_bottom - (safezoneY_PG + border_offsetY + offset_top);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -338,9 +338,9 @@ class balca_loader_main
 	class balca_loader_vehicle_shortcut : balca_loader_image
 	{
 		idc = balca_loader_vehicle_shortcut_IDC;
-		x = safezoneX_PG + border_offsetX; 
+		x = safezoneX_PG + border_offsetX;
 		w = column_weight - border_offsetX;
-		y = safezoneY_PG + border_offsetY + offset_top; 
+		y = safezoneY_PG + border_offsetY + offset_top;
 		h = img_height;
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -350,9 +350,9 @@ class balca_loader_main
 	class balca_loader_vehicle_list : balca_loader_list
 	{
 		idc = balca_loader_vehicle_list_IDC;
-		x = safezoneX_PG + border_offsetX + column_weight*1; 
+		x = safezoneX_PG + border_offsetX + column_weight*1;
 		w = column_weight - column_div;
-		y = safezoneY_PG + border_offsetY + offset_top; 
+		y = safezoneY_PG + border_offsetY + offset_top;
 		h = display_height/2 - offset_bottom - (safezoneY_PG + border_offsetY + offset_top);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -363,9 +363,9 @@ class balca_loader_main
 	class balca_loader_turret_list : balca_loader_list
 	{
 		idc = balca_loader_turret_list_IDC;
-		x = safezoneX_PG + border_offsetX + column_weight*2; 
+		x = safezoneX_PG + border_offsetX + column_weight*2;
 		w = column_weight - column_div;
-		y = safezoneY_PG + border_offsetY + offset_top; 
+		y = safezoneY_PG + border_offsetY + offset_top;
 		h = display_height/2 - offset_bottom - (safezoneY_PG + border_offsetY + offset_top);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -376,9 +376,9 @@ class balca_loader_main
 	class balca_loader_weapon_list : balca_loader_list
 	{
 		idc = balca_loader_weapon_list_IDC;
-		x = safezoneX_PG + border_offsetX + column_weight*3; 
+		x = safezoneX_PG + border_offsetX + column_weight*3;
 		w = column_weight - column_div;
-		y = safezoneY_PG + border_offsetY + offset_top; 
+		y = safezoneY_PG + border_offsetY + offset_top;
 		h = display_height/2 - offset_bottom - (safezoneY_PG + border_offsetY + offset_top);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -389,9 +389,9 @@ class balca_loader_main
 	class balca_loader_default_loadout : balca_loader_list
 	{
 		idc = balca_loader_default_loadout_IDC;
-		x = safezoneX_PG + border_offsetX; 
+		x = safezoneX_PG + border_offsetX;
 		w = column_weight - column_div;
-		y = display_height/2 + border_offsetY*2 + offset_top; 
+		y = display_height/2 + border_offsetY*2 + offset_top;
 		h = display_height/2 - offset_bottom - (safezoneY_PG + border_offsetY + offset_top);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -401,9 +401,9 @@ class balca_loader_main
 	class balca_loader_compatible_magazines : balca_loader_list
 	{
 		idc = balca_loader_compatible_magazines_IDC;
-		x = safezoneX_PG + border_offsetX + column_weight*1; 
+		x = safezoneX_PG + border_offsetX + column_weight*1;
 		w = column_weight - column_div;
-		y = display_height/2 + border_offsetY*2 + offset_top; 
+		y = display_height/2 + border_offsetY*2 + offset_top;
 		h = display_height/2 - offset_bottom - (safezoneY_PG + border_offsetY + offset_top);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -414,9 +414,9 @@ class balca_loader_main
 	class balca_loader_current_magazines : balca_loader_list
 	{
 		idc = balca_loader_current_magazines_IDC;
-		x = safezoneX_PG + border_offsetX + column_weight*2; 
+		x = safezoneX_PG + border_offsetX + column_weight*2;
 		w = column_weight - column_div;
-		y = display_height/2 + border_offsetY*2 + offset_top; 
+		y = display_height/2 + border_offsetY*2 + offset_top;
 		h = display_height/2 - offset_bottom - (safezoneY_PG + border_offsetY + offset_top);
 		colorText[] = {1, 1, 1, 1};
 		colorBackground[] = {0,0,0,0};
@@ -430,7 +430,7 @@ class balca_loader_main
 		x = safezoneX_PG + border_offsetX; w = 0.16;
 		y = display_height - 0.16;
 		text = "Restore";
-		action = "call c_proving_ground_reloader_fnc_restore_loadout;"; 
+		action = "call c_proving_ground_reloader_fnc_restore_loadout;";
 	};
 
 	class balca_loader_load_btn : balca_loader_btn
@@ -439,7 +439,7 @@ class balca_loader_main
 		x = safezoneX_PG + border_offsetX + column_weight*1; w = 0.16;
 		y = display_height - 0.16;
 		text = "Load";
-		action = "call c_proving_ground_reloader_fnc_add_magazine;"; 
+		action = "call c_proving_ground_reloader_fnc_add_magazine;";
 	};
 
 	class balca_loader_unload_btn : balca_loader_btn
@@ -448,7 +448,7 @@ class balca_loader_main
 		x = safezoneX_PG + border_offsetX + column_weight*2; w = 0.16;
 		y = display_height - 0.16;
 		text = "Unload";
-		action = "call c_proving_ground_reloader_fnc_remove_magazine"; 
+		action = "call c_proving_ground_reloader_fnc_remove_magazine";
 	};
 
 	class balca_loader_close_btn : balca_loader_btn
@@ -456,7 +456,7 @@ class balca_loader_main
 		x = safezoneX_PG + border_offsetX + column_weight*3; w = 0.16;
 		y = display_height - 0.16;
 		text = "Close";
-		action = "closeDialog 0;"; 
+		action = "closeDialog 0;";
 	};
 };
 

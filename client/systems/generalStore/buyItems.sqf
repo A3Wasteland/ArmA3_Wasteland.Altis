@@ -34,7 +34,7 @@ storePurchaseHandle = _this spawn
 	_itemText = _itemlist lbText _itemIndex;
 	_itemData = _itemlist lbData _itemIndex;
 
-	_showInsufficientFundsError = 
+	_showInsufficientFundsError =
 	{
 		_itemText = _this select 0;
 		hint parseText format ["Not enough money for<br/>""%1""", _itemText];
@@ -42,15 +42,15 @@ storePurchaseHandle = _this spawn
 		_price = -1;
 	};
 
-	_showInsufficientSpaceError = 
+	_showInsufficientSpaceError =
 	{
 		_itemText = _this select 0;
 		hint parseText format ["Not enough space for<br/>""%1""", _itemText];
 		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
 	};
-	
-	_showItemSpawnTimeoutError = 
+
+	_showItemSpawnTimeoutError =
 	{
 		_itemText = _this select 0;
 		hint parseText format ["<t color='#ffff00'>An unknown error occurred.</t><br/>The purchase of ""%1"" has been cancelled.", _itemText];
@@ -58,18 +58,18 @@ storePurchaseHandle = _this spawn
 		_price = -1;
 	};
 
-	_showItemSpawnedOutsideMessage = 
+	_showItemSpawnedOutsideMessage =
 	{
 		_itemText = _this select 0;
 		hint format ["""%1"" has been spawned outside, in front of the store.", _itemText];
 		playSound "FD_Finish_F";
 		_successHint = false;
 	};
-	
-	_showReplaceConfirmMessage = 
+
+	_showReplaceConfirmMessage =
 	{
 		_itemText = _this select 0;
-		
+
 		if ([_this, 1, false, [false]] call BIS_fnc_param) then
 		{
 			_itemText = format ["Purchasing these %1 will replace your current ones.", _itemText];
@@ -85,21 +85,21 @@ storePurchaseHandle = _this spawn
 				_itemText = format ["Purchasing this %1 will replace your current one, and its contents will be lost.", _itemText];
 			};
 		};
-		
+
 		_confirmResult = [parseText _itemText, "Confirm", "Buy", true] call BIS_fnc_guiMessage;
-		 
+
 		if (!_confirmResult) then
 		{
 			_price = -1;
 		};
-		
+
 		_confirmResult
 	};
 
-	_showAlreadyHaveItemMessage = 
+	_showAlreadyHaveItemMessage =
 	{
 		_itemText = _this select 0;
-		
+
 		if ([_this, 1, false, [false]] call BIS_fnc_param) then
 		{
 			_itemText = format ["You already have these %1.", _itemText];
@@ -108,10 +108,10 @@ storePurchaseHandle = _this spawn
 		{
 			_itemText = format ["You already have this %1.", _itemText];
 		};
-		
+
 		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
-		
+
 		[parseText _itemText, "Error"] call BIS_fnc_guiMessage
 	};
 
@@ -121,7 +121,7 @@ storePurchaseHandle = _this spawn
 			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
 			{
 				_class = _x select 1;
-				
+
 				if (_x select 3 == "vest") then
 				{
 					_price = [_class] call getCapacity;
@@ -130,19 +130,19 @@ storePurchaseHandle = _this spawn
 				{
 					_price = _x select 2;
 				};
-				
+
 				// Ensure the player has enough money
 				if (_price > _playerMoney) exitWith
 				{
 					[_itemText] call _showInsufficientFundsError;
 				};
-				
+
 				switch (_x select 3) do
 				{
 					case "binoc":
 					{
 						_currentBinoc = binocular player;
-						
+
 						if (_currentBinoc == "") then
 						{
 							player addWeapon _class;
@@ -183,10 +183,10 @@ storePurchaseHandle = _this spawn
 						{
 							["backpack"] call _showAlreadyHaveItemMessage;
 						};
-						
+
 						// Confirm replace
 						if (backpack player != "" && {!(["backpack"] call _showReplaceConfirmMessage)}) exitWith {};
-						
+
 						removeBackpack player;
 						player addBackpack _class;
 					};
@@ -196,10 +196,10 @@ storePurchaseHandle = _this spawn
 						{
 							["goggles", true] call _showAlreadyHaveItemMessage;
 						};
-						
+
 						// Confirm replace
 						if (goggles player != "" && {!(["goggles", true] call _showReplaceConfirmMessage)}) exitWith {};
-						
+
 						removeGoggles player;
 						player addGoggles _class;
 					};
@@ -264,7 +264,7 @@ storePurchaseHandle = _this spawn
 			};
 		} forEach (call genItemArray);
 	};
-	
+
 	if (isNil "_price") then
 	{
 		{
@@ -272,13 +272,13 @@ storePurchaseHandle = _this spawn
 			{
 				_class = _x select 1;
 				_price = _x select 2;
-				
+
 				// Ensure the player has enough money
 				if (_price > _playerMoney) exitWith
 				{
 					[_itemText] call _showInsufficientFundsError;
 				};
-				
+
 				_requestKey = call A3W_fnc_generateKey;
 				call requestStoreObject;
 			};
@@ -291,13 +291,13 @@ storePurchaseHandle = _this spawn
 			if (_itemData == _x select 1) exitWith
 			{
 				_price = _x select 4;
-				
+
 				// Ensure the player has enough money
 				if (_price > _playerMoney) exitWith
 				{
 					[_itemText] call _showInsufficientFundsError;
 				};
-				
+
 				if !(_itemData call mf_inventory_is_full) then
 				{
 					[_itemData, 1] call mf_inventory_add;
@@ -306,13 +306,13 @@ storePurchaseHandle = _this spawn
 				{
 					[_itemText] call _showInsufficientSpaceError;
 				};
-				
+
 				//populate the inventory items
 				[] execVM "client\systems\generalStore\getInventory.sqf";
 			};
 		} forEach (call customPlayerItems);
 	};
-	
+
 	if (isNil "_price") then
 	{
 		{
@@ -320,21 +320,21 @@ storePurchaseHandle = _this spawn
 			{
 				_class = _x select 1;
 				_price = _x select 2;
-				
+
 				if (headgear player == _class) exitWith
 				{
 					["headgear"] call _showAlreadyHaveItemMessage;
 				};
-					
+
 				// Ensure the player has enough money
 				if (_price > _playerMoney) exitWith
 				{
 					[_itemText] call _showInsufficientFundsError;
 				};
-				
+
 				// Confirm replace
 				if (headgear player != "" && {!(["headgear", false, true] call _showReplaceConfirmMessage)}) exitWith {};
-				
+
 				removeHeadgear player;
 				player addHeadgear _class;
 			};
@@ -348,21 +348,21 @@ storePurchaseHandle = _this spawn
 			{
 				_class = _x select 1;
 				_price = _x select 2;
-				
+
 				if (uniform player == _class) exitWith
 				{
 					["uniform"] call _showAlreadyHaveItemMessage;
 				};
-				
+
 				// Ensure the player has enough money
 				if (_price > _playerMoney) exitWith
 				{
 					[_itemText] call _showInsufficientFundsError;
 				};
-				
+
 				// Confirm replace
 				if (uniform player != "" && {!(["uniform"] call _showReplaceConfirmMessage)}) exitWith {};
-				
+
 				removeUniform player;
 				player addUniform _class;
 			};
@@ -376,26 +376,26 @@ storePurchaseHandle = _this spawn
 			{
 				_class = _x select 1;
 				_price = _x select 2;
-				
+
 				if (_price < 0) then
 				{
 					_price = [_class] call getCapacity;
 				};
-				
+
 				if (vest player == _class) exitWith
 				{
 					["vest"] call _showAlreadyHaveItemMessage;
 				};
-				
+
 				// Ensure the player has enough money
 				if (_price > _playerMoney) exitWith
 				{
 					[_itemText] call _showInsufficientFundsError;
 				};
-				
+
 				// Confirm replace
 				if (vest player != "" && {!(["vest"] call _showReplaceConfirmMessage)}) exitWith {};
-				
+
 				removeVest player;
 				player addVest _class;
 			};
@@ -409,21 +409,21 @@ storePurchaseHandle = _this spawn
 			{
 				_class = _x select 1;
 				_price = _x select 2;
-				
+
 				if (backpack player == _class) exitWith
 				{
 					["backpack"] call _showAlreadyHaveItemMessage;
 				};
-				
+
 				// Ensure the player has enough money
 				if (_price > _playerMoney) exitWith
 				{
 					[_itemText] call _showInsufficientFundsError;
 				};
-				
+
 				// Confirm replace
 				if (backpack player != "" && {!(["backpack"] call _showReplaceConfirmMessage)}) exitWith {};
-				
+
 				removeBackpack player;
 				player addBackpack _class;
 			};
@@ -433,7 +433,7 @@ storePurchaseHandle = _this spawn
 	if (!isNil "_price" && {_price > -1}) then
 	{
 		_playerMoney = player getVariable ["cmoney", 0];
-		
+
 		// Re-check for money after purchase
 		if (_price > _playerMoney) then
 		{
@@ -441,7 +441,7 @@ storePurchaseHandle = _this spawn
 			{
 				deleteVehicle objectFromNetId (missionNamespace getVariable _requestKey);
 			};
-			
+
 			[_itemText] call _showInsufficientFundsError;
 		}
 		else
@@ -452,12 +452,12 @@ storePurchaseHandle = _this spawn
 			playSound "FD_Finish_F";
 		};
 	};
-	
+
 	if (!isNil "_requestKey" && {!isNil _requestKey}) then
 	{
 		missionNamespace setVariable [_requestKey, nil];
 	};
-	
+
 	sleep 0.25; // double-click protection
 };
 

@@ -22,7 +22,7 @@ lbClear _vehlist;
 lbClear _colorlist;
 _vehlist lbSetCurSel -1;
 
-_vehArray = switch (_switch) do 
+_vehArray = switch (_switch) do
 {
 	case 0: { call landArray };
 	case 1: { call armoredArray };
@@ -46,11 +46,11 @@ _playerSideNum = switch (playerSide) do
 // Populate the vehicle shop list
 {
 	_vehClass = _x select 1;
-	
+
 	if (!_noBuzzard || {!(_vehClass isKindOf "Plane_Fighter_03_base_F")}) then
 	{
 		_vehCfg = configFile >> "CfgVehicles" >> _vehClass;
-		
+
 		if (getNumber (_vehCfg >> "isUav") <= 0 || {getNumber (_vehCfg >> "side") == _playerSideNum}) then
 		{
 			_vehPicture = getText (configFile >> "CfgVehicles" >> _vehClass >> "picture");

@@ -20,17 +20,17 @@ if (count _this > 2) then
 _moveString =
 {
 	private ["_moveArr", "_result", "_x"];
-	
+
 	_moveArr = _this;
 	_result = "";
-	
+
 	{
 		if (typeName _x == "ARRAY") then
 		{
 			_result = _result + (_x select 0) + (_x select 1);
 		};
 	} forEach _moveArr;
-	
+
 	_result
 };
 
@@ -48,20 +48,20 @@ _result = "";
 if (typeName _currentMove == "ARRAY") then
 {
 	_resultArr = [];
-	
+
 	{
 		_targetPart = _x;
 		_currentCopy = +_currentMove; // Create a copy of the current move array for each target move part
-		
+
 		if (typeName _targetPart == "ARRAY") then
 		{
 			// The good stuff
 			{
 				_targetParam = _x;
-				
+
 				{
 					_currentParam = _x;
-					
+
 					// Override current move parameter by target parameter if match
 					if (_currentParam select 0 == _targetParam select 0) then
 					{
@@ -70,9 +70,9 @@ if (typeName _currentMove == "ARRAY") then
 				} forEach _currentCopy;
 			} forEach _targetPart;
 		};
-		
+
 		_copyString = _currentCopy call _moveString;
-		
+
 		// Add the processed copy to the result string
 		if (_result == "") then
 		{

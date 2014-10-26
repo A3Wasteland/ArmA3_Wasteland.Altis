@@ -29,7 +29,7 @@ if (_uid call isAdmin) then
 	// Get handles on the UI elements we need
 	_objectSearchTermCtrl = _display displayCtrl objectSearchFindTexteditBox;
 	_objectListBoxCtrl = _display displayCtrl objectSearchObjectList;
-	
+
 	_switch = _this select 0;
 
 	switch (_switch) do

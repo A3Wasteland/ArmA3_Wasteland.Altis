@@ -1,8 +1,8 @@
 /**
  * Interface d'affichage du contenu du véhicule
- * 
+ *
  * Copyright (C) 2010 madbull ~R3F~
- * 
+ *
  * This program is free software under the terms of the GNU General Public License version 3.
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
@@ -15,21 +15,21 @@ class R3F_LOG_dlg_contenu_vehicule
 	idd = R3F_LOG_IDD_dlg_contenu_vehicule;
 	name = "R3F_LOG_dlg_contenu_vehicule";
 	movingEnable = false;
-	
+
 	controlsBackground[] = {R3F_LOG_dlg_CV_arriere_plan};
 	objects[] = {};
 	controls[] =
 	{
 		R3F_LOG_dlg_CV_titre,
-		
+
 		R3F_LOG_dlg_CV_capacite_vehicule,
 		R3F_LOG_dlg_CV_liste_contenu,
-		
+
 		R3F_LOG_dlg_CV_credits,
 		R3F_LOG_dlg_CV_btn_decharger,
 		R3F_LOG_dlg_CV_btn_fermer
 	};
-	
+
 	// Définition des classes de base
 	class R3F_LOG_dlg_CV_texte
 	{
@@ -44,25 +44,25 @@ class R3F_LOG_dlg_contenu_vehicule
 		font = "PuristaMedium";
 		text = "";
 	};
-	
+
 	class R3F_LOG_dlg_CV_btn
 	{
 		idc = -1;
 		type = 16;
 		style = 0;
-		
+
 		text = "btn";
 		action = "";
-		
+
 		x = 0;
 		y = 0;
-		
+
 		w = 0.23;
 		h = 0.11;
-		
+
 		size = 0.03921;
 		sizeEx = 0.03921;
-		
+
 		color[] = {0.543, 0.5742, 0.4102, 1.0};
 		color2[] = {0.95, 0.95, 0.95, 1};
 		colorFocused[] = {0.543, 0.5742, 0.4102, 1.0};
@@ -72,31 +72,31 @@ class R3F_LOG_dlg_contenu_vehicule
 		colorDisabled[] = {1, 1, 1, 0.25};
 		periodFocus = 1.2;
 		periodOver = 0.8;
-		
-		class HitZone 
+
+		class HitZone
 		{
 			left = 0.004;
 			top = 0.029;
 			right = 0.004;
 			bottom = 0.029;
 		};
-		
-		class ShortcutPos 
+
+		class ShortcutPos
 		{
 			left = 0.0145;
 			top = 0.026;
 			w = 0.0392157;
 			h = 0.0522876;
 		};
-		
-		class TextPos 
+
+		class TextPos
 		{
 			left = 0.05;
 			top = 0.019;
 			right = 0.005;
 			bottom = 0.005;
 		};
-		
+
 		textureNoShortcut = "";
 		animTextureNormal = "client\ui\igui_button_normal_ca.paa";
 		animTextureDisabled = "client\ui\igui_button_disabled_ca.paa";
@@ -106,21 +106,21 @@ class R3F_LOG_dlg_contenu_vehicule
 		animTextureDefault = "client\ui\igui_button_normal_ca.paa";
 		period = 0.4;
 		font = "PuristaMedium";
-		
+
 		soundEnter[] = {"\A3\ui_f\data\Sound\MOUSE2", 0.09, 1};
 		soundPush[] = {"\A3\ui_f\data\Sound\NEW1", 0.09, 1};
 		soundClick[] = {"\A3\ui_f\data\Sound\MOUSE3", 0.07, 1};
 		soundEscape[] = {"\A3\ui_f\data\Sound\MOUSE1", 0.09, 1};
-		
-		class Attributes 
+
+		class Attributes
 		{
 			font = "PuristaMedium";
 			color = "#E5E5E5";
 			align = "left";
 			shadow = "true";
 		};
-		
-		class AttributesImage 
+
+		class AttributesImage
 		{
 			font = "PuristaMedium";
 			color = "#E5E5E5";
@@ -128,7 +128,7 @@ class R3F_LOG_dlg_contenu_vehicule
 			shadow = "true";
 		};
 	};
-	
+
 	class R3F_LOG_dlg_CV_liste
 	{
 		type = CT_LISTBOX;
@@ -143,7 +143,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		colorSelectBackground[] = {0, 0, 0, 1};
 		colorScrollbar[] = {0.2, 0.2, 0.2, 1};
 		arrowEmpty = "client\ui\ui_arrow_combo_ca.paa";
-        arrowFull = "client\ui\ui_arrow_combo_active_ca.paa";
+		arrowFull = "client\ui\ui_arrow_combo_active_ca.paa";
 		wholeHeight = 0.45;
 		rowHeight = 0.06;
 		color[] = {0.8, 0.8, 0.8, 1};
@@ -158,7 +158,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		autoScrollSpeed = -1;
 		autoScrollDelay = 5;
 		autoScrollRewind = 0;
-		
+
 		class ListScrollBar
 		{
 			color[] = {1, 1, 1, 0.6};
@@ -171,8 +171,8 @@ class R3F_LOG_dlg_contenu_vehicule
 		};
 	};
 	// FIN Définition des classes de base
-	
-	
+
+
 	class R3F_LOG_dlg_CV_arriere_plan
 	{
 		/*idc = -1;
@@ -194,7 +194,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		colorText[]       = {1, 1, 1, 1};
 		sizeEx            = 0.04;
 	};
-	
+
 	class R3F_LOG_dlg_CV_titre : R3F_LOG_dlg_CV_texte
 	{
 		idc = R3F_LOG_IDC_dlg_CV_titre;
@@ -203,7 +203,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		sizeEx = 0.05;
 		text = "";
 	};
-	
+
 	class R3F_LOG_dlg_CV_capacite_vehicule : R3F_LOG_dlg_CV_texte
 	{
 		idc = R3F_LOG_IDC_dlg_CV_capacite_vehicule;
@@ -212,7 +212,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		sizeEx = 0.03;
 		text = "";
 	};
-	
+
 	class R3F_LOG_dlg_CV_liste_contenu : R3F_LOG_dlg_CV_liste
 	{
 		idc = R3F_LOG_IDC_dlg_CV_liste_contenu;
@@ -220,7 +220,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		y = 0.22; h = 0.44;
 		onLBDblClick = "execVM ""addons\R3F_ARTY_AND_LOG\R3F_LOG\transporteur\decharger.sqf"";";
 	};
-	
+
 	class R3F_LOG_dlg_CV_credits : R3F_LOG_dlg_CV_texte
 	{
 		idc = R3F_LOG_IDC_dlg_CV_credits;
@@ -230,7 +230,7 @@ class R3F_LOG_dlg_contenu_vehicule
 		colorText[] = {0.5, 0.5, 0.5, 0.75};
 		text = "";
 	};
-	
+
 	class R3F_LOG_dlg_CV_btn_decharger : R3F_LOG_dlg_CV_btn
 	{
 		idc = R3F_LOG_IDC_dlg_CV_btn_decharger;
@@ -240,13 +240,13 @@ class R3F_LOG_dlg_contenu_vehicule
 		text = "";
 		action = "execVM ""addons\R3F_ARTY_AND_LOG\R3F_LOG\transporteur\decharger.sqf"";";
 	};
-	
+
 	class R3F_LOG_dlg_CV_btn_fermer : R3F_LOG_dlg_CV_btn
 	{
 		idc = R3F_LOG_IDC_dlg_CV_btn_fermer;
 		x = 0.537; w = 0.16;
 		y = 0.66;
 		text = "";
-		action = "closeDialog 0;"; 
+		action = "closeDialog 0;";
 	};
 };

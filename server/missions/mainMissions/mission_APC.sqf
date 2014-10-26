@@ -11,7 +11,7 @@ if (!isServer) exitwith {};
 
 private ["_vehicleClass", "_nbUnits"];
 
-_setupVars = 
+_setupVars =
 {
 	_vehicleClass =
 	[

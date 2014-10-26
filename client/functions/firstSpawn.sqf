@@ -13,7 +13,7 @@ client_firstSpawn = true;
 player addEventHandler ["Take",
 {
 	_vehicle = _this select 1;
-	
+
 	if (_vehicle isKindOf "LandVehicle" && {!(_vehicle getVariable ["itemTakenFromVehicle", false])}) then
 	{
 		_vehicle setVariable ["itemTakenFromVehicle", true, true];
@@ -23,22 +23,22 @@ player addEventHandler ["Take",
 player addEventHandler ["Put",
 {
 	_vehicle = _this select 1;
-	
+
 	if (_vehicle getVariable ["A3W_storeSellBox", false] && isNil {_vehicle getVariable "A3W_storeSellBox_track"}) then
 	{
 		_vehicle setVariable ["A3W_storeSellBox_track", _vehicle spawn
 		{
 			_vehicle = _this;
-			
+
 			waitUntil {sleep 1; !alive player || player distance _vehicle > 25};
-			
+
 			_sellScript = [_vehicle, player, -1, [true, true]] execVM "client\systems\selling\sellCrateItems.sqf";
 			waitUntil {sleep 0.1; scriptDone _sellScript};
-			
+
 			if (!alive player) then
 			{
 				sleep 0.5;
-				
+
 				if (player getVariable ["cmoney", 0] > 0) then
 				{
 					_m = createVehicle ["Land_Money_F", getPosATL player, [], 0.5, "CAN_COLLIDE"];
@@ -47,7 +47,7 @@ player addEventHandler ["Put",
 					player setVariable ["cmoney", 0, true];
 				};
 			};
-			
+
 			_vehicle setVariable ["A3W_storeSellBox_track", nil];
 		}];
 	};

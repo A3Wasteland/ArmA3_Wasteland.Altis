@@ -17,7 +17,7 @@ fn_requestPlayerData =
 	playerData_resetPos = nil;
 	requestPlayerData = [player, getPlayerUID player];
 	publicVariableServer "requestPlayerData";
-} call mf_compile; 
+} call mf_compile;
 
 fn_deletePlayerData =
 {

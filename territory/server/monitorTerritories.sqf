@@ -30,7 +30,7 @@
 //
 // 4. For each territory we call _teamCountsForPlayerArray which returns the
 //    relative size of each team in the area
-// 
+//
 // 5. The team counts are then passed to _handleTeamCounts which assesses
 //    the action to be taken for each territory: CAPTURE< BLOCK or RESET
 //
@@ -124,7 +124,7 @@ _onCaptureStarted =
 	};
 	*/
 };
-   
+
 // Trigger for when a capture of a territory has ended.
 _onCaptureFinished =
 {
@@ -212,12 +212,12 @@ _getPlayerTeam =
 // Count players in a particular area for each team, and calculate if its
 // uncontested or contested, and whether there's a dominant team
 _teamCountsForPlayerArray =
-{ 
+{
 	//diag_log format["_teamCountsForPlayerArray called with %1", _this];
 
 	private ["_players", "_teamCounts", "_contested", "_dominantTeam", "_added", "_playerTeam", "_team1", "_team1count", "_team2count"];
 	_players = _this select 0;
-	
+
 	_teamCounts = [];
 
 	_contested = false; // true if there are more than one team present
@@ -369,10 +369,10 @@ _updatePlayerTerritoryActivity =
 
 _handleCapPointTick = {
 	private ["_currentTerritoryData", "_newTerritoryData", "_count", "_currentTerritoryDetails", "_i", "_currentTerritoryName", "_currentTerritoryOccupiers", "_currentTerritoryChrono", "_currentTerritoryTimer", "_newTerritoryDetails", "_newTerritoryDetails", "_newTerritoryName", "_newTerritoryOccupiers", "_currentTeamCounts", "_newTeamCounts", "_newDominantTeam", "_currentDominantTeam", "_action", "_curCapPointTimer", "_newMarkerColor", "_playerUIDs", "_msg", "_configEntry", "_capturePointHumanName", "_value"];
-	
+
 	//diag_log format["_handleCapPointTick called with %1", _this];
 
-	// Into this method comes two arrays. One is the master array called _currentTerritoryData, containing all the 
+	// Into this method comes two arrays. One is the master array called _currentTerritoryData, containing all the
 	// cap points, known players within that area, and the timer count for that area.
 
 	// The second array is the current list of cap points and players at that location
@@ -386,7 +386,7 @@ _handleCapPointTick = {
 	// [
 	//  [NAME_OF_CAP_POINT, [PLAYERS, AT, POINT], uncontestedOccupiedTime, currentPointOwners]
 	// ]
-	// 
+	//
 
 	// Known to be the same as _currentTerritoryData
 	_count = count _currentTerritoryData;
@@ -412,7 +412,7 @@ _handleCapPointTick = {
 		//diag_log format["Searching _newTerritoryData for %1", _currentTerritoryName];
 
 		_newTerritoryDetails = [_newTerritoryData, { _x select 0 == _currentTerritoryName }] call BIS_fnc_conditionalSelect;
-		
+
 		// If territory is is held by anyone, update chrono
 		if !(_currentTerritoryOwner isEqualTo sideUnknown) then
 		{
@@ -430,7 +430,7 @@ _handleCapPointTick = {
 			_newTerritoryOccupiers = _newTerritoryDetails select 1;
 
 			// Ok players have hanged. Contested or not?
-			_currentTeamCounts = [_currentTerritoryOccupiers] call _teamCountsForPlayerArray; 
+			_currentTeamCounts = [_currentTerritoryOccupiers] call _teamCountsForPlayerArray;
 			_newTeamCounts = [_newTerritoryOccupiers] call _teamCountsForPlayerArray;
 
 			_currentDominantTeam = _currentTeamCounts select 2;
@@ -459,7 +459,7 @@ _handleCapPointTick = {
 						_configEntry = [["config_territory_markers", []] call getPublicVar, { _x select 0 == _currentTerritoryName }] call BIS_fnc_conditionalSelect;
 						_territoryDescriptiveName = (_configEntry select 0) select 1;
 
-						[_territoryDescriptiveName, _currentTerritoryOwner] call _onCaptureStarted;                        
+						[_territoryDescriptiveName, _currentTerritoryOwner] call _onCaptureStarted;
 					};
 
 					_newCapPointTimer = _newCapPointTimer + _realLoopTime
@@ -550,7 +550,7 @@ while {true} do
 		{
 			// We don't see dead people. Hahaha...ha!
 			_curCapPoint = _x getVariable ["TERRITORY_OCCUPATION", ""];
-			
+
 			if (_curCapPoint != "") then
 			{
 				// Make the entry
@@ -562,7 +562,7 @@ while {true} do
 
 		// Mark / sweep old players who no longer need activity entries
 		_uid = getPlayerUID _x;
-		
+
 		if (_uid in _oldPlayersWithTerritoryActivity) then
 		{
 			//diag_log format["Removing activity state from %1", _x];

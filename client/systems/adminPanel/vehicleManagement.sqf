@@ -21,14 +21,14 @@ _uid = getPlayerUID player;
 if (_uid call isAdmin) then
 {
 	_start = createDialog "VehicleManagement";
-	
+
 	_dialog = findDisplay vehicleManagementDialog;
 	_vehicleCountText = _dialog displayCtrl vehicleManagementVehicleCount;
 	_vehicleCivBtn = _dialog displayCtrl vehicleManagementCivButton;
 	_vehicleHeliBtn = _dialog displayCtrl vehicleManagementHeliButton;
 	_vehiclePlaneBtn = _dialog displayCtrl vehicleManagementPlaneButton;
 	_vehicleTankBtn = _dialog displayCtrl vehicleManagementTankButton;
-	
+
 	_uid = getPlayerUID player;
 	_vehicleCount = 0;
 	{
@@ -37,14 +37,14 @@ if (_uid call isAdmin) then
 	        _vehicleCount = _vehicleCount + 1;
 		};
 	}forEach vehicles;
-	
+
 	_vehicleCountText ctrlSetText format["Vehicles on Server: %1", _vehicleCount];
-	
+
 	/*if((_uid in moderators)) then
 	{
 		_vehicleCivBtn ctrlShow false;
 	    _vehicleHeliBtn ctrlShow false;
 	    _vehiclePlaneBtn ctrlShow false;
-	    _vehicleTankBtn ctrlShow false;	    
+	    _vehicleTankBtn ctrlShow false;
 	};*/
 };

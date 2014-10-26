@@ -16,7 +16,7 @@ if ([_item, 4096] call isWeaponType &&
    {getNumber (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "type") != 616}) then
 {
 	{
-		if ([_x, 4096] call isWeaponType && 
+		if ([_x, 4096] call isWeaponType &&
 		   {getNumber (configFile >> "CfgWeapons" >> _x >> "ItemInfo" >> "type") != 616}) exitWith
 		{
 			_isAssignable = false;

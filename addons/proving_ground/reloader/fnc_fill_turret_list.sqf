@@ -40,7 +40,7 @@ if (isClass(configFile >> "CfgVehicles" >> _veh_type >> "Turrets")) then {
 	};
 }else{};
 lbClear GET_CTRL(balca_loader_default_loadout_IDC);
-{	
+{
 	_display_name = (getText(configFile >> "CfgMagazines" >> _x >> "displayName"));
 	if (_display_name=="") then {
 		GET_CTRL(balca_loader_default_loadout_IDC) lbAdd str _x;

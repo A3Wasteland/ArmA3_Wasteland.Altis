@@ -16,12 +16,12 @@
 
 class WastelandHud {
 	idd = -1;
-    fadeout=0;
-    fadein=0;
+	fadeout=0;
+	fadein=0;
 	duration = 20;
 	name= "WastelandHud";
 	onLoad = "uiNamespace setVariable ['WastelandHud', _this select 0]";
-	
+
 	class controlsBackground {
 		class WastelandHud_Vehicle:w_RscText
 		{

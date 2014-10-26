@@ -28,12 +28,12 @@ if (local _unit && !isPlayer _unit) then
 		while {alive _unit} do
 		{
 			_magCount = {_x == _magType} count magazines _unit;
-			
+
 			if (_magCount < _minMags) then
 			{
 				_unit addMagazines [_magType, _minMags - _magCount];
 			};
-			
+
 			sleep 3;
 		};
 	};

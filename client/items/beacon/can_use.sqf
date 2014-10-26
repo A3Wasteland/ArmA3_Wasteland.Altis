@@ -16,8 +16,8 @@ if (_side == playerSide) then {
 			};
 		} forEach (units group player);
 	} else {
-        _canUse = true;
-    };
+		_canUse = true;
+	};
 };
 
 _canUse;

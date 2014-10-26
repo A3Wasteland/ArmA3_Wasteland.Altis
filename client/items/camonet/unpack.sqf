@@ -16,8 +16,8 @@
 private ["_netting", "_error", "_hasFailed", "_success", "_pos"];
 
 if (MF_ITEMS_CAMO_NET call mf_inventory_count <= 0) exitWith {
-    [ERR_NO_NETS,5] call mf_notify_client;
-    false;
+	[ERR_NO_NETS,5] call mf_notify_client;
+	false;
 };
 
 _hasFailed = {
@@ -33,17 +33,17 @@ _hasFailed = {
 		default {
 			_text = format["Camouflage Netting %1%2 Unpacked", round(_progress*100), "%"];
 			_failed = false;
-        };
-    };
-    [_failed, _text];
+		};
+	};
+	[_failed, _text];
 };
 
 _success =  [DURATION, ANIM, _hasFailed, []] call a3w_actions_start;
-    
+
 if (_success) then {
 	_pos = getPosATL player;
 	_netting = MF_ITEMS_CAMO_NET_TYPE createVehicle _pos;
-    _netting setPosATL _pos;
-    ["You successfully unpacked the Camouflage Netting", 5] call mf_notify_client;
+	_netting setPosATL _pos;
+	["You successfully unpacked the Camouflage Netting", 5] call mf_notify_client;
 };
 _success

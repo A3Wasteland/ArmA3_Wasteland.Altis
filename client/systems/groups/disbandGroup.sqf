@@ -7,5 +7,5 @@
 //	@file Created: 20/11/2012 05:19
 
 {
-	[_x] join grpNull;    
+	[_x] join grpNull;
 }forEach units group player;

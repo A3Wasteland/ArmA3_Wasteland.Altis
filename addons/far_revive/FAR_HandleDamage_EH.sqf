@@ -29,7 +29,7 @@ if (((_dead && !isNull _source) || (_criticalHit && UNCONSCIOUS(_unit))) && isNi
 		{
 			_suspect = _x;
 			_role = assignedVehicleRole _suspect;
-			
+
 			if (count _role > 0) then
 			{
 				_seat = _role select 0;

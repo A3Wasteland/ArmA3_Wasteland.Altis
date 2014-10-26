@@ -31,16 +31,16 @@ _hasFailed = {
 	switch (true) do {
 		case (!alive player): {}; // player dead, no error msg needed
 		case (vehicle player != player): {};
-        case (isNull _beacon): {_text = ERR_SOMEONE_ELSE_TAKEN};
+		case (isNull _beacon): {_text = ERR_SOMEONE_ELSE_TAKEN};
 		case (player distance _beacon > 5): {_text = ERR_TOO_FAR_AWAY};
 		case (doCancelAction): {doCancelAction = false; _text = ERR_CANCELLED};
 		//case (count units group player < 2): {_text = ERR_NO_GROUP};
 		default {
 			_text = format["Spawn beacon is %1%2 updated", round(_progress*100), "%"];
 			_failed = false;
-        };
-    };
-    [_failed, _text];
+		};
+	};
+	[_failed, _text];
 };
 
 _currentGroupOnlyState = _beacon getVariable ["groupOnly", false];

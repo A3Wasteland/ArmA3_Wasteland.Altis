@@ -104,7 +104,7 @@ for [{_x=1},{_x<=_amount},{_x=_x+1}] do
 
 {
 	_class = _x;
-	
+
 	{
 		if (_class == _x select 1) exitWith
 		{

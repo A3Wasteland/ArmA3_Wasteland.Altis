@@ -49,20 +49,20 @@ _gunDesc ctrlSetStructuredText parseText _description;
 if (_showAmmo) then
 {
 	private ["_configMags", "_shopMag", "_shopMagClass", "_conf", "_name", "_picture"];
-	
+
 	_weapon = configFile >> _parentCfg >> _itemData;
-	
+
 	if (isClass _weapon) then
 	{
 		_configMags = [];
 		{
 			_configMags = _configMags + getArray ((if (_x == "this") then { _weapon } else { _weapon >> _x }) >> "magazines");
 		} forEach getArray (_weapon >> "muzzles");
-		
+
 		{
 			_shopMag = _x;
 			_shopMagClass = _x select 1;
-			
+
 			if ({_x == _shopMagClass} count _configMags > 0) then
 			{
 				_conf = configFile >> "CfgMagazines" >> _shopMagClass;
@@ -73,7 +73,7 @@ if (_showAmmo) then
 				_ammolist lbSetData [_ammolistIndex, _shopMagClass];
 			};
 		} forEach (call ammoArray);
-		
+
 		[] execVM "client\systems\gunStore\ammoInfo.sqf";
 	};
 };
