@@ -18,6 +18,7 @@ if (!alive _player || !isPlayer _player || !(_moneyObj isKindOf "Land_Money_F"))
 
 if (_moneyObj getVariable ["owner", "world"] == "world") then
 {
+	_moneyObj setVariable ["owner", getPlayerUID _player];
 	_money = _moneyObj getVariable ["cmoney", 0];
 	deleteVehicle _moneyObj;
 
