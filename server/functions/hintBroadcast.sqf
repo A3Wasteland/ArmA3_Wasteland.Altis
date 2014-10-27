@@ -9,6 +9,5 @@ publicVariable "messageSystem";
 if (!isDedicated) then
 {
 	waitUntil {!isNil "playerCompiledScripts" && {playerCompiledScripts}};
-	[] spawn updateMissionsMarkers;
 	[] spawn serverMessage;
 };

@@ -8,7 +8,9 @@ if ((getPlayerUID player) call isAdmin) then
 
 	if (!_curPlayerInvulnState) then
 	{
+		player setDamage 0;
 		player allowDamage false;
+		vehicle player setDamage 0;
 		player setVariable ["isAdminInvulnerable", true, true];
 
 		if (player getVariable ["FAR_isUnconscious", 0] == 1) then

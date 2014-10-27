@@ -13,7 +13,7 @@ switch (_type) do
 
 		if (isPlayer _sender) then
 		{
-			if (!isStreamFriendlyUIEnabled) then
+			if (isStreamFriendlyUIEnabled) then
 			{
 				_msg = "You have been invited<br/>to join a group";
 			}

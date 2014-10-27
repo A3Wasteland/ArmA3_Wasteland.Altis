@@ -160,7 +160,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				_safePos = _this select 1;
 				_marker = _this select 2;
 				
-				_isDamageable = ({_object isKindOf _x} count ["AllVehicles", "Lamps_base_F", "Cargo_Patrol_base_F", "Cargo_Tower_base_F"] > 0);
+				_isDamageable = !(_object isKindOf "ReammoBox_F"); // ({_object isKindOf _x} count ["AllVehicles", "Lamps_base_F", "Cargo_Patrol_base_F", "Cargo_Tower_base_F"] > 0);
 				
 				[_object, false] call vehicleSetup;
 				_object allowDamage _isDamageable;
@@ -171,15 +171,16 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 					_object setPosATL [_safePos select 0, _safePos select 1, 0.05];
 					_object setVelocity [0,0,0.01];
 					// _object spawn cleanVehicleWreck;
+					_object setVariable ["A3W_purchasedVehicle", true];
 				};
 				
 				if (_object isKindOf "Plane") then
 				{
-					_object setDir (markerDir _marker);
+					_object setDir markerDir _marker;
 				}
 				else
 				{
-					_object setDir (random 360);
+					_object setDir random 360;
 				};
 
 				switch (true) do

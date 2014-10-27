@@ -7,8 +7,6 @@ if ((_params select 0) call isPVarTarget) then { _value = _params select 1; CODE
 
 "currentDate" addPublicVariableEventHandler {[] spawn timeSync};
 "messageSystem" addPublicVariableEventHandler {[] spawn serverMessage};
-"clientMissionMarkers" addPublicVariableEventHandler {[] spawn updateMissionsMarkers};
-// "clientRadarMarkers" addPublicVariableEventHandler {[] spawn updateRadarMarkers};
 "pvar_warnTeamKiller" addPublicVariableEventHandler { (_this select 1) spawn updateTeamKiller };
 "pvar_groupNotify" addPublicVariableEventHandler { (_this select 1) spawn groupNotify };
 "pvar_disableCollision" addPublicVariableEventHandler { (_this select 1) call fn_disableCollision };

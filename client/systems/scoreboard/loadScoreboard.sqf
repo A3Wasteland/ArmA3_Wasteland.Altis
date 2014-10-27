@@ -32,7 +32,7 @@ _code =
 			if (_playerCount >= _i) then
 			{
 				_index = if (_i == scoreGUI_PList_Length && !_playerShown) then { _players find player } else { _id };
-				_player = _players select _index;
+				_player = if (_index != -1) then { _players select _index };
 				if (isNil "_player") then { _player = objNull };
 				_isPlayer = (_player == player);
 
@@ -139,7 +139,7 @@ _code =
 			if (_teamCount >= _i) then
 			{
 				_index = if (_i == scoreGUI_TList_Length && !_playerTeamShown) then { _teams find _playerTeam } else { _id };
-				_team = _teams select _index;
+				_team = if (_index != -1) then { _teams select _index };
 				if (isNil "_team") then { _team = sideUnknown };
 				_isPlayerTeam = _team isEqualTo _playerTeam;
 				_isGroup = (typeName _team == "GROUP");

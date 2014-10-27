@@ -65,8 +65,6 @@ spawnRandom = "client\functions\spawnRandom.sqf" call mf_compile;
 timeSync = "client\functions\clientTimeSync.sqf" call mf_compile;
 
 // Update scripts
-updateMissionsMarkers = "client\functions\updatePlayerMissionMarkers.sqf" call mf_compile;
-updateRadarMarkers = "client\functions\updatePlayerRadarMarkers.sqf" call mf_compile;
 updateTeamKiller = "client\functions\updateTeamKiller.sqf" call mf_compile;
 
 // Team-kill system
@@ -84,9 +82,6 @@ getCapacity = "client\functions\getCapacity.sqf" call mf_compile;
 getItemInfo = "client\functions\getItemInfo.sqf" call mf_compile;
 getSellPriceList = "client\systems\selling\getSellPriceList.sqf" call mf_compile;
 requestStoreObject = "client\functions\requestStoreObject.sqf" call mf_compile;
-
-// Custom paint/textures on vehicles
-applyVehicleTexture = "client\systems\vehicleStore\applyVehicleTexture.sqf" call mf_compile;
 
 if (isNil "A3W_fnc_MP") then { A3W_fnc_MP = compile preprocessFileLineNumbers "\A3\functions_f\MP\fn_MP.sqf" };
 if (isNil "A3W_fnc_MPexec") then { A3W_fnc_MPexec = compile preprocessFileLineNumbers "\A3\functions_f\MP\fn_MPexec.sqf" };
