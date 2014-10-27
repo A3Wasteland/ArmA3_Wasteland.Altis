@@ -12,7 +12,7 @@ fn_requestPlayerData =
 	playerData_alive = nil;
 	playerData_loaded = nil;
 	playerData_resetPos = nil;
-	requestPlayerData = [player, getPlayerUID player];
+	requestPlayerData = player;
 	publicVariableServer "requestPlayerData";
 } call mf_compile;
 

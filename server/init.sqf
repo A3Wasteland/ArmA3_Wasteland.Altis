@@ -94,11 +94,7 @@ _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
 _vehicleSavingOn = ["A3W_vehicleSaving"] call isConfigOn;
 vehicleThermalsOn = ["A3W_vehicleThermals"] call isConfigOn;
 
-_purchasedVehicleSavingOn = ["A3W_purchasedVehicleSaving"] call isConfigOn;
-_missionVehicleSavingOn = ["A3W_missionVehicleSaving"] call isConfigOn;
-
-_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn || _purchasedVehicleSavingOn || _missionVehicleSavingOn);
-_vehicleSavingOn = (_purchasedVehicleSavingOn || _purchasedVehicleSavingOn);
+_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
 
 _setupPlayerDB = scriptNull;
 
@@ -190,11 +186,6 @@ if (_playerSavingOn || _serverSavingOn) then
 			_serverObjectsIDs = [] call compile preprocessFileLineNumbers format["persistence\server\%1\world\oLoad.sqf", _persistence];
 		};
 
-		if (_vehicleSavingOn) then
-		{
-			call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
-		};
-
 		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
 		{
 			[_serverObjectsIDs] execVM format["persistence\server\%1\world\oSave.sqf", _persistence];
@@ -216,7 +207,6 @@ if (_playerSavingOn || _serverSavingOn) then
 	];
 };
 
-call compile preprocessFileLineNumbers "server\missions\setupMissionArrays.sqf";
 call compile preprocessFileLineNumbers "server\functions\createTownMarkers.sqf";
 
 _createTriggers = [] spawn compile preprocessFileLineNumbers "territory\server\createCaptureTriggers.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
@@ -307,7 +297,11 @@ else
 if (["A3W_serverMissions"] call isConfigOn) then
 {
 	diag_log "WASTELAND SERVER - Initializing Missions";
-	[] execVM "server\missions\masterController.sqf";
+	[] execVM "server\missions\sideMissionController.sqf";
+	sleep 5;
+	[] execVM "server\missions\mainMissionController.sqf";
+	sleep 5;
+	[] execVM "server\missions\moneyMissionController.sqf";
 };
 
 // Start clean-up loop

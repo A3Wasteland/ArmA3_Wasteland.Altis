@@ -91,9 +91,6 @@ _globalVoiceWarnTimer = ["A3W_globalVoiceWarnTimer", 5] call getPublicVar;
 _globalVoiceWarning = 0;
 _globalVoiceMaxWarns = ceil (["A3W_globalVoiceMaxWarns", 5] call getPublicVar);
 
-private "_uavMapCtrl";
-_uavMapCtrl = controlNull;
-
 while {true} do
 {
 	private ["_ui","_vitals","_hudVehicle","_health","_tempString","_yOffset","_vehicle"];
@@ -314,20 +311,5 @@ while {true} do
 		};
 	};
 
-	// Add player markers to UAV Terminal
-	if (isNull _uavMapCtrl) then
-	{
-		_uavTerminal = findDisplay 160;
-
-		if (!isNull _uavTerminal) then
-		{
-			_uavMapCtrl = _uavTerminal displayCtrl 51;
-			_uavMapCtrl ctrlAddEventHandler ["Draw",
-			{
-				{ (_this select 0) drawIcon _x } forEach drawPlayerMarkers_array;
-			}];
-		};
-	};
-
-	uiSleep 1;
+	sleep 1;
 };
