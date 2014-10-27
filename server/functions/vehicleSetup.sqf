@@ -94,3 +94,10 @@ switch (true) do
 		_vehicle addWeaponTurret ["MiniCarHorn", [-1]];
 	};
 };
+
+
+if (isDedicated) then {
+  //used for keeping track of the vehicle used un-used lifetime
+  _vehicle addEventHandler ["GetIn", { _this spawn v_GetIn_handler}];
+  _vehicle addEventHandler ["GetOut", { _this spawn v_GetOut_handler}];
+};
