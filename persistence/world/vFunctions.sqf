@@ -104,7 +104,32 @@ v_isVehicle = {
   (_result)
 };
 
-v_maxLifetime = OR(A3W_vehicleLifetime,nil);
+
+
+v_restoreVehicleVariables = {
+  ARGVX3(0,_obj,objNull);
+  ARGVX3(1,_variables,[]);
+
+  def(_name);
+  def(_value);
+
+  {
+    _name = _x select 0;
+    _value = _x select 1;
+
+    if (!isNil "_value") then {
+      switch (_name) do {
+        case "side": { _value = _value call v_strToSide};
+      };
+    };
+    _obj setVariable [_name, OR(_value,nil), true];
+  } forEach _variables;
+};
+
+
+v_maxLifetime = if (isSCALAR(A3W_vehicleLifetime)) then {A3W_vehicleLifetime} else {0};
+v_maxAbandonedTime = if (isSCALAR(A3W_vehicleMaxUnusedTime)) then {A3W_vehicleMaxUnusedTime} else {0};
+
 
 v_restoreVehicle = {_this spawn {
   //diag_log format["%1 call v_restoreVehicle", _this];
@@ -122,6 +147,7 @@ v_restoreVehicle = {_this spawn {
   
   
   def(_hours_alive);
+  def(_hours_abandoned);
   def(_pos);
   def(_class);
   def(_dir);
@@ -138,6 +164,7 @@ v_restoreVehicle = {_this spawn {
   def(_cargo_repair);
   def(_fuel);
   def(_hitPoints);
+
 
 
   def(_key);
@@ -157,6 +184,7 @@ v_restoreVehicle = {_this spawn {
       case "Magazines": { _cargo_magazines = OR(_value,nil);};
       case "Backpacks": { _cargo_backpacks = OR(_value,nil);};
       case "HoursAlive": { _hours_alive = OR(_value,nil);};
+      case "HoursAbandoned": { _hours_abandoned = OR(_value,nil);};
       case "Variables": { _variables = OR(_value,nil);};
       case "AmmoCargo": { _cargo_ammo = OR(_value,nil);};
       case "FuelCargo": { _cargo_fuel = OR(_value,nil);};
@@ -172,11 +200,15 @@ v_restoreVehicle = {_this spawn {
     diag_log format["No class or position available for vehicle: %1", _vehicle_key];
   };
 
-  if (isSCALAR(v_maxLifetime) && {v_maxLifetime <= 0 || {_hours_alive > v_maxLifetime}}) exitWith {
+  if (v_maxLifetime > 0 && {_hours_alive > v_maxLifetime}) exitWith {
     diag_log format["vehicle %1(%2) has exceeded max lifetime of %3, skipping it", _vehicle_key, _class, v_maxLifetime];
   };
 
-  
+  if (v_maxAbandonedTime > 0 && {_hours_abandoned > v_maxAbandonedTime}) exitWith {
+    diag_log format["vehicle %1(%2) has exceeded max abandoned time of %3, skipping it", _vehicle_key, _class, v_maxAbandonedTime];
+  };
+
+
   def(_obj);
   _obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
   if (!isOBJECT(_obj)) exitWith {
@@ -195,6 +227,11 @@ v_restoreVehicle = {_this spawn {
   _obj setVariable ["baseSaving_spawningTime", diag_tickTime];
   if (isSCALAR(_hours_alive)) then {
     _obj setVariable ["baseSaving_hoursAlive", _hours_alive];
+  };
+
+  _obj setVariable ["vehicle_abandoned_time", diag_tickTime];  //the moment the vehicle is restored, consider it abandoned
+  if (isSCALAR(_hours_abandoned)) then {
+    _obj setVariable ["vehicle_abandoned_hours", _hours_abandoned];
   };
   
   // disables thermal equipment on loaded vehicles, comment out if you want thermal
@@ -235,25 +272,8 @@ v_restoreVehicle = {_this spawn {
     { _obj setHitPointDamage _x } forEach _hitPoints;
   };
    
+  [_obj,_variables] call v_restoreVehicleVariables;
 
-  //restore vehicle variables
-  if (isARRAY(_variables)) then {
-    def(_name);
-    def(_value);
-    {
-      _name = _x select 0;
-      _value = _x select 1;
-      
-      if (!isNil "_value") then {
-        switch (_name) do {
-          case "side": { _value = _value call v_strToSide};
-        };
-      };
-      
-      _obj setVariable [_name, OR(_value,nil), true];
-    } forEach _variables;
-  };
-  
   //restore the stuff inside the vehicle  
   clearWeaponCargoGlobal _obj;
   clearMagazineCargoGlobal _obj;
@@ -305,7 +325,7 @@ v_restoreVehicle = {_this spawn {
 	};
   
   
-};};
+}};;
 
 //build list of object that should not be saved
 v_skipList = [];
@@ -318,38 +338,49 @@ def(_obj);
   v_skipList pushBack _obj;
 } forEach [civilianVehicles, call allVehStoreVehicles];
 
-v_vehicleIsSaveble = {
+
+v_isSavingMissionVehiclesDisabled = (isSCALAR(A3W_missionVehicleSaving) && {A3W_missionVehicleSaving == 0});
+v_isSavingPurchasedVehiclesDisabled = (isSCALAR(A3W_purchasedVehicleSaving) && {A3W_purchasedVehicleSaving == 0});
+
+
+v_isAMissionVehicle = {
+  ARGVX4(0,_obj,objNull,false);
+  not(isNil{_obj getVariable "A3W_missionVehicle"})
+};
+
+v_isAPurchasedVehicle = {
+  ARGVX4(0,_obj,objNull,false);
+  not(isNil{_obj getVariable "A3W_purchasedVehicle"})
+};
+
+v_isVehicleSaveable = {
   ARGVX4(0,_obj,objNull,false);
 
+  //it's a wreck, don't save it
   if (not(alive _obj)) exitWith {false};
+
+  //not a vehicle, don't save it
   if (not([_obj] call v_isVehicle)) exitWith {false};
-  if (not(isNil{_obj getVariable "vehicle_key"})) exitWith {true};
-  if (not(isNil{_obj getVariable "A3W_purchasedStoreObject"})) exitWith {true};
+
+  //it's a purchased vehicle, but saving purchased vehicles has been disabled, don't save it
+  if (([_obj] call v_isAPurchasedVehicle) && {v_isSavingPurchasedVehiclesDisabled}) exitWith {false};
+
+  //it's a mission spawned vehicle, but saving mission vehicles has been disabled, don't save it
+  if (([_obj] call v_isAMissionVehicle) && {v_isSavingMissionVehiclesDisabled}) exitWith {false};
+
+  //the vehicle has been used at least once
+  if (not([_obj] call v_isVehicleVirgin)) exitWith {true};
 
   false
 };
 
-v_addSaveVehicle = {
-  ARGVX3(0,_list,[]);
-  ARGVX3(1,_obj,objNull);
 
-  if (not([_obj] call v_vehicleIsSaveble)) exitWith {};
+v_trackVehicleHoursAlive = {
+  ARGVX3(0,_obj,objNull);
 
-  def(_class);
-  def(_netId);
-  def(_pos);
-  def(_dir);
-  def(_damage);
-  def(_texture);
   def(_spawnTime);
   def(_hoursAlive);
-  def(_hoursSinceSpawn);
 
-  _class = typeOf _obj;
-  _netId = netId _obj;
-  _dir = [vectorDir _obj, vectorUp _obj];
-  _damage = damage _obj;
-  _texture = _obj getVariable ["A3W_objectTexture", ""];
   _spawnTime = _obj getVariable "baseSaving_spawningTime";
   _hoursAlive = _obj getVariable "baseSaving_hoursAlive";
 
@@ -357,29 +388,132 @@ v_addSaveVehicle = {
     _spawnTime = diag_tickTime;
     _obj setVariable ["baseSaving_spawningTime", _spawnTime, true];
   };
-  
+
   if (isNil "_hoursAlive") then {
     _hoursAlive = 0;
-    _obj setVariable ["baseSaving_hoursAlive", _hoursAlive, true];  
+    _obj setVariable ["baseSaving_hoursAlive", _hoursAlive, true];
   };
-  
+
   def(_totalHours);
   _totalHours = _hoursAlive + (diag_tickTime - _spawnTime) / 3600;
-  
-  def(_variables);
-  _variables = [];
+
+  (_totalHours)
+};
+
+v_trackVehicleHoursAbandoned = {
+  ARGVX3(0,_obj,objNull);
+
+  //if the vehicle is not empty, it can't possibly be abandoned
+  if (not([_obj] call v_isVehicleEmpty)) exitWith {0};
+
+  //if the vehicle has never been used, it's not technically abandoned, just un-used
+  if (isNil{_obj getVariable "vehicle_first_user"}) exitWith {0};
+
+  /*
+   * past this point, we know for sure that the vehicle is in 'abandoned' state
+   * which means that it has been used at least once, and left empty somewhere
+   * by a player
+   */
+
+  def(_hoursAbandoned);
+  def(_abandonedTime);
+
+  _abandonedTime = _obj getVariable "vehicle_abandoned_time";
+  _hoursAbandoned = _obj getVariable "vehicle_abandoned_hours";
+
+  if (!isSCALAR(_abandonedTime)) then {
+    _abandonedTime = diag_tickTime;
+    _obj setVariable ["vehicle_abandoned_time", _abandonedTime];
+  };
+
+  if (!isSCALAR(_hoursAbandoned)) then {
+    _hoursAbandoned = 0;
+    _obj setVariable ["vehicle_abandoned_hours", _hoursAbandoned];
+  };
+
+
+  def(_totalHours);
+  _totalHours = _hoursAbandoned + (diag_tickTime - _abandonedTime) / 3600;
+
+  (_totalHours)
+};
+
+v_setupVehicleSavedVariables = {
+  ARGVX3(0,_obj,objNull);
+  ARGVX3(1,_variables,[]);
 
   def(_ownerUID);
   _ownerUID = _obj getVariable ["ownerUID", nil];
   if (isSTRING(_ownerUID) && {_ownerUID != ""}) then {
     _variables pushBack ["ownerUID", _ownerUID];;
   };
- 
+
   def(_ownerN);
   _ownerN = _obj getVariable ["ownerN", nil];
   if (isSTRING(_ownerN) && {_ownerN != ""}) then {
     _variables pushBack ["ownerN", _ownerN];
   };
+
+  def(_firstUser);
+  _firstUser = _obj getVariable ["vehicle_first_user", nil];
+  if (isSTRING(_firstUser) && {_firstUser != ""}) then {
+    _variables pushBack ["vehicle_first_user", _firstUser];
+  };
+
+  _variables pushBack ["vehicle_abandoned_by", (_obj getVariable "vehicle_abandoned_by")];
+
+  def(_purchasedVehicle);
+  _purchasedVehicle = _obj getVariable "A3W_purchasedVehicle";
+  if (defined(_purchasedVehicle)) then {
+    _variables pushBack ["A3W_purchasedVehicle", _purchasedVehicle];
+  };
+
+  def(_missionVehicle);
+  _missionVehicle = _obj getVariable "A3W_missionVehicle";
+  if (defined(_missionVehicle)) then {
+    _variables pushBack ["A3W_missionVehicle", _missionVehicle];
+  };
+
+  def(_r3f_log_disabled);
+  _r3f_log_disabled = _obj getVariable "R3F_LOG_disabled";
+  if (defined(_r3f_log_disabled)) then {
+    _variables pushBack ["R3F_LOG_disabled", _r3f_log_disabled];
+  };
+
+
+};
+
+v_addSaveVehicle = {
+  ARGVX3(0,_list,[]);
+  ARGVX3(1,_obj,objNull);
+
+  if (not([_obj] call v_isVehicleSaveable)) exitWith {};
+
+  def(_class);
+  def(_netId);
+  def(_pos);
+  def(_dir);
+  def(_damage);
+  def(_texture);
+  def(_hoursAlive);
+  def(_hoursAbandoned);
+
+  _class = typeOf _obj;
+  _netId = netId _obj;
+  _dir = [vectorDir _obj, vectorUp _obj];
+  _damage = damage _obj;
+  _texture = _obj getVariable ["A3W_objectTexture", ""];
+
+  _hoursAlive = [_obj] call v_trackVehicleHoursAlive;
+  _hoursAbandoned = [_obj] call v_trackVehicleHoursAbandoned;
+
+  //diag_log format["%1: _hoursAlive = %2", _obj,_hoursAlive];
+  //diag_log format["%1: _hoursAbandoned = %2", _obj,_hoursAbandoned];
+
+  def(_variables);
+  _variables = [];
+  [_obj,_variables] call v_setupVehicleSavedVariables;
+
 
   init(_weapons,[]);
   init(_magazines,[]);
@@ -429,7 +563,8 @@ v_addSaveVehicle = {
     ["Class", _class],
     ["Position", _pos],
     ["Direction", _dir],
-    ["HoursAlive", _totalHours],
+    ["HoursAlive", _hoursAlive],
+    ["HoursAbandoned", _hoursAbandoned],
     ["Damage", _damage],
     ["Fuel", _fuel],
     ["Variables", _variables],
@@ -447,6 +582,56 @@ v_addSaveVehicle = {
 
   
   true
+};
+
+v_isVehicleEmpty = {
+  ARGVX4(0,_obj,objNull,false);
+  not({isPlayer _x} count crew _obj > 0 || isPlayer ((uavControl _obj) select 0))
+};
+
+//a virgin vehicle is one that no-one has ever used
+v_isVehicleVirgin = {
+  ARGVX4(0,_obj,objNull,false);
+  (isNil {_obj getVariable "vehicle_first_user"})
+};
+
+v_GetIn_handler = {
+  //diag_log format["%1 call v_GetIn_handler", _this];
+	ARGVX3(0,_obj,objNull);
+	ARGVX3(2,_player,objNull);
+
+  //only track players
+	if (!(isPlayer _player)) exitWith {};
+	init(_uid,getPlayerUID _player);
+
+  if ([_obj] call v_isVehicleVirgin) then {
+    _obj setVariable ["vehicle_first_user", _uid];
+  };
+
+  //diag_log format["%1 entered vehicle by %2", _obj, _player];
+	_obj setVariable ["vehicle_abandoned_by", nil];
+  _obj setVariable ["vehicle_abandoned_time", nil];
+};
+
+v_GetOut_handler = {
+  //diag_log format["%1 call v_GetOut_handler", _this];
+	ARGVX3(0,_obj,objNull);
+	ARGVX3(2,_player,objNull);
+
+  //only track players
+  if (!(isPlayer _player)) exitWith {};
+  init(_uid,getPlayerUID _player);
+
+  //in case the player was already inside the vehicle ... (the get-in handler did not catch it)
+  if ([_obj] call v_isVehicleVirgin) then {
+    _obj setVariable ["vehicle_first_user", _uid];
+  };
+
+  if ([_obj] call v_isVehicleEmpty) then {
+    //diag_log format["%1 left abandoned by %2", _obj, _player];
+    _obj setVariable ["vehicle_abandoned_by", _uid];
+    _obj setVariable ["vehicle_abandoned_time", diag_tickTime];
+	};
 };
 
 v_saveAllVechiles = {

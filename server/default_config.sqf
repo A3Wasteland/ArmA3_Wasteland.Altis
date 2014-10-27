@@ -43,6 +43,10 @@ A3W_vehicle_saveInterval = 60;     // Number of seconds between vehicle saves
 A3W_object_saveInterval = 60;      // Number of seconds between object saves
 A3W_locked_vehicles_list = [];     // List of class names for vehicles that should be automatically locked unpon restore
 A3W_vehicleLifetime = 36;          // Maximum lifetime in hours for saved vehicles (leave it unset, or set to 0 for no limit)
+A3W_vehicleMaxUnusedTime = 8;      // Maximum parking time in hours after which unused saved vehicles will be marked for deletion (0 = no time limit)
+A3W_purchasedVehicleSaving = 1;    // Save vehicles purchased at vehicle stores between server restarts (0 = no, 1 = yes)
+A3W_missionVehicleSaving = 1;      // Save vehicles captured from missions between server restarts (0 = no, 1 = yes)
+
 
 // Spawning settings
 A3W_serverSpawning = 1;            // Vehicle, object, and loot spawning (0 = no, 1 = yes)
@@ -80,3 +84,9 @@ A3W_missionsDifficulty = 0;        // Missions difficulty (0 = normal, 1 = hard)
 // A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
 // A3W_moneyMissionDelay = 15*60;     // Time in seconds between Money Missions
 // A3W_missionCompleteRadius = 99999; // Radius from a mission in which a player must be present in order mark it as complete after AIs are killed
+
+A3W_purchasedVehicleSaving = 1;    // Save vehicles purchased at vehicle stores between server restarts (0 = no, 1 = yes)
+A3W_missionVehicleSaving = 1;      // Save vehicles captured from missions between server restarts (0 = no, 1 = yes)
+
+A3W_vehicleLifetime = 0;           // Maximum lifetime in hours for saved vehicles across server restarts, regardless of usage (0 = no time limit)
+A3W_vehicleMaxUnusedTime = 2*24;   // Maximum parking time in hours after which unused saved vehicles will be marked for deletion (0 = no time limit)
