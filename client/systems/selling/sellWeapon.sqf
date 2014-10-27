@@ -45,10 +45,9 @@ storeSellingHandle = [] spawn
 		[_magsToSell, _x select 0, [_x select 1]] call fn_addToPairs;
 	} forEach _currMags;
 
-	//_invMagsToRemove = [];
-
 	// If a magazine is loaded in the weapon, add each identical magazine in the inventory to the list of magazines to sell
-	/*if (_currMag != "") then
+	_invMagsToRemove = [];
+	if (_currMag != "") then
 	{
 		_currMag = _currMag call getBallMagazine;
 
@@ -62,7 +61,7 @@ storeSellingHandle = [] spawn
 				[_invMagsToRemove, _mag, 1] call fn_addToPairs;
 			};
 		} forEach magazinesAmmo player;
-	};*/
+	};
 
 	// Add weapon name to confirm message
 	_confirmMsg = format ["<t font='EtelkaMonospaceProBold'>1</t> x %1", getText (configFile >> "CfgWeapons" >> _currWep >> "displayName")];
@@ -118,10 +117,10 @@ storeSellingHandle = [] spawn
 	_confirmMsg = format ["You will obtain $%1 for:<br/><br/>", [_sellValue] call fn_numbersText] + _confirmMsg;
 
 	// Add note about removing weapon mag if the player doesn't want to sell inventory mags
-	/*if (_currMag != "") then
+	if (_currMag != "") then
 	{
 		_confirmMsg = _confirmMsg + "<br/><br/>If you don't want to sell your ammo, simply remove the magazine from your weapon.";
-	};*/
+	};
 
 	// Display confirmation
 	if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then

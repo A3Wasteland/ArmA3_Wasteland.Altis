@@ -128,7 +128,7 @@ player addEventHandler ["InventoryClosed",
 		};
 
 		_lastVeh = _currVeh;
-		sleep 0.25;
+		uiSleep 0.25;
 	};
 };
 

@@ -44,7 +44,7 @@ if (!isNil "_exists" && {_exists}) then
 			_pos = [_fileName, _objName, "Position", "ARRAY"] call PDB_read; // iniDB_read
 			_hoursAlive = [_fileName, _objName, "HoursAlive", "NUMBER"] call PDB_read; // iniDB_read
 
-			if (!isNil "_class" && {!isNil "_pos"} && {_maxLifetime <= 0 || {_hoursAlive < _maxLifetime}}) then
+			if (!isNil "_class" && !isNil "_pos" && {_maxLifetime <= 0 || {_hoursAlive < _maxLifetime}}) then
 			{
 				_variables = [_fileName, _objName, "Variables", "ARRAY"] call PDB_read; // iniDB_read
 
@@ -63,6 +63,8 @@ if (!isNil "_exists" && {_exists}) then
 					_damage = [_fileName, _objName, "Damage", "NUMBER"] call PDB_read; // iniDB_read
 					_allowDamage = [_fileName, _objName, "AllowDamage", "NUMBER"] call PDB_read; // iniDB_read
 
+					{ if (typeName _x == "STRING") then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
+
 					_obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
 					_obj setPosWorld ATLtoASL _pos;
 
@@ -70,6 +72,8 @@ if (!isNil "_exists" && {_exists}) then
 					{
 						_obj setVectorDirAndUp _dir;
 					};
+
+					[_obj] call vehicleSetup;
 
 					_obj setVariable ["baseSaving_hoursAlive", _hoursAlive];
 					_obj setVariable ["baseSaving_spawningTime", diag_tickTime];

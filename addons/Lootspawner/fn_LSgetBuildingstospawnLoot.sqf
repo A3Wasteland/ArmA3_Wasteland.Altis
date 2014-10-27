@@ -1,5 +1,6 @@
 //	Lootspawner spawn script
 //	Author: Na_Palm (BIS forums)
+//  Note by AgentRev: This script is a very good example of bad coding. If you are learning how to code, do NOT do it that way.
 //-------------------------------------------------------------------------------------
 //local to Server Var. "BuildingLoot" array of [state, time], placed on buildings that can spawn loot
 //												state: 0-not assigned, 1-has loot, 2-currently in use/blockaded
@@ -50,6 +51,8 @@ _begintime = diag_tickTime;
 			}forEach Buildingstoloot_list;
 			//diag_log format["-- LOOTSPAWNER DEBUG BaP: v%1v%2v :: v%3v :: v%4v --", _BaPname, _lootClass, _buildPosViable_list, _buildPosZadj_list];
 			//get spawn position, here the former _x
+			if (count _buildPosViable_list > 0) then
+			{
 			for "_poscount" from 0 to (count (_buildPosViable_list select 0) - 1) do
 			{
 				//consider chance per Slot
@@ -186,6 +189,7 @@ _begintime = diag_tickTime;
 						};
 					};
 				};
+			};
 			};
 			//release building with new timestamp
 			_x setVariable ["BuildingLoot", [1, serverTime], true];

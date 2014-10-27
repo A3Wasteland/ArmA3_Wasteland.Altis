@@ -4,160 +4,82 @@
 //	@file Created: 08/12/2012 15:19
 //	@file Args:
 
+if (!isServer) exitwith {};
 #include "moneyMissionDefines.sqf";
 
-if(!isServer) exitwith {};
+private ["_cashObjects", "_cash", "_cashPos", "_box1", "_boxPos", "_vehicleClass", "_vehicle"];
 
-private ["_result","_missionMarkerName","_missionType","_startTime","_rand", "_posRand", "_ZCoor", "_fix", "_treas0", "_marker", "_group", "_vehicles", "_playerPresent", "_allMoneyUp","_ammobox","_ammobox2","_randomIndex"];
-
-//Mission Initialization.
-_result = 0;
-_missionMarkerName = "Treasure_Marker";
-_missionType = "Sunken Treasure";
-
-diag_log format["WASTELAND SERVER - Money Mission Started: %1",_missionType];
-
-_rand = floor (random 9);
-_posRand =	(getMarkerPos format ["treasure_%1", _rand]);
-
-diag_log format["WASTELAND SERVER - Money Mission Waiting to run: %1",_missionType];
-[moneyMissionDelayTime] call createWaitCondition;
-diag_log format["WASTELAND SERVER - Money Mission Resumed: %1",_missionType];
-
-/*
-//not finished yet. need to find out how to get correct values for these :)
-_ZCoor = -10;
-switch((_rand)) do
+_setupVars =
 {
-	case 0:
-	{
-		_ZCoor = -31;
-	};
-	case 1:
-	{
-		_ZCoor = -69;
-	};
-	case 2:
-	{
-		_ZCoor = -37;
-	};
-	case 3:
-	{
-		_ZCoor = -68;
-	};
-	case 4:
-	{
-		_ZCoor = -44;
-	};
-	case 5:
-	{
-		_ZCoor = -72;
-	};
-	case 6:
-	{
-		_ZCoor = -74;
-	};
-	case 7:
-	{
-		_ZCoor = -30;
-	};
-	case 8:
-	{
-		_ZCoor = -30;
-	};
-};
-*/
-
-_treas0 = createVehicle ["Land_Money_F", _posRand, [], 0, "None"];
-_treas0 setVariable["cmoney",25000,true];
-_treas0 setVariable["owner","mission",true];
-
-_fix = [_posRand select 0, _posRand select 1, getTerrainHeightASL _posRand];
-_treas0 setPos _fix;
-
-_fix = getPosASL _treas0;
-
-_group = createGroup civilian;
-
-_createVehicle = {
-    private ["_type","_position","_moneyp","_direction","_group","_vehicle","_soldier1","_soldier2","_soldier3","_soldier4"];
-    
-    _type = _this select 0;
-    _position = _this select 1;
-	_moneyp = _this select 2;
-    _direction = _this select 3;
-    _group = _this select 4;
-    
-    _vehicle = createVehicle [_type, _position, [], 0, "None"];
-	_vehicle setPos _position;
-	// not sure why this was added so commented it our for now..
-	//_vehicle addEventHandler ["IncomingMissile", "hint format['Incoming Missile Launched By: %1', name (_this select 2)]"];
-    _vehicle setDir _direction;
-    [_vehicle] call vehicleSetup;
-    
-    _group addVehicle _vehicle;
-    
-    [_group,_moneyp] call createSmallDivers;
-    _soldier1 = [_group, _moneyp] call createRandomAquaticSoldier; 
-    _soldier1 moveInDriver _vehicle;
-    _soldier2 = [_group, _moneyp] call createRandomAquaticSoldier;
-    _soldier2 moveInTurret [_vehicle, [1]];    
-    _vehicle
+	_missionType = "Sunken Treasure";
+	_locationsArray = SunkenMissionMarkers;
 };
 
-_vehicles = [];
-_vehicles set [0, ["O_Boat_Armed_01_hmg_F", [_fix select 0, _fix select 1, 0], _fix, random 360, _group] call _createVehicle];
-
-_marker = "SunkenTreasure0";
-[_marker, _fix, _missionType] call createClientMarker;
-
-_hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Money Objective</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>$25,000 in sunken treasure has been located. Go get it!</t>", _missionType,  moneyMissionColor, subTextColor];
-[_hint] call hintBroadcast;
-
-diag_log format["WASTELAND SERVER - Money Mission Waiting to be Finished: %1",_missionType];
-_startTime = diag_tickTime;
-waitUntil
+_setupObjects =
 {
-    sleep 10;
-    if (diag_tickTime - _startTime >= moneyMissionTimeout || !alive _treas0) then {_result = 1 };
-	(_result == 1 || {alive _x} count units _group == 0)
-};
+	_missionPos = markerPos _missionLocation;
 
-if(_result == 1) then
-{
-	//Mission Failed.
-    deleteVehicle _treas0;
-	{deleteVehicle _x;}forEach _vehicles;
-	{deleteVehicle _x;}forEach units _group; 
-	deleteGroup _group; 
-    _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%2' size='1.25'>%1</t><br/><t align='center' color='%3'>Objective failed, better luck next time</t>", _missionType, failMissionColor, subTextColor];
-	[_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Money Mission Failed: %1",_missionType];
-} else {
-	//Mission Complete.
-		_unitsAlive = { alive _x } count units _group;
-	_treas0 setVariable ["owner","world",true];
-	if(_unitsAlive == 0) then
+	_box1 = createVehicle ["Box_NATO_Wps_F", _missionPos, [], 0, "None"];
+	_box1 setVariable ["R3F_LOG_disabled", true, true];
+	_box1 setDir random 360;
+	[_box1, "mission_USSpecial"] call fn_refillbox;
+
+	_cashObjects = [];
+
+	for "_i" from 1 to 10 do
 	{
-		private ["_ammobox", "_ammobox2"];
-		_ammobox = createVehicle ["Box_NATO_Wps_F", markerPos _marker, [], 5, "None"];
-		clearMagazineCargoGlobal _ammobox;
-		clearWeaponCargoGlobal _ammobox; 
-		[_ammobox,"mission_USSpecial2"] call fn_refillbox;
-		_ammobox2 = createVehicle ["Box_East_Wps_F", markerPos _marker, [], 5, "None"];
-		clearMagazineCargoGlobal _ammobox2;
-		clearWeaponCargoGlobal _ammobox2; 
-		[_ammobox2,"mission_USLaunchers"] call fn_refillbox;
+		_cash = createVehicle ["Land_Money_F", _missionPos, [], 0, "None"];
+		_cash setVariable ["owner", "mission", true];
+		//_cashPos = getPosATL _cash;
+		//_cashPos set [2, getTerrainHeightASL _cashPos + 1];
+		//_cash setPos _cashPos;
+
+		// Money value is set only when AI are dead
+		_cashObjects pushBack _cash;
 	};
-	
-	{if(!alive _x) then {deleteVehicle _x;};}forEach _vehicles;
-	{deleteVehicle _x;}forEach units _group; 
-	deleteGroup _group; 
-	
-    _hint = parseText format ["<t align='center' color='%2' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%2'>------------------------------</t><br/><t align='center' color='%3' size='1.25'>%1</t><br/><t align='center' color='%3'>The money is yours! Help out your team!</t>", _missionType, successMissionColor, subTextColor];
-	[_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Money Mission Success: %1",_missionType];
+
+	_vehicleClass = ["B_Boat_Armed_01_minigun_F", "O_Boat_Armed_01_hmg_F", "I_Boat_Armed_01_minigun_F"] call BIS_fnc_selectRandom;
+
+	// Vehicle Class, Position, Fuel, Ammo, Damage, Special
+	_vehicle = [_vehicleClass, _missionPos] call createMissionVehicle2;
+	_vehicle setPosASL _missionPos;
+	_vehicle lockDriver true;
+
+	_aiGroup = createGroup CIVILIAN;
+	[_aiGroup, _missionPos] call createLargeDivers;
+
+	[_vehicle, _aiGroup] spawn checkMissionVehicleLock;
+
+	_missionPicture = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "picture");
+	_missionHintText = format ["A treasure containing <t color='%1'>$25,000</t> and weapons is being recovered.<br/>If you want to capture it, you will need diving gear and an underwater weapon.", moneyMissionColor];
 };
 
-//Reset Mission Spot.
-["SunkenTreasure0"] call deleteClientMarker;
+_waitUntilMarkerPos = nil;
+_waitUntilExec = nil;
+_waitUntilCondition = nil;
+
+_failedExec =
+{
+	// Mission failed
+	{ deleteVehicle _x } forEach _cashObjects;
+	deleteVehicle _box1;
+};
+
+// _vehicle is automatically deleted or unlocked in missionProcessor depending on the outcome
+
+_successExec =
+{
+	// Mission complete
+	_box1 setVariable ["R3F_LOG_disabled", false, true];
+	_vehicle lockDriver false;
+
+	// Give the rewards
+	{
+		_x setVariable ["cmoney", 2500, true];
+		_x setVariable ["owner", "world", true];
+	} forEach _cashObjects;
+
+	_successHintMessage = "The treasure has been captured, well done.";
+};
+
+_this call moneyMissionProcessor;

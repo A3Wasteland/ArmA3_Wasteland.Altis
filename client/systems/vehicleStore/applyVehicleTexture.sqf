@@ -8,16 +8,19 @@
 
 // Generally called from buyVehicles.sqf
 
-private ["_veh", "_texture", "_selections"];
+private ["_veh", "_texture", "_selections", "_textures"];
 
 _veh = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _texture = [_this, 1, "", [""]] call BIS_fnc_param;
+_selections = [_this, 2, [], [[]]] call BIS_fnc_param;
 
-if (!isNull _veh && _texture != "") then
+if (isNull _veh || _texture == "") exitWith {};
+
+_veh setVariable ["BIS_enableRandomization", false, true];
+
+// Apply texture to all appropriate parts
+if (count _selections == 0) then
 {
-	_veh setVariable ["BIS_enableRandomization", false, true];
-
-	// Apply texture to all appropriate parts
 	_selections = switch (true) do
 	{
 		case (_veh isKindOf "Van_01_base_F"):             { [0,1] };
@@ -52,8 +55,13 @@ if (!isNull _veh && _texture != "") then
 
 		default                                           { [0] };
 	};
-
-	{ _veh setObjectTextureGlobal [_x, _texture] } forEach _selections;
-
-	_veh setVariable ["A3W_objectTexture", _texture, true];
 };
+
+_textures = _veh getVariable ["A3W_objectTextures", []];
+
+{
+	_veh setObjectTextureGlobal [_x, _texture];
+	[_textures, _x, _texture] call fn_setToPairs;
+} forEach _selections;
+
+_veh setVariable ["A3W_objectTextures", _textures, true];
