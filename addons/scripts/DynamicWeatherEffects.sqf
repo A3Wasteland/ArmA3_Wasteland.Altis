@@ -244,7 +244,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 		else {
 			_targetWeatherValue = _targetWeatherValue max (_currentRain / 4);
 		};
-		_timeUntilCompletion setFog _targetWeatherValue;
+		_timeUntilCompletion setFog [_targetWeatherValue max (_currentRain / 4), 0.001, 1000];
 	};
 };
 
@@ -339,7 +339,7 @@ if (isServer) then {
 
 	drn_var_DynamicWeather_Rain = _initialRain;
 	0 setRain drn_var_DynamicWeather_Rain;
-	0 setFog [drn_var_DynamicWeather_Rain / 4, 0.001, 1000];
+	0 setFog [fog max (drn_var_DynamicWeather_Rain / 4), 0.001, 1000];
 
 
 	_maxWind = _minimumWind + random (_maximumWind - _minimumWind);
