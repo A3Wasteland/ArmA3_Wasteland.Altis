@@ -27,15 +27,15 @@ v_isBeacon = {
 
 v_strToSide = {
   def(_result);
-	_result = switch (toUpper _this) do
-	{
-		case "WEST":  { BLUFOR };
-		case "EAST":  { OPFOR };
-		case "GUER":  { INDEPENDENT };
-		case "CIV":   { CIVILIAN };
-		case "LOGIC": { sideLogic };
-		default       { sideUnknown };
-	};
+  _result = switch (toUpper _this) do
+  {
+    case "WEST":  { BLUFOR };
+    case "EAST":  { OPFOR };
+    case "GUER":  { INDEPENDENT };
+    case "CIV":   { CIVILIAN };
+    case "LOGIC": { sideLogic };
+    default       { sideUnknown };
+  };
   (_result)
 };
 
@@ -43,11 +43,11 @@ v_isAlwaysUnlocked = {
   ARGVX4(0,_obj,objNull, false);
   
   def(_result);
-	_result = switch (true) do {
+  _result = switch (true) do {
     case (_obj call v_isWarchest): { true };
     case (_obj call v_isBeacon): {true};
-		default { false };
-	};
+    default { false };
+  };
   
   (_result)
 };
@@ -243,7 +243,7 @@ v_restoreVehicle = {_this spawn {
     _obj setVariable ["locked", 2, true];
     _obj setVariable ["objectLocked", true, true];
     _obj setVariable ["R3F_LOG_disabled",true,true];
-	};
+  };
 
 
   if (isSTRING(_texture) && {_texture != ""}) then {  
@@ -251,8 +251,8 @@ v_restoreVehicle = {_this spawn {
     _selections = [_obj] call v_getVehicleTextureSelections;
     if (!isARRAY(_selections)) exitWith {};
     
-    _obj setVariable ["A3W_objectTexture", _texture, true];		
-		_obj setVariable ["BIS_enableRandomization", false, true];
+    _obj setVariable ["A3W_objectTexture", _texture, true];
+    _obj setVariable ["BIS_enableRandomization", false, true];
 
     { 
       _obj setObjectTextureGlobal [_x, _texture] 
@@ -322,7 +322,7 @@ v_restoreVehicle = {_this spawn {
   _unlocked = [_obj] call v_isAlwaysUnlocked;
   if (_unlocked) then {
     _obj setVariable ["objectLocked", false, true];
-	};
+  };
   
   
 }};;
@@ -597,26 +597,26 @@ v_isVehicleVirgin = {
 
 v_GetIn_handler = {
   //diag_log format["%1 call v_GetIn_handler", _this];
-	ARGVX3(0,_obj,objNull);
-	ARGVX3(2,_player,objNull);
+  ARGVX3(0,_obj,objNull);
+  ARGVX3(2,_player,objNull);
 
   //only track players
-	if (!(isPlayer _player)) exitWith {};
-	init(_uid,getPlayerUID _player);
+  if (!(isPlayer _player)) exitWith {};
+  init(_uid,getPlayerUID _player);
 
   if ([_obj] call v_isVehicleVirgin) then {
     _obj setVariable ["vehicle_first_user", _uid];
   };
 
   //diag_log format["%1 entered vehicle by %2", _obj, _player];
-	_obj setVariable ["vehicle_abandoned_by", nil];
+  _obj setVariable ["vehicle_abandoned_by", nil];
   _obj setVariable ["vehicle_abandoned_time", nil];
 };
 
 v_GetOut_handler = {
   //diag_log format["%1 call v_GetOut_handler", _this];
-	ARGVX3(0,_obj,objNull);
-	ARGVX3(2,_player,objNull);
+  ARGVX3(0,_obj,objNull);
+  ARGVX3(2,_player,objNull);
 
   //only track players
   if (!(isPlayer _player)) exitWith {};
@@ -631,7 +631,7 @@ v_GetOut_handler = {
     //diag_log format["%1 left abandoned by %2", _obj, _player];
     _obj setVariable ["vehicle_abandoned_by", _uid];
     _obj setVariable ["vehicle_abandoned_time", diag_tickTime];
-	};
+  };
 };
 
 v_saveAllVechiles = {
