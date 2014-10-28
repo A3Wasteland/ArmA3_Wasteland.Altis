@@ -244,7 +244,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 		else {
 			_targetWeatherValue = _targetWeatherValue max (_currentRain / 4);
 		};
-		_timeUntilCompletion setFog [_targetWeatherValue max (_currentRain / 4), 0.001, 1000];
+		_timeUntilCompletion setFog _targetWeatherValue;
 	};
 };
 
