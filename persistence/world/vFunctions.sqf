@@ -200,12 +200,15 @@ v_restoreVehicle = {_this spawn {
     diag_log format["No class or position available for vehicle: %1", _vehicle_key];
   };
 
+  diag_log format["%1(%2) is being restored.", _object_key, _class];
+
+
   if (isSCALAR(_hours_alive) && {v_maxLifetime > 0 && {_hours_alive > v_maxLifetime}}) exitWith {
-    diag_log format["vehicle %1(%2) has exceeded max lifetime of %3, skipping it", _vehicle_key, _class, v_maxLifetime];
+    diag_log format["vehicle %1(%2) has been alive for %3 (max=%4), skipping it", _object_key, _class, _hours_alive, v_maxLifetime];
   };
 
   if (isSCALAR(_hours_abandoned) && {v_maxAbandonedTime > 0 && {_hours_abandoned > v_maxAbandonedTime}}) exitWith {
-    diag_log format["vehicle %1(%2) has exceeded max abandoned time of %3, skipping it", _vehicle_key, _class, v_maxAbandonedTime];
+    diag_log format["vehicle %1(%2) has been abandoned for %3 hours, (max=%4), skipping it", _vehicle_key, _class, _hours_abandoned, v_maxAbandonedTime];
   };
 
 

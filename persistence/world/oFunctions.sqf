@@ -225,14 +225,14 @@ o_restoreObject = {_this spawn {
   diag_log format["%1(%2) is being restored.", _object_key, _class];
 
   if (o_maxLifetime <= 0 || {_hours_alive > o_maxLifetime}) exitWith {
-    diag_log format["%1(%2) has exceeded max lifetime, skipping it", _object_key, _class];
+    diag_log format["object %1(%2) has been alive for %3 (max=%4), skipping it", _object_key, _class, _hours_alive, o_maxLifetime];
   };
   
   def(_obj);
   _obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
   _obj allowDamage false; //set damage to false immediately to avoid taking fall damage
   if (!isOBJECT(_obj)) exitWith {
-    diag_log format["%1(%2) could not be created.", _object_key, _class];
+    diag_log format["object %1(%2) could not be created.", _object_key, _class];
   };
   
   _obj setVariable ["object_key", _object_key, true];
