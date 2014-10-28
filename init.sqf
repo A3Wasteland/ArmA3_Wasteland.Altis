@@ -1,10 +1,9 @@
 // ******************************************************************************************
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
-																																																												asaerw3rw3r4 = 1; Menu_Init_Lol = 1;
 //	@file Version: 1.2
 //	@file Name: init.sqf
-//	@file Author: [404] Deadbeat, [GoT] JoSchaap
+//	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev
 //	@file Description: The main init.
 
 #define DEBUG false
