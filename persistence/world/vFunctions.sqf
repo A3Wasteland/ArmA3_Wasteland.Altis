@@ -326,9 +326,60 @@ v_restoreVehicle = {_this spawn {
   if (_unlocked) then {
     _obj setVariable ["objectLocked", false, true];
   };
-  
-  
+
+  tracked_vehicles_list pushBack _obj;
+
 }};;
+
+
+tracked_vehicles_list = [];
+
+v_getTrackedVehicleIndex = {
+  ARGVX4(0,_obj,objNull,-1);
+  if (isNull _obj) exitWith {-1};
+
+  (tracked_vehicles_list find _obj)
+};
+
+//event handlers for object locking and unlocking
+v_trackVehicle = {
+  private["_index","_object"];
+  _object = _this select 0;
+  _index = [OR(_object,nil)] call v_getTrackedVehicleIndex;
+  if (_index >= 0) exitWith {};
+
+  //diag_log format["%1 is being added to the tracked list", _object];
+  tracked_vehicles_list pushBack _object;
+};
+
+
+v_untrackVehicle = {
+  private["_index","_object"];
+  _object = _this select 0;
+  _index = [OR(_object,nil)] call o_getLockedObjectIndex;
+  if (_index < 0) exitWith {};
+
+  //diag_log format["%1 is being removed from the tracked list", _object];
+  tracked_vehicles_list deleteAt _index;
+};
+
+v_trackedVehiclesListCleanup = {
+  //post cleanup the array
+  init(_cleanup_start, diag_tickTime);
+  init(_nulls,[]);
+  init(_index,-1);
+  init(_start_size,count(tracked_vehicles_list));
+  while {true} do {
+    _index = tracked_vehicles_list find objNull;
+    if (_index < 0) exitWith {};
+    tracked_vehicles_list deleteAt _index;
+  };
+  init(_end_size,count(tracked_vehicles_list));
+  init(_cleanup_end, diag_tickTime);
+  diag_log format["v_saveLoop: count(tracked_vehicles_list) = %1, %2 nulls deleted in %3 ticks", count(tracked_vehicles_list), (_start_size - _end_size), (_cleanup_end - _cleanup_start)];
+};
+
+
 
 //build list of object that should not be saved
 v_skipList = [];
@@ -614,6 +665,8 @@ v_GetIn_handler = {
   //diag_log format["%1 entered vehicle by %2", _obj, _player];
   _obj setVariable ["vehicle_abandoned_by", nil];
   _obj setVariable ["vehicle_abandoned_time", nil];
+
+  [_obj] call v_trackVehicle;
 };
 
 v_GetOut_handler = {
@@ -662,7 +715,7 @@ v_saveAllVechiles = {
       diag_log format["v_saveLoop: %1 vehicles saved in %2 ticks, save call took %3 ticks", (_bulk_size), (diag_tickTime - _start_time), (_save_end - _save_start)];
       _last_save = _save_end;
     };
-  } forEach (allMissionObjects "All");
+  } forEach (tracked_vehicles_list);
   
   if (count(_request) > 1) then {
     init(_save_start, diag_tickTime);
@@ -672,7 +725,8 @@ v_saveAllVechiles = {
   };
   
   diag_log format["v_saveLoop: total of %1 vehicles saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
-
+  
+  call v_trackedVehiclesListCleanup;
 };
 
 v_saveLoop_interval = OR(A3W_vehicle_saveInterval,60);
