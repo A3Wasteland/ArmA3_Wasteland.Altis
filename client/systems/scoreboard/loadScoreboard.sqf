@@ -11,7 +11,7 @@ disableSerialization;
 
 _code =
 {
-	private ["_allPlayers", "_scoreOrdering", "_players", "_playerCount", "_playerShown", "_i", "_id", "_entry", "_index", "_player", "_isPlayer", "_bgColor", "_entryBG", "_entryTColor", "_textColor", "_entryRank", "_entryName", "_entryPKills", "_entryAIKills", "_entryDeaths", "_entryRevives", "_entryCaptures", "_teams", "_grp", "_side", "_teamCount", "_playerTeam", "_playerTeamShown", "_team", "_isPlayerTeam", "_isGroup", "_teamName", "_entryTerritories"];
+	private ["_bluforColor", "_opforColor", "_indieColor", "_civColor", "_defColor", "_allPlayers", "_scoreOrdering", "_players", "_playerCount", "_playerShown", "_i", "_id", "_entry", "_index", "_player", "_isPlayer", "_bgColor", "_entryBG", "_entryTColor", "_textColor", "_entryRank", "_entryName", "_entryPKills", "_entryAIKills", "_entryDeaths", "_entryRevives", "_entryCaptures", "_teams", "_grp", "_side", "_teamCount", "_playerTeam", "_playerTeamShown", "_team", "_isPlayerTeam", "_isGroup", "_teamName", "_entryTerritories"];
 
 	if (!alive player) then
 	{
@@ -20,6 +20,13 @@ _code =
 
 	if (!isNull _display) then
 	{
+		
+		_bluforColor = ["Map", "BLUFOR"] call BIS_fnc_displayColorGet;
+		_opforColor = ["Map", "OPFOR"] call BIS_fnc_displayColorGet;
+		_indieColor = ["Map", "Independent"] call BIS_fnc_displayColorGet;
+		_civColor = ["Map", "Civilian"] call BIS_fnc_displayColorGet;
+		_defColor = ["Map", "Unknown"] call BIS_fnc_displayColorGet;
+
 		_allPlayers = call allPlayers;
 
 		_scoreOrdering = { (([_x, "playerKills"] call fn_getScore) * 1000) + ([_x, "deathCount"] call fn_getScore) };
@@ -56,11 +63,11 @@ _code =
 				_entryTColor = _display displayCtrl scoreGUI_PListEntry_TColor(_id);
 				_entryTColor ctrlSetBackgroundColor (switch (side group _player) do
 				{
-					case BLUFOR:      { [0, 0.25, 1, 1] };
-					case OPFOR:       { [1, 0, 0, 1] };
-					case INDEPENDENT: { [0, 0.7, 0, 1] };
-					case CIVILIAN:    { [0.4, 0, 0.5, 1] };
-					default           { [0, 0, 0, 0] };
+					case BLUFOR:      { _bluforColor };
+					case OPFOR:       { _opforColor };
+					case INDEPENDENT: { _indieColor };
+					case CIVILIAN:    { _civColor };
+					default           { _defColor };
 				});
 
 				_textColor = switch (true) do
@@ -157,11 +164,11 @@ _code =
 				_entryTColor = _display displayCtrl scoreGUI_TListEntry_TColor(_id);
 				_entryTColor ctrlSetBackgroundColor (switch (if (_isGroup) then { side _team } else { _team }) do
 				{
-					case BLUFOR:      { [0, 0.25, 1, 1] };
-					case OPFOR:       { [1, 0, 0, 1] };
-					case INDEPENDENT: { [0, 0.7, 0, 1] };
-					case CIVILIAN:    { [0.4, 0, 0.5, 1] };
-					default           { [0, 0, 0, 0] };
+					case BLUFOR:      { _bluforColor };
+					case OPFOR:       { _opforColor };
+					case INDEPENDENT: { _indieColor };
+					case CIVILIAN:    { _civColor };
+					default           { _defColor };
 				});
 
 				_textColor = switch (true) do
