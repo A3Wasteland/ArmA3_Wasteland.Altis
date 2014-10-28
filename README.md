@@ -27,17 +27,17 @@ If you are looking for the prebuilt PBO files head over to the [Release Files](h
 0. Open a new terminal, and switch to the Arma 3 server directory
 <pre>cd ~/steamcmd/arma3</pre>
 0. Download and unzip the Wasteland saving pack  
-<pre>wget https://github.com/micovery/ArmA3_Wasteland.Altis/releases/download/v0.0.1/A3W_Saving_Pack-sock_v0.0.1.zip</pre>
-<pre>unzip A3W_Saving_Pack-sock_v0.0.1.zip</pre>
+<pre>wget https://github.com/micovery/ArmA3_Wasteland.Altis/releases/download/v0.9hi-sock_v0.0.2/A3W_Saving_Pack_v0.9hi-sock_v0.0.2.zip</pre>
+<pre>unzip A3W_Saving_Pack_v0.9hi-sock_v0.0.2.zip</pre>
 0. Download misison file, and put it in the mpmissions directory
-<pre>wget https://github.com/micovery/ArmA3_Wasteland.Altis/releases/download/v0.0.1/ArmA3_Wasteland_v0.9h-sock_v0.0.1.Altis.pbo</pre>
-<pre>mv ArmA3_Wasteland_v0.9h-sock_v0.0.1.Altis.pbo mpmissions/</pre>
+<pre>wget https://github.com/micovery/ArmA3_Wasteland.Altis/releases/download/v0.9hi-sock_v0.0.2/ArmA3_Wasteland_v0.9hi-sock_v0.0.2.Altis.pbo</pre>
+<pre>mv ArmA3_Wasteland_v0.9hi-sock_v0.0.2.Altis.pbo mpmissions/</pre>
 0. Modify your server config file to reference the Wasteland mission
 <pre>
   //excerpt from server.cfg
   class Missions {
     class Test {
-      template="ArmA3_Wasteland_v0.9h-sock_v0.0.1.Altis";
+      template="ArmA3_Wasteland_v0.9hi-sock_v0.0.2.Altis.pbo";
       difficulty="regular";
     };
   };
