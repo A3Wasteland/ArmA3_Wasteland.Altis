@@ -1,7 +1,7 @@
-//	@file Version: 0.1
-//	@file Name: oFunctions.sqf
-//	@file Author: micovery
-//	@file Description: Object loading
+//  @file Version: 0.1
+//  @file Name: oFunctions.sqf
+//  @file Author: micovery
+//  @file Description: Object loading
 
 diag_log "oFunctions.sqf loading ...";
 
@@ -9,14 +9,14 @@ diag_log "oFunctions.sqf loading ...";
 
 o_strToSide = {
   def(_result);
-	_result = switch (toUpper _this) do {
-		case "WEST":  { BLUFOR };
-		case "EAST":  { OPFOR };
-		case "GUER":  { INDEPENDENT };
-		case "CIV":   { CIVILIAN };
-		case "LOGIC": { sideLogic };
-		default       { sideUnknown };
-	};
+  _result = switch (toUpper _this) do {
+    case "WEST":  { BLUFOR };
+    case "EAST":  { OPFOR };
+    case "GUER":  { INDEPENDENT };
+    case "CIV":   { CIVILIAN };
+    case "LOGIC": { sideLogic };
+    default       { sideUnknown };
+  };
   (_result)
 };
 
@@ -86,10 +86,10 @@ o_hasInventory = {
   def(_config);
   _config = (configFile >> "CfgVehicles" >> _class);
 
-	(isClass _config && {
+  (isClass _config && {
    getNumber (_config >> "transportMaxWeapons") > 0 ||
-	 getNumber (_config >> "transportMaxMagazines") > 0 ||
-	 getNumber (_config >> "transportMaxBackpacks") > 0})
+   getNumber (_config >> "transportMaxMagazines") > 0 ||
+   getNumber (_config >> "transportMaxBackpacks") > 0})
 };
          
 o_isSaveable = {
@@ -140,7 +140,7 @@ o_isVehicle = {
     if (_obj isKindOf _x) exitWith {
       _result = true;
     };
-  } forEach ["Helicopter", "Plane", "Boat_F", "Car", "Motorcycle", "Tank", "StaticWeapon"];
+  } forEach ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank", "StaticWeapon"];
   
   (_result)
 };
@@ -149,11 +149,11 @@ o_isAlwaysUnlocked = {
   ARGVX4(0,_obj,objNull, false);
   
   def(_result);
-	_result = switch (true) do {
+  _result = switch (true) do {
     case ([_obj] call o_isWarchest): { true };
     case ([_obj] call o_isBeacon): {true};
     default { false };
-	};
+  };
   
   (_result)
 };
@@ -225,14 +225,14 @@ o_restoreObject = {_this spawn {
   diag_log format["%1(%2) is being restored.", _object_key, _class];
 
   if (o_maxLifetime <= 0 || {_hours_alive > o_maxLifetime}) exitWith {
-    diag_log format["%1(%2) has exceeded max lifetime, skipping it", _object_key, _class];
+    diag_log format["object %1(%2) has been alive for %3 (max=%4), skipping it", _object_key, _class, _hours_alive, o_maxLifetime];
   };
   
   def(_obj);
   _obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
   _obj allowDamage false; //set damage to false immediately to avoid taking fall damage
   if (!isOBJECT(_obj)) exitWith {
-    diag_log format["%1(%2) could not be created.", _object_key, _class];
+    diag_log format["object %1(%2) could not be created.", _object_key, _class];
   };
   
   _obj setVariable ["object_key", _object_key, true];
@@ -343,10 +343,10 @@ o_restoreObject = {_this spawn {
   _unlocked = [_obj] call o_isAlwaysUnlocked;
   if (_unlocked) then {
     _obj setVariable ["objectLocked", false, true];
-	}
-	else {
-	  (locked_objects_list pushBack _obj);
-	};
+  }
+  else {
+    (locked_objects_list pushBack _obj);
+  };
 
 };};
 
@@ -417,7 +417,7 @@ o_fillVariables = {
   };
 
   def(_r3fSide);
-	_r3fSide = _obj getVariable "R3F_Side";
+  _r3fSide = _obj getVariable "R3F_Side";
   if (!isNil "_r3fSide" && {typeName _r3fSide == typeName sideUnknown}) then {
     _variables pushBack ["R3F_Side", str _r3fSide];
   };  
@@ -439,7 +439,7 @@ o_addSaveObject = {
   def(_allowDamage);
 
   _class = typeOf _obj;
- 	_netId = netId _obj;
+   _netId = netId _obj;
   _pos = ASLtoATL getPosWorld _obj;
   _dir = [vectorDir _obj, vectorUp _obj];
   _damage = damage _obj;
@@ -485,13 +485,13 @@ o_addSaveObject = {
   init(_turretMags,[]);
   if ((call o_isStaticWeaponSavingOn) && {[_obj] call o_isStaticWeapon}) then {
     _turretMags = magazinesAmmo _obj;
-	};
+  };
 
   init(_ammoCargo,getAmmoCargo _obj);
   init(_fuelCargo,getFuelCargo _obj);
   init(_repairCargo,getRepairCargo _obj);
   
-	
+  
   def(_objName);
   _objName = _obj getVariable "object_key";
 
@@ -526,14 +526,14 @@ o_addSaveObject = {
 o_saveInfo = {
   ARGVX3(0,_scope,"");
   
-	init(_fundsWest,0);
-	init(_fundsEast,0);
+  init(_fundsWest,0);
+  init(_fundsEast,0);
   
   init(_request,[_scope]);
   
   if (call o_isWarchestMoneySavingOn) then {
     _fundsWest = ["pvar_warchest_funds_west", 0] call getPublicVar;
-		_fundsEast = ["pvar_warchest_funds_east", 0] call getPublicVar;
+    _fundsEast = ["pvar_warchest_funds_east", 0] call getPublicVar;
   };
   
   init(_objName, "Info");
@@ -541,7 +541,7 @@ o_saveInfo = {
   _request pushBack [ _objName + "." + "WarchestMoneyOPFOR", _fundsEast];
   
   _request call stats_set;  
-};	
+};  
 
 
 o_saveAllObjects = {
