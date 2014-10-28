@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.1
 //	@file Name: init.sqf
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev
@@ -91,7 +94,6 @@ _staticWeaponSavingOn = ["A3W_staticWeaponSaving"] call isConfigOn;
 _warchestSavingOn = ["A3W_warchestSaving"] call isConfigOn;
 _warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
 _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
-_vehicleSavingOn = ["A3W_vehicleSaving"] call isConfigOn;
 vehicleThermalsOn = ["A3W_vehicleThermals"] call isConfigOn;
 
 _purchasedVehicleSavingOn = ["A3W_purchasedVehicleSaving"] call isConfigOn;
@@ -188,11 +190,6 @@ if (_playerSavingOn || _serverSavingOn) then
 		if (_serverSavingOn) then
 		{
 			_serverObjectsIDs = [] call compile preprocessFileLineNumbers format["persistence\server\%1\world\oLoad.sqf", _persistence];
-		};
-
-		if (_vehicleSavingOn) then
-		{
-			call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
 		};
 
 		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then

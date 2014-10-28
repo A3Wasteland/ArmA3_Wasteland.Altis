@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 2.1
 //	@file Name: mission_MoneyShipment.sqf
 //	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo), AgentRev, Wiking.at, Lodac
@@ -17,7 +20,7 @@ _setupVars =
 	// Convoys per difficulty : Min = 1, Max = infinite
 	// Vehicles per convoy : Min = 1, Max = infinite
 	// Choices per vehicle : Min = 1, Max = infinite
-	_MoneyShipment = 
+	_MoneyShipment =
 	[
 		// Easy
 		[
@@ -222,12 +225,12 @@ _successExec =
 {
 	// Mission completed
 
-	for "_i" from 1 to 5 do
+	for "_i" from 1 to 10 do
 	{
 		_cash = createVehicle ["Land_Money_F", _lastPos, [], 5, "None"];
 		_cash setPos ([_lastPos, [[2 + random 3,0,0], random 360] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd);
 		_cash setDir random 360;
-		_cash setVariable ["cmoney", 1000, true];
+		_cash setVariable ["cmoney", _moneyAmount / 10, true];
 		_cash setVariable ["owner", "world", true];
 	};
 

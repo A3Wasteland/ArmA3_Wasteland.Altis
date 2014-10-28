@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 
 //	@file Version: 1.0
 //	@file Name: populateSwitch.sqf
@@ -16,6 +19,7 @@ _switchText = ctrlText _iteminv;
 if(_switchText == "Inventory") then
 {
 	[] execVM "client\systems\generalStore\getInventory.sqf";
-} else {	
+} else {
 	[0] execVM "client\systems\generalStore\populateGenStore.sqf";
-};
+};
+

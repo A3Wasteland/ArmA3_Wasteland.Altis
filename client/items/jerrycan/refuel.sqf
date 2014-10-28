@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //@file Version: 1.0
 //@file Name: refuel.sqf
 //@file Author: MercyfulFate
@@ -20,7 +23,7 @@ _checks = {
 	private ["_progress","_vehicle","_failed", "_text"];
 	_progress = _this select 0;
 	_vehicle = _this select 1;
-    _text = "";
+	_text = "";
 	_failed = true;
 	switch (true) do {
 		case (!alive player): {}; //player is dead, no need for a notification
@@ -36,11 +39,11 @@ _checks = {
 };
 _success = [DURATION, ANIMATION, _checks, [_vehicle]] call a3w_actions_start;
 if (_success) then {
-    // the fuel qty is handled by mf_remote_refuel.
-    // will execute locally if _currVehicle is local
+	// the fuel qty is handled by mf_remote_refuel.
+	// will execute locally if _currVehicle is local
 	[[netId _vehicle], "mf_remote_refuel", _vehicle] call A3W_fnc_MP;
 	[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_remove;
 	[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_add;
-    ["Refueling complete!", 5] call mf_notify_client;
+	["Refueling complete!", 5] call mf_notify_client;
 };
 false;

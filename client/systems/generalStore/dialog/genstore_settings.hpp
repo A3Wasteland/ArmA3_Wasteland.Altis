@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #include "genstoreDefines.sqf"
 
 #define GenStoreButton_textSize (0.04 * TEXT_SCALE)
@@ -142,7 +145,7 @@ class genstored
 			w = 0.096 * SZ_SCALE;
 			h = 0.040 * SZ_SCALE;
 		};
-		
+
 		class SellItem: w_RscButton
 		{
 			idc = genstore_sell;
@@ -246,7 +249,7 @@ class genstored
 			w = 0.1173 * SZ_SCALE;
 			h = 0.040 * SZ_SCALE;
 		};
-		
+
 		class SellWeapon: w_RscButton
 		{
 			idc = -1;
@@ -298,7 +301,7 @@ class genstored
 			w = 0.1173 * SZ_SCALE;
 			h = 0.040 * SZ_SCALE;
 		};
-		
+
 		class CancelButton: w_RscButton
 		{
 			idc = -1;

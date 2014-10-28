@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: objectCreation.sqf
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev
 
@@ -7,7 +10,7 @@ private ["_objPos", "_objClass", "_obj", "_adjustZ", "_pos"];
 _objPos = _this select 0;
 
 _objClass = objectList call BIS_fnc_selectRandom;
-_obj = createVehicle [_objClass, _objPos, [], 50, "None"]; 
+_obj = createVehicle [_objClass, _objPos, [], 50, "None"];
 
 switch (true) do
 {
@@ -40,7 +43,7 @@ switch (true) do
 	};
 	default
 	{
-		_object setVariable ["allowDamage", true];
+		_obj setVariable ["allowDamage", true];
 	};
 };
 

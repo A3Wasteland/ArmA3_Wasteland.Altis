@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: sellBackpack.sqf
 //	@file Author: AgentRev
 //	@file Created: 21/10/2013 18:20

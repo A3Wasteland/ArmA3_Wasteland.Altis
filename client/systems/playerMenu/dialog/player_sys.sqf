@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define playersys_DIALOG 2001
 #define money_text 2002
 #define water_text 2003
@@ -9,4 +12,5 @@
 #define rogue_text 2008
 #define distance_text 2009
 #define uptime_text 2010
-#define groupButton 2011
+#define groupButton 2011
+

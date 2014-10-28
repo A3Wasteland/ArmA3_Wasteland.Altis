@@ -68,47 +68,47 @@
 #define ST_TITLE          ST_TITLE_BAR + ST_CENTER
 
 // Color defines
-// #define CA_UI_HUD_Green				{0.600,0.8392,0.4706,1.0}
-// #define CA_IGUI_GreenDark			{0.659,0.863,0.549,1}
-// #define CA_IGUI_Green				{0.6000,0.8392,0.4706,1.0}
-// #define CA_IGUI_Green_Transparent	{0.6000,0.8392,0.4706,0.75}
-// #define CA_IGUI_Red					{0.706,0.0745,0.0196,1}
-// #define CA_IGUI_Orange				{0.863,0.584,0.0,1}
-// #define CA_IGUI_Blue				{0.196,0.592,0.706, 1}
-// #define CA_IGUI_Grey				{0.606,0.606,0.606,1}
-// #define CA_IGUI_Background			{0.1882,0.2588,0.1490,0.76}
-// #define CA_IGUI_DarkGreen			{0.424,0.651,0.247, 1}
-// #define Color_White					{0.95, 0.95, 0.95, 1}
-// #define Color_Black					{0.023529, 0, 0.0313725, 1}
-// #define Color_Gray					{1, 1, 1, 0.5}
-// #define Color_Orange				{1, 0.537, 0, 1}
+// #define CA_UI_HUD_Green              {0.600,0.8392,0.4706,1.0}
+// #define CA_IGUI_GreenDark            {0.659,0.863,0.549,1}
+// #define CA_IGUI_Green                {0.6000,0.8392,0.4706,1.0}
+// #define CA_IGUI_Green_Transparent    {0.6000,0.8392,0.4706,0.75}
+// #define CA_IGUI_Red                  {0.706,0.0745,0.0196,1}
+// #define CA_IGUI_Orange               {0.863,0.584,0.0,1}
+// #define CA_IGUI_Blue                 {0.196,0.592,0.706, 1}
+// #define CA_IGUI_Grey                 {0.606,0.606,0.606,1}
+// #define CA_IGUI_Background           {0.1882,0.2588,0.1490,0.76}
+// #define CA_IGUI_DarkGreen            {0.424,0.651,0.247, 1}
+// #define Color_White                  {0.95, 0.95, 0.95, 1}
+// #define Color_Black                  {0.023529, 0, 0.0313725, 1}
+// #define Color_Gray                   {1, 1, 1, 0.5}
+// #define Color_Orange                 {1, 0.537, 0, 1}
 
-// #define Color_OA_Text				{0.8784, 0.8471, 0.651, 1}
+// #define Color_OA_Text                {0.8784, 0.8471, 0.651, 1}
 
 
 // Text Size
-#define TextSize_small 		SafeZoneH * 0.016
-#define TextSize_normal 	SafeZoneH * 0.018
+#define TextSize_small      SafeZoneH * 0.016
+#define TextSize_normal     SafeZoneH * 0.018
 #define TextSize_big        SafeZoneH * 0.022
-#define TextSize_title 		SafeZoneH * 0.040
+#define TextSize_title      SafeZoneH * 0.040
 
 
 
 // main dialog definiton
 class HJ_ConfigExplorer
-	{ 
-	idd = 19000; 
+	{
+	idd = 19000;
 	enableSimulation = 0;
 	movingEnable = 0;
 	//onLoad = "_this call c_proving_ground_HJ_fnc_InitDialog;";
 	onUnLoad = "_this call c_proving_ground_HJ_fnc_EndDialog;";
-	
-	controlsBackground[] = 
-	{ 
+
+	controlsBackground[] =
+	{
 		BackGround,
 		TitleBar
-	}; 
-	objects[] = { }; 
+	};
+	objects[] = { };
 	controls[] = {
 		tCurrentPathText,
 		tCurrentPathValue,
@@ -127,11 +127,11 @@ class HJ_ConfigExplorer
 		tVersion,
 		sbtnClose
 	};
-	
+
 	// external class references
 	#include "defs_base_control.cpp"
 
-	class RSC_HJ_ShortcutButton: RscIGUIShortcutButton 
+	class RSC_HJ_ShortcutButton: RscIGUIShortcutButton
 	{
 		w = 0.1 * SafeZoneW;
 		h = 0.05 * SafeZoneW;
@@ -149,38 +149,38 @@ class HJ_ConfigExplorer
 	//****************************************
 	//*** Background Controls
 	//****************************************
-	
+
 	class BackGround:RscBackground
 	{
 		style = ST_HUD_BACKGROUND;
-		
+
 		x = SafeZoneX;
-		y = SafeZoneY; 
+		y = SafeZoneY;
 		w = SafeZoneW;
 		h = SafeZoneH;
-		
+
 		colorBackground[] = {0.05, 0.05, 0.05, 0.95};
 	};
-	
-	
+
+
 	class TitleBar:RscTitle
 	{
 		style = ST_TITLE;
 		x = SafeZoneX + 0.01;
-		y = SafeZoneY + 0.01; 
+		y = SafeZoneY + 0.01;
 		w = SafeZoneW - 0.02;
 		h = TitleBarH - 0.01;
 		sizeEx = TextSize_title;
-		
+
 		text = EXPL_TITLE;
 	};
-	
-	
+
+
 	//****************************************
 	//*** Controls
 	//****************************************
-	
-	class tCurrentPathText:RscText 
+
+	class tCurrentPathText:RscText
 	{
 		idc = -1;
 		style = ST_FRAME;
@@ -189,12 +189,12 @@ class HJ_ConfigExplorer
 		w = (0.74 * SafeZoneW);
 		h = (2.5 * TextSize_normal);
 		sizeEx = TextSize_normal;
-		
+
 		text = "Current Config Path";
 		// colorText[] = Color_OA_Text;
 	};
-	
-	class tCurrentPathValue:RscText 
+
+	class tCurrentPathValue:RscText
 	{
 		idc = 101;
 		style = ST_LEFT;
@@ -202,11 +202,11 @@ class HJ_ConfigExplorer
 		y = ((0.10 * SafeZoneH) + SafeZoneY);
 		w = (0.74 * SafeZoneW);
 		sizeEx = TextSize_normal;
-		
+
 		text = "Current Config Path";
 	};
-	
-	class tConfigText:RscText 
+
+	class tConfigText:RscText
 	{
 		idc = -1;
 		style = ST_RIGHT;
@@ -214,11 +214,11 @@ class HJ_ConfigExplorer
 		y = ((0.10 * SafeZoneH) + SafeZoneY);
 		w = (0.08 * SafeZoneW);
 		sizeEx = TextSize_normal;
-		
+
 		text = "Config:";
 	};
-	
-	class cConfigValue:RscCombo 
+
+	class cConfigValue:RscCombo
 	{
 		idc = 103;
 		x = ((0.85 * SafeZoneW) + SafeZoneX);
@@ -227,7 +227,7 @@ class HJ_ConfigExplorer
 		sizeEx = TextSize_normal;
 		onLBSelChanged = "_this call c_proving_ground_HJ_fnc_onConfigChange";
 	};
-	
+
 	class frmClasses:RscText
 	{
 		idc = -1;
@@ -238,11 +238,11 @@ class HJ_ConfigExplorer
 		w = (0.28 * SafeZoneW);
 		h = (0.47 * SafeZoneH);
 		sizeEx = TextSize_normal;
-		
+
 		text = "Classes";
 	};
-	
-	class lbClasses:RscIGUIListBox 
+
+	class lbClasses:RscIGUIListBox
 	{
 		idc = 110;
 		x = ((0.01 * SafeZoneW) + SafeZoneX);
@@ -250,12 +250,12 @@ class HJ_ConfigExplorer
 		w = (0.28 * SafeZoneW);
 		h = (0.46 * SafeZoneH) - (TextSize_normal / 2);
 		sizeEx = TextSize_normal;
-		
+
 		rowHeight = TextSize_normal;
-		
+
 		onLBDblClick = "_this call c_proving_ground_HJ_fnc_onDoubleClickClass;";
 	};
-	
+
 	class frmValues:RscText
 	{
 		idc = -1;
@@ -266,11 +266,11 @@ class HJ_ConfigExplorer
 		w = (0.68 * SafeZoneW);
 		h = (0.47 * SafeZoneH);
 		sizeEx = TextSize_normal;
-		
+
 		text = "Values";
 	};
-	
-	class lbValues:RscIGUIListBox 
+
+	class lbValues:RscIGUIListBox
 	{
 		idc = 111;
 		x = ((0.31 * SafeZoneW) + SafeZoneX);
@@ -278,34 +278,34 @@ class HJ_ConfigExplorer
 		w = (0.68 * SafeZoneW);
 		h = (0.46 * SafeZoneH) - (TextSize_normal / 2);
 		sizeEx = TextSize_normal;
-		
+
 		rowHeight = TextSize_normal;
 	};
 
-	class sbtnDumpClasses:RSC_HJ_ShortcutButton 
+	class sbtnDumpClasses:RSC_HJ_ShortcutButton
 	{
 		idc = 119;
 		x = ((0.09 * SafeZoneW) + SafeZoneX);
 		y = ((0.61 * SafeZoneH) + SafeZoneY);
-		
+
 		text = "dump";
 		tooltip = "dump all classnames to edit box";
-		
+
 		onButtonClick = "_this call c_proving_ground_HJ_fnc_onButtonClick_dump;";
 	};
 
-	class sbtnUp:RSC_HJ_ShortcutButton 
+	class sbtnUp:RSC_HJ_ShortcutButton
 	{
 		idc = 120;
 		x = ((0.19 * SafeZoneW) + SafeZoneX);
 		y = ((0.61 * SafeZoneH) + SafeZoneY);
-		
+
 		text = "up";
 		tooltip = "move to parent class";
-		
+
 		onButtonClick = "_this call c_proving_ground_HJ_fnc_onButtonClick_up;";
 	};
-	
+
 	class frmOrder:RscText
 	{
 		idc = -1;
@@ -319,20 +319,20 @@ class HJ_ConfigExplorer
 		sizeEx = TextSize_normal;
 		// colorText[] = Color_OA_Text;
 	};
-	
-	class lbOrder:RscIGUIListBox 
+
+	class lbOrder:RscIGUIListBox
 	{
 		idc = 112;
 		x = ((0.01 * SafeZoneW) + SafeZoneX);
 		y = ((0.65 * SafeZoneH) + SafeZoneY) + TextSize_normal;
 		w = (0.28 * SafeZoneW);
 		h = (0.25 * SafeZoneH) - TextSize_normal;
-		sizeEx = TextSize_normal;		
+		sizeEx = TextSize_normal;
 
 		rowHeight = TextSize_normal;
 	};
-	
-	class eCode:RscEdit 
+
+	class eCode:RscEdit
 	{
 		idc = 113;
 		style = ST_MULTI;
@@ -341,42 +341,42 @@ class HJ_ConfigExplorer
 		w = (0.68 * SafeZoneW);
 		h = (0.25 * SafeZoneH);
 		sizeEx = TextSize_small;
-		
+
 		font = "LucidaConsoleB";
 		linespacing = 2;
 		autocomplete = "general";
 	};
-	
+
 	class sbtnCopyClip:RSC_HJ_ShortcutButton
 	{
 		x = ((0.31 * SafeZoneW) + SafeZoneX);
 		y = ((0.905 * SafeZoneH) + SafeZoneY);
-	
+
 		text = "-> Clipboard";
 		tooltip = "copy all text to clipboard";
-		
+
 		action = "copyToClipboard ctrlText 113;";
 	};
-	
-	class tVersion:RscText 
+
+	class tVersion:RscText
 	{
 		style = ST_RIGHT;
 		x = ((0.70 * SafeZoneW) + SafeZoneX);
 		y = ((0.95 * SafeZoneH) + SafeZoneY);
 		w = (0.19 * SafeZoneW);
 		sizeEx = TextSize_small;
-		
+
 		text = EXPL_VERSION;
 	};
-	
-	class sbtnClose:RSC_HJ_ShortcutButton 
+
+	class sbtnClose:RSC_HJ_ShortcutButton
 	{
 		x = ((0.90 * SafeZoneW) + SafeZoneX);
 		y = ((0.95 * SafeZoneH) + SafeZoneY);
-	
+
 		text = "close";
 		action = "closeDialog 0";
-		
+
 		tooltip = "close explorer";
 	};
 };

@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: buyAmmo.sqf
 //	@file Author: [KoS] His_Shadow, AgentRev
@@ -32,7 +35,7 @@ storePurchaseHandle = _this spawn
 	_itemText = _ammoList lbText _itemIndex;
 	_itemData = _ammoList lbData _itemIndex;
 
-	_showInsufficientFundsError = 
+	_showInsufficientFundsError =
 	{
 		_itemText = _this select 0;
 		hint format ["You don't have enough money for ""%1""", _itemText];
@@ -40,7 +43,7 @@ storePurchaseHandle = _this spawn
 		_price = -1;
 	};
 
-	_showInsufficientSpaceError = 
+	_showInsufficientSpaceError =
 	{
 		_itemText = _this select 0;
 		hint format ["You don't have enough space for ""%1""", _itemText];
@@ -48,10 +51,10 @@ storePurchaseHandle = _this spawn
 		_price = -1;
 	};
 
-	switch(_switch) do 
+	switch(_switch) do
 	{
 		//Buy To Player
-		case 0: 
+		case 0:
 		{
 			{
 				if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
@@ -59,13 +62,13 @@ storePurchaseHandle = _this spawn
 					_class = _x select 1;
 					_price = _x select 2;
 					_mag = configFile >> "CfgMagazines" >> _class;
-					
+
 					//ensure the player has enough money
 					if (_price > _playerMoney) exitWith
 					{
 						[_itemText] call _showInsufficientFundsError;
 					};
-					
+
 					if ([player, _class] call fn_fitsInventory) then
 					{
 						player addMagazine _class;

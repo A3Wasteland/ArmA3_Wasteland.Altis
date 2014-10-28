@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: findHackedVehicles.sqf
 //	@file Author: AgentRev
@@ -7,7 +10,7 @@ private ["_requestKey", "_hackedVehicles"];
 _requestKey = call A3W_fnc_generateKey;
 
 [[player, _requestKey], "A3W_fnc_checkHackedVehicles", false, false] call A3W_fnc_MP;
-	
+
 waitUntil {!isNil _requestKey};
 
 _hackedVehicles = missionNamespace getVariable [_requestKey, []];

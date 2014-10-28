@@ -1,8 +1,10 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: optionSelect.sqf
 //	@file Author: [404] Deadbeat
 //	@file Created: 20/11/2012 05:19
-//	@file Args:
 
 #define debugMenu_option 50003
 #define adminMenu_option 50001
@@ -19,20 +21,20 @@ if (_uid call isAdmin) then
 
 	switch (true) do
 	{
-	    case (!isNull _displayAdmin): //Admin panel
-	    {
+		case (!isNull _displayAdmin): //Admin panel
+		{
 			_adminSelect = _displayAdmin displayCtrl adminMenu_option;
 
 			switch (lbCurSel _adminSelect) do
 			{
-			    case 0: //Player Menu
+				case 0: //Player Menu
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\adminPanel\playerMenu.sqf";
 				};
 				case 1: //Full Vehicle Management
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\adminPanel\vehicleManagement.sqf";
 				};
 				case 2: //Spectator Cam
@@ -78,21 +80,21 @@ if (_uid call isAdmin) then
 			    	execVM "client\systems\adminPanel\toggleGodMode.sqf";
 			    };
 			};
-	    };
-	    case (!isNull _displayDebug): //Debug panel
-	    {
+		};
+		case (!isNull _displayDebug): //Debug panel
+		{
 			_debugSelect = _displayDebug displayCtrl debugMenu_option;
 
 			switch (lbCurSel _debugSelect) do
 			{
-			    case 0: //Access Gun Store
+				case 0: //Access Gun Store
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\gunStore\loadGunStore.sqf";
 				};
 				case 1: //Access General Store
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\generalStore\loadGenStore.sqf";
 				};
 				case 2: //Access ATM Interface
@@ -102,7 +104,7 @@ if (_uid call isAdmin) then
 				};
 				case 3: //Access Vehicle Store
 				{
-	                closeDialog 0;
+					closeDialog 0;
 					execVM "client\systems\vehicleStore\loadVehicleStore.sqf";
 				};
 			    case 4: //Access Respawn Dialog
@@ -131,8 +133,8 @@ if (_uid call isAdmin) then
 					_leader addMagazine "30Rnd_556x45_Stanag";
 					_leader addMagazine "30Rnd_556x45_Stanag";
 					_leader addWeapon "arifle_TRG20_F";
-			    };
+				};
 			};
-	    };
+		};
 	};
 };

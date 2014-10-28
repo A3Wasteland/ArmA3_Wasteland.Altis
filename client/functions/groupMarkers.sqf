@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: groupMarkers.sqf
 //	@file Author: AgentRev
 
@@ -66,7 +69,7 @@ while {true} do
 		_created = _x select 3;
 
 		_isSpawning = _unit getVariable ["playerSpawning", false];
-		
+
 		_isPlayer = if (_unit == player) then
 		{
 			_unit = vehicle player;

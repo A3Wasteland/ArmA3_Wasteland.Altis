@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: isAssignableBinocular.sqf
 //	@file Author: AgentRev
@@ -13,7 +16,7 @@ if ([_item, 4096] call isWeaponType &&
    {getNumber (configFile >> "CfgWeapons" >> _item >> "ItemInfo" >> "type") != 616}) then
 {
 	{
-		if ([_x, 4096] call isWeaponType && 
+		if ([_x, 4096] call isWeaponType &&
 		   {getNumber (configFile >> "CfgWeapons" >> _x >> "ItemInfo" >> "type") != 616}) exitWith
 		{
 			_isAssignable = false;

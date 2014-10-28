@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: briefing.sqf
 
 if (!hasInterface) exitWith {};
@@ -12,7 +15,18 @@ player createDiaryRecord ["changelog",
 [
 "v1.0",
 "
-Coming soon!
+<br/> [Added] Custom scoreboard
+<br/> [Added] Mission and store vehicle saving
+<br/> [Added] Player markers on GPS and UAV Terminal
+<br/> [Added] Holster actions
+<br/> [Changed] Full rewrite of side mission system
+<br/> [Changed] Windows key toggles player marker names too
+<br/> [Changed] New loading picture by Gameaholic.se
+<br/> [Fixed] Weapon sometimes disppearing when moving objects
+<br/> [Fixed] More money duping exploits
+<br/> [Fixed] Store menu sizes on smaller aspect ratios
+<br/> [Fixed] Hunger and thirst reset on rejoin
+<br/> [Fixed] Other minor optimizations and fixes
 "
 ]];
 

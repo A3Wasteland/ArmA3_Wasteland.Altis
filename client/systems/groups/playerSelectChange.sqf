@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: playerSelectChange.sqf
 //	@file Author: [404] Deadbeat
@@ -24,7 +27,7 @@ if (isNil "_target") exitWith {};
 
 if (!isStreamFriendlyUIEnabled && player == leader player && count units _target == 1) then //streamfriendly users cannot create groups themselves only accept invites
 {
-    _groupInvite ctrlShow true;
+	_groupInvite ctrlShow true;
 } else {
-	_groupInvite ctrlShow false;	    
+	_groupInvite ctrlShow false;
 };

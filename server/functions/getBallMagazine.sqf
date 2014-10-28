@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: getBallMagazine.sqf
 //	@file Author: AgentRev
@@ -17,7 +20,7 @@ if (isClass _magCfg) then
 	{
 		_magCfg = inheritsFrom _magCfg;
 	};
-	
+
 	if (isClass _magCfg) then
 	{
 		_mag = configName (_magCfg);

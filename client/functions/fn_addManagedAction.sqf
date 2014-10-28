@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: fn_addManagedAction.sqf
 //	@file Author: AgentRev
 
@@ -42,7 +45,7 @@ if (_id != -1 && !isNil "_condition") then
 		default        { compile str _condition };
 	};
 
-	waitUntil {!managedActions_arrayCleanup};
+	waitUntil {!isNil "managedActions_arrayCleanup" && {!managedActions_arrayCleanup}};
 	managedActions_array pushBack [_obj, _id, _conditionPvar, _condition];
 };
 

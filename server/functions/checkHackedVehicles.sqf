@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: checkHackedVehicles.sqf
 //	@file Author: AgentRev
@@ -13,12 +16,12 @@ _hackedVehicles = [];
 
 {
 	_check = _x getVariable [call vChecksum, false];
-	
+
 	if ((_x isKindOf "ReammoBox_F" && {owner _x > 1}) || {!(_x isKindOf "ReammoBox_F") && {typeName _check == "BOOL"} && {!_check}}) then
 	{
 		_owner = [owner _x] call findClientPlayer;
 		_name = if (isPlayer _owner) then { name _owner } else { "" };
-		
+
 		_hackedVehicles pushBack [netId _x, toArray _name];
 	};
 } forEach vehicles;

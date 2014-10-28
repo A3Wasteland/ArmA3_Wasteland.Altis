@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: canPushPlaneBack.sqf
 //	@file Author: AgentRev
 
@@ -10,14 +13,14 @@ switch (_this select 0) do
 	case 0:
 	{
 		_veh = vehicle player;
-		
+
 		if (driver _veh == player) then
 		{
 			_isDriver = true;
 		};
-		
+
 		_uav = getConnectedUav player;
-		
+
 		if (!isNull _uav && {_uav isKindOf "Plane" && isNil {_uav getVariable "uavAction_pushPlane"}}) then
 		{
 			_uav setVariable ["uavAction_pushPlane", [_uav, ["[1, _target]"] call getPushPlaneAction] call fn_addManagedAction];
@@ -27,7 +30,7 @@ switch (_this select 0) do
 	{
 		_uav = _this select 1;
 		_uavCtrl = uavControl _uav;
-		
+
 		if (_uavCtrl select 0 == player && {_uavCtrl select 1 == "DRIVER"}) then
 		{
 			_veh = _uav;

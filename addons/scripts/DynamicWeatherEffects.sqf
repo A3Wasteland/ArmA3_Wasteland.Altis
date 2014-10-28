@@ -111,7 +111,7 @@ _forceRainToStopAfterOneRainInterval = false;
 drn_DynamicWeather_DebugTextEventArgs = []; // Empty
 
 "drn_DynamicWeather_DebugTextEventArgs" addPublicVariableEventHandler {
-    drn_DynamicWeather_DebugTextEventArgs call drn_fnc_DynamicWeather_ShowDebugTextLocal;
+	drn_DynamicWeather_DebugTextEventArgs call drn_fnc_DynamicWeather_ShowDebugTextLocal;
 };
 
 /*
@@ -137,13 +137,13 @@ drn_fnc_DynamicWeather_ShowDebugTextLocal = {
  *   _text: Debug text.
  */
 drn_fnc_DynamicWeather_ShowDebugTextAllClients = {
-    drn_DynamicWeather_DebugTextEventArgs = _this;
-    publicVariable "drn_DynamicWeather_DebugTextEventArgs";
-    drn_DynamicWeather_DebugTextEventArgs call drn_fnc_DynamicWeather_ShowDebugTextLocal;
+	drn_DynamicWeather_DebugTextEventArgs = _this;
+	publicVariable "drn_DynamicWeather_DebugTextEventArgs";
+	drn_DynamicWeather_DebugTextEventArgs call drn_fnc_DynamicWeather_ShowDebugTextLocal;
 };
 
 if (_debug) then {
-    ["Starting script WeatherEffects.sqf..."] call drn_fnc_DynamicWeather_ShowDebugTextLocal;
+	["Starting script WeatherEffects.sqf..."] call drn_fnc_DynamicWeather_ShowDebugTextLocal;
 };
 
 drn_DynamicWeatherEventArgs = []; // [current overcast, current fog, current rain, current weather change ("OVERCAST", "FOG" or ""), target weather value, time until weather completion (in seconds), current wind x, current wind z]
@@ -236,8 +236,8 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 		};
 		5 setFog [_currentRain / 4, 0.001, 1000]; // Quick hack to ensure fog goes away regularly
 		_currentFog
-    };
-    if (_currentWeatherChange == "FOG") then {
+	};
+	if (_currentWeatherChange == "FOG") then {
 		if (typeName _targetWeatherValue == "ARRAY") then {
 			_targetWeatherValue set [0, (_targetWeatherValue select 0) max (_currentRain / 4)];
 		}
@@ -245,7 +245,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 			_targetWeatherValue = _targetWeatherValue max (_currentRain / 4);
 		};
 		_timeUntilCompletion setFog _targetWeatherValue;
-    };
+	};
 };
 
 if (!isDedicated) then
@@ -339,7 +339,7 @@ if (isServer) then {
 
     drn_var_DynamicWeather_Rain = _initialRain;
     0 setRain drn_var_DynamicWeather_Rain;
-	0 setFog [drn_var_DynamicWeather_Rain / 4, 0.001, 1000];
+	0 setFog [fog max (drn_var_DynamicWeather_Rain / 4), 0.001, 1000];
 
 
     _maxWind = _minimumWind + random (_maximumWind - _minimumWind);

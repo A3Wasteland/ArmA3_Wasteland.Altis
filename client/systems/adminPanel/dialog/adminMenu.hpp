@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define adminMenu_dialog 50000
 #define adminMenu_option 50001
 
@@ -67,4 +70,5 @@ class AdminMenu
 			h=0.071;
 		};
 	};
-};
+};
+

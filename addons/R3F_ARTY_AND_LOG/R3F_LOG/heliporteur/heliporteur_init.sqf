@@ -1,6 +1,6 @@
 /**
  * Initialise un véhicule héliporteur
- * 
+ *
  * @param 0 l'héliporteur
  */
 

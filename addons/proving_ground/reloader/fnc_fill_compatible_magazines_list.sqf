@@ -23,7 +23,7 @@ if ((_veh isKindOf "Plane")or(_veh isKindOf "Helicopter")) then {
 
 
 lbClear GET_CTRL(balca_loader_compatible_magazines_IDC);
-{	
+{
 	_display_name = (getText(configFile >> "CfgMagazines" >> _x >> "displayName"));
 	if (_display_name=="") then {
 		GET_CTRL(balca_loader_compatible_magazines_IDC) lbAdd _x;

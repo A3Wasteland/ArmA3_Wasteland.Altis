@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: setupPlayerDB.sqf
 //	@file Author: AgentRev
 
@@ -12,7 +15,7 @@ fn_requestPlayerData =
 	playerData_alive = nil;
 	playerData_loaded = nil;
 	playerData_resetPos = nil;
-	requestPlayerData = [player, getPlayerUID player];
+	requestPlayerData = player;
 	publicVariableServer "requestPlayerData";
 } call mf_compile;
 

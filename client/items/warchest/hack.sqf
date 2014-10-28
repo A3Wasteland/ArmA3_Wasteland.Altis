@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #include "mutex.sqf"
 #define DURATION MF_ITEMS_WARCHEST_HACK_DURATION
 #define ANIMATION "AinvPknlMstpSlayWrflDnon_medic"

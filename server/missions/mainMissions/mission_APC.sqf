@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: mission_APC.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, AgentRev
@@ -8,7 +11,7 @@ if (!isServer) exitwith {};
 
 private ["_vehicleClass", "_nbUnits"];
 
-_setupVars = 
+_setupVars =
 {
 	_vehicleClass =
 	[

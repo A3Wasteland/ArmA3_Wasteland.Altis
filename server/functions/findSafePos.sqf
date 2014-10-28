@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 /*
 	File: findSafePos.sqf
 	Author: Joris-Jan van 't Land
@@ -22,12 +25,12 @@
 						0: does not have to be at a shore
 						1: must be at a shore
 	_this select 7: (optional) Vehicle type
-	
+
 	Returns:
 	Coordinate array with a position solution.
-	
+
 	TODO:
-	* Maybe allow passing several combinations of position, min and max dist ... so that you can 
+	* Maybe allow passing several combinations of position, min and max dist ... so that you can
 	avoid several things?
 	* Interpretation of minDist / maxDist is wrong. It's not true distance that is used. Too bad? - Fixed by AgentRev
 */
@@ -46,20 +49,20 @@ _shoreMode = _this select 6;
 if (_shoreMode == 0) then {_shoreMode = false} else {_shoreMode = true};
 
 _vehicleType = "";
-if (count _this > 7) then 
+if (count _this > 7) then
 {
 	_vehicleType = _this select 7;
 };
 
 //See if default world values should be used.
-if (count _pos == 0) then 
+if (count _pos == 0) then
 {
 	_pos = getArray (configFile >> "CfgWorlds" >> worldName >> "safePositionAnchor");
 };
 
 if (count _pos == 0) exitWith {debugLog "Log: [findSafePos] No center position was passed!"; []}; //TODO: instead return defaults below.
 
-if (_maxDist == -1) then 
+if (_maxDist == -1) then
 {
 	_maxDist = getNumber(configFile >> "CfgWorlds" >> worldName >> "safePositionRadius");
 };
@@ -81,7 +84,7 @@ for "_attempts" from 0 to _maxAttempts do
 {
 	private "_testPos";
 	_testPos = _pos vectorAdd ([[_minDist + random (_maxDist - _minDist), 0, 0], random 360] call BIS_fnc_rotateVector2D);
-	
+
 	if (count (_testPos isFlatEmpty [_objDist, 0, _maxGradient, _objDist max 3, _waterMode, _shoreMode, objNull]) > 0) exitWith
 	{
 		_newPos = _testPos;
@@ -92,12 +95,12 @@ if (count _newPos == 0) then
 {
 	private "_params";
 	_params = [_minDist, _maxDist];
-	
+
 	if (_vehicleType != "") then
 	{
 		_params set [2, _vehicleType];
 	};
-	
+
 	_newPos = _pos findEmptyPosition _params;
 };
 
@@ -108,7 +111,7 @@ if (count _newPos == 0) then
 };
 
 //Still nothing was found, use world center positions.
-if (count _newPos == 0) then 
+if (count _newPos == 0) then
 {
 	_newPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 };
