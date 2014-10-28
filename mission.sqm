@@ -2458,7 +2458,7 @@ class Mission
 		};
 		class Item42
 		{
-			position[]={10571.924,59.380604,8288.291};
+			position[]={10481.982,92.54425,8165.8809};
 			name="Mission_10";
 			type="Empty";
 			colorName="ColorOrange";
@@ -2486,7 +2486,7 @@ class Mission
 		};
 		class Item46
 		{
-			position[]={6567.271,94.984398,22647.32};
+			position[]={6580.0361,94.924103,22660.633};
 			name="Mission_14";
 			type="Empty";
 			colorName="ColorOrange";
