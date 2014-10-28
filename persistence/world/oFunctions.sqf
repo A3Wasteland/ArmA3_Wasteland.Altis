@@ -140,7 +140,7 @@ o_isVehicle = {
     if (_obj isKindOf _x) exitWith {
       _result = true;
     };
-  } forEach ["Helicopter", "Plane", "Boat_F", "Car", "Motorcycle", "Tank", "StaticWeapon"];
+  } forEach ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank", "StaticWeapon"];
   
   (_result)
 };
