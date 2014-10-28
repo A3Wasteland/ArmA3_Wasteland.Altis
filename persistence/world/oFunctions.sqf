@@ -343,7 +343,11 @@ o_restoreObject = {_this spawn {
   _unlocked = [_obj] call o_isAlwaysUnlocked;
   if (_unlocked) then {
     _obj setVariable ["objectLocked", false, true];
+	}
+	else {
+	  (locked_objects_list pushBack _obj);
 	};
+
 };};
 
 
@@ -549,6 +553,8 @@ o_saveAllObjects = {
   init(_bulk_size,100);
   init(_start_time, diag_tickTime);
   init(_last_save, diag_tickTime);
+
+
   {
     if (!isNil{[_request, _x] call o_addSaveObject}) then {
       _count = _count + 1;
@@ -563,7 +569,7 @@ o_saveAllObjects = {
       diag_log format["o_saveLoop: %1 objects saved in %2 ticks, save call took %3 ticks", (_bulk_size), (diag_tickTime - _start_time), (_save_end - _save_start)];
       _last_save = _save_end;
     };
-  } forEach (allMissionObjects "All");
+  } forEach (locked_objects_list);
   
   if (count(_request) > 1) then {
     init(_save_start, diag_tickTime);
@@ -574,8 +580,58 @@ o_saveAllObjects = {
 
   diag_log format["o_saveLoop: total of %1 objects saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
 
-  
+  call o_lockedObjectsListCleanup;
 };
+
+o_lockedObjectsListCleanup = {
+
+  //post cleanup the array
+  init(_cleanup_start, diag_tickTime);
+  init(_nulls,[]);
+  init(_index,-1);
+  init(_start_size,count(locked_objects_list));
+  while {true} do {
+    _index = locked_objects_list find objNull;
+    if (_index < 0) exitWith {};
+    locked_objects_list deleteAt _index;
+  };
+  init(_end_size,count(locked_objects_list));
+  init(_cleanup_end, diag_tickTime);
+  diag_log format["o_saveLoop: count(locked_objects_list) = %1, %2 nulls deleted in %3 ticks", count(locked_objects_list), (_start_size - _end_size), (_cleanup_end - _cleanup_start)];
+};
+
+
+locked_objects_list = [];
+
+o_getLockedObjectIndex = {
+  ARGVX4(0,_obj,objNull,-1);
+  if (isNull _obj) exitWith {-1};
+
+  (locked_objects_list find _obj)
+};
+
+//event handlers for object locking and unlocking
+"objectLocked" addPublicVariableEventHandler {
+  private["_index","_object"];
+  _object = _this select 1;
+  _index = [OR(_object,nil)] call o_getLockedObjectIndex;
+  if (_index >= 0) exitWith {};
+
+  //diag_log format["%1 is being added to the lock list", _object];
+  locked_objects_list pushBack _object;
+};
+
+
+"objectUnlocked" addPublicVariableEventHandler {
+  private["_index","_object"];
+  _object = _this select 1;
+  _index = [OR(_object,nil)] call o_getLockedObjectIndex;
+  if (_index < 0) exitWith {};
+
+  //diag_log format["%1 is being removed from the lock list", _object];
+  locked_objects_list deleteAt _index;
+};
+
 
 
 o_saveLoop_interval = OR(A3W_object_saveInterval,60);
