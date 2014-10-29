@@ -146,6 +146,7 @@ fn_applyPlayerData = {
   def(_handgun_weapon);
   def(_uniform_class);
   def(_vest_class);
+  def(_vehicle_key);
 
   //iterate through the data, and extract the hash variables into local variables
   {
@@ -163,6 +164,8 @@ fn_applyPlayerData = {
       case "HandgunWeapon": { _handgun_weapon = _value};
       case "Uniform":{ _uniform_class = _value};
       case "Vest": { _vest_class = _value};
+      case "InVehicle": { _vehicle_key = _value};
+
     };
   } forEach _data;
 
@@ -248,6 +251,18 @@ fn_applyPlayerData = {
       case "WastelandItems": { { [_x select 0, _x select 1, true] call mf_inventory_add } forEach _value };
     };
   } forEach _data;
+
+  if (isSTRING(_vehicle_key)) then {
+    diag_log format["Looks like you were in a vehicle, we will put you back inside, hang tight"];
+    backInVehicle = [player,_vehicle_key];
+    publicVariableServer "backInVehicle";
+    private["_end_time"];
+    _end_time = time + 30; //wait at most 30 seconds before givin up
+    while {((vehicle player) == player) && { time < _end_time}} do {
+      sleep 1;
+    };
+    diag_log format["Vehicle wait complete after %1 secs", (time - _end_time)];
+  };
 };
 
 fn_savePlayerData = {
@@ -423,6 +438,10 @@ p_savePlayerData = {
     */
     { _data pushBack _x } forEach _gear;
 
+
+    _data pushBack ["InVehicle", (vehicle player) getVariable ["vehicle_key",nil]];
+
+
     if (alive player) then {
       missionNamespace setVariable [_reply_variable, [_UID, _info, _data, player]];
       publicVariableServer _reply_variable;
@@ -566,6 +585,19 @@ fn_requestPlayerData = {[] spawn {
 "reportStats" addPublicVariableEventHandler {
   diag_log format["reportStats: %1", _this];
   [_this select 1] spawn p_savePlayerData;
+};
+
+
+
+
+"objectUnlocked" addPublicVariableEventHandler {
+  private["_index","_object"];
+  _object = _this select 1;
+  _index = [OR(_object,nil)] call o_getLockedObjectIndex;
+  if (_index < 0) exitWith {};
+
+  //diag_log format["%1 is being removed from the lock list", _object];
+  locked_objects_list deleteAt _index;
 };
 
 

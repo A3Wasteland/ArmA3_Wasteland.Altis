@@ -181,6 +181,7 @@ v_restoreVehicle = {_this spawn {
   [_obj, false] call vehicleSetup;
 
   _obj setVariable ["vehicle_key", _vehicle_key, true];
+  missionNamespace setVariable [_vehicle_key, _obj];
   
   _obj setPosWorld ATLtoASL _pos;
   if (isARRAY(_dir)) then {
@@ -288,6 +289,33 @@ v_restoreVehicle = {_this spawn {
   tracked_vehicles_list pushBack _obj;
 
 }};;
+
+
+//event handlers for object locking and unlocking
+"backInVehicle" addPublicVariableEventHandler { _this spawn {
+  diag_log format["%1 backInVehicle", _this];
+  private["_player", "_vehicle_key"];
+  _this = _this select 1;
+  _player = _this select 0;
+  _vehicle_key = _this select 1;
+
+  if (isNil "_player" || {typeName _player != typeName objNull}) exitWith {};
+  if (isNil "_vehicle_key" || {typeName _vehicle_key != typeName ""}) exitWith {};
+
+  waitUntil {!isNil {v_loadVehicles_complete}};
+
+  private["_vehicle"];
+  _vehicle = missionNamespace getVariable _vehicle_key;
+  if (isNil "_vehicle" || {typeName _vehicle != typeName objNull}) exitWith {};
+
+  //diag_log format["Putting back %1 into vehicle %2", _player, _vehicle];
+  private["_lock_state"];
+  _lock_state = locked _vehicle;
+  _vehicle lock 0;
+  _player moveInAny _vehicle;
+  _vehicle lock _lock_state;
+  _player setVariable ["vehicle", _vehicle];
+};};
 
 
 tracked_vehicles_list = [];
@@ -712,6 +740,8 @@ v_loadVehicles = {
   { 
     [_x] call v_restoreVehicle;
   } forEach _vehicles;
+
+  v_loadVehicles_complete = true;
 };
 
 diag_log "vFunctions.sqf loading complete";
