@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: initSurvival.sqf
 //	@file Author: MercyfulFate, [404] Deadbeat, [404] Costlyy, TAW_Tonic (original)
@@ -16,13 +19,13 @@
 
 private["_warnf1","_warnf2","_warnf3","_warnf4","_warnd1","_warnd2","_warnd3","_warnd4"];
 
-_warnf1 = true; 
-_warnf2 = true; 
-_warnf3 = true; 
+_warnf1 = true;
+_warnf2 = true;
+_warnf3 = true;
 _warnf4 = true;
-_warnd1 = true; 
-_warnd2 = true; 
-_warnd3 = true; 
+_warnd1 = true;
+_warnd2 = true;
+_warnd3 = true;
 _warnd4 = true;
 
 if (!isNil "mf_survival_handle1") then { terminate mf_survival_handle1 };

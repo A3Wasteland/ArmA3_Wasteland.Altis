@@ -1,5 +1,5 @@
 /**
- * Constantes pour rendre les définitions des boîtes de dialogue plus lisible et maintenable
+ * Constantes pour rendre les dÃ©finitions des boÃ®tes de dialogue plus lisible et maintenable
  */
 
 #define R3F_ARTY_ID_transporteur_START 65430

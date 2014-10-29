@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: setupStoreNPC.sqf
 //	@file Author: AgentRev
@@ -96,11 +99,8 @@ if (isNil "_building" || {isNull _building}) then
 	_building = nearestBuilding _npc;
 };
 
-if (isServer) then
-{
-	for "_i" from 1 to 99 do { _building setHit ["glass_" + str _i, 1] }; // pre-break the windows so people can shoot thru them
-};
-
+_building allowDamage true;
+for "_i" from 1 to 99 do { _building setHit ["glass_" + str _i, 1] }; // pre-break the windows so people can shoot thru them
 _building allowDamage false; // disable building damage
 
 if (isServer) then

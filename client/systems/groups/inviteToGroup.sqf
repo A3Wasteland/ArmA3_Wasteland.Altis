@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: inviteToGroup.sqf
 //	@file Author: [404] Deadbeat
@@ -19,7 +22,7 @@ _index = lbCurSel _playerListBox;
 _playerData = _playerListBox lbData _index;
 _hasInvite = false;
 
-//Check selected data is valid   			
+//Check selected data is valid
 { if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call allPlayers);
 
 diag_log "Invite to group: Before the checks";

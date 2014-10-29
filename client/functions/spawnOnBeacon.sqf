@@ -1,8 +1,11 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.1
 //	@file Name: spawnOnBeacons.sqf
 //	@file Author: [404] Costlyy, [GoT] JoSchaap, MercyfulFate, AgentRev
 //	@file Created: 08/12/2012 18:30
-//	@file Args: 
+//	@file Args:
 
 private ["_data", "_beacon", "_pos", "_owner", "_preload", "_playerPos"];
 _data = _this select 0;

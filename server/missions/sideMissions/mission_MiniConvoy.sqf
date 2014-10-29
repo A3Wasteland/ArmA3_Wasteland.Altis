@@ -1,288 +1,143 @@
-//	@file Version: 2
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
+//	@file Version: 2.1
 //	@file Name: mission_MiniConvoy.sqf
-//	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo)
-//	@file Created: 1/09/2013 14:19
-//	@file Args: none
+//	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo), AgentRev
+//	@file Created: 31/08/2013 18:19
 
 if (!isServer) exitwith {};
 #include "sideMissionDefines.sqf";
 
-private ["_missionMarkerName","_missionType","_picture","_vehicleName","_hint","_waypoint","_routes","_convoyVeh","_veh1","_veh2","_veh3","_rn","_waypoints","_starts","_startdirs","_groupsm","_vehicles","_marker","_failed","_startTime","_numWaypoints","_ammobox","_createVehicle","_leader"];
+private ["_convoyVeh", "_veh1", "_veh2", "_veh3", "_createVehicle", "_vehicles", "_leader", "_speedMode", "_waypoint", "_vehicleName", "_numWaypoints", "_box1", "_box2"];
 
-_missionMarkerName = "MiniConvoy_Marker";
-_missionType = "Truck Convoy";
-diag_log format["WASTELAND SERVER - Side Mission Started: %1", _missionType];
-diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1", _missionType];
-[sideMissionDelayTime] call createWaitCondition;
-diag_log format["WASTELAND SERVER - Side Mission Resumed: %1", _missionType];
+_setupVars =
+{
+	_missionType = "Truck Convoy";
+	_locationsArray = LandConvoyPaths;
+};
 
-//pick the vehicles for the convoy (veh2 is the 'convoyed' vehicle
-_convoyVeh = 
-[
-	["B_Quadbike_01_F", "C_Van_01_box_F", "B_Quadbike_01_F"],
-	["B_Quadbike_01_F", "C_Van_01_box_F", "B_Quadbike_01_F"],
-	["I_G_Offroad_01_F", "I_Truck_02_transport_F", "I_G_Offroad_01_F"],
-	["I_G_Offroad_01_F", "O_Truck_02_transport_F", "I_G_Offroad_01_F"]
-]
-call BIS_fnc_selectRandom;
+_setupObjects =
+{
+	private ["_starts", "_startDirs", "_waypoints"];
+	call compile preprocessFileLineNumbers format ["mapConfig\convoys\%1.sqf", _missionLocation];
 
-_veh1 = _convoyVeh select 0;
-_veh2 = _convoyVeh select 1;
-_veh3 = _convoyVeh select 2;
-
-// available routes to add a route. If you add more routes append ,4 to the array and so on
-_routes = [1,2,3];
-
-// pick one of the routes
-_rn = _routes call BIS_fnc_selectRandom;
-
-// set starts and waypoints depending on above (random) choice
-switch (_rn) do 
-{ 
-	case 1: {
-		// route 1
-		// starting positions for this route
-		_starts = 
-		[
-			[4684.3921, 13337.070],
-			[4663.5249, 13305.790],
-			[4643.0615, 13272.709]
-		];
-		// starting directions in which the vehicles are spawned on this route
-		_startdirs = 
-		[
-			33,
-			33,
-			33
-		];
-		// the routes
-		_waypoints = 
-		[			
-			[4709.3672, 13381.538],
-			[6614.5122, 15335.907],
-			[8348.6055, 15781.597],
-			[9703.3369, 16182.543],
-			[11160.020, 17270.051],
-			[12748.146, 18834.535],
-			[12994.632, 19462.133],
-			[11125.767, 20896.094],
-			[11869.673, 22208.621]
-		];
-		// end of route one
-	}; 
-	case 2: {
-		// route 2
-		// starting positions for this route
-		_starts = 
-		[
-			[21825.268, 7122.4512],
-			[21821.420, 7062.1821],
-			[21812.445, 6990.3716]
-		];
-		// starting directions in which the vehicles are spawned on this route
-		_startdirs = 
-		[
-			10,
-			10,
-			10
-		];
-		// the routes
-		_waypoints = 
-		[
-			[21824.990, 7174.1509],
-			[20485.871, 10990.865],
-			[18257.242, 13530.432],
-			[18311.520, 13544.588],
-			[18335.752, 13940.664],
-			[18278.490, 14655.104],
-			[20768.957, 16632.809],
-			[20332.428, 16846.414],
-			[20469.039, 17205.830],
-			[19996.465, 18402.379],
-			[20927.098, 18642.852],
-			[21651.148, 18949.061]
-		];
-		// end of route two
-	}; 
-	case 3: {
-		// route 3
-		// starting positions for this route
-		_starts = 
-		[
-			[9540.4004, 8544.2471],
-			[9523.5410, 8505.0156],
-			[9502.9043, 8470.8223]
-		];
-		// starting directions in which the vehicles are spawned on this route
-		_startdirs = 
-		[
-			35,
-			35,
-			35
-		];
-		// the routes
-		_waypoints = 
-		[
-			[9573.9238, 8603.8203],
-			[10779.979, 10752.867],
-			[9883.0000, 12795.109],
-			[9230.6670, 14191.858],
-			[8190.9907, 15869.275],
-			[6789.5913, 16126.018],
-			[7139.0513, 16877.182],
-			[6832.0098, 19443.926],
-			[4384.6670, 21031.820]
-		];
-		// end of route three
-	}; 
-	default {
-		// this shouldnt happen but just to be sure..
-		diag_log format["WASTELAND SERVER - WARNING! %1 encountered an error selecting routes - defaulting to route 1", _missionType];
-		// route 1
-		// starting positions for this route
-		_starts = 
-		[
-			[4684.3921, 13337.070],
-			[4663.5249, 13305.790],
-			[4643.0615, 13272.709]
-		];
-		// starting directions in which the vehicles are spawned on this route
-		_startdirs = 
-		[
-			33,
-			33,
-			33
-		];
-		// the routes
-		_waypoints = 
-		[			
-			[4709.3672, 13381.538],
-			[6614.5122, 15335.907],
-			[8348.6055, 15781.597],
-			[9703.3369, 16182.543],
-			[11160.020, 17270.051],
-			[12748.146, 18834.535],
-			[12994.632, 19462.133],
-			[11125.767, 20896.094],
-			[11869.673, 22208.621]
-		];
-		// end of route one
-	}; 
-}; 
-
-_groupsm = createGroup civilian;
-
-_createVehicle = {
-    private ["_type","_position","_direction","_vehicle","_soldier"];
-    
-    _type = _this select 0;
-    _position = _this select 1;
-    _direction = _this select 2;
-    _groupsm = _this select 3;
-    
-    _vehicle = createVehicle [_type, _position, [], 0, "None"];
-	_vehicle setVariable ["BIS_enableRandomization", false, true];
-	[_vehicle] call vehicleSetup;
-    _vehicle setDir _direction;
-    _groupsm addVehicle _vehicle;
-    
-    _soldier = [_groupsm, _position] call createRandomSoldier; 
-    _soldier moveInDriver _vehicle;
-    _soldier = [_groupsm, _position] call createRandomSoldier; 
-    _soldier moveInCargo [_vehicle, 0];
-    _vehicle setVehicleLock "LOCKED";  // prevents players from getting into the vehicle while the AI are still owning it
-	
-	if (_vehicle isKindOf "C_Van_01_box_F") then
+	// pick the vehicles for the convoy
+	_convoyVeh = if (missionDifficultyHard) then
 	{
-		_vehicle setObjectTextureGlobal [0, "\A3\Soft_F_Bootcamp\Van_01\Data\Van_01_ext_IG_01_CO.paa"]; // Apply camo instead of civilian color
+		["I_G_Offroad_01_armed_F", "I_Truck_02_transport_F", "I_G_Offroad_01_F"]
+	}
+	else
+	{
+		[
+			["B_Quadbike_01_F", "C_Van_01_box_F", "B_Quadbike_01_F"],
+			["I_G_Offroad_01_F", "I_Truck_02_transport_F", "I_G_Offroad_01_F"]
+		] call BIS_fnc_selectRandom;
 	};
-	
-    _vehicle
-};
 
-_vehicles = [];
-_vehicles set [0, [_veh1, (_starts select 0), (_startdirs select 0), _groupsm] call _createVehicle];
-_vehicles set [1, [_veh2, (_starts select 1), (_startdirs select 1), _groupsm] call _createVehicle];
-_vehicles set [2, [_veh3, (_starts select 2), (_startdirs select 2), _groupsm] call _createVehicle];
+	_veh1 = _convoyVeh select 0;
+	_veh2 = _convoyVeh select 1;
+	_veh3 = _convoyVeh select 2;
 
-_leader = driver (_vehicles select 0);
-_groupsm selectLeader _leader;
-_leader setRank "LIEUTENANT";
+	_createVehicle =
+	{
+		private ["_type", "_position", "_direction", "_vehicle", "_soldier"];
 
-_groupsm setCombatMode "GREEN"; // units will defend themselves
-_groupsm setBehaviour "SAFE"; // units feel safe until they spot an enemy or get into contact
-_groupsm setFormation "STAG COLUMN";
-_groupsm setSpeedMode "LIMITED";
+		_type = _this select 0;
+		_position = _this select 1;
+		_direction = _this select 2;
 
-{
-    _waypoint = _groupsm addWaypoint [_x, 0];
-    _waypoint setWaypointType "MOVE";
-    _waypoint setWaypointCompletionRadius 50;
-    _waypoint setWaypointCombatMode "GREEN"; 
-    _waypoint setWaypointBehaviour "SAFE"; // safe is the best behaviour to make AI follow roads, as soon as they spot an enemy or go into combat they WILL leave the road for cover though!
-    _waypoint setWaypointFormation "STAG COLUMN";
-    _waypoint setWaypointSpeed "LIMITED";
-} forEach _waypoints;
+		_vehicle = createVehicle [_type, _position, [], 0, "None"];
+		_vehicle setVariable ["R3F_LOG_disabled", true, true];
+		[_vehicle] call vehicleSetup;
 
-_marker = createMarker [_missionMarkerName, position leader _groupsm];
-_marker setMarkerType "mil_destroy";
-_marker setMarkerSize [1.25, 1.25];
-_marker setMarkerColor "ColorRed";
-_marker setMarkerText "Truck Convoy";
+		_vehicle setDir _direction;
+		_aiGroup addVehicle _vehicle;
 
-_picture = getText (configFile >> "CfgVehicles" >> _veh2 >> "picture");
-_vehicleName = getText (configFile >> "cfgVehicles" >> _veh2 >> "displayName");
-_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Side Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> transporting weapon cargo is on route! Stop the convoy and capture the goods!</t>", _missionType, _picture, _vehicleName, sideMissionColor, subTextColor];
-[_hint] call hintBroadcast;
+		_soldier = [_aiGroup, _position] call createRandomSoldier;
+		_soldier moveInDriver _vehicle;
 
-diag_log format["WASTELAND SERVER - Side Mission Waiting to be Finished: %1", _missionType];
+		_soldier = [_aiGroup, _position] call createRandomSoldier;
+		_soldier moveInCargo [_vehicle, 0];
 
-_failed = false;
-_startTime = floor(time);
-_numWaypoints = count waypoints _groupsm;
-waitUntil
-{
-    private ["_unitsAlive"];
-    
-    sleep 10; 
-    
-    _marker setMarkerPos (position leader _groupsm);
-    
-    if ((floor time) - _startTime >= sideMissionTimeout) then { _failed = true };
-    if (currentWaypoint _groupsm >= _numWaypoints) then { _failed = true }; // Convoy got successfully to the target location
-    _unitsAlive = { alive _x } count units _groupsm;
-    
-    _unitsAlive == 0 || _failed
-};
-
-if(_failed) then
-{
-    // Mission failed
-    if not(isNil "_vehicle") then {deleteVehicle _vehicle;};
-	{if (vehicle _x != _x) then { deleteVehicle vehicle _x; }; deleteVehicle _x;}forEach units _groupsm;
-	{deleteVehicle _x;}forEach units _groupsm;
-	deleteGroup _groupsm; 
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time.</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
-    [_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
-} else {
-	// Mission completed
-	// unlock the vehicles incase the player cleared the mission without destroying them
-	if (!isNil "_vehicles") then { 
+		switch (true) do
 		{
-			_x setVehicleLock "UNLOCKED"; 
-			_x setVariable ["R3F_LOG_disabled", false, true];
-		}forEach _vehicles;
+			case (_type isKindOf "Offroad_01_armed_base_F"):
+			{
+				_soldier = [_aiGroup, _position] call createRandomSoldier;
+				_soldier moveInGunner _vehicle;
+			};
+			case (_type isKindOf "C_Van_01_box_F"):
+			{
+				[_vehicle, "\A3\Soft_F_Bootcamp\Van_01\Data\Van_01_ext_IG_01_CO.paa", [0]] call applyVehicleTexture; // Apply camo instead of civilian color
+			};
+		};
+
+		[_vehicle, _aiGroup] spawn checkMissionVehicleLock;
+
+		_vehicle
 	};
-	// give the rewards
-	_ammobox = "Box_NATO_Wps_F" createVehicle getMarkerPos _marker;
-    [_ammobox,"mission_USSpecial2"] call fn_refillbox;
-	_ammobox allowDamage false;
-	
-	deleteGroup _groupsm; 
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The convoy has been stopped, the ammo creates and vehicles are yours to take.</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
-    [_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Side Mission Success: %1",_missionType];
+
+	_aiGroup = createGroup CIVILIAN;
+
+	_vehicles =
+	[
+		[_veh1, _starts select 0, _startDirs select 0] call _createVehicle,
+		[_veh2, _starts select 1, _startDirs select 1] call _createVehicle,
+		[_veh3, _starts select 2, _startDirs select 2] call _createVehicle
+	];
+
+	_leader = effectiveCommander (_vehicles select 0);
+	_aiGroup selectLeader _leader;
+
+	_aiGroup setCombatMode "GREEN"; // units will defend themselves
+	_aiGroup setBehaviour "SAFE"; // units feel safe until they spot an enemy or get into contact
+	_aiGroup setFormation "STAG COLUMN";
+
+	_speedMode = if (missionDifficultyHard) then { "NORMAL" } else { "LIMITED" };
+
+	_aiGroup setSpeedMode _speedMode;
+
+	{
+		_waypoint = _aiGroup addWaypoint [_x, 0];
+		_waypoint setWaypointType "MOVE";
+		_waypoint setWaypointCompletionRadius 25;
+		_waypoint setWaypointCombatMode "GREEN";
+		_waypoint setWaypointBehaviour "SAFE"; // safe is the best behaviour to make AI follow roads, as soon as they spot an enemy or go into combat they WILL leave the road for cover though!
+		_waypoint setWaypointFormation "STAG COLUMN";
+		_waypoint setWaypointSpeed _speedMode;
+	} forEach _waypoints;
+
+	_missionPos = getPosATL leader _aiGroup;
+
+	_missionPicture = getText (configFile >> "CfgVehicles" >> _veh2 >> "picture");
+	_vehicleName = getText (configFile >> "CfgVehicles" >> _veh2 >> "displayName");
+
+	_missionHintText = format ["A <t color='%2'>%1</t> transporting 2 weapon crates is being escorted. Stop the convoy!", _vehicleName, sideMissionColor];
+
+	_numWaypoints = count waypoints _aiGroup;
 };
 
-deleteMarker _marker;
+_waitUntilMarkerPos = {getPosATL _leader};
+_waitUntilExec = nil;
+_waitUntilCondition = {currentWaypoint _aiGroup >= _numWaypoints};
+
+_failedExec = nil;
+
+// _vehicles are automatically deleted or unlocked in missionProcessor depending on the outcome
+
+_successExec =
+{
+	// Mission completed
+	_box1 = createVehicle ["Box_NATO_Wps_F", _lastPos, [], 2, "None"];
+	_box1 setDir random 360;
+	[_box1, "mission_USSpecial2"] call fn_refillbox;
+
+	_box2 = createVehicle ["Box_East_WpsSpecial_F", _lastPos, [], 2, "None"];
+	_box2 setDir random 360;
+	[_box2, "mission_USLaunchers"] call fn_refillbox;
+
+	_successHintMessage = "The convoy has been stopped, the weapon crates and vehicles are now yours to take.";
+};
+
+_this call sideMissionProcessor;

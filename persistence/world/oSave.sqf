@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.2
 //	@file Name: oSave.sqf
 //	@file Author: [GoT] JoSchaap, AgentRev
@@ -39,9 +42,20 @@ if !(_fileName call PDB_exists) then // iniDB_exists
 
 _savingMethod = ["A3W_savingMethod", 1] call getPublicVar;
 
+_purchasedVehicleSaving = ["A3W_purchasedVehicleSaving"] call isConfigOn;
+_missionVehicleSaving = ["A3W_missionVehicleSaving"] call isConfigOn;
+_vehicleSaving = (_purchasedVehicleSaving || _missionVehicleSaving);
+_vehFileName = "Vehicles" call PDB_objectFileName;
+
+// If file doesn't exist, create Info section at the top
+if (_vehicleSaving && !(_vehFileName call PDB_exists)) then // iniDB_exists
+{
+	[_vehFileName, "Info", "VehCount", 0] call PDB_write; // iniDB_write
+};
+
 while {true} do
 {
-	uiSleep 60;
+	uiSleep 30;
 
 	_oldObjCount = [_fileName, "Info", "ObjCount", "NUMBER"] call PDB_read; // iniDB_read
 	_objCount = 0;
@@ -62,16 +76,20 @@ while {true} do
 			{
 				_netId = netId _obj;
 				_pos = ASLtoATL getPosWorld _obj;
+				{ _pos set [_forEachIndex, _x call fn_numToStr] } forEach _pos;
 				_dir = [vectorDir _obj, vectorUp _obj];
 				_damage = damage _obj;
 				_allowDamage = if (_obj getVariable ["allowDamage", false]) then { 1 } else { 0 };
 
-				if (isNil {_obj getVariable "baseSaving_spawningTime"}) then
+				_spawningTime = _obj getVariable "baseSaving_spawningTime";
+
+				if (isNil "_spawningTime") then
 				{
-					_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
+					_spawningTime = diag_tickTime;
+					_obj setVariable ["baseSaving_spawningTime", _spawningTime];
 				};
 
-				_hoursAlive = (_obj getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - (_obj getVariable "baseSaving_spawningTime")) / 3600);
+				_hoursAlive = (_obj getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - _spawningTime) / 3600);
 
 				_variables = [];
 
@@ -149,6 +167,11 @@ while {true} do
 				_fuelCargo = getFuelCargo _obj;
 				_repairCargo = getRepairCargo _obj;
 
+				// Fix for -1.#IND
+				if !(_ammoCargo >= 0) then { _ammoCargo = 0 };
+				if !(_fuelCargo >= 0) then { _fuelCargo = 0 };
+				if !(_repairCargo >= 0) then { _repairCargo = 0 };
+
 				// Save data
 
 				_objCount = _objCount + 1;
@@ -213,5 +236,191 @@ while {true} do
 	{
 		saveProfileNamespace; // this line is crucial to ensure all profileNamespace data submitted to the server is saved
 		diag_log "A3W - profileNamespace saved";
+	};
+
+	uiSleep 30;
+
+	// Vehicle saving
+	if (_vehicleSaving) then
+	{
+		_oldVehCount = [_vehFileName, "Info", "VehCount", "NUMBER"] call PDB_read; // iniDB_read
+		_vehCount = 0;
+
+		{
+			_veh = _x;
+
+			// Only save vehicles that are alive and touching the ground or water
+			if (!(_veh isKindOf "Man") && {alive _veh && (isTouchingGround _veh || (getPos _veh) select 2 < 1)}) then
+			{
+				_class = typeOf _veh;
+				_purchasedVehicle = _veh getVariable ["A3W_purchasedVehicle", false];
+				_missionVehicle = (_veh getVariable ["A3W_missionVehicle", false] && !(_veh getVariable ["R3F_LOG_disabled", false]));
+
+				if ((_purchasedVehicle && _purchasedVehicleSaving) ||
+				    (_missionVehicle && _missionVehicleSaving)) then
+				{
+					_pos = ASLtoATL getPosWorld _veh;
+					{ _pos set [_forEachIndex, _x call fn_numToStr] } forEach _pos;
+					_dir = [vectorDir _veh, vectorUp _veh];
+					_fuel = fuel _veh;
+					_damage = damage _veh;
+					_hitPoints = [];
+
+					{
+						_hitPoint = configName _x;
+						_hitPoints set [count _hitPoints, [_hitPoint, _veh getHitPointDamage _hitPoint]];
+					} forEach (_class call getHitPoints);
+
+					_spawningTime = _veh getVariable "vehSaving_spawningTime";
+
+					if (isNil "_spawningTime") then
+					{
+						_spawningTime = diag_tickTime;
+						_veh setVariable ["vehSaving_spawningTime", _spawningTime];
+					};
+
+					_lastUse = _veh getVariable ["vehSaving_lastUse", _spawningTime];
+
+					if ({isPlayer _x} count crew _veh > 0 || isPlayer ((uavControl _veh) select 0)) then
+					{
+						_lastUse = diag_tickTime;
+						_veh setVariable ["vehSaving_lastUse", _lastUse];
+						_veh setVariable ["vehSaving_hoursUnused", 0];
+					};
+
+					_hoursAlive = (_veh getVariable ["vehSaving_hoursAlive", 0]) + ((diag_tickTime - _spawningTime) / 3600);
+					_hoursUnused = (_veh getVariable ["vehSaving_hoursUnused", 0]) + ((diag_tickTime - _lastUse) / 3600);
+
+					_variables = [];
+
+					_owner = _veh getVariable ["ownerUID", ""];
+
+					if !(_owner in ["","0"]) then
+					{
+						_variables pushBack ["ownerUID", _owner];
+					};
+
+					switch (true) do
+					{
+						case _purchasedVehicle:
+						{
+							_variables pushBack ["A3W_purchasedVehicle", true];
+						};
+						case _missionVehicle:
+						{
+							_variables pushBack ["A3W_missionVehicle", true];
+						};
+					};
+
+					_textures = [];
+					{
+						[_textures, _x select 1, [_x select 0]] call fn_addToPairs;
+					} forEach (_veh getVariable ["A3W_objectTextures", []]);
+
+					_weapons = [];
+					_magazines = [];
+					_items = [];
+					_backpacks = [];
+
+					if (_class call _hasInventory) then
+					{
+						// Save weapons & ammo
+						_weapons = (getWeaponCargo _veh) call cargoToPairs;
+						_magazines = (getMagazineCargo _veh) call cargoToPairs;
+						_items = (getItemCargo _veh) call cargoToPairs;
+						_backpacks = (getBackpackCargo _veh) call cargoToPairs;
+					};
+
+					_turretMags = magazinesAmmo _veh;
+					_turretMags2 = [];
+					_turretMags3 = [];
+					_hasDoorGuns = isClass (configFile >> "CfgVehicles" >> _class >> "Turrets" >> "RightDoorGun");
+
+					_turrets = if (_hasDoorGuns) then { [[-1],[2]] } else { [[-1]] + ([_veh, []] call BIS_fnc_getTurrets) };
+
+					{
+						_path = _x;
+
+						{
+							if ([_turretMags, _x, -1] call fn_getFromPairs == -1 || _hasDoorGuns) then
+							{
+								if (_veh currentMagazineTurret _path == _x && {count _turretMags3 == 0}) then
+								{
+									_turretMags3 set [count _turretMags3, [_x, _path, [_veh currentMagazineDetailTurret _path] call getMagazineDetailAmmo]];
+								}
+								else
+								{
+									_turretMags2 set [count _turretMags2, [_x, _path]];
+								};
+							};
+						} forEach (_veh magazinesTurret _path);
+					} forEach _turrets;
+
+					_ammoCargo = getAmmoCargo _veh;
+					_fuelCargo = getFuelCargo _veh;
+					_repairCargo = getRepairCargo _veh;
+
+					// Fix for -1.#IND
+					if !(_ammoCargo >= 0) then { _ammoCargo = 0 };
+					if !(_fuelCargo >= 0) then { _fuelCargo = 0 };
+					if !(_repairCargo >= 0) then { _repairCargo = 0 };
+
+					// Save data
+
+					_vehCount = _vehCount + 1;
+					_vehName = format ["Veh%1", _vehCount];
+
+					{
+						[_vehFileName, _vehName, _x select 0, _x select 1, false] call PDB_write; // iniDB_write
+					}
+					forEach
+					[
+						["Class", _class],
+						["Position", _pos],
+						["Direction", _dir],
+						["HoursAlive", _hoursAlive],
+						["HoursUnused", _hoursUnused],
+						["Fuel", _fuel],
+						["Damage", _damage],
+						["HitPoints", _hitPoints],
+						["Variables", _variables],
+						["Textures", _textures],
+
+						["Weapons", _weapons],
+						["Magazines", _magazines],
+						["Items", _items],
+						["Backpacks", _backpacks],
+
+						["TurretMagazines", _turretMags],
+						["TurretMagazines2", _turretMags2],
+						["TurretMagazines3", _turretMags3],
+
+						["AmmoCargo", _ammoCargo],
+						["FuelCargo", _fuelCargo],
+						["RepairCargo", _repairCargo]
+					];
+
+					sleep 0.01;
+				};
+			};
+		} forEach allMissionObjects "AllVehicles";
+
+		[_vehFileName, "Info", "VehCount", _vehCount] call PDB_write; // iniDB_write
+		diag_log format ["A3W - %1 vehicles have been saved with %2", _vehCount, ["A3W_savingMethodName", "-ERROR-"] call getPublicVar];
+
+		// Reverse-delete old vehicles
+		if (_oldVehCount > _vehCount) then
+		{
+			for "_i" from _oldVehCount to (_vehCount + 1) step -1 do
+			{
+				[_vehFileName, format ["Veh%1", _i], false] call PDB_deleteSection; // iniDB_deleteSection
+			};
+		};
+
+		if (_savingMethod == 1) then
+		{
+			saveProfileNamespace;
+			diag_log "A3W - profileNamespace saved";
+		};
 	};
 };

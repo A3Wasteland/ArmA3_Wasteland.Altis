@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 
 #define vehicleManagementDialog 12000
 #define vehicleManagementListBox 12001
@@ -19,7 +22,7 @@ class VehicleManagement {
 	onLoad = "[4] execVM 'client\systems\adminPanel\populateVehicles.sqf'";
 
 	class controlsBackground {
-		
+
 		class MainBackground: w_RscPicture
 		{
 			idc = -1;
@@ -111,9 +114,9 @@ class VehicleManagement {
 			h = 0.030 * safezoneH;
 		};
 	};
-	
+
 	class controls {
-		
+
 		class vehicleListBox: w_RscList
 		{
 			idc = vehicleManagementListBox;
@@ -123,7 +126,7 @@ class VehicleManagement {
 			w = 0.32875 * safezoneW;
 			h = 0.250 * safezoneH;
 		};
-		
+
 		class civButton: w_RscButton
 		{
 			idc = vehicleManagementCivButton;
@@ -203,4 +206,5 @@ class VehicleManagement {
 			color[] = {0.95,0.1,0.1,1};
 		};
 	};
-};
+};
+

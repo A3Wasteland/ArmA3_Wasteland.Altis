@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: spawnAction.sqf
 //	@file Author: [404] Deadbeat, [KoS] Bewilderbeest, AgentRev
@@ -47,7 +50,7 @@ spawnActionHandle = [_this select 1, _this select 2] spawn
 		profileNamespace setVariable ["A3W_preloadSpawn", false];
 	};
 
-	switch (_switch) do 
+	switch (_switch) do
 	{
 		case 1: { _data call spawnInTown };
 		case 2: { _data call spawnOnBeacon };
@@ -71,7 +74,7 @@ _header = _dialog displayCtrl respawn_Content_Text;
 
 if (cbChecked (_dialog displayCtrl respawn_Preload_Checkbox)) then
 {
-	_header ctrlSetStructuredText parseText "<t size='0.5'>�<br/></t><t size='1.33'>Preloading spawn...</t>";
+	_header ctrlSetStructuredText parseText "<t size='0.5'> <br/></t><t size='1.33'>Preloading spawn...</t>";
 };
 
 if (typeName spawnActionHandle == "SCRIPT") then

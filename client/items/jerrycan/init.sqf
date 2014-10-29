@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //@file Version: 1.0
 //@file Name: init.sqf
 //@file Author: MercyfulFate
@@ -21,18 +24,18 @@ _syphon = [_path, "syphon.sqf"] call mf_compile;
 _icon = "client\icons\jerrycan.paa";
 
 _max = {
-    private ["_empty", "_full"];
-    _empty = MF_ITEMS_JERRYCAN_EMPTY call mf_inventory_count;
-    _full = MF_ITEMS_JERRYCAN_FULL call mf_inventory_count;
-    (_empty + _full) >= MF_ITEMS_JERRYCAN_MAX;
+	private ["_empty", "_full"];
+	_empty = MF_ITEMS_JERRYCAN_EMPTY call mf_inventory_count;
+	_full = MF_ITEMS_JERRYCAN_FULL call mf_inventory_count;
+	(_empty + _full) >= MF_ITEMS_JERRYCAN_MAX;
 };
 
 mf_jerrycan_nearest_pump = {
 	_pump_objects = ["Land_FuelStation_Feed_F", "Land_MetalBarrel_F", "Land_fs_feed_F", "Land_Tank_rust_F"];
-    _objects = nearestobjects [player, _pump_objects,  3];
-    _object = objNull;
-    if (count _objects > 0) then {_object = _objects select 0;};
-    _object;
+	_objects = nearestobjects [player, _pump_objects,  3];
+	_object = objNull;
+	if (count _objects > 0) then {_object = _objects select 0;};
+	_object;
 } call mf_compile;
 
 mf_jerrycan_nearest_vehicle = {
@@ -54,16 +57,16 @@ mf_jerrycan_fuel_amount = {
 } call mf_compile;
 
 mf_remote_refuel = {
-    private ["_vehicle", "_qty", "_fuel"];
-    _vehicle = objectFromNetId (_this select 0);
-    _fuel = fuel _vehicle + ([_vehicle] call mf_jerrycan_fuel_amount);
+	private ["_vehicle", "_qty", "_fuel"];
+	_vehicle = objectFromNetId (_this select 0);
+	_fuel = fuel _vehicle + ([_vehicle] call mf_jerrycan_fuel_amount);
 	_vehicle setFuel (_fuel min 1);
 } call mf_compile;
 
 mf_remote_syphon = {
-    private ["_vehicle", "_qty", "_fuel"];
-    _vehicle = objectFromNetId (_this select 0);
-    _fuel = fuel _vehicle - ([_vehicle] call mf_jerrycan_fuel_amount);
+	private ["_vehicle", "_qty", "_fuel"];
+	_vehicle = objectFromNetId (_this select 0);
+	_fuel = fuel _vehicle - ([_vehicle] call mf_jerrycan_fuel_amount);
 	_vehicle setFuel (_fuel max 0);
 } call mf_compile;
 

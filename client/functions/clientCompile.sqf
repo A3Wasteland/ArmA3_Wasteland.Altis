@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: clientCompile.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, MercyfulFate, AgentRev
 //	@file Args:
@@ -20,6 +23,7 @@ addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
 canPushPlaneBack = "client\functions\canPushPlaneBack.sqf" call mf_compile;
 canPushVehicleOnFoot = "client\functions\canPushVehicleOnFoot.sqf" call mf_compile;
 canPushWatercraft = "client\functions\canPushWatercraft.sqf" call mf_compile;
+deleteEmptyGroup = "client\functions\deleteEmptyGroup.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
 fn_addManagedAction = "client\functions\fn_addManagedAction.sqf" call mf_compile;
 fn_disableCollision = "client\functions\fn_disableCollision.sqf" call mf_compile;
@@ -64,8 +68,6 @@ spawnRandom = "client\functions\spawnRandom.sqf" call mf_compile;
 timeSync = "client\functions\clientTimeSync.sqf" call mf_compile;
 
 // Update scripts
-updateMissionsMarkers = "client\functions\updatePlayerMissionMarkers.sqf" call mf_compile;
-updateRadarMarkers = "client\functions\updatePlayerRadarMarkers.sqf" call mf_compile;
 updateTeamKiller = "client\functions\updateTeamKiller.sqf" call mf_compile;
 
 // Team-kill system
@@ -74,16 +76,15 @@ teamkillMessage = "client\functions\showTeamKillMessage.sqf" call mf_compile;
 
 // Dialog compiles
 client_respawnDialog = "client\functions\loadRespawnDialog.sqf" call mf_compile;
+fn_respawnTimer = "client\systems\scoreboard\fn_respawnTimer.sqf" call mf_compile;
 loadGeneralStore = "client\systems\generalStore\loadGenStore.sqf" call mf_compile;
 loadGunStore = "client\systems\gunStore\loadGunStore.sqf" call mf_compile;
+loadScoreboard = "client\systems\scoreboard\loadScoreboard.sqf" call mf_compile;
 gearProperties = "client\functions\gearProperties.sqf" call mf_compile;
 getCapacity = "client\functions\getCapacity.sqf" call mf_compile;
 getItemInfo = "client\functions\getItemInfo.sqf" call mf_compile;
 getSellPriceList = "client\systems\selling\getSellPriceList.sqf" call mf_compile;
 requestStoreObject = "client\functions\requestStoreObject.sqf" call mf_compile;
-
-// Custom paint/textures on vehicles
-applyVehicleTexture = "client\systems\vehicleStore\applyVehicleTexture.sqf" call mf_compile;
 
 if (isNil "A3W_fnc_MP") then { A3W_fnc_MP = compile preprocessFileLineNumbers "\A3\functions_f\MP\fn_MP.sqf" };
 if (isNil "A3W_fnc_MPexec") then { A3W_fnc_MPexec = compile preprocessFileLineNumbers "\A3\functions_f\MP\fn_MPexec.sqf" };

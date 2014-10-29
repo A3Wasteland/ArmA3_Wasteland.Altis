@@ -1,26 +1,20 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: createMissionLocation.sqf
-//	@file Author: [404] Deadbeat
+//	@file Author: [404] Deadbeat, AgentRev
 //	@file Created: 26/1/2013 15:19
 
 if (!isServer) exitwith {};
 
-private ["_GotLoc", "_randomIndex", "_selectedMarker", "_returnData"];
-_GotLoc = false;
+private ["_validLocations", "_selectedMarker", "_markerIndex"];
 
-while {!_GotLoc} do 
-{
-	_randomIndex = MissionSpawnMarkers call BIS_fnc_randomIndex;
+_validLocations = [MissionSpawnMarkers, { !(_x select 1) }] call BIS_fnc_conditionalSelect;
 
-	//If the index of the mission markers array is false then break the loop and finish up doing the mission
-	if (!((MissionSpawnMarkers select _randomIndex) select 1)) then 
-	{
-		_selectedMarker = MissionSpawnMarkers select _randomIndex select 0;
-		_randomPos = getMarkerPos _selectedMarker;
-        _returnData = [_randomPos, _randomIndex];
-		MissionSpawnMarkers select _randomIndex set [1, true];
-		_GotLoc = true;
-	};
-};
+_selectedMarker = (_validLocations call BIS_fnc_selectRandom) select 0;
+_markerIndex = [MissionSpawnMarkers, _selectedMarker] call BIS_fnc_findInPairs;
 
-_returnData
+(MissionSpawnMarkers select _markerIndex) set [1, true];
+
+[markerPos _selectedMarker, _markerIndex]

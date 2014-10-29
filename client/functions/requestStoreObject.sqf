@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: requestStoreObject.sqf
 //	@file Author: AgentRev
@@ -39,20 +42,20 @@ if (isNil "_object" || {isNull objectFromNetId _object}) then
 		private ["_requestKey", "_postTimeout", "_object"];
 		_requestKey = _this;
 		_postTimeout = time + OBJECT_PURCHASE_POST_TIMEOUT;
-		
+
 		while {isNil "_object" && time < _postTimeout} do
 		{
 			sleep 0.1;
 			_object = player getVariable _requestKey;
 		};
-		
+
 		if (!isNil "_object") then
 		{
 			deleteVehicle objectFromNetId _object;
 			player setVariable [_requestKey, nil, true];
 		};
 	};
-	
+
 	[_itemText] call _showItemSpawnTimeoutError;
 }
 else

@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 
 /*
 	Author: Karel Moricky, modified by AgentRev
@@ -8,7 +11,7 @@
 	Parameter(s):
 	_this select 0: STRING - Packet variable name
 	_this select 1: ARRAY - Packet value (sent by A3W_fnc_MP function; see its description for more details)
-	
+
 	Returns:
 	BOOL - true if function was executed successfuly
 */
@@ -18,12 +21,12 @@ private ["_params","_functionName","_target","_isPersistent","_isCall","_varName
 _varName = _this select 0;
 _varValue = _this select 1;
 
-_mode = 	[_varValue,0,[0]] call bis_fnc_param;
-_params = 	[_varValue,1,[]] call bis_fnc_param;
-_functionName =	[_varValue,2,"",[""]] call bis_fnc_param;
-_target =	[_varValue,3,true,[objnull,true,0,[],sideUnknown,grpnull]] call bis_fnc_param;
-_isPersistent =	[_varValue,4,false,[false]] call bis_fnc_param;
-_isCall =	[_varValue,5,false,[false]] call bis_fnc_param;
+_mode = [_varValue,0,[0]] call bis_fnc_param;
+_params = [_varValue,1,[]] call bis_fnc_param;
+_functionName = [_varValue,2,"",[""]] call bis_fnc_param;
+_target = [_varValue,3,true,[objnull,true,0,[],sideUnknown,grpnull]] call bis_fnc_param;
+_isPersistent = [_varValue,4,false,[false]] call bis_fnc_param;
+_isCall = [_varValue,5,false,[false]] call bis_fnc_param;
 
 if (ismultiplayer && _mode == 0) then {
 	if (isserver) then {
@@ -100,14 +103,14 @@ if (ismultiplayer && _mode == 0) then {
 		default {true};
 	};
 
-	if (_canExecute) then 
+	if (_canExecute) then
 	{
 		private ["_isWhitelisted", "_defineServerRules", "_logMsg"];
-		
+
 		_isWhitelisted = [["A3W_fnc_", "mf_remote_"], _functionName] call fn_startsWith;
-		
+
 		_defineServerRules = (_functionName == "BIS_fnc_execVM" && {[_params, 1, "", [""]] call BIS_fnc_param == "client\functions\defineServerRules.sqf"});
-		
+
 		if (_isWhitelisted || _defineServerRules) then
 		{
 			_function = missionnamespace getvariable _functionName;

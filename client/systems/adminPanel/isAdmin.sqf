@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: isAdmin.sqf
 //	@file Author: AgentRev
@@ -9,12 +12,12 @@ _result = false;
 _findUIDinArray =
 {
 	private ["_uid", "_adminType", "_adminList", "_found"];
-	
+
 	_uid = _this select 0;
 	_adminType = _this select 1;
 	_adminList = [];
 	_found = false;
-	
+
 	switch (typeName _adminType) do
 	{
 		case (typeName {}):	{ _adminList = call _adminType };
@@ -40,7 +43,7 @@ _findUIDinArray =
 			};
 		};
 	};
-	
+
 	_found || _uid in _adminList
 };
 

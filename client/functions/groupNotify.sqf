@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: groupNotify.sqf
 //	@file Author: AgentRev
 
@@ -13,7 +16,7 @@ switch (_type) do
 
 		if (isPlayer _sender) then
 		{
-			if (!isStreamFriendlyUIEnabled) then
+			if (isStreamFriendlyUIEnabled) then
 			{
 				_msg = "You have been invited<br/>to join a group";
 			}

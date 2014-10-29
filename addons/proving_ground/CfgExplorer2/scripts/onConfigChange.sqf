@@ -10,7 +10,7 @@ _selectedIndex = _this select 1;
 // *** and set some global variables to inital values
 // ***
 
-switch (_selectedIndex) do 
+switch (_selectedIndex) do
 {
 	case 0:
 	{
@@ -18,20 +18,20 @@ switch (_selectedIndex) do
 		CurrentConfig = configFile;
 		ConfigPath = [configFile];
 	};
-	
+
 	case 1:
 	{
 		CurrentRoot = missionConfigFile;
 		CurrentConfig = missionConfigFile;
 		ConfigPath = [missionConfigFile];
 	};
-    
+
 	case 2:
 	{
 		CurrentRoot = campaignConfigFile;
 		CurrentConfig = campaignConfigFile;
 		ConfigPath = [campaignConfigFile];
-	}; 
+	};
 };
 GVAR(IndexOrder) = [];
 

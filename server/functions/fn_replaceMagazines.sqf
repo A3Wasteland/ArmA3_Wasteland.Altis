@@ -1,9 +1,12 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: fn_replaceMagazines.sqf
 //	@file Author: AgentRev
 //	@file Created: 04/05/2013 17:00
 //	@file Args: container (Object), oldMagazineName (String), newMagazineName (String)
-//	
+//
 //	NOTE: Only use during mission init, as it ignores ammo and will replace all magazines with full ones.
 
 if (!isServer) exitWith {};
@@ -31,7 +34,7 @@ if (_magIndex != -1) then
 	{
 		_magazines set [_magIndex, _newMagazineName];
 	};
-	
+
 	clearMagazineCargoGlobal _container;
 
 	{

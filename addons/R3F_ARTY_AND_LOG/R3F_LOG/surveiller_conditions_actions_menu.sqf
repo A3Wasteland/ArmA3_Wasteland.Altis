@@ -71,7 +71,7 @@ while {true} do
 				isNull R3F_LOG_joueur_deplace_objet &&
 				{!isNull (_objet_pointe getVariable "R3F_LOG_est_transporte_par")} &&
 				{!(_objet_pointe getVariable "R3F_LOG_disabled")};
-			
+
 			// S'il est déplaçable
 			if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 			{
@@ -91,7 +91,7 @@ while {true} do
 						{!(_x getVariable "R3F_LOG_disabled")}
 					} count nearestObjects [_objet_pointe, R3F_LOG_CFG_remorqueurs, 18] > 0} &&
 					{!(_objet_pointe getVariable "R3F_LOG_disabled")};
-				
+
 				if ({_objet_pointe isKindOf (_x select 0)} count R3F_LOG_CFG_objets_transportables > 0) then
 				{
 					// Disable towing on loadable objects

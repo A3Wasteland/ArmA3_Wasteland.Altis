@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: FAR_HandleDamage_EH.sqf
 //	@file Author: Farooq, AgentRev
 
@@ -26,7 +29,7 @@ if (((_dead && !isNull _source) || (_criticalHit && UNCONSCIOUS(_unit))) && isNi
 		{
 			_suspect = _x;
 			_role = assignedVehicleRole _suspect;
-			
+
 			if (count _role > 0) then
 			{
 				_seat = _role select 0;

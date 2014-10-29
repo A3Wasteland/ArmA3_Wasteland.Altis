@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //@file Version: 1.1
 //@file Name: init.sqf
 //@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev, [KoS] Bewilderbeest
@@ -23,8 +26,6 @@ respawnDialogActive = false;
 groupManagmentActive = false;
 pvar_PlayerTeamKiller = objNull;
 doCancelAction = false;
-currentMissionsMarkers = [];
-currentRadarMarkers = [];
 
 //Initialization Variables
 playerCompiledScripts = false;
@@ -69,9 +70,9 @@ if (["A3W_playerSaving"] call isConfigOn) then
 {
 	call compile preprocessFileLineNumbers "persistence\players\c_setupPlayerDB.sqf";
 	call fn_requestPlayerData;
-	
+
 	waitUntil {!isNil "playerData_loaded"};
-	
+
 	[] spawn
 	{
 		// Save player every 60s
@@ -107,15 +108,13 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 //Setup Key Handler
 waitUntil {!isNull findDisplay 46};
 (findDisplay 46) displayAddEventHandler ["KeyDown", onKeyPress];
-//(findDisplay 46) displayAddEventHandler ["KeyUp", onKeyRelease];
+(findDisplay 46) displayAddEventHandler ["KeyUp", onKeyRelease];
 
 call compile preprocessFileLineNumbers "client\functions\setupClientPVars.sqf";
 
 //client Executes
 A3W_scriptThreads pushBack execVM "client\systems\hud\playerHud.sqf";
 [] execVM "client\functions\initSurvival.sqf";
-[] spawn updateMissionsMarkers;
-// [] call updateRadarMarkers;
 
 [] spawn
 {

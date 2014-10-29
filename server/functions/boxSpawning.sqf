@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.1
 //	@file Name: boxSpawning.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, AgentRev
@@ -28,12 +31,12 @@ _boxList =
 		_safePos = [_pos, 10, (_x select 1) / 2, 1, 0, 60 * (pi / 180), 0] call findSafePos; // spawns somewhere within half the town radius
 		_box = createVehicle [_boxClass, _safePos, [], 0, "NONE"];
 		_box allowDamage false;
-		
+
 		// Clear prexisting cargo first
 		clearMagazineCargoGlobal _box;
 		clearWeaponCargoGlobal _box;
 		clearItemCargoGlobal _box;
-		
+
 		switch (true) do
 		{
 			// Basic Weapons box contents
@@ -70,19 +73,19 @@ _boxList =
 					};
 					default { _boxItems = [] };
 				};
-				
+
 				[_box, _boxItems] call processItems;
-				
+
 				// Extra loadout
 				_boxItems =
 				[
 					["wep", "hgun_Pistol_heavy_01_F", 1, 5],
 					["mag", "9Rnd_45ACP_Mag", 5]
 				];
-				
+
 				[_box, _boxItems] call processItems;
 			};
-			
+
 			// Special Weapons box contents
 			case (["_WpsSpecial_F", _boxClass] call fn_findString != -1):
 			{
@@ -115,20 +118,20 @@ _boxList =
 					};
 					default { _boxItems = [] };
 				};
-				
+
 				[_box, _boxItems] call processItems;
-				
+
 				// Extra loadout
 				_boxItems =
 				[
 					["wep", "arifle_SDAR_F", 1, 4], // SDAR + 4 underwater mags
 					["mag", "30Rnd_556x45_Stanag", 4] // 4 normal mags
 				];
-				
+
 				[_box, _boxItems] call processItems;
 			};
 		};
-		
+
 		_counter = _counter + 1;
 	};
 } forEach (call cityList);

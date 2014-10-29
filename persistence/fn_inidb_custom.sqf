@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //Persistent Scripts by ZA-Gamers. www.za-gamers.co.za
 //Filename: fn_inidb_custom.sqf
 //Author: {ZAG}Ed!
@@ -32,8 +35,8 @@ iniDB_HashFunction = {
 	private["_mode", "_data", "_cdata"];
 	_mode = _this select 0;
 	_data = _this select 1;
-	
-	if((typeName _data) == "STRING") then {	
+
+	if((typeName _data) == "STRING") then {
 		_data = "iniDB" callExtension format["%1;%2", _mode, _data];
 		_cdata = call compile _data;
 
@@ -78,7 +81,7 @@ iniDB_exists = {
 	_data = "iniDB" callExtension format["exists;%1", _this];
 	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_exists returned %1", _data]; };
 	_cdata = call compile _data;
-	
+
 	if((_cdata select 0) && (_cdata select 1)) then {
 		true
 	} else {
@@ -92,7 +95,7 @@ iniDB_delete = {
 	private ["_data", "_cdata"];
 	_data = "iniDB" callExtension format["delete;%1", _this select 0]; //############################
 	_cdata = call compile _data;
-	
+
 	if((_cdata select 0)) then {
 		true
 	} else {
@@ -105,7 +108,7 @@ iniDB_deleteSection = {
 	private ["_data", "_cdata"];
 	_data = "iniDB" callExtension format["deletesection;%1;%2", _this select 0, _this select 1];
 	_cdata = call compile _data;
-	
+
 	if((_cdata select 0)) then {
 		true
 	} else {
@@ -129,7 +132,7 @@ iniDB_readRaw = {
 	if (_data != "") then {
 		_cdata = call compile _data;
 	};
-	
+
 	if((_cdata select 0)) then {
 		_cdata select 1
 	} else {
@@ -164,7 +167,7 @@ iniDB_Datarizer = {
 	if (__DEBUG_INIDB_CALLS__ == 1) then { diag_log format["iniDB_Datarizer called with %1", _this]; };
 	_string = _this select 0;
 	_type = _this select 1;
-	
+
 	if(_type == "ARRAY") then {
 		_return = call compile _string;
 	} else {
@@ -174,7 +177,7 @@ iniDB_Datarizer = {
 			_return = _string;
 		};
 	};
-	
+
 	_return
 }
 call mf_compile;
@@ -187,12 +190,12 @@ iniDB_read = {
 	_sec = _this select 1;
 	_key = _this select 2;
 	_data = [_file, _sec, _key] call iniDB_readRaw;
-	
+
 	if (count _this > 3) then {
 		_type = _this select 3;
 		_data = [_data, _type] call iniDB_Datarizer;
 	};
-	
+
 	_data
 }
 call mf_compile;
@@ -205,7 +208,7 @@ iniDB_write = {
 	_sec = _this select 1;
 	_key = _this select 2;
 	_data = _this select 3;
-	
+
 	_data = format['"%1"', _data];
 	_data = [_file, _sec, _key, _data] call iniDB_writeRaw;
 	_data

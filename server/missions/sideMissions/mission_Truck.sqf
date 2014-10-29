@@ -1,105 +1,73 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: mission_Truck.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, AgentRev
 //	@file Created: 08/12/2012 15:19
-//	@file Args:
 
 if (!isServer) exitwith {};
-#include "sideMissionDefines.sqf";
+#include "sideMissionDefines.sqf"
 
-private ["_result", "_missionMarkerName", "_missionType", "_startTime", "_returnData", "_randomPos", "_randomIndex", "_vehicleClass", "_vehicle", "_picture", "_vehicleName", "_hint", "_currTime", "_playerPresent"];
+private ["_nbUnits", "_vehicleClass", "_vehicle"];
 
-//Mission Initialization.
-_result = 0;
-_missionMarkerName = "Truck_Marker";
-_missionType = "Supply Truck";
-_startTime = floor(time);
-
-diag_log format["WASTELAND SERVER - Side Mission Started: %1",_missionType];
-
-//Get Mission Location
-_returnData = call createMissionLocation;
-_randomPos = _returnData select 0;
-_randomIndex = _returnData select 1;
-
-diag_log format["WASTELAND SERVER - Side Mission Waiting to run: %1",_missionType];
-[sideMissionDelayTime] call createWaitCondition;
-diag_log format["WASTELAND SERVER - Side Mission Resumed: %1",_missionType];
-
-[_missionMarkerName,_randomPos,_missionType] call createClientMarker;
-
-_vehicleClass =
-[
-	"B_Truck_01_covered_F",
-	"B_Truck_01_fuel_F",
-	"B_Truck_01_medical_F",
-	"B_Truck_01_Repair_F",
-	"O_Truck_03_covered_F",
-	"O_Truck_03_fuel_F",
-	"O_Truck_03_medical_F",
-	"O_Truck_03_repair_F",
-	"I_Truck_02_covered_F",
-	"I_Truck_02_fuel_F",
-	"I_Truck_02_medical_F",
-	"I_Truck_02_box_F"
-] call BIS_fnc_selectRandom;
-
-//Vehicle Class, Posistion, Fuel, Ammo, Damage
-_vehicle = [_vehicleClass,_randomPos,1,1,0,"NONE"] call createMissionVehicle;
-
-_vehicle call fn_refilltruck;
-
-_picture = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "picture");
-_vehicleName = getText (configFile >> "cfgVehicles" >> typeOf _vehicle >> "displayName");
-
-// Remove " (Covered)" from vehicle name when applicable
-if ([_vehicleName, (count toArray _vehicleName) - 10] call BIS_fnc_trimString == " (Covered)") then
+_setupVars =
 {
-	_vehicleName = [_vehicleName, 0, (count toArray _vehicleName) - 11] call BIS_fnc_trimString;
+	_missionType = "Supply Truck";
+	_locationsArray = MissionSpawnMarkers;
+	_nbUnits = if (missionDifficultyHard) then { AI_GROUP_LARGE } else { AI_GROUP_MEDIUM };
 };
 
-_hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Side Objective</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>A <t color='%4'>%3</t> has been immobilized, go get it for your team.</t>", _missionType, _picture, _vehicleName, sideMissionColor, subTextColor];
-[_hint] call hintBroadcast;
-
-_CivGrpM = createGroup civilian;
-[_CivGrpM,_randomPos] call createMidGroup;
-
-diag_log format["WASTELAND SERVER - Side Mission Waiting to be Finished: %1",_missionType];
-_startTime = floor(time);
-
-waitUntil
+_setupObjects =
 {
-    sleep 1; 
-	_playerPresent = false;
-	_currTime = floor(time);
-	
-    if(_currTime - _startTime >= sideMissionTimeout) then {_result = 1;};
-    {if((isPlayer _x) AND (_x distance _vehicle <= missionRadiusTrigger)) then {_playerPresent = true};}forEach playableUnits;
-    _unitsAlive = ({alive _x} count units _CivGrpM);
-	(_result == 1) OR ((_playerPresent) AND (_unitsAlive < 1)) OR ((damage _vehicle) == 1)
+	_missionPos = markerPos _missionLocation;
+
+	_vehicleClass =
+	[
+		"B_Truck_01_covered_F",
+		"B_Truck_01_fuel_F",
+		"B_Truck_01_medical_F",
+		"B_Truck_01_Repair_F",
+		"O_Truck_03_covered_F",
+		"O_Truck_03_fuel_F",
+		"O_Truck_03_medical_F",
+		"O_Truck_03_repair_F",
+		"I_Truck_02_covered_F",
+		"I_Truck_02_fuel_F",
+		"I_Truck_02_medical_F",
+		"I_Truck_02_box_F"
+	] call BIS_fnc_selectRandom;
+
+	// Class, Position, Fuel, Ammo, Damage, Special
+	_vehicle = [_vehicleClass, _missionPos] call createMissionVehicle;
+	_vehicle call fn_refilltruck;
+
+	_aiGroup = createGroup CIVILIAN;
+	[_aiGroup, _missionPos, _nbUnits] call createCustomGroup;
+
+	_missionPicture = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "picture");
+	_vehicleName = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "displayName");
+
+	_missionHintText = format ["A <t color='%2'>%1</t> has been immobilized, go get it for your team.", _vehicleName, sideMissionColor];
 };
 
-_vehicle setVehicleLock "UNLOCKED";
-_vehicle disableTIEquipment true;
-_vehicle setVariable ["R3F_LOG_disabled", false, true];
+_waitUntilMarkerPos = nil;
+_waitUntilExec = nil;
+_waitUntilCondition = {!alive _vehicle};
 
-if(_result == 1) then
+_failedExec =
 {
-	//Mission Failed.
-    if (!isNil "_vehicle") then { deleteVehicle _vehicle };
-	{ deleteVehicle _x }forEach units _CivGrpM;
-    deleteGroup _CivGrpM;
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Failed</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>Objective failed, better luck next time.</t>", _missionType, _picture, _vehicleName, failMissionColor, subTextColor];
-	[_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Side Mission Failed: %1",_missionType];
-} else {
-	//Mission Complete.
-	deleteGroup _CivGrpM;
-    _hint = parseText format ["<t align='center' color='%4' shadow='2' size='1.75'>Objective Complete</t><br/><t align='center' color='%4'>------------------------------</t><br/><t align='center' color='%5' size='1.25'>%1</t><br/><t align='center'><img size='5' image='%2'/></t><br/><t align='center' color='%5'>The truck has been captured, well done.</t>", _missionType, _picture, _vehicleName, successMissionColor, subTextColor];
-	[_hint] call hintBroadcast;
-    diag_log format["WASTELAND SERVER - Side Mission Success: %1",_missionType];
+	// Mission failed
+	deleteVehicle _vehicle;
 };
 
-//Reset Mission Spot.
-MissionSpawnMarkers select _randomIndex set[1, false];
-[_missionMarkerName] call deleteClientMarker;
+_successExec =
+{
+	// Mission completed
+	_vehicle lock 1;
+	_vehicle setVariable ["R3F_LOG_disabled", false, true];
+
+	_successHintMessage = "The truck has been captured, well done.";
+};
+
+_this call sideMissionProcessor;

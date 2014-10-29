@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: setupServerPVars.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, [404] Pulse, AgentRev, MercyfulFate
 
@@ -11,10 +14,6 @@ pvar_warchest_funds_east = 0;
 publicVariable "pvar_warchest_funds_east";
 pvar_warchest_funds_west = 0;
 publicVariable "pvar_warchest_funds_west";
-clientMissionMarkers = [];
-publicVariable "clientMissionMarkers";
-clientRadarMarkers = [];
-publicVariable "clientRadarMarkers";
 currentDate = [];
 publicVariable "currentDate";
 currentInvites = [];

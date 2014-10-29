@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define welcomeText 3200
 #define tkWarningText 3500
 
@@ -6,7 +9,7 @@ class WelcomeMessage {
 	duration = 1e+011;
 	name= "WelcomeMessage";
 	onLoad = "uiNamespace setVariable ['WelcomeMessage', _this select 0]";
-	
+
 	class controlsBackground {
 		class WelcomeMessage_Text:w_RscText
 		{
@@ -27,7 +30,7 @@ class TeamKillWarningMessage {
 	duration = 1e+011;
 	name= "TeamKillWarningMessage";
 	onLoad = "uiNamespace setVariable ['TeamKillWarningMessage', _this select 0]";
-	
+
 	class controlsBackground {
 		class TeamKillWarningMessage:w_RscText
 		{
@@ -49,7 +52,8 @@ class TeamKillWarningMessage {
 
 class RscEmpty {
 	idd = -1;
-	duration = 1;
-	name= "RscEmpty";
-	onLoad = "";
+	name = "RscEmpty";
+	fadeIn = 0;
+	fadeOut = 0;
+	duration = 0;
 };
