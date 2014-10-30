@@ -8,6 +8,7 @@
 #define PLANE_COLLISION_DMG_SCALE 0.5
 #define WHEEL_COLLISION_DMG_SCALE 0.05
 #define HELI_MISSILE_DMG_SCALE 5.0
+#define PLANE_MiSSILE_DMG_SCALE 5.0
 #define IFV_DMG_SCALE 1.5
 #define TANK_DMG_SCALE 2.0
 
@@ -24,6 +25,7 @@ if (_selection != "?") then
 	if (!isNil "_oldDamage") then
 	{
 		_isHeli = _vehicle isKindOf "Helicopter";
+		_isPlane = _vehicle isKindOf "Plane";
 
 		if (_isHeli && _selection == "fuel_hit") then
 		{
@@ -53,6 +55,15 @@ if (_selection != "?") then
 					if ({_ammo isKindOf _x} count ["R_PG32V_F", "M_NLAW_AT_F", "M_Titan_AT", "M_Titan_AA", "M_Air_AA", "Missile_AA_04_F"] > 0) then
 					{
 						_damage = ((_damage - _oldDamage) * HELI_MISSILE_DMG_SCALE) + _oldDamage;
+					};
+				};
+				
+				// If vehicle is plane and projectile is missile then blow that shit up
+				if (_isPlane && _selection == "") then
+				{
+					if ({_ammo isKindOf _x} count ["R_PG32V_F", "M_NLAW_AT_F", "M_Titan_AT", "M_Titan_AA", "M_Air_AA", "Missile_AA_04_F"] > 0) then
+					{
+						_damage = ((_damage - _oldDamage) * PLANE_MISSILE_DMG_SCALE) + _oldDamage;
 					};
 				};
 
