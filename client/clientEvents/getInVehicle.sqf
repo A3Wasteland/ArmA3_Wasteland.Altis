@@ -18,7 +18,7 @@ if (isNil {_veh getVariable "A3W_unconsciousEngineEH"}) then
 	{
 		_veh = _this select 0;
 		_turnedOn = _this select 1;
-		
+
 		if (local _veh && {_turnedOn && (driver _veh) getVariable ["FAR_isUnconscious", 0] == 1}) then
 		{
 			(driver _veh) action ["EngineOff", _veh];
@@ -47,6 +47,7 @@ if ( (count _crew) > 1) then  //player already in vehicle when this code runs - 
 			if (!(playerSide in [BLUFOR,OPFOR]) && group _x != group player ) then //check if other ppl which where in vehicle before are in the players group
 			{
 				player action ["Eject", vehicle player];
+				["You can't enter vehicles of other independent players without grouping first.", 5] call mf_notify_client;
 			}
 		};
 	} forEach _crew;
