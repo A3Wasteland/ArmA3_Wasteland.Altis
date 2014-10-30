@@ -102,8 +102,8 @@ R3F_LOG_CFG_transporteurs =
 	["Heli_Attack_02_base_F", 20]
 ];
 
- 
-R3F_LOG_CFG_objets_transportables = 
+
+R3F_LOG_CFG_objets_transportables =
 [
 	["StaticWeapon", 5],
 	["Box_NATO_AmmoVeh_F", 10],

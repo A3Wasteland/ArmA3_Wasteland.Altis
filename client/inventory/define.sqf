@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 // This is the indexes into the array that makes up an "Item"
 #define ID 0
 #define QTY 1

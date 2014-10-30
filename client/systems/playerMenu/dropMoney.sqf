@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #include "dialog\player_sys.sqf";
 #define GET_DISPLAY (findDisplay playersys_DIALOG)
 #define GET_CTRL(a) (GET_DISPLAY displayCtrl ##a)
@@ -25,6 +28,8 @@ _cash = createVehicle ["Land_Money_F", [player, [0,1,0]] call relativePos, [], 0
 _cash setVariable ["cmoney", _money, true];
 _cash setVariable ["owner", "world", true];
 player setVariable ["cmoney", (player getVariable "cmoney") - _money, true];
+
+[] spawn fn_savePlayerData;
 
 sleep 0.5;
 mutexScriptInProgress = false;

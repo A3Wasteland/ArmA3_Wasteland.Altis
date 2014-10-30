@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: getInVehicle.sqf
 //	@file Author: AgentRev
 
@@ -15,7 +18,7 @@ if (isNil {_veh getVariable "A3W_unconsciousEngineEH"}) then
 	{
 		_veh = _this select 0;
 		_turnedOn = _this select 1;
-		
+
 		if (local _veh && {_turnedOn && (driver _veh) getVariable ["FAR_isUnconscious", 0] == 1}) then
 		{
 			(driver _veh) action ["EngineOff", _veh];

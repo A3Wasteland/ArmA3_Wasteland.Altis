@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: fn_replaceWeapons.sqf
 //	@file Author: AgentRev
@@ -29,7 +32,7 @@ if (_wepIndex != -1) then
 	{
 		_weapons set [_wepIndex, _newWeaponName];
 	};
-	
+
 	clearWeaponCargoGlobal _container;
 
 	{

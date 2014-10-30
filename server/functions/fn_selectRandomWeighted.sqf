@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: fn_selectRandomWeighted.sqf
 //	@file Author: AgentRev
@@ -33,10 +36,10 @@ if (_arrayCount > count _weights) exitWith
 if (_weightsTotal > 0) then
 {
 	private ["_random", "_index"];
-	
+
 	_random = random _weightsTotal;
 	_weightsTotal = 0;
-	
+
 	{
 		_weightsTotal = _weightsTotal + _x;
 		if (_random < _weightsTotal) exitWith
@@ -44,7 +47,7 @@ if (_weightsTotal > 0) then
 			_index = _forEachIndex;
 		};
 	} forEach _weights;
-	
+
 	if (!isNil "_index") then
 	{
 		_array select _index

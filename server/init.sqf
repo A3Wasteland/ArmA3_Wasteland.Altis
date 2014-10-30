@@ -1,3 +1,9 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.1
 //	@file Name: init.sqf
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev
@@ -85,7 +91,14 @@ _warchestSavingOn = ["A3W_warchestSaving"] call isConfigOn;
 _warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
 _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
 
-_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
+_purchasedVehicleSavingOn = ["A3W_purchasedVehicleSaving"] call isConfigOn;
+_missionVehicleSavingOn = ["A3W_missionVehicleSaving"] call isConfigOn;
+
+_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn || _purchasedVehicleSavingOn || _missionVehicleSavingOn);
+_vehicleSavingOn = (_purchasedVehicleSavingOn || _purchasedVehicleSavingOn);
+
+_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn || _purchasedVehicleSavingOn || _missionVehicleSavingOn);
+_vehicleSavingOn = (_purchasedVehicleSavingOn || _purchasedVehicleSavingOn);
 
 _setupPlayerDB = scriptNull;
 
@@ -132,18 +145,21 @@ if (_playerSavingOn || _serverSavingOn) then
 		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\players\s_setupPlayerDB.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 	};
 
-	[_serverSavingOn, _playerSavingOn] spawn
+	[_playerSavingOn, _serverSavingOn, _vehicleSavingOn] spawn
 	{
-		_serverSavingOn = _this select 0;
-		_playerSavingOn = _this select 1;
+		_playerSavingOn = _this select 0;
+		_serverSavingOn = _this select 1;
+		_vehicleSavingOn = _this select 2;
 
 		if (_serverSavingOn) then
 		{
 			call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
-			call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
 		};
 
-
+		if (_vehicleSavingOn) then
+		{
+  		call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
+		};
 	};
 
 	{
@@ -161,6 +177,8 @@ if (_playerSavingOn || _serverSavingOn) then
 	];
 };
 
+call compile preprocessFileLineNumbers "server\missions\setupMissionArrays.sqf";
+call compile preprocessFileLineNumbers "server\missions\setupMissionArrays.sqf";
 call compile preprocessFileLineNumbers "server\functions\createTownMarkers.sqf";
 
 _createTriggers = [] spawn compile preprocessFileLineNumbers "territory\server\createCaptureTriggers.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
@@ -251,11 +269,7 @@ else
 if (["A3W_serverMissions"] call isConfigOn) then
 {
 	diag_log "WASTELAND SERVER - Initializing Missions";
-	[] execVM "server\missions\sideMissionController.sqf";
-	sleep 5;
-	[] execVM "server\missions\mainMissionController.sqf";
-	sleep 5;
-	[] execVM "server\missions\moneyMissionController.sqf";
+	[] execVM "server\missions\masterController.sqf";
 };
 
 // Start clean-up loop

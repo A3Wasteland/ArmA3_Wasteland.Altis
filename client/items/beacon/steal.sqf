@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //@file Version: 1.0
 //@file Name: steal.sqf
 //@file Author: MercyfulFate
@@ -28,7 +31,7 @@ _hasFailed = {
 	_failed = true;
 	switch (true) do {
 		case (!alive player): {};
-        case (isNull _beacon): {_text = ERR_SOMEONE_ELSE_TAKEN};
+		case (isNull _beacon): {_text = ERR_SOMEONE_ELSE_TAKEN};
 		case (vehicle player != player): {_text = ERR_IN_VEHICLE};
 		case ((!_isIndie && _ownerSide == playerSide) || (_isIndie && {{getPlayerUID _x == _ownerUID} count units player > 0})): {_text = ERR_NOT_OPP_SIDE};
 		case (player distance _beacon > 5): {_text = ERR_TOO_FAR_AWAY;};
@@ -43,9 +46,9 @@ _hasFailed = {
 _success =  [MF_ITEMS_SPAWN_BEACON_STEAL_DURATION, ANIM, _hasFailed, [_beacon]] call a3w_actions_start;
 
 if (_success) then {
-    pvar_spawn_beacons = pvar_spawn_beacons - [_beacon];
-    publicVariable "pvar_spawn_beacons";
-    deleteVehicle _beacon;
-    [MF_ITEMS_SPAWN_BEACON, 1] call mf_inventory_add;
+	pvar_spawn_beacons = pvar_spawn_beacons - [_beacon];
+	publicVariable "pvar_spawn_beacons";
+	deleteVehicle _beacon;
+	[MF_ITEMS_SPAWN_BEACON, 1] call mf_inventory_add;
 	["You have successfully stolen the Spawn Beacon",5] call mf_notify_client;
 };

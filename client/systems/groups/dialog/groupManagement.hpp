@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #define groupManagementDialog 55510
 #define groupManagementPlayerList 55511
 #define groupManagementGroupList 55512
@@ -15,14 +18,14 @@ class GroupManagement {
 	idd = groupManagementDialog;
 	movingEnable = true;
 	enableSimulation = true;
-	
+
 	class controlsBackground {
-		
+
 		class MainBG : w_RscPicture {
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
 			colorBackground[] = {0,0,0,0};
-			text = "#(argb,8,8,3)color(0,0,0,0.6)";	
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
 			moving = true;
 			x = 0.0; y = 0.1;
 			w = 0.745; h = 0.65;
@@ -38,12 +41,12 @@ class GroupManagement {
 			x = 0.0; y = 0.1;
 			w = 0.745; h = 0.05;
 		};
-		
+
 		class MainTitle : w_RscText {
 			idc = -1;
 			text = "Group Management";
 			sizeEx = 0.04;
-			shadow = 2;		
+			shadow = 2;
 			x = 0.260; y = 0.10;
 			w = 0.3; h = 0.05;
 		};
@@ -52,7 +55,7 @@ class GroupManagement {
 			idc = -1;
 			text = "Players";
 			sizeEx = 0.025;
-			shadow = 2;		
+			shadow = 2;
 			x = 0.0875; y = 0.155;
 			w = 0.3; h = 0.050;
 		};
@@ -61,7 +64,7 @@ class GroupManagement {
 			idc = -1;
 			text = "Your Group";
 			sizeEx = 0.025;
-			shadow = 2;		
+			shadow = 2;
 			x = 0.5575; y = 0.155;
 			w = 0.3; h = 0.050;
 		};
@@ -76,7 +79,7 @@ class GroupManagement {
 			w = 0.235; h = 0.075;
 		};
 	};
-	
+
 	class controls {
 
 		class PlayerListBox : w_Rsclist {
@@ -107,7 +110,7 @@ class GroupManagement {
 			x = 0.3075; y = 0.200;
 			w = 0.14; h = 0.033 * safezoneH;
 		};
-		
+
 		class PromoteButton : w_RscButton {
 			idc = groupManagementPromoteButton;
 			text = "Promote";
@@ -156,4 +159,5 @@ class GroupManagement {
 			w = 0.100; h = 0.033 * safezoneH;
 		};
 	};
-};
+};
+

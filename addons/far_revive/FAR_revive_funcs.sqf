@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 #include "FAR_defines.sqf"
 
 ////////////////////////////////////////////////
@@ -49,6 +52,8 @@ FAR_HandleRevive =
 		if (CAN_PERFORM) then
 		{
 			_target setVariable ["FAR_isUnconscious", 0, true];
+
+			[player, "reviveCount", 1] call fn_addScore;
 
 			// [Debugging] Code below is only relevant if revive script is enabled for AI
 			if (!isPlayer _target) then
@@ -282,7 +287,7 @@ FAR_CheckFriendlies =
 	private ["_units", "_msg", "_medics", "_dir", "_cardinal"];
 
 	_units = player nearEntities ["AllVehicles", 1000];
-	_msg = "<t underline='true'>Nearby�medics</t>";
+	_msg = "<t underline='true'>Nearby medics</t>";
 	_medics = "";
 
 	{

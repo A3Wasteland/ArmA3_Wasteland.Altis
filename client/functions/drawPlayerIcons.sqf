@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: drawPlayerIcons.sqf
 //	@file Author: AgentRev
@@ -9,7 +12,8 @@ if (!hasInterface) exitWith {};
 #define ICON_limitDistance 2000
 #define ICON_sizeScale 0.75
 
-showPlayerNames = false;
+if (isNil "showPlayerNames") then { showPlayerNames = false };
+
 hudPlayerIcon_uiScale = (0.55 / (getResolution select 5)) * ICON_sizeScale; // 0.55 = Interface size "Small"
 drawPlayerIcons_array = [];
 

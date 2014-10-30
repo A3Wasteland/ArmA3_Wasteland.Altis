@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: populateGenStore.sqf
 //	@file Author: [404] Deadbeat, [KoS] His_Shadow, AgentRev
@@ -25,50 +28,50 @@ _itemDesc ctrlSetText "";
 
 _showPicture = true;
 
-switch(_switch) do 
+switch(_switch) do
 {
-	case 0: 
+	case 0:
 	{
 		_itemsArray = call headArray;
 	};
-	case 1: 
+	case 1:
 	{
 		_itemsArray = call uniformArray;
 	};
-	case 2: 
+	case 2:
 	{
 		_itemsArray = call vestArray;
 	};
-	case 3: 
+	case 3:
 	{
 		_itemsArray = call backpackArray;
 	};
-	case 4: 
+	case 4:
 	{
 		_itemsArray = call genItemArray;
 	};
-	case 5: 
+	case 5:
 	{
 		_itemsArray = call customPlayerItems;
-		
+
 		_excludedItems = [];
-		
+
 		if !(playerSide in [BLUFOR,OPFOR]) then
 		{
 			_excludedItems pushBack "warchest";
 		};
-		
+
 		if (["A3W_unlimitedStamina"] call isConfigOn) then
 		{
 			_excludedItems pushBack "energydrink";
 		};
-		
+
 		if (count _excludedItems > 0) then
 		{
 			_itemsArray = [_itemsArray, { !((_x select 1) in _excludedItems) }] call BIS_fnc_conditionalSelect;
 		};
 	};
-	case 6: 
+	case 6:
 	{
 		_itemsArray = call genObjectsArray;
 		_showPicture = false;
@@ -97,9 +100,9 @@ _playerSideNum = switch (playerSide) do
 		case (isClass (configFile >> "CfgMagazines" >> _weaponClass)): { _parentCfg = configFile >> "CfgMagazines" };
 		case (isClass (configFile >> "CfgGlasses" >> _weaponClass)):   { _parentCfg = configFile >> "CfgGlasses" };
 	};
-	
+
 	_showItem = true;
-	
+
 	// Side-based filtering
 	if (!isNil "_parentCfg") then
 	{
@@ -108,11 +111,11 @@ _playerSideNum = switch (playerSide) do
 			case "CfgVehicles":
 			{
 				_sideCfg = _parentCfg >> _weaponClass >> "side";
-				
+
 				if (isNumber _sideCfg) then
 				{
 					_side = getNumber _sideCfg;
-					
+
 					if (_side in [0,1,2] && {_side != _playerSideNum}) then
 					{
 						_showItem = false;
@@ -123,7 +126,7 @@ _playerSideNum = switch (playerSide) do
 			{
 				_isUniform = isText (_parentCfg >> _weaponClass >> "ItemInfo" >> "uniformClass");
 				_sideCfg = _parentCfg >> _weaponClass >> "ItemInfo" >> "side";
-				
+
 				switch (true) do
 				{
 					case (_isUniform):
@@ -136,7 +139,7 @@ _playerSideNum = switch (playerSide) do
 					case (isNumber _sideCfg):
 					{
 						_side = getNumber _sideCfg;
-						
+
 						if (_side in [0,1,2] && {_side != _playerSideNum}) then
 						{
 							_showItem = false;
@@ -146,11 +149,11 @@ _playerSideNum = switch (playerSide) do
 			};
 		};
 	};
-	
+
 	if (_showItem) then
 	{
 		_listIndex = _itemlist lbAdd format ["%1", _x select 0];
-		
+
 		if (isNil "_parentCfg") then
 		{
 			_itemlist lbSetPicture [_listIndex, _x select 3];
@@ -166,15 +169,15 @@ _playerSideNum = switch (playerSide) do
 			{
 				_weapon = _parentCfg >> _weaponClass;
 			};
-			
+
 			_picture = getText (_weapon >> "picture");
-			
+
 			if (_showPicture) then
 			{
 				_itemlist lbSetPicture [_listIndex, _picture];
 			};
 		};
-		
+
 		_itemlist lbSetData [_listIndex, _weaponClass];
 	};
 } forEach _itemsArray;

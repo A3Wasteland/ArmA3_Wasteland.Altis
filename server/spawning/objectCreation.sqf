@@ -1,34 +1,35 @@
-//	@file Version: 1.1
-//	@file Name: Script Name
-//	@file Author: [404] Deadbeat, [GoT] JoSchaap
-//	@file Created: DD/MM/YYYY HH:MM
-//	@file Args:
-private ["_adjustPOS"];
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
+//	@file Name: objectCreation.sqf
+//	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev
 
 if (!isServer) exitWith {};
 
+private ["_objPos", "_objClass", "_obj", "_adjustZ", "_pos"];
 _objPos = _this select 0;
-_Objtype = objectList select (random (count objectList - 1));
-_obj = createVehicle [_Objtype,_objPos,[], 50,"None"]; 
 
-_obj allowDamage false;
+_objClass = objectList call BIS_fnc_selectRandom;
+_obj = createVehicle [_objClass, _objPos, [], 50, "None"];
 
-switch (_Objtype) do
+switch (true) do
 {
-	case "Land_BarrelWater_F":
+	case (_objClass == "Land_BarrelWater_F"):
 	{
-		_obj setVariable["water",50,true];
+		_obj setVariable ["water", 50, true];
+		_obj allowDamage false;
 	};
-	case "Land_Sacks_goods_F":
+	case (_objClass == "Land_Sacks_goods_F"):
 	{
-		_obj setVariable["food",40,true];
+		_obj setVariable ["food", 40, true];
+		_obj allowDamage false;
 	};
-	case "B_supplyCrate_F":
+	case (_objClass isKindOf "ReammoBox_F"):
 	{
 		clearMagazineCargoGlobal _obj;
 		clearWeaponCargoGlobal _obj;
 		clearItemCargoGlobal _obj;
-		
+
 		_obj addMagazineCargoGlobal ["9Rnd_45ACP_Mag", 10];
 		_obj addMagazineCargoGlobal ["Laserbatteries", 1];
 		_obj addWeaponCargoGlobal ["Laserdesignator", 1];
@@ -37,27 +38,24 @@ switch (_Objtype) do
 		_obj addItemCargoGlobal ["ItemGPS", 5];
 		_obj addItemCargoGlobal ["Medikit", 4];
 		_obj addItemCargoGlobal ["ToolKit", 2];
+
+		_obj allowDamage false;
+	};
+	default
+	{
+		_obj setVariable ["allowDamage", true];
 	};
 };
-
-_obj setVariable["R3F_LOG_disabled",false];
 
 // fix for sunken/rissen objects :)
-_adjustPOS=0;
-switch (_Objtype) do
+_adjustZ = switch (true) do
 {
-	case "Land_Scaffolding_F":
-	{
-		_adjustPOS=-3; 
-	};
-	case "Land_Canal_WallSmall_10m_F":
-	{
-		_adjustPOS=3;
-	};
-	case "Land_Canal_Wall_Stairs_F":
-	{
-		_adjustPOS=3;
-	};
+	case (_objClass == "Land_Scaffolding_F"):         { -3 };
+	case (_objClass == "Land_Canal_WallSmall_10m_F"): { 3 };
+	case (_objClass == "Land_Canal_Wall_Stairs_F"):   { 3 };
+	default                                           { 0 };
 };
 
-_obj setpos [getpos _obj select 0,getpos _obj select 1, (getposATL _obj select 2)+_adjustPOS];
+_pos = getPosATL _obj;
+_pos set [2, (_pos select 2) + _adjustZ];
+_obj setPos _pos;

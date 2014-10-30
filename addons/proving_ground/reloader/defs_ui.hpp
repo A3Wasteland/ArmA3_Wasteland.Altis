@@ -79,8 +79,8 @@
 #define FontM             "TahomaB"
 
 
-#define safezoneX 0.1
-#define safezoneY 0.1
+#define safezoneX_PG 0.1
+#define safezoneX_PG 0.1
 #define display_weight 0.9
 #define display_height 1
 #define border_offsetX 0.03

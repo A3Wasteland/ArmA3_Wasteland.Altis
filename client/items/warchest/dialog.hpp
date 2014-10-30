@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 ////////////////////////////////////////////////////////
 // GUI EDITOR OUTPUT START (by Brett, v1.062, #Comaxy)
 ////////////////////////////////////////////////////////
@@ -21,7 +24,7 @@ class WarchestDialog {
 			h = 0.05;
 			colorBackground[] = {0,0,0,0.7};
 		};
-		
+
 		class FundsTitle: RscText {
 			idc = IDC_FUNDSTITLE;
 			style = ST_LEFT;
@@ -32,7 +35,7 @@ class WarchestDialog {
 			h = 0.05;
 			colorBackground[] = {0,0,0,0.7};
 		};
-		
+
 		class AmountBackground: IGUIBack {
 			x = 0.35;
 			y = 0.4;
@@ -40,7 +43,7 @@ class WarchestDialog {
 			h = 0.05;
 			colorBackground[] = {0,0,0,0.7};
 		};
-		
+
 		class Decoration1: IGUIBack {
 			x = 0.3;
 			y = 0.56;

@@ -23,14 +23,14 @@ lbClear 113;  //eCode
 
 if (count _configPath == 1) then
 {
-	ctrlSetText [101, "ROOT"]; 
+	ctrlSetText [101, "ROOT"];
 } else
 {
-	// TODO: Cutting off the Name 
+	// TODO: Cutting off the Name
 	// _lenRootName = count (toArray ConfigRoot);
 	// _cfgNameArray = toarray (_configPath select ((count _configPath) -1));
-	
-	ctrlSetText [101, format["%1",_configPath select ((count _configPath) -1)]]; 
+
+	ctrlSetText [101, format["%1",_configPath select ((count _configPath) -1)]];
 };
 
 // ***
@@ -39,8 +39,8 @@ if (count _configPath == 1) then
 
 if (count _configPath == 1) then
 {
-	ctrlEnable [120, false];   
-} 
+	ctrlEnable [120, false];
+}
 else
 {
 	ctrlEnable [120, true];

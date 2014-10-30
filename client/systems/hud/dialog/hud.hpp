@@ -1,4 +1,7 @@
-﻿/*
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
+/*
 	@file Version: 1.0
 	@file Name: hud.hpp
 	@file Author: [404] Deadbeat, [KoS] Bewilderbeest
@@ -13,12 +16,12 @@
 
 class WastelandHud {
 	idd = -1;
-    fadeout=0;
-    fadein=0;
+	fadeout=0;
+	fadein=0;
 	duration = 20;
 	name= "WastelandHud";
 	onLoad = "uiNamespace setVariable ['WastelandHud', _this select 0]";
-	
+
 	class controlsBackground {
 		class WastelandHud_Vehicle:w_RscText
 		{

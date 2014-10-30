@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Name: processMoneyPickup.sqf
 //	@file Author: AgentRev
 
@@ -15,6 +18,7 @@ if (!alive _player || !isPlayer _player || !(_moneyObj isKindOf "Land_Money_F"))
 
 if (_moneyObj getVariable ["owner", "world"] == "world") then
 {
+	_moneyObj setVariable ["owner", getPlayerUID _player];
 	_money = _moneyObj getVariable ["cmoney", 0];
 	deleteVehicle _moneyObj;
 

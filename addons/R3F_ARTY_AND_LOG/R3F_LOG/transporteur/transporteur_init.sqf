@@ -1,6 +1,6 @@
 /**
  * Initialise un véhicule transporteur
- * 
+ *
  * @param 0 le transporteur
  */
 

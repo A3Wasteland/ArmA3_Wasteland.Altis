@@ -1,3 +1,6 @@
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
 //	@file Version: 1.0
 //	@file Name: processItems.sqf
 //	@file Author: AgentRev
@@ -50,11 +53,33 @@ _items = _this select 1;
 			};
 			case "M":
 			{
-				_vehicle addMagazineCargoGlobal [_class, _quantity];
+				if (typeName _class == "ARRAY") then
+				{
+					for "_i" from 1 to _quantity do
+					{
+						_randomClass = _class call BIS_fnc_selectRandom;
+						_vehicle addMagazineCargoGlobal [_randomClass, 1];
+					};
+				}
+				else
+				{
+					_vehicle addMagazineCargoGlobal [_class, _quantity];
+				};
 			};
 			case "I":
 			{
-				_vehicle addItemCargoGlobal [_class, _quantity];
+				if (typeName _class == "ARRAY") then
+				{
+					for "_i" from 1 to _quantity do
+					{
+						_randomClass = _class call BIS_fnc_selectRandom;
+						_vehicle addItemCargoGlobal [_randomClass, 1];
+					};
+				}
+				else
+				{
+					_vehicle addItemCargoGlobal [_class, _quantity];
+				};
 			};
 		};
 	};
