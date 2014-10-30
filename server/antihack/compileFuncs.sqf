@@ -6,12 +6,15 @@
 //	@file Author: AgentRev
 //	@file Created: 04/01/2014 02:51
 
-private ["_assignChecksum", "_assignPacketKey"];
+private ["_assignChecksum", "_assignPacketKey", "_checksum", "_packetKey"];
 
 _assignChecksum = [_this, 0, "", [""]] call BIS_fnc_param;
 _assignPacketKey = [_this, 1, "", [""]] call BIS_fnc_param;
 
-if (call compile (_assignChecksum + "isNil {missionNamespace getVariable _flagChecksum}")) then
+_checksum = call compile (_assignChecksum + "_flagChecksum");
+_packetKey = call compile (_assignPacketKey + "_mpPacketKey");
+
+if (isNil {missionNamespace getVariable _checksum}) then
 {
 	{
 		_func = _x select 0;
@@ -55,8 +58,9 @@ if (call compile (_assignChecksum + "isNil {missionNamespace getVariable _flagCh
 		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\payload.sqf"));
 	};
 
-	//call compile (_assignChecksum + "call compile format ['%1 = compileFinal str true', _flagChecksum]");
-	call compile (_assignChecksum + "missionNamespace setVariable [_flagChecksum, compileFinal 'true']");
+	missionNamespace setVariable [_checksum, compileFinal "true"];
 };
 
-call compile (_assignPacketKey + "_mpPacketKey addPublicVariableEventHandler A3W_fnc_MPexec");
+_packetKey addPublicVariableEventHandler A3W_fnc_MPexec;
+A3W_network_compileFuncs = compileFinal "true";
+publicVariable "A3W_network_compileFuncs";

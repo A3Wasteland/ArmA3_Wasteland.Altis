@@ -6,25 +6,24 @@
 //	@file Author: AgentRev
 //	@file Created: 14/07/2013 13:10
 
-if (!isServer) exitWith {};
-
 private "_packetName";
 _packetName = [_this, 0, "", [""]] call BIS_fnc_param;
 
 if (_packetName == "BIS_fnc_MP_packet") then
 {
-	private ["_values", "_code", "_function", "_whitelisted", "_filePath", "_args2", "_buffer"];
+	private ["_values", "_args", "_function", "_whitelisted", "_filePath", "_argsType", "_argsStr", "_buffer"];
 
-	_values = +(_this select 1);
-	_values deleteAt 0;
+	_values = [_this, 1, [], [[]]] call BIS_fnc_param;
 
-	_code = _values select 0;
-	_function = _values select 1;
+	if (count _values < 3) exitWith {};
+
+	_args = [_values, 1, []] call BIS_fnc_param;
+	_function = [_values, 2, "", [""]] call BIS_fnc_param;
 	_whitelisted = false;
 
 	if (_function == "BIS_fnc_execVM") then
 	{
-		_filePath = [_code, 1, "", [""]] call BIS_fnc_param;
+		_filePath = if (typeName _args == "STRING") then { _args } else { [_args, 1, "", [""]] call BIS_fnc_param };
 
 		{
 			if (_filePath == _x) exitWith
@@ -38,9 +37,8 @@ if (_packetName == "BIS_fnc_MP_packet") then
 			"territory\client\updateTerritoryMarkers.sqf",
 			"initPlayerServer.sqf"
 		];
-	};
-
-	if (!_whitelisted) then
+	}
+	else
 	{
 		{
 			if (_function == _x) exitWith
@@ -55,6 +53,21 @@ if (_packetName == "BIS_fnc_MP_packet") then
 			"BIS_fnc_effectKilledSecondaries"/*,
 			"JTS_FNC_SENT"*/ // PM Compact by JTS
 		];
+
+		if (!_whitelisted) then
+		{
+			{
+				if (_function select [0, count _x] == _x) exitWith
+				{
+					_whitelisted = true;
+				};
+			}
+			forEach
+			[
+				"A3W_fnc_",
+				"mf_remote_"
+			];
+		};
 	};
 
 	if (_whitelisted) then
@@ -63,14 +76,20 @@ if (_packetName == "BIS_fnc_MP_packet") then
 	}
 	else
 	{
-		_values deleteAt 0;
-		_args2 = if (typeName _code == "STRING") then { "'" + _code + "'" } else { str (if (typeName _code in ["BOOL","SCALAR","ARRAY","SIDE"]) then { _code } else { str _code }) };
-		_buffer = toArray ("ANTI-HACK: Blocked remote execution: params=" + str _values + " args=" + _args2);
-
-		while {count _buffer > 0} do
+		if (isServer) then
 		{
-			diag_log toString (_buffer select [0, 1024]);
-			_buffer deleteRange [0, 1024];
+			BIS_fnc_MP_packet = [];
+			publicVariable "BIS_fnc_MP_packet";
+
+			_argsType = toUpper typeName _args;
+			_argsStr = if (_argsType == "STRING") then { "'" + _args + "'" } else { if (_argsType in ["BOOL","SCALAR","ARRAY","SIDE"]) then { str _args } else { "(" + str _args + ")" } };
+			_buffer = toArray ("ANTI-HACK - Blocked remote execution: params=" + str (_values select [2, count _values - 2]) + " args=" + _argsStr);
+
+			while {count _buffer > 0} do
+			{
+				diag_log toString (_buffer select [0, 1021]);
+				_buffer deleteRange [0, 1021];
+			};
 		};
 	};
 };
