@@ -3,7 +3,7 @@
 // ******************************************************************************************
 //	@file Version: 2.1
 //	@file Name: mission_MoneyShipment.sqf
-//	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo), AgentRev, Wiking.at, Lodac
+//	@file Author: JoSchaap / routes by Del1te - (original idea by Sanjo), AgentRev
 //	@file Created: 31/08/2013 18:19
 
 if (!isServer) exitwith {};
@@ -109,8 +109,7 @@ _setupVars =
 					["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F", "I_MBT_03_cannon_F"] // Veh 4
 				]
 			]
-		],
-		"Extreme Armed Money Shipment" //Marker Text
+		]
 	]
 	call BIS_fnc_selectRandom;
 
