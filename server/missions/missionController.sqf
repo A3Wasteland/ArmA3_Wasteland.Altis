@@ -26,6 +26,8 @@ _missionDelay = MISSION_CTRL_DELAY;
 
 while {true} do
 {
+	_nextMission = nil;
+
 	while {isNil "_nextMission"} do
 	{
 		_availableMissions = [MISSION_CTRL_PVAR_LIST, { !(_x select 2) }] call BIS_fnc_conditionalSelect;
@@ -38,8 +40,7 @@ while {true} do
 		}
 		else
 		{
-			_nextMission = nil;
-			sleep 60;
+			uiSleep 60;
 		};
 	};
 
