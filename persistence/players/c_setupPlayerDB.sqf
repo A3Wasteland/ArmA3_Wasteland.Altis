@@ -15,13 +15,13 @@ fn_requestPlayerData =
 	playerData_alive = nil;
 	playerData_loaded = nil;
 	playerData_resetPos = nil;
-	requestPlayerData = [player, getPlayerUID player];
+	requestPlayerData = [player, getPlayerUID player, netId player];
 	publicVariableServer "requestPlayerData";
 } call mf_compile;
 
 fn_deletePlayerData =
 {
-	deletePlayerData = player;
+	deletePlayerData = getPlayerUID player;
 	publicVariableServer "deletePlayerData";
 	playerData_gear = "";
 } call mf_compile;

@@ -10,6 +10,8 @@
 private ["_uid","_handle"];
 _uid = getPlayerUID player;
 
+if (!isNull (uiNamespace getVariable ["AdminMenu", displayNull]) || player getVariable ["FAR_isUnconscious", 0] == 1) exitWith {};
+
 switch (true) do
 {
 	case ([_uid, serverOwners] call isAdmin || isServer):
@@ -25,16 +27,11 @@ switch (true) do
 	case ([_uid, lowAdmins] call isAdmin):
 	{
 		execVM "client\systems\adminPanel\loadModeratorMenu.sqf";
-		hint "Welcome Admin";
-	};
-	case (serverCommandAvailable "#exec ban"):
-	{
-		execVM "client\systems\adminPanel\loadServerAdministratorMenu.sqf";
-		hint "Welcome Boss";
+		hint "Welcome Low Admin";
 	};
 	case (serverCommandAvailable "#kick"):
 	{
-		execVM "client\systems\adminPanel\loadModeratorMenu.sqf";
-		hint "Welcome Admin";
+		execVM "client\systems\adminPanel\loadServerAdministratorMenu.sqf";
+		hint "Welcome Boss";
 	};
 };

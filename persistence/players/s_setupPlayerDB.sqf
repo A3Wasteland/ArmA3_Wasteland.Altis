@@ -40,6 +40,7 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 	_array = _this select 1;
 	_player = _array select 0;
 	_UID = _array select 1;
+	_pNetId = _array select 2;
 
 	if ((_UID call PDB_playerFileName) call PDB_exists) then // iniDB_exists
 	{
@@ -51,10 +52,8 @@ fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
 	};
 
 	(owner _player) publicVariableClient "applyPlayerData";
+
+	diag_log format ["requestPlayerData: %1", [_player, owner _player, objectFromNetId _pNetId]];
 };
 
-"deletePlayerData" addPublicVariableEventHandler
-{
-	_player = _this select 1;
-	(getPlayerUID _player) call fn_deletePlayerSave;
-};
+"deletePlayerData" addPublicVariableEventHandler { (_this select 1) call fn_deletePlayerSave };

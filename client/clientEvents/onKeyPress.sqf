@@ -79,14 +79,19 @@ switch (true) do
 	};
 
 	// Scoreboard
-	case (_key in actionKeys "NetworkStats" && {!_shift && (!_ctrl || isNil "TFAR_fnc_TaskForceArrowheadRadioInit")}):
+	case (_key in actionKeys "NetworkStats"):
 	{
-		if (alive player && isNull (uiNamespace getVariable ["ScoreGUI", displayNull])) then
+		if (_key != 25 || // 25 = P
+		   ((!_ctrl || {!(486539289 in actionKeys "NetworkPlayers") && isNil "TFAR_fnc_TaskForceArrowheadRadioInit"}) && // 486539289 = Left Ctrl + P
+		   (!_shift || {!(704643042 in actionKeys "NetworkPlayers")}))) then // 704643042 = Left Shift + P
 		{
-			call loadScoreboard;
-		};
+			if (alive player && isNull (uiNamespace getVariable ["ScoreGUI", displayNull])) then
+			{
+				call loadScoreboard;
+			};
 
-		_handled = true;
+			_handled = true;
+		};
 	};
 };
 
