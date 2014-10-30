@@ -112,7 +112,8 @@ while {true} do
 
 				if (!_updateObj) exitWith
 				{
-					_old_serverObjectsIDs = _old_serverObjectsIDs - [_db_id];
+					//_old_serverObjectsIDs = _old_serverObjectsIDs - [_db_id];
+					_obj setVariable ["db_id", nil];
 				};
 
 				// Getting Info
