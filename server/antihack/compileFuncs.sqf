@@ -62,5 +62,9 @@ if (isNil {missionNamespace getVariable _checksum}) then
 };
 
 _packetKey addPublicVariableEventHandler A3W_fnc_MPexec;
-A3W_network_compileFuncs = compileFinal "true";
-publicVariable "A3W_network_compileFuncs";
+
+if (isServer) then
+{
+	A3W_network_compileFuncs = compileFinal "true";
+	publicVariable "A3W_network_compileFuncs";
+};
