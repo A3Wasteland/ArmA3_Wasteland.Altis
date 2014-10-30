@@ -8,7 +8,7 @@
 
 if (isDedicated) exitWith {};
 
-private ["_cheatFlag", "_cfgPatches", "_patchClass", "_ctrlCfg", "_ctrlText", "_minRecoil", "_currentRecoil", "_loopCount"];
+private ["_cheatFlag", "_cfgPatches", "_patchClass", "_ctrlCfg", "_minRecoil", "_currentRecoil", "_loopCount"];
 
 waitUntil {!isNull player};
 
@@ -34,9 +34,7 @@ if (isNil "_cheatFlag") then
 			_ctrlCfg = _x select _i;
 			if (getText (_ctrlCfg >> "action") != "" || getText (_ctrlCfg >> "onButtonClick") != "") exitWith
 			{
-				_ctrlText = toArray getText (_ctrlCfg >> "text");
-				_ctrlText resize 64;
-				_cheatFlag = ["hack menu", format ["foreign Esc menu button '%1'", toString _ctrlText]];
+				_cheatFlag = ["hack menu", format ["foreign Esc menu button '%1'", (getText (_ctrlCfg >> "text")) select [0, 64]]];
 			};
 		};
 
@@ -81,6 +79,7 @@ if (isNil "_cheatFlag") then
 				[132, "RscDisplayHostSettings"],
 				[157, "RscDisplayPhysX3Debug (Itsyuka)"],
 				[165, "RscDisplayPublishMission"],
+				[167, "RscDisplayFileSelect (Lystic)"],
 				[2727, "RscDisplayLocWeaponInfo"],
 				[3030, "RscConfigEditor_Main (Wookie)"]
 			];

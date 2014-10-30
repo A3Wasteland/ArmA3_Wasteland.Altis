@@ -12,8 +12,6 @@ if (isDedicated) exitWith {};
 if (!isServer) then
 {
 	waitUntil {!isNil "A3W_network_compileFuncs"};
-	_networkCompile = call A3W_network_compileFuncs;
-	waitUntil {scriptDone _networkCompile};
 };
 
 waitUntil {!isNil "A3W_serverSetupComplete"};

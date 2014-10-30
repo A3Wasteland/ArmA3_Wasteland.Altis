@@ -16,7 +16,7 @@
 private ["_needles", "_haystack", "_caseSensitive", "_found", "_testArray", "_testStr"];
 
 _needles = [_this, 0, [], ["",[]]] call BIS_fnc_param;
-_haystack = toArray ([_this, 1, "", [""]] call BIS_fnc_param);
+_haystack = [_this, 1, "", [""]] call BIS_fnc_param;
 _caseSensitive = [_this, 2, false, [false]] call BIS_fnc_param;
 
 if (typeName _needles != "ARRAY") then
@@ -26,15 +26,23 @@ if (typeName _needles != "ARRAY") then
 
 _found = false;
 
+if (_caseSensitive) then
 {
-	_testArray = +_haystack;
-	_testArray resize count toArray _x;
-	_testStr = toString _testArray;
-
-	if (_x isEqualTo _testStr || (!_caseSensitive && _x == _testStr)) exitWith
 	{
-		_found = true;
-	};
-} forEach _needles;
+		if (_x != "" && _x isEqualTo (_haystack select [0, count _x])) exitWith
+		{
+			_found = true;
+		};
+	} forEach _needles;
+}
+else
+{
+	{
+		if (_x != "" && _x == (_haystack select [0, count _x])) exitWith
+		{
+			_found = true;
+		};
+	} forEach _needles;
+};
 
 _found

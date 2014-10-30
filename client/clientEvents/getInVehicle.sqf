@@ -50,5 +50,4 @@ if ( (count _crew) > 1) then  //player already in vehicle when this code runs - 
 			}
 		};
 	} forEach _crew;
-		
 };
