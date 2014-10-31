@@ -40,6 +40,6 @@ _soldier spawn refillPrimaryAmmo;
 _soldier spawn addMilCap;
 _soldier call setMissionSkill;
 
-_soldier addEventHandler ["Killed", {_this call server_playerDied; (_this select 1) call removeNegativeScore}];
+_soldier addEventHandler ["Killed", server_playerDied];
 
 _soldier

@@ -18,6 +18,6 @@ _soldier addUniform "U_B_Ghilliesuit";
 _soldier spawn refillPrimaryAmmo;
 _soldier call setMissionSkill;
 
-_soldier addEventHandler ["Killed", {_this call server_playerDied; (_this select 1) call removeNegativeScore}];
+_soldier addEventHandler ["Killed", server_playerDied];
 
 _soldier
