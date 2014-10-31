@@ -22,6 +22,7 @@ _marker setMarkerType "o_service";
 _marker setMarkerText "Service";
 _marker setMarkerColor "ColorYellow";
 _marker setMarkerSize [0.5, 0.5];
+_marker setMarkerDir 270;
 
 _this spawn
 {
