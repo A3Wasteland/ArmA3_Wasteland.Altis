@@ -21,7 +21,7 @@ fn_requestPlayerData =
 
 fn_deletePlayerData =
 {
-	deletePlayerData = getPlayerUID player;
+	deletePlayerData = player;
 	publicVariableServer "deletePlayerData";
 	playerData_gear = "";
 } call mf_compile;
