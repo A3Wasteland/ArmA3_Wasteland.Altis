@@ -680,12 +680,12 @@ planesArray = compileFinal str
 	["A-143 Buzzard CAS", "I_Plane_Fighter_03_CAS_F", 45000, "vehicle"],
 	["A-164 Wipeout CAS", "B_Plane_CAS_01_F", 60000, "vehicle"],
 	["To-199 Neophron CAS", "O_Plane_CAS_02_F", 60000, "vehicle"],
-	["MQ4A Greyhawk Bomber UAV", "B_UAV_02_CAS_F", 10000, "vehicle"], // Bomber UAVs are a lot harder to use, hence why they are cheaper than ATGMs
 	["MQ4A Greyhawk ATGM UAV", "B_UAV_02_F", 15000, "vehicle"],
-	["K40 Ababil-3 Bomber UAV (CSAT)", "O_UAV_02_CAS_F", 10000, "vehicle"],
+	["MQ4A Greyhawk Bomber UAV", "B_UAV_02_CAS_F", 10000, "vehicle"], // Bomber UAVs are a lot harder to use, hence why they are cheaper than ATGMs
 	["K40 Ababil-3 ATGM UAV (CSAT)", "O_UAV_02_F", 15000, "vehicle"],
-	["K40 Ababil-3 Bomber UAV (AAF)", "I_UAV_02_CAS_F", 10000, "vehicle"],
-	["K40 Ababil-3 ATGM UAV (AAF)", "I_UAV_02_F", 15000, "vehicle"]
+	["K40 Ababil-3 Bomber UAV (CSAT)", "O_UAV_02_CAS_F", 10000, "vehicle"],
+	["K40 Ababil-3 ATGM UAV (AAF)", "I_UAV_02_F", 15000, "vehicle"],
+	["K40 Ababil-3 Bomber UAV (AAF)", "I_UAV_02_CAS_F", 10000, "vehicle"]
 ];
 
 boatsArray = compileFinal str

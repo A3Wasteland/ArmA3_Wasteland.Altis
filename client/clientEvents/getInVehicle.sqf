@@ -31,20 +31,14 @@ if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_ser
 	]];
 };
 
-
-//Kick out Indi-Player of vehicle if is is already used by other people, only run if player enters vehicle
-_crew = crew _veh;
-if ( (count _crew) > 1) then  //player already in vehicle when this code runs - so at least 2 people have to be in vehicle
+// Eject Independents of vehicle if it is already used by another group
+if !(playerSide in [BLUFOR,OPFOR]) then
 {
 	{
-		if (isPlayer _x && alive _x) then  
+		if (alive _x && group _x != group player) exitWith 
 		{
-			if (!(playerSide in [BLUFOR,OPFOR]) && group _x != group player ) then //check if other ppl which where in vehicle before are in the players group
-			{
-				player action ["Eject", vehicle player];
-				["You can't enter vehicles of other independent players without grouping first.", 5] call mf_notify_client;
-			}
+			moveOut player;
+			["You can't enter vehicles used by enemy groups.", 5] call mf_notify_client;
 		};
-	} forEach _crew;
-		
+	} forEach crew _veh;
 };

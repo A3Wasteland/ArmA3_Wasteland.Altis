@@ -48,10 +48,6 @@ switch (true) do
 		_plane addMagazine ["4Rnd_Missile_AGM_01_F", 0];
 		_plane addMagazine "2Rnd_Bomb_03_F";
 	};
-	case (_planeType isKindOf "Plane_Fighter_03_base_F"):
-	{
-		_plane addMagazine "300Rnd_20mm_shells";
-	};
 };
 
 _plane enableSimulationGlobal true;

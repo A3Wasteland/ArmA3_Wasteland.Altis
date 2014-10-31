@@ -65,6 +65,10 @@ switch (true) do
 		_vehicle addWeaponTurret ["CMFlareLauncher", [-1]];
 		_vehicle addMagazineTurret ["120Rnd_CMFlare_Chaff_Magazine", [-1]];
 	};
+	case (_class isKindOf "Plane_Fighter_03_base_F"):
+	{
+		_vehicle addMagazine "300Rnd_20mm_shells";
+	};
 };
 
 _weapons = getArray (configFile >> "CfgVehicles" >> _class >> "weapons");
