@@ -85,8 +85,7 @@ if (_uid call isAdmin) then
 		};
 		case 2: //Slay
 		{
-			//[{player setDamage 1; endMission "LOSER"; deleteVehicle player}, "BIS_fnc_spawn", _target, false] call A3W_fnc_MP;
-			["This option has been disabled due to exploiting by hackers."] spawn BIS_fnc_guiMessage;
+			_target setDamage 1;
 		};
 		case 3: //Unlock Team Switcher
 		{

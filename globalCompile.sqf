@@ -107,6 +107,8 @@ relativePos = [_serverFunc, "relativePos.sqf"] call mf_compile;
 removeNegativeScore = [_serverFunc, "removeNegativeScore.sqf"] call mf_compile;
 splitWeaponItems = [_serverFunc, "splitWeaponItems.sqf"] call mf_compile;
 switchMoveGlobal = [_clientFunc, "switchMoveGlobal.sqf"] call mf_compile;
+vehicleDammagedEvent = [_serverFunc, "vehicleDammagedEvent.sqf"] call mf_compile;
+vehicleEngineEvent = [_serverFunc, "vehicleEngineEvent.sqf"] call mf_compile;
 vehicleHandleDamage = [_serverFunc, "vehicleHandleDamage.sqf"] call mf_compile;
 
 "pvar_switchMoveGlobal" addPublicVariableEventHandler { ((_this select 1) select 0) switchMove ((_this select 1) select 1) };
