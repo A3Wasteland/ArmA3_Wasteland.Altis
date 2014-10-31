@@ -4,6 +4,8 @@
 //	@file Name: setupResupplyTruck.sqf
 //	@file Author: AgentRev
 
+_this addAction ["<img image='client\icons\repair.paa'/> Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, true, true, "", "vehicle _this != _this && _this distance _target <= 15"];
+
 if (!isServer) exitWith {};
 
 _this lock 2;
@@ -13,8 +15,6 @@ _this setVariable ["A3W_resupplyTruck", true, true];
 _this setAmmoCargo 0;
 _this setFuelCargo 0;
 _this setRepairCargo 0;
-
-_this addAction ["Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, true, true, "", "vehicle _this != _this && _this distance _target <= 15"];
 
 _marker = createMarker ["Service_Icon_" + netId _this, getPosATL _this];
 _marker setMarkerShape "ICON";
