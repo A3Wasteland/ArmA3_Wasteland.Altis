@@ -21,6 +21,8 @@ if (_preload) then { waitUntil {sleep 0.1; preloadCamera _playerPos} };
 player setPos _playerPos;
 
 respawnDialogActive = false;
+player setVariable ["respawnDialogActive", false, true];
+
 closeDialog 0;
 
 _townName spawn

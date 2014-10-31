@@ -17,3 +17,7 @@ hungerLevel = if (isNil "hungerLevel") then {100} else {hungerLevel};
 
 _player groupChat "Wasteland - Initialization Complete";
 playerSetupComplete = true;
+_player setVariable ["initComplete", true, true];
+
+trackMe = [_player];
+publicVariable "trackMe";

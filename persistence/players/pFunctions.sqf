@@ -176,7 +176,7 @@ fn_applyPlayerData = {
 
   //Restore backpack, and stuff inside
   if (isSTRING(_backpack_class) && {_backpack_class != ""}) then {
-    diag_log format["Resting backpack: %1", _backpack_class];
+    //diag_log format["Restoring backpack: %1", _backpack_class];
     [_backpack_class] call p_restoreBackpack;
 
     //restore the stuff inside the backpack
@@ -191,22 +191,22 @@ fn_applyPlayerData = {
   //restore other stuff that is not order-dependent
   def(_name);
   def(_value);
-  {
+  {if (true) then {
     _name = _x select 0;
     _value = _x select 1;
 
     switch (_name) do {
-      case "Damage": { player setDamage _value };
-      case "HitPoints": { { player setHitPointDamage _x } forEach _value };
-      case "Hunger": { hungerLevel = _value };
-      case "Thirst": { thirstLevel = _value };
-      case "Money": { player setVariable ["cmoney", _value, true] };
-      case "Position": { if (count _value == 3) then { player setPosATL _value } };
-      case "Direction": { player setDir _value };
-      case "Goggles": { if (_value != "") then { player addGoggles _value } };
+      case "Damage": { if (isSCALAR(_value)) then {player setDamage _value;};};
+      case "HitPoints": { { player setHitPointDamage _x } forEach (OR(_value,[])) };
+      case "Hunger": { hungerLevel = OR(_value,nil); };
+      case "Thirst": { thirstLevel = OR(_value,nil); };
+      case "Money": { player setVariable ["cmoney", OR(_value,0), true] };
+      case "Position": { if (isARRAY(_value) && {count _value == 3}) then { player setPosATL _value } };
+      case "Direction": { if (defined(_value)) then {player setDir _value} };
+      case "Goggles": { if (isSTRING(_value) && {_value != ""}) then { player addGoggles _value } };
       case "Headgear": {
         // If wearing one of the default headgears, give the one belonging to actual team instead
-        if (_value != "") then {
+        if (isSTRING(_value) && {_value != ""}) then {
           _defHeadgear = [player, "headgear"] call getDefaultClothing;
           _defHeadgears =
           [
@@ -223,9 +223,9 @@ fn_applyPlayerData = {
           };
         };
       };
-      case "PrimaryWeaponItems": { { if (_x != "") then { player addPrimaryWeaponItem _x } } forEach _value };
-      case "SecondaryWeaponItems": { { if (_x != "") then { player addSecondaryWeaponItem _x } } forEach _value };
-      case "HandgunItems": { { if (_x != "") then { player addHandgunItem _x } } forEach _value };
+      case "PrimaryWeaponItems": { { if (_x != "") then { player addPrimaryWeaponItem _x } } forEach (OR(_value,[])) };
+      case "SecondaryWeaponItems": { { if (_x != "") then { player addSecondaryWeaponItem _x } } forEach (OR(_value,[])) };
+      case "HandgunItems": { { if (_x != "") then { player addHandgunItem _x } } forEach (OR(_value,[])) };
       case "AssignedItems": {
         {
           if ([player, _x] call isAssignableBinocular) then {
@@ -234,200 +234,35 @@ fn_applyPlayerData = {
           else {
             player linkItem _x;
           };
-        } forEach _value;
+        } forEach (OR(_value,[]));
       };
-      case "CurrentWeapon": { player selectWeapon _value };
-      case "Stance": { [player, [player, _value] call getFullMove] call switchMoveGlobal };
-      case "UniformWeapons": { { (uniformContainer player) addWeaponCargoGlobal _x } forEach _value };
-      case "UniformItems": { { (uniformContainer player) addItemCargoGlobal _x } forEach _value };
-      case "UniformMagazines": { { (uniformContainer player) addMagazineCargoGlobal _x } forEach _value };
-      case "VestWeapons": { { (vestContainer player) addWeaponCargoGlobal _x } forEach _value };
-      case "VestItems": { { (vestContainer player) addItemCargoGlobal _x } forEach _value };
-      case "VestMagazines": { { (vestContainer player) addMagazineCargoGlobal _x } forEach _value };
+      case "CurrentWeapon": { player selectWeapon OR(_value,"") };
+      case "Animation": { if (isSTRING(_value) && {_value != ""}) then {[player, _value] call switchMoveGlobal};};
+      case "UniformWeapons": { { (uniformContainer player) addWeaponCargoGlobal _x } forEach (OR(_value,[])) };
+      case "UniformItems": { { (uniformContainer player) addItemCargoGlobal _x } forEach (OR(_value,[])) };
+      case "UniformMagazines": { { (uniformContainer player) addMagazineCargoGlobal _x } forEach (OR(_value,[])) };
+      case "VestWeapons": { { (vestContainer player) addWeaponCargoGlobal _x } forEach (OR(_value,[])) };
+      case "VestItems": { { (vestContainer player) addItemCargoGlobal _x } forEach (OR(_value,[])) };
+      case "VestMagazines": { { (vestContainer player) addMagazineCargoGlobal _x } forEach (OR(_value,[])) };
       case "PartialMagazines": { { player addMagazine _x } forEach _value };
-      case "WastelandItems": { { [_x select 0, _x select 1, true] call mf_inventory_add } forEach _value };
+      case "WastelandItems": { { [_x select 0, _x select 1, true] call mf_inventory_add } forEach (OR(_value,[])) };
     };
-  } forEach _data;
+  };} forEach _data;
 };
 
 fn_savePlayerData = {
-  if (isDedicated) exitWith {};
-  if (isCODE(savePlayerHandle) && {!scriptDone savePlayerHandle}) exitWith {};
+  trackMyVitals =
+  [
+    player,
+    [
+      ["thirstLevel", thirstLevel],
+      ["hungerLevel", hungerLevel]
+    ]
+  ];
 
-  ARGV4(0,_manual_save,false,false);
-
-
-  savePlayerHandle = ["savePlayerData"] spawn p_savePlayerData;
-
-  if (isCODE(savePlayerHandle)) then {
-    _savePlayerHandle = savePlayerHandle;
-    waitUntil {scriptDone _savePlayerHandle};
-    savePlayerHandle = nil;
-  };
-
-  if (_manual_save) then {
-    cutText ["\nPlayer saved!", "PLAIN DOWN", 0.2];
-  };
+  publicVariableServer "trackMyVitals";
 };
 
-p_isPlayerSaveable = {
-   (
-     alive player &&
-     {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}} &&
-     {!isNil "playerSetupComplete" && {playerSetupComplete}} &&
-     {!isNil "respawnDialogActive" && {!respawnDialogActive}} &&
-     {player getVariable ["FAR_isUnconscious", 0] == 0}
-   )
-};
-
-p_savePlayerData = {
-    ARGVX3(0,_reply_variable,"");
-    if (not(call p_isPlayerSaveable)) exitWith {};
-
-    def(_UID);
-    _UID = getPlayerUID player;
-
-    _info =
-    [
-      ["UID", _UID],
-      ["Name", name player],
-      ["LastGroupSide", str side group player],
-      ["LastPlayerSide", str playerSide],
-      ["BankMoney", player getVariable ["bmoney", 0]]
-    ];
-
-    _hitPoints = [];
-    {
-      _hitPoint = configName _x;
-      _hitPoints pushBack [_hitPoint, player getHitPointDamage _hitPoint];
-    } forEach (player call getHitPoints);
-
-    _data =
-    [
-      ["Damage", damage player],
-      ["HitPoints", _hitPoints],
-      ["Hunger", ["hungerLevel", 0] call getPublicVar],
-      ["Thirst", ["thirstLevel", 0] call getPublicVar],
-      ["Money", player getVariable ["cmoney", 0]] // Money is always saved, but only restored if A3W_moneySaving = 1
-    ];
-
-    // Only save those when on ground or underwater (you probably wouldn't want to spawn 500m in the air if you get logged off in flight)
-    if (isTouchingGround vehicle player || {(getPos player) select 2 < 0.5 || (getPosASL player) select 2 < 0.5}) then {
-      _data pushBack ["Position", getPosATL player];
-      _data pushBack ["Direction", direction player];
-
-      if (vehicle player == player) then {
-        _data pushBack ["CurrentWeapon", format ["%1", currentMuzzle player]]; // currentMuzzle returns a number sometimes, hence the format
-        _data pushBack ["Stance", [player, ["P"]] call getMoveParams];
-      };
-    };
-
-    _gear =
-    [
-      ["Uniform", uniform player],
-      ["Vest", vest player],
-      ["Backpack", backpack player],
-      ["Goggles", goggles player],
-      ["Headgear", headgear player],
-
-      ["PrimaryWeapon", primaryWeapon player],
-      ["SecondaryWeapon", secondaryWeapon player],
-      ["HandgunWeapon", handgunWeapon player],
-
-      ["PrimaryWeaponItems", primaryWeaponItems player],
-      ["SecondaryWeaponItems", secondaryWeaponItems player],
-      ["HandgunItems", handgunItems player],
-
-      ["AssignedItems", assignedItems player]
-    ];
-
-
-    _uMags = [];
-    _vMags = [];
-    _bMags = [];
-    _partialMags = [];
-
-    {
-      _magArr = _x select 0;
-
-      {
-        _mag = _x select 0;
-        _ammo = _x select 1;
-
-        if (_ammo == getNumber (configFile >> "CfgMagazines" >> _mag >> "count")) then {
-          [_magArr, _mag, 1] call fn_addToPairs;
-        }
-        else {
-          if (_ammo > 0) then {
-            _partialMags pushBack [_mag, _ammo];
-          };
-        };
-      } forEach magazinesAmmoCargo (_x select 1);
-    }
-    forEach
-    [
-      [_uMags, uniformContainer player],
-      [_vMags, vestContainer player],
-      [_bMags, backpackContainer player]
-    ];
-
-    _loadedMags = [];
-
-    {
-      _mag = _x select 0;
-      _ammo = _x select 1;
-      _loaded = _x select 2;
-      _type = _x select 3;
-
-      // if loaded in weapon, not empty, and not hand grenade
-      if (_loaded && _ammo > 0 && _type != 0) then
-      {
-        _loadedMags pushBack [_mag, _ammo];
-      };
-    } forEach magazinesAmmoFull player;
-
-    _data pushBack ["UniformWeapons", (getWeaponCargo uniformContainer player) call cargoToPairs];
-    _data pushBack ["UniformItems", (getItemCargo uniformContainer player) call cargoToPairs];
-    _data pushBack ["UniformMagazines", _uMags];
-
-    _data pushBack ["VestWeapons", (getWeaponCargo vestContainer player) call cargoToPairs];
-    _data pushBack ["VestItems", (getItemCargo vestContainer player) call cargoToPairs];
-    _data pushBack ["VestMagazines", _vMags];
-
-    _data pushBack ["BackpackWeapons", (getWeaponCargo backpackContainer player) call cargoToPairs];
-    _data pushBack ["BackpackItems", (getItemCargo backpackContainer player) call cargoToPairs];
-    _data pushBack ["BackpackMagazines", _bMags];
-
-    _gear pushBack ["PartialMagazines", _partialMags];
-    _gear pushBack ["LoadedMagazines", _loadedMags];
-
-    _wastelandItems = [];
-    {
-      if (_x select 1 > 0) then
-      {
-        _wastelandItems pushBack [_x select 0, _x select 1];
-      };
-    } forEach call mf_inventory_all;
-
-    _gear pushBack ["WastelandItems", _wastelandItems];
-
-    //FIXME: re-enable this optimization once stats_merge is implement
-    /*
-    _gearStr = str _gear;
-
-    if (_gearStr != ["playerData_gear", ""] call getPublicVar) then
-    {
-      { _data pushBack _x } forEach _gear;
-      playerData_gear = _gearStr;
-    };
-    */
-    { _data pushBack _x } forEach _gear;
-
-    if (alive player) then {
-      missionNamespace setVariable [_reply_variable, [_UID, _info, _data, player]];
-      publicVariableServer _reply_variable;
-    };
-};
 
 fn_deletePlayerData = {
 	deletePlayerData = player;
@@ -563,10 +398,19 @@ fn_requestPlayerData = {[] spawn {
 };};
 
 
-"reportStats" addPublicVariableEventHandler {
-  diag_log format["reportStats: %1", _this];
-  [_this select 1] spawn p_savePlayerData;
+
+p_handle_mprespawn = {
+  	ARGV3(0,_unit,objNull);
+  	ARGV3(1,_corpse,objNull);
+    //diag_log format["%1 call p_handle_mprespawn;", _this];
+
+    if (not(local _unit)) exitWith {};
+    trackMe = [_unit];
+    publicVariableServer "trackMe";
 };
+
+
+player addMPEventHandler ["MPRespawn",{ _this call p_handle_mprespawn }];
 
 
 

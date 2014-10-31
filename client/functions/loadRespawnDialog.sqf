@@ -53,6 +53,7 @@ _side = switch (playerSide) do
 
 _respawnText ctrlSetStructuredText parseText (format ["Welcome to Wasteland<br/>You are on %1. Please select a spawn point.", _side]);
 respawnDialogActive = true;
+player setVariable ["respawnDialogActive", true, true];
 
 _dynamicControlsArray =
 [

@@ -15,36 +15,25 @@ s_processRestartMessage = {
   ARGVX3(4,_subject,"");
   ARGV2(5,_body);
 
-  diag_log format["Requesting all players to report their stats"];
-  def(_var_name);
-  _var_name = format["reportStats_%1",ceil(random 10000)];
+  //halt all the save loops
+  p_saveLoopActive = false;
+  v_saveLoopActive = false;
+  o_saveLoopActive = false;
 
-  reportStats_received = 0;
-  //setup an event listener for receiving player stats
-  _var_name addPublicVariableEventHandler {
-    reportStats_received = reportStats_received + 1;
-    _this call s_handleSaveEvent;
-  };
-
-  //ask all clients to report their stats
-  reportStats = _var_name;
-  publicVariable "reportStats";
+  diag_log format["Saving players all player stats"];
+  //save all player stats
+  call p_saveAllPlayers;
 
   diag_log format["Saving all vehicles on the map"];
   //save all vehilce stats
-  v_saveLoopActive = false;
   init(_vScope, "Vehicles" call PDB_objectFileName);
   [_vScope] call v_saveAllVechiles;
 
   diag_log format["Saving all objects on the map"];
   //save all object scopes
-  o_saveLoopActive = false;
   init(_oScope, "Objects" call PDB_objectFileName);
   [_oScope] call o_saveAllObjects;
 
-  //wait for 15 seconds, to give a chance for players to report their stats
-  sleep 15;
-  diag_log format["%1 players reported their stats", reportStats_received];
 
   diag_log format["Sending restart message ack"];
   //send ack that the message has been processed
@@ -64,8 +53,9 @@ s_processRestartMessage = {
   [] spawn {
     sleep (5 * 60);
     diag_log format["WARNING: looks like server did not go down 5 minutes after a restart request"];
-    v_saveLoopActive = false;
-    o_saveLoopActive = false;
+    v_saveLoopActive = true;
+    o_saveLoopActive = true;
+    p_saveLoopActive = true;
   };
 
   true
@@ -139,6 +129,7 @@ s_processMessages = {
 
 };
 
+
 s_messageLoop = {
   ARGVX3(0,_scope,"");
 
@@ -154,22 +145,341 @@ s_messageLoop = {
   };
 };
 
-s_handleSaveEvent = { _this spawn {
+
+p_addPlayerSave = {
+  //diag_log format["%1 call p_addPlayerSave", _this];
+  ARGVX3(0,_request,[]);
+  ARGVX3(1,_player,objNull);
+  ARGVX3(2,_uid,"");
+  ARGVX3(3,_name,"");
+
+
+  init(_alive, alive _player);
+  //diag_log format["Saving stats for %1, alive = %2", _player, _alive];
+
+  //alive player && //FIXME: need to add this check back
+  def(_initComplete);
+  _initComplete = _player getVariable ["initComplete", false];
+  //diag_log format["_initComplete = %1", _initComplete];
+  if (not(_initComplete)) exitWith {};
+
+
+  def(_respawnDialogActive);
+  _respawnDialogActive = _player getVariable ["respawnDialogActive", false];
+  //diag_log format["_respawnDialogActive = %1", _respawnDialogActive];
+
+  def(_FAR_isUnconscious);
+  _FAR_isUnconscious = (_player getVariable ["FAR_isUnconscious", 0] != 0);
+  //diag_log format["_FAR_isUnconscious = %1", _FAR_isUnconscious];
+
+  def(_reset_save);
+  _reset_save = (_respawnDialogActive || {_FAR_isUnconscious || {not(_alive)}}); //or not alive
+  //diag_log format["_reset_save = %1", _reset_save];
+
+
+  def(_info);
+  _info =
+  [
+    ["UID", _uid],
+    ["Name", _name],
+    ["LastGroupSide", str side group player],
+    ["LastPlayerSide", str playerSide],
+    ["BankMoney", _player getVariable ["bmoney", 0]]
+  ];
+
+  if (_reset_save) exitWith {
+     //diag_log format["%1 disconnected while dead, or unconcious, or from resspawn dialog",_player];
+     _request pushBack ["PlayerInfo", (_info call sock_hash)];
+     _request pushBack ["PlayerSave",nil];
+     true
+  };
+
+  _hitPoints = [];
+  {
+    _hitPoint = configName _x;
+    _hitPoints pushBack [_hitPoint, _player getHitPointDamage _hitPoint];
+  } forEach (_player call getHitPoints);
+
+  _data =
+  [
+    ["Damage", damage _player],
+    ["HitPoints", _hitPoints],
+    ["Hunger", _player getVariable ["hungerLevel", 0]],
+    ["Thirst", _player getVariable ["thirstLevel", 0]],
+    ["Money", _player getVariable ["cmoney", 0]] // Money is always saved, but only restored if A3W_moneySaving = 1
+  ];
+
+  // Only save those when on ground or underwater (you probably wouldn't want to spawn 500m in the air if you get logged off in flight)
+  if (isTouchingGround vehicle _player || {(getPos _player) select 2 < 0.5 || (getPosASL _player) select 2 < 0.5}) then {
+    _data pushBack ["Position", getPosATL _player];
+    _data pushBack ["Direction", direction _player];
+
+    if (vehicle _player == _player) then {
+      _data pushBack ["CurrentWeapon", format ["%1", currentMuzzle _player]]; // currentMuzzle returns a number sometimes, hence the format
+      _data pushBack ["Animation", (animationState _player)];
+    };
+  };
+
+  _gear =
+  [
+    ["Uniform", uniform _player],
+    ["Vest", vest _player],
+    ["Backpack", backpack _player],
+    ["Goggles", goggles _player],
+    ["Headgear", headgear _player],
+
+    ["PrimaryWeapon", primaryWeapon _player],
+    ["SecondaryWeapon", secondaryWeapon _player],
+    ["HandgunWeapon", handgunWeapon _player],
+
+    ["PrimaryWeaponItems", primaryWeaponItems _player],
+    ["SecondaryWeaponItems", secondaryWeaponItems _player],
+    ["HandgunItems", handgunItems _player],
+
+    ["AssignedItems", assignedItems _player]
+  ];
+
+
+  _uMags = [];
+  _vMags = [];
+  _bMags = [];
+  _partialMags = [];
+
+  {
+    _magArr = _x select 0;
+
+    {
+      _mag = _x select 0;
+      _ammo = _x select 1;
+
+      if (_ammo == getNumber (configFile >> "CfgMagazines" >> _mag >> "count")) then {
+        [_magArr, _mag, 1] call fn_addToPairs;
+      }
+      else {
+        if (_ammo > 0) then {
+          _partialMags pushBack [_mag, _ammo];
+        };
+      };
+    } forEach magazinesAmmoCargo (_x select 1);
+  }
+  forEach
+  [
+    [_uMags, uniformContainer _player],
+    [_vMags, vestContainer _player],
+    [_bMags, backpackContainer _player]
+  ];
+
+  _loadedMags = [];
+
+  {
+    _mag = _x select 0;
+    _ammo = _x select 1;
+    _loaded = _x select 2;
+    _type = _x select 3;
+
+    // if loaded in weapon, not empty, and not hand grenade
+    if (_loaded && _ammo > 0 && _type != 0) then
+    {
+      _loadedMags pushBack [_mag, _ammo];
+    };
+  } forEach magazinesAmmoFull _player;
+
+  _data pushBack ["UniformWeapons", (getWeaponCargo uniformContainer _player) call cargoToPairs];
+  _data pushBack ["UniformItems", (getItemCargo uniformContainer _player) call cargoToPairs];
+  _data pushBack ["UniformMagazines", _uMags];
+
+  _data pushBack ["VestWeapons", (getWeaponCargo vestContainer _player) call cargoToPairs];
+  _data pushBack ["VestItems", (getItemCargo vestContainer _player) call cargoToPairs];
+  _data pushBack ["VestMagazines", _vMags];
+
+  _data pushBack ["BackpackWeapons", (getWeaponCargo backpackContainer _player) call cargoToPairs];
+  _data pushBack ["BackpackItems", (getItemCargo backpackContainer _player) call cargoToPairs];
+  _data pushBack ["BackpackMagazines", _bMags];
+
+  _gear pushBack ["PartialMagazines", _partialMags];
+  _gear pushBack ["LoadedMagazines", _loadedMags];
+
+  _wastelandItems = [];
+  {
+    if (_x select 1 > 0) then
+    {
+      _wastelandItems pushBack [_x select 0, _x select 1];
+    };
+  } forEach (_player getVariable ["inventory",[]]);
+
+  _gear pushBack ["WastelandItems", _wastelandItems];
+
+  //FIXME: re-enable this optimization once stats_merge is implement
+  /*
+  _gearStr = str _gear;
+
+  if (_gearStr != ["playerData_gear", ""] call getPublicVar) then
+  {
+    { _data pushBack _x } forEach _gear;
+    playerData_gear = _gearStr;
+  };
+  */
+  { _data pushBack _x } forEach _gear;
+
+  _request pushBack ["PlayerInfo", (_info call sock_hash)];
+  _request pushBack ["PlayerSave", (_data call sock_hash)];
+
+  true
+};
+
+p_disconnectSave = {
+  //diag_log format["%1 call p_disconnectSave", _this];
+  ARGVX3(0,_player,objNull);
+  ARGVX3(2,_uid,"");
+  ARGVX3(3,_name,"");
+
+
+  init(_scope,_uid call PDB_playerFileName);
+  init(_request,[_scope]);
+
+  [_request,_player,_uid,_name] call p_addPlayerSave;
+  _request call stats_set;
+};
+
+
+//event listener for server to track when the players inventory changes
+"trackMyInventory" addPublicVariableEventHandler {
+  //diag_log format["%1 call trackMyInventory", _this];
   ARGVX3(1,_this,[]);
-  ARGVX3(0,_uid,"");
-  ARGVX3(1,_info,[]);
-  ARGVX3(2,_data,[]);
-  ARGVX3(3,_player,objNull);
+  ARGVX3(0,_player,objNull);
+  ARGVX3(1,_inventory,[]);
 
-  if (!alive _player) exitWith {
-    _uid call fn_deletePlayerSave;
-  };
+  //note that this is not being set to broadcast on purpose
+  _player setVariable ["inventory", _inventory];
+};
 
-  if (alive _player && {_player getVariable ["FAR_isUnconscious", 0] == 0})  exitWith {
-    init(_scope,_UID call PDB_playerFileName);
-    [_scope, "PlayerInfo", (_info call sock_hash)] call stats_set;
-    [_scope, "PlayerSave", (_data call sock_hash)] call stats_set;
-  };
+"trackMyVitals" addPublicVariableEventHandler {_this spawn {
+  //diag_log format["%1 call trackMyVitals", _this];
+  ARGVX3(1,_this,[]);
+  ARGVX3(0,_player,objNull);
+  ARGVX3(1,_vitals,[]);
+
+  {
+    private["_key", "_value"];
+    _key = _x select 0;
+    _value = _x select 1;
+
+    if (!isNil "_key" || {typeName _key == "STRING"}) then {
+      _player setVariable [_key,OR(_value,nil)];
+      //diag_log format["_key = %1, _value = %2", _key, OR(_value,nil)];
+    };
+  } forEach _vitals;
 };};
+
+
+active_players_list = [];
+
+p_getActivePlayerIndex = {
+  ARGVX4(0,_player,objNull,-1);
+  if (isNull _player) exitWith {-1};
+
+  (active_players_list find _player)
+};
+
+p_trackPlayer = {
+  ARGVX3(0,_player,objNull);
+
+  def(_index);
+  _index = [_player] call p_getActivePlayerIndex;
+  if (_index >= 0) exitWith {};
+
+  //diag_log format["%1 is being added to the active list", _player];
+  active_players_list pushBack _player;
+};
+
+p_untrackPlayer = {
+  ARGVX3(0,_player,objNull);
+
+  def(_index);
+  _index = [_player] call p_getActivePlayerIndex;
+  if (_index < 0) exitWith {};
+
+  //diag_log format["%1 is being removed from the active list", _player];
+  active_players_list deleteAt _index;
+};
+
+
+p_ActivePlayersListCleanup = {
+
+  //post cleanup the array
+  init(_cleanup_start, diag_tickTime);
+  init(_nulls,[]);
+  init(_index,-1);
+  init(_start_size,count(active_players_list));
+  while {true} do {
+    _index = active_players_list find objNull;
+    if (_index < 0) exitWith {};
+    active_players_list deleteAt _index;
+  };
+  init(_end_size,count(active_players_list));
+  init(_cleanup_end, diag_tickTime);
+  diag_log format["p_saveLoop: count(active_players_list) = %1, %2 nulls deleted in %3 ticks", count(active_players_list), (_start_size - _end_size), (_cleanup_end - _cleanup_start)];
+};
+
+
+//event handlers for when player spawns
+"trackMe" addPublicVariableEventHandler {
+  //diag_log format["%1 call trackMe", _this];
+  ARGVX3(1,_this,[]);
+  [_this select 0] call p_trackPlayer;
+};
+
+
+p_saveAllPlayers = {
+  init(_count,0);
+  init(_start_time, diag_tickTime);
+
+  def(_request);
+  def(_scope);
+  def(_player);
+  def(_uid);
+  def(_name);
+
+  {if (true) then {
+    _player = _x;
+    if (isNil "_player" || {typeName _player != "OBJECT" || {isNull _player || {not(isPlayer _player) || { not(alive _player)}}}}) exitWith {
+      active_players_list set [_forEachIndex, objNull];
+    };
+
+    _uid = getPlayerUID _player;
+    _name = name _player;
+    _scope = _uid call PDB_playerFileName;
+    _request = [_scope];
+
+    if (!isNil{[_request, _player, _uid, _name] call p_addPlayerSave}) then {
+      _count = _count + 1;
+    };
+
+    init(_save_start, diag_tickTime);
+    _request call stats_set;
+    diag_log format["p_saveLoop: (%1 - %2) saved in %3 ticks, save call took %4 ticks", _name, _uid, (diag_tickTime - _start_time), (diag_tickTime - _save_start)];
+
+  };} forEach (active_players_list);
+
+  diag_log format["p_saveLoop: total of %1 players saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
+
+  call p_ActivePlayersListCleanup;
+};
+
+
+p_saveLoop_interval = OR(A3W_player_saveInterval,60);
+diag_log format["config: A3W_player_saveInterval = %1", p_saveLoop_interval];
+
+
+p_saveLoop = {
+  while {true} do {
+    sleep p_saveLoop_interval;
+    if (not(isBOOLEAN(p_saveLoopActive) && {!p_saveLoopActive})) then {
+      diag_log format["saving all players"];
+      call p_saveAllPlayers;
+    };
+  };
+};
+
 
 diag_log "sFunctions.sqf loading complete";

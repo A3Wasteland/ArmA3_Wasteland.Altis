@@ -12,10 +12,6 @@ fn_deletePlayerSave = {
   [_scope, "PlayerSave", nil] call stats_set;
 };
 
-"savePlayerData" addPublicVariableEventHandler {
-  _this call s_handleSaveEvent;
-};
-
 
 "deletePlayerData" addPublicVariableEventHandler {
   _player = _this select 1;
@@ -24,5 +20,6 @@ fn_deletePlayerSave = {
 
 
 [format["%1Messages", PDB_ServerID]] spawn s_messageLoop;
+[] spawn p_saveLoop;
 
 diag_log "Loading s_setupPlayerDB complete";

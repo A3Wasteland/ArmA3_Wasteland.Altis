@@ -18,13 +18,10 @@ externalConfigFolder = "\A3Wasteland_settings";
 vChecksum = compileFinal str call A3W_fnc_generateKey;
 
 // Corpse deletion on disconnect if player alive and player saving on
-addMissionEventHandler ["HandleDisconnect",
-{
-	if (isNil "isConfigOn" || {["A3W_playerSaving"] call isConfigOn}) then
-	{
-		_unit = _this select 0;
-		if (alive _unit) then { deleteVehicle _unit };
-	};
+addMissionEventHandler ["HandleDisconnect", {
+  diag_log format["HandleDisconnect %1", _this];
+  _this call p_disconnectSave;
+  deleteVehicle (_this select 0);
 }];
 
 //Execute Server Side Scripts.

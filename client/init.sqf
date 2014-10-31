@@ -23,6 +23,7 @@ waitUntil {!isNil "A3W_serverSetupComplete"};
 showPlayerIcons = true;
 mutexScriptInProgress = false;
 respawnDialogActive = false;
+player setVariable ["respawnDialogActive", false, true];
 groupManagmentActive = false;
 pvar_PlayerTeamKiller = objNull;
 doCancelAction = false;
