@@ -81,6 +81,10 @@ switch (true) do
 	{
 		_vehicle addMagazine "300Rnd_20mm_shells";
 	};
+	case ({_class isKindOf _x} count ["B_Truck_01_ammo_F", "O_Truck_03_ammo_F", "I_Truck_02_ammo_F"] > 0):
+	{
+		_vehicle addAction ["Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, true, true, "", "vehicle _this != _this && _this distance _target <= 15"];
+	};
 };
 
 _weapons = getArray (configFile >> "CfgVehicles" >> _class >> "weapons");
