@@ -129,7 +129,6 @@ class Mission
 					id=0;
 					side="WEST";
 					vehicle="C_man_w_worker_F";
-					//player="PLAY CDG"; // If you want to enable the headless client slot, just uncomment this line
 					forceHeadlessClient=1;
 					leader=1;
 					skill=0.60000002;
@@ -2318,42 +2317,42 @@ class Mission
 			special="NONE";
 			id=196;
 			side="EMPTY";
-			vehicle="O_Truck_03_device_F";
+			vehicle="O_Truck_03_ammo_F";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_2";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
+			init="this call A3W_fnc_setupResupplyTruck";
 			description="Service";
 		};
 		class Item38
 		{
-			position[]={4956.1401,16.85,14439.879};
-			azimut=-32.237598;
+			position[]={4952.3545,16.147579,14393.732};
+			azimut=96.126503;
 			special="NONE";
 			id=197;
 			side="EMPTY";
-			vehicle="O_Truck_03_device_F";
+			vehicle="O_Truck_03_ammo_F";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_1";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
+			init="this call A3W_fnc_setupResupplyTruck";
 			description="Service";
 		};
 		class Item39
 		{
-			position[]={14770.674,18.073345,16182.461};
+			position[]={14661.995,17.912691,16146.978};
 			azimut=30.279499;
 			special="NONE";
 			id=198;
 			side="EMPTY";
-			vehicle="O_Truck_03_device_F";
+			vehicle="O_Truck_03_ammo_F";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_3";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
+			init="this call A3W_fnc_setupResupplyTruck";
 			description="Service";
 		};
 		class Item40
@@ -2363,27 +2362,27 @@ class Mission
 			special="NONE";
 			id=199;
 			side="EMPTY";
-			vehicle="O_Truck_03_device_F";
+			vehicle="O_Truck_03_ammo_F";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_4";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
+			init="this call A3W_fnc_setupResupplyTruck";
 			description="Service";
 		};
 		class Item41
 		{
-			position[]={26997.945,21.123363,24785.578};
-			azimut=30.279499;
+			position[]={26844.912,21.499775,24680.639};
+			azimut=69.169502;
 			special="NONE";
 			id=200;
 			side="EMPTY";
-			vehicle="O_Truck_03_device_F";
+			vehicle="O_Truck_03_ammo_F";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_5";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
+			init="this call A3W_fnc_setupResupplyTruck";
 			description="Service";
 		};
 		class Item42
@@ -2393,12 +2392,12 @@ class Mission
 			special="NONE";
 			id=201;
 			side="EMPTY";
-			vehicle="O_Truck_03_device_F";
+			vehicle="O_Truck_03_ammo_F";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_6";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
+			init="this call A3W_fnc_setupResupplyTruck";
 			description="Service";
 		};
 		class Item43
@@ -2408,12 +2407,12 @@ class Mission
 			special="NONE";
 			id=202;
 			side="EMPTY";
-			vehicle="O_Truck_03_device_F";
+			vehicle="O_Truck_03_ammo_F";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
 			text="Service_Truck_7";
-			init="this allowdamage false; this setVariable[""R3F_LOG_disabled"",true];";
+			init="this call A3W_fnc_setupResupplyTruck";
 			description="Service";
 		};
 		class Item44
@@ -3924,14 +3923,11 @@ class Mission
 		};
 		class Item181
 		{
-			position[]={11866.286,16.360786,9441.3799};
-			name="Service_Icon_2";
-			text="Service";
-			type="o_service";
+			position[]={11874.131,16.197126,9440.4404};
+			name="Service_Truck_2";
+			text="Service_Truck_2";
+			type="Empty";
 			colorName="ColorYellow";
-			a=0.5;
-			b=0.5;
-			angle=-446.918;
 		};
 		class Item182
 		{
@@ -4275,69 +4271,51 @@ class Mission
 		};
 		class Item216
 		{
-			position[]={4956.2202,16.850002,14439.738};
-			name="Service_Icon_1";
-			text="Service";
-			type="o_service";
+			position[]={4960.4512,16.07592,14392.533};
+			name="Service_Truck_1";
+			text="Service_Truck_1";
+			type="Empty";
 			colorName="ColorYellow";
-			a=0.5;
-			b=0.5;
-			angle=-446.918;
 		};
 		class Item217
 		{
-			position[]={14770.492,18.069855,16182.406};
-			name="Service_Icon_3";
-			text="Service";
-			type="o_service";
+			position[]={14668.858,17.91,16145.946};
+			name="Service_Truck_3";
+			text="Service_Truck_3";
+			type="Empty";
 			colorName="ColorYellow";
-			a=0.5;
-			b=0.5;
-			angle=-446.918;
 		};
 		class Item218
 		{
-			position[]={23052.336,3.1900001,18980.516};
-			name="Service_Icon_4";
-			text="Service";
-			type="o_service";
+			position[]={23061.568,3.1900001,18980.928};
+			name="Service_Truck_4";
+			text="Service_Truck_4";
+			type="Empty";
 			colorName="ColorYellow";
-			a=0.5;
-			b=0.5;
-			angle=-446.918;
 		};
 		class Item219
 		{
-			position[]={26997.766,21.121851,24785.523};
-			name="Service_Icon_5";
-			text="Service";
-			type="o_service";
+			position[]={26852.576,21.30323,24689.699};
+			name="Service_Truck_5";
+			text="Service_Truck_5";
+			type="Empty";
 			colorName="ColorYellow";
-			a=0.5;
-			b=0.5;
-			angle=-446.918;
 		};
 		class Item220
 		{
-			position[]={21018.328,24.16917,7235.9316};
-			name="Service_Icon_6";
-			text="Service";
-			type="o_service";
+			position[]={21026.596,24.087046,7235.833};
+			name="Service_Truck_6";
+			text="Service_Truck_6";
+			type="Empty";
 			colorName="ColorYellow";
-			a=0.5;
-			b=0.5;
-			angle=-446.918;
 		};
 		class Item221
 		{
-			position[]={5513.4419,199.90347,19773.967};
-			name="Service_Icon_7";
-			text="Service";
-			type="o_service";
+			position[]={5524.9316,200.53172,19771.277};
+			name="Service_Truck_7";
+			text="Service_Truck_7";
+			type="Empty";
 			colorName="ColorYellow";
-			a=0.5;
-			b=0.5;
-			angle=-446.918;
 		};
 		class Item222
 		{
