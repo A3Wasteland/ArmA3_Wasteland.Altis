@@ -112,17 +112,17 @@ _resupplyThread = [_truck, _unit, _vehicle, _price] spawn
 	_started = true;
 
 	//Add cost for resupply
-	_playerMoney = player getVariable ["cmoney", 0];
+	_playerMoney = player getVariable ["bmoney", 0];
 
 	if (_playerMoney < _price) exitWith
 	{
-		_text = format ["Not enough money! You need $%1 to resupply %2. Service cancelled!", _price call fn_numbersText, _vehName];
+		_text = format ["Not enough money in your BANK! You need $%1 to resupply %2. Service cancelled!", _price call fn_numbersText, _vehName];
 		[_text, 10] call mf_notify_client;
 		mutexScriptInProgress = false;
 	};
 
 	//start resupply here
-	player setVariable ["cmoney", _playerMoney - _price, true];
+	player setVariable ["bmoney", _playerMoney - _price, true];
 
 	_text = format ["You paid $%1 to resupply %2.\nNo Refunds!\nPlease stand by...", _price call fn_numbersText, _vehName];
 	[_text, 10] call mf_notify_client;
