@@ -203,10 +203,10 @@ if (_playerSavingOn || _serverSavingOn) then
 			[_serverObjectsIDs, _serverVehiclesIDs] execVM format["persistence\server\%1\world\oSave.sqf", _persistence];
 		};
 		
-		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
+		/*if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
 		{
 			[_serverObjectsIDs] execVM format["persistence\server\%1\world\oSave.sqf", _persistence];
-		};
+		}; */
 	};
 
 	{
