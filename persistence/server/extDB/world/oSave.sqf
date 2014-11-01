@@ -8,8 +8,12 @@ if (!isServer) exitWith {};
 #include "functions.sqf"
 
 _serverObjectsIDs = _this select 0;
+_serverVehiclesIDs = _this select 1;
 _saveableObjects = [];
 
+_purchasedVehicleSaving = ["A3W_purchasedVehicleSaving"] call isConfigOn;
+_missionVehicleSaving = ["A3W_missionVehicleSaving"] call isConfigOn;
+_vehicleSaving = (_purchasedVehicleSaving || _missionVehicleSaving);
 
 // Add objectList & general store objects
 {
@@ -33,6 +37,7 @@ while {true} do
 	_diag_tickTime = diag_tickTime; // Doesn't Need to be accurate... once its close enough
 
 	_old_serverObjectsIDs = + _serverObjectsIDs;
+	_old_serverVehiclesIDs = + _serverVehiclesIDs;
 
 	uiSleep 60;
 	{
@@ -234,6 +239,7 @@ while {true} do
 			};
 		};
 	} forEach allMissionObjects "All";
+	
 
 	{
 		[format["deleteServerObject:%1", _x]] call extDB_Database_async;
@@ -248,4 +254,183 @@ while {true} do
 	};
 
 	diag_log format ["A3W - %1 baseparts and objects have been saved with %2", count(_serverObjectsIDs), ["A3W_savingMethodName", "-ERROR-"] call getPublicVar];
+	
+	uiSleep 30;
+	
+	
+	// Vehicle Saving
+	if (_vehicleSaving) then
+	{
+		{
+			_veh = _x;
+			sleep 0.01;
+			_db_id = _veh getVariable ["db_id", -1];
+			if (_db_id > -2) then // -2 Means Ignore not savableObject, was scanned previously
+			{
+				// Only save vehicles that are alive and touching the ground or water
+				if (!(_veh isKindOf "Man") && {alive _veh && (isTouchingGround _veh || (getPos _veh) select 2 < 1)}) then
+				{
+					_class = typeOf _veh;
+					_purchasedVehicle = _veh getVariable ["A3W_purchasedVehicle", false];
+					_missionVehicle = (_veh getVariable ["A3W_missionVehicle", false] && !(_veh getVariable ["R3F_LOG_disabled", false]));
+
+					if ((_purchasedVehicle && _purchasedVehicleSaving) ||
+						(_missionVehicle && _missionVehicleSaving)) then
+					{
+						_pos = ASLtoATL getPosWorld _veh;
+						{ _pos set [_forEachIndex, _x call fn_numToStr] } forEach _pos;
+						_dir = [vectorDir _veh, vectorUp _veh];
+						_fuel = fuel _veh;
+						_damage = damage _veh;
+						_hitPoints = [];
+
+						{
+							_hitPoint = configName _x;
+							_hitPoints set [count _hitPoints, [_hitPoint, _veh getHitPointDamage _hitPoint]];
+						} forEach (_class call getHitPoints);
+
+						if (isNil {_veh getVariable "vehSaving_spawningTime"}) then
+						{
+							_veh setVariable ["vehSaving_spawningTime", diag_tickTime];
+						};
+
+						_hoursAlive = (_veh getVariable ["vehSaving_hoursAlive", 0]) + ((diag_tickTime - (_veh getVariable "vehSaving_spawningTime")) / 3600);
+
+						_variables = [];
+
+						_owner = _veh getVariable ["ownerUID", ""];
+
+						if !(_owner in ["","0"]) then
+						{
+							_variables pushBack ["ownerUID", _owner];
+						};
+
+						switch (true) do
+						{
+							case _purchasedVehicle:
+							{
+								_variables pushBack ["A3W_purchasedVehicle", true];
+							};
+							case _missionVehicle:
+							{
+								_variables pushBack ["A3W_missionVehicle", true];
+							};
+						};
+
+						_texture = _veh getVariable ["A3W_objectTexture", ""];
+
+						_weapons = [];
+						_magazines = [];
+						_items = [];
+						_backpacks = [];
+
+						if (_class call _hasInventory) then
+						{
+							// Save weapons & ammo
+							_weapons = (getWeaponCargo _veh) call cargoToPairs;
+							_magazines = (getMagazineCargo _veh) call cargoToPairs;
+							_items = (getItemCargo _veh) call cargoToPairs;
+							_backpacks = (getBackpackCargo _veh) call cargoToPairs;
+						};
+
+						_turretMags = magazinesAmmo _veh;
+						_turretMags2 = [];
+						_turretMags3 = [];
+						_isGhostHawk = _class isKindOf "Heli_Transport_01_base_F";
+
+						_turrets = if (_isGhostHawk) then { [[-1],[2]] } else { [[-1]] + ([_veh, []] call BIS_fnc_getTurrets) };
+
+						{
+							_path = _x;
+
+							{
+								if ([_turretMags, _x, -1] call fn_getFromPairs == -1 || _isGhostHawk) then
+								{
+									if (_veh currentMagazineTurret _path == _x && {count _turretMags3 == 0}) then
+									{
+										_turretMags3 set [count _turretMags3, [_x, _path, [_veh currentMagazineDetailTurret _path] call getMagazineDetailAmmo]];
+									}
+									else
+									{
+										_turretMags2 set [count _turretMags2, [_x, _path]];
+									};
+								};
+							} forEach (_veh magazinesTurret _path);
+						} forEach _turrets;
+
+						_ammoCargo = getAmmoCargo _veh;
+						_fuelCargo = getFuelCargo _veh;
+						_repairCargo = getRepairCargo _veh;
+
+						// Fix for -1.#IND
+						if !(_ammoCargo >= 0) then { _ammoCargo = 0 };
+						if !(_fuelCargo >= 0) then { _fuelCargo = 0 };
+						if !(_repairCargo >= 0) then { _repairCargo = 0 };
+						diag_log format["DB_ID %1",_db_id];
+						if (_db_id == -1) then
+						{
+
+							_db_id = (["insertServerVehicle:" +
+											str(call(A3W_extDB_ServerID)) + ":" +
+											str(_class) + ":" +
+											str(_pos) + ":" +
+											str(_dir) + ":" +
+											str(_hoursAlive) + ":" +
+											str(_fuel) + ":" +
+											str(_damage) + ":" +
+											str(_hitPoints) + ":" +
+											str(_variables) + ":" +
+											str(_texture) + ":" +
+											str(_weapons) + ":" +
+											str(_magazines) + ":" +
+											str(_items) + ":" +
+											str(_backpacks) + ":" +
+											str(_turretMags) + ":" +
+											str(_turretMags2) + ":" +
+											str(_turretMags3) + ":" +
+											str(_ammoCargo) + ":" +
+											str(_fuelCargo) + ":" +
+											str(_repairCargo),2] call extDB_Database_async) select 0;
+
+							_veh setVariable ["db_id", _db_id];
+							_serverVehiclesIDs pushBack _db_id;
+						}
+						else
+						{
+							["updateServerVehicle:" +
+											str(_db_id) + ":" +
+											str(_pos) + ":" +
+											str(_dir) + ":" +
+											str(_hoursAlive) + ":" +
+											str(_fuel) + ":" +
+											str(_damage) + ":" +
+											str(_hitPoints) + ":" +
+											str(_variables) + ":" +
+											str(_texture) + ":" +
+											str(_weapons) + ":" +
+											str(_magazines) + ":" +
+											str(_items) + ":" +
+											str(_backpacks) + ":" +
+											str(_turretMags) + ":" +
+											str(_turretMags2) + ":" +
+											str(_turretMags3) + ":" +
+											str(_ammoCargo) + ":" +
+											str(_fuelCargo) + ":" +
+											str(_repairCargo)] call extDB_Database_async;
+
+							_old_serverVehiclesIDs = _old_serverVehiclesIDs - [_db_id];
+						};
+					};
+
+				};
+			};
+		} forEach allMissionObjects "AllVehicles";
+		
+		diag_log format ["A3W - %1 vehicles have been saved with %2", count(_serverVehiclesIDs), ["A3W_savingMethodName", "-ERROR-"] call getPublicVar];
+		
+		{
+			[format["deleteServerVehicle:%1", _x]] call extDB_Database_async;
+			_serverVehiclesIDs = _serverVehiclesIDs - [_x];
+		} forEach _old_serverVehiclesIDs;
+	};
 };
