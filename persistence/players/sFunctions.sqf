@@ -220,6 +220,8 @@ p_addPlayerSave = {
     };
   };
 
+  _data pushBack ["Position", _pos];
+
   //only save animation, and current weapon if the player is not inside a vehicle
   if (vehicle _player == _player) then {
     _data pushBack ["CurrentWeapon", format ["%1", currentMuzzle _player]]; // currentMuzzle returns a number sometimes, hence the format
