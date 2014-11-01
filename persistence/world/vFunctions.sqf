@@ -398,16 +398,27 @@ def(_obj);
 
 v_isSavingMissionVehiclesEnabled = (isSCALAR(A3W_missionVehicleSaving) && {A3W_missionVehicleSaving == 1});
 v_isSavingPurchasedVehiclesEnabled = (isSCALAR(A3W_purchasedVehicleSaving) && {A3W_purchasedVehicleSaving == 1});
+v_isSavingTownVehiclesEnabled = (isSCALAR(A3W_townVehicleSaving) && {A3W_townVehicleSaving == 1});
+
+
+diag_log format["config: A3W_purchasedVehicleSaving = %1", v_isSavingPurchasedVehiclesEnabled];
+diag_log format["config: A3W_missionVehicleSaving = %1", v_isSavingMissionVehiclesEnabled];
+diag_log format["config: A3W_townVehicleSaving = %1", v_isSavingTownVehiclesEnabled];
+
 
 
 v_isAMissionVehicle = {
   ARGVX4(0,_obj,objNull,false);
-  not(isNil{_obj getVariable "A3W_missionVehicle"})
+  def(_mission);
+  _mission = _obj getVariable "A3W_missionVehicle";
+  (isBOOLEAN(_mission) && {_mission})
 };
 
 v_isAPurchasedVehicle = {
   ARGVX4(0,_obj,objNull,false);
-  not(isNil{_obj getVariable "A3W_purchasedVehicle"})
+  def(_purchased);
+  _purchased = _obj getVariable "A3W_purchasedVehicle";
+  (isBOOLEAN(_purchased) && {_purchased})
 };
 
 v_isVehicleSaveable = {
@@ -419,14 +430,28 @@ v_isVehicleSaveable = {
   //not a vehicle, don't save it
   if (not([_obj] call v_isVehicle)) exitWith {false};
 
+  def(_purchasedVehicle);
+  def(_missionVehicle);
+  def(_usedVehicle);
+  def(_townVehicle);
+  def(_usedOnce);
+
+
+  _purchasedVehicle = ([_obj] call v_isAPurchasedVehicle);
+  _missionVehicle = ([_obj] call v_isAMissionVehicle);
+  _townVehicle = (!_missionVehicle && {!_purchasedVehicle});
+  _usedOnce = not([_obj] call v_isVehicleVirgin);
+
+  //diag_log format["%1, _purchasedVehicle = %2, _missionVehicle = %3, _usedOnce = %4, _townVehicle = %5",_obj, _purchasedVehicle,_missionVehicle,_usedOnce,_townVehicle];
+
   //it's a purchased vehicle, and saving purchased vehicles has been enabled, save it
-  if (([_obj] call v_isAPurchasedVehicle) && {v_isSavingPurchasedVehiclesEnabled}) exitWith {true};
+  if (_purchasedVehicle && {v_isSavingPurchasedVehiclesEnabled}) exitWith {true};
 
   //it's a mission spawned vehicle, and saving mission vehicles has been enabled, save it
-  if (([_obj] call v_isAMissionVehicle) && {v_isSavingMissionVehiclesEnabled}) exitWith {true};
+  if (_missionVehicle && {v_isSavingMissionVehiclesEnabled}) exitWith {true};
 
-  //the vehicle has been used at least once
-  if (not([_obj] call v_isVehicleVirgin)) exitWith {true};
+  //if it's a town vehicle that has been used at least once, save it
+  if (_townVehicle && {_usedOnce && {v_isSavingTownVehiclesEnabled}}) exitWith {true};
 
   false
 };
