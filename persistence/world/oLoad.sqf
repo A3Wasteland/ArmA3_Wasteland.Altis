@@ -1,4 +1,7 @@
-//	@file Version: 0.1
+// ******************************************************************************************
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// ******************************************************************************************
+//	@file Version: 1.2
 //	@file Name: oLoad.sqf
 //	@file Author: micovery
 //	@file Description: object loading

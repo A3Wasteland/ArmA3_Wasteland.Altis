@@ -146,6 +146,7 @@ fn_applyPlayerData = {
   def(_handgun_weapon);
   def(_uniform_class);
   def(_vest_class);
+  def(_vehicle_key);
 
   //iterate through the data, and extract the hash variables into local variables
   {
@@ -163,6 +164,8 @@ fn_applyPlayerData = {
       case "HandgunWeapon": { _handgun_weapon = _value};
       case "Uniform":{ _uniform_class = _value};
       case "Vest": { _vest_class = _value};
+      case "InVehicle": { _vehicle_key = _value};
+
     };
   } forEach _data;
 
@@ -191,7 +194,7 @@ fn_applyPlayerData = {
   //restore other stuff that is not order-dependent
   def(_name);
   def(_value);
-  {if (true) then {
+  {
     _name = _x select 0;
     _value = _x select 1;
 
@@ -247,7 +250,7 @@ fn_applyPlayerData = {
       case "PartialMagazines": { { player addMagazine _x } forEach _value };
       case "WastelandItems": { { [_x select 0, _x select 1, true] call mf_inventory_add } forEach (OR(_value,[])) };
     };
-  };} forEach _data;
+  } forEach _data;
 };
 
 fn_savePlayerData = {

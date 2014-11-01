@@ -53,44 +53,6 @@ v_isAlwaysUnlocked = {
 };
 
 
-v_getVehicleTextureSelections = {
-  ARGVX3(0,_veh,objNull);
-  
-  _selections = switch (true) do {
-    case (_veh isKindOf "Van_01_base_F"):             { [0,1] };
-    case (_veh isKindOf "MRAP_01_base_F"):            { [0,2] };
-    case (_veh isKindOf "MRAP_02_base_F"):            { [0,2] };
-    case (_veh isKindOf "MRAP_03_base_F"):            { [0,1] };
-
-    case (_veh isKindOf "Truck_01_base_F"):           { [0,1,2] };
-    case (_veh isKindOf "Truck_02_base_F"):           { [0,1] };
-    case (_veh isKindOf "Truck_03_base_F"):           { [0,1] };
-
-    case (_veh isKindOf "APC_Wheeled_01_base_F"):     { [0,2] };
-    case (_veh isKindOf "APC_Wheeled_02_base_F"):     { [0,2] };
-    case (_veh isKindOf "APC_Wheeled_03_base_F"):     { [0,2,3] };
-
-    case (_veh isKindOf "APC_Tracked_01_base_F"):     { [0,1,2,3] };
-    case (_veh isKindOf "APC_Tracked_02_base_F"):     { [0,1,2] };
-    case (_veh isKindOf "APC_Tracked_03_base_F"):     { [0,1] };
-
-    case (_veh isKindOf "MBT_01_base_F"):             { [0,1,2] };
-    case (_veh isKindOf "MBT_02_base_F"):             { [0,1,2,3] };
-    case (_veh isKindOf "MBT_03_base_F"):             { [0,1,2] };
-
-    case (_veh isKindOf "Heli_Transport_01_base_F"):  { [0,1] };
-    case (_veh isKindOf "Heli_Transport_02_base_F"):  { [0,1,2] };
-    case (_veh isKindOf "Heli_Attack_02_base_F"):     { [0,1] };
-
-    case (_veh isKindOf "Plane_Base_F"):              { [0,1] };
-
-    default                                           { [0] };
-  };
-  
-  (_selections)
-};
-
-
 v_isVehicle = {
   ARGVX4(0,_obj,objNull,false);
   
@@ -103,7 +65,6 @@ v_isVehicle = {
   
   (_result)
 };
-
 
 
 v_restoreVehicleVariables = {
@@ -178,7 +139,6 @@ v_restoreVehicle = {_this spawn {
       case "Position": { _pos = OR(_value,nil);};
       case "Direction": { _dir = OR(_value,nil);};
       case "Damage": { _damage = OR(_value,nil);};
-      case "Texture": { _texture = OR(_value,nil);};
       case "Weapons": { _cargo_weapons = OR(_value,nil);};
       case "Items": { _cargo_items = OR(_value,nil);};
       case "Magazines": { _cargo_magazines = OR(_value,nil);};
@@ -224,6 +184,7 @@ v_restoreVehicle = {_this spawn {
   [_obj, false] call vehicleSetup;
 
   _obj setVariable ["vehicle_key", _vehicle_key, true];
+  missionNamespace setVariable [_vehicle_key, _obj];
   
   _obj setPosWorld ATLtoASL _pos;
   if (isARRAY(_dir)) then {
@@ -252,20 +213,7 @@ v_restoreVehicle = {_this spawn {
   };
 
 
-  if (isSTRING(_texture) && {_texture != ""}) then {  
-    def(_selections);
-    _selections = [_obj] call v_getVehicleTextureSelections;
-    if (!isARRAY(_selections)) exitWith {};
-    
-    _obj setVariable ["A3W_objectTexture", _texture, true];
-    _obj setVariable ["BIS_enableRandomization", false, true];
 
-    { 
-      _obj setObjectTextureGlobal [_x, _texture] 
-    } forEach _selections;
-  };
-  
-  
   if (isSCALAR(_damage)) then {
     _obj setDamage _damage;
   };
@@ -279,6 +227,17 @@ v_restoreVehicle = {_this spawn {
   };
    
   [_obj,_variables] call v_restoreVehicleVariables;
+
+
+  def(_textures);
+  _textures = _obj getVariable ["A3W_objectTextures",[]];
+  if (isARRAY(_textures)) then {
+    _obj setVariable ["BIS_enableRandomization", false, true];
+    {
+      _obj setObjectTextureGlobal _x;
+    } forEach _textures;
+  };
+
 
   //restore the stuff inside the vehicle  
   clearWeaponCargoGlobal _obj;
@@ -333,6 +292,33 @@ v_restoreVehicle = {_this spawn {
   tracked_vehicles_list pushBack _obj;
 
 }};;
+
+
+//event handlers for object locking and unlocking
+"backInVehicle" addPublicVariableEventHandler { _this spawn {
+  diag_log format["%1 backInVehicle", _this];
+  private["_player", "_vehicle_key"];
+  _this = _this select 1;
+  _player = _this select 0;
+  _vehicle_key = _this select 1;
+
+  if (isNil "_player" || {typeName _player != typeName objNull}) exitWith {};
+  if (isNil "_vehicle_key" || {typeName _vehicle_key != typeName ""}) exitWith {};
+
+  waitUntil {!isNil {v_loadVehicles_complete}};
+
+  private["_vehicle"];
+  _vehicle = missionNamespace getVariable _vehicle_key;
+  if (isNil "_vehicle" || {typeName _vehicle != typeName objNull}) exitWith {};
+
+  //diag_log format["Putting back %1 into vehicle %2", _player, _vehicle];
+  private["_lock_state"];
+  _lock_state = locked _vehicle;
+  _vehicle lock 0;
+  _player moveInAny _vehicle;
+  _vehicle lock _lock_state;
+  _player setVariable ["vehicle", _vehicle];
+};};
 
 
 tracked_vehicles_list = [];
@@ -562,6 +548,7 @@ v_setupVehicleSavedVariables = {
     _variables pushBack ["R3F_LOG_disabled", _r3f_log_disabled];
   };
 
+  _variables pushBack ["A3W_objectTextures", (_obj getVariable ["A3W_objectTextures",[]])];
 
 };
 
@@ -576,7 +563,6 @@ v_addSaveVehicle = {
   def(_pos);
   def(_dir);
   def(_damage);
-  def(_texture);
   def(_hoursAlive);
   def(_hoursAbandoned);
 
@@ -584,7 +570,6 @@ v_addSaveVehicle = {
   _netId = netId _obj;
   _dir = [vectorDir _obj, vectorUp _obj];
   _damage = damage _obj;
-  _texture = _obj getVariable ["A3W_objectTexture", ""];
 
   _hoursAlive = [_obj] call v_trackVehicleHoursAlive;
   _hoursAbandoned = [_obj] call v_trackVehicleHoursAbandoned;
@@ -651,7 +636,6 @@ v_addSaveVehicle = {
     ["Damage", _damage],
     ["Fuel", _fuel],
     ["Variables", _variables],
-    ["Texture", _texture],
     ["Weapons", _weapons],
     ["Magazines", _magazines],
     ["Items", _items],
@@ -785,6 +769,8 @@ v_loadVehicles = {
   { 
     [_x] call v_restoreVehicle;
   } forEach _vehicles;
+
+  v_loadVehicles_complete = true;
 };
 
 diag_log "vFunctions.sqf loading complete";

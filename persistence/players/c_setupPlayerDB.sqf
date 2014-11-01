@@ -1,5 +1,5 @@
 //	@file Name: c_setupPlayerDB.sqf
-//	@file Author: AgentRev
+//	@file Author: micovery
 
 if (isDedicated) exitWith {};
 
