@@ -396,8 +396,8 @@ def(_obj);
 } forEach [civilianVehicles, call allVehStoreVehicles];
 
 
-v_isSavingMissionVehiclesDisabled = (isSCALAR(A3W_missionVehicleSaving) && {A3W_missionVehicleSaving == 0});
-v_isSavingPurchasedVehiclesDisabled = (isSCALAR(A3W_purchasedVehicleSaving) && {A3W_purchasedVehicleSaving == 0});
+v_isSavingMissionVehiclesEnabled = (isSCALAR(A3W_missionVehicleSaving) && {A3W_missionVehicleSaving == 1});
+v_isSavingPurchasedVehiclesEnabled = (isSCALAR(A3W_purchasedVehicleSaving) && {A3W_purchasedVehicleSaving == 1});
 
 
 v_isAMissionVehicle = {
@@ -419,11 +419,11 @@ v_isVehicleSaveable = {
   //not a vehicle, don't save it
   if (not([_obj] call v_isVehicle)) exitWith {false};
 
-  //it's a purchased vehicle, but saving purchased vehicles has been disabled, don't save it
-  if (([_obj] call v_isAPurchasedVehicle) && {v_isSavingPurchasedVehiclesDisabled}) exitWith {false};
+  //it's a purchased vehicle, and saving purchased vehicles has been enabled, save it
+  if (([_obj] call v_isAPurchasedVehicle) && {v_isSavingPurchasedVehiclesEnabled}) exitWith {true};
 
-  //it's a mission spawned vehicle, but saving mission vehicles has been disabled, don't save it
-  if (([_obj] call v_isAMissionVehicle) && {v_isSavingMissionVehiclesDisabled}) exitWith {false};
+  //it's a mission spawned vehicle, and saving mission vehicles has been enabled, save it
+  if (([_obj] call v_isAMissionVehicle) && {v_isSavingMissionVehiclesEnabled}) exitWith {true};
 
   //the vehicle has been used at least once
   if (not([_obj] call v_isVehicleVirgin)) exitWith {true};
