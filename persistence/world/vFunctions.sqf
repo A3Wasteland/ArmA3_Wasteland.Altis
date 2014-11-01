@@ -200,6 +200,9 @@ v_restoreVehicle = {_this spawn {
     diag_log format["No class or position available for vehicle: %1", _vehicle_key];
   };
 
+  //AgentRev changed how position is saved, put this fail-safe to handle position with values as strings
+  { if (isSTRING(_x)) then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
+
   diag_log format["%1(%2) is being restored.", _vehicle_key, _class];
 
 
