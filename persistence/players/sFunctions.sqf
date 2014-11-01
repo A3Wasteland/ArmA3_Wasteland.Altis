@@ -204,8 +204,8 @@ p_addPlayerSave = {
   [
     ["Damage", damage _player],
     ["HitPoints", _hitPoints],
-    ["Hunger", _player getVariable ["hungerLevel", 0]],
-    ["Thirst", _player getVariable ["thirstLevel", 0]],
+    ["Hunger", _player getVariable ["hungerLevel", 100]],
+    ["Thirst", _player getVariable ["thirstLevel", 100]],
     ["Money", _player getVariable ["cmoney", 0]] // Money is always saved, but only restored if A3W_moneySaving = 1
   ];
 
