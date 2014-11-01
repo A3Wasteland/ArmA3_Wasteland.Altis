@@ -209,16 +209,23 @@ p_addPlayerSave = {
     ["Money", _player getVariable ["cmoney", 0]] // Money is always saved, but only restored if A3W_moneySaving = 1
   ];
 
-  // Only save those when on ground or underwater (you probably wouldn't want to spawn 500m in the air if you get logged off in flight)
-  if (isTouchingGround vehicle _player || {(getPos _player) select 2 < 0.5 || (getPosASL _player) select 2 < 0.5}) then {
-    _data pushBack ["Position", getPosATL _player];
-    _data pushBack ["Direction", direction _player];
 
-    if (vehicle _player == _player) then {
-      _data pushBack ["CurrentWeapon", format ["%1", currentMuzzle _player]]; // currentMuzzle returns a number sometimes, hence the format
-      _data pushBack ["Animation", (animationState _player)];
+  def(_pos);
+  _pos = ASLtoATL getPosWorld _player;
+  //force the Z-axis if the player is high above ground, or deep underwater
+  if (!(isTouchingGround vehicle _player || {(getPos _player) select 2 < 0.5 || (getPosASL _player) select 2 < 0.5})) then {
+    _pos set [2, 0];
+    if (surfaceIsWater _pos) then {
+      _pos = ASLToATL (_pos);
     };
   };
+
+  //only save animation, and current weapon if the player is not inside a vehicle
+  if (vehicle _player == _player) then {
+    _data pushBack ["CurrentWeapon", format ["%1", currentMuzzle _player]]; // currentMuzzle returns a number sometimes, hence the format
+    _data pushBack ["Animation", (animationState _player)];
+  };
+
 
   _gear =
   [
