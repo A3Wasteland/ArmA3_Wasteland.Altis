@@ -224,7 +224,7 @@ o_restoreObject = {_this spawn {
   
   diag_log format["%1(%2) is being restored.", _object_key, _class];
 
-  if (o_maxLifetime <= 0 || {_hours_alive > o_maxLifetime}) exitWith {
+  if (isSCALAR(_hours_alive) && {o_maxLifetime > 0 && {_hours_alive > o_maxLifetime}}) exitWith {
     diag_log format["object %1(%2) has been alive for %3 (max=%4), skipping it", _object_key, _class, _hours_alive, o_maxLifetime];
   };
   
@@ -548,7 +548,9 @@ o_saveAllObjects = {
   ARGVX3(0,_scope,"");
   init(_count,0);
   init(_request,[_scope]);
-  
+
+  if (count(locked_objects_list) == 0) exitWith {};
+
   [_scope] call stats_wipe;
   init(_bulk_size,100);
   init(_start_time, diag_tickTime);
