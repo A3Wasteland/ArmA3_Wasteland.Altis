@@ -606,13 +606,14 @@ v_addSaveVehicle = {
     _objName = format["veh_%1_%2",ceil(time), ceil(random 10000)];
     _obj setVariable ["vehicle_key", _objName, true];
   };
+
   _pos = ASLtoATL getPosWorld _obj;
   _pos set [2, ((_pos select 2) + 0.3)];
-  //force the Z-axis if the vehicle is high above ground
+  //force the Z-axis if the vehicle is high above ground, or deep underwater (bring it to the surface)
   if (!(isTouchingGround _obj || {(getPos _obj) select 2 < 0.5 || (getPosASL _obj) select 2 < 0.5})) then {
     _pos set [2, 0];
-    if (surfaceIsWater _posATL) then {
-      _posATL = ASLToATL (_posATL);
+    if (surfaceIsWater _pos) then {
+      _pos = ASLToATL (_pos);
     };
   };
 
