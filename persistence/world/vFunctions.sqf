@@ -6,6 +6,8 @@ diag_log "vFunctions.sqf loading ...";
  * List of class names of locked objects.
  */
 VLOAD_LOCKED = OR(A3W_locked_vehicles_list,[]);
+#define isUAV(o) (isOBJECT(o) && {getNumber(configFile >> "CfgVehicles" >> typeOf o >> "isUav") > 0}) 
+
 
 
 v_isWarchest = { 
@@ -72,6 +74,7 @@ v_restoreVehicleVariables = {
     if (!isNil "_value") then {
       switch (_name) do {
         case "side": { _value = _value call v_strToSide};
+        case "R3F_Side": { _value = _value call v_strToSide };	
       };
     };
     _obj setVariable [_name, OR(_value,nil), true];
@@ -203,8 +206,6 @@ v_restoreVehicle = {_this spawn {
     _obj setVariable ["R3F_LOG_disabled",true,true];
   };
 
-
-
   if (isSCALAR(_damage)) then {
     _obj setDamage _damage;
   };
@@ -228,7 +229,11 @@ v_restoreVehicle = {_this spawn {
       _obj setObjectTextureGlobal _x;
     } forEach _textures;
   };
-
+  
+  //AddAi to vehicle
+  if (isUAV(_obj)) then {
+    createVehicleCrew _obj;
+  };
 
   //restore the stuff inside the vehicle  
   clearWeaponCargoGlobal _obj;
@@ -541,7 +546,13 @@ v_setupVehicleSavedVariables = {
   if (defined(_r3f_log_disabled)) then {
     _variables pushBack ["R3F_LOG_disabled", _r3f_log_disabled];
   };
-
+  
+  def(_r3fSide);
+  _r3fSide = _obj getVariable "R3F_Side";
+  if (isSIDE(_r3fSide)) then {
+    _variables pushBack ["R3F_Side", str _r3fSide];
+  };
+  
   _variables pushBack ["A3W_objectTextures", (_obj getVariable ["A3W_objectTextures",[]])];
 
 };
