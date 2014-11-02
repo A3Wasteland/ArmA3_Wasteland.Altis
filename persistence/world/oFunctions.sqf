@@ -253,6 +253,13 @@ o_restoreObject = {_this spawn {
         switch (_name) do {
           case "R3F_Side": { _value = _value call o_strToSide};
           case "side": { _value = _value call o_strToSide};
+          case "ownerName": {
+            switch (typeName _value) do {
+              case "ARRAY": { _value = toString _value };
+              case "STRING": { /* do nothing, it's already a string */ };
+              default { _value = "[Beacon]" };
+            };
+          };
         };  
       };
 
