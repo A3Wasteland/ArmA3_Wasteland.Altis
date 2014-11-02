@@ -19,6 +19,9 @@
 #define isCODE(x) \
 (not(isNil {x}) && {typeName (x) == typeName {}})
 
+#define isSIDE(x) \
+(not(isNil {x}) && {typeName x == typeName sideUnknown})
+
 #define isNullable(x) (false ||{ \
   not(isNil {x}) &&{ \
   private["_t"]; \
