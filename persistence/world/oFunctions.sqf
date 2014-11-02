@@ -103,20 +103,20 @@ o_isSaveable = {
   if ([_obj] call o_isInSaveList) exitWith {true};
 
 
-  init(_boxSavingOn, call o_isBoxSavingOn);
+  init(_boxSavingOn,call o_isBoxSavingOn);
 
   if ([_obj] call o_isBeacon) exitWith {
-    //diag_log format["box5(%1): o_isBeaconSavingOn = %2", _obj, (call o_isBeaconSavingOn)];
+    //diag_log format["sav1(%1): o_isBeaconSavingOn = %2", _obj, (call o_isBeaconSavingOn)];
     (call o_isBeaconSavingOn)
   };
   
   if ([_obj] call o_isWarchest) exitWith {
-    //diag_log format["box4(%1): o_isWarchestSavingOn = %2", _obj, (call o_isWarchestSavingOn)];
+    //diag_log format["sav2(%1): o_isWarchestSavingOn = %2", _obj, (call o_isWarchestSavingOn)];
     (call o_isWarchestSavingOn)
   };
   
   if ([_obj] call o_isStaticWeapon) exitWith {
-    //diag_log format["box3(%1): o_isStaticWeaponSavingOn = %2", _obj, (call o_isStaticWeaponSavingOn)];
+    //diag_log format["sav3(%1): o_isStaticWeaponSavingOn = %2", _obj, (call o_isStaticWeaponSavingOn)];
     (call o_isStaticWeaponSavingOn)
   };
 
@@ -124,11 +124,11 @@ o_isSaveable = {
   _locked = _obj getVariable ["objectLocked", false];
 
   if ([_obj] call o_isBox) exitWith {
-    //diag_log format["box2(%1): _boxSavingOn = %2, _locked = %3", _obj, _boxSavingOn, _locked];
+    //diag_log format["sav4(%1): _boxSavingOn = %2, _locked = %3", _obj, _boxSavingOn, _locked];
     (_boxSavingOn && {_locked})
   };
 
-  //diag_log format["box1(%1): _boxSavingOn = %2, _locked = %3",_obj, _boxSavingOn, _locked];
+  //diag_log format["sav5(%1): _boxSavingOn = %2, _locked = %3",_obj, _boxSavingOn, _locked];
   (_boxSavingOn && {_locked})
 };
 
@@ -354,10 +354,10 @@ o_restoreObject = {_this spawn {
   _unlocked = [_obj] call o_isAlwaysUnlocked;
   if (_unlocked) then {
     _obj setVariable ["objectLocked", false, true];
-  }
-  else {
-    (locked_objects_list pushBack _obj);
   };
+
+  //objects, warchests, and beacons
+  tracked_objects_list pushBack _obj;
 
 };};
 
@@ -560,7 +560,7 @@ o_saveAllObjects = {
   init(_count,0);
   init(_request,[_scope]);
 
-  if (count(locked_objects_list) == 0) exitWith {};
+  if (count(tracked_objects_list) == 0) exitWith {};
 
   [_scope] call stats_wipe;
   init(_bulk_size,100);
@@ -582,7 +582,7 @@ o_saveAllObjects = {
       diag_log format["o_saveLoop: %1 objects saved in %2 ticks, save call took %3 ticks", (_bulk_size), (diag_tickTime - _start_time), (_save_end - _save_start)];
       _last_save = _save_end;
     };
-  } forEach (locked_objects_list);
+  } forEach (tracked_objects_list);
   
   if (count(_request) > 1) then {
     init(_save_start, diag_tickTime);
@@ -593,56 +593,56 @@ o_saveAllObjects = {
 
   diag_log format["o_saveLoop: total of %1 objects saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
 
-  call o_lockedObjectsListCleanup;
+  call o_trackedObjectsListCleanup;
 };
 
-o_lockedObjectsListCleanup = {
+o_trackedObjectsListCleanup = {
 
   //post cleanup the array
   init(_cleanup_start, diag_tickTime);
   init(_nulls,[]);
   init(_index,-1);
-  init(_start_size,count(locked_objects_list));
+  init(_start_size,count(tracked_objects_list));
   while {true} do {
-    _index = locked_objects_list find objNull;
+    _index = tracked_objects_list find objNull;
     if (_index < 0) exitWith {};
-    locked_objects_list deleteAt _index;
+    tracked_objects_list deleteAt _index;
   };
-  init(_end_size,count(locked_objects_list));
+  init(_end_size,count(tracked_objects_list));
   init(_cleanup_end, diag_tickTime);
-  diag_log format["o_saveLoop: count(locked_objects_list) = %1, %2 nulls deleted in %3 ticks", count(locked_objects_list), (_start_size - _end_size), (_cleanup_end - _cleanup_start)];
+  diag_log format["o_saveLoop: count(tracked_objects_list) = %1, %2 nulls deleted in %3 ticks", count(tracked_objects_list), (_start_size - _end_size), (_cleanup_end - _cleanup_start)];
 };
 
 
-locked_objects_list = [];
+tracked_objects_list = [];
 
-o_getLockedObjectIndex = {
+o_getTrackedObjectIndex = {
   ARGVX4(0,_obj,objNull,-1);
   if (isNull _obj) exitWith {-1};
 
-  (locked_objects_list find _obj)
+  (tracked_objects_list find _obj)
 };
 
 //event handlers for object locking and unlocking
-"objectLocked" addPublicVariableEventHandler {
+"trackObject" addPublicVariableEventHandler {
   private["_index","_object"];
   _object = _this select 1;
-  _index = [OR(_object,nil)] call o_getLockedObjectIndex;
+  _index = [OR(_object,nil)] call o_getTrackedObjectIndex;
   if (_index >= 0) exitWith {};
 
   //diag_log format["%1 is being added to the lock list", _object];
-  locked_objects_list pushBack _object;
+  tracked_objects_list pushBack _object;
 };
 
 
-"objectUnlocked" addPublicVariableEventHandler {
+"untrackObject" addPublicVariableEventHandler {
   private["_index","_object"];
   _object = _this select 1;
-  _index = [OR(_object,nil)] call o_getLockedObjectIndex;
+  _index = [OR(_object,nil)] call o_getTrackedObjectIndex;
   if (_index < 0) exitWith {};
 
   //diag_log format["%1 is being removed from the lock list", _object];
-  locked_objects_list deleteAt _index;
+  tracked_objects_list deleteAt _index;
 };
 
 

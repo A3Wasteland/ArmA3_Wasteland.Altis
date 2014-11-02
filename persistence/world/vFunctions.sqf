@@ -345,7 +345,7 @@ v_trackVehicle = {
 v_untrackVehicle = {
   private["_index","_object"];
   _object = _this select 0;
-  _index = [OR(_object,nil)] call o_getLockedObjectIndex;
+  _index = [OR(_object,nil)] call v_getTrackedVehicleIndex;
   if (_index < 0) exitWith {};
 
   //diag_log format["%1 is being removed from the tracked list", _object];

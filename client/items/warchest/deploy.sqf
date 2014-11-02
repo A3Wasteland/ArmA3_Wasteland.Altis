@@ -38,5 +38,8 @@ if (_success) then {
 	_warchest setVariable ["R3F_LOG_disabled", true];
 	_warchest setVariable ["a3w_warchest", true, true];
 	["Warchest Deployed!", 5] call mf_notify_client;
+
+  trackObject = _warchest;
+  publicVariableServer "trackObject";
 };
 _success;
