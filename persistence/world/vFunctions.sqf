@@ -529,18 +529,9 @@ v_setupVehicleSavedVariables = {
   };
 
   _variables pushBack ["vehicle_abandoned_by", (_obj getVariable "vehicle_abandoned_by")];
+  _variables pushBack ["A3W_purchasedVehicle", (_obj getVariable ["A3W_purchasedVehicle",false])];
+  _variables pushBack ["A3W_missionVehicle", (_obj getVariable ["A3W_missionVehicle",false])];
 
-  def(_purchasedVehicle);
-  _purchasedVehicle = _obj getVariable "A3W_purchasedVehicle";
-  if (defined(_purchasedVehicle)) then {
-    _variables pushBack ["A3W_purchasedVehicle", _purchasedVehicle];
-  };
-
-  def(_missionVehicle);
-  _missionVehicle = _obj getVariable "A3W_missionVehicle";
-  if (defined(_missionVehicle)) then {
-    _variables pushBack ["A3W_missionVehicle", _missionVehicle];
-  };
 
   def(_r3f_log_disabled);
   _r3f_log_disabled = _obj getVariable "R3F_LOG_disabled";
