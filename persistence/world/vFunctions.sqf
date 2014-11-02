@@ -8,15 +8,6 @@ diag_log "vFunctions.sqf loading ...";
 VLOAD_LOCKED = OR(A3W_locked_vehicles_list,[]);
 
 
-v_isStaticWeapon = {
-  ARGVX4(0,_class,"",false);
-  (_class isKindOf "StaticWeapon")
-};
-
-v_isStaticWeaponSavingOn = {
-  (["A3W_staticWeaponSaving"] call isConfigOn)
-};
-
 v_isWarchest = { 
   _this getVariable ["a3w_warchest", false] && {(_this getVariable ["side", sideUnknown]) in [WEST,EAST]} 
 };
@@ -385,13 +376,21 @@ def(_obj);
 v_isSavingMissionVehiclesEnabled = (isSCALAR(A3W_missionVehicleSaving) && {A3W_missionVehicleSaving == 1});
 v_isSavingPurchasedVehiclesEnabled = (isSCALAR(A3W_purchasedVehicleSaving) && {A3W_purchasedVehicleSaving == 1});
 v_isSavingTownVehiclesEnabled = (isSCALAR(A3W_townVehicleSaving) && {A3W_townVehicleSaving == 1});
+v_isSavingStaticWeaponsEnabled = (isSCALAR(A3W_staticWeaponSaving) && {A3W_staticWeaponSaving == 1});
 
 
-diag_log format["config: A3W_purchasedVehicleSaving = %1", v_isSavingPurchasedVehiclesEnabled];
-diag_log format["config: A3W_missionVehicleSaving = %1", v_isSavingMissionVehiclesEnabled];
-diag_log format["config: A3W_townVehicleSaving = %1", v_isSavingTownVehiclesEnabled];
+diag_log format["[INFO] config: A3W_purchasedVehicleSaving = %1", v_isSavingPurchasedVehiclesEnabled];
+diag_log format["[INFO] config: A3W_missionVehicleSaving = %1", v_isSavingMissionVehiclesEnabled];
+diag_log format["[INFO] config: A3W_townVehicleSaving = %1", v_isSavingTownVehiclesEnabled];
+diag_log format["[INFO] config: A3W_staticWeaponSaving = %1", v_isSavingStaticWeaponsEnabled];
 
 
+
+v_isStaticWeapon = {
+  ARGVX4(0,_obj,objNull,false);
+  init(_class, typeof _obj);
+  (_class isKindOf "StaticWeapon")
+};
 
 v_isAMissionVehicle = {
   ARGVX4(0,_obj,objNull,false);
@@ -425,16 +424,20 @@ v_isVehicleSaveable = {
 
   _purchasedVehicle = ([_obj] call v_isAPurchasedVehicle);
   _missionVehicle = ([_obj] call v_isAMissionVehicle);
-  _townVehicle = (!_missionVehicle && {!_purchasedVehicle});
+  _staticWeapon = [_obj] call v_isStaticWeapon;
+  _townVehicle = not(_missionVehicle || {_purchasedVehicle || {_staticWeapon}});
   _usedOnce = not([_obj] call v_isVehicleVirgin);
 
-  //diag_log format["%1, _purchasedVehicle = %2, _missionVehicle = %3, _usedOnce = %4, _townVehicle = %5",_obj, _purchasedVehicle,_missionVehicle,_usedOnce,_townVehicle];
+  //diag_log format["%1, _purchasedVehicle = %2, _missionVehicle = %3, _usedOnce = %4, _townVehicle = %5, _staticWeapon = %6",_obj, _purchasedVehicle,_missionVehicle,_usedOnce,_townVehicle, _staticWeapon];
 
   //it's a purchased vehicle, and saving purchased vehicles has been enabled, save it
   if (_purchasedVehicle && {v_isSavingPurchasedVehiclesEnabled}) exitWith {true};
 
   //it's a mission spawned vehicle, and saving mission vehicles has been enabled, save it
   if (_missionVehicle && {v_isSavingMissionVehiclesEnabled}) exitWith {true};
+
+  //if it's a static weapon, and saving static weapons has been enabled, save it
+  if (_staticWeapon && {v_isSavingStaticWeaponsEnabled}) exitWith {true};
 
   //if it's a town vehicle that has been used at least once, save it
   if (_townVehicle && {_usedOnce && {v_isSavingTownVehiclesEnabled}}) exitWith {true};
@@ -585,7 +588,7 @@ v_addSaveVehicle = {
   _backpacks = (getBackpackCargo _obj) call cargoToPairs;
 
   init(_turretMags,[]);
-  if ((call v_isStaticWeaponSavingOn) && {[_class] call v_isStaticWeapon}) then {
+  if (v_isSavingStaticWeaponsEnabled && {[_obj] call v_isStaticWeapon}) then {
     _turretMags = magazinesAmmo _obj;
   };
 
