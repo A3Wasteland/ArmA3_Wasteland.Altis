@@ -77,7 +77,8 @@ forEach
 	"A3W_globalVoiceWarnTimer",
 	"A3W_globalVoiceMaxWarns",
 	"A3W_antiHackMinRecoil",
-	"A3W_spawnBeaconCooldown"
+	"A3W_spawnBeaconCooldown",
+	"A3W_spawnBeaconSpawnHeight"
 ];
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
