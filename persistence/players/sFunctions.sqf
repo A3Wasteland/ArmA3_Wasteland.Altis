@@ -349,6 +349,7 @@ p_disconnectSave = {
 
   [_request,_player,_uid,_name] call p_addPlayerSave;
   _request call stats_set;
+  [_scope] call stats_flush;
 };
 
 
