@@ -7,17 +7,26 @@
 //	@file Created: 08/12/2012 18:30
 //	@file Args:
 
-private ["_data", "_beacon", "_pos", "_owner", "_preload", "_playerPos"];
+private ["_data", "_beacon", "_pos", "_owner", "_preload", "_height", "_playerPos"];
 _data = _this select 0;
 _beacon = objectFromNetId (_data select 0);
 _pos = _data select 1;
 _owner = _data select 2;
 _preload = [_this, 1, false, [false]] call BIS_fnc_param;
+_height = (["A3W_spawnBeaconSpawnHeight", 0] call getPublicVar) max 0;
 
 _beacon setVariable ["spawnBeacon_lastUse", diag_tickTime];
 
-_playerPos = [_pos,1,25,1,0,0,0] call findSafePos;
-if (_preload) then { waitUntil {sleep 0.1; preloadCamera _playerPos} };
+if (_height < 25) then
+{
+	_playerPos = [_pos,1,25,1,0,0,0] call findSafePos;
+}
+else
+{
+	_playerPos = [_pos select 0, _pos select 1, _height];
+};
+
+if (_preload) then { waitUntil {preloadCamera _playerPos} };
 player setPos _playerPos;
 
 respawnDialogActive = false;
