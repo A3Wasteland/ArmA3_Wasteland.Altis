@@ -23,7 +23,7 @@ disableSerialization;
 
 private ["_start","_dialog","_myGroup","_playerListBox","_groupListBox","_uid","_namestr","_allPlayers","_index","_groupCreate","_groupPromote","_groupInvite","_groupKick","_groupDisband","_groupLeaveButton","_inGroup","_isLeader","_name"];
 
-closeDialog 0;
+//closeDialog 0;
 _start = createDialog "GroupManagement";
 waitUntil{!isNull(findDisplay groupManagementDialog)};
 _dialog = findDisplay groupManagementDialog;
