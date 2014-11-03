@@ -33,6 +33,7 @@ s_processRestartMessage = {
   //save all object scopes
   init(_oScope, "Objects" call PDB_objectFileName);
   [_oScope] call o_saveAllObjects;
+  [_oScope] call o_saveInfo;
 
 
   diag_log format["Sending restart message ack"];

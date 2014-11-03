@@ -45,13 +45,17 @@ A3W_spawnBeaconSaving = 1;         // Save spawn beacons between server restarts
 A3W_objectLifetime = 5*24;         // Maximum lifetime in hours for saved objects (baseparts, crates, etc. except vehicles) across server restarts (0 = no time limit)
 A3W_vehicleLifetime = 0;           // Maximum lifetime in hours for saved vehicles across server restarts, regardless of usage (0 = no time limit)
 A3W_vehicleMaxUnusedTime = 2*24;   // Maximum parking time in hours after which unused saved vehicles will be marked for deletion (0 = no time limit)
-A3W_locked_vehicles_list = [];     // List of class names for vehicles that should be automatically locked unpon restore
 PDB_PlayerFileID = "A3W_";         // Player savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_ObjectFileID = "A3W_";         // Object savefile prefix (change this in case you run multiple servers from the same folder)
 
 A3W_vehicle_saveInterval = 300;    // Number of seconds between vehicle saves
 A3W_object_saveInterval = 300;     // Number of seconds between object saves
 A3W_player_saveInterval = 300;     // Number of seconds between player saves
+
+                                   // List of classes for vehicles that are saveable
+                                   // You can add/remove classes from this list for fine grained control which kind of vehicles can be saved
+A3W_saveable_vehicles_list = ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank"];
+A3W_locked_vehicles_list = [];     // List of class names for vehicles that should be automatically locked unpon restore
 
 // Spawning settings
 A3W_serverSpawning = 1;            // Vehicle, object, and loot spawning (0 = no, 1 = yes)

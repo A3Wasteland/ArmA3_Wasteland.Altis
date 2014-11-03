@@ -1,106 +1,26 @@
 diag_log "vFunctions.sqf loading ...";
 
-#include "macro.h";
+#include "macro.h"
 
-/**
- * List of class names of locked objects.
- */
-VLOAD_LOCKED = OR(A3W_locked_vehicles_list,[]);
-#define isUAV(o) (isOBJECT(o) && {getNumber(configFile >> "CfgVehicles" >> typeOf o >> "isUav") > 0}) 
+call compile preProcessFileLineNumbers "persistence\lib\shFunctions.sqf";
 
-
-
-v_isWarchest = { 
-  _this getVariable ["a3w_warchest", false] && {(_this getVariable ["side", sideUnknown]) in [WEST,EAST]} 
-};
-
-v_isBeacon = {
-  _this getVariable ["a3w_spawnBeacon", false] 
-};
-
-v_strToSide = {
-  def(_result);
-  _result = switch (toUpper _this) do
-  {
-    case "WEST":  { BLUFOR };
-    case "EAST":  { OPFOR };
-    case "GUER":  { INDEPENDENT };
-    case "CIV":   { CIVILIAN };
-    case "LOGIC": { sideLogic };
-    default       { sideUnknown };
-  };
-  (_result)
-};
-
-v_isAlwaysUnlocked = {
-  ARGVX4(0,_obj,objNull, false);
-  
-  def(_result);
-  _result = switch (true) do {
-    case (_obj call v_isWarchest): { true };
-    case (_obj call v_isBeacon): {true};
-    default { false };
-  };
-  
-  (_result)
-};
-
-
-v_isVehicle = {
-  ARGVX4(0,_obj,objNull,false);
-  
-  init(_result, false);
-  {
-    if (_obj isKindOf _x) exitWith {
-      _result = true;
-    };
-  } forEach ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank", "StaticWeapon"];
-  
-  (_result)
-};
-
-
-v_restoreVehicleVariables = {
-  ARGVX3(0,_obj,objNull);
-  ARGVX3(1,_variables,[]);
-
-  def(_name);
-  def(_value);
-
-  {
-    _name = _x select 0;
-    _value = _x select 1;
-
-    if (!isNil "_value") then {
-      switch (_name) do {
-        case "side": { _value = _value call v_strToSide};
-        case "R3F_Side": { _value = _value call v_strToSide };	
-      };
-    };
-    _obj setVariable [_name, OR(_value,nil), true];
-  } forEach _variables;
-};
-
-
-v_maxLifetime = if (isSCALAR(A3W_vehicleLifetime)) then {A3W_vehicleLifetime} else {0};
-v_maxAbandonedTime = if (isSCALAR(A3W_vehicleMaxUnusedTime)) then {A3W_vehicleMaxUnusedTime} else {0};
 
 
 v_restoreVehicle = {_this spawn {
   //diag_log format["%1 call v_restoreVehicle", _this];
   ARGVX3(0,_data_pair,[]);
-  
+
   _this = _data_pair;
   ARGVX3(0,_vehicle_key,"");
   ARGVX2(1,_vehicle_hash);
-  
+
   if (!isCODE(_vehicle_hash)) exitWith {};
-  
+
   def(_vehicle_data);
   _vehicle_data =  call _vehicle_hash;
   //diag_log _vehicle_data;
-  
-  
+
+
   def(_hours_alive);
   def(_hours_abandoned);
   def(_pos);
@@ -160,12 +80,12 @@ v_restoreVehicle = {_this spawn {
   diag_log format["%1(%2) is being restored.", _vehicle_key, _class];
 
 
-  if (isSCALAR(_hours_alive) && {v_maxLifetime > 0 && {_hours_alive > v_maxLifetime}}) exitWith {
-    diag_log format["vehicle %1(%2) has been alive for %3 (max=%4), skipping it", _vehicle_key, _class, _hours_alive, v_maxLifetime];
+  if (isSCALAR(_hours_alive) && {A3W_vehicleLifetime > 0 && {_hours_alive > A3W_vehicleLifetime}}) exitWith {
+    diag_log format["vehicle %1(%2) has been alive for %3 (max=%4), skipping it", _vehicle_key, _class, _hours_alive, A3W_vehicleLifetime];
   };
 
-  if (isSCALAR(_hours_abandoned) && {v_maxAbandonedTime > 0 && {_hours_abandoned > v_maxAbandonedTime}}) exitWith {
-    diag_log format["vehicle %1(%2) has been abandoned for %3 hours, (max=%4), skipping it", _vehicle_key, _class, _hours_abandoned, v_maxAbandonedTime];
+  if (isSCALAR(_hours_abandoned) && {A3W_vehicleMaxUnusedTime > 0 && {_hours_abandoned > A3W_vehicleMaxUnusedTime}}) exitWith {
+    diag_log format["vehicle %1(%2) has been abandoned for %3 hours, (max=%4), skipping it", _vehicle_key, _class, _hours_abandoned, A3W_vehicleMaxUnusedTime];
   };
 
 
@@ -179,12 +99,12 @@ v_restoreVehicle = {_this spawn {
 
   _obj setVariable ["vehicle_key", _vehicle_key, true];
   missionNamespace setVariable [_vehicle_key, _obj];
-  
+
   _obj setPosWorld ATLtoASL _pos;
   if (isARRAY(_dir)) then {
     _obj setVectorDirAndUp _dir;
   };
-  
+
   _obj setVariable ["baseSaving_spawningTime", diag_tickTime];
   if (isSCALAR(_hours_alive)) then {
     _obj setVariable ["baseSaving_hoursAlive", _hours_alive];
@@ -194,12 +114,12 @@ v_restoreVehicle = {_this spawn {
   if (isSCALAR(_hours_abandoned)) then {
     _obj setVariable ["vehicle_abandoned_hours", _hours_abandoned];
   };
-  
+
   // disables thermal equipment on loaded vehicles, comment out if you want thermal
-  _obj disableTIEquipment true; 
-  
+  _obj disableTIEquipment true;
+
   //lock vehicles form this list
-  if ({_obj isKindOf _x} count VLOAD_LOCKED > 0) then {
+  if ({_obj isKindOf _x} count A3W_locked_vehicles_list > 0) then {
     _obj lock 2;
     _obj setVariable ["locked", 2, true];
     _obj setVariable ["objectLocked", true, true];
@@ -217,8 +137,8 @@ v_restoreVehicle = {_this spawn {
   if (isARRAY(_hitPoints)) then {
     { _obj setHitPointDamage _x } forEach _hitPoints;
   };
-   
-  [_obj,_variables] call v_restoreVehicleVariables;
+
+  [_obj,_variables] call sh_restoreVariables;
 
 
   def(_textures);
@@ -229,23 +149,23 @@ v_restoreVehicle = {_this spawn {
       _obj setObjectTextureGlobal _x;
     } forEach _textures;
   };
-  
+
   //AddAi to vehicle
-  if (isUAV(_obj)) then {
+  if ([_obj] call sh_isUAV) then {
     createVehicleCrew _obj;
   };
 
-  //restore the stuff inside the vehicle  
+  //restore the stuff inside the vehicle
   clearWeaponCargoGlobal _obj;
   clearMagazineCargoGlobal _obj;
   clearItemCargoGlobal _obj;
   clearBackpackCargoGlobal _obj;
   //_obj setVehicleAmmo 0;
-          
+
   if (isARRAY(_cargo_weapons)) then {
     { _obj addWeaponCargoGlobal _x } forEach _cargo_weapons;
   };
-  
+
   if (isARRAY(_cargo_backpacks)) then {
     {
       if (not((_x select 0) isKindOf "Weapon_Bag_Base")) then {
@@ -253,11 +173,11 @@ v_restoreVehicle = {_this spawn {
       };
     } forEach _cargo_backpacks;
   };
-  
+
   if (isARRAY(_cargo_items)) then {
     { _obj addItemCargoGlobal _x } forEach _cargo_items;
   };
-  
+
   if (isARRAY(_cargo_magazines)) then {
     { _obj addMagazineCargoGlobal _x } forEach _cargo_magazines;
   };
@@ -277,44 +197,11 @@ v_restoreVehicle = {_this spawn {
   if (isSCALAR(_cargo_repair)) then {
     _obj setRepairCargo _cargo_repair;
   };
-  
-  //some vehicles need to be always unlocked
-  def(_unlocked);
-  _unlocked = [_obj] call v_isAlwaysUnlocked;
-  if (_unlocked) then {
-    _obj setVariable ["objectLocked", false, true];
-  };
+
 
   tracked_vehicles_list pushBack _obj;
 
 }};;
-
-
-//event handlers for object locking and unlocking
-"backInVehicle" addPublicVariableEventHandler { _this spawn {
-  diag_log format["%1 backInVehicle", _this];
-  private["_player", "_vehicle_key"];
-  _this = _this select 1;
-  _player = _this select 0;
-  _vehicle_key = _this select 1;
-
-  if (isNil "_player" || {typeName _player != typeName objNull}) exitWith {};
-  if (isNil "_vehicle_key" || {typeName _vehicle_key != typeName ""}) exitWith {};
-
-  waitUntil {!isNil {v_loadVehicles_complete}};
-
-  private["_vehicle"];
-  _vehicle = missionNamespace getVariable _vehicle_key;
-  if (isNil "_vehicle" || {typeName _vehicle != typeName objNull}) exitWith {};
-
-  //diag_log format["Putting back %1 into vehicle %2", _player, _vehicle];
-  private["_lock_state"];
-  _lock_state = locked _vehicle;
-  _vehicle lock 0;
-  _player moveInAny _vehicle;
-  _vehicle lock _lock_state;
-  _player setVariable ["vehicle", _vehicle];
-};};
 
 
 tracked_vehicles_list = [];
@@ -326,7 +213,6 @@ v_getTrackedVehicleIndex = {
   (tracked_vehicles_list find _obj)
 };
 
-//event handlers for object locking and unlocking
 v_trackVehicle = {
   private["_index","_object"];
   _object = _this select 0;
@@ -336,7 +222,6 @@ v_trackVehicle = {
   //diag_log format["%1 is being added to the tracked list", _object];
   tracked_vehicles_list pushBack _object;
 };
-
 
 v_untrackVehicle = {
   private["_index","_object"];
@@ -365,7 +250,6 @@ v_trackedVehiclesListCleanup = {
 };
 
 
-
 //build list of object that should not be saved
 v_skipList = [];
 def(_obj);
@@ -378,47 +262,14 @@ def(_obj);
 } forEach [civilianVehicles, call allVehStoreVehicles];
 
 
-v_isSavingMissionVehiclesEnabled = (isSCALAR(A3W_missionVehicleSaving) && {A3W_missionVehicleSaving == 1});
-v_isSavingPurchasedVehiclesEnabled = (isSCALAR(A3W_purchasedVehicleSaving) && {A3W_purchasedVehicleSaving == 1});
-v_isSavingTownVehiclesEnabled = (isSCALAR(A3W_townVehicleSaving) && {A3W_townVehicleSaving == 1});
-v_isSavingStaticWeaponsEnabled = (isSCALAR(A3W_staticWeaponSaving) && {A3W_staticWeaponSaving == 1});
-
-
-diag_log format["[INFO] config: A3W_purchasedVehicleSaving = %1", v_isSavingPurchasedVehiclesEnabled];
-diag_log format["[INFO] config: A3W_missionVehicleSaving = %1", v_isSavingMissionVehiclesEnabled];
-diag_log format["[INFO] config: A3W_townVehicleSaving = %1", v_isSavingTownVehiclesEnabled];
-diag_log format["[INFO] config: A3W_staticWeaponSaving = %1", v_isSavingStaticWeaponsEnabled];
-
-
-
-v_isStaticWeapon = {
-  ARGVX4(0,_obj,objNull,false);
-  init(_class, typeof _obj);
-  (_class isKindOf "StaticWeapon")
-};
-
-v_isAMissionVehicle = {
-  ARGVX4(0,_obj,objNull,false);
-  def(_mission);
-  _mission = _obj getVariable "A3W_missionVehicle";
-  (isBOOLEAN(_mission) && {_mission})
-};
-
-v_isAPurchasedVehicle = {
-  ARGVX4(0,_obj,objNull,false);
-  def(_purchased);
-  _purchased = _obj getVariable "A3W_purchasedVehicle";
-  (isBOOLEAN(_purchased) && {_purchased})
-};
-
-v_isVehicleSaveable = {
+v_isSaveable = {
   ARGVX4(0,_obj,objNull,false);
 
   //it's a wreck, don't save it
   if (not(alive _obj)) exitWith {false};
 
   //not a vehicle, don't save it
-  if (not([_obj] call v_isVehicle)) exitWith {false};
+  if (not([_obj] call sh_isSaveableVehicle)) exitWith {false};
 
   def(_purchasedVehicle);
   def(_missionVehicle);
@@ -427,25 +278,25 @@ v_isVehicleSaveable = {
   def(_usedOnce);
 
 
-  _purchasedVehicle = ([_obj] call v_isAPurchasedVehicle);
-  _missionVehicle = ([_obj] call v_isAMissionVehicle);
-  _staticWeapon = [_obj] call v_isStaticWeapon;
+  _purchasedVehicle = ([_obj] call sh_isAPurchasedVehicle);
+  _missionVehicle = ([_obj] call sh_isAMissionVehicle);
+  _staticWeapon = [_obj] call sh_isStaticWeapon;
   _townVehicle = not(_missionVehicle || {_purchasedVehicle || {_staticWeapon}});
   _usedOnce = not([_obj] call v_isVehicleVirgin);
 
   //diag_log format["%1, _purchasedVehicle = %2, _missionVehicle = %3, _usedOnce = %4, _townVehicle = %5, _staticWeapon = %6",_obj, _purchasedVehicle,_missionVehicle,_usedOnce,_townVehicle, _staticWeapon];
 
   //it's a purchased vehicle, and saving purchased vehicles has been enabled, save it
-  if (_purchasedVehicle && {v_isSavingPurchasedVehiclesEnabled}) exitWith {true};
+  if (_purchasedVehicle && {cfg_purchasedVehicleSaving_on}) exitWith {true};
 
   //it's a mission spawned vehicle, and saving mission vehicles has been enabled, save it
-  if (_missionVehicle && {v_isSavingMissionVehiclesEnabled}) exitWith {true};
+  if (_missionVehicle && {cfg_missionVehicleSaving_on}) exitWith {true};
 
   //if it's a static weapon, and saving static weapons has been enabled, save it
-  if (_staticWeapon && {v_isSavingStaticWeaponsEnabled}) exitWith {true};
+  if (_staticWeapon && {cfg_staticWeaponSaving_on}) exitWith {true};
 
   //if it's a town vehicle that has been used at least once, save it
-  if (_townVehicle && {_usedOnce && {v_isSavingTownVehiclesEnabled}}) exitWith {true};
+  if (_townVehicle && {_usedOnce && {cfg_townVehicleSaving_on}}) exitWith {true};
 
   false
 };
@@ -546,13 +397,13 @@ v_setupVehicleSavedVariables = {
   if (defined(_r3f_log_disabled)) then {
     _variables pushBack ["R3F_LOG_disabled", _r3f_log_disabled];
   };
-  
+
   def(_r3fSide);
   _r3fSide = _obj getVariable "R3F_Side";
   if (isSIDE(_r3fSide)) then {
     _variables pushBack ["R3F_Side", str _r3fSide];
   };
-  
+
   _variables pushBack ["A3W_objectTextures", (_obj getVariable ["A3W_objectTextures",[]])];
 
 };
@@ -561,7 +412,7 @@ v_addSaveVehicle = {
   ARGVX3(0,_list,[]);
   ARGVX3(1,_obj,objNull);
 
-  if (not([_obj] call v_isVehicleSaveable)) exitWith {};
+  if (not([_obj] call v_isSaveable)) exitWith {};
 
   def(_class);
   def(_netId);
@@ -591,7 +442,7 @@ v_addSaveVehicle = {
   init(_magazines,[]);
   init(_items,[]);
   init(_backpacks,[]);
-  
+
   // Save weapons & ammo
   _weapons = (getWeaponCargo _obj) call cargoToPairs;
   _magazines = (getMagazineCargo _obj) call cargoToPairs;
@@ -599,7 +450,7 @@ v_addSaveVehicle = {
   _backpacks = (getBackpackCargo _obj) call cargoToPairs;
 
   init(_turretMags,[]);
-  if (v_isSavingStaticWeaponsEnabled && {[_obj] call v_isStaticWeapon}) then {
+  if (cfg_staticWeaponSaving_on && {[_obj] call sh_isStaticWeapon}) then {
     _turretMags = magazinesAmmo _obj;
   };
 
@@ -652,7 +503,7 @@ v_addSaveVehicle = {
     ["Hitpoints", _hitPoints]
   ] call sock_hash)];
 
-  
+
   true
 };
 
@@ -712,18 +563,18 @@ v_saveAllVechiles = {
   ARGVX3(0,_scope,"");
   init(_count,0);
   init(_request,[_scope]);
-  
+
   [_scope] call stats_wipe;
   init(_bulk_size,100);
   init(_start_time, diag_tickTime);
   init(_last_save, diag_tickTime);
 
-  
+
   {
     if (!isNil{[_request, _x] call v_addSaveVehicle}) then {
       _count = _count + 1;
     };
-    
+
     //save vehicles in bulks
     if ((_count % _bulk_size) == 0 && {count(_request) > 1}) then {
       init(_save_start, diag_tickTime);
@@ -734,36 +585,33 @@ v_saveAllVechiles = {
       _last_save = _save_end;
     };
   } forEach (tracked_vehicles_list);
-  
+
   if (count(_request) > 1) then {
     init(_save_start, diag_tickTime);
     _request call stats_set;
     init(_save_end, diag_tickTime);
     diag_log format["v_saveLoop: %1 vehicles saved in %2 ticks, save call took %3 ticks", (count(_request) -1), (_save_end - _last_save), (_save_end - _save_start)];
   };
-  
+
   diag_log format["v_saveLoop: total of %1 vehicles saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
-  
+
   call v_trackedVehiclesListCleanup;
 };
-
-v_saveLoop_interval = OR(A3W_vehicle_saveInterval,60);
-diag_log format["config: A3W_vehicle_saveInterval = %1", v_saveLoop_interval];
 
 
 v_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
-    sleep v_saveLoop_interval;
+    sleep A3W_vehicle_saveInterval;
     if (not(isBOOLEAN(v_saveLoopActive) && {!v_saveLoopActive})) then {
       [_scope] call v_saveAllVechiles;
     };
-  };  
+  };
 };
 
 v_loadVehicles = {
   ARGVX3(0,_scope,"");
-  
+
   def(_vehicles);
   _vehicles = [_scope] call stats_get;
 
@@ -771,7 +619,7 @@ v_loadVehicles = {
   if (!isARRAY(_vehicles)) exitWith {};
 
   diag_log format["A3Wasteland - will restore %1 vehicles", count(_vehicles)];
-  { 
+  {
     [_x] call v_restoreVehicle;
   } forEach _vehicles;
 

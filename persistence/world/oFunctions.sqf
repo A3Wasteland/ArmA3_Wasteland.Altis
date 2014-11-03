@@ -5,69 +5,12 @@
 
 diag_log "oFunctions.sqf loading ...";
 
+
+call compile preProcessFileLineNumbers "persistence\lib\shFunctions.sqf";
+
 #include "macro.h";
 
-o_strToSide = {
-  def(_result);
-  _result = switch (toUpper _this) do {
-    case "WEST":  { BLUFOR };
-    case "EAST":  { OPFOR };
-    case "GUER":  { INDEPENDENT };
-    case "CIV":   { CIVILIAN };
-    case "LOGIC": { sideLogic };
-    default       { sideUnknown };
-  };
-  (_result)
-};
 
-o_isBaseSavingOn = {
-  (["A3W_baseSaving"] call isConfigOn)
-};
-
-o_isStaticWeapon = {
-  ARGVX4(0,_obj,objNull,false);
-  init(_class,typeOf _obj);
-  (_class isKindOf "StaticWeapon")
-};
-
-o_isStaticWeaponSavingOn = {
-  (["A3W_staticWeaponSaving"] call isConfigOn)
-};
-
-o_isBeacon = {
-  ARGVX4(0,_obj,objNull,false);
-  (_obj getVariable ["a3w_spawnBeacon", false])
-};
-
-o_isBeaconSavingOn = {
-  (["A3W_spawnBeaconSaving"] call isConfigOn)
-};
-
-o_isBox = {
-  ARGVX4(0,_obj,objNull,false);
-  init(_class,typeOf _obj);
-  (_class isKindOf "ReammoBox_F")
-};
-
-o_isBoxSavingOn = {
-  (["A3W_boxSaving"] call isConfigOn)
-};
-
-o_isWarchest = {
-  ARGVX4(0,_obj,objNull,false);
-  (
-    _obj getVariable ["a3w_warchest", false] && {
-    (_obj getVariable ["side", sideUnknown]) in [WEST,EAST]}
-  )
-};
-
-o_isWarchestSavingOn = {
-  (["A3W_warchestSaving"] call isConfigOn)
-};
-
-o_isWarchestMoneySavingOn = {
-  (["A3W_warchestMoneySaving"] call isConfigOn)
-};
 
 o_hasInventory = {
   ARGVX2(0,_arg);
@@ -99,66 +42,45 @@ o_isSaveable = {
   init(_class, typeOf _obj);
 
   if (!(alive _obj)) exitWith {false};
-  if ([_obj] call o_isVehicle) exitWith {false};
-  if ([_obj] call o_isInSaveList) exitWith {true};
+  if ([_obj] call sh_isSaveableVehicle) exitWith {false}; //already being saved as a vehicle, don't save it
+  if ([_obj] call o_isInSaveList) exitWith {true}; //not sure what this "saveList" thing is ...
 
 
-  init(_boxSavingOn,call o_isBoxSavingOn);
 
-  if ([_obj] call o_isBeacon) exitWith {
-    //diag_log format["sav1(%1): o_isBeaconSavingOn = %2", _obj, (call o_isBeaconSavingOn)];
-    (call o_isBeaconSavingOn)
+  if ([_obj] call sh_isBeacon) exitWith {
+    //diag_log format["sav1(%1): cfg_spawnBeaconSaving_on = %2", _obj, (cfg_spawnBeaconSaving_on)];
+    (cfg_spawnBeaconSaving_on)
   };
   
-  if ([_obj] call o_isWarchest) exitWith {
-    //diag_log format["sav2(%1): o_isWarchestSavingOn = %2", _obj, (call o_isWarchestSavingOn)];
-    (call o_isWarchestSavingOn)
+  if ([_obj] call sh_isWarchest) exitWith {
+    //diag_log format["sav2(%1): cfg_warchestSaving_on = %2", _obj, (cfg_warchestSaving_on)];
+    (cfg_warchestSaving_on)
   };
   
-  if ([_obj] call o_isStaticWeapon) exitWith {
-    //diag_log format["sav3(%1): o_isStaticWeaponSavingOn = %2", _obj, (call o_isStaticWeaponSavingOn)];
-    (call o_isStaticWeaponSavingOn)
+  if ([_obj] call sh_isStaticWeapon) exitWith {
+    //diag_log format["sav3(%1): cfg_staticWeaponSaving_on = %2", _obj, cfg_staticWeaponSaving_on];
+    (cfg_staticWeaponSaving_on)
   };
 
   def(_locked);
   _locked = _obj getVariable ["objectLocked", false];
 
-  if ([_obj] call o_isBox) exitWith {
-    //diag_log format["sav4(%1): _boxSavingOn = %2, _locked = %3", _obj, _boxSavingOn, _locked];
-    (_boxSavingOn && {_locked})
+  if ([_obj] call sh_isBox) exitWith {
+    //diag_log format["sav4(%1): cfg_boxSaving_on = %2, _locked = %3", _obj, cfg_boxSaving_on, _locked];
+    (cfg_boxSaving_on && {_locked})
   };
 
-  //diag_log format["sav5(%1): _boxSavingOn = %2, _locked = %3",_obj, _boxSavingOn, _locked];
-  (_boxSavingOn && {_locked})
+  //diag_log format["sav5(%1): cfg_boxSaving_on = %2, _locked = %3",_obj, cfg_boxSaving_on, _locked];
+  (cfg_boxSaving_on && {_locked})
 };
 
-o_isVehicle = {
-  ARGVX4(0,_obj,objNull,false);
-  
-  init(_result, false);
-  {
-    if (_obj isKindOf _x) exitWith {
-      _result = true;
-    };
-  } forEach ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank", "StaticWeapon"];
-  
-  (_result)
-};
-
-o_isAlwaysUnlocked = {
+o_isLockableObject = {
   ARGVX4(0,_obj,objNull, false);
-  
-  def(_result);
-  _result = switch (true) do {
-    case ([_obj] call o_isWarchest): { true };
-    case ([_obj] call o_isBeacon): {true};
-    default { false };
-  };
-  
-  (_result)
+
+  not(([_obj] call sh_isWarchest) && {[_obj] call sh_isBeacon})
 };
 
-o_maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
+
 
 o_restoreObject = {_this spawn {
   //diag_log format["%1 call o_restoreObject", _this];
@@ -228,8 +150,8 @@ o_restoreObject = {_this spawn {
   
   diag_log format["%1(%2) is being restored.", _object_key, _class];
 
-  if (isSCALAR(_hours_alive) && {o_maxLifetime > 0 && {_hours_alive > o_maxLifetime}}) exitWith {
-    diag_log format["object %1(%2) has been alive for %3 (max=%4), skipping it", _object_key, _class, _hours_alive, o_maxLifetime];
+  if (isSCALAR(_hours_alive) && {A3W_objectLifetime > 0 && {_hours_alive > A3W_objectLifetime}}) exitWith {
+    diag_log format["object %1(%2) has been alive for %3 (max=%4), skipping it", _object_key, _class, _hours_alive, A3W_objectLifetime];
   };
   
   def(_obj);
@@ -240,38 +162,20 @@ o_restoreObject = {_this spawn {
   };
   
   _obj setVariable ["object_key", _object_key, true];
-  
-  //restore the variables for the object
-  if (isARRAY(_variables)) then {
-    def(_name);
-    def(_value);
-    {
-      _name = _x select 0;
-      _value = _x select 1;
-      
-      if (!isNil "_value") then {
-        switch (_name) do {
-          case "R3F_Side": { _value = _value call o_strToSide};
-          case "side": { _value = _value call o_strToSide};
-          case "ownerName": {
-            switch (typeName _value) do {
-              case "ARRAY": { _value = toString _value };
-              case "STRING": { /* do nothing, it's already a string */ };
-              default { _value = "[Beacon]" };
-            };
-          };
-        };  
-      };
 
-      _obj setVariable [_name, OR(_value,nil), true];
-    } forEach _variables;
-  };
-  
-  _obj setVariable ["objectLocked", true, true]; // force lock
+  [_obj, _variables] call sh_restoreVariables;
+
 
   if (not([_obj] call o_isSaveable)) exitWith {
     diag_log format["%1(%2) has been deleted, it is not saveable", _object_key, _class];
     deleteVehicle _obj;
+  };
+
+  //for backwards compatibility, if the object does not have the "objectLocked" variable, then lock it
+  def(_objectLocked);
+  _objectLocked = _obj getVariable "objectLocked";
+  if (!isBOOLEAN(_objectLocked) && {[_obj] call o_isLockableObject}) then {
+    _obj setVariable ["objectLocked", true, true];
   };
 
   
@@ -301,7 +205,7 @@ o_restoreObject = {_this spawn {
   };
 
   //broadcast the spawn beacon
-  if ([_obj] call o_isBeacon) then {
+  if ([_obj] call sh_isBeacon) then {
     pvar_spawn_beacons pushBack _obj;
     publicVariable "pvar_spawn_beacons";
   };
@@ -348,12 +252,10 @@ o_restoreObject = {_this spawn {
   if (isSCALAR(_cargo_repair)) then {
     _obj setRepairCargo _cargo_repair;
   };
-    
-  //some objects need to be always unlocked
-  def(_unlocked);
-  _unlocked = [_obj] call o_isAlwaysUnlocked;
-  if (_unlocked) then {
-    _obj setVariable ["objectLocked", false, true];
+
+  //AddAi to vehicle
+  if ([_obj] call sh_isUAV) then {
+    createVehicleCrew _obj;
   };
 
   //objects, warchests, and beacons
@@ -367,7 +269,7 @@ o_restoreObject = {_this spawn {
 o_saveList = [];
 {if (true) then {
 
-  if (not(call o_isBaseSavingOn)) exitWith {};
+  if (not(call sh_isBaseSavingOn)) exitWith {};
   def(_obj);
   _obj = _x select 1;
   
@@ -408,17 +310,17 @@ o_fillVariables = {
     _variables pushBack ["ownerN", _ownerN];
   };
   
-  if ([_obj] call o_isBox) then {
+  if ([_obj] call sh_isBox) then {
     _variables pushBack ["cmoney", _obj getVariable ["cmoney", 0]];
   };
   
-  if ([_obj] call o_isWarchest) then {
+  if ([_obj] call sh_isWarchest) then {
     _variables pushBack ["a3w_warchest", true];
     _variables pushBack ["R3F_LOG_disabled", true];
     _variables pushBack ["side", str (_obj getVariable ["side", sideUnknown])];
   };
   
-  if ([_obj] call o_isBeacon) then {
+  if ([_obj] call sh_isBeacon) then {
     _variables pushBack ["a3w_spawnBeacon", true];
     _variables pushBack ["R3F_LOG_disabled", true];
     _variables pushBack ["side", str(_obj getVariable ["side", sideUnknown])];
@@ -431,7 +333,9 @@ o_fillVariables = {
   _r3fSide = _obj getVariable "R3F_Side";
   if (!isNil "_r3fSide" && {typeName _r3fSide == typeName sideUnknown}) then {
     _variables pushBack ["R3F_Side", str _r3fSide];
-  };  
+  };
+
+  _variables pushBack ["objectLocked", _obj getVariable "objectLocked"];
 };
 
 o_addSaveObject = {
@@ -494,7 +398,7 @@ o_addSaveObject = {
   };
   
   init(_turretMags,[]);
-  if ((call o_isStaticWeaponSavingOn) && {[_obj] call o_isStaticWeapon}) then {
+  if ((cfg_staticWeaponSaving_on) && {[_obj] call sh_isStaticWeapon}) then {
     _turretMags = magazinesAmmo _obj;
   };
 
@@ -542,7 +446,7 @@ o_saveInfo = {
   
   init(_request,[_scope]);
   
-  if (call o_isWarchestMoneySavingOn) then {
+  if (cfg_warchestMoneySaving_on) then {
     _fundsWest = ["pvar_warchest_funds_west", 0] call getPublicVar;
     _fundsEast = ["pvar_warchest_funds_east", 0] call getPublicVar;
   };
@@ -597,7 +501,6 @@ o_saveAllObjects = {
 };
 
 o_trackedObjectsListCleanup = {
-
   //post cleanup the array
   init(_cleanup_start, diag_tickTime);
   init(_nulls,[]);
@@ -623,14 +526,14 @@ o_getTrackedObjectIndex = {
   (tracked_objects_list find _obj)
 };
 
-//event handlers for object locking and unlocking
+//event handlers for object tracking, and untracking
 "trackObject" addPublicVariableEventHandler {
   private["_index","_object"];
   _object = _this select 1;
   _index = [OR(_object,nil)] call o_getTrackedObjectIndex;
   if (_index >= 0) exitWith {};
 
-  //diag_log format["%1 is being added to the lock list", _object];
+  //diag_log format["%1 is being added to the tracked list", _object];
   tracked_objects_list pushBack _object;
 };
 
@@ -641,19 +544,14 @@ o_getTrackedObjectIndex = {
   _index = [OR(_object,nil)] call o_getTrackedObjectIndex;
   if (_index < 0) exitWith {};
 
-  //diag_log format["%1 is being removed from the lock list", _object];
+  //diag_log format["%1 is being removed from the tracked list", _object];
   tracked_objects_list deleteAt _index;
 };
-
-
-
-o_saveLoop_interval = OR(A3W_object_saveInterval,60);
-diag_log format["config: A3W_object_saveInterval = %1", o_saveLoop_interval];
 
 o_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
-    sleep o_saveLoop_interval;
+    sleep A3W_object_saveInterval;
     if (not(isBOOLEAN(o_saveLoopActive) && {!o_saveLoopActive})) then {
       diag_log format["saving all objects"];
       [_scope] call o_saveInfo;
@@ -665,15 +563,13 @@ o_saveLoop = {
 o_loadInfoPair = {
   ARGVX3(0,_name,"");
   ARGV2(1,_value);
-  
-  init(_warchestSavingOn, call o_isWarchestMoneySavingOn);
-  
-  if (_warchestSavingOn && _name == "WarchestMoneyBLUFOR" && {isSCALAR(_value)}) exitWith {
+
+  if (cfg_warchestMoneySaving_on && _name == "WarchestMoneyBLUFOR" && {isSCALAR(_value)}) exitWith {
     pvar_warchest_funds_west = _value;
     publicVariable "pvar_warchest_funds_west";
   };
   
-  if (_warchestSavingOn && _name == "WarchestMoneyOPFOR" && {isSCALAR(_value)}) exitWith {
+  if (cfg_warchestMoneySaving_on && _name == "WarchestMoneyOPFOR" && {isSCALAR(_value)}) exitWith {
     pvar_warchest_funds_east = _value;
     publicVariable "pvar_warchest_funds_east";
   };

@@ -2,22 +2,22 @@
 #define _undefined objNull
 
 #define isARRAY(x) \
-(not(isNil {x}) && {typeName (x) == typeName []})
+(not(isNil {x}) && {typeName x == typeName []})
 
 #define isSTRING(x) \
-(not(isNil {x}) && {typeName (x) == typeName ""})
+(not(isNil {x}) && {typeName x == typeName ""})
 
 #define isSCALAR(x) \
-(not(isNil {x}) && {typeName (x) == typeName 0})
+(not(isNil {x}) && {typeName x == typeName 0})
 
 #define isBOOLEAN(x) \
-(not(isNil {x}) && {typeName (x) == typeName true})
+(not(isNil {x}) && {typeName x == typeName true})
 
 #define isOBJECT(x) \
-(not(isNil {x}) && {typeName (x) == typeName objNull})
+(not(isNil {x}) && {typeName x == typeName objNull})
 
 #define isCODE(x) \
-(not(isNil {x}) && {typeName (x) == typeName {}})
+(not(isNil {x}) && {typeName x == typeName {}})
 
 #define isSIDE(x) \
 (not(isNil {x}) && {typeName x == typeName sideUnknown})
@@ -25,7 +25,7 @@
 #define isNullable(x) (false ||{ \
   not(isNil {x}) &&{ \
   private["_t"]; \
-  _t = typeName (x); \
+  _t = typeName x; \
   _t == typeName controlNull ||{ \
   _t == typeName displayNull ||{ \
   _t == typeName locationNull ||{ \
@@ -48,6 +48,17 @@ getIf(not(cond),v1,v2)
 
 #define OR(x,y) \
 getIf(defined(x),x,y)
+
+#define OR_ARRAY(v,d) (if (isARRAY(v)) then {v} else {d})
+#define OR_SCALAR(v,d) (if(isSCALAR(v)) then {v} else {d})
+#define OR_STRING(v,d) (if (isSTRING(v)) then {v} else {d})
+#define OR_BOOLEAN(v,d) (if(isBOOLEAN(v)) then {v} else {d})
+#define OR_OBJECT(v,d) (if(isOBJECT(v)) then {v} else {d})
+#define OR_SIDE(v,d) (if(isSIDE(v)) then {v} else {d})
+#define OR_CODE(v,d) (if(isCODE(v)) then {v} else {d})
+
+#define OR_POSITIVE(v,d) (if (isSCALAR(v) && {v > 0}) then {v} else {d})
+
 
 #define AND(x,y) \
 OR(v,y)
