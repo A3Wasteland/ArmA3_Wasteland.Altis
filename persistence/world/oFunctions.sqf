@@ -269,7 +269,7 @@ o_restoreObject = {_this spawn {
 o_saveList = [];
 {if (true) then {
 
-  if (not(call sh_isBaseSavingOn)) exitWith {};
+  if (not(cfg_baseSaving_on)) exitWith {};
   def(_obj);
   _obj = _x select 1;
   

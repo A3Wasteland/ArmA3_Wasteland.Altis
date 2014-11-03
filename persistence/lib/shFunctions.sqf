@@ -61,12 +61,6 @@ sh_restoreVariables = {
   } forEach _variables;
 };
 
-
-sh_isBaseSavingOn = {
-  (["A3W_baseSaving"] call isConfigOn)
-};
-
-
 sh_isStaticWeapon = {
   ARGVX4(0,_obj,objNull,false);
   init(_class,typeOf _obj);

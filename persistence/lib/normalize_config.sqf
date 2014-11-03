@@ -11,6 +11,8 @@ cfg_spawnBeaconSaving_on = ON_SCALAR(A3W_spawnBeaconSaving);
 cfg_boxSaving_on = ON_SCALAR(A3W_boxSaving);
 cfg_warchestSaving_on = ON_SCALAR(A3W_warchestSaving);
 cfg_warchestMoneySaving_on = ON_SCALAR(A3W_warchestMoneySaving);
+cfg_baseSaving_on = ON_SCALAR(A3W_baseSaving);
+
 
 A3W_saveable_vehicles_list = OR_ARRAY(A3W_saveable_vehicles_list,[]);
 A3W_objectLifetime = OR_SCALAR(A3W_objectLifetime,0);
@@ -30,6 +32,9 @@ diag_log format["[INFO] config: A3W_spawnBeaconSaving = %1", cfg_spawnBeaconSavi
 diag_log format["[INFO] config: A3W_boxSaving = %1", cfg_boxSaving_on];
 diag_log format["[INFO] config: A3W_warchestSaving = %1", cfg_warchestSaving_on];
 diag_log format["[INFO] config: A3W_warchestMoneySaving = %1", cfg_warchestMoneySaving_on];
+diag_log format["[INFO] config: A3W_baseSaving = %1", cfg_baseSaving_on];
+
+
 diag_log format["[INFO] config: A3W_objectLifetime = %1", A3W_objectLifetime];
 diag_log format["[INFO] config: A3W_object_saveInterval = %1", A3W_object_saveInterval];
 
