@@ -46,19 +46,15 @@ o_isSaveable = {
   if ([_obj] call o_isInSaveList) exitWith {true}; //not sure what this "saveList" thing is ...
 
 
-
   if ([_obj] call sh_isBeacon) exitWith {
-    //diag_log format["sav1(%1): cfg_spawnBeaconSaving_on = %2", _obj, (cfg_spawnBeaconSaving_on)];
     (cfg_spawnBeaconSaving_on)
   };
   
   if ([_obj] call sh_isWarchest) exitWith {
-    //diag_log format["sav2(%1): cfg_warchestSaving_on = %2", _obj, (cfg_warchestSaving_on)];
     (cfg_warchestSaving_on)
   };
   
   if ([_obj] call sh_isStaticWeapon) exitWith {
-    //diag_log format["sav3(%1): cfg_staticWeaponSaving_on = %2", _obj, cfg_staticWeaponSaving_on];
     (cfg_staticWeaponSaving_on)
   };
 
@@ -66,11 +62,9 @@ o_isSaveable = {
   _locked = _obj getVariable ["objectLocked", false];
 
   if ([_obj] call sh_isBox) exitWith {
-    //diag_log format["sav4(%1): cfg_boxSaving_on = %2, _locked = %3", _obj, cfg_boxSaving_on, _locked];
     (cfg_boxSaving_on && {_locked})
   };
 
-  //diag_log format["sav5(%1): cfg_boxSaving_on = %2, _locked = %3",_obj, cfg_boxSaving_on, _locked];
   (cfg_boxSaving_on && {_locked})
 };
 
@@ -165,18 +159,19 @@ o_restoreObject = {_this spawn {
 
   [_obj, _variables] call sh_restoreVariables;
 
-
-  if (not([_obj] call o_isSaveable)) exitWith {
-    diag_log format["%1(%2) has been deleted, it is not saveable", _object_key, _class];
-    deleteVehicle _obj;
-  };
-
   //for backwards compatibility, if the object does not have the "objectLocked" variable, then lock it
   def(_objectLocked);
   _objectLocked = _obj getVariable "objectLocked";
   if (!isBOOLEAN(_objectLocked) && {[_obj] call o_isLockableObject}) then {
     _obj setVariable ["objectLocked", true, true];
   };
+
+
+  if (not([_obj] call o_isSaveable)) exitWith {
+    diag_log format["%1(%2) has been deleted, it is not saveable", _object_key, _class];
+    deleteVehicle _obj;
+  };
+
 
   
   _obj setPosWorld ATLtoASL _pos;
