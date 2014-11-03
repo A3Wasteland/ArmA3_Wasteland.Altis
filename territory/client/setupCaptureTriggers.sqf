@@ -30,6 +30,6 @@ if (!hasInterface) exitWith {};
 
 		_trig setTriggerArea [_markerSize select 0, _markerSize select 1, markerDir _marker, markerShape _marker == "RECTANGLE"];
 		_trig setTriggerActivation ["ANY", "PRESENT", true];
-		_trig setTriggerStatements ["(vehicle player) in thislist", _onEnter, _onExit];
+		_trig setTriggerStatements ["(vehicle player) in thislist && (player call fn_getPos3D) select 2 <= 250", _onEnter, _onExit];
 	};
 } forEach allMissionObjects "EmptyDetector";

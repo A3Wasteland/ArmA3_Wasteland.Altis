@@ -78,6 +78,7 @@ forEach
 	"A3W_globalVoiceMaxWarns",
 	"A3W_antiHackMinRecoil",
 	"A3W_spawnBeaconCooldown",
+	"A3W_spawnBeaconSpawnHeight"
 	"A3W_extDB_ServerID",
 	"A3W_extDB_PlayerSave_ServerID",
 	"A3W_extension",

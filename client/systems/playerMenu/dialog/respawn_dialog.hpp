@@ -1,24 +1,10 @@
 // ******************************************************************************************
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
-#define respawn_dialog 3400
-#define respawn_Content_Text 3401
-#define respawn_MissionUptime_Text 3402
-#define respawn_Town_Button0 3403
-#define respawn_Town_Button1 3404
-#define respawn_Town_Button2 3405
-#define respawn_Town_Button3 3406
-#define respawn_Town_Button4 3407
-#define respawn_PlayersInTown_Text0 3408
-#define respawn_PlayersInTown_Text1 3409
-#define respawn_PlayersInTown_Text2 3410
-#define respawn_PlayersInTown_Text3 3411
-#define respawn_PlayersInTown_Text4 3412
-#define respawn_Random_Button 3413
-#define respawn_LoadTowns_Button 3414
-#define respawn_LoadBeacons_Button 3415
-#define respawn_Preload_Checkbox 3416
+//	@file Name: respawn_dialog.hpp
+//	@file Author: His_Shadow, AgentRev
 
+#include "respawn_defines.hpp"
 
 class RespawnSelectionDialog
 {
@@ -107,9 +93,9 @@ class RespawnSelectionDialog
 		// relative to RspnTopBar
 		#define RspnRandomButton_Y (RspnTopBar_Y + RspnTopBar_H + (0.072 * Y_SCALE)) // under RspnTopBar
 
-		#define RspnLine_X (RspnTopBar_X + CENTER(RspnTopBar_W, RspnLine_W)) // centered to RspnTopBar
-		#define RspnLine_W (RspnMainBG_W - (0.2 * X_SCALE))
+		#define RspnLine_W (RspnMainBG_W - (0.1 * X_SCALE))
 		#define RspnLine_H (0.002 * SZ_SCALE_ABS) // (0.002 * Y_SCALE)
+		#define RspnLine_X (RspnTopBar_X + CENTER(RspnTopBar_W, RspnLine_W)) // centered to RspnTopBar
 
 		class RspnTopLine: w_RscPicture
 		{
@@ -120,22 +106,6 @@ class RespawnSelectionDialog
 
 			x = RspnLine_X;
 			y = RspnTopLine_Y;
-			w = RspnLine_W;
-			h = RspnLine_H;
-		};
-
-		// relative to RspnTopLine
-		#define RspnLoadButton_Y (RspnTopLine_Y + RspnLine_H + (0.015 * Y_SCALE))
-
-		class RspnMiddleLine: w_RscPicture
-		{
-			idc = -1;
-			text = "#(argb,8,8,3)color(1,1,1,1)";
-
-			#define RspnMiddleLine_Y (RspnLoadButton_Y + RspnButton_H + (0.015 * Y_SCALE)) // under RspnTownsButton
-
-			x = RspnLine_X;
-			y = RspnMiddleLine_Y;
 			w = RspnLine_W;
 			h = RspnLine_H;
 		};
@@ -233,154 +203,90 @@ class RespawnSelectionDialog
 			h = RspnPreloadChkText_H;
 		};
 
-		// relative to RspnTopLine
-		#define RspnLoadButton_X (RspnLine_X + (RspnLine_W / 2))
-		#define RspnLoadButton_X_spacer (0.015 * Y_SCALE)
 
-		class RspnTownsButton: RspnButton
+		#define RspnLocType_X RspnLine_X
+		#define RspnLocType_Y (RspnTopLine_Y + RspnLine_H + (0.015 * Y_SCALE))
+		#define RspnLocType_W (0.225 * X_SCALE)
+		#define RspnLocType_H (0.0225 * Y_SCALE)
+
+		class RspnLocType: w_RscXListBox
 		{
-			idc = respawn_LoadTowns_Button;
-			onButtonClick = "[0] execVM 'client\functions\switchButtonNames.sqf'";
-			text = "Towns";
+			idc = respawn_Locations_Type;
 
-			x = RspnLoadButton_X - (RspnLoadButton_X_spacer + RspnButton_W);
-			y = RspnLoadButton_Y;
+			x = RspnLocType_X;
+			y = RspnLocType_Y;
+			w = RspnLocType_W;
+			h = RspnLocType_H;
 		};
 
-		class RspnBeaconsButton: RspnButton
+		#define RspnSpawnButton_W RspnLocType_W
+		#define RspnSpawnButton_H (0.04 * Y_SCALE)
+		#define RspnSpawnButton_X RspnLocType_X
+		#define RspnSpawnButton_Y ((RspnBottomLine_Y - (0.015 * Y_SCALE)) - RspnSpawnButton_H)
+
+		class RspnSpawnButton: RspnButton
 		{
-			idc = respawn_LoadBeacons_Button;
-			onButtonClick = "[1] execVM 'client\functions\switchButtonNames.sqf'";
-			text = "Beacons";
+			idc = respawn_Spawn_Button;
+			text = "Spawn"; // text alternates between "Loading..." and "Spawn" in loadRespawnDialog.sqf
 
-			x = RspnLoadButton_X + RspnLoadButton_X_spacer;
-			y = RspnLoadButton_Y;
+			x = RspnSpawnButton_X;
+			y = RspnSpawnButton_Y;
+			w = RspnSpawnButton_W;
+			h = RspnSpawnButton_H;
 		};
 
-		// relative to RspnMiddleLine
-		#define RspnLocButton_X (RspnLine_X + (0.01 * X_SCALE))
-		#define RspnLocButton_Y (RspnMiddleLine_Y + RspnLine_H + (0.0225 * Y_SCALE))
-		#define RspnLocButton_Y_offset (RspnButton_H + (0.015 * Y_SCALE))
+		#define RspnLocList_X RspnLocType_X
+		#define RspnLocList_Y (RspnLocType_Y + RspnLocType_H + (0.0075 * Y_SCALE))
+		#define RspnLocList_W RspnLocType_W
+		#define RspnLocList_H ((RspnSpawnButton_Y - RspnLocList_Y) - (0.0075 * Y_SCALE))
 
-		#define Create_RspnLocButton(RspnLocButton_NUM) \
-		class RspnLocButton##RspnLocButton_NUM : RspnButton \
-		{ \
-			idc = respawn_Town_Button0 + RspnLocButton_NUM; \
-			x = RspnLocButton_X; \
-			y = RspnLocButton_Y + (RspnLocButton_Y_offset * RspnLocButton_NUM); \
-		};
-
-		Create_RspnLocButton(0)
-		Create_RspnLocButton(1)
-		Create_RspnLocButton(2)
-		Create_RspnLocButton(3)
-		Create_RspnLocButton(4)
-
-		/*
-		class RspnLocButton0: RspnButton
+		class RspnLocList: w_RscList
 		{
-			idc = respawn_Town_Button0;
-			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
-			text = "";
+			idc = respawn_Locations_List;
+			rowHeight = 0.0225 * Y_SCALE;
 
-			x = RspnLocButton_X;
-			y = RspnLocButton_Y + (RspnLocButton_Y_offset * 0);
+			x = RspnLocList_X;
+			y = RspnLocList_Y;
+			w = RspnLocList_W;
+			h = RspnLocList_H;
 		};
 
-		class RspnLocButton1: RspnButton
+		#define RspnLocText_X (RspnLocList_X + RspnLocList_W + (0.0075 * X_SCALE))
+		#define RspnLocText_W ((RspnLine_X + RspnLine_W) - RspnLocText_X)
+		#define RspnLocText_H RspnSpawnButton_H
+		#define RspnLocText_Y ((RspnBottomLine_Y - (0.015 * Y_SCALE)) - RspnLocText_H)
+
+		class RspnLocText: w_RscStructuredTextLeft
 		{
-			idc = respawn_Town_Button1;
-			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
-			text = "";
+			idc = respawn_Locations_Text;
+			size = 0.034 * TEXT_SCALE;
+			colorBackground[] = {0, 0, 0, 0.3};
+			shadow = 0;
 
-			x = RspnLocButton_X;
-			y = RspnLocButton_Y + (RspnLocButton_Y_offset * 1);
+			x = RspnLocText_X;
+			y = RspnLocText_Y;
+			w = RspnLocText_W;
+			h = RspnLocText_H;
 		};
 
-		class RspnLocButton2: RspnButton
+		#define RspnLocMap_X RspnLocText_X
+		#define RspnLocMap_Y RspnLocType_Y
+		#define RspnLocMap_W RspnLocText_W
+		#define RspnLocMap_H ((RspnLocText_Y - (0.0075 * Y_SCALE)) - RspnLocMap_Y)
+
+		class RspnLocMap: w_RscMapControl
 		{
-			idc = respawn_Town_Button2;
-			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
-			text = "";
+			idc = respawn_Locations_Map;
+			scaleMax = 3;
 
-			x = RspnLocButton_X;
-			y = RspnLocButton_Y + (RspnLocButton_Y_offset * 2);
+			x = RspnLocMap_X;
+			y = RspnLocMap_Y;
+			w = RspnLocMap_W;
+			h = RspnLocMap_H;
 		};
 
-		class RspnLocButton3: RspnButton
-		{
-			idc = respawn_Town_Button3;
-			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
-			text = "";
 
-			x = RspnLocButton_X;
-			y = RspnLocButton_Y + (RspnLocButton_Y_offset * 3);
-		};
-
-		class RspnLocButton4: RspnButton
-		{
-			idc = respawn_Town_Button4;
-			onButtonClick = ""; // Action is now set dynamically in loadRespawnDialog.sqf using buttonSetAction
-			text = "";
-
-			x = RspnLocButton_X;
-			y = RspnLocButton_Y + (RspnLocButton_Y_offset * 4);
-		};
-		*/
-
-		#define RspnLocPlayers_X (RspnLocButton_X + RspnButton_W + (0.008 * X_SCALE))
-		#define RspnLocPlayers_Y (RspnLocButton_Y + (0.003 * Y_SCALE))
-		#define RspnLocPlayers_W ((RspnLine_X + RspnLine_W) - RspnLocPlayers_X)
-		#define RspnLocPlayers_H (0.04 * Y_SCALE)
-
-		#define Create_RspnLocPlayers(RspnLocPlayers_NUM) \
-		class RspnLocPlayers##RspnLocPlayers_NUM: w_RscStructuredTextLeft \
-		{ \
-			idc = respawn_PlayersInTown_Text0 + RspnLocPlayers_NUM; \
-			size = 0.026 * TEXT_SCALE; \
-			x = RspnLocPlayers_X; \
-			y = RspnLocPlayers_Y + (RspnLocButton_Y_offset * RspnLocPlayers_NUM); \
-			w = RspnLocPlayers_W; \
-			h = RspnLocPlayers_H; \
-		};
-
-		Create_RspnLocPlayers(0)
-		Create_RspnLocPlayers(1)
-		Create_RspnLocPlayers(2)
-		Create_RspnLocPlayers(3)
-		Create_RspnLocPlayers(4)
-
-		/*
-		class RspnLocPlayers0: w_RspnLocPlayers
-		{
-			idc = respawn_PlayersInTown_Text0;
-			y = RspnLocPlayers_Y + (RspnLocButton_Y_offset * 0);
-		};
-
-		class RspnLocPlayers1: w_RspnLocPlayers
-		{
-			idc = respawn_PlayersInTown_Text1;
-			y = RspnLocPlayers_Y + (RspnLocButton_Y_offset * 1);
-		};
-
-		class RspnLocPlayers2: w_RspnLocPlayers
-		{
-			idc = respawn_PlayersInTown_Text2;
-			y = RspnLocPlayers_Y + (RspnLocButton_Y_offset * 2);
-		};
-
-		class RspnLocPlayers3: w_RspnLocPlayers
-		{
-			idc = respawn_PlayersInTown_Text3;
-			y = RspnLocPlayers_Y + (RspnLocButton_Y_offset * 3);
-		};
-
-		class RspnLocPlayers4: w_RspnLocPlayers
-		{
-			idc = respawn_PlayersInTown_Text4;
-			y = RspnLocPlayers_Y + (RspnLocButton_Y_offset * 4);
-		};
-		*/
+		#define RspnLobbyButton_X RspnLine_X
 
 		class RspnLobbyButton: RspnButton
 		{
@@ -388,8 +294,22 @@ class RespawnSelectionDialog
 			onButtonClick = "endMission 'LOSER'";
 			text = "Lobby";
 
-			x = RspnLine_X;
+			x = RspnLobbyButton_X;
 			y = RspnLobbyButton_Y;
+		};
+
+		#define RspnGroupButton_X (RspnLobbyButton_X + RspnButton_W + (0.015 * X_SCALE))
+		#define RspnGroupButton_W (0.175 * X_SCALE)
+
+		class RspnGroupButton: RspnButton
+		{
+			idc = -1;
+			text = "Group Management";
+			onButtonClick = "[] execVM 'client\systems\groups\loadGroupManagement.sqf'";
+
+			x = RspnGroupButton_X;
+			y = RspnLobbyButton_Y;
+			w = RspnGroupButton_W;
 		};
 	};
 };
