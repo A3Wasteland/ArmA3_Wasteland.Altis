@@ -6,43 +6,36 @@
 //	@file Author: [404] Deadbeat, [404] Costlyy, MercyfulFate, AgentRev
 //	@file Created: 20/11/2012 05:19
 
-#define respawn_Content_Text 3401
-#define respawn_MissionUptime_Text 3402
-#define respawn_Town_Button0 3403
-#define respawn_Town_Button1 3404
-#define respawn_Town_Button2 3405
-#define respawn_Town_Button3 3406
-#define respawn_Town_Button4 3407
-#define respawn_PlayersInTown_Text0 3408
-#define respawn_PlayersInTown_Text1 3409
-#define respawn_PlayersInTown_Text2 3410
-#define respawn_PlayersInTown_Text3 3411
-#define respawn_PlayersInTown_Text4 3412
-#define respawn_Random_Button 3413
-#define respawn_LoadTowns_Button 3414
-#define respawn_LoadBeacons_Button 3415
-#define respawn_Preload_Checkbox 3416
+#include "respawn_defines.hpp"
 
 // Check if both players are on the same side, and that our player is BLUFOR or OPFOR, or that both are in the same group
 #define FRIENDLY_CONDITION (side group _x == playerSide && {playerSide in [BLUFOR,OPFOR] || group _x == group player})
-
+#define DISABLE_ALL_BUTTONS format ["{ ctrlEnable [_x, false] } forEach %1;", [respawn_Random_Button, respawn_Spawn_Button, respawn_Locations_Type, respawn_Locations_List, respawn_Preload_Checkbox]]
+#define SPAWN_BEACON_COOLDOWN (["A3W_spawnBeaconCooldown", 5*60] call getPublicVar)
 #define BEACON_CHECK_RADIUS 250
 
 disableSerialization;
 waitUntil {!isNil "bis_fnc_init"};
 
-private ["_player", "_city", "_radius", "_name", "_enemyCount", "_friendlyCount", "_side", "_dynamicControlsArray", "_enemyPresent", "_tempArray", "_text", "_players", "_playerArray"];
-
 createDialog "RespawnSelectionDialog";
-_display = uiNamespace getVariable "RespawnSelectionDialog";
+_display = uiNamespace getVariable ["RespawnSelectionDialog", displayNull];
 _display displayAddEventHandler ["KeyDown", "(respawnDialogActive && _this select 1 == 1)"];
 _respawnText = _display displayCtrl respawn_Content_Text;
 _missionUptimeText = _display displayCtrl respawn_MissionUptime_Text;
 
-_townsButton = _display displayCtrl respawn_LoadTowns_Button;
-_beaconsButton = _display displayCtrl respawn_LoadBeacons_Button;
+_randomButton = _display displayCtrl respawn_Random_Button;
+//_townsButton = _display displayCtrl respawn_LoadTowns_Button;
+//_beaconsButton = _display displayCtrl respawn_LoadBeacons_Button;
+_spawnButton = _display displayCtrl respawn_Spawn_Button;
+_spawnButton ctrlEnable false;
 
-_spawnBeaconCooldown = ["A3W_spawnBeaconCooldown", 5*60] call getPublicVar;
+_spawnButton ctrlSetText "Loading...";
+
+_locType = _display displayCtrl respawn_Locations_Type;
+_locList = _display displayCtrl respawn_Locations_List;
+_locMap = _display displayCtrl respawn_Locations_Map;
+
+_spawnBeaconCooldown = SPAWN_BEACON_COOLDOWN;
 
 _side = switch (playerSide) do
 {
@@ -54,33 +47,11 @@ _side = switch (playerSide) do
 _respawnText ctrlSetStructuredText parseText (format ["Welcome to Wasteland<br/>You are on %1. Please select a spawn point.", _side]);
 respawnDialogActive = true;
 
-_dynamicControlsArray =
-[
-	[respawn_Town_Button0, respawn_PlayersInTown_Text0],
-	[respawn_Town_Button1, respawn_PlayersInTown_Text1],
-	[respawn_Town_Button2, respawn_PlayersInTown_Text2],
-	[respawn_Town_Button3, respawn_PlayersInTown_Text3],
-	[respawn_Town_Button4, respawn_PlayersInTown_Text4]
-];
-
-_btnMax = count _dynamicControlsArray;
-
-_disableAllButtons = "";
-
-{
-	_disableAllButtons = _disableAllButtons + (format ["ctrlEnable [%1, false]; ", _x]);
-} forEach [respawn_Random_Button, respawn_LoadTowns_Button, respawn_LoadBeacons_Button, respawn_Preload_Checkbox];
-
-{
-	_button = _display displayCtrl (_x select 0);
-	_button ctrlShow false;
-	_button ctrlSetText "";
-	_disableAllButtons = _disableAllButtons + (format ["ctrlEnable [%1, false]; ", _x select 0]);
-} forEach _dynamicControlsArray;
-
-buttonSetAction [respawn_Random_Button, format ["%1 [%2,0] execVM 'client\functions\spawnAction.sqf'", _disableAllButtons, respawn_Random_Button]];
-
+//buttonSetAction [respawn_Random_Button, format ["%1 [%2,0] execVM 'client\functions\spawnAction.sqf'", _disableAllButtons, respawn_Random_Button]];
+_randomButton buttonSetAction format ["%1 [%2,[0,nil]] execVM 'client\functions\spawnAction.sqf'", DISABLE_ALL_BUTTONS, respawn_Random_Button];
 (_display displayCtrl respawn_Preload_Checkbox) cbSetChecked (profileNamespace getVariable ["A3W_preloadSpawn", true]);
+
+#include "respawn_functions.sqf"
 
 _setPlayersInfo =
 {
@@ -162,43 +133,13 @@ _setPlayersInfo =
 	};
 };
 
-_getPlayersInfo =
-{
-	private ["_location", "_isBeacon"];
-	_location = _this; // spawn beacon object or town marker name
-	_isBeacon = (typeName _location == "OBJECT");
-
-	_friendlyUnits = [];
-	_friendlyPlayers = 0;
-	_friendlyNPCs = 0;
-	_enemyPlayers = 0;
-	_enemyNPCs = 0;
-
-	if (_isBeacon) then
-	{
-		_friendlyUnits = _location getVariable ["friendlyUnits", []];
-		_friendlyPlayers = _location getVariable ["friendlyPlayers", 0];
-		_friendlyNPCs = _location getVariable ["friendlyNPCs", 0];
-		_enemyPlayers = _location getVariable ["enemyPlayers", 0];
-		_enemyNPCs = _location getVariable ["enemyNPCs", 0];
-	}
-	else // town
-	{
-		_friendlyUnits = missionNamespace getVariable [format ["%1_friendlyUnits", _location], []];
-		_friendlyPlayers = missionNamespace getVariable [format ["%1_friendlyPlayers", _location], 0];
-		_friendlyNPCs = missionNamespace getVariable [format ["%1_friendlyNPCs", _location], 0];
-		_enemyPlayers = missionNamespace getVariable [format ["%1_enemyPlayers", _location], 0];
-		_enemyNPCs = missionNamespace getVariable [format ["%1_enemyNPCs", _location], 0];
-	};
-};
-
-// Function to determine the player thresold for use by BIS_fnc_sortBy (friendly = +1, enemy = -1)
+// Function to determine the player thresold for use by BIS_fnc_sortBy (friendly = +100, enemy = -1)
 _getPlayerThreshold =
 {
 	private ["_friendlyPlayers", "_friendlyNPCs", "_enemyPlayers", "_enemyNPCs"];
 	_this call _getPlayersInfo;
 
-	((_friendlyPlayers + _friendlyNPCs) - (_enemyPlayers + _enemyNPCs) + (if (!showBeacons && _enemyPlayers > _friendlyPlayers) then { -1000 } else { 0 }))
+	((_friendlyPlayers + _friendlyNPCs) * 100 - (_enemyPlayers + _enemyNPCs) + (if (typeName _this != "OBJECT" && _enemyPlayers > _friendlyPlayers) then { -99999 } else { 0 }))
 };
 
 // Function to determine if a beacon is allowed for use with BIS_fnc_conditionalSelect
@@ -229,13 +170,237 @@ _isBeaconAllowed =
 	_allowed
 };
 
+_selLocChanged =
+{
+	disableSerialization;
+	private ["_location", "_textStr"];
+
+	_locList = _this select 0;
+	_curSel = _this select 1;
+	_selText = _locList lbText _curSel;
+
+	_display = ctrlParent _locList;
+	_locMap = _display displayCtrl respawn_Locations_Map;
+	_locText = _display displayCtrl respawn_Locations_Text;
+	_randomBtn = _display displayCtrl respawn_Random_Button;
+	_spawnBtn = _display displayCtrl respawn_Spawn_Button;
+	_spawnBtnEnabled = false;
+	_spawnBtnAction = "";
+	_textStr = "";
+
+	#include "respawn_functions.sqf"
+
+	_selData = _locList lbData lbCurSel _locList;
+
+	if (_selData != "") then
+	{
+		_location = call compile _selData;
+	};
+
+	if (!isNil "_location") then
+	{
+		private ["_friendlyUnits", "_friendlyPlayers", "_enemyPlayers", "_enemyNPCs"];
+		_isBeacon = false;
+		_isValid = false;
+
+		if (typeName _location == "OBJECT") then
+		{
+			_isBeacon = true;
+
+			if (alive _location) then
+			{
+				_isValid = true;
+				_location call _getPlayersInfo;
+				_lastUse = _location getVariable "spawnBeacon_lastUse";
+
+				if (!isNil "_lastUse") then
+				{
+					_spawnBeaconCooldown = SPAWN_BEACON_COOLDOWN;
+					_remaining = _spawnBeaconCooldown - (diag_tickTime - _lastUse);
+
+					if (_spawnBeaconCooldown > 0 && _remaining > 0) then
+					{
+						_textStr = _textStr + format ["[<t color='#ffff00'>%1</t>] ", _remaining call fn_formatTimer];
+					}
+					else
+					{
+						_spawnBtnEnabled = true;
+					};
+				}
+				else
+				{
+					_spawnBtnEnabled = true;
+				};
+			};
+		}
+		else
+		{
+			if (_location != "") then
+			{
+				_isValid = true;
+				_location call _getPlayersInfo;
+
+				if (_enemyPlayers > _friendlyPlayers) then
+				{
+					_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
+				}
+				else
+				{
+					_spawnBtnEnabled = true;
+				};
+			};
+		};
+
+		if (_isValid) then
+		{
+			_extraTextStr = "";
+
+			if (_friendlyPlayers > 0) then
+			{
+				if (_extraTextStr != "") then { _extraTextStr = _extraTextStr + ", " };
+				_extraTextStr = _extraTextStr + format ["<t color='#00ff00'>%1 friendly player(s)</t>", _friendlyPlayers];
+			};
+
+			if (_enemyPlayers > 0) then
+			{
+				if (_extraTextStr != "") then { _extraTextStr = _extraTextStr + ", " };
+				_extraTextStr = _extraTextStr + format ["<t color='#ff0000'>%1 enemy player(s)</t>", _enemyPlayers];
+			};
+
+			if (_enemyNPCs > 0) then
+			{
+				if (_extraTextStr != "") then { _extraTextStr = _extraTextStr + ", " };
+				_extraTextStr = _extraTextStr + format ["<t color='#ff0000'>%1 enemy AI(s)</t>", _enemyNPCs];
+			};
+
+			_textStr = _textStr + _extraTextStr;
+
+			private ["_data", "_pos"];
+
+			if (_isBeacon) then
+			{
+				_pos = getPosATL _location;
+				_data = [2, [netId _location, _pos, _selText]];
+			}
+			else
+			{
+				_pos = markerPos _location;
+				_data = [1, _location];
+			};
+
+			_spawnBtnAction = format ["%1 %2 execVM 'client\functions\spawnAction.sqf'", DISABLE_ALL_BUTTONS, [respawn_Spawn_Button, _data]];
+
+			if (uiNamespace getVariable ["RespawnSelectionDialog_lastSelLoc", ""] != _selData) then
+			{
+				ctrlMapAnimClear _locMap;
+				_locMap ctrlMapAnimAdd [0.25, ctrlMapScale _locMap, _pos];
+				ctrlMapAnimCommit _locMap;
+			};
+
+			uiNamespace setVariable ["RespawnSelectionDialog_selLocPos", _pos];
+		}
+		else
+		{
+			uiNamespace setVariable ["RespawnSelectionDialog_selLocPos", nil];
+		};
+	}
+	else
+	{
+		uiNamespace setVariable ["RespawnSelectionDialog_selLocPos", nil];
+	};
+
+	if (buttonAction _spawnBtn != _spawnBtnAction) then
+	{
+		_spawnBtn buttonSetAction _spawnBtnAction;
+	};
+
+	_spawnBtnEnabled = _spawnBtnEnabled && ctrlEnabled _randomBtn;
+
+	if ((!ctrlEnabled _spawnBtn && _spawnBtnEnabled) || (ctrlEnabled _spawnBtn && !_spawnBtnEnabled)) then
+	{
+		_spawnBtn ctrlEnable _spawnBtnEnabled;
+	};
+
+	if (ctrlText _locText != _textStr) then
+	{
+		_locText ctrlSetStructuredText parseText _textStr;
+	};
+
+	uiNamespace setVariable ["RespawnSelectionDialog_lastSelLoc", _selData];
+};
+
+_locList ctrlAddEventHandler ["LBSelChanged", _selLocChanged];
+
+_locMap ctrlAddEventHandler ["Draw",
+{
+	_ctrl = _this select 0;
+
+	if (!isNil "drawPlayerMarkers_array") then
+	{
+		{ _ctrl drawIcon _x } forEach drawPlayerMarkers_array;
+	};
+
+	_spawnLoc = uiNamespace getVariable "RespawnSelectionDialog_selLocPos";
+
+	if (!isNil "_spawnLoc") then
+	{
+		_ctrl drawIcon ["\A3\ui_f\Data\gui\Rsc\RscDisplayArcadeMap\top_close_gs.paa", [0,1,1,1], _spawnLoc, 31, 35, 0, "", 2];
+	};
+}];
+
+_locType lbAdd "Towns";
+_locType lbAdd "Beacons";
+_locType lbSetCurSel 0;
+
+_locType ctrlAddEventHandler ["LBSelChanged",
+{
+	_locType = _this select 0;
+	_curSel = _this select 1;
+
+	_display = ctrlParent _locType;
+	showBeacons = (_curSel > 0);
+
+	_locList = _display displayCtrl respawn_Locations_List;
+	lbClear _locList;
+	_locList lbSetCurSel -1;
+
+	_spawnButton = _display displayCtrl respawn_Spawn_Button;
+	_spawnButton ctrlSetText "Loading...";
+
+	uiNamespace setVariable ["RespawnSelectionDialog_updateLocs", true];
+}];
+
+uiNamespace setVariable ["RespawnSelectionDialog_lastSelLoc", nil];
+uiNamespace setVariable ["RespawnSelectionDialog_selLocPos", nil];
 
 showBeacons = false;
+_oldLocArray = [];
+_typeAutoSel = false;
 
-while {respawnDialogActive} do
+// Separate thread for fast text updating
+[_selLocChanged] spawn
 {
-	_timeText = [serverTime/60/60] call BIS_fnc_timeToString;
-	_missionUptimeText ctrlSetText format ["Mission uptime: %1", _timeText];
+	disableSerialization;
+	_selLocChanged = _this select 0;
+	_display = uiNamespace getVariable ["RespawnSelectionDialog", displayNull];
+	_missionUptimeText = _display displayCtrl respawn_MissionUptime_Text;
+	_locList = _display displayCtrl respawn_Locations_List;
+
+	while {!isNull _display} do
+	{
+		_timeText = [serverTime/60/60] call BIS_fnc_timeToString;
+		_missionUptimeText ctrlSetText format ["Mission uptime: %1", _timeText];
+		[_locList, lbCurSel _locList] call _selLocChanged;
+		uiSleep 0.9;
+	};
+};
+
+// Main scanning subroutine
+while {!isNull _display} do
+{
+	_time = diag_tickTime;
+	//_timeText = [serverTime/60/60] call BIS_fnc_timeToString;
+	//_missionUptimeText ctrlSetText format ["Mission uptime: %1", _timeText];
 
 	_locations = [];
 
@@ -255,31 +420,16 @@ while {respawnDialogActive} do
 	{
 		if (_x call _isBeaconAllowed) then
 		{
+			_x call _setPlayersInfo;
 			_beacons pushBack _x;
 		};
 	} forEach (["pvar_spawn_beacons", []] call getPublicVar);
 
-	if (ctrlEnabled (_display displayCtrl respawn_Random_Button)) then
+	if (!_typeAutoSel && ctrlEnabled _randomButton) then
 	{
-		if (count _towns == 0) then
-		{
-			if (ctrlEnabled _townsButton) then { _townsButton ctrlEnable false };
-		}
-		else
-		{
-			if (!ctrlEnabled _townsButton) then { _townsButton ctrlEnable true };
-			if (count _beacons == 0 && showBeacons) then { showBeacons = false };
-		};
-
-		if (count _beacons == 0) then
-		{
-			if (ctrlEnabled _beaconsButton) then { _beaconsButton ctrlEnable false };
-		}
-		else
-		{
-			if (!ctrlEnabled _beaconsButton) then { _beaconsButton ctrlEnable true };
-			if (count _towns == 0 && !showBeacons) then { showBeacons = true };
-		};
+		if (count _towns > 0 && count _beacons == 0 && showBeacons) then { _locType lbSetCurSel 0 };
+		if (count _beacons > 0 && count _towns == 0 && !showBeacons) then { _locType lbSetCurSel 1 };
+		_typeAutoSel = true;
 	};
 
 	_locations = if (showBeacons) then
@@ -291,21 +441,38 @@ while {respawnDialogActive} do
 		[_towns, [], {_x call _getPlayerThreshold}, "DESCEND"] call BIS_fnc_sortBy
 	};
 
-	_btnIndex = 0;
+	_newLocArray = []; // Location, Text, Data, Picture, Enabled
 
 	{
 		_location = _x;
+		_text = "";
+		_data = "";
 
-		_buttonIdc = _dynamicControlsArray select _btnIndex select 0;
-		_button = _display displayCtrl _buttonIdc;
-		_text = _display displayCtrl (_dynamicControlsArray select _btnIndex select 1);
+		_isBeacon = (typeName _location == "OBJECT");
+
+		if (_isBeacon) then
+		{
+			_text = _location getVariable ["ownerName", "[Beacon]"];
+			_data = "objectFromNetId " + str netId _location;
+		}
+		else
+		{
+			{
+				if (_x select 0 == _location) exitWith
+				{
+					_text = (_x select 2);
+					_data = str _location;
+				};
+			} forEach (call cityList);
+		};
 
 		_isBeacon = (typeName _location == "OBJECT");
 
 		private ["_friendlyUnits", "_friendlyPlayers", "_enemyPlayers", "_enemyNPCs"];
 		_location call _getPlayersInfo;
 
-		_textStr = "";
+		private "_picture";
+		_enabled = true;
 
 		if (_isBeacon) then
 		{
@@ -317,109 +484,64 @@ while {respawnDialogActive} do
 
 				if (_spawnBeaconCooldown > 0 && _remaining > 0) then
 				{
-					_textStr = _textStr + format ["[<t color='#ff0000'>%1</t>] ", _remaining call fn_formatTimer];
-					_button ctrlEnable false;
-				}
-				else
-				{
-					_button ctrlEnable true;
+					_picture = "\A3\ui_f\Data\gui\Rsc\RscDisplayMultiplayer\sessions_locked_ca.paa";
+					_enabled = false;
 				};
-			}
-			else
-			{
-				_button ctrlEnable true;
 			};
 		}
 		else
 		{
-			if (_enemyPlayers > _friendlyPlayers) then
-			{
-				_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
-				_button ctrlEnable false;
-			}
-			else
-			{
-				if (ctrlEnabled (_display displayCtrl respawn_Random_Button)) then
-				{
-					_button ctrlEnable true;
-				};
-			};
+			_enabled = (_enemyPlayers <= _friendlyPlayers);
 		};
 
-		if (_friendlyPlayers > 0) then
+		if (isNil "_picture") then
 		{
-			{
-				_textStr = _textStr + format ["<t color='#00ff00'>%1</t>", name _x];
-				if (_forEachIndex < _friendlyPlayers - 1 && _textStr != "") then { _textStr = _textStr + ", " };
-			} forEach _friendlyUnits;
+			_picture = format ["\A3\ui_f\Data\gui\Rsc\RscDisplayMultiplayer\%1", if (_enabled) then { "sessions_none_ca.paa" } else { "sessions_version_ca.paa" }];
 		};
 
-		/*
-		if (_friendlyNPCs > 0) then
-		{
-			if (_textStr != "") then { _textStr = _textStr + ", " };
-			_textStr = format ["%1 friendly NPC%2", _friendlyNPCs, if (_friendlyNPCs == 1) then { "" } else { "s" }];
-		};
-		*/
-
-		if (_enemyPlayers > 0) then
-		{
-			if (_textStr != "") then { _textStr = _textStr + ", " };
-			_textStr = _textStr + format ["<t color='#ff0000'>%1 enemy player%2</t>", _enemyPlayers, if (_enemyPlayers == 1) then { "" } else { "s" }];
-		};
-
-		if (_enemyNPCs > 0) then
-		{
-			if (_textStr != "") then { _textStr = _textStr + ", " };
-			_textStr = _textStr + format ["<t color='#ff0000'>%1 enemy NPC%2</t>", _enemyNPCs, if (_enemyNPCs == 1) then { "" } else { "s" }];
-		};
-
-		_data = "";
-
-		if (_isBeacon) then
-		{
-			_pos = getPos _location;
-			_owner = _location getVariable ["ownerName", "[Beacon]"];
-
-			_button ctrlSetText format ["%1", _owner];
-			_data = format ["2,%1", [netId _location, _pos, _owner]];
-		}
-		else
-		{
-			{
-				if (_x select 0 == _location) exitWith
-				{
-					_button ctrlSetText (_x select 2);
-					_data = format ["1,'%1'", _location];
-				};
-			} forEach (call cityList);
-		};
-
-		_button buttonSetAction format ["%1 [%2,%3] execVM 'client\functions\spawnAction.sqf'", _disableAllButtons, _buttonIdc, _data];
-		_button ctrlShow true;
-		_text ctrlSetStructuredText parseText _textStr;
-		_text ctrlShow true;
-
-		_btnIndex = _btnIndex + 1;
-
-		if (_btnIndex >= _btnMax) exitWith {}; // no more buttons to display on
+		_newLocArray pushBack [_location, _text, _data, _picture, _enabled];
 	} forEach _locations;
 
-	if (_btnIndex < _btnMax) then
+	if (!(_newLocArray isEqualTo _oldLocArray) && !(uiNamespace getVariable ["RespawnSelectionDialog_updateLocs", false])) then
 	{
-		for "_i" from _btnIndex to (_btnMax - 1) do
-		{
-			_btnArr = _dynamicControlsArray select _i;
-			_button = _display displayCtrl (_btnArr select 0);
-			_text = _display displayCtrl (_btnArr select 1);
+		private ["_selData", "_selLoc", "_loc", "_idx", "_selIdx"];
+		_selData = _locList lbData lbCurSel _locList;
 
-			_button ctrlShow false;
-			_button ctrlSetText "";
-			_button buttonSetAction "";
-			_text ctrlShow false;
-			_text ctrlSetText "";
+		if (_selData != "") then
+		{
+			_selLoc = call compile _selData;
 		};
+
+		lbClear _locList;
+
+		{
+			_loc = _x select 0;
+			_idx = _locList lbAdd (_x select 1);
+			_locList lbSetData [_idx, _x select 2];
+			_locList lbSetPicture [_idx, _x select 3];
+
+			if (isNil "_selIdx" && !isNil "_selLoc" && {typeName _loc == typeName _selLoc && {_loc == _selLoc}}) then
+			{
+				_selIdx = _idx;
+			};
+		} forEach _newLocArray;
+
+		if (!isNil "_selIdx") then
+		{
+			_locList lbSetCurSel _selIdx;
+		};
+
+		_spawnButton ctrlSetText "Spawn";
 	};
 
-	sleep 0.25;
+	_oldLocArray = _newLocArray;
+
+	_updateLocs = false;
+	waitUntil {_updateLocs = uiNamespace getVariable ["RespawnSelectionDialog_updateLocs", false]; diag_tickTime - _time >= 0.5 || _updateLocs};
+
+	if (_updateLocs) then
+	{
+		_oldLocArray = [];
+		uiNamespace setVariable ["RespawnSelectionDialog_updateLocs", nil];
+	};
 };
