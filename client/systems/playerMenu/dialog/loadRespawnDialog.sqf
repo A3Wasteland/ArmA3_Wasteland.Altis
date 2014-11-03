@@ -502,33 +502,36 @@ while {!isNull _display} do
 		_newLocArray pushBack [_location, _text, _data, _picture, _enabled];
 	} forEach _locations;
 
-	if (!(_newLocArray isEqualTo _oldLocArray) && !(uiNamespace getVariable ["RespawnSelectionDialog_updateLocs", false])) then
+	if !(uiNamespace getVariable ["RespawnSelectionDialog_updateLocs", false]) then
 	{
-		private ["_selData", "_selLoc", "_loc", "_idx", "_selIdx"];
-		_selData = _locList lbData lbCurSel _locList;
-
-		if (_selData != "") then
+		if !(_newLocArray isEqualTo _oldLocArray) then
 		{
-			_selLoc = call compile _selData;
-		};
+			private ["_selData", "_selLoc", "_loc", "_idx", "_selIdx"];
+			_selData = _locList lbData lbCurSel _locList;
 
-		lbClear _locList;
-
-		{
-			_loc = _x select 0;
-			_idx = _locList lbAdd (_x select 1);
-			_locList lbSetData [_idx, _x select 2];
-			_locList lbSetPicture [_idx, _x select 3];
-
-			if (isNil "_selIdx" && !isNil "_selLoc" && {typeName _loc == typeName _selLoc && {_loc == _selLoc}}) then
+			if (_selData != "") then
 			{
-				_selIdx = _idx;
+				_selLoc = call compile _selData;
 			};
-		} forEach _newLocArray;
 
-		if (!isNil "_selIdx") then
-		{
-			_locList lbSetCurSel _selIdx;
+			lbClear _locList;
+
+			{
+				_loc = _x select 0;
+				_idx = _locList lbAdd (_x select 1);
+				_locList lbSetData [_idx, _x select 2];
+				_locList lbSetPicture [_idx, _x select 3];
+
+				if (isNil "_selIdx" && !isNil "_selLoc" && {typeName _loc == typeName _selLoc && {_loc == _selLoc}}) then
+				{
+					_selIdx = _idx;
+				};
+			} forEach _newLocArray;
+
+			if (!isNil "_selIdx") then
+			{
+				_locList lbSetCurSel _selIdx;
+			};
 		};
 
 		_spawnButton ctrlSetText "Spawn";
