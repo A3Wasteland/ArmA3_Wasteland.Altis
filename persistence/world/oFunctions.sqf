@@ -77,7 +77,7 @@ o_isSaveable = {
 o_isLockableObject = {
   ARGVX4(0,_obj,objNull, false);
 
-  not(([_obj] call sh_isWarchest) && {[_obj] call sh_isBeacon})
+  not(([_obj] call sh_isWarchest) || {[_obj] call sh_isBeacon})
 };
 
 
