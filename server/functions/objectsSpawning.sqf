@@ -38,7 +38,14 @@ _createRandomObject =
 	_pos = getMarkerPos (_x select 0);
 	_tradius = _x select 1;
 	_townname = _x select 2;
-	_objammount = ceil (_tradius / 15);  // spawns an object for every 15m radius the townmarker has, this might need tweaking!
+	if (["A3W_essentialsSpawning"] call isConfigOn && !(["A3W_baseBuilding"] call isConfigOn)) then
+	{
+		_objammount = ceil (_tradius / 75);  // spawns an object for every 75m radius the townmarker has, this might need tweaking!
+	}
+	else
+	{
+		_objammount = ceil (_tradius / 15);  // spawns an object for every 15m radius the townmarker has, this might need tweaking!
+	};
 	_angleIncr = 360 / _objammount;
 	_langle = random _angleIncr;
 	//_minrad = 15;
