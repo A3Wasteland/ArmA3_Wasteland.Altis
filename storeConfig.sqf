@@ -665,7 +665,14 @@ helicoptersArray = compileFinal str
 	["PO-30 Orca (Black)", "O_Heli_Light_02_unarmed_F", 7500, "vehicle"], // Ka-60
 	["WY-55 Hellcat (Green)", "I_Heli_light_03_unarmed_F", 7500, "vehicle"], // AW159
 	["CH-49 Mohawk", "I_Heli_Transport_02_F", 10000, "vehicle"], // AW101
-
+	["Mi-290 Taru", "O_Heli_Transport_04_F", 12500, "vehicle"], // Mi-290 Taru
+	["Mi-290 Taru (Ammo)", "O_Heli_Transport_04_ammo_F", 12500, "vehicle"], // Mi-290 Taru Ammo
+	["Mi-290 Taru (Bench)", "O_Heli_Transport_04_bench_F", 12500, "vehicle"], // Mi-290 Taru Bench
+	["Mi-290 Taru (Cargo)", "O_Heli_Transport_04_box_F", 12500, "vehicle"], // Mi-290 Taru Cargo
+	["Mi-290 Taru (Transport)", "O_Heli_Transport_04_covered_F", 12500, "vehicle"], // Mi-290 Taru Transport
+	["Mi-290 Taru (Medical)", "O_Heli_Transport_04_medevac_F",12500, "vehicle"], // Mi-290 Taru Medical
+	["Mi-290 Taru (Repair)", "O_Heli_Transport_04_repair_F", 12500, "vehicle"], // Mi-290 Taru Repair
+	["CH-67 Huron", "B_Heli_Transport_03_F", 15000, "vehicle"], // Huron CH-67 Huron
 	["UH-80 Ghost Hawk (Black)", "B_Heli_Transport_01_F", 25000, "vehicle"], // UH-60 Stealth with 2 side miniguns
 	["UH-80 Ghost Hawk (Green)", "B_Heli_Transport_01_camo_F", 25000, "vehicle"], // UH-60 Stealth with 2 side miniguns (green camo)
 	["AH-9 Pawnee", "B_Heli_Light_01_armed_F", 30000, "vehicle"], // Armed AH-6
