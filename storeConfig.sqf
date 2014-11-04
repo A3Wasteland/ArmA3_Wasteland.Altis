@@ -661,6 +661,7 @@ tanksArray = compileFinal str
 
 helicoptersArray = compileFinal str
 [
+	["M-900 Civilian", "C_Heli_Light_01_civil_F", 5000, "vehicle"], // M-900
 	["MH-9 Hummingbird", "B_Heli_Light_01_F", 5000, "vehicle"], // MH-6
 	["PO-30 Orca (Black)", "O_Heli_Light_02_unarmed_F", 7500, "vehicle"], // Ka-60
 	["WY-55 Hellcat (Green)", "I_Heli_light_03_unarmed_F", 7500, "vehicle"], // AW159
