@@ -534,6 +534,7 @@ v_GetIn_handler = {
   //diag_log format["%1 entered vehicle by %2", _obj, _player];
   _obj setVariable ["vehicle_abandoned_by", nil];
   _obj setVariable ["vehicle_abandoned_time", nil];
+  _obj setVariable ["vehicle_abandoned_hours", nil];
 
   [_obj] call v_trackVehicle;
 };
@@ -556,6 +557,8 @@ v_GetOut_handler = {
     //diag_log format["%1 left abandoned by %2", _obj, _player];
     _obj setVariable ["vehicle_abandoned_by", _uid];
     _obj setVariable ["vehicle_abandoned_time", diag_tickTime];
+    _obj setVariable ["vehicle_abandoned_hours", nil]; //start counting the hours form 0 again
+
   };
 };
 
