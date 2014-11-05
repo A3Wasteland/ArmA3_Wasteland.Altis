@@ -33,15 +33,7 @@ if (hmd _player != "") then { _player unlinkItem hmd _player };
 // Add NVG
 _player linkItem "NVGoggles";
 
-_player addBackpack "B_AssaultPack_rgr";
-switch (typeOf _player) do {
-	case "B_medic_F": { _player addItem "MediKit" };
-	case "O_medic_F": { _player addItem "MediKit" };
-	case "I_medic_F": { _player addItem "MediKit" }; 
-	case "B_engineer_F": { _player addItem "ToolKit" };
-	case "O_engineer_F": { _player addItem "ToolKit" };
-	case "I_engineer_F": { _player addItem "ToolKit" };
-};
+_player addBackpack "B_FieldPack_khk";
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addWeapon "hgun_ACPC2_F";
 _player addMagazine "9Rnd_45ACP_Mag";
@@ -49,6 +41,24 @@ _player addMagazine "9Rnd_45ACP_Mag";
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addItem "FirstAidKit";
 _player selectWeapon "hgun_ACPC2_F";
+
+switch (true) do
+{
+	case (["_medic_", typeOf _player] call fn_findString != -1):
+	{
+		_player removeItem "FirstAidKit";
+		_player addItem "Medikit";
+	};
+	case (["_engineer_", typeOf _player] call fn_findString != -1):
+	{
+		_player addItem "MineDetector";
+		_player addItem "Toolkit";
+	};
+	case (["_sniper_", typeOf _player] call fn_findString != -1):
+	{
+		_player addWeapon "Rangefinder";
+	};
+};
 
 if (_player == player) then
 {
