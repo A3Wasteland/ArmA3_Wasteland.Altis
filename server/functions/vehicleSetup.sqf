@@ -59,11 +59,11 @@ switch (true) do
 		_centerOfMass set [2, -0.657]; // original = -0.557481
 		_vehicle setCenterOfMass _centerOfMass;
 	};
-	case ({_class isKindOf _x} count ["Heli_Light_01_base_F", "O_Heli_Light_02_unarmed_F"] > 0):
+	case ({_class isKindOf _x} count ["B_Heli_Light_01_F", "B_Heli_Light_01_armed_F", "O_Heli_Light_02_unarmed_F"] > 0):
 	{
-		// Add flares to those poor defenceless helis
+		// Add flares to those poor helis
 		_vehicle addWeaponTurret ["CMFlareLauncher", [-1]];
-		_vehicle addMagazineTurret ["120Rnd_CMFlare_Chaff_Magazine", [-1]];
+		_vehicle addMagazineTurret ["60Rnd_CMFlare_Chaff_Magazine", [-1]];
 	};
 	case (_class isKindOf "Plane_Fighter_03_base_F"):
 	{
