@@ -549,8 +549,8 @@ o_saveLoop = {
     sleep A3W_object_saveInterval;
     if (not(isBOOLEAN(o_saveLoopActive) && {!o_saveLoopActive})) then {
       diag_log format["saving all objects"];
-      [_scope] call o_saveInfo;
       [_scope] call o_saveAllObjects;
+      [_scope] call o_saveInfo;
     };
   };
 };
