@@ -100,6 +100,7 @@ _player spawn
 };
 
 _player spawn fn_removeAllManagedActions;
+removeAllActions _player;
 
 // Same-side kills
 if (_player == player && (playerSide == side group _killer) && (player != _killer) && (vehicle player != vehicle _killer)) then
