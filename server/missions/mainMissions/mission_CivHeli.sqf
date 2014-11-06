@@ -13,7 +13,7 @@ private ["_vehicleClass", "_nbUnits"];
 
 _setupVars =
 {
-	_vehicleClass = "I_Heli_Transport_02_F"; // Helicopters DLC: ["B_Heli_Transport_03_unarmed_F", "O_Heli_Transport_04_covered_F"]
+	_vehicleClass = ["I_Heli_Transport_02_F", "B_Heli_Transport_03_unarmed_F", "O_Heli_Transport_04_F"] call BIS_fnc_selectRandom;
 
 	_missionType = "Transport Helicopter";
 	_locationsArray = MissionSpawnMarkers;

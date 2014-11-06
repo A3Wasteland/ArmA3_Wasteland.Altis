@@ -13,6 +13,29 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.0b",
+"
+<br/> [Added] Helicopters DLC content
+<br/> [Added] Revamped respawn menu
+<br/> [Added] 250m altitude limit for territory capture
+<br/> [Added] HALO insertion on spawn beacons
+<br/> [Added] New vehicle store textures
+<br/> [Changed] Increased damage done to planes by 50%
+<br/> [Changed] Plane engines shutdown when above 90% damage
+<br/> [Changed] Player names can also be toggled with Home key
+<br/> [Changed] Increased ATGM UAV price
+<br/> [Changed] Increased prices from thermal scopes again
+<br/> [Changed] Minor edits to spawn loadouts
+<br/> [Fixed] Saved UAVs not being connectable
+<br/> [Fixed] Indies unable to get in UGVs
+<br/> [Fixed] Blinking fog
+<br/> [Fixed] Clipped numbers on scoreboard
+<br/> [Fixed] Minor other optimizations and fixes
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.0",
 "
 <br/> [Added] Custom scoreboard
