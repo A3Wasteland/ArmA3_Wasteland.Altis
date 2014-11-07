@@ -145,6 +145,21 @@ if (!isNil "_exists" && {_exists}) then
 				if (!isNil "_repairCargo") then { _veh setRepairCargo _repairCargo };
 
 				reload _veh;
+
+				// UAV AI
+				if (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0) then
+				{
+					createVehicleCrew _veh;
+
+					_veh spawn
+					{
+						waitUntil {!isNull driver _this};
+
+						{
+							[[_x, ["AI","",""]], "A3W_fnc_setName", true] call A3W_fnc_MP;
+						} forEach crew _this;
+					};
+				};
 			};
 		};
 	};

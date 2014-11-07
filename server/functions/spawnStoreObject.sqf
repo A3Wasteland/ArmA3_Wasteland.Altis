@@ -129,7 +129,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			_objectID = netId _object;
 			_object setVariable ["A3W_purchasedStoreObject", true];
 			_object setVariable ["ownerUID", getPlayerUID _player];
-
+			
 			if (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0) then
 			{
 				//assign AI to the vehicle so it can actually be used
@@ -194,12 +194,17 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 						_object setAmmoCargo 5;
 					};
 
+					case (_object isKindOf "O_Heli_Transport_04_ammo_F"):
+					{
+						_object setAmmoCargo 10;
+					};
+
 					case ({_object isKindOf _x} count ["B_Truck_01_ammo_F", "O_Truck_02_Ammo_F", "O_Truck_03_ammo_F", "I_Truck_02_ammo_F"] > 0):
 					{
 						_object setAmmoCargo 25;
 					};
 
-					case ({_object isKindOf _x} count ["C_Van_01_fuel_F", "I_G_Van_01_fuel_F"] > 0):
+					case ({_object isKindOf _x} count ["C_Van_01_fuel_F", "I_G_Van_01_fuel_F", "O_Heli_Transport_04_fuel_F"] > 0):
 					{
 						_object setFuelCargo 10;
 					};
@@ -214,10 +219,22 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 						_object setRepairCargo 5;
 					};
 
+					case (_object isKindOf "O_Heli_Transport_04_repair_F"):
+					{
+						_object setRepairCargo 10;
+					};
+
 					case ({_object isKindOf _x} count ["B_Truck_01_Repair_F", "O_Truck_02_box_F", "O_Truck_03_repair_F", "I_Truck_02_box_F"] > 0):
 					{
 						_object setRepairCargo 25;
 					};
+					
+					case ({_object isKindOf _x} count ["Land_Pod_Heli_Transport_04_ammo_F"] > 0):
+					{
+						_object setVariable ["A3W_resupplyTruck", true, true];
+						_object addAction ["<img image='client\icons\repair.paa'/> Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, true, true, "", "vehicle _this != _this && _this distance _target <= 20"];
+					};
+					
 				};
 			};
 		};

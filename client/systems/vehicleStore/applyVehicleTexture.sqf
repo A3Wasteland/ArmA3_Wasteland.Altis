@@ -26,37 +26,39 @@ if (count _selections == 0) then
 {
 	_selections = switch (true) do
 	{
-		case (_veh isKindOf "Van_01_base_F"):             { [0,1] };
+		case (_veh isKindOf "Van_01_base_F"):                 { [0,1] };
 
-		case (_veh isKindOf "MRAP_01_base_F"):            { [0,2] };
-		case (_veh isKindOf "MRAP_02_base_F"):            { [0,2] };
-		case (_veh isKindOf "MRAP_03_base_F"):            { [0,1] };
+		case (_veh isKindOf "MRAP_01_base_F"):                { [0,2] };
+		case (_veh isKindOf "MRAP_02_base_F"):                { [0,2] };
+		case (_veh isKindOf "MRAP_03_base_F"):                { [0,1] };
 
-		case (_veh isKindOf "Truck_01_base_F"):           { [0,1,2] };
-		case (_veh isKindOf "Truck_02_base_F"):           { [0,1] };
-		case (_veh isKindOf "Truck_03_base_F"):           { [0,1] };
+		case (_veh isKindOf "Truck_01_base_F"):               { [0,1,2] };
+		case (_veh isKindOf "Truck_02_base_F"):               { [0,1] };
+		case (_veh isKindOf "Truck_03_base_F"):               { [0,1] };
 
-		case (_veh isKindOf "APC_Wheeled_01_base_F"):     { [0,2] };
-		case (_veh isKindOf "APC_Wheeled_02_base_F"):     { [0,2] };
-		case (_veh isKindOf "APC_Wheeled_03_base_F"):     { [0,2,3] };
+		case (_veh isKindOf "APC_Wheeled_01_base_F"):         { [0,2] };
+		case (_veh isKindOf "APC_Wheeled_02_base_F"):         { [0,2] };
+		case (_veh isKindOf "APC_Wheeled_03_base_F"):         { [0,2,3] };
 
-		case (_veh isKindOf "APC_Tracked_01_base_F"):     { [0,1,2,3] };
-		case (_veh isKindOf "APC_Tracked_02_base_F"):     { [0,1,2] };
-		case (_veh isKindOf "APC_Tracked_03_base_F"):     { [0,1] };
+		case (_veh isKindOf "APC_Tracked_01_base_F"):         { [0,1,2,3] };
+		case (_veh isKindOf "APC_Tracked_02_base_F"):         { [0,1,2] };
+		case (_veh isKindOf "APC_Tracked_03_base_F"):         { [0,1] };
 
-		case (_veh isKindOf "MBT_01_base_F"):             { [0,1,2] };
-		case (_veh isKindOf "MBT_02_base_F"):             { [0,1,2,3] };
-		case (_veh isKindOf "MBT_03_base_F"):             { [0,1,2] };
+		case (_veh isKindOf "MBT_01_base_F"):                 { [0,1,2] };
+		case (_veh isKindOf "MBT_02_base_F"):                 { [0,1,2,3] };
+		case (_veh isKindOf "MBT_03_base_F"):                 { [0,1,2] };
 
-		case (_veh isKindOf "Heli_Transport_01_base_F"):  { [0,1] };
-		case (_veh isKindOf "Heli_Transport_02_base_F"):  { [0,1,2] };
-		case (_veh isKindOf "Heli_Attack_02_base_F"):     { [0,1] };
+		case (_veh isKindOf "Heli_Transport_01_base_F"):      { [0,1] };
+		case (_veh isKindOf "Heli_Transport_02_base_F"):      { [0,1,2] };
+		case (_veh isKindOf "B_Heli_Transport_03_base_F"):    { [0,1] };
+		case (_veh isKindOf "Heli_Transport_04_base_F"):      { [0,1,2,3] };
+		case (_veh isKindOf "Heli_Attack_02_base_F"):         { [0,1] };
 
-		case (_veh isKindOf "Plane_Base_F"):              { [0,1] };
+		case (_veh isKindOf "Plane_Base_F"):                  { [0,1] };
 
-		case (_veh isKindOf "UGV_01_rcws_base_F"):        { [0,2] };
+		case (_veh isKindOf "UGV_01_rcws_base_F"):            { [0,2] };
 
-		default                                           { [0] };
+		default                                               { [0] };
 	};
 };
 

@@ -35,10 +35,10 @@ if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_ser
 if !(playerSide in [BLUFOR,OPFOR]) then
 {
 	{
-		if (alive _x && group _x != group player) exitWith 
+		if (isPlayer _x && alive _x && group _x != group player) exitWith 
 		{
 			moveOut player;
-			["You can't enter vehicles used by enemy groups.", 5] call mf_notify_client;
+			["You can't enter vehicles being used by enemy groups.", 5] call mf_notify_client;
 		};
 	} forEach crew _veh;
 };

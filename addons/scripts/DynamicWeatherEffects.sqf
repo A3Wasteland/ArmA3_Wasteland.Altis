@@ -239,7 +239,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 	};
 	if (_currentWeatherChange == "FOG") then {
 		if (typeName _targetWeatherValue == "ARRAY") then {
-			_targetWeatherValue set [0, (_targetWeatherValue select 0) max (_currentRain / 4)];
+			_targetWeatherValue = [(_targetWeatherValue select 0) max (_currentRain / 4), 0.001, 1000]; // override decay value
 		}
 		else {
 			_targetWeatherValue = _targetWeatherValue max (_currentRain / 4);
