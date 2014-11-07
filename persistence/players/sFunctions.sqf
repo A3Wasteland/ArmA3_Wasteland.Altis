@@ -148,7 +148,7 @@ s_messageLoop = {
 
 
 p_addPlayerSave = {
-  //diag_log format["%1 call p_addPlayerSave", _this];
+  diag_log format["%1 call p_addPlayerSave", _this];
   ARGVX3(0,_request,[]);
   ARGVX3(1,_player,objNull);
   ARGVX3(2,_uid,"");
@@ -156,9 +156,8 @@ p_addPlayerSave = {
 
 
   init(_alive, alive _player);
-  //diag_log format["Saving stats for %1, alive = %2", _player, _alive];
+  diag_log format["Saving stats for %1, alive = %2", _player, _alive];
 
-  //alive player && //FIXME: need to add this check back
   def(_initComplete);
   _initComplete = _player getVariable ["initComplete", false];
   //diag_log format["_initComplete = %1", _initComplete];
@@ -189,7 +188,7 @@ p_addPlayerSave = {
   ];
 
   if (_reset_save) exitWith {
-     //diag_log format["%1 disconnected while dead, or unconcious, or from resspawn dialog",_player];
+     diag_log format["Resetting stats for %1(%2), unconscious = %3, respawning = %4",_name,_uid,_FAR_isUnconscious, _respawnDialogActive];
      _request pushBack ["PlayerInfo", (_info call sock_hash)];
      _request pushBack ["PlayerSave",nil];
      true
@@ -347,7 +346,10 @@ p_disconnectSave = {
   init(_scope,_uid call PDB_playerFileName);
   init(_request,[_scope]);
 
-  [_request,_player,_uid,_name] call p_addPlayerSave;
+  if (isNil{[_request,_player,_uid,_name] call p_addPlayerSave}) exitWith {
+    diag_log format["WARNING: No stats saved for %1(%2) on disconnect", _name, _uid];
+  };
+
   _request call stats_set;
   [_scope] call stats_flush;
 };
