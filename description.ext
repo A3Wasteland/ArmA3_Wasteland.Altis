@@ -58,7 +58,7 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "addons\atm\defines.hpp"
 #include "addons\atm\bank.hpp"
 #include "addons\outlw_magRepack\MagRepack_config.hpp"
-
+#include "addons\beacondetector\sound\cfgsounds.hpp"
 
 
 class RscTitles
