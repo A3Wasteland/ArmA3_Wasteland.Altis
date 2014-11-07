@@ -26,6 +26,7 @@ player createDiaryRecord ["changelog",
 <br/> [Changed] Increased ATGM UAV price
 <br/> [Changed] Increased prices from thermal scopes again
 <br/> [Changed] Minor edits to spawn loadouts
+<br/> [Fixed] FPS drop that began in v0.9h
 <br/> [Fixed] Saved UAVs not being connectable
 <br/> [Fixed] Indies unable to get in UGVs
 <br/> [Fixed] Blinking fog
