@@ -142,13 +142,11 @@ staticWeaponsList =
 //Object List - Random Helis.
 staticHeliList =
 [
-	"B_Heli_Light_01_F",
+	"C_Heli_Light_01_civil_F",
 	"B_Heli_Light_01_F",
 	"O_Heli_Light_02_unarmed_F",
-	"I_Heli_light_03_unarmed_F",
-	"B_Heli_Transport_03_F",  // Huron CH-67
-	"O_Heli_Transport_04_covered_F", // Mi-290 Taru Transport
-	"C_Heli_Light_01_civil_F" // M-900
+	"I_Heli_light_03_unarmed_F"
+	// don't put cargo helicopters here, it doesn't make sense to find them in towns; they spawn in the CivHeli mission
 ];
 
 //Object List - Random Planes.
