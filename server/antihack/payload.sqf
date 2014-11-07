@@ -173,6 +173,8 @@ if (isNil "_cheatFlag") then
 					{if (buttonAction (_display displayCtrl _x) != "") exitWith {true}; false} forEach [1,2]
 				];
 			};
+
+			sleep 1;
 		};
 
 		[[profileName, getPlayerUID player, "hack menu", _cheatFlag, _flagChecksum], "A3W_fnc_flagHandler", false] call A3W_fnc_MP;
