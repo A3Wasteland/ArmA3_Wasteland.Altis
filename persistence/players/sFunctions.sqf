@@ -148,7 +148,7 @@ s_messageLoop = {
 
 
 p_addPlayerSave = {
-  diag_log format["%1 call p_addPlayerSave", _this];
+  //diag_log format["%1 call p_addPlayerSave", _this];
   ARGVX3(0,_request,[]);
   ARGVX3(1,_player,objNull);
   ARGVX3(2,_uid,"");
@@ -156,7 +156,7 @@ p_addPlayerSave = {
 
 
   init(_alive, alive _player);
-  diag_log format["Saving stats for %1, alive = %2", _player, _alive];
+  diag_log format["p_addPlayerSave: Saving stats for %1(%2)", _name, _uid];
 
   def(_initComplete);
   _initComplete = _player getVariable ["initComplete", false];
@@ -188,7 +188,7 @@ p_addPlayerSave = {
   ];
 
   if (_reset_save) exitWith {
-     diag_log format["Resetting stats for %1(%2), unconscious = %3, respawning = %4",_name,_uid,_FAR_isUnconscious, _respawnDialogActive];
+     diag_log format["Resetting stats for %1(%2), unconscious = %3, respawning = %4, alive = %5",_name,_uid,_FAR_isUnconscious, _respawnDialogActive, _alive];
      _request pushBack ["PlayerInfo", (_info call sock_hash)];
      _request pushBack ["PlayerSave",nil];
      true
@@ -221,6 +221,8 @@ p_addPlayerSave = {
   };
 
   _data pushBack ["Position", _pos];
+	_data pushBack ["Direction", direction _player];
+
 
   //only save animation, and current weapon if the player is not inside a vehicle
   if (vehicle _player == _player) then {
