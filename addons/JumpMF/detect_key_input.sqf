@@ -33,14 +33,21 @@ if (_pressedKey in actionKeys "GetOver") then
 
 				[player, "AovrPercMrunSrasWrflDf"] call switchMoveGlobal;
 
+
 				waitUntil
 				{
 					player setFatigue (_fatigue + 0.05 + (_load / 5000));
+					private["_zComponent"];
+					_zComponent = (velocity player) select 2;
+					if (((getPosATL player) select 2) > 0 && _zComponent > 0) then {
+					  _zComponent = _zComponent * 0.5;
+					};
+
 					player setVelocity
 					[
 						(_prevVel select 0) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
 						(_prevVel select 1) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
-						(velocity player) select 2
+						_zComponent
 					];
 					!(["AovrPercMrun", animationState player] call fn_startsWith)
 				};
