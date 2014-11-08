@@ -26,11 +26,11 @@ if (count _this > 4) then { _debug = _this select 4; } else { _debug = false; };
 
 // Minimum time in minutes for the weather (fog and overcast) to change. Must be greater than or equal to 1 and less than or equal to
 // _maxWeatherChangeTimeMin. When weather changes, it is fog OR overcast that changes, not both at the same time. (Suggested value: 10).
-_minWeatherChangeTimeMin = 30;
+_minWeatherChangeTimeMin = 20;
 
 // Maximum time in minutes for the weather (fog and overcast) to change. Must be greater than or equal to _minWeatherChangeTimeMin.
 // (Suggested value: 20).
-_maxWeatherChangeTimeMin = 60;
+_maxWeatherChangeTimeMin = 40;
 
 // Minimum time in minutes that weather (fog and overcast) stays constant between weather changes. Must be less than or equal to 0 and
 // greater than or equal to _minWeatherChangeTimeMin. (Suggested value: 5).
@@ -45,8 +45,8 @@ _maxTimeBetweenWeatherChangesMin = 10;
 _minimumFog = 0;
 
 // Fog intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumFog
-// (0 = no fog, 1 = pea soup). (Suggested value: 0.8).
-_maximumFog = 0.15;
+// (0 = no fog, 1 = pea soup). (Suggested value: 0.1).
+_maximumFog = 0.1;
 
 // New ArmA3 facilities added by Bewilderbeest
 _minimumFogDecay = 0.001;
