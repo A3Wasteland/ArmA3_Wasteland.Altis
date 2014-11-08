@@ -22,7 +22,9 @@ fn_deletePlayerSave = {
 };
 
 
-[format["%1Messages", PDB_ServerID]] spawn s_messageLoop;
+def(_mScope);
+_mScope = "Messages" call PDB_messagesFileName;
+[_mScope] spawn s_messageLoop;
 [] spawn p_saveLoop;
 
 diag_log "Loading s_setupPlayerDB complete";

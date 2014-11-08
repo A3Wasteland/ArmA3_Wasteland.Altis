@@ -132,6 +132,7 @@ s_processMessages = {
 
 
 s_messageLoop = {
+  diag_log format["%1 call s_messageLoop", _this];
   ARGVX3(0,_scope,"");
 
   //cleanup the message queue
