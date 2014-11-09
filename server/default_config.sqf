@@ -53,12 +53,15 @@ A3W_vehicleMaxUnusedTime = 2*24;   // Maximum parking time in hours after which 
 PDB_PlayerFileID = "A3W_";         // Player savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_ObjectFileID = "A3W_";         // Object savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_MessagesFileID = "A3W_";       // Messages savefile prefix (change this in case you run multiple servers from the same folder)
-PDB_AdminLogFileID = "A3W_";      // Admin log savefile prefix (change this in case you run multiple servers from the same folder)
+PDB_AdminLogFileID = "A3W_";       // Admin log savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_HackerLogFileID = "A3W_";      // Hacker log savefile prefix (change this in case you run multiple servers from the same folder)
+PDB_PlayersListFileID = "A3W_";     // PlayerList savefile prefix (change this in case you run multiple servers from the same folder)
 
-A3W_vehicle_saveInterval = 300;    // Number of seconds between vehicle saves
-A3W_object_saveInterval = 300;     // Number of seconds between object saves
-A3W_player_saveInterval = 300;     // Number of seconds between player saves
+
+A3W_vehicle_saveInterval = 300;     // Number of seconds between vehicle saves
+A3W_object_saveInterval = 300;      // Number of seconds between object saves
+A3W_player_saveInterval = 300;      // Number of seconds between player saves
+A3W_playersList_saveInterval = 120; // Number of seconds between player list saves
 
                                    // List of classes for vehicles that are saveable
                                    // You can add/remove classes from this list for fine grained control which kind of vehicles can be saved

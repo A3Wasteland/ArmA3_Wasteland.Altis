@@ -25,6 +25,13 @@ fn_deletePlayerSave = {
 def(_mScope);
 _mScope = "Messages" call PDB_messagesFileName;
 [_mScope] spawn s_messageLoop;
+
+
+def(_plScope);
+_plScope = "PlayersList" call PDB_playersListFileName;
+[_plScope] spawn pl_saveLoop;
+
+
 [] spawn p_saveLoop;
 
 diag_log "Loading s_setupPlayerDB complete";

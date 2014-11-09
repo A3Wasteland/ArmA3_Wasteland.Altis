@@ -17,12 +17,18 @@ s_processRestartMessage = {
 
   //halt all the save loops
   p_saveLoopActive = false;
+  pl_saveLoopActive = false;
   v_saveLoopActive = false;
   o_saveLoopActive = false;
 
   diag_log format["Saving players all player stats"];
   //save all player stats
   call p_saveAllPlayers;
+
+  diag_log format["Saving active players list"];
+  //save all player stats
+  init(_plScope, "PlayersList" call PDB_playersListFileName);
+  [_plScope] call pl_savePlayersList;
 
   diag_log format["Saving all vehicles on the map"];
   //save all vehilce stats
@@ -57,6 +63,7 @@ s_processRestartMessage = {
     v_saveLoopActive = true;
     o_saveLoopActive = true;
     p_saveLoopActive = true;
+    pl_saveLoopActive = true;
   };
 
   true
@@ -149,7 +156,7 @@ s_messageLoop = {
 
 
 p_getScoreInfo = {
-  diag_log format["%1 call p_getScoreInfo", _this];
+  //diag_log format["%1 call p_getScoreInfo", _this];
   ARGVX3(0,_uid,"");
 
   def(_playerKills);
@@ -177,6 +184,23 @@ p_getScoreInfo = {
   (_scoreInfo)
 };
 
+p_getPlayerInfo = {
+  //diag_log format["%1 call p_getPlayerInfo", _this];
+  ARGVX3(0,_player,objNull);
+
+  def(_info);
+  _info =
+  [
+    ["UID", _uid],
+    ["Name", _name],
+    ["LastGroupSide", str side group _player],
+    ["LastPlayerSide", str (side _player)],
+    ["BankMoney", _player getVariable ["bmoney", 0]]
+  ] call sock_hash;
+
+  (_info)
+};
+
 p_addPlayerSave = {
   //diag_log format["%1 call p_addPlayerSave", _this];
   ARGVX3(0,_request,[]);
@@ -193,7 +217,6 @@ p_addPlayerSave = {
   //diag_log format["_initComplete = %1", _initComplete];
   if (not(_initComplete)) exitWith {};
 
-
   def(_respawnDialogActive);
   _respawnDialogActive = _player getVariable ["respawnDialogActive", false];
   //diag_log format["_respawnDialogActive = %1", _respawnDialogActive];
@@ -207,20 +230,16 @@ p_addPlayerSave = {
   //diag_log format["_reset_save = %1", _reset_save];
 
 
-  def(_info);
-  _info =
-  [
-    ["UID", _uid],
-    ["Name", _name],
-    ["LastGroupSide", str side group player],
-    ["LastPlayerSide", str playerSide],
-    ["BankMoney", _player getVariable ["bmoney", 0]]
-  ];
+  def(_playerInfo);
+  _playerInfo = [_player] call p_getPlayerInfo;
+
+  if (isARRAY(_playerInfo)) then {
+    _request pushBack ["PlayerInfo", _playerInfo];
+  };
+
 
   def(_scoreInfo);
   _scoreInfo = [_uid] call p_getScoreInfo;
-
-  diag_log format["_scoreInfo = %1", OR(_scoreInfo,nil)];
 
   if (isARRAY(_scoreInfo)) then {
     _request pushBack ["PlayerScore",_scoreInfo];
@@ -228,7 +247,6 @@ p_addPlayerSave = {
 
   if (_reset_save) exitWith {
      diag_log format["Resetting stats for %1(%2), unconscious = %3, respawning = %4, alive = %5",_name,_uid,_FAR_isUnconscious, _respawnDialogActive, _alive];
-     _request pushBack ["PlayerInfo", (_info call sock_hash)];
      _request pushBack ["PlayerSave",nil];
      true
   };
@@ -371,7 +389,6 @@ p_addPlayerSave = {
   */
   { _data pushBack _x } forEach _gear;
 
-  _request pushBack ["PlayerInfo", (_info call sock_hash)];
   _request pushBack ["PlayerSave", (_data call sock_hash)];
 
   true
@@ -516,21 +533,100 @@ p_saveAllPlayers = {
   };} forEach (active_players_list);
 
   diag_log format["p_saveLoop: total of %1 players saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
+};
+
+
+
+
+
+p_saveLoop = {
+  while {true} do {
+    sleep A3W_player_saveInterval;
+    if (not(isBOOLEAN(p_saveLoopActive) && {!p_saveLoopActive})) then {
+      diag_log format["saving all players"];
+      call p_saveAllPlayers;
+    };
+  };
+};
+
+
+
+pl_addPlayerListSave = {
+  ARGVX3(0,_request,[]);
+  ARGVX3(1,_player,objNull);
+  ARGVX3(2,_uid,"");
+  ARGVX3(3,_name,"");
+
+  init(_pdata,[]);
+
+  def(_playerInfo);
+  _playerInfo = [_player] call p_getPlayerInfo;
+  if (isARRAY(_playerInfo)) then {
+    _pdata pushBack ["PlayerInfo", _playerInfo];
+  };
+
+  def(_scoreInfo);
+  _scoreInfo = [_uid] call p_getScoreInfo;
+  if (isARRAY(_scoreInfo)) then {
+    _pdata pushBack ["PlayerScore",_scoreInfo];
+  };
+
+  if (count _pdata == 0) exitWith {};
+
+  _request pushBack [_uid, (_pdata call sock_hash)];
+
+  true
+};
+
+pl_savePlayersList = {
+  ARGVX3(0,_scope,"");
+
+  init(_count,0);
+  init(_start_time, diag_tickTime);
+
+  def(_request);
+  def(_scope);
+  def(_player);
+  def(_uid);
+  def(_name);
+  def(_request);
+
+  _request = [_scope];
+
+  {if (true) then {
+    _player = _x;
+    if (isNil "_player" || {typeName _player != "OBJECT" || {isNull _player || {not(isPlayer _player)}}}) exitWith {
+      active_players_list set [_forEachIndex, objNull];
+    };
+
+    _uid = getPlayerUID _player;
+    _name = name _player;
+
+    if (!isNil{[_request, _player, _uid, _name] call pl_addPlayerListSave}) then {
+      _count = _count + 1;
+    };
+
+  };} forEach (active_players_list);
+
+  [_scope] call stats_wipe;
+
+  init(_save_start, diag_tickTime);
+  _request call stats_set;
+  diag_log format["pl_saveLoop: total of %1 entries saved (in player-list) in %2 ticks, save call took %3 ticks", (_count), (diag_tickTime - _start_time), (diag_tickTime - _save_start)];
+
+  [_scope] call stats_flush;
 
   call p_ActivePlayersListCleanup;
 };
 
 
-p_saveLoop_interval = OR(A3W_player_saveInterval,60);
-diag_log format["config: A3W_player_saveInterval = %1", p_saveLoop_interval];
-
-
-p_saveLoop = {
+pl_saveLoop = {
+  ARGVX3(0,_scope,"");
   while {true} do {
-    sleep p_saveLoop_interval;
-    if (not(isBOOLEAN(p_saveLoopActive) && {!p_saveLoopActive})) then {
-      diag_log format["saving all players"];
-      call p_saveAllPlayers;
+    sleep A3W_playersList_saveInterval;
+    if (not(isBOOLEAN(pl_saveLoopActive) && {!pl_saveLoopActive})) then {
+      diag_log format["saving player list"];
+      [_scope] call pl_savePlayersList;
     };
   };
 };

@@ -25,6 +25,8 @@ PDB_ObjectFileID = if (isNil "PDB_ObjectFileID") then {PDB_ServerID} else {PDB_O
 PDB_MessagesFileID = if (isNil "PDB_MessagesFileID") then {PDB_ServerID} else {PDB_MessagesFileID};
 PDB_AdminLogFileID = if (isNil "PDB_AdminLogFileID") then {PDB_ServerID} else {PDB_AdminLogFileID};
 PDB_HackerLogFileID = if (isNil "PDB_HackerLogFileID") then {PDB_ServerID} else {PDB_HackerLogFileID};
+PDB_PlayersListFileID = if (isNil "PDB_PlayersListFileID") then {PDB_ServerID} else {PDB_PlayersListFileID};
+
 
 
 PDB_playerFileName = compileFinal ("format ['%1%2', '" + PDB_PlayerFileID + "', _this]");
@@ -32,12 +34,19 @@ PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', 
 PDB_messagesFileName = compileFinal ("format ['%1%2', '" + PDB_MessagesFileID + "', _this]");
 PDB_adminLogFileName = compileFinal ("format ['%1%2', '" + PDB_AdminLogFileID + "', _this]");
 PDB_hackerLogFileName = compileFinal ("format ['%1%2', '" + PDB_HackerLogFileID + "', _this]");
+PDB_playersListFileName = compileFinal ("format ['%1%2', '" + PDB_PlayersListFileID + "', _this]");
+
 
 diag_log format["[INFO] config: PDB_PlayerFileID = %1", PDB_PlayerFileID];
 diag_log format["[INFO] config: PDB_ObjectFileID = %1", PDB_ObjectFileID];
 diag_log format["[INFO] config: PDB_MessagesFileID = %1", PDB_MessagesFileID];
 diag_log format["[INFO] config: PDB_AdminLogFileID = %1", PDB_AdminLogFileID];
 diag_log format["[INFO] config: PDB_HackerLogFileID = %1", PDB_HackerLogFileID];
+diag_log format["[INFO] config: PDB_PlayersListFileID = %1", PDB_PlayersListFileID];
+
+
+
+
 
 PDB_databaseNameCompiler = PDB_objectFileName;
 
