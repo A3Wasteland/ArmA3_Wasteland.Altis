@@ -83,6 +83,8 @@ forEach
 	"A3W_extDB_PlayerSave_ServerID",
 	"A3W_extension",
 	"A3W_vehicleThermals",
+	"A3W_firstPersonCamOnFoot",
+	"A3W_firstPersonCamNotDriver",
 	"A3W_resupplyCostPR",
 	"A3W_serverNumber"
 ];
