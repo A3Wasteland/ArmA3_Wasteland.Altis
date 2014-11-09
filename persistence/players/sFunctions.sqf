@@ -148,6 +148,35 @@ s_messageLoop = {
 };
 
 
+p_getScoreInfo = {
+  diag_log format["%1 call p_getScoreInfo", _this];
+  ARGVX3(0,_uid,"");
+
+  def(_playerKills);
+  def(_aiKills);
+  def(_deathsCount);
+  def(_reviveCount);
+  def(_captureCount);
+
+  _playerKills = [_uid, "playerKills"] call fn_getScore;
+  _aiKills = [_uid, "aiKills"] call fn_getScore;
+  _deathsCount = [_uid, "deathCount"] call fn_getScore;
+  _reviveCount = [_uid, "reviveCount"] call fn_getScore;
+  _captureCount = [_uid, "captureCount"] call fn_getScore;
+
+  def(_scoreInfo);
+
+  _scoreInfo = [
+    ["playerKills", _playerKills],
+    ["aiKills", _aiKills],
+    ["deathCount", _deathsCount],
+    ["reviveCount", _reviveCount],
+    ["captureCount", _captureCount]
+  ] call sock_hash;
+
+  (_scoreInfo)
+};
+
 p_addPlayerSave = {
   //diag_log format["%1 call p_addPlayerSave", _this];
   ARGVX3(0,_request,[]);
@@ -187,6 +216,15 @@ p_addPlayerSave = {
     ["LastPlayerSide", str playerSide],
     ["BankMoney", _player getVariable ["bmoney", 0]]
   ];
+
+  def(_scoreInfo);
+  _scoreInfo = [_uid] call p_getScoreInfo;
+
+  diag_log format["_scoreInfo = %1", OR(_scoreInfo,nil)];
+
+  if (isARRAY(_scoreInfo)) then {
+    _request pushBack ["PlayerScore",_scoreInfo];
+  };
 
   if (_reset_save) exitWith {
      diag_log format["Resetting stats for %1(%2), unconscious = %3, respawning = %4, alive = %5",_name,_uid,_FAR_isUnconscious, _respawnDialogActive, _alive];

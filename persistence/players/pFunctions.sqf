@@ -305,6 +305,30 @@ p_restoreInfo = {
   _data call fn_applyPlayerInfo;
 };
 
+p_restoreScore = {
+  ARGVX2(0,_hash);
+  if (!isCODE(_hash)) exitWith {};
+  diag_log format["%1 call p_restoreScore;",_this];
+  def(_data);
+  _data = call _hash;
+
+  def(_key);
+  def(_value);
+
+  {if (true) then {
+    if (!isARRAY(_x)) exitWith {};
+
+    _key = _x select 0;
+    _value = _x select 1;
+    if (!isSCALAR(_value)) exitWith {};
+
+    diag_log format["Restoring %1 = %2", _key, _value];
+
+    [player, _key, _value] call fn_setScore;
+  };} forEach _data;
+
+};
+
 p_preloadEnabled = {
   (profileNamespace getVariable ["A3W_preloadSpawn", true])
 };
@@ -378,9 +402,11 @@ fn_requestPlayerData = {[] spawn {
   playerData_resetPos = nil;
   init(_dataKey, "PlayerSave");
   init(_infoKey, "PlayerInfo");
+  init(_scoreKey, "PlayerScore");
+
 
   def(_pData);
-  _pData = [_scope, [_dataKey, nil], [_infoKey, nil]] call stats_get;
+  _pData = [_scope, [_dataKey, nil], [_infoKey, nil],[_scoreKey, nil]] call stats_get;
   if (not(isARRAY(_pData))) exitWith {
     //player data did not load, force him back to lobby
     endMission "LOSER";
@@ -395,6 +421,9 @@ fn_requestPlayerData = {[] spawn {
       };
       case _infoKey: {
         [xGet(_x,1)] call p_restoreInfo;
+      };
+      case _scoreKey: {
+        [xGet(_x,1)] call p_restoreScore;
       };
     };
   } forEach _pData;
