@@ -71,7 +71,7 @@ storePurchaseHandle = _this spawn
 
 					if ([player, _class] call fn_fitsInventory) then
 					{
-						player addMagazine _class;
+						[player, _class] call fn_forceAddItem;
 					}
 					else
 					{
