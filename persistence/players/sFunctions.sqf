@@ -188,13 +188,19 @@ p_getPlayerInfo = {
   //diag_log format["%1 call p_getPlayerInfo", _this];
   ARGVX3(0,_player,objNull);
 
+  def(_groupSide);
+  _groupSide = str side group _player;
+
+  def(_playerSide);
+  _playerSide = if (alive _player) then {str (side _player)} else {_groupSide};
+
   def(_info);
   _info =
   [
     ["UID", _uid],
     ["Name", _name],
-    ["LastGroupSide", str side group _player],
-    ["LastPlayerSide", str (side _player)],
+    ["LastGroupSide", OR(_groupSide,sideUnknown)],
+    ["LastPlayerSide", OR(_playerSide,sideUnknown)],
     ["BankMoney", _player getVariable ["bmoney", 0]]
   ] call sock_hash;
 
@@ -489,7 +495,7 @@ p_ActivePlayersListCleanup = {
   };
   init(_end_size,count(active_players_list));
   init(_cleanup_end, diag_tickTime);
-  diag_log format["p_saveLoop: count(active_players_list) = %1, %2 nulls deleted in %3 ticks", count(active_players_list), (_start_size - _end_size), (_cleanup_end - _cleanup_start)];
+  diag_log format["pl_saveLoop: count(active_players_list) = %1, %2 nulls deleted in %3 ticks", count(active_players_list), (_start_size - _end_size), (_cleanup_end - _cleanup_start)];
 };
 
 
@@ -611,7 +617,10 @@ pl_savePlayersList = {
   [_scope] call stats_wipe;
 
   init(_save_start, diag_tickTime);
-  _request call stats_set;
+  if (count _request > 1) then {
+    //only send the save request if there is at least one player
+    _request call stats_set;
+  };
   diag_log format["pl_saveLoop: total of %1 entries saved (in player-list) in %2 ticks, save call took %3 ticks", (_count), (diag_tickTime - _start_time), (diag_tickTime - _save_start)];
 
   [_scope] call stats_flush;
