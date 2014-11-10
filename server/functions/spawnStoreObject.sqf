@@ -128,7 +128,6 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 			_objectID = netId _object;
 			_object setVariable ["A3W_purchasedStoreObject", true];
-			_object setVariable ["ownerUID", getPlayerUID _player, true];
 
 			[_object] call v_trackVehicle;
 
@@ -160,11 +159,12 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			};
 
 			// Spawn remaining calls to speed up delivery confirmation
-			[_object, _safePos, _marker] spawn
+			[_object, _safePos, _marker, _player] spawn
 			{
 				_object = _this select 0;
 				_safePos = _this select 1;
 				_marker = _this select 2;
+				_player = _this select 3;
 
 				_isDamageable = !(_object isKindOf "ReammoBox_F"); // ({_object isKindOf _x} count ["AllVehicles", "Lamps_base_F", "Cargo_Patrol_base_F", "Cargo_Tower_base_F"] > 0);
 
@@ -177,7 +177,14 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 					_object setPosATL [_safePos select 0, _safePos select 1, 0.05];
 					_object setVelocity [0,0,0.01];
 					// _object spawn cleanVehicleWreck;
-					_object setVariable ["A3W_purchasedVehicle", true];
+					if ({_object isKindOf _x} count A3W_autosave_vehicles_list > 0) then {
+						[[netId _object, 2], "A3W_fnc_setLockState", _object] call A3W_fnc_MP; // Lock
+						_object setVariable ["objectLocked", true, true];
+						_object setVariable ["R3F_LOG_disabled",true,true];
+						_object setVariable ["A3W_purchasedVehicle", true];
+						_object setVariable ["ownerUID", getPlayerUID _player, true];              
+						_object setVariable ["ownerN", name _player, true];
+					};
 				};
 
 				if (_object isKindOf "Plane") then

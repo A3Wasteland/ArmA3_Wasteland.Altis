@@ -21,7 +21,7 @@ else
 	private ["_heliporteur", "_objet"];
 
 	_heliporteur = _this select 0;
-	_objet = nearestObjects [_heliporteur, R3F_LOG_CFG_objets_heliportables, 20];
+	_objet = nearestObjects [_heliporteur, R3F_LOG_CFG_objets_heliportablesH, 20];
 	// Parce que l'héliporteur peut être un objet héliportable
 	_objet = _objet - [_heliporteur];
 

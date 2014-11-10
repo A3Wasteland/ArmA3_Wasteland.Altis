@@ -20,7 +20,7 @@ else
 
 	_objet = R3F_LOG_joueur_deplace_objet;
 
-	_remorqueur = nearestObjects [_objet, R3F_LOG_CFG_remorqueurs, 22];
+	_remorqueur = nearestObjects [_objet, R3F_LOG_CFG_remorqueursALL, 22];
 	// Parce que le remorqueur peut être un objet remorquable
 	_remorqueur = _remorqueur - [_objet];
 

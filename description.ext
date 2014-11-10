@@ -1,14 +1,14 @@
 respawn="BASE";
 respawnDelay=15;
 disabledAI=1;
-disableChannels[] = {2}; // {0} to disable global, {2} for command channel
+disableChannels[] = {0,2}; // {0} to disable global, {2} for command channel
 joinUnassigned = 0;
 enableItemsDropping = 0;
-forceRotorLibSimulation = 0; // if you set this to 1, you deny freedom of choice to the players, which is the very principle this mission is built upon
+forceRotorLibSimulation = 0; // Force RotorLib (0 = disable, 1= enable)
 weaponPool = 0;
 corpseManagerMode = 1;
-corpseRemovalMinTime = 30*60;
-corpseRemovalMaxTime = 30*60;
+corpseRemovalMinTime = 15*60;
+corpseRemovalMaxTime = 20*60;
 wreckManagerMode = 1;
 wreckRemovalMinTime = 5*60;
 wreckRemovalMaxTime = 10*60;
@@ -53,6 +53,7 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
+#include "addons\JTS_PM\PM_Compact.hpp"
 
 class RscTitles
 {
@@ -73,4 +74,14 @@ class CfgFunctions
 class CfgNotifications
 {
 	#include "client\CfgNotifications.hpp"
+};
+class CfgSounds {
+  sounds[] = {
+    carlock
+  };
+  class carlock {
+    name = "carlock";
+    sound[] = {sounds\carlock.ogg,0.2,1};
+    titles[] = {};
+  };
 };

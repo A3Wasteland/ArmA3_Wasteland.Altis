@@ -70,6 +70,7 @@ mf_init =
 _clientFunc = "client\functions";
 _serverFunc = "server\functions";
 
+A3W_fnc_setLockState = { (objectFromNetId (_this select 0)) lock (_this select 1) } call mf_compile;
 A3W_fnc_pushVehicle = [_serverFunc, "pushVehicle.sqf"] call mf_compile;
 A3W_fnc_setName = [_clientFunc, "fn_setName.sqf"] call mf_compile;
 A3W_fnc_towingHelper = [_serverFunc, "towingHelper.sqf"] call mf_compile;

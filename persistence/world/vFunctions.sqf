@@ -392,11 +392,6 @@ v_setupVehicleSavedVariables = {
   _variables pushBack ["A3W_missionVehicle", (_obj getVariable ["A3W_missionVehicle",false])];
 
 
-  def(_r3f_log_disabled);
-  _r3f_log_disabled = _obj getVariable "R3F_LOG_disabled";
-  if (defined(_r3f_log_disabled)) then {
-    _variables pushBack ["R3F_LOG_disabled", _r3f_log_disabled];
-  };
 
   def(_r3fSide);
   _r3fSide = _obj getVariable "R3F_Side";
