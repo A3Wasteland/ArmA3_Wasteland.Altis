@@ -1,15 +1,15 @@
 /*
-	File: asyncCall.sqf
-	Author: Bryan "Tonic" Boardwine
+		File: asyncCall.sqf
+		Author: Bryan "Tonic" Boardwine
 
-	Description:
-	Commits an asynchronous call to extDB
-	Gets result via extDB  4:x + uses 5:x if message is Multi-Part
+		Description:
+		Commits an asynchronous call to extDB
+		Gets result via extDB  4:x + uses 5:x if message is Multi-Part
 
-	Parameters:
-		0: STRING (Query to be ran).
-		1: INTEGER (1 = ASYNC + not return for update/insert, 2 = ASYNC + return for query's).
-		3: BOOL (False to return a single array, True to return multiple entries mainly for garage).
+		Parameters:
+				0: STRING (Query to be ran).
+				1: INTEGER (1 = ASYNC + not return for update/insert, 2 = ASYNC + return for query's).
+				3: BOOL (False to return a single array, True to return multiple entries mainly for garage).
 */
 
 private["_queryStmt","_queryResult","_key","_mode","_return","_loop"];
@@ -34,31 +34,26 @@ _queryResult = "";
 _loop = true;
 while{_loop} do
 {
-	_queryResult = "extDB" callExtension format["4:%1", _key];
-	if (_queryResult == "[5]") then {
-		// extDB returned that result is Multi-Part Message
-		_queryResult = "";
-		while{true} do {
-			_pipe = "extDB" callExtension format["5:%1", _key];
-			if(_pipe == "") exitWith {_loop = false};
-			if(_pipe != "[3]") then {
-				_queryResult = _queryResult + _pipe;
-			} else {
-				diag_log format ["extDB: Sleep [5]: %1", diag_tickTime];
-				sleep 0.1;
-			};
-		};
-	}
-	else
-	{
-		if (_queryResult == "[3]") then
+		_queryResult = "extDB" callExtension format["4:%1", _key];
+		if (_queryResult == "[5]") then {
+				// extDB returned that result is Multi-Part Message
+				_queryResult = "";
+				while{true} do {
+						_pipe = "extDB" callExtension format["5:%1", _key];
+						if(_pipe == "") exitWith {_loop = false};
+						_queryResult = _queryResult + _pipe;
+				};
+		}
+		else
 		{
-			diag_log format ["extDB: Sleep [4]: %1", diag_tickTime];
-			sleep 0.1;
-		} else {
-			_loop = false;
+				if (_queryResult == "[3]") then
+				{
+						diag_log format ["extDB: Sleep [4]: %1", diag_tickTime];
+						sleep 0.1;
+				} else {
+						_loop = false;
+				};
 		};
-	};
 };
 
 
