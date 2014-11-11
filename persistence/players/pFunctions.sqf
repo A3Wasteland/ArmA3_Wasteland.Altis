@@ -289,7 +289,7 @@ fn_applyPlayerInfo = {
     switch (_name) do
     {
       case "Donator": { player setVariable ["isDonator", _value > 0] };
-      case "BankMoney": { player setVariable ["bmoney", _value max 0] };
+      case "BankMoney": { player setVariable ["bmoney", OR(_value,0), true] };
     };
   } forEach _data;
 };
