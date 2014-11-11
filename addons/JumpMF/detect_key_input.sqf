@@ -40,7 +40,7 @@ if (_pressedKey in actionKeys "GetOver") then
 					[
 						(_prevVel select 0) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
 						(_prevVel select 1) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
-						(velocity player) select 2
+						((velocity player) select 2) min 1
 					];
 					!(["AovrPercMrun", animationState player] call fn_startsWith)
 				};
