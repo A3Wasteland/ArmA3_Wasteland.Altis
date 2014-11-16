@@ -41,8 +41,8 @@ sleep 60; //Wait in seconds before the credits start after player IS ingame
  
 _role1 = "Welcome to";
 _role1names = ["A3Armory - A3Wasteland Altis"];
-_role2 = "Server restarts every 6 hours";
-_role2names = ["2, 8, 14, 20 EST"];
+_role2 = "Server restarts @";
+_role2names = ["4, 9, 13, 18, 23 EST"];
 _role3 = "Player stats, and support @";
 _role3names = ["A3Armory.com"];
  

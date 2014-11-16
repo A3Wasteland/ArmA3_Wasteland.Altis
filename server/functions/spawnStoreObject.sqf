@@ -177,14 +177,16 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 					_object setPosATL [_safePos select 0, _safePos select 1, 0.05];
 					_object setVelocity [0,0,0.01];
 					// _object spawn cleanVehicleWreck;
+          
 					if ({_object isKindOf _x} count A3W_autosave_vehicles_list > 0) then {
 						[[netId _object, 2], "A3W_fnc_setLockState", _object] call A3W_fnc_MP; // Lock
 						_object setVariable ["objectLocked", true, true];
 						_object setVariable ["R3F_LOG_disabled",true,true];
 						_object setVariable ["A3W_purchasedVehicle", true];
-						_object setVariable ["ownerUID", getPlayerUID _player, true];              
+						_object setVariable ["ownerUID", getPlayerUID _player, true];
 						_object setVariable ["ownerN", name _player, true];
 					};
+          
 				};
 
 				if (_object isKindOf "Plane") then

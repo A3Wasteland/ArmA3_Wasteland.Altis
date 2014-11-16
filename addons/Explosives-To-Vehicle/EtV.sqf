@@ -8,7 +8,7 @@ EtV_ChargeCheck =
 	_charge = _this select 0;
 	_unit = _this select 1;
 	_hasIt = _charge in (magazines _unit);
-	_nearVehs = nearestObjects [_unit,["Air","Ship","LandVehicle"],5];
+	_nearVehs = nearestObjects [_unit,["Plane","Ship","LandVehicle","Helicopter_Base_F"],5];
 	_return = (_hasIt && count _nearVehs > 0 && alive _unit);
 	_return
 };
@@ -63,7 +63,7 @@ EtV_AttachCharge =
 		};
 	};
 	
-	_nearVehicle = (nearestObjects [_unit,["Air","Ship","LandVehicle"],5]) select 0;
+	_nearVehicle = (nearestObjects [_unit,["Plane","Ship","LandVehicle","Helicopter_Base_F"],5]) select 0;
 	_explosive = _class createVehicle [0,0,0];
 	_explosive attachTo [_unit,[0,1,0],"Lefthand"];
 	_random0 = random 180;

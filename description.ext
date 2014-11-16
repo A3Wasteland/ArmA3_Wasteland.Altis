@@ -54,11 +54,12 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
 #include "addons\JTS_PM\PM_Compact.hpp"
+#include "outlw_magRepack\MagRepack_Config.hpp"
 
 class RscTitles
 {
 	#include "addons\proving_ground\PG_rsctitles.hpp"
-	#include "client\systems\hud\dialog\hud.hpp"
+ 	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
 	#include "client\systems\scoreboard\score_gui.hpp"
 };
@@ -75,13 +76,18 @@ class CfgNotifications
 {
 	#include "client\CfgNotifications.hpp"
 };
-class CfgSounds {
-  sounds[] = {
-    carlock
-  };
-  class carlock {
-    name = "carlock";
-    sound[] = {sounds\carlock.ogg,0.2,1};
-    titles[] = {};
-  };
+
+class CfgSounds
+{
+    sounds[] =
+	{
+	carlock
+	};
+
+class carlock
+{
+name = "carlock";
+sound[] = {sounds\carlock.ogg,0.2,1};
+titles[] = {};
+};
 };

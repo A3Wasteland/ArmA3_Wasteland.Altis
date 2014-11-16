@@ -13,6 +13,7 @@ R3F_LOG_CFG_remorqueurs =
 	"MRAP_03_base_F",
 	"Boat_Armed_01_base_F"
 ];
+
 /**
  * List of class names of (ground or air) vehicles which can tow heavy towables objects.
  */
@@ -24,6 +25,7 @@ R3F_LOG_CFG_remorqueursH =
 	"Wheeled_APC_F",
 	"Tank_F"
 ];
+
 /**
  * List of class names of (ground or air) vehicles which can tow all towables objects.
  */
@@ -72,6 +74,7 @@ R3F_LOG_CFG_objets_remorquables =
 	"B_Heli_Light_01_armed_F",
 	"C_Heli_Light_01_civil_F"
 ];
+
 /**
  * List of class names of heavy towables objects.
  */
@@ -129,6 +132,7 @@ R3F_LOG_CFG_objets_remorquablesALL =
 	"B_Plane_CAS_01_F",
 	"O_Plane_CAS_02_F"
 ];
+
 /****** LIFT WITH VEHICLE  ******/
 
 /**
@@ -146,6 +150,7 @@ R3F_LOG_CFG_heliporteurs =
 	"O_Heli_Attack_02_F",
 	"O_Heli_Attack_02_black_F"
 ];
+
 /**
  * List of class names of air vehicles which can lift heavy liftables objects.
  */
@@ -172,6 +177,7 @@ R3F_LOG_CFG_objets_heliportables =
 	"Boat_Civil_01_base_F",
 	"Boat_Armed_01_base_F"
 ];
+
 /**
  * List of class names of heavy liftables objects.
  */
@@ -193,7 +199,6 @@ R3F_LOG_CFG_objets_heliportablesH =
 	"Boat_Civil_01_base_F",
 	"Boat_Armed_01_base_F"
 ];
-
 
 /****** LOAD IN VEHICLE / CHARGER DANS LE VEHICULE ******/
 

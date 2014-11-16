@@ -2,7 +2,7 @@
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
 //	@file Name: customGroup.sqf
-//	@file Author: AgentRev
+//	@file Author: AgentRev, micovery
 
 if (!isServer) exitWith {};
 
@@ -35,9 +35,11 @@ grenadier_loadout =  {
   _unit addMagazine "1Rnd_HE_Grenade_shell";
   _unit addMagazine "1Rnd_HE_Grenade_shell";
 };
+  
 support_loadout = {
   private["_unit"];
   _unit = _this;
+
   _unit addUniform "U_IG_Guerilla1_1";
   _unit addBackpack "B_Carryall_oli";
   _unit addMagazine "200Rnd_65x39_cased_Box";
@@ -47,9 +49,11 @@ support_loadout = {
   _unit addMagazine "200Rnd_65x39_cased_Box";
   _unit addItem "FirstAidKit";
 };
+
 sniper_loadout = {
   private["_unit"];
   _unit = _this;
+  
   _unit addUniform "U_I_GhillieSuit";
   _unit addBackpack "B_AssaultPack_rgr";
   _unit addMagazine "30Rnd_65x39_caseless_mag";
@@ -66,9 +70,11 @@ sniper_loadout = {
   _unit addItem "ItemCompass";
   _unit assignItem "ItemCompass";  
 };
+
 aa_loadout = {
   private["_unit"];
   _unit = _this;
+  
   _unit addUniform "U_IG_Guerilla1_1";
   _unit addMagazine "30Rnd_9x21_Mag";
   _unit addMagazine "30Rnd_9x21_Mag";
@@ -80,9 +86,11 @@ aa_loadout = {
   _unit addWeapon "launch_Titan_F";
   _unit addMagazine "Titan_AA";
 };
+
 at_loadout = {
   private["_unit"];
   _unit = _this;
+
   _unit addUniform "U_IG_Guerilla2_1";
   _unit addMagazine "30Rnd_45ACP_Mag_SMG_01";
   _unit addMagazine "30Rnd_45ACP_Mag_SMG_01";
@@ -95,9 +103,11 @@ at_loadout = {
   _unit addMagazine "Titan_AT";
   _unit addMagazine "Titan_AT";
 };
+
 leader_loadout = {
   private["_unit"];
   _unit = _this;
+  
   _unit addUniform "U_IG_leader";
   _unit addMagazine "30Rnd_65x39_caseless_green_mag_Tracer";
   _unit addMagazine "30Rnd_65x39_caseless_green_mag_Tracer";
@@ -113,9 +123,11 @@ leader_loadout = {
   _unit addItem "ItemCompass";
   _unit assignItem "ItemCompass";
 };
+
 rifleman_loadout = {
   private["_unit"];
   _unit = _this;
+  
   _unit addUniform "U_IG_Guerilla2_3";
   _unit addMagazine "20Rnd_762x51_Mag";
   _unit addMagazine "20Rnd_762x51_Mag";
@@ -125,6 +137,7 @@ rifleman_loadout = {
   _unit addWeapon "srifle_EBR_ARCO_pointer_snds_F";
   _unit addMagazine "20Rnd_762x51_Mag";
 };
+
 weighted_list = 
 [
   [1, sniper_loadout],
@@ -134,9 +147,11 @@ weighted_list =
   [0.5, rifleman_loadout],
   [0.5, grenadier_loadout]
 ];
+  
 get_weighted_loadout = {
   private["_items"];
   _items = weighted_list;
+  
   //calculate the total weight
   private["_totalSum", "_weight"];
   _totalSum = 0;
@@ -144,54 +159,57 @@ get_weighted_loadout = {
     _weight = _x select 0;
     _totalSum = _weight + _totalSum;
   } forEach _items;
+  
   //pick at random from the distribution
   private["_index", "_i", "_item", "_sum"];
   _index = random _totalSum;
   _sum = 0;
   _i = 0;
+  
   while {_sum < _index} do {
     _item = _items select _i;
     _weight = _item select 0;
     _sum = _sum + _weight;
     _i = _i + 1;
   };
+  
   ((_items select (_i - 1)) select 1)
 };
+
 for "_i" from 1 to _nbUnits do
 {
-	_uPos = _pos vectorAdd ([[random _radius, 0, 0], random 360] call BIS_fnc_rotateVector2D);
-	_unit = _group createUnit [_unitTypes call BIS_fnc_selectRandom, _uPos, [], 0, "Form"];
-	_unit setPosATL _uPos;
+  _uPos = _pos vectorAdd ([[random _radius, 0, 0], random 360] call BIS_fnc_rotateVector2D);
+  _unit = _group createUnit [_unitTypes call BIS_fnc_selectRandom, _uPos, [], 0, "Form"];
+  _unit setPosATL _uPos;
 
-	removeAllWeapons _unit;
-	removeAllAssignedItems _unit;
-	removeUniform _unit;
-	removeVest _unit;
-	removeBackpack _unit;
-	removeHeadgear _unit;
-	removeGoggles _unit;
+  removeAllWeapons _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
 
-	_unit addVest "V_PlateCarrier1_rgr";
-
+  _unit addVest "V_PlateCarrier1_rgr";
   _unit addItem "NVGoggles";
   _unit assignItem "NVGoggles";
   _unit addItem "FirstAidKit";
-
+  
   if (_unit == leader _group) then {
     _unit call leader_loadout;
-				_unit setRank "SERGEANT";
-			}
+    _unit setRank "SERGEANT";
+  }
   else {  
     private["_loadout"];
     _loadout = call get_weighted_loadout;
     _unit call _loadout;
-	};
+  };
 
-	_unit addRating 1e11;
-	_unit spawn addMilCap;
-	_unit spawn refillPrimaryAmmo;
-	_unit call setMissionSkill;
-	_unit addEventHandler ["Killed", server_playerDied];
+  _unit addRating 1e11;
+  _unit spawn addMilCap;
+  _unit spawn refillPrimaryAmmo;
+  _unit call setMissionSkill;
+  _unit addEventHandler ["Killed", server_playerDied];
 };
 
 [_group, _pos] call defendArea;
