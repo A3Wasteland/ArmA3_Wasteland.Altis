@@ -10,7 +10,7 @@
 playerSpawning = true;
 
 //Teamkiller Kick
-if (!isNil "pvar_teamKillList") then
+if (!isNil "pvar_teamKillList" && {playerSide in [BLUFOR,OPFOR]}) then
 {
 	if ([pvar_teamKillList, getPlayerUID player, 0] call fn_getFromPairs >= 2) exitWith
 	{
