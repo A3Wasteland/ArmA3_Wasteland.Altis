@@ -26,13 +26,13 @@ A3W_remoteBombStoreRadius = 75;    // Prevent players from placing remote explos
 A3W_vehiclePurchaseCooldown = 45;  // Number of seconds to wait before allowing someone to purchase another vehicle, don't bother setting it too high because it can be bypassed by rejoining
 
 // Player settings
-A3W_startingMoney = 1500;           // Amount of money that players start with
+A3W_startingMoney = 1500;          // Amount of money that players start with
 A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (0 = no, 1 = yes) - this also removes energy drinks from the mission
 A3W_bleedingTime = 60;             // Time in seconds for which to allow revive after a critical injury (minimum 10 seconds)
 
 A3W_healthTime = 60*5;             //seconds till death
-A3W_hungerTime = 120*60;            //seconds till starving
-A3W_thirstTime = 100*60;            //seconds till dehydrated
+A3W_hungerTime = 120*60;           //seconds till starving
+A3W_thirstTime = 100*60;           //seconds till dehydrated
 
 // Persistence settings
 A3W_playerSaving = 1;              // Save player data like position, health, inventory, etc. (0 = no, 1 = yes)
@@ -48,17 +48,20 @@ A3W_warchestSaving = 0;            // Save warchest objects deployed by players 
 A3W_warchestMoneySaving = 0;       // Save warchest team money between server restarts (0 = no, 1 = yes)
 A3W_spawnBeaconSaving = 1;         // Save spawn beacons between server restarts (0 = no, 1 = yes)
 A3W_objectLifetime = 7*24;         // Maximum lifetime in hours for saved objects (baseparts, crates, etc. except vehicles) across server restarts (0 = no time limit)
-A3W_vehicleLifetime = 0;        // Maximum lifetime in hours for saved vehicles across server restarts, regardless of usage (0 = no time limit)
-A3W_vehicleMaxUnusedTime = 36;   // Maximum parking time in hours after which unused saved vehicles will be marked for deletion (0 = no time limit)
+A3W_vehicleLifetime = 0;           // Maximum lifetime in hours for saved vehicles across server restarts, regardless of usage (0 = no time limit)
+A3W_vehicleMaxUnusedTime = 36;     // Maximum parking time in hours after which unused saved vehicles will be marked for deletion (0 = no time limit)
 PDB_PlayerFileID = "A3W_";         // Player savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_ObjectFileID = "A3W_";         // Object savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_MessagesFileID = "A3W_";       // Messages savefile prefix (change this in case you run multiple servers from the same folder)
-PDB_AdminLogFileID = "A3W_";      // Admin log savefile prefix (change this in case you run multiple servers from the same folder)
+PDB_AdminLogFileID = "A3W_";       // Admin log savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_HackerLogFileID = "A3W_";      // Hacker log savefile prefix (change this in case you run multiple servers from the same folder)
+PDB_PlayersListFileID = "A3W_";    // PlayerList savefile prefix (change this in case you run multiple servers from the same folder)
+
 
 A3W_vehicle_saveInterval = 1200;    // Number of seconds between vehicle saves
 A3W_object_saveInterval = 1200;     // Number of seconds between object saves
-A3W_player_saveInterval = 600;     // Number of seconds between player saves
+A3W_player_saveInterval = 1200;     // Number of seconds between player saves
+A3W_playersList_saveInterval = 120; // Number of seconds between player list saves
 
                                    // List of classes for vehicles that are saveable
                                    // You can add/remove classes from this list for fine grained control which kind of vehicles can be saved
@@ -75,12 +78,11 @@ A3W_heliSpawning = 1;              // If serverSpawning = 1, spawn helicopters i
 A3W_planeSpawning = 1;             // If serverSpawning = 1, spawn planes at some airfields (0 = no, 1 = yes)
 A3W_boxSpawning = 0;               // If serverSpawning = 1, spawn weapon crates in 50% towns (0 = no, 1 = yes)
 A3W_baseBuilding = 0;              // If serverSpawning = 1, spawn base parts in towns (0 = no, 1 = yes)
-A3W_essentialsSpawning = 1; 	   // If serverSpawning = 1, spawn essential items (food, water and ammo crates) in towns (0 = no, 1 = yes. If A3W_baseBuilding = 1, then essentialsSpawning = 1;)
 
 // Loot settings
 A3W_buildingLootWeapons = 0;       // Spawn weapon loot in all buildings (0 = no, 1 = yes)
 A3W_buildingLootSupplies = 0;      // Spawn supply loot (backpacks & player items) in all buildings (0 = no, 1 = yes)
-A3W_buildingLootChances = 0;      // Chance percentage that loot will spawn at each spot in a building (0 to 100)
+A3W_buildingLootChances = 0;       // Chance percentage that loot will spawn at each spot in a building (0 to 100)
 A3W_vehicleLoot = 2;               // Level of loot added to vehicles (0 = none, 1 = weapon OR items, 2 = weapon AND items, 3 = two weapons AND items) - 2 or 3 recommended if buildingLoot = 0
 
 // Territory settings
@@ -95,9 +97,9 @@ A3W_missionsDifficulty = 1;        // Missions difficulty (0 = normal, 1 = hard)
 A3W_missionsQuantity = 4;          // Number of missions running at the same time (0 to 6)
 A3W_heliPatrolMissions = 1;        // Enable missions involving flying helicopters piloted by AI (0 = no, 1 = yes)
 A3W_underWaterMissions = 1;        // Enable underwater missions which require diving gear (0 = no, 1 = yes)
-A3W_mainMissionDelay = 5*60;      // Time in seconds between Main Missions
+A3W_mainMissionDelay = 5*60;       // Time in seconds between Main Missions
 A3W_mainMissionTimeout = 60*60;    // Time in seconds that a Main Mission will run for, unless completed
 A3W_sideMissionDelay = 5*60;       // Time in seconds between Side Missions
 A3W_sideMissionTimeout = 60*60;    // Time in seconds that a Side Mission will run for, unless completed
-A3W_moneyMissionDelay = 5*60;     // Time in seconds between Money Missions
+A3W_moneyMissionDelay = 5*60;      // Time in seconds between Money Missions
 A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
