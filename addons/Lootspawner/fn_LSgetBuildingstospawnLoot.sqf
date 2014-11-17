@@ -77,6 +77,10 @@ _begintime = diag_tickTime;
 						//check what type of loot to spawn, get chance for loot every time, so all combos in spawnClassChance_list are viable
 						_lootType = [[1,2,3,4,5], spawnClassChance_list select _lootClass] call fn_selectRandomWeighted;
 
+						if (isNil "_lootType") exitWith {};
+
+						_lootholder = objNull;
+
 						if (_lootType < 5) then
 						{
 							_lootholder = createVehicle ["GroundWeaponHolder", _tmpPos, [], 0, "CAN_COLLIDE"];
