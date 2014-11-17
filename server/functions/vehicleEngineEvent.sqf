@@ -16,6 +16,5 @@ if (local _veh && _running) then
 	if (_driver getVariable ["FAR_isUnconscious", 0] == 1 || (!isNil "_dmg" && {_dmg >= 0.9})) then
 	{
 		_veh engineOn false;
-		_driver action ["EngineOff", _veh];
 	};
 };

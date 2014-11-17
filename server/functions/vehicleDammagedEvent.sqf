@@ -14,13 +14,6 @@ if (local _veh) then
 	{
 		_veh engineOn false;
 
-		_driver = (crew _veh) select 0;
-
-		if (!isNil "_driver") then
-		{
-			_driver action ["EngineOff", _veh];
-		};
-
 		_dmg = _veh getHitPointDamage "HitHull";
 
 		if (!isNil "_dmg" && {_dmg < 0.5}) then
