@@ -132,7 +132,7 @@ storeSellingHandle = [] spawn
 		player removeWeapon _currWep;
 
 		// Remove sold inventory magazines
-		//{ player removeMagazines _x } forEach _invMagsToRemove;
+		{ player removeMagazines _x } forEach _invMagsToRemove;
 
 		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
 		hint format ["You sold your gun for $%1", [_sellValue] call fn_numbersText];
