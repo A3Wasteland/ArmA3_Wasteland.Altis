@@ -336,7 +336,25 @@ while {true} do
 					_turretMags3 = [];
 					_hasDoorGuns = isClass (configFile >> "CfgVehicles" >> _class >> "Turrets" >> "RightDoorGun");
 
-					_turrets = if (_hasDoorGuns) then { [[-1],[2]] } else { [[-1]] + ([_veh, []] call BIS_fnc_getTurrets) };
+					_turrets = allTurrets [_veh, false];
+
+					if !(_class isKindOf "B_Heli_Transport_03_unarmed_F") then
+					{
+						_turrets = [[-1]] + _turrets; // only add driver turret if not unarmed Huron, otherwise flares get saved twice
+					};
+
+					if (_hasDoorGuns) then
+					{
+						// remove left door turret, because its mags are already returned by magazinesAmmo
+						{
+							if (_x isEqualTo [1]) exitWith
+							{
+								_turrets set [_forEachIndex, 1];
+							};
+						} forEach _turrets;
+
+						_turrets = _turrets - [1];
+					};
 
 					{
 						_path = _x;
@@ -346,11 +364,11 @@ while {true} do
 							{
 								if (_veh currentMagazineTurret _path == _x && {count _turretMags3 == 0}) then
 								{
-									_turretMags3 set [count _turretMags3, [_x, _path, [_veh currentMagazineDetailTurret _path] call getMagazineDetailAmmo]];
+									_turretMags3 pushBack [_x, _path, [_veh currentMagazineDetailTurret _path] call getMagazineDetailAmmo];
 								}
 								else
 								{
-									_turretMags2 set [count _turretMags2, [_x, _path]];
+									_turretMags2 pushBack [_x, _path];
 								};
 							};
 						} forEach (_veh magazinesTurret _path);
