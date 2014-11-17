@@ -64,7 +64,7 @@ removeHeadgear player;
 
 			if (_value != "") then
 			{
-				if (_value isKindOf "Weapon_Bag_Base") then
+				if (_value isKindOf "Weapon_Bag_Base" && !(_value isKindOf "B_UAV_01_backpack_F")) then
 				{
 					player addBackpack "B_AssaultPack_rgr"; // NO SOUP FOR YOU
 				}
