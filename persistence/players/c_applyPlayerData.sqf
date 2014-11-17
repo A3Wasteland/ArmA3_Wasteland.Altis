@@ -114,6 +114,12 @@ removeHeadgear player;
 			{
 				if ([player, _x] call isAssignableBinocular) then
 				{
+					// Temporary fix for http://feedback.arma3.com/view.php?id=21618
+					if (_x == "Laserdesignator" && {{_x == "Laserbatteries"} count magazines player == 0}) then
+					{
+						[player, "Laserbatteries"] call fn_forceAddItem;
+					};
+
 					player addWeapon _x;
 				}
 				else
