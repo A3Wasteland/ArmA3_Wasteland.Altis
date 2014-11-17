@@ -55,7 +55,7 @@ if (!isNull _backpack) then
 };
 
 // Eject corpse from vehicle once stopped
-if (!isPlayer _unit && vehicle _unit != _unit) then
+if (vehicle _unit != _unit) then
 {
 	_unit spawn
 	{
@@ -63,14 +63,14 @@ if (!isPlayer _unit && vehicle _unit != _unit) then
 
 		waitUntil
 		{
-			sleep 0.1;
+			sleep 0.5;
 			_veh = vehicle _this;
-			(isTouchingGround _veh || (getPos _veh) select 2 < 5) && {vectorMagnitude velocity _veh < 5}
+			isNull _this || ((isTouchingGround _veh || (getPos _veh) select 2 < 5) && {vectorMagnitude velocity _veh < 5})
 		};
 
 		if (_veh != _this) then
 		{
-			_this setPos getPosATL _this; // ejects dead bodies
+			_this setPos ((getPosATL _this) vectorAdd ([[1 + random 1.5, 0, 0], -([_this, _veh] call BIS_fnc_dirTo)] call BIS_fnc_rotateVector2D)); // ejects dead bodies
 		};
 	};
 };
