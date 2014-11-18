@@ -100,3 +100,15 @@ switch (true) do
 		_vehicle addWeaponTurret ["MiniCarHorn", [-1]];
 	};
 };
+
+// Double minigun ammo to compensate for Bohemia's incompetence (http://feedback.arma3.com/view.php?id=21613)
+{
+	_path = _x;
+
+	{
+		if ((toLower getText (configFile >> "CfgMagazines" >> _x >> "ammo")) find "_minigun_" != -1) then
+		{
+			_vehicle addMagazineTurret [_x, _path];
+		};
+	} forEach (_vehicle magazinesTurret _path);
+} forEach ([[-1]] + allTurrets [_vehicle, false]);
