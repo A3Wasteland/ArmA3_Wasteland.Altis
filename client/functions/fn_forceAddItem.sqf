@@ -5,7 +5,7 @@
 //	@file Author: AgentRev
 
 // This command was made because addMagazine, addItem, and canAddItemToXXX are not detecting free inventory space correctly in Arma 3 v1.34, another bug courtesy of BIS...
-// Only use for magazines and items, not weapons
+// Only use for magazines and items; addWeaponInventory should be used for weapons
 
 private ["_unit", "_class", "_qty", "_container"];
 _unit = _this select 0;
