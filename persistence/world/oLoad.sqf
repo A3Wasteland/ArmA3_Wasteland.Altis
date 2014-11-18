@@ -155,7 +155,7 @@ if (!isNil "_exists" && {_exists}) then
 						};
 						if (!isNil "_magazines") then
 						{
-							[_veh, _magazines] call processMagazineCargo;
+							[_obj, _magazines] call processMagazineCargo;
 						};
 						if (!isNil "_items") then
 						{
