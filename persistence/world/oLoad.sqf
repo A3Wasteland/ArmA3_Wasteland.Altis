@@ -155,7 +155,7 @@ if (!isNil "_exists" && {_exists}) then
 						};
 						if (!isNil "_magazines") then
 						{
-							{ _obj addMagazineCargoGlobal _x } forEach _magazines;
+							[_veh, _magazines] call processMagazineCargo;
 						};
 						if (!isNil "_items") then
 						{

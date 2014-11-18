@@ -326,7 +326,7 @@ while {true} do
 					{
 						// Save weapons & ammo
 						_weapons = (getWeaponCargo _veh) call cargoToPairs;
-						_magazines = (getMagazineCargo _veh) call cargoToPairs;
+						_magazines = _veh call fn_magazineAmmoCargo;
 						_items = (getItemCargo _veh) call cargoToPairs;
 						_backpacks = (getBackpackCargo _veh) call cargoToPairs;
 					};

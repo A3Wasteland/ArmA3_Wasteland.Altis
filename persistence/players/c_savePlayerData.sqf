@@ -81,38 +81,6 @@ savePlayerHandle = _this spawn
 		];
 
 
-		_uMags = [];
-		_vMags = [];
-		_bMags = [];
-		_partialMags = [];
-
-		{
-			_magArr = _x select 0;
-
-			{
-				_mag = _x select 0;
-				_ammo = _x select 1;
-
-				if (_ammo == getNumber (configFile >> "CfgMagazines" >> _mag >> "count")) then
-				{
-					[_magArr, _mag, 1] call fn_addToPairs;
-				}
-				else
-				{
-					if (_ammo > 0) then
-					{
-						_partialMags pushBack [_mag, _ammo];
-					};
-				};
-			} forEach magazinesAmmoCargo (_x select 1);
-		}
-		forEach
-		[
-			[_uMags, uniformContainer player],
-			[_vMags, vestContainer player],
-			[_bMags, backpackContainer player]
-		];
-
 		_loadedMags = [];
 
 		{
@@ -130,17 +98,17 @@ savePlayerHandle = _this spawn
 
 		_data pushBack ["UniformWeapons", (getWeaponCargo uniformContainer player) call cargoToPairs];
 		_data pushBack ["UniformItems", (getItemCargo uniformContainer player) call cargoToPairs];
-		_data pushBack ["UniformMagazines", _uMags];
+		_data pushBack ["UniformMagazines", (uniformContainer player) call fn_magazineAmmoCargo];
 
 		_data pushBack ["VestWeapons", (getWeaponCargo vestContainer player) call cargoToPairs];
 		_data pushBack ["VestItems", (getItemCargo vestContainer player) call cargoToPairs];
-		_data pushBack ["VestMagazines", _vMags];
+		_data pushBack ["VestMagazines", (vestContainer player) call fn_magazineAmmoCargo];
 
 		_data pushBack ["BackpackWeapons", (getWeaponCargo backpackContainer player) call cargoToPairs];
 		_data pushBack ["BackpackItems", (getItemCargo backpackContainer player) call cargoToPairs];
-		_data pushBack ["BackpackMagazines", _bMags];
+		_data pushBack ["BackpackMagazines", (backpackContainer player) call fn_magazineAmmoCargo];
 
-		_gear pushBack ["PartialMagazines", _partialMags];
+		_gear pushBack ["PartialMagazines", []]; // deprecated, always empty
 		_gear pushBack ["LoadedMagazines", _loadedMags];
 
 		_wastelandItems = [];
