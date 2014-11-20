@@ -145,6 +145,11 @@ storePurchaseHandle = _this spawn
 
 						if (_currentBinoc == "") then
 						{
+							if (_class == "Laserdesignator" && {{_x == "Laserbatteries"} count magazines player == 0}) then
+							{
+								[player, "Laserbatteries"] call fn_forceAddItem;
+							};
+
 							player addWeapon _class;
 						}
 						else

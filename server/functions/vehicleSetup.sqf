@@ -107,3 +107,15 @@ if (isDedicated) then {
   _vehicle addEventHandler ["GetIn", { _this spawn v_GetIn_handler}];
   _vehicle addEventHandler ["GetOut", { _this spawn v_GetOut_handler}];
 };
+
+// Double minigun ammo to compensate for Bohemia's incompetence (http://feedback.arma3.com/view.php?id=21613)
+{
+	_path = _x;
+
+	{
+		if ((toLower getText (configFile >> "CfgMagazines" >> _x >> "ammo")) find "_minigun_" != -1) then
+		{
+			_vehicle addMagazineTurret [_x, _path];
+		};
+	} forEach (_vehicle magazinesTurret _path);
+} forEach ([[-1]] + allTurrets [_vehicle, false]);
