@@ -83,7 +83,7 @@ removeHeadgear player;
 			// diag_log "Removed Backpack";
 			removeBackpack player;
 
-			if (_value isKindOf "Weapon_Bag_Base") then
+			if (_value isKindOf "Weapon_Bag_Base" && !(_value isKindOf "B_UAV_01_backpack_F")) then
 			{
 				// diag_log "Add Default Backpack";
 				player addBackpack "B_AssaultPack_rgr"; // NO SOUP FOR YOU
@@ -131,6 +131,12 @@ removeHeadgear player;
 			{
 				if ([player, _x] call isAssignableBinocular) then
 				{
+					// Temporary fix for http://feedback.arma3.com/view.php?id=21618
+					if (_x == "Laserdesignator" && {{_x == "Laserbatteries"} count magazines player == 0}) then
+					{
+						[player, "Laserbatteries"] call fn_forceAddItem;
+					};
+
 					player addWeapon _x;
 				}
 				else
@@ -143,13 +149,13 @@ removeHeadgear player;
 		case "Stance": { [player, [player, _value] call getFullMove] call switchMoveGlobal };
 		case "UniformWeapons": { { (uniformContainer player) addWeaponCargoGlobal _x } forEach _value };
 		case "UniformItems": { { (uniformContainer player) addItemCargoGlobal _x } forEach _value };
-		case "UniformMagazines": { { (uniformContainer player) addMagazineCargoGlobal _x } forEach _value };
+		case "UniformMagazines": { [uniformContainer player, _value] call processMagazineCargo };
 		case "VestWeapons": { { (vestContainer player) addWeaponCargoGlobal _x } forEach _value };
 		case "VestItems": { { (vestContainer player) addItemCargoGlobal _x } forEach _value };
-		case "VestMagazines": { { (vestContainer player) addMagazineCargoGlobal _x } forEach _value };
+		case "VestMagazines": { [vestContainer player, _value] call processMagazineCargo };
 		case "BackpackWeapons": { { (backpackContainer player) addWeaponCargoGlobal _x } forEach _value };
 		case "BackpackItems": { { (backpackContainer player) addItemCargoGlobal _x } forEach _value };
-		case "BackpackMagazines": { { (backpackContainer player) addMagazineCargoGlobal _x } forEach _value };
+		case "BackpackMagazines": { [backpackContainer player, _value] call processMagazineCargo };
 		case "PartialMagazines": { { player addMagazine _x } forEach _value };
 		case "WastelandItems": { { [_x select 0, _x select 1, true] call mf_inventory_add } forEach _value };
 		default {diag_log format ["DEBUG: applyPlayerData Error: Name: %1 Value:%2", _name, _value]}

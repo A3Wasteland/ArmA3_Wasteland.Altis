@@ -46,10 +46,5 @@ switch (_type) do
 		_veh lockDriver true;
 		_veh enableCopilot false;
 		_veh engineOn false;
-
-		if (!isNull player) then
-		{
-			player action ["EngineOff", _veh];
-		};
 	};
 };
