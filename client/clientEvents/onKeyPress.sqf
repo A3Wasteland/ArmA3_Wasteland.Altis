@@ -31,17 +31,10 @@ switch (true) do
 		_handled = true;
 	};
 
-	// Left & right Windows key
-	case (_key in [219,220]):
+	// Home & Windows keys
+	case (_key in [199,219,220]):
 	{
-		if (isNil "showPlayerNames") then
-		{
-			showPlayerNames = true;
-		}
-		else
-		{
-			showPlayerNames = !showPlayerNames;
-		};
+		showPlayerNames = if (isNil "showPlayerNames") then { true } else { !showPlayerNames };
 	};
 
 	case (_key in actionKeys "GetOver"):

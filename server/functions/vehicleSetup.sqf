@@ -71,15 +71,16 @@ switch (true) do
 		_centerOfMass set [2, -0.657]; // original = -0.557481
 		_vehicle setCenterOfMass _centerOfMass;
 	};
-	case ({_class isKindOf _x} count ["Heli_Light_01_base_F", "O_Heli_Light_02_unarmed_F"] > 0):
+	case ({_class isKindOf _x} count ["B_Heli_Light_01_F", "B_Heli_Light_01_armed_F", "O_Heli_Light_02_unarmed_F"] > 0):
 	{
-		// Add flares to those poor defenceless helis
+		// Add flares to those poor helis
 		_vehicle addWeaponTurret ["CMFlareLauncher", [-1]];
-		_vehicle addMagazineTurret ["120Rnd_CMFlare_Chaff_Magazine", [-1]];
+		_vehicle addMagazineTurret ["60Rnd_CMFlare_Chaff_Magazine", [-1]];
 	};
 	case (_class isKindOf "Plane_Fighter_03_base_F"):
 	{
 		_vehicle addMagazine "300Rnd_20mm_shells";
+		_vehicle removeWeaponTurret ["missiles_SCALPEL",[-1]];
 	};
 };
 
@@ -112,3 +113,15 @@ switch (true) do
 		_vehicle addWeaponTurret ["MiniCarHorn", [-1]];
 	};
 };
+
+// Double minigun ammo to compensate for Bohemia's incompetence (http://feedback.arma3.com/view.php?id=21613)
+{
+	_path = _x;
+
+	{
+		if ((toLower getText (configFile >> "CfgMagazines" >> _x >> "ammo")) find "_minigun_" != -1) then
+		{
+			_vehicle addMagazineTurret [_x, _path];
+		};
+	} forEach (_vehicle magazinesTurret _path);
+} forEach ([[-1]] + allTurrets [_vehicle, false]);

@@ -78,10 +78,13 @@ forEach
 	"A3W_globalVoiceMaxWarns",
 	"A3W_antiHackMinRecoil",
 	"A3W_spawnBeaconCooldown",
+	"A3W_spawnBeaconSpawnHeight",
 	"A3W_extDB_ServerID",
 	"A3W_extDB_PlayerSave_ServerID",
 	"A3W_extension",
 	"A3W_vehicleThermals",
+	"A3W_firstPersonCamOnFoot",
+	"A3W_firstPersonCamNotDriver",
 	"A3W_resupplyCostPR",
 	"A3W_serverNumber"
 ];
@@ -276,7 +279,7 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 		call compile preprocessFileLineNumbers "server\functions\boatSpawning.sqf";
 	};
 
-	if (["A3W_baseBuilding"] call isConfigOn) then
+	if (["A3W_baseBuilding"] call isConfigOn || ["A3W_essentialsSpawning"] call isConfigOn) then
 	{
 		call compile preprocessFileLineNumbers "server\functions\objectsSpawning.sqf";
 	};

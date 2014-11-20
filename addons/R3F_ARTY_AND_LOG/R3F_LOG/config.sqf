@@ -19,7 +19,8 @@ R3F_LOG_CFG_objets_remorquables =
 	"Ship_F",
 	"Tank_F",
 	"Plane",
-	"Helicopter_Base_F"
+	"Helicopter_Base_F",
+	"Land_Pod_Heli_Transport_04_ammo_F"
 ];
 
 /****** LIFT WITH VEHICLE  ******/
@@ -40,8 +41,6 @@ R3F_LOG_CFG_objets_heliportables =
 	"Car_F",
 	"Ship_F",
 	"Tank_F",
-	"Plane",
-	"Helicopter_Base_F",
 	"Land_Pier_F"
 ];
 
@@ -76,6 +75,8 @@ R3F_LOG_CFG_transporteurs =
 	["I_Heli_light_03_base_F", 20],
 	["Heli_Transport_01_base_F", 25],
 	["Heli_Transport_02_base_F", 150],
+	["B_Heli_Transport_03_base_F", 150],
+	["Heli_Transport_04_base_F", 125],
 	["Heli_Attack_01_base_F", 10],
 	["Heli_Attack_02_base_F", 20]
 ];
@@ -136,7 +137,8 @@ R3F_LOG_CFG_objets_transportables =
 	["Land_ToiletBox_F", 2],
 	["Land_BarrelWater_F", 2],
 	["Land_Pier_F", 150],  
-	["Land_FuelStation_Feed_F", 75]
+	["Land_FuelStation_Feed_F", 75],
+	["Land_Pod_Heli_Transport_04_ammo_F", 150]
 	
 ];
 
@@ -196,5 +198,6 @@ R3F_LOG_CFG_objets_deplacables =
 	// "Land_ToiletBox_F",
 	"Land_BarrelWater_F",
 	"Land_Pier_F",  
-	"Land_FuelStation_Feed_F"
+	"Land_FuelStation_Feed_F",
+	"Land_Pod_Heli_Transport_04_ammo_F"
 ];

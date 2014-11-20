@@ -127,11 +127,15 @@ fn_loadAccount = "persistence\server\default\players\loadAccount.sqf" call mf_co
 
 "requestPlayerData" addPublicVariableEventHandler
 {
-	_player = _this select 1;
+	_array = _this select 1;
+	_player = _array select 0;
+	_pNetId = _array select 1;
 
 	applyPlayerData = _player call fn_loadAccount;
 
 	(owner _player) publicVariableClient "applyPlayerData";
+
+	diag_log format ["requestPlayerData: %1", [_player, owner _player, objectFromNetId _pNetId]];
 };
 
 "deletePlayerData" addPublicVariableEventHandler

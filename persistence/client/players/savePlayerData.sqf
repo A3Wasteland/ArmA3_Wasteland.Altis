@@ -49,38 +49,6 @@ savePlayerHandle = _this spawn
 			};
 		};
 
-		_uMags = [];
-		_vMags = [];
-		_bMags = [];
-		_partialMags = [];
-
-		{
-			_magArr = _x select 0;
-
-			{
-				_mag = _x select 0;
-				_ammo = _x select 1;
-
-				if (_ammo == getNumber (configFile >> "CfgMagazines" >> _mag >> "count")) then
-				{
-					[_magArr, _mag, 1] call fn_addToPairs;
-				}
-				else
-				{
-					if (_ammo > 0) then
-					{
-						_partialMags pushBack [_mag, _ammo];
-					};
-				};
-			} forEach magazinesAmmoCargo (_x select 1);
-		}
-		forEach
-		[
-			[_uMags, uniformContainer player],
-			[_vMags, vestContainer player],
-			[_bMags, backpackContainer player]
-		];
-
 		_loadedMags = [];
 
 		{
@@ -105,15 +73,14 @@ savePlayerHandle = _this spawn
 			player getVariable ["cmoney", 0], 							// Money is always saved, but only restored if A3W_moneySaving = 1
 			(getWeaponCargo uniformContainer player) call cargoToPairs, // UniformWeapons
 			(getItemCargo uniformContainer player) call cargoToPairs, 	// UniformItems
-			_uMags, 													// UniformMagazines
+			(uniformContainer player) call fn_magazineAmmoCargo,		// UniformMagazines
 			(getWeaponCargo vestContainer player) call cargoToPairs, 	// VestWeapons
 			(getItemCargo vestContainer player) call cargoToPairs, 		// VestItems
-			_vMags, 													// VestMagazines
+			(vestContainer player) call fn_magazineAmmoCargo,			// VestMagazines
 			(getWeaponCargo backpackContainer player) call cargoToPairs, // BackpackWeapons
 			(getItemCargo backpackContainer player) call cargoToPairs, 	// BackpackItems
-			_bMags 														// BackpackMagazines
+			(backpackContainer player) call fn_magazineAmmoCargo		// BackpackMagazines
 		];
-
 
 		// Create _gear array
 		_wastelandItems = [];
@@ -124,6 +91,8 @@ savePlayerHandle = _this spawn
 			};
 		} forEach call mf_inventory_all;
 
+		_partialMags = [];
+		
 		_gear =
 		[
 			uniform player,  				// "Uniform"
