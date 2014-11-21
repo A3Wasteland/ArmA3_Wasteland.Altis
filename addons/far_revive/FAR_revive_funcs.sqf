@@ -284,35 +284,48 @@ call mf_compile;
 
 FAR_CheckFriendlies =
 {
-	private ["_units", "_msg", "_medics", "_dir", "_cardinal"];
+	scopeName "FAR_CheckFriendlies";
+	private ["_units", "_msg", "_medics", "_medicsText", "_dir", "_cardinal"];
 
 	_units = player nearEntities ["AllVehicles", 1000];
-	_msg = "<t underline='true'>Nearby medics</t>";
-	_medics = "";
+	_msg = "<t underline='true'>Nearby medics</t>"; // Non-breaking space (Alt+255) between "nearby" and "medics", otherwise the underline is split between the 2 words
+	_medics = [];
+	_medicsText = "";
 
 	{
 		{
 			if (alive _x && (_x != player) && (isPlayer _x || FAR_Debugging) && {_x call FAR_IsFriendlyMedic}) then
 			{
-				_dir = [player, _x] call BIS_fnc_dirTo;
-				_cardinal = switch (true) do
-				{
-					case (_dir >= 337.5): { "N" };
-					case (_dir >= 292.5): { "NW" };
-					case (_dir >= 247.5): { "W" };
-					case (_dir >= 202.5): { "SW" };
-					case (_dir >= 157.5): { "S" };
-					case (_dir >= 112.5): { "SE" };
-					case (_dir >= 67.5):  { "E" };
-					case (_dir >= 22.5):  { "NE" };
-					default               { "N" };
-				};
+				_medics pushBack _x;
 
-				_medics = _medics + format ["<br/>%1 - %2m %3", name _x, floor ((vehicle _x) distance player), _cardinal];
+				if (count _medics >= 7) then
+				{
+					breakTo "FAR_CheckFriendlies";
+				};
 			};
 		} forEach crew _x;
 	} forEach _units;
 
-	_msg + (if (_medics == "") then { "<br/>- none -" } else { _medics })
+	[_medics, [], {(vehicle _x) distance player}, "ASCEND"] call BIS_fnc_sortBy;
+
+	{
+		_dir = [player, _x] call BIS_fnc_dirTo;
+		_cardinal = switch (true) do
+		{
+			case (_dir >= 337.5): { "N" };
+			case (_dir >= 292.5): { "NW" };
+			case (_dir >= 247.5): { "W" };
+			case (_dir >= 202.5): { "SW" };
+			case (_dir >= 157.5): { "S" };
+			case (_dir >= 112.5): { "SE" };
+			case (_dir >= 67.5):  { "E" };
+			case (_dir >= 22.5):  { "NE" };
+			default               { "N" };
+		};
+
+		_medicsText = _medicsText + format ["<br/>%1 - %2m %3", name _x, floor ((vehicle _x) distance player), _cardinal];
+	} forEach _medics;
+
+	_msg + (if (_medicsText == "") then { "<br/>- none -" } else { _medicsText })
 }
 call mf_compile;
