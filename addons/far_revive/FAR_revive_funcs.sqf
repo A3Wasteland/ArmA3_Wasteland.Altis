@@ -161,6 +161,11 @@ FAR_Drag =
 				[player, "AcinPknlMstpSrasWrflDnon"] call switchMoveGlobal;
 			};
 
+			if (currentWeapon player != primaryWeapon player) then
+			{
+				player selectWeapon primaryWeapon player;
+			};
+
 			sleep 0.5;
 		};
 	};
