@@ -27,6 +27,12 @@ if !(_vehicle isKindOf "UAV_02_base_F") then
 	_vehicle disableTIEquipment true;
 };
 
+{
+	_vehicle setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x, true];
+} forEach (_class call getHitPoints);
+
+_vehicle setVariable ["A3W_hitPointSelections", true, true];
+
 _vehicle setVariable ["A3W_handleDamageEH", _vehicle addEventHandler ["HandleDamage", vehicleHandleDamage]];
 _vehicle setVariable ["A3W_dammagedEH", _vehicle addEventHandler ["Dammaged", vehicleDammagedEvent]];
 _vehicle setVariable ["A3W_engineEH", _vehicle addEventHandler ["Engine", vehicleEngineEvent]];

@@ -77,6 +77,7 @@ allPlayers = [_serverFunc, "allPlayers.sqf"] call mf_compile;
 applyVehicleTexture = "client\systems\vehicleStore\applyVehicleTexture.sqf" call mf_compile;
 cargoToPairs = [_serverFunc, "cargoToPairs.sqf"] call mf_compile;
 detachTowedObject = [_serverFunc, "detachTowedObject.sqf"] call mf_compile;
+FAR_setKillerInfo = "addons\far_revive\FAR_setKillerInfo.sqf" call mf_compile;
 findSafePos = [_serverFunc, "findSafePos.sqf"] call mf_compile;
 fn_addScore = [_serverFunc, "fn_addScore.sqf"] call mf_compile;
 fn_addToPairs = [_serverFunc, "fn_addToPairs.sqf"] call mf_compile;
@@ -113,6 +114,7 @@ switchMoveGlobal = [_clientFunc, "switchMoveGlobal.sqf"] call mf_compile;
 vehicleDammagedEvent = [_serverFunc, "vehicleDammagedEvent.sqf"] call mf_compile;
 vehicleEngineEvent = [_serverFunc, "vehicleEngineEvent.sqf"] call mf_compile;
 vehicleHandleDamage = [_serverFunc, "vehicleHandleDamage.sqf"] call mf_compile;
+vehicleHitTracking = [_serverFunc, "vehicleHitTracking.sqf"] call mf_compile;
 
 "pvar_switchMoveGlobal" addPublicVariableEventHandler { ((_this select 1) select 0) switchMove ((_this select 1) select 1) };
 "pvar_detachTowedObject" addPublicVariableEventHandler { (_this select 1) spawn detachTowedObject };
