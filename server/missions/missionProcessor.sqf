@@ -58,6 +58,8 @@ diag_log format ["WASTELAND SERVER - %1 Mission%2 waiting to be finished: %3", M
 _failed = false;
 _startTime = diag_tickTime;
 
+if (isNil "_ignoreAiDeaths") then { _ignoreAiDeaths = false };
+
 waitUntil
 {
 	sleep 1;
@@ -70,7 +72,7 @@ waitUntil
 
 	_failed = ((!isNil "_waitUntilCondition" && {call _waitUntilCondition}) || diag_tickTime - _startTime >= _missionTimeout);
 
-	(_failed || {alive _x} count units _aiGroup == 0)
+	(_failed || (!_ignoreAiDeaths && {alive _x} count units _aiGroup == 0))
 };
 
 if (_failed) then
