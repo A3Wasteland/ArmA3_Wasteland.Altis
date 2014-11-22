@@ -19,13 +19,13 @@ _serverVehicles = [format["getAllServerVehicles:%1", call(A3W_extDB_ServerID)], 
 _serverVehiclesIDs = [];
 
 {
-	_db_id = _x select 0;
-
+	_vdb_id = _x select 0;
+	_serverVehiclesIDs pushBack _vdb_id;
 	_class = _x select 1;
 	_pos = _x select 2;
 	_hoursAlive = _x select 4;
 
-	if (!isNil "_class" && !isNil "_pos" && {(_maxLifetime <= 0 || _hoursAlive < _maxLifetime) && (_maxUnusedTime <= 0 || _hoursUnused < _maxUnusedTime)}) then
+	if (!isNil "_class" && !isNil "_pos" && {(_maxLifetime <= 0 || _hoursAlive < _maxLifetime)/* && (_maxUnusedTime <= 0 || _hoursUnused < _maxUnusedTime*/}) then
 	{
 		_variables = _x select 8;
 		_dir = _x select 3;
@@ -47,17 +47,17 @@ _serverVehiclesIDs = [];
 
 		_veh setVariable ["vehSaving_hoursAlive", _hoursAlive];
 		_veh setVariable ["vehSaving_spawningTime", diag_tickTime];
-		_veh setVariable ["vehSaving_hoursUnused", _hoursUnused];
 		_veh setVariable ["vehSaving_lastUse", diag_tickTime];		
-
+		_veh setVariable ["vdb_id", _vdb_id];
+		
 		_veh setDamage _damage;
 		{ _veh setHitPointDamage _x } forEach _hitPoints;
 
 		_veh setFuel _fuel;
 
-		if (!isNil "_textures") then
+		if (!isNil "_textures" && _textures != "") then
 		{
-			_veh setVariable ["BIS_enableRandomization", false, true];
+			/*_veh setVariable ["BIS_enableRandomization", false, true];
 
 			_objTextures = [];
 			{
@@ -66,9 +66,13 @@ _serverVehiclesIDs = [];
 					_veh setObjectTextureGlobal [_x, _texture];
 					[_objTextures, _x, _texture] call fn_setToPairs;
 				} forEach (_x select 1);
-			} forEach _textures;
+			} forEach _textures;*/
+			
+			[_veh, _textures] call applyVehicleTexture;
+			_veh setVariable ["Texture", _texture, true];
+			
 
-			_veh setVariable ["A3W_objectTextures", _objTextures, true];
+			//_veh setVariable ["A3W_objectTextures", _objTextures, true];
 		};
 
 		{ _veh setVariable [_x select 0, _x select 1] } forEach _variables;
@@ -140,6 +144,6 @@ _serverVehiclesIDs = [];
 	};
 } forEach _serverVehicles;
 
-diag_log format ["A3Wasteland - world persistence loaded %1 vehicles from %2", _serverVehiclesIDs, ["A3W_savingMethodName", "a rip in the fabric of space-time"] call getPublicVar];
+diag_log format ["A3Wasteland - world persistence loaded %1 vehicles from %2", count _serverVehicles, ["A3W_savingMethodName", "a rip in the fabric of space-time"] call getPublicVar];
 
 _serverVehiclesIDs
