@@ -10,7 +10,7 @@
 // General settings
 A3W_startHour = 1;                // In-game hour at mission start (0 to 23)
 A3W_timeMultiplierDay = 2.5;       // Sets the speed of time between 5 AM and 8 PM (for example, 6.0 means 6 hours in-game will pass in 1 real hour)
-A3W_timeMultiplierNight = 2.25;     // Sets the speed of time between 8 PM and 5 AM
+A3W_timeMultiplierNight = 2.0;     // Sets the speed of time between 8 PM and 5 AM
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 A3W_teamPlayersMap = 1;            // Show all friendly players on the map at all times, regardless of difficulty level (0 = no, 1 = yes)
 A3W_globalVoiceWarnTimer = 5;      // Number of seconds for which global voice chat must be active before triggering a warning (0 = disabled)
@@ -31,8 +31,8 @@ A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (
 A3W_bleedingTime = 60;             // Time in seconds for which to allow revive after a critical injury (minimum 10 seconds)
 
 A3W_healthTime = 60*5;             //seconds till death
-A3W_hungerTime = 120*60;           //seconds till starving
-A3W_thirstTime = 100*60;           //seconds till dehydrated
+A3W_hungerTime = 60*60;           //seconds till starving
+A3W_thirstTime = 50*60;           //seconds till dehydrated
 
 // Persistence settings
 A3W_playerSaving = 1;              // Save player data like position, health, inventory, etc. (0 = no, 1 = yes)

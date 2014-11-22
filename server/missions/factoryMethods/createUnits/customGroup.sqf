@@ -141,11 +141,11 @@ rifleman_loadout = {
 weighted_list = 
 [
   [1, sniper_loadout],
-  [1, aa_loadout],
-  [0.9, at_loadout],
-  [1.1, support_loadout],
-  [0.5, rifleman_loadout],
-  [0.5, grenadier_loadout]
+  [1.1, aa_loadout],
+  [1, at_loadout],
+  [1.2, support_loadout],
+  [1, rifleman_loadout],
+  [1, grenadier_loadout]
 ];
   
 get_weighted_loadout = {
