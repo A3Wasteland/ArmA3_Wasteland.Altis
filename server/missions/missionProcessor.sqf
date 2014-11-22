@@ -65,6 +65,19 @@ waitUntil
 	sleep 1;
 
 	_leaderTemp = leader _aiGroup;
+
+	// Force immediate leader change if current one is dead
+	if (!alive _leaderTemp) then
+	{
+		{
+			if (alive _x) exitWith
+			{
+				_aiGroup selectLeader _x;
+				_leaderTemp = _x;
+			};
+		} forEach units _aiGroup;
+	};
+
 	if (!isNull _leaderTemp) then { _leader = _leaderTemp }; // Update current leader
 
 	if (!isNil "_waitUntilMarkerPos") then { _marker setMarkerPos (call _waitUntilMarkerPos) };
