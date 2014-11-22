@@ -16,6 +16,7 @@ _box = _this select 0;
 _boxType = _this select 1;
 
 _box allowDamage false; // No more fucking busted crates
+_box setVariable ["A3W_inventoryLockR3F", true, true];
 
 // Clear pre-existing cargo first
 //clearBackpackCargoGlobal _box;

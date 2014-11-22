@@ -72,17 +72,17 @@ if (isNil "_cheatFlag") then
 				[19, "RscDisplayIPAddress"],
 				[30, "RscDisplayTemplateLoad (Gladtwoown)"],
 				[32, "RscDisplayIntel"],
-				[64, "RscDisplayPassword"],
-				[69, "RscDisplayPort (Itsyuka)"],
-				[71, "RscDisplayFilter"],
+				[64, "RscDisplayPassword (ShadowyFaze)"],
+				[69, "RscDisplayPort"],
+				[71, "RscDisplayFilter (Gladtwoown)"],
 				[125, "RscDisplayEditDiaryRecord (Gladtwoown)"],
 				[132, "RscDisplayHostSettings"],
-				[157, "RscDisplayPhysX3Debug (Itsyuka)"],
+				[157, "RscDisplayPhysX3Debug"],
 				[165, "RscDisplayPublishMission"],
 				[166, "RscDisplayPublishMissionSelectTags (Gladtwoown)"],
 				[167, "RscDisplayFileSelect (Lystic)"],
 				[2727, "RscDisplayLocWeaponInfo"],
-				[3030, "RscConfigEditor_Main (Wookie)"]
+				[3030, "RscConfigEditor_Main (ShadowyFaze/Wookie/Lystic)"]
 			];
 
 			_isAdmin = serverCommandAvailable "#kick";
