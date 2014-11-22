@@ -183,12 +183,14 @@ if (_playerSavingOn || _serverSavingOn) then
 		_setupPlayerDB = [_persistence] spawn compile preprocessFileLineNumbers format["persistence\server\%1\players\setupPlayerDB.sqf", _persistence]; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 	};
 
-	[_serverSavingOn, _playerSavingOn, _vehicleSavingOn, _persistence] spawn
+	[_serverSavingOn, _playerSavingOn, _vehicleSavingOn, _purchasedVehicleSavingOn, _missionVehicleSavingOn, _persistence] spawn
 	{
 		_serverSavingOn = _this select 0;
 		_playerSavingOn = _this select 1;
 		_vehicleSavingOn = _this select 2;
-		_persistence = _this select 3;
+		_purchasedVehicleSavingOn = _this select 3;
+		_missionVehicleSavingOn = _this select 4;
+		_persistence = _this select 5;
 		_serverObjectsIDs = [];
 		_serverVehiclesIDs = [];
 
@@ -203,7 +205,7 @@ if (_playerSavingOn || _serverSavingOn) then
 		
 		if ((_serverSavingOn && _vehicleSavingOn) || (_playerSavingOn && _vehicleSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
 		{
-			[_serverObjectsIDs, _serverVehiclesIDs] execVM format["persistence\server\%1\world\oSave.sqf", _persistence];
+			[_serverObjectsIDs, _serverVehiclesIDs, _purchasedVehicleSavingOn, _missionVehicleSavingOn] execVM format["persistence\server\%1\world\oSave.sqf", _persistence];
 		};
 		
 		/*if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
