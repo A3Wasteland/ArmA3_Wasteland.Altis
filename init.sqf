@@ -10,13 +10,8 @@
 
 enableSaving [false, false];
 
-currMissionDir = compileFinal str call
-{
-	private "_arr";
-	_arr = toArray str missionConfigFile;
-	_arr resize (count _arr - 15);
-	toString _arr
-};
+_descExtPath = str missionConfigFile;
+currMissionDir = compileFinal str (_descExtPath select [0, count _descExtPath - 15]);
 
 X_Server = false;
 X_Client = false;

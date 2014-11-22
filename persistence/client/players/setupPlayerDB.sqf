@@ -59,6 +59,8 @@ fn_deletePlayerData =
 				playerData_resetPos = true;
 			};
 
+			waitUntil {!isNil "bis_fnc_init"}; // wait for loading screen to be done
+
 			_data call fn_applyPlayerData;
 		};
 

@@ -28,7 +28,7 @@ while { true } do
 
 			if (owner _unit > _serverID) then
 			{
-				if (alive _unit && {!isPlayer _unit} && {["_UAV_AI", typeOf _unit] call fn_findString == -1}) then
+				if (alive _unit && !isPlayer _unit && {getText (configFile >> "CfgVehicles" >> typeOf _unit >> "simulation") != "UAVPilot"}) then
 				{
 					if (isNil "_cheatFlag") then
 					{

@@ -15,18 +15,18 @@ managedActions_arrayEval = false;
 
 while {true} do
 {
-	// Only evaluate conditions if map and pause menu are not open
-	_doEval = !visibleMap && isNull findDisplay 49 && alive player;
+	// Only evaluate conditions if no menus or dialogs are open
+	_doEval = (!visibleMap && isNull findDisplay 49 && !dialog && alive player);
 
 	_cleanup = false;
-	_evalSleepTime = 0.25;
+	_evalSleepTime = 0.333;
 	_actionsCount = count managedActions_array;
 
 	if (_actionsCount > 0) then
 	{
 		managedActions_arrayEval = true;
 
-		_evalSleepTime = (_evalSleepTime / _actionsCount) max 0.01;
+		_evalSleepTime = (_evalSleepTime / _actionsCount) max 0.005;
 
 		{
 			if !(_x isEqualTo -1) then
@@ -59,7 +59,7 @@ while {true} do
 	}
 	else
 	{
-		uiSleep _evalSleepTime;
+		sleep 1;
 	};
 
 	if (_cleanup) then
@@ -88,5 +88,5 @@ while {true} do
 		};
 	};
 
-	uiSleep 0.25;
+	//uiSleep 0.15;
 };

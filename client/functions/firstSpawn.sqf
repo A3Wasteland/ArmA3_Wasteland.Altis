@@ -101,6 +101,23 @@ player addEventHandler ["InventoryOpened",
 	_obj = _this select 1;
 	if (!simulationEnabled _obj) then { _obj enableSimulation true };
 	_obj setVariable ["inventoryIsOpen", true];
+
+	if !(_obj isKindOf "Man") then
+	{
+		if (locked _obj > 1 || (_obj getVariable ["A3W_inventoryLockR3F", false] && _obj getVariable ["R3F_LOG_disabled", false])) then
+		{
+			if (_obj isKindOf "AllVehicles") then
+			{
+				["This vehicle is locked.", 5] call mf_notify_client;
+			}
+			else
+			{
+				["This object is locked.", 5] call mf_notify_client;
+			};
+
+			true
+		};
+	};
 }];
 
 player addEventHandler ["InventoryClosed",

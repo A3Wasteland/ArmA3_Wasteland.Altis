@@ -8,17 +8,21 @@ _veh = _this select 0;
 
 if (local _veh) then
 {
-	_dmg = _veh getHitPointDamage "HitEngine";
-
-	if (!isNil "_dmg" && {_dmg >= 0.9}) then
+	// If vehicle is plane, show orange color for hull damage icon if engine is broken, because there's no engine icon
+	if (_veh isKindOf "Plane") then
 	{
-		_veh engineOn false;
+		_dmg = _veh getHitPointDamage "HitEngine";
 
-		_dmg = _veh getHitPointDamage "HitHull";
-
-		if (!isNil "_dmg" && {_dmg < 0.5}) then
+		if (!isNil "_dmg" && {_dmg >= 0.9}) then
 		{
-			_veh setHitPointDamage ["HitHull", 0.5];
+			_veh engineOn false;
+
+			_dmg = _veh getHitPointDamage "HitHull";
+
+			if (!isNil "_dmg" && {_dmg < 0.5}) then
+			{
+				_veh setHitPointDamage ["HitHull", 0.5];
+			};
 		};
 	};
 };

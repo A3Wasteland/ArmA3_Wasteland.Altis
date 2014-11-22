@@ -128,10 +128,10 @@ class ReviveGUI : IGUIBack
 		};
 
 		// centered inside RevTextBG
-		#define RevText_W (RevTextBG_W - (BORDER_X * 2))
-		#define RevText_H (RevTextBG_H - (BORDER_Y * 2))
-		#define RevText_X (RevTextBG_X + BORDER_X)
-		#define RevText_Y (RevTextBG_Y + BORDER_Y)
+		#define RevText_W (RevTextBG_W - BORDER_X)
+		#define RevText_H (RevTextBG_H - BORDER_Y)
+		#define RevText_X (RevTextBG_X + (BORDER_X / 2))
+		#define RevText_Y (RevTextBG_Y + (BORDER_Y / 2))
 
 		x = RevText_X;
 		y = RevText_Y;
