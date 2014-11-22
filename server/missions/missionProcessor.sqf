@@ -8,7 +8,7 @@ if (!isServer) exitwith {};
 
 #define MISSION_LOCATION_COOLDOWN (10*60)
 
-private ["_controllerSuffix", "_missionTimeout", "_availableLocations", "_missionLocation", "_leader", "_marker", "_failed", "_startTime", "_leaderTemp", "_lastPos", "_floorHeight"];
+private ["_controllerSuffix", "_missionTimeout", "_availableLocations", "_missionLocation", "_leader", "_marker", "_failed", "_complete", "_startTime", "_leaderTemp", "_lastPos", "_floorHeight"];
 
 // Variables that can be defined in the mission script :
 private ["_missionType", "_locationsArray", "_aiGroup", "_missionPos", "_missionPicture", "_missionHintText", "_successHintMessage", "_failedHintMessage"];
@@ -56,13 +56,29 @@ call missionHint;
 diag_log format ["WASTELAND SERVER - %1 Mission%2 waiting to be finished: %3", MISSION_PROC_TYPE_NAME, _controllerSuffix, _missionType];
 
 _failed = false;
+_complete = false;
 _startTime = diag_tickTime;
+
+if (isNil "_ignoreAiDeaths") then { _ignoreAiDeaths = false };
 
 waitUntil
 {
 	sleep 1;
 
 	_leaderTemp = leader _aiGroup;
+
+	// Force immediate leader change if current one is dead
+	if (!alive _leaderTemp) then
+	{
+		{
+			if (alive _x) exitWith
+			{
+				_aiGroup selectLeader _x;
+				_leaderTemp = _x;
+			};
+		} forEach units _aiGroup;
+	};
+
 	if (!isNull _leaderTemp) then { _leader = _leaderTemp }; // Update current leader
 
 	if (!isNil "_waitUntilMarkerPos") then { _marker setMarkerPos (call _waitUntilMarkerPos) };
@@ -70,7 +86,13 @@ waitUntil
 
 	_failed = ((!isNil "_waitUntilCondition" && {call _waitUntilCondition}) || diag_tickTime - _startTime >= _missionTimeout);
 
-	(_failed || {alive _x} count units _aiGroup == 0)
+	if (!isNil "_waitUntilSuccessCondition" && {call _waitUntilSuccessCondition}) then
+	{
+		_failed = false;
+		_complete = true;
+	};
+
+	(_failed || _complete || (!_ignoreAiDeaths && {alive _x} count units _aiGroup == 0))
 };
 
 if (_failed) then

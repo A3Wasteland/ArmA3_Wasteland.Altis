@@ -94,8 +94,7 @@ _globalVoiceWarnTimer = ["A3W_globalVoiceWarnTimer", 5] call getPublicVar;
 _globalVoiceWarning = 0;
 _globalVoiceMaxWarns = ceil (["A3W_globalVoiceMaxWarns", 5] call getPublicVar);
 
-private "_uavMapCtrl";
-_uavMapCtrl = controlNull;
+private ["_mapCtrls", "_mapCtrl"];
 
 while {true} do
 {
@@ -316,20 +315,28 @@ while {true} do
 		};
 	};
 
-	// Add player markers to UAV Terminal
-	if (isNull _uavMapCtrl) then
+	if (isNil "_mapCtrls") then
 	{
-		_uavTerminal = findDisplay 160;
-
-		if (!isNull _uavTerminal) then
-		{
-			_uavMapCtrl = _uavTerminal displayCtrl 51;
-			_uavMapCtrl ctrlAddEventHandler ["Draw",
-			{
-				{ (_this select 0) drawIcon _x } forEach drawPlayerMarkers_array;
-			}];
-		};
+		_mapCtrls =
+		[
+			[{(uiNamespace getVariable ["RscDisplayAVTerminal", displayNull]) displayCtrl 51}, controlNull]/*, // UAV Terminal
+			[{artilleryComputerDisplayGoesHere displayCtrl 500}, controlNull]*/  // Artillery computer - cannot be enabled until this issue is resolved: http://feedback.arma3.com/view.php?id=21546
+		];
 	};
+
+	// Add player markers to misc map controls
+	{
+		if (isNull (_x select 1)) then
+		{
+			_mapCtrl = call (_x select 0);
+
+			if (!isNull _mapCtrl) then
+			{
+				_mapCtrl ctrlAddEventHandler ["Draw", { _ctrl = _this select 0; { _ctrl drawIcon _x } forEach drawPlayerMarkers_array }];
+				_x set [1, _mapCtrl];
+			};
+		};
+	} forEach _mapCtrls;
 
 	uiSleep 1;
 };
