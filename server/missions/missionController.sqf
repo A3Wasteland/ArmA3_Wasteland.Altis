@@ -64,7 +64,8 @@ while {true} do
 
 	uiSleep _missionDelay;
 
-	private ["_setupVars", "_setupObjects", "_waitUntilMarkerPos", "_waitUntilExec", "_waitUntilCondition", "_ignoreAiDeaths", "_failedExec", "_successExec"]; // these should be defined in the mission script
+	// these should be defined in the mission script
+	private ["_setupVars", "_setupObjects", "_waitUntilMarkerPos", "_waitUntilExec", "_waitUntilCondition", "_waitUntilSuccessCondition", "_ignoreAiDeaths", "_failedExec", "_successExec"];
 
 	[_controllerSuffix] call compile preprocessFileLineNumbers format ["server\missions\%1\%2.sqf", MISSION_CTRL_FOLDER, _nextMission];
 
