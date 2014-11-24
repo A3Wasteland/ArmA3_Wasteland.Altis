@@ -27,7 +27,8 @@ SideMissions =
 	["mission_SunkenSupplies", 1],
 	//["mission_AirWreck", 1.5],
 	//["mission_WepCache", 1.5],
-	["mission_Outpost", 3],
+	["mission_Outpost", 2],
+	["mission_HostileInfantry", 3],
 	["mission_Truck", 1]
 ];
 
