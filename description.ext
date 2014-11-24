@@ -55,6 +55,7 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "addons\proving_ground\PG_config.hpp"
 #include "addons\JTS_PM\PM_Compact.hpp"
 #include "addons\outlw_magRepack\MagRepack_Config.hpp"
+#include "addons\taw_vd\dialog.hpp"
 
 class RscTitles
 {
@@ -66,10 +67,11 @@ class RscTitles
 
 class CfgFunctions
 {
-	class A3W
+  #include "addons\taw_vd\CfgFunctions.hpp"
+  class A3W
 	{
 		#include "server\CfgFunctions.hpp"
-	};
+  };
 };
 
 class CfgNotifications
