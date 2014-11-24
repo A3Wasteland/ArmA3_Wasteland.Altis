@@ -345,7 +345,7 @@ class TAW_VD
 		class Title : TAWVD_RscTitle {
 			colorBackground[] = {0, 0, 0, 0};
 			idc = -1;
-			text = "TAW View Distance Script";
+			text = "View Distance Script";
 			x = 0.3;
 			y = 0.2;
 			w = 0.8;
