@@ -345,7 +345,7 @@ class TAW_VD
 		class Title : TAWVD_RscTitle {
 			colorBackground[] = {0, 0, 0, 0};
 			idc = -1;
-			text = "View Distance Script";
+			text = "View Distance";
 			x = 0.3;
 			y = 0.2;
 			w = 0.8;
@@ -449,7 +449,7 @@ class TAW_VD
 			y = 0.656;
 		};
 		
-		class VD_terr_none : TAWVD_activeText
+		/*class VD_terr_none : TAWVD_activeText
 		{
 			idc = -1;
 			text = "None";
@@ -458,7 +458,7 @@ class TAW_VD
 			
 			x = 0.38; y = 0.50;
 			w = 0.275; h = 0.04;
-		};
+		};*/
 		
 		class VD_terr_low : TAWVD_activeText
 		{
@@ -467,7 +467,7 @@ class TAW_VD
 			action = "['low'] call TAWVD_fnc_onTerrainChange;";
 			sizeEx = 0.04;
 			
-			x = 0.47; y = 0.50;
+			x = 0.37; y = 0.50;
 			w = 0.275; h = 0.04;
 		};
 		
@@ -478,7 +478,7 @@ class TAW_VD
 			action = "['norm'] call TAWVD_fnc_onTerrainChange;";
 			sizeEx = 0.04;
 			
-			x = 0.56; y = 0.50;
+			x = 0.50; y = 0.50;
 			w = 0.275; h = 0.04;
 		};
 		

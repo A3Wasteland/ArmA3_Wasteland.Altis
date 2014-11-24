@@ -174,17 +174,17 @@ class playerSettings {
 			onButtonClick = "setViewDistance 2200;";
 			x = 0.02; y = 0.5;
 			w = 0.125; h = 0.033 * safezoneH;
-		};
+		};*/
 
 		class btnDistanceFar : w_RscButton {
 			idc = -1;
-			text = "Far";
-			onButtonClick = "setViewDistance 3300;";
+			text = "Messages";
+			onButtonClick = "[] execVM 'addons\JTS_PM\JTS_PM.sqf'";
 			x = 0.02; y = 0.57;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
 
-		class btnDistanceInsane : w_RscButton {
+		/*class btnDistanceInsane : w_RscButton {
 			text = "Insane";
 			onButtonClick = "setViewDistance 5000;";
 			x = 0.02; y = 0.60;
