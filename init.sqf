@@ -17,6 +17,9 @@ X_Server = false;
 X_Client = false;
 X_JIP = false;
 
+//disable TAW grass Option 'None'
+tawvd_disablenone = true;
+
 // versionName = ""; // Set in STR_WL_WelcomeToWasteland in stringtable.xml
 
 if (isServer) then { X_Server = true };
