@@ -54,7 +54,7 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
 #include "addons\JTS_PM\PM_Compact.hpp"
-#include "outlw_magRepack\MagRepack_Config.hpp"
+#include "addons\outlw_magRepack\MagRepack_Config.hpp"
 
 class RscTitles
 {

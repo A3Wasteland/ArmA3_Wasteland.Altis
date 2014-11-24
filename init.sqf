@@ -66,4 +66,4 @@ if (isServer) then
 [] execVM "addons\JTS_PM\Functions.sqf";
 [] execVM "addons\scripts\servercredits.sqf";
 [] execVM "addons\scripts\zlt_fastrope.sqf";
-[] execVM "outlw_magRepack\MagRepack_init_sv.sqf";
+[] execVM "addons\outlw_magRepack\MagRepack_init_sv.sqf";
