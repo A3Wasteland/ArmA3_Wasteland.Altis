@@ -16,7 +16,7 @@ while {true} do
 		_old = player;
 		_old removeAction tawvd_action;
 		waitUntil {alive player};
-		tawvd_action = player addAction["<t color='#FF0000'>Settings</t>",TAWVD_fnc_openTAWVD,[],-99,false,false,"",''];
+		tawvd_action = player addAction["View Distance",TAWVD_fnc_openTAWVD,[],-99,false,false,"",''];
 	};
 	[] call TAWVD_fnc_updateViewDistance;
 	waitUntil {_recorded != vehicle player || !alive player};
