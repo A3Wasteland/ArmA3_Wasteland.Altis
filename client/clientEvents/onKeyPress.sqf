@@ -85,6 +85,18 @@ switch (true) do
 
 			_handled = true;
 		};
+
+	// Ear Plugs - End Key
+	case (_key == 207):
+	{
+		if (soundVolume <= 0.5) then
+		{
+			0.5 fadeSound 1;
+			["You've taken out your ear plugs.",4] call mf_notify_client;
+		} else {
+			0.5 fadeSound 0.1;
+			["You've inserted your ear plugs.",4] call mf_notify_client;
+		};
 	};
 };
 
