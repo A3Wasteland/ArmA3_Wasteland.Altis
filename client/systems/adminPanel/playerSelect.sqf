@@ -43,37 +43,24 @@ if (_uid call isAdmin) then
 			if (!isNil "_target") then
 			{
 				_spectating = ctrlText _spectateButton;
-				if (_spectating == "Spectate") then {
-					_spectateButton ctrlSetText "Spectating";
-					//player commandChat format ["Viewing %1.", name _target];
-
-					if (!isNil "_camadm") then { camDestroy _camadm; };
-					_camadm = "camera" camCreate ([(position vehicle _target select 0) - 5,(position vehicle _target select 1), (position vehicle _target select 2) + 10]);
-					_camadm cameraEffect ["external", "TOP"];
-					_camadm camSetTarget (vehicle _target);
-					_camadm camCommit 1;
-
-					_rnum = 0;
-					while {ctrlText _spectateButton == "Spectating"} do {
-						switch (_rnum) do
-						{
-							if (daytime > 19 || daytime < 5) then {camUseNVG true;} else {camUseNVG false;};
-							case 0: {detach _camadm; _camadm attachTo [(vehicle _target), [0,-10,4]]; _camadm setVectorUp [0, 1, 5];};
-							case 1: {detach _camadm; _camadm attachTo [(vehicle _target), [0,10,4]]; _camadm setDir 180; _camadm setVectorUp [0, 1, -5];};
-							case 2: {detach _camadm; _camadm attachTo [(vehicle _target), [0,1,50]]; _camadm setVectorUp [0, 50, 1];};
-							case 3: {detach _camadm; _camadm attachTo [(vehicle _target), [-10,0,2]]; _camadm setDir 90; _camadm setVectorUp [0, 1, 5];};
-							case 4: {detach _camadm; _camadm attachTo [(vehicle _target), [10,0,2]]; _camadm setDir -90; _camadm setVectorUp [0, 1, -5];};
-						};
-						player commandchat "Viewing cam " + str(_rnum) + " on " + str(name vehicle _target);
-						_rnum = _rnum + 1;
-						if (_rnum > 4) then {_rnum = 0;};
-						sleep 5;
+				if (_spectating == "Spectate") then
+				{
+					if (!([player] call camera_enabled)) then
+					{
+						[] call camera_toggle;
 					};
+
+					[player, _target] call camera_attach_to_target;
+					player commandChat format ["Viewing %1.", name _target];
+					_spectateButton ctrlSetText "Spectating";
 				} else {
 					_spectateButton ctrlSetText "Spectate";
-					player commandchat format ["No Longer Viewing.", name _target];
-					player cameraEffect ["terminate","back"];
-					if (!isNil "_camadm") then { camDestroy _camadm; };
+					player commandChat format ["No Longer Viewing.", name _target];
+
+					if ([player] call camera_enabled) then
+					{
+						[] call camera_toggle;
+					};
 				};
 			};
 		};
