@@ -44,9 +44,14 @@ if (_uid call isAdmin) then
 			{
 				_spectating = ctrlText _spectateButton;
 				if (_spectating == "Spectate") then {
-					_spectateButton ctrlSetText "Spectating";
-					//player commandChat format ["Viewing %1.", name _target];
-
+         if (!([player] call camera_enabled)) then {
+           [] call camera_toggle;
+         };
+         [player, _target] call camera_attach_to_target;
+         player commandChat format ["Viewing %1.", name _target];
+         _spectateButton ctrlSetText "Spectating";
+         
+         /*
 					if (!isNil "_camadm") then { camDestroy _camadm; };
 					_camadm = "camera" camCreate ([(position vehicle _target select 0) - 5,(position vehicle _target select 1), (position vehicle _target select 2) + 10]);
 					_camadm cameraEffect ["external", "TOP"];
@@ -69,11 +74,17 @@ if (_uid call isAdmin) then
 						if (_rnum > 4) then {_rnum = 0;};
 						sleep 5;
 					};
+          */
 				} else {
 					_spectateButton ctrlSetText "Spectate";
-					player commandchat format ["No Longer Viewing.", name _target];
-					player cameraEffect ["terminate","back"];
+					player commandChat format ["No Longer Viewing.", name _target];
+          
+          if ([player] call camera_enabled) then {
+            [] call camera_toggle;
+          };
+					/*player cameraEffect ["terminate","back"];
 					if (!isNil "_camadm") then { camDestroy _camadm; };
+          */
 				};
 			};
 		};
