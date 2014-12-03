@@ -133,7 +133,7 @@ FAR_findKiller = "addons\far_revive\FAR_findKiller.sqf" call mf_compile;
 	[
 		"Killed",
 		{
-			if (!isNil "FAR_Player_Unconscious_thread" && {!scriptDone FAR_Player_Unconscious_thread}) then
+			if (!isNil "FAR_Player_Unconscious_thread" && {typeName FAR_Player_Unconscious_thread == "SCRIPT" && {!scriptDone FAR_Player_Unconscious_thread}}) then
 			{
 				terminate FAR_Player_Unconscious_thread;
 				closeDialog ReviveBlankGUI_IDD;
