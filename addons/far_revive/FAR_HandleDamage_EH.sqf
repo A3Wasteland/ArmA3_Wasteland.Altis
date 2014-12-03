@@ -5,6 +5,7 @@
 //	@file Author: Farooq, AgentRev
 
 #include "FAR_defines.sqf"
+#include "gui_defines.hpp"
 
 //private ["_unit", "_selection", "_damage", "_source", "_dead", "_killerVehicle", "_oldDamage"];
 
@@ -94,10 +95,15 @@ else
 		_unit enableFatigue true;
 		_unit setFatigue 1;
 
-		if (isNil "FAR_Player_Unconscious_thread" || {scriptDone FAR_Player_Unconscious_thread}) then
+		if (!isNil "FAR_Player_Unconscious_thread" && {typeName FAR_Player_Unconscious_thread == "SCRIPT" && {!scriptDone FAR_Player_Unconscious_thread}}) then
 		{
-			FAR_Player_Unconscious_thread = [_unit, _source] spawn FAR_Player_Unconscious;
+			terminate FAR_Player_Unconscious_thread;
 		};
+
+		closeDialog ReviveBlankGUI_IDD;
+		closeDialog ReviveGUI_IDD;
+
+		FAR_Player_Unconscious_thread = [_unit, _source] spawn FAR_Player_Unconscious;
 
 		_damage = 0.5;
 
