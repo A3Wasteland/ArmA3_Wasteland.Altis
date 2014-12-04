@@ -90,6 +90,18 @@
 		<Key ID="STR_WL_ShopDescriptions_Warchest">
 			<English>A safe to store your team's money.</English>
 		</Key>
+        <Key ID="STR_WL_ShopDescriptions_LSD">
+            <English>A synthetic crystalline compound, lysergic acid diethylamide, that is a potent hallucinogenic drug.</English>
+        </Key>
+        <Key ID="STR_WL_ShopDescriptions_Marijuana">
+            <English>Often consumed for its psychoactive and physiological effects, which can include heightened mood or euphoria, relaxation, and an increase in appetite.</English>
+        </Key>
+        <Key ID="STR_WL_ShopDescriptions_Cocaine">
+            <English>An addictive drug derived from coca or prepared synthetically, used as an illegal stimulant and sometimes medicinally as a local anesthetic.</English>
+        </Key>
+        <Key ID="STR_WL_ShopDescriptions_Heroin">
+            <English>A highly addictive analgesic drug derived from morphine, often used illicitly as a narcotic producing euphoria.</English>
+        </Key>
 	</Package>
 	<Package name="Dialogs">
 		<Key ID="STR_WL_dialog_TeamkillText">
