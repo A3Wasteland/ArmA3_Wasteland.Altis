@@ -43,9 +43,11 @@ water_edge_check_effects = {
 	
 	if (water_edge_colorized) then {
 	  1 setFog 1;
+	  setObjectViewDistance 15;
 	};
 
 	if (water_edge_colorized && not(_in_water_edge)) then {
+	  setObjectViewDistance viewDistance;
 		1 setFog 0;
 		ppEffectDestroy watter_edge_effect;
 		water_edge_colorized = false;
