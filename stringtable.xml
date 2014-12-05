@@ -3,114 +3,146 @@
 	<Package name="General">
 		<Key ID="STR_WL_Gen_TeamWEST">
 			<English>BLUFOR</English>
+			<Russian>Синие</Russian>
 		</Key>
 		<Key ID="STR_WL_Gen_TeamWEST_2">
 			<English>BLUFOR</English>
+			<Russian>Синие</Russian>
 		</Key>
 		<Key ID="STR_WL_Gen_TeamEAST">
 			<English>OPFOR</English>
+			<Russian>Красные</Russian>
 		</Key>
 		<Key ID="STR_WL_Gen_TeamEAST_2">
 			<English>OPFOR</English>
+			<Russian>Красные</Russian>
 		</Key>
 		<Key ID="STR_WL_Gen_TeamGUER">
 			<English>Independent</English>
+			<Russian>Независимые</Russian>
 		</Key>
 		<Key ID="STR_WL_Gen_TeamGUER_2">
 			<English>Independent</English>
+			<Russian>Независимые</Russian>
 		</Key>
 	</Package>
 	<Package name="TeamLock">
 		<Key ID="STR_WL_Punish_Teamkiller">
 			<English>You have been punished for teamkilling twice during this server session. Your inventory has been wiped, and you are now locked to the Independent side.</English>
+			<Russian>За время текущей сессии сервера, вы уже дважды были наказаны за убийство своих. Поэтому, ваш инвентарь аннулируется и вас перекидывают на сторону Независимых.</Russian>
 		</Key>
 		<Key ID="STR_WL_Loading_Teamkiller">
 			<English>You are restricted to the Independent side, due to having done 2 or more teamkills during this server session.</English>
+			<Russian>Ваш выбор сторон ограничен Независимыми, так как вы уже дважды или более раз убивали своих за время текущей сессии сервера.</Russian>
 		</Key>
 		<Key ID="STR_WL_Loading_Teamswitched">
 			<English>You have played as %1 for too long and cannot switch to the other team. You can still play as Independent. (or if online, ask an admin to unlock you)</English>
+			<Russian>Вы уже слишком долго играли за %1 чтобы поменять команду. Тем не менее, вы всё еще можете перейти за Независимых. (За разблокировкой, обращайтесь к администрации)</Russian>
 		</Key>
 	</Package>
 	<Package name="WelcomeMessage">
 		<Key ID="STR_WL_WelcomeToWasteland">
 			<English>&lt;t color='#FF8000' size='2.5' &gt;A3Wasteland Altis v1.0b &lt;/t&gt;</English>
+			<Russian>&lt;t color='#FF8000' size='2.5' &gt;A3Wasteland Алтис v1.0b &lt;/t&gt;</Russian>
 		</Key>
 		<Key ID="STR_WL_YouAreInTeam">
 			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* Attacking or stealing from other %4 players is &lt;t color="#FF1111"&gt;FORBIDDEN&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;br/&gt;* You will be locked to your team after 3 minutes.&lt;/t&gt;</English>
+			<Russian>&lt;t color='#FFFFFF' size='1.5' &gt;* Вы в команде &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt;&lt;br/&gt;* Причинять вред или ущерб другим игрокам из команды %4 &lt;t color="#FF1111"&gt;ЗАПРЕШЕНО&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;В ОБЩЕМ НЕ БОЛТАТЬ&lt;/t&gt;&lt;br/&gt;* Правила сервера в закладке «Server Rules» на экране карты.&lt;br/&gt;* Перезагрузки сервера по усмотрению администраторов.&lt;br/&gt;* Через 3 минуты ваш выбор сторон будет привязан к нынешней команде.&lt;/t&gt;</Russian>
 		</Key>
 		<Key ID="STR_WL_YouAreInFFA">
 			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* You are &lt;t color="#00aa00"&gt;FREE TO ATTACK ANYONE&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;/t&gt;</English>
+			<Russian>&lt;t color='#FFFFFF' size='1.5' &gt;* Вы в команде &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt;&lt;br/&gt;* Вы в праве &lt;t color="#00aa00"&gt;РУБИТЬ КОГО ПОПАЛО&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;В ОБЩЕМ НЕ БОЛТАТЬ&lt;/t&gt;&lt;br/&gt;* Правила сервера в закладке «Server Rules» на экране карты.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;/t&gt;</Russian>
 		</Key>
 		<Key ID="STR_WL_MapMoreInfo">
-			<English>&lt;t color='#FFFFFF' size='1.5' &gt;Report bugs and suggestions at http://forums.a3wasteland.com/ &lt;br/&gt;Server restarts are done at the admin's discretion.&lt;br/&gt;Press the Windows or Home key to toggle player names&lt;br/&gt;For more info please see the map&lt;br/&gt;</English>
+			<English>&lt;t color='#FFFFFF' size='1.5' &gt;Report bugs and suggestions at forums.a3wasteland.com &lt;br/&gt;Server restarts are done at the admin's discretion.&lt;br/&gt;Press the Windows or Home key to toggle player names.&lt;br/&gt;For more info please see the map.&lt;br/&gt;</English>
+			<Russian>&lt;t color='#FFFFFF' size='1.5' &gt;Для предложений по игре или сообщений о возможных ошибках, пишите нам по адресу forums.a3wasteland.com &lt;br/&gt;Перезагрузки сервера по усмотрению администраторов.&lt;br/&gt;Режим отображения имён игроков через клавиши «Windows» или «Home».&lt;br/&gt;Подробная информация на экране карты.&lt;br/&gt;</Russian>
 			<!-- &lt;br/&gt;&lt;/t&gt;&lt;t size='1.3'&gt;[Update X]&lt;/t&gt;&lt;br/&gt; -->
 		</Key>
 	</Package>
 	<Package name="TeamKillWarningMessage">
 		<Key ID="STR_TK_MESSAGE">
 			<English>&lt;t size='2' color='#ff0000'&gt;Team killing is against the rules!&lt;/t&gt;&lt;br/&gt;If this was a mistake then you must explain yourself and say sorry, otherwise they will mark you as teamkiller and you will get kicked.</English>
+			<Russian>&lt;t size='2' color='#ff0000'&gt;Убийство своих противоречит нашим правилам!&lt;/t&gt;&lt;br/&gt;Если данный инцидент произошёл случайно или по ошибке, то, будьте добры, объяснитесь и попросите извинения. В противном случае, потерпевший игрок может отметить вас как «убийца своих», за что вас и выгонят с сервера.</Russian>
 		</Key>
 	</Package>
 	<Package name="Diary">
 		<Key ID="STR_WL_Diary_RulesContent">
-			<English>&lt;br/&gt;    1. Keep bad language to a minimum. If you have a problem with another player, take it to direct.&lt;br/&gt;    2. NO VOIP IN GLOBAL. Use the channels or Teamspeak!.&lt;br/&gt;    3. Team killing when you are in BLUFOR or OPFOR is forbidden and punishable. Play as Independent if you want to be free for all.&lt;br/&gt;    4. Revealing information about your (ex)team to other teams is lame and not appreciated&lt;br/&gt;    5. Do not exploit R3F or any other add-ons or you will be banned.&lt;br/&gt;    6. Using or spamming with loud\long custom sound commands will cause punishment up to permanent ban</English>
+			<English>&lt;br/&gt;    1. Keep bad language to a minimum. If you have a problem with another player, take it to direct.&lt;br/&gt;    2. NO VOIP IN GLOBAL. Use the channels or Teamspeak!.&lt;br/&gt;    3. Team killing when you are in BLUFOR or OPFOR is forbidden and punishable. Play as Independent if you want to be free for all.&lt;br/&gt;    4. Revealing information about your (ex)team to other teams is lame and not appreciated.&lt;br/&gt;    5. Do not exploit R3F or any other add-ons or you will be banned.&lt;br/&gt;    6. Using or spamming with loud\long custom sound commands will cause punishment up to permanent ban</English>
+			<Russian>&lt;br/&gt;    1. Мат только по теме и в рамках приличия. Если вы не поладили с другим игроком, то постарайтесь разобраться напрямую, а не на публике.&lt;br/&gt;    2. В ОБЩЕМ НЕ БОЛТАТЬ. Используйте каналы Тимспика!.&lt;br/&gt;    3. Намеренное убийство своих, играя за команду Синих или Красных, строго запрещено и наказуемо. Хотите порубиться в духе «каждый за себя», идите играть за Независимых.&lt;br/&gt;    4. Не раскрывайте своих карт противоположной команде о собственной или бывшей команде. Такого рода подлости не приветствуются.&lt;br/&gt;    5. Намеренное использование ошибок в скриптах (напр. R3F) карается блокировкой.&lt;br/&gt;    6. За использование и флуд посредством громких/коротких сторонних звуковых команд игрок наказывается бессрочной блокировкой.</Russian>
 		</Key>
 	</Package>
 	<Package name="ShopDescriptions">
 		<Key ID="STR_WL_ShopDescriptions_Water">
 			<English>Greece is a hot place! Drink plenty!</English>
+			<Russian>В Греции, вообще то жарко, но и вода не бесплатная!</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_Camo">
 			<English>An improvised roof, 4 sticks and a blanket!</English>
+			<Russian>Импровизированная крыша - четыре палки да одеяло!</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_CanFood">
 			<English>The Greek wastelands may get you hungry!</English>
+			<Russian>Консервы - деликатес на просторах греческой пустоши!</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_RepairKit">
 			<English>With this kit, you won't need an engineer!</English>
+			<Russian>С таким-то ремкомплектом, вы и без механика справитесь!</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_MedKit">
 			<English>With this kit, you won't need a medic!</English>
+			<Russian>С такой-то аптечкой, вы и без врача справитесь!</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_fuelFull">
 			<English>25 litres of pure unleaded fuel!</English>
+			<Russian>25 литров чистого неэтилированного бензина!</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_fuelEmpty">
 			<English>Empty fuel can. You can refill it!</English>
+			<Russian>Пустая канистра для топлива. С возможностью пополнить!</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_spawnBeacon">
 			<English>Choose your spawn location. Disclaimer: This product does not guarantee safe delivery of goods.</English>
+			<Russian>Позволяет выбрать свое место возрождения. Внимание: Данный продукт не гарантирует безопасную доставку груза.</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_SyphonHose">
 			<English>Go forth and steal fuel from vehicles!</English>
+			<Russian>Будет в чем таскать бензин из чужих машин!</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_Energy_Drink">
 			<English>Allows you to sprint continuously for 5 minutes.</English>
+			<Russian>Дает силы для непрерывного бега в течении 5 минут.</Russian>
 		</Key>
 		<Key ID="STR_WL_ShopDescriptions_Warchest">
 			<English>A safe to store your team's money.</English>
+			<Russian>Сейф для хранения денег вашей группы.</Russian>
 		</Key>
 	</Package>
 	<Package name="Dialogs">
 		<Key ID="STR_WL_dialog_TeamkillText">
 			<English>You have been teamkilled by %2 player %1&lt;br/&gt;&lt;br/&gt;If this was an accident, forgive him, otherwise they should explain their actions.&lt;br/&gt;&lt;br/&gt;If the player does not apologize, punish him.</English>
+			<Russian>Вы были убиты товарищем по команде (%2) %1&lt;br/&gt;&lt;br/&gt;Если это произошло случайно, то вы можете сразу простить. В иных случаях нарушитель должен сначала объясниться.&lt;br/&gt;&lt;br/&gt;Если игрок не извиняется, тогда накажите его.</Russian>
 		</Key>
 	</Package>
 	<Package name="Errors">
 		<Key ID="STR_WL_Errors_InProgress">
 			<English>You are already performing another action!</English>
+			<Russian>Вы уже выполняете другое действие!</Russian>
 		</Key>
 		<Key ID="STR_WL_Errors_InVehicle">
 			<English>You are currently busy!</English>
+			<Russian>Вы сейчас заняты!</Russian>
 		</Key>
 		<Key ID="STR_WL_Errors_BeaconActive">
 			<English>You already have an active spawn beacon!</English>
+			<Russian>У вас уже есть действующий маяк возрождения!</Russian>
 		</Key>
 		<Key ID="STR_WL_Errors_BeaconInVehicle">
 			<English>You cannot enter a vehicle while placing a spawn beacon!</English>
+			<Russian>Вы не можете сесть в машину при установке маяка возрождения!</Russian>
 		</Key>
 		<Key ID="STR_WL_Errors_BeaconTooMany">
 			<English>You cannot take more spawn beacons!</English>
+			<Russian>Вы не можете взять еще больше маяков возрождения!</Russian>
 		</Key>
 	</Package>
 </Project>
