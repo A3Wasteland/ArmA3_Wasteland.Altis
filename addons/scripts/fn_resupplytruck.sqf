@@ -104,7 +104,7 @@ _resupplyThread = _vehicle spawn
 		};
 
 		// Abort everything if no Tempest Device in proximity
-		if ({alive _x} count (_vehicle nearEntities ["O_Truck_03_device_F", RESUPPLY_TRUCK_DISTANCE]) == 0) then
+		if ({alive _x} count (_vehicle nearEntities [["O_Heli_Transport_04_ammo_F", "I_Truck_02_ammo_F", "O_Truck_03_ammo_F", "B_Truck_01_ammo_F"], RESUPPLY_TRUCK_DISTANCE]) == 0) then
 		{
 			if (_started) then { titleText ["Vehicle resupply aborted!", "PLAIN DOWN", 0.5] };
 			mutexScriptInProgress = false;
