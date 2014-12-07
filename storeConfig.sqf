@@ -769,7 +769,7 @@ colorsArray = compileFinal str
 			//["Leopard", "client\images\vehicleTextures\leopard.jpg"],
 			["'Murica", "client\images\vehicleTextures\murica.jpg"],
 			["Confederate", "client\images\vehicleTextures\confederate.jpg"],
-			["Union Jack", "client\images\vehicleTextures\union_ jack.jpg"],
+			["Union Jack", "client\images\vehicleTextures\union_jack.jpg"],
 			["Yellow Camo", "client\images\vehicleTextures\camo_fuel.jpg"],
 			["Orange Camo", "client\images\vehicleTextures\camo_fack.jpg"],
 			["Red Camo", "client\images\vehicleTextures\camo_deser.jpg"]
@@ -799,10 +799,10 @@ customPlayerItems = compileFinal str
 	["Canned Food", "cannedfood", localize "STR_WL_ShopDescriptions_CanFood", "client\icons\cannedfood.paa", 30, 15],
 	["Repair Kit", "repairkit", localize "STR_WL_ShopDescriptions_RepairKit", "client\icons\briefcase.paa", 500, 250],
 	["Jerry Can (Full)", "jerrycanfull", localize "STR_WL_ShopDescriptions_fuelFull", "client\icons\jerrycan.paa", 150, 75],
-    ["LSD", "lsd", localize "STR_WL_ShopDescriptions_LSD", "client\icons\lsd.paa", 3500, 3000],
-    ["Marijuana", "marijuana", localize "STR_WL_ShopDescriptions_Marijuana", "client\icons\marijuana.paa", 3500, 3000],
-    ["Cocaine", "cocaine", localize "STR_WL_ShopDescriptions_Cocaine", "client\icons\cocaine.paa", 3500, 3000],
-    ["Heroin", "heroin", localize "STR_WL_ShopDescriptions_Heroin", "client\icons\heroin.paa", 3500, 3000],
+	["LSD", "lsd", localize "STR_WL_ShopDescriptions_LSD", "client\icons\lsd.paa", 3500, 3000],
+	["Marijuana", "marijuana", localize "STR_WL_ShopDescriptions_Marijuana", "client\icons\marijuana.paa", 3500, 3000],
+	["Cocaine", "cocaine", localize "STR_WL_ShopDescriptions_Cocaine", "client\icons\cocaine.paa", 3500, 3000],
+	["Heroin", "heroin", localize "STR_WL_ShopDescriptions_Heroin", "client\icons\heroin.paa", 3500, 3000],
 
 
 	["Jerry Can (Empty)", "jerrycanempty", localize "STR_WL_ShopDescriptions_fuelEmpty", "client\icons\jerrycan.paa", 50, 25],
