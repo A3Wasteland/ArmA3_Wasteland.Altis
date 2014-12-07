@@ -72,11 +72,11 @@ interact_check_trx_minimum = {
 };
 
 interact_check_trx_maximum = {
-	ARGV2(0,_amount);
-	ARGV2(1,_balance);
+	ARGVX3(0,_amount,0);
+	ARGVX3(1,_balance,0);
 	private["_max"];
 	_max = bank_maximum_balance;
-	if ((_amount + _blanace) > _max) exitWith {
+	if ((_amount + _balance) > _max) exitWith {
 		player groupChat format["This transaction would put the bank account over the $%1 maximum.",strM(_max)];
 		true
 	};
