@@ -16,7 +16,7 @@ interact_deposit_receive = {
 
 	[_player,_amount] call bank_transaction;
 
-	player groupChat format["You received $%1 from %2-%3 on your bank account",strM(_amount),_sender,(name _sender)];
+	player groupChat format["You received $%1 from %2 on your bank account",strM(_amount),(name _sender)];
 };
 
 //setup the bank deposit receive handler
@@ -47,11 +47,13 @@ interact_deposit_other = {
 		player groupChat format["You do not have enough money in your account to send $%1, with tax fee $%2",strM(_amount),strM(_tax_fee)];
 	};
 
-	if ([_amount, _bank_amount] call interact_check_trx_maximum) exitWith {};
+  private["_target_bank_amount"];
+  _target_bank_amount = [_target] call bank_get_value;
+	if ([_amount, _target_bank_amount] call interact_check_trx_maximum) exitWith {};
 
 	[_player,-(_total_due)] call bank_transaction;
 
-	player groupChat format["You have sent $%1 to %2-%3,your tax fee was $%4",strM(_amount),_target,(name _target),strM(_tax_fee)];
+	player groupChat format["You have sent $%1 to %2,your tax fee was $%3",strM(_amount),(name _target),strM(_tax_fee)];
 
 	_receive_handler_name = format["bank_deposit_receive_%1", getPlayerUID _target];
 	missionNamespace setVariable[_receive_handler_name, [_target,_player,_amount]];
