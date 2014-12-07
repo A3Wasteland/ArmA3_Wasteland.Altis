@@ -57,6 +57,10 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "addons\outlw_magRepack\MagRepack_Config.hpp"
 #include "addons\taw_vd\dialog.hpp"
 
+#include "addons\bank\ui.hpp"
+#include "addons\bank\bank_menu.hpp"
+
+
 class RscTitles
 {
 	#include "addons\proving_ground\PG_rsctitles.hpp"
