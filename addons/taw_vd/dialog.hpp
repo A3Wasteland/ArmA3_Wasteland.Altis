@@ -298,7 +298,7 @@ class TAW_VD
 		class VDinCar : TAWVD_RscText
 		{
 			idc = -1;
-			text = "In Car:";
+			text = "On Land:";
 			
 			x = 0.32; y = 0.305;
 			w = 0.275; h = 0.04;
