@@ -5,8 +5,6 @@
 //	@file Name: spawnRandom.sqf
 //	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, AgentRev
 
-waituntil {!isnil "bis_fnc_init"};
-
 private ["_preload", "_randomLoc", "_pos", "_rad", "_townName", "_playerPos"];
 _preload = [_this, 1, false, [false]] call BIS_fnc_param;
 
@@ -18,6 +16,9 @@ _townName = _randomLoc select 2;
 
 _playerPos = [_pos,5,_rad,1,0,0,0] call findSafePos;
 if (_preload) then { waitUntil {sleep 0.1; preloadCamera _playerPos} };
+
+waitUntil {!isNil "bis_fnc_init" && {bis_fnc_init}};
+
 player setPos _playerPos;
 
 respawnDialogActive = false;
