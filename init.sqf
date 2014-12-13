@@ -36,17 +36,28 @@ if (!isDedicated) then
 {
 	[] spawn
 	{
-		9999 cutText ["Welcome to A3Wasteland, please wait for your client to initialize", "BLACK", 0.01];
+		if (hasInterface) then // Normal player
+		{
+			9999 cutText ["Welcome to A3Wasteland, please wait for your client to initialize", "BLACK", 0.01];
 
-		waitUntil {!isNull player};
-		removeAllWeapons player;
-		client_initEH = player addEventHandler ["Respawn", { removeAllWeapons (_this select 0) }];
+			waitUntil {!isNull player};
+			removeAllWeapons player;
+			client_initEH = player addEventHandler ["Respawn", { removeAllWeapons (_this select 0) }];
 
-		// Reset group & side
-		[player] joinSilent createGroup playerSide;
-		player setVariable ["playerSpawning", true, true];
+			// Reset group & side
+			[player] joinSilent createGroup playerSide;
+			player setVariable ["playerSpawning", true, true];
 
-		[] execVM "client\init.sqf";
+			execVM "client\init.sqf";
+		}
+		else // Headless
+		{
+			waitUntil {!isNull player};
+			if (typeOf player == "HeadlessClient_F") then
+			{
+				execVM "client\headless\init.sqf";
+			};
+		};
 	};
 };
 
