@@ -12,6 +12,8 @@ private ["_cheatFlag", "_cfgPatches", "_patchClass", "_ctrlCfg", "_minRecoil", "
 
 waitUntil {!isNull player};
 
+if (!hasInterface && typeOf player == "HeadlessClient_F") exitWith {};
+
 // diag_log "ANTI-HACK starting...";
 
 _cfgPatches = configFile >> "CfgPatches";
