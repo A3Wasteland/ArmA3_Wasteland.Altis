@@ -13,6 +13,15 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.0c",
+"
+extDB MySQL beta
+Changelog coming soon
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.0b",
 "
 <br/> [Added] Helicopters DLC content
@@ -255,6 +264,7 @@ player createDiaryRecord ["credits",
 <br/>	* madbull (R3F)
 <br/>	* Mainfrezzer (Magnon)
 <br/>	* meat147 (GitHub)
+<br/>	* micovery (GitHub)
 <br/>	* Na_Palm (BIS forums)
 <br/>	* red281gt (GitHub)
 <br/>	* RockHound (BierAG)
@@ -268,6 +278,7 @@ player createDiaryRecord ["credits",
 <br/>	* spunFIN (BIS forums)
 <br/>	* Tonic (BIS forums)
 <br/>	* wiking.at (A3W forums)
+<br/>	* Zenophon (BIS Forums)
 <br/>
 <br/><font size='16'>Thanks A LOT to everyone involved for the help and inspiration!</font>
 "
