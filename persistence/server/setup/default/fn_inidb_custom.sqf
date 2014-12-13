@@ -16,16 +16,23 @@
 
 if (!isServer) exitWith {};
 
-_savingMethod = ["A3W_savingMethod", 1] call getPublicVar;
+private ["_savingMethod", "_pFileID", "_oFileID"];
 
-if (!isNil "PDB_ServerID") then
+_savingMethod = ["A3W_savingMethod", "profile"] call getPublicVar;
+
+if (!isNil "PDB_ServerID" && {isNil "PDB_PlayerFileID" || isNil "PDB_ObjectFileID"}) then
 {
-	PDB_PlayerFileID = PDB_ServerID;
-	PDB_ObjectFileID = PDB_ServerID;
+	_pFileID = PDB_ServerID;
+	_oFileID = PDB_ServerID;
+}
+else
+{
+	_pFileID = ["PDB_PlayerFileID", "A3W_"] call getPublicVar;
+	_oFileID = ["PDB_ObjectFileID", "A3W_"] call getPublicVar;
 };
 
-PDB_playerFileName = compileFinal ("format ['%1%2', '" + PDB_PlayerFileID + "', _this]");
-PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', _this]");
+PDB_playerFileName = compileFinal ("format ['%1%2', '" + _pFileID + "', _this]");
+PDB_objectFileName = compileFinal ("format ['%1%2', '" + _oFileID + "', _this]");
 
 PDB_databaseNameCompiler = PDB_objectFileName;
 
@@ -233,14 +240,14 @@ call mf_compile;
 
 // Server-side profileNamespace saving if iniDB is disabled or unavailable
 
-PDB_exists = if (_savingMethod == 2) then { iniDB_exists } else
+PDB_exists = if (_savingMethod == "iniDB") then { iniDB_exists } else
 {
 	{
 		!isNil {profileNamespace getVariable _this};
 	} call mf_compile;
 };
 
-PDB_read = if (_savingMethod == 2) then { iniDB_read } else
+PDB_read = if (_savingMethod == "iniDB") then { iniDB_read } else
 {
 	{
 		private ["_var", "_sec", "_key", "_varSec", "_data", "_type"];
@@ -265,7 +272,7 @@ PDB_read = if (_savingMethod == 2) then { iniDB_read } else
 	} call mf_compile;
 };
 
-PDB_write = if (_savingMethod == 2) then { iniDB_write } else
+PDB_write = if (_savingMethod == "iniDB") then { iniDB_write } else
 {
 	{
 		private ["_var", "_sec", "_key", "_val", "_saveSec", "_varSec", "_data", "_setVar"];
@@ -321,7 +328,7 @@ PDB_write = if (_savingMethod == 2) then { iniDB_write } else
 	} call mf_compile;
 };
 
-PDB_delete = if (_savingMethod == 2) then { iniDB_delete } else
+PDB_delete = if (_savingMethod == "iniDB") then { iniDB_delete } else
 {
 	{
 		private ["_var", "_delSec", "_indData"];
@@ -347,7 +354,7 @@ PDB_delete = if (_savingMethod == 2) then { iniDB_delete } else
 	} call mf_compile;
 };
 
-PDB_deleteSection = if (_savingMethod == 2) then { iniDB_deleteSection } else
+PDB_deleteSection = if (_savingMethod == "iniDB") then { iniDB_deleteSection } else
 {
 	{
 		private ["_var", "_sec", "_delIndex", "_varSec", "_indData"];

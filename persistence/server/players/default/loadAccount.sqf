@@ -1,16 +1,14 @@
 // ******************************************************************************************
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
-//	@file Version: 1.0
-//	@file Name: s_loadAccount.sqf
+//	@file Name: loadAccount.sqf
 //	@file Author: AgentRev
-//	@file Created: 25/02/2014 22:21
-
-if (!isServer) exitWith {};
 
 private ["_UID", "_data", "_saveValid", "_getValue"];
-
 _UID = _this;
+
+if !((_UID call PDB_playerFileName) call PDB_exists) exitWith { [] }; // iniDB_exists
+
 _data = [];
 
 _saveValid = ([_UID call PDB_playerFileName, "PlayerSave", "Position", "STRING"] call PDB_read != ""); // iniDB_read
@@ -32,9 +30,10 @@ _getValue =
 };
 
 ["Donator", "NUMBER", "PlayerInfo"] call _getValue;
-//["BankMoney", "NUMBER", "PlayerInfo"] call _getValue; // Not implemented in vanilla mission
+["BankMoney", "NUMBER", "PlayerInfo"] call _getValue;
 
 ["Damage", "NUMBER"] call _getValue;
+["HitPoints", "ARRAY"] call _getValue;
 ["Hunger", "NUMBER"] call _getValue;
 ["Thirst", "NUMBER"] call _getValue;
 
@@ -55,7 +54,7 @@ if (["A3W_moneySaving"] call isConfigOn) then
 
 ["AssignedItems", "ARRAY"] call _getValue;
 
-["CurrentMuzzle", "STRING"] call _getValue;
+["CurrentWeapon", "STRING"] call _getValue;
 ["Stance", "STRING"] call _getValue;
 
 ["Uniform", "STRING"] call _getValue;
@@ -76,7 +75,7 @@ if (["A3W_moneySaving"] call isConfigOn) then
 ["BackpackItems", "ARRAY"] call _getValue;
 ["BackpackMagazines", "ARRAY"] call _getValue;
 
-["PartialMagazines", "ARRAY"] call _getValue;
+["PartialMagazines", "ARRAY"] call _getValue; // legacy
 
 ["WastelandItems", "ARRAY"] call _getValue;
 
