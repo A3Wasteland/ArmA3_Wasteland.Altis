@@ -29,6 +29,7 @@ A3W_saveableObjects = [];
 _purchasedVehicleSaving = ["A3W_purchasedVehicleSaving"] call isConfigOn;
 _missionVehicleSaving = ["A3W_missionVehicleSaving"] call isConfigOn;
 _vehicleSaving = (_purchasedVehicleSaving || _missionVehicleSaving);
+_savingInterval = (["A3W_serverSavingInterval", 60] call getPublicVar) / 2;
 
 _worldDir = "persistence\server\world";
 _methodDir = format ["%1\%2", _worldDir, call A3W_savingMethodDir];
@@ -76,7 +77,7 @@ A3W_oSaveReady = compileFinal "true";
 
 while {true} do
 {
-	uiSleep 30;
+	uiSleep _savingInterval;
 
 	_objCount = 0;
 	_newObjectIDs = [];
@@ -109,7 +110,7 @@ while {true} do
 
 	_objectIDs = _newObjectIDs;
 
-	uiSleep 30;
+	uiSleep _savingInterval;
 
 	// Vehicle saving
 	if (_vehicleSaving) then
