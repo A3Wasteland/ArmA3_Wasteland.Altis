@@ -14,13 +14,24 @@ externalConfigFolder = "\A3Wasteland_settings";
 
 vChecksum = compileFinal str call A3W_fnc_generateKey;
 
-// Corpse deletion on disconnect if player alive and player saving on
+// Corpse deletion on disconnect if player alive and player saving on + inventory save
 addMissionEventHandler ["HandleDisconnect",
 {
-	if (isNil "isConfigOn" || {["A3W_playerSaving"] call isConfigOn}) then
+	_unit = _this select 0;
+	_id = _this select 1;
+	_uid = _this select 2;
+	_name = _this select 3;
+
+	if (alive _unit && {isNil "isConfigOn" || {["A3W_playerSaving"] call isConfigOn}}) then
 	{
-		_unit = _this select 0;
-		if (alive _unit) then { deleteVehicle _unit };
+		if (!(_unit getVariable ["playerSpawning", false]) &&
+		   {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}} &&
+		   {_unit getVariable ["FAR_isUnconscious", 0] == 0}) then
+		{
+			[_uid, [], _unit call fn_getPlayerData] spawn fn_saveAccount;
+		};
+
+		deleteVehicle _unit;
 	};
 }];
 
