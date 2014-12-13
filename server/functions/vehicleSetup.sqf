@@ -53,7 +53,16 @@ _vehicle addEventHandler ["GetIn", _getInOut];
 _vehicle addEventHandler ["GetOut", _getInOut];
 
 // Wreck cleanup
-_vehicle addEventHandler ["Killed", { (_this select 0) setVariable ["processedDeath", diag_tickTime] }];
+_vehicle addEventHandler ["Killed",
+{
+	_veh = _this select 0;
+	_veh setVariable ["processedDeath", diag_tickTime];
+
+	if (!isNil "fn_manualVehicleDelete") then
+	{
+		[objNull, _veh getVariable "A3W_vehicleID"] call fn_manualVehicleDelete;
+	};
+}];
 
 // Vehicle customization
 switch (true) do

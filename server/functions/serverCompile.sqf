@@ -38,6 +38,7 @@ setMissionState = [_path, "setMissionState.sqf"] call mf_compile;
 _path = "server\functions";
 A3W_fnc_checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
 addMilCap = [_path, "addMilCap.sqf"] call mf_compile;
+basePartSetup = [_path, "basePartSetup.sqf"] call mf_compile;
 cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
 convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_compile;
 defendArea = [_path, "defendArea.sqf"] call mf_compile;

@@ -41,3 +41,6 @@ publicVariable "currentInvites";
 "pvar_teamSwitchLock" addPublicVariableEventHandler { (_this select 1) call teamSwitchLock };
 "pvar_teamSwitchUnlock" addPublicVariableEventHandler { (_this select 1) call teamSwitchUnlock };
 "pvar_teamKillUnlock" addPublicVariableEventHandler { (_this select 1) call teamKillUnlock };
+"pvar_manualObjectSave" addPublicVariableEventHandler { if (!isNil "fn_manualObjectSave") then { (_this select 1) call fn_manualObjectSave } };
+"pvar_manualObjectDelete" addPublicVariableEventHandler { if (!isNil "fn_manualObjectDelete") then { (_this select 1) call fn_manualObjectDelete } };
+"pvar_manualVehicleSave" addPublicVariableEventHandler { if (!isNil "fn_manualVehicleSave") then { (_this select 1) call fn_manualVehicleSave } };

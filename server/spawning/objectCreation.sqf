@@ -59,3 +59,5 @@ _adjustZ = switch (true) do
 _pos = getPosATL _obj;
 _pos set [2, (_pos select 2) + _adjustZ];
 _obj setPos _pos;
+
+[_obj] call basePartSetup;
