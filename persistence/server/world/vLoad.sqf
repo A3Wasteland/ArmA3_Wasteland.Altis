@@ -28,7 +28,7 @@ _exclVehicleIDs = [];
 	if (isNil "_hoursUnused") then { _hoursUnused = 0 };
 	_valid = false;
 
-	if (!isNil "_class" && !isNil "_pos" && {(_maxLifetime <= 0 || _hoursAlive < _maxLifetime) && (_maxUnusedTime <= 0 || _hoursUnused < _maxUnusedTime)}) then
+	if (!isNil "_class" && !isNil "_pos" && {count _pos == 3 && (_maxLifetime <= 0 || _hoursAlive < _maxLifetime) && (_maxUnusedTime <= 0 || _hoursUnused < _maxUnusedTime)}) then
 	{
 		{ if (typeName _x == "STRING") then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
 
