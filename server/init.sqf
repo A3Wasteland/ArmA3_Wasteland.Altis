@@ -22,11 +22,9 @@ addMissionEventHandler ["HandleDisconnect",
 	_uid = _this select 2;
 	_name = _this select 3;
 
-	if (alive _unit && {isNil "isConfigOn" || {["A3W_playerSaving"] call isConfigOn}}) then
+	if (alive _unit && (_unit getVariable ["FAR_isUnconscious", 0] == 0) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
 	{
-		if (!(_unit getVariable ["playerSpawning", false]) &&
-		   {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}} &&
-		   {_unit getVariable ["FAR_isUnconscious", 0] == 0}) then
+		if !(_unit getVariable ["playerSpawning", false]) then
 		{
 			[_uid, [], _unit call fn_getPlayerData] spawn fn_saveAccount;
 		};
@@ -36,7 +34,7 @@ addMissionEventHandler ["HandleDisconnect",
 
 	if (!isNil "fn_onPlayerDisconnected") then
 	{
-		[_id, _uid, _name] call fn_onPlayerDisconnected;
+		[_id, _uid, _name] spawn fn_onPlayerDisconnected;
 	};
 
 	false
