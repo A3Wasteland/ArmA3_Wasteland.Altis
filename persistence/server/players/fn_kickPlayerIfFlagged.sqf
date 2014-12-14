@@ -8,7 +8,7 @@ private ["_UID", "_name", "_flag"];
 _UID = _this select 0;
 _name = _this select 1;
 
-_flag = (getPlayerUID _x) call fn_getPlayerFlag;
+_flag = _UID call fn_getPlayerFlag;
 
 if (!isNil "_flag" && {count _flag > 1}) then
 {

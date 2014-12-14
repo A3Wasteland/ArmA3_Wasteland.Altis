@@ -7,4 +7,4 @@
 private "_UID";
 _UID = _this;
 
-["Hackers" call PDB_objectFileName, "Hackers", _UID, "ARRAY"] call PDB_read
+["Hackers" call PDB_playerFileName, "Hackers", _UID, "ARRAY"] call PDB_read
