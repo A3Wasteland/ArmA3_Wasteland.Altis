@@ -44,6 +44,8 @@ fn_deletePlayerData =
 			_pos = [_data, "Position", []] call fn_getFromPairs;
 			_preload = profileNamespace getVariable ["A3W_preloadSpawn", true];
 
+			{ if (typeName _x == "STRING") then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
+
 			if (count _pos == 2) then { _pos set [2, 0] };
 			if (count _pos == 3) then
 			{
