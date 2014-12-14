@@ -175,7 +175,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 					_object setPosATL [_safePos select 0, _safePos select 1, 0.05];
 					_object setVelocity [0,0,0.01];
 					// _object spawn cleanVehicleWreck;
-					_object setVariable ["A3W_purchasedVehicle", true];
+					_object setVariable ["A3W_purchasedVehicle", true, true];
 				};
 
 				if (_object isKindOf "Plane") then
@@ -235,6 +235,11 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 						_object addAction ["<img image='client\icons\repair.paa'/> Resupply", "client\functions\fn_resupplytruck.sqf", [], 51, true, true, "", "vehicle _this != _this && _this distance _target <= 20"];
 					};
 					
+				};
+
+				if (_object getVariable ["A3W_purchasedVehicle", false] && !isNil "fn_manualVehicleSave") then
+				{
+					_object call fn_manualVehicleSave;
 				};
 			};
 		};

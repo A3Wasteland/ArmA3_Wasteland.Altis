@@ -37,6 +37,8 @@ if (_success) then {
 	_warchest setVariable ['side', playerSide, true];
 	_warchest setVariable ["R3F_LOG_disabled", true];
 	_warchest setVariable ["a3w_warchest", true, true];
+	pvar_manualObjectSave = netId _warchest;
+	publicVariableServer "pvar_manualObjectSave";
 	["Warchest Deployed!", 5] call mf_notify_client;
 };
 _success;

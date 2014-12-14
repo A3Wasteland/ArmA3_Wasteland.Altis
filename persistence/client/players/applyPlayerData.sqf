@@ -6,8 +6,6 @@
 
 // This is where you load player status & inventory data which will be wiped upon death, for persistent variables use c_applyPlayerInfo.sqf instead
 
-if (isDedicated) exitWith {};
-
 private ["_data", "_name", "_value"];
 
 _data = _this;
@@ -53,8 +51,14 @@ removeHeadgear player;
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
 		case "Money": { player setVariable ["cmoney", _value, true] };
-		case "BankMoney": { player setVariable ["bmoney", _value, true] };
-		case "Position": { if (count _value == 3) then { player setPosATL _value } };
+		case "Position":
+		{
+			if (count _value == 3) then
+			{
+				{ if (typeName _x == "STRING") then { _value set [_forEachIndex, parseNumber _x] } } forEach _value;
+				player setPosATL _value;
+			};
+		};
 		case "Direction": { player setDir _value };
 		case "Uniform":
 		{
@@ -141,6 +145,16 @@ removeHeadgear player;
 				}
 				else
 				{
+					if (["_UavTerminal", _x] call fn_findString != -1) then
+					{
+						_x = switch (playerSide) do
+						{
+							case BLUFOR: { "B_UavTerminal" };
+							case OPFOR:  { "O_UavTerminal" };
+							default      { "I_UavTerminal" };
+						};
+					};
+
 					player linkItem _x;
 				};
 			} forEach _value;
