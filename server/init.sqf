@@ -3,7 +3,7 @@
 // ******************************************************************************************
 //	@file Version: 1.1
 //	@file Name: init.sqf
-//	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev
+//	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev, micovery
 //	@file Created: 20/11/2012 05:19
 //	@file Description: The server init.
 //	@file Args:
@@ -14,39 +14,18 @@ externalConfigFolder = "\A3Wasteland_settings";
 
 vChecksum = compileFinal str call A3W_fnc_generateKey;
 
-// Corpse deletion on disconnect if player alive and player saving on + inventory save
-addMissionEventHandler ["HandleDisconnect",
-{
-	_unit = _this select 0;
-	_id = _this select 1;
-	_uid = _this select 2;
-	_name = _this select 3;
-
-	if (alive _unit && {isNil "isConfigOn" || {["A3W_playerSaving"] call isConfigOn}}) then
-	{
-		if (!(_unit getVariable ["playerSpawning", false]) &&
-		   {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}} &&
-		   {_unit getVariable ["FAR_isUnconscious", 0] == 0}) then
-		{
-			[_uid, [], _unit call fn_getPlayerData] spawn fn_saveAccount;
-		};
-
-		deleteVehicle _unit;
-	};
-
-	if (!isNil "fn_onPlayerDisconnected") then
-	{
-		[_id, _uid, _name] call fn_onPlayerDisconnected;
-	};
-
-	false
+// Corpse deletion on disconnect if player alive and player saving on
+addMissionEventHandler ["HandleDisconnect", {
+  diag_log format["HandleDisconnect %1", _this];
+  _this call p_disconnectSave;
+  deleteVehicle (_this select 0);
 }];
 
 //Execute Server Side Scripts.
 call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
 [] execVM "server\admins.sqf";
 [] execVM "server\functions\serverVars.sqf";
-_serverCompileHandle = [] spawn compile preprocessFileLineNumbers "server\functions\serverCompile.sqf"; // scriptDone stays stuck on false when using execVM on Linux
+_serverCompileHandle = [] spawn compile preprocessFileLineNumbers "server\functions\serverCompile.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 [] execVM "server\functions\broadcaster.sqf";
 [] execVM "server\functions\relations.sqf";
 [] execVM (externalConfigFolder + "\init.sqf");
@@ -120,77 +99,40 @@ _setupPlayerDB = scriptNull;
 // Do we need any persistence?
 if (_playerSavingOn || _serverSavingOn) then
 {
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	_verIniDB = "iniDB" callExtension "version";
 
-	_savingMethod = ["A3W_savingMethod", "profile"] call getPublicVar;
-	if (_savingMethod == "iniDBI") then { _savingMethod = "iniDB" };
-
-	// extDB
-	if (_savingMethod == "extDB") then
+	if (_verIniDB == "") then
 	{
-		_version = "extDB" callExtension "9:VERSION";
-
-		if (parseNumber _version >= 20) then
-		{
-			A3W_savingMethodName = compileFinal "'extDB'";
-			A3W_savingMethodDir = compileFinal "'extDB'";
-			A3W_extDB_ConfigName = compileFinal str (["A3W_extDB_ConfigName", "A3W"] call getPublicVar);
-			A3W_extDB_IniName = compileFinal str (["A3W_extDB_IniName", "a3wasteland"] call getPublicVar);
-		}
-		else
-		{
-			if (_version != "") then
-			{
-				diag_log format "[INFO] ### extDB startup cancelled!";
-				diag_log format ["[INFO] ### A3W requires extDB v20 or later: v%1 detected", _result];
-			}
-			else
-			{
-				diag_log "[INFO] ### A3W NOT running with extDB!";
-			};
-
-			_savingMethod = "profile"; // fallback
-		};
-	};
-
-	// iniDB
-	if (_savingMethod == "iniDB") then
-	{
-		_verIniDB = "iniDB" callExtension "version";
-
-		if (_verIniDB != "") then
-		{
-			A3W_savingMethodName = compileFinal (if (parseNumber _verIniDB > 1) then { "'iniDBI'" } else { "'iniDB'" });
-			A3W_savingMethodDir = compileFinal "'default'";
-			diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
-		}
-		else
-		{
-			diag_log "[INFO] ### A3W NOT running with iniDB!";
-			_savingMethod = "profile"; // fallback
-		};
-	};
-
-	if (_savingMethod == "profileNamespace") then { _savingMethod = "profile" };
-
-	// profileNamespace
-	if (_savingMethod == "profile") then
-	{
+		A3W_savingMethod = compileFinal "1";
 		A3W_savingMethodName = compileFinal "'profileNamespace'";
-		A3W_savingMethodDir = compileFinal "'default'";
+
+		diag_log "[INFO] ### A3W NOT running with iniDB!";
 		diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
+	}
+	else
+	{
+		A3W_savingMethod = compileFinal "2";
+
+		if (parseNumber _verIniDB > 1) then
+		{
+			A3W_savingMethodName = compileFinal "'iniDBI'";
+		}
+		else
+		{
+			A3W_savingMethodName = compileFinal "'iniDB'";
+		};
+
+		diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
 	};
 
-	A3W_savingMethod = compileFinal str _savingMethod;
-	publicVariable "A3W_savingMethod";
+	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
 
-	call compile preProcessFileLineNumbers format ["persistence\server\setup\%1\init.sqf", call A3W_savingMethodDir];
-
+	// Have we got player persistence enabled?
 	if (_playerSavingOn) then
 	{
-		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\server\players\setupPlayerDB.sqf"; // scriptDone stays stuck on false on Linux servers when using execVM
+		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\players\s_setupPlayerDB.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
 	};
 
 	[_playerSavingOn, _serverSavingOn, _vehicleSavingOn] spawn
@@ -199,23 +141,19 @@ if (_playerSavingOn || _serverSavingOn) then
 		_serverSavingOn = _this select 1;
 		_vehicleSavingOn = _this select 2;
 
-		_objectIDs = [];
-		_vehicleIDs = [];
-
 		if (_serverSavingOn) then
 		{
-			_objectIDs = call compile preprocessFileLineNumbers "persistence\server\world\oLoad.sqf";
+			call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
 		};
 
 		if (_vehicleSavingOn) then
 		{
-			_vehicleIDs = call compile preprocessFileLineNumbers "persistence\server\world\vLoad.sqf";
+			call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
 		};
 
-		if (_serverSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
+		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
 		{
-			[_objectIDs, _vehicleIDs] execVM "persistence\server\world\oSave.sqf";
-			waitUntil {!isNil "A3W_oSaveReady"};
+			execVM "persistence\world\oSave.sqf";
 		};
 	};
 
@@ -261,7 +199,7 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 	setDate [2035, 6, _monthDay, _startHour, 0];
 };
 
-if (_playerSavingOn && !((call A3W_savingMethod) in ["profile","none"])) then
+if (_playerSavingOn) then
 {
 	["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
 
@@ -313,6 +251,8 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 		call compile preprocessFileLineNumbers "server\functions\boxSpawning.sqf";
 	};
 };
+
+["A3W_quit", "onPlayerDisconnected", { [_id, _uid, _name] spawn fn_onPlayerDisconnected }] call BIS_fnc_addStackedEventHandler;
 
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {

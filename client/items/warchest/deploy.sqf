@@ -40,5 +40,8 @@ if (_success) then {
 	pvar_manualObjectSave = netId _warchest;
 	publicVariableServer "pvar_manualObjectSave";
 	["Warchest Deployed!", 5] call mf_notify_client;
+
+  trackObject = _warchest;
+  publicVariableServer "trackObject";
 };
 _success;

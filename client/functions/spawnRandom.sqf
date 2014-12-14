@@ -22,6 +22,8 @@ waitUntil {!isNil "bis_fnc_init" && {bis_fnc_init}};
 player setPos _playerPos;
 
 respawnDialogActive = false;
+player setVariable ["respawnDialogActive", false, true];
+
 closeDialog 0;
 
 _townName spawn

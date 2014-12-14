@@ -28,6 +28,8 @@ _preload = [_this, 1, false, [false]] call BIS_fnc_param;
 } forEach (call cityList);
 
 respawnDialogActive = false;
+player setVariable ["respawnDialogActive", false, true];
+
 closeDialog 0;
 
 _townName spawn

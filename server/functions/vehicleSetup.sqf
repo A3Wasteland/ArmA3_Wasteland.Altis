@@ -116,6 +116,13 @@ switch (true) do
 	};
 };
 
+
+if (isDedicated) then {
+  //used for keeping track of the vehicle used un-used lifetime
+  _vehicle addEventHandler ["GetIn", { _this spawn v_GetIn_handler}];
+  _vehicle addEventHandler ["GetOut", { _this spawn v_GetOut_handler}];
+};
+
 // Double minigun ammo to compensate for Bohemia's incompetence (http://feedback.arma3.com/view.php?id=21613)
 {
 	_path = _x;

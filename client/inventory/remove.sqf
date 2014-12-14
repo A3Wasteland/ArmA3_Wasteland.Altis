@@ -20,3 +20,6 @@ private ["_item", "_current"];
 _item = _id call mf_inventory_get;
 _current = _item select QTY;
 _item set [QTY, _current - _qty];
+
+trackMyInventory = [player, mf_inventory];
+publicVariableServer "trackMyInventory";

@@ -43,6 +43,10 @@ _success =  [DURATION, ANIM, _hasFailed, [_beacon]] call a3w_actions_start;
 
 if (_success) then {
 	pvar_spawn_beacons = pvar_spawn_beacons - [_beacon];
+
+	untrackObject = _beacon;
+  publicVariableServer "untrackObject";
+
 	publicVariable "pvar_spawn_beacons";
 	pvar_manualObjectDelete = [netId _beacon, _beacon getVariable "A3W_objectID"];
 	publicVariableServer "pvar_manualObjectDelete";

@@ -44,4 +44,7 @@ if (_success) then {
 	deleteVehicle _warchest;
 	[MF_ITEMS_WARCHEST, 1] call mf_inventory_add;
 	["You successfully packed the Warchest", 5] call mf_notify_client;
+
+	 untrackObject = _warchest;
+   publicVariableServer "untrackObject";
 };
