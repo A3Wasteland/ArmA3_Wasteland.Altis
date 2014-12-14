@@ -1,7 +1,6 @@
 #include "macro.h"
 
-#define ON_SCALAR(v) (isSCALAR(v) && {v == 1})
-
+#define ON_SCALAR(v) (if(isCODE(v)) then { private["_val"]; _val = call v; (isSCALAR(_val) && {_val == 1})} else {(isSCALAR(v) && {v == 1})})
 
 cfg_missionVehicleSaving_on = ON_SCALAR(A3W_missionVehicleSaving);
 cfg_purchasedVehicleSaving_on = ON_SCALAR(A3W_purchasedVehicleSaving);
