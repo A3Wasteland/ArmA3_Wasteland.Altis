@@ -1,18 +1,18 @@
 // ******************************************************************************************
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
-//	@file Name: saveAccount.sqf
+//	@file Name: deletePlayerSave.sqf
 //	@file Author: AgentRev
 
-private ["_UID", "_info", "_data"];
-_UID = _this select 0;
-_info = _this select 1;
-_data = _this select 2;
+private "_fileName";
+_fileName = _this call PDB_playerFileName;
 
+if (call A3W_savingMethod == "iniDB" && {parseNumber (call iniDB_version) < 1.2}) then
 {
-	[_UID call PDB_playerFileName, "PlayerInfo", _x select 0, _x select 1] call PDB_write; // iniDB_write
-} forEach _info;
-
+	// Required for iniDB v1.0
+	_fileName call iniDB_delete;
+}
+else
 {
-	[_UID call PDB_playerFileName, "PlayerSave", _x select 0, _x select 1] call PDB_write; // iniDB_write
-} forEach _data;
+	[_fileName, "PlayerSave"] call PDB_deleteSection;
+};
