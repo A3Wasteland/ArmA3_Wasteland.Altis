@@ -12,6 +12,7 @@ fn_deletePlayerSave = [_playerFuncs, "deletePlayerSave.sqf"] call mf_compile;
 fn_loadAccount = [_playerFuncs, "loadAccount.sqf"] call mf_compile;
 fn_saveAccount = [_playerFuncs, "saveAccount.sqf"] call mf_compile;
 fn_getPlayerFlag = [_playerFuncs, "getPlayerFlag.sqf"] call mf_compile;
+fn_kickPlayerIfFlagged = "persistence\server\players\fn_kickPlayerIfFlagged.sqf" call mf_compile;
 
 "pvar_savePlayerData" addPublicVariableEventHandler
 {

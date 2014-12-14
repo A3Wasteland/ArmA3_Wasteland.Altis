@@ -101,6 +101,8 @@ forEach
 	"A3W_missionVehicleSaving"
 ];
 
+["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
+
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
 _boxSavingOn = ["A3W_boxSaving"] call isConfigOn;
@@ -191,6 +193,19 @@ if (_playerSavingOn || _serverSavingOn) then
 	if (_playerSavingOn) then
 	{
 		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\server\players\setupPlayerDB.sqf"; // scriptDone stays stuck on false on Linux servers when using execVM
+
+		// profileNamespace doesn't save antihack logs
+		if (_savingMethod != "profile") then
+		{
+			_setupPlayerDB spawn
+			{
+				waitUntil {scriptDone _this};
+
+				["A3W_flagCheckOnJoin", "onPlayerConnected", { [_uid, _name] spawn fn_kickPlayerIfFlagged }] call BIS_fnc_addStackedEventHandler;
+
+				{ [getPlayerUID _x, name _x] call fn_kickPlayerIfFlagged } forEach (call allPlayers);
+			};
+		};
 	};
 
 	[_playerSavingOn, _serverSavingOn, _vehicleSavingOn] spawn
@@ -259,16 +274,6 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 	_monthDay = if (["A3W_moonLight"] call isConfigOn) then { 9 } else { 24 };
 	_startHour = ["A3W_startHour", date select 2] call getPublicVar;
 	setDate [2035, 6, _monthDay, _startHour, 0];
-};
-
-if (_playerSavingOn && !((call A3W_savingMethod) in ["profile","none"])) then
-{
-	["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
-
-	[] spawn
-	{
-		{ [getPlayerUID _x, name _x] call fn_kickPlayerIfFlagged } forEach (call allPlayers);
-	};
 };
 
 if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then
