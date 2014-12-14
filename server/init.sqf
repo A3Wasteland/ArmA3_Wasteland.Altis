@@ -99,33 +99,14 @@ _setupPlayerDB = scriptNull;
 // Do we need any persistence?
 if (_playerSavingOn || _serverSavingOn) then
 {
-	_verIniDB = "iniDB" callExtension "version";
 
-	if (_verIniDB == "") then
-	{
-		A3W_savingMethod = compileFinal "1";
-		A3W_savingMethodName = compileFinal "'profileNamespace'";
+  //pretend to be iniDB
+	A3W_savingMethod = compileFinal "sock";
+	A3W_savingMethodName = compileFinal "'sock'";
 
-		diag_log "[INFO] ### A3W NOT running with iniDB!";
-		diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
-	}
-	else
-	{
-		A3W_savingMethod = compileFinal "2";
+	diag_log format ["[INFO] ### A3W running with %1", call A3W_savingMethodName];
 
-		if (parseNumber _verIniDB > 1) then
-		{
-			A3W_savingMethodName = compileFinal "'iniDBI'";
-		}
-		else
-		{
-			A3W_savingMethodName = compileFinal "'iniDB'";
-		};
-
-		diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
-	};
-
-	call compile preProcessFileLineNumbers "persistence\fn_inidb_custom.sqf";
+	call compile preProcessFileLineNumbers "persistence\fn_sock_custom.sqf";
 
 	diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
 
@@ -133,6 +114,7 @@ if (_playerSavingOn || _serverSavingOn) then
 	if (_playerSavingOn) then
 	{
 		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\players\s_setupPlayerDB.sqf"; // For some reason, scriptDone stays stuck on false on Linux servers when using execVM for this line...
+		waitUntil {scriptDone _setupPlayerDB};
 	};
 
 	[_playerSavingOn, _serverSavingOn, _vehicleSavingOn] spawn
@@ -149,11 +131,6 @@ if (_playerSavingOn || _serverSavingOn) then
 		if (_vehicleSavingOn) then
 		{
 			call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
-		};
-
-		if (_serverSavingOn || (_playerSavingOn && ["A3W_savingMethod", 1] call getPublicVar == 1)) then
-		{
-			execVM "persistence\world\oSave.sqf";
 		};
 	};
 
@@ -173,11 +150,6 @@ if (_playerSavingOn || _serverSavingOn) then
 	];
 };
 
-if (isNil "A3W_savingMethod") then
-{
-	A3W_savingMethod = compileFinal "'none'";
-	publicVariable "A3W_savingMethod";
-};
 
 call compile preprocessFileLineNumbers "server\missions\setupMissionArrays.sqf";
 call compile preprocessFileLineNumbers "server\functions\createTownMarkers.sqf";

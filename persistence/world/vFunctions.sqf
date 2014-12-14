@@ -233,6 +233,22 @@ v_untrackVehicle = {
   tracked_vehicles_list deleteAt _index;
 };
 
+fn_manualVehicleSave = {
+  ARGVX2(0,_object);
+
+  if (isSTRING(_object)) then {
+    _object = objectFromNetId _object;
+  };
+
+  if (!isOBJECT(_object)) exitWith {};
+  if (diag_tickTime - (_object getVariable ["vehSaving_lastSave", 0]) <= MANUAL_VEH_SAVE_COOLDOWN) exitWith {};
+
+  _object setVariable ["vehSaving_lastUse", diag_tickTime];
+  _object setVariable ["vehSaving_lastSave", diag_tickTime];
+  [_object] call v_trackVehicle;
+};
+
+
 v_trackedVehiclesListCleanup = {
   //post cleanup the array
   init(_cleanup_start, diag_tickTime);

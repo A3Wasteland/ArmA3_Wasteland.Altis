@@ -390,6 +390,7 @@ p_getScope = {
   (format["%1%2",PDB_PlayerFileID,_id])
 };
 
+
 fn_requestPlayerData = {[] spawn {
   init(_player,player);
   init(_uid,getPlayerUID player);

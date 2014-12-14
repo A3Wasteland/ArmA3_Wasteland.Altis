@@ -512,6 +512,8 @@ o_trackedObjectsListCleanup = {
 };
 
 
+
+
 tracked_objects_list = [];
 
 o_getTrackedObjectIndex = {
@@ -521,9 +523,8 @@ o_getTrackedObjectIndex = {
   (tracked_objects_list find _obj)
 };
 
-//event handlers for object tracking, and untracking
-"trackObject" addPublicVariableEventHandler {
-  private["_index","_object"];
+o_trackObject = {
+ private["_index","_object"];
   _object = _this select 1;
   _index = [OR(_object,nil)] call o_getTrackedObjectIndex;
   if (_index >= 0) exitWith {};
@@ -532,8 +533,10 @@ o_getTrackedObjectIndex = {
   tracked_objects_list pushBack _object;
 };
 
+//event handlers for object tracking, and untracking
+"trackObject" addPublicVariableEventHandler { _this call o_trackObject; };
 
-"untrackObject" addPublicVariableEventHandler {
+o_untrackObject = {
   private["_index","_object"];
   _object = _this select 1;
   _index = [OR(_object,nil)] call o_getTrackedObjectIndex;
@@ -541,6 +544,28 @@ o_getTrackedObjectIndex = {
 
   //diag_log format["%1 is being removed from the tracked list", _object];
   tracked_objects_list deleteAt _index;
+};
+
+"untrackObject" addPublicVariableEventHandler { _this call o_untrackObject; };
+
+fn_manualObjectSave = {
+  ARGVX3(0,_netId,"");
+
+  def(_object);
+  _object = objectFromNetId _netId;
+  if (!isOBJECT(_object)) exitWith {};
+
+  [_object] call o_trackObject;
+};
+
+fn_manualObjectDelete = {
+  ARGVX3(0,_netId,"");
+
+  def(_object);
+  _object = objectFromNetId _netId;
+  if (!isOBJECT(_object)) exitWith {};
+
+  [_object] call o_untrackObject;
 };
 
 o_saveLoop = {

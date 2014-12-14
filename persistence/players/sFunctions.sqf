@@ -1,7 +1,7 @@
-//	@file Version: 0.1
-//	@file Name: pFunctions.sqf
-//	@file Author: micovery
-//	@file Description: server functions
+//  @file Version: 0.1
+//  @file Name: sFunctions.sqf
+//  @file Author: micovery
+//  @file Description: server functions
 
 diag_log "sFunctions.sqf loading ...";
 
@@ -284,7 +284,7 @@ p_addPlayerSave = {
   };
 
   _data pushBack ["Position", _pos];
-	_data pushBack ["Direction", direction _player];
+  _data pushBack ["Direction", direction _player];
 
 
   //only save animation, and current weapon if the player is not inside a vehicle
@@ -448,6 +448,65 @@ p_disconnectSave = {
   } forEach _vitals;
 };};
 
+fn_getPlayerFlag = {
+  ARGVX3(0,_uid,"");
+
+  def(_scope);
+  _scope = "Hackers2" call PDB_hackerLogFileName;
+
+  def(_key);
+  _key = format["%1.records",_uid];
+
+
+  def(_records);
+  _records = [_scope, _key, nil] call stats_get;
+
+  if (!isARRAY(_records)) exitWith {};
+
+  private["_last"];
+  _last = _records select (count(_records) -1);
+
+  if (!isCODE(_last)) exitWith {};
+
+  (call _last)
+};
+
+fn_kickPlayerIfFlagged = {
+  ARGVX3(0,_UID,"");
+  ARGVX3(1,_name,"");
+
+  def(_flag);
+  _flag = [_UID] call fn_getPlayerFlag;
+  if (!isARRAY(_flag) || {count(_flag) == 0}) exitWith {};
+
+  // Super mega awesome dodgy player kick method
+  "Logic" createUnit [[1,1,1], createGroup sideLogic,
+  ("
+    this spawn {
+      if (isServer) then {
+        _grp = group _this;
+        deleteVehicle _this;
+        deleteGroup _grp;
+      }
+      else {
+        waitUntil {!isNull player};
+        if (getPlayerUID player == '" + _UID + "') then {
+          preprocessFile 'client\functions\quit.sqf';
+        };
+      };
+    }
+  ")];
+
+  //_oldName = _flag select 0; // always empty for extDB
+  def(_hackType);
+  def(_hackValue);
+
+  _hackType = [_flag, "hackType", "unknown"] call fn_getFromPairs;
+  _hackValue = [_flag, "hackValue", "unknown"] call fn_getFromPairs;
+
+  diag_log format ["ANTI-HACK: %1 (%2) was kicked due to having been flagged for [%3, %4] in the past", _name, _UID, _hackType, _hackValue];
+
+};
 
 active_players_list = [];
 
@@ -540,6 +599,9 @@ p_saveAllPlayers = {
 
   diag_log format["p_saveLoop: total of %1 players saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
 };
+
+
+
 
 
 

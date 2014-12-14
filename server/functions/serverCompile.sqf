@@ -46,7 +46,6 @@ convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_com
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
 getMagazineDetailAmmo = [_path, "getMagazineDetailAmmo.sqf"] call mf_compile;
 findClientPlayer = [_path, "findClientPlayer.sqf"] call mf_compile;
-fn_kickPlayerIfFlagged = [_path, "fn_kickPlayerIfFlagged.sqf"] call mf_compile;
 fn_onPlayerConnected = [_path, "fn_onPlayerConnected.sqf"] call mf_compile;
 fn_onPlayerDisconnected = [_path, "fn_onPlayerDisconnected.sqf"] call mf_compile;
 fn_publicVariableAll = [_path, "fn_publicVariableAll.sqf"] call mf_compile;
@@ -56,6 +55,7 @@ fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;
 fn_replaceWeapons = [_path, "fn_replaceWeapons.sqf"] call mf_compile;
 fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile;
 fn_updatePlayerScore = [_path, "fn_updatePlayerScore.sqf"] call mf_compile;
+
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
 parachuteLiftedVehicle = [_path, "parachuteLiftedVehicle.sqf"] call mf_compile;
 processGroupInvite = [_path, "processGroupInvite.sqf"] call mf_compile;
