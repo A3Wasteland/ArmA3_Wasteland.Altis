@@ -10,5 +10,3 @@ _uid = _this select 1;
 _name = _this select 2;
 
 diag_log format ["Player connected: %1 (%2)", _name, _uid];
-
-[_uid, _name] call fn_kickPlayerIfFlagged;

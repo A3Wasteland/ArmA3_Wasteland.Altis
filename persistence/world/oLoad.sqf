@@ -14,9 +14,12 @@ if (!isServer) exitWith {};
 
 init(_oScope, "Objects" call PDB_objectFileName);
 
-[_oScope] call o_loadObjects;
+def(_oIds);
+_oIds = [_oScope] call o_loadObjects;
 [_oScope] call o_loadInfo;
 [_oScope] spawn o_saveLoop;
 
 
 diag_log "oLoad.sqf loading complete";
+
+(_oIds)

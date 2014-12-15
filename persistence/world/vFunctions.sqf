@@ -634,15 +634,21 @@ v_loadVehicles = {
   def(_vehicles);
   _vehicles = [_scope] call stats_get;
 
+  init(_vIds,[]);
+
+
   //nothing to load
   if (!isARRAY(_vehicles)) exitWith {};
 
   diag_log format["A3Wasteland - will restore %1 vehicles", count(_vehicles)];
   {
+    _vIds pushBack (_x select 0);
     [_x] call v_restoreVehicle;
   } forEach _vehicles;
 
   v_loadVehicles_complete = true;
+
+  (_vIds)
 };
 
 diag_log "vFunctions.sqf loading complete";

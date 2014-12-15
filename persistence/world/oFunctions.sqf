@@ -622,14 +622,19 @@ o_loadObjects = {
   
   def(_objects);
   _objects = [_scope] call stats_get;
+
+  init(_oIds,[]);
   
   //nothing to load
   if (!isARRAY(_objects)) exitWith {};
 
   diag_log format["A3Wasteland - will restore %1 objects", count(_objects)];
-  { 
+  {
+    _oIds pushBack (_x select 0);
     [_x] call o_restoreObject;
   } forEach _objects;
+
+  (_oIds)
 };
 
 diag_log "oFunctions.sqf loading complete";

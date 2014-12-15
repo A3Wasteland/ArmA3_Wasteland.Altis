@@ -13,7 +13,11 @@ if (!isServer) exitWith {};
   
 init(_vScope, "Vehicles" call PDB_objectFileName);
 
-[_vScope] call v_loadVehicles;
+def(_vIds);
+_vIds = [_vScope] call v_loadVehicles;
 [_vScope] spawn v_saveLoop;
 
 diag_log "vLoad.sqf loading complete";
+
+(_vIds)
+
