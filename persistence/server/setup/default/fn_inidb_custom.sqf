@@ -230,7 +230,7 @@ PDB_defaultValue = {
 	switch (toUpper _type) do
 	{
 		case "ARRAY":  { [] };
-		case "STRING": { if (isNil "_data") then { "" } else { str _data } };
+		case "STRING": { if (isNil "_data") then { "" } else { format ["%1", _data] } };
 		case "NUMBER": { parseNumber str _data };
 		case "SCALAR": { parseNumber str _data };
 		default        { nil };
