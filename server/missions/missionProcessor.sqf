@@ -7,8 +7,9 @@
 if (!isServer) exitwith {};
 
 #define MISSION_LOCATION_COOLDOWN (10*60)
+#define MISSION_TIMER_EXTENSION (15*60)
 
-private ["_controllerSuffix", "_missionTimeout", "_availableLocations", "_missionLocation", "_leader", "_marker", "_failed", "_complete", "_startTime", "_leaderTemp", "_lastPos", "_floorHeight"];
+private ["_controllerSuffix", "_missionTimeout", "_availableLocations", "_missionLocation", "_leader", "_marker", "_failed", "_complete", "_startTime", "_oldAiCount", "_leaderTemp", "_newAiCount", "_lastPos", "_floorHeight"];
 
 // Variables that can be defined in the mission script :
 private ["_missionType", "_locationsArray", "_aiGroup", "_missionPos", "_missionPicture", "_missionHintText", "_successHintMessage", "_failedHintMessage"];
@@ -58,12 +59,13 @@ diag_log format ["WASTELAND SERVER - %1 Mission%2 waiting to be finished: %3", M
 _failed = false;
 _complete = false;
 _startTime = diag_tickTime;
+_oldAiCount = 0;
 
 if (isNil "_ignoreAiDeaths") then { _ignoreAiDeaths = false };
 
 waitUntil
 {
-	sleep 1;
+	uiSleep 1;
 
 	_leaderTemp = leader _aiGroup;
 
@@ -78,6 +80,16 @@ waitUntil
 			};
 		} forEach units _aiGroup;
 	};
+
+	_newAiCount = count units _aiGroup;
+
+	if (_newAiCount < _oldAiCount) then
+	{
+		// some units were killed, mission expiry will be reset to 15 mins if it's currently lower than that
+		_startTime = _startTime min (diag_tickTime - MISSION_TIMER_EXTENSION);
+	};
+
+	_oldAiCount = _newAiCount;
 
 	if (!isNull _leaderTemp) then { _leader = _leaderTemp }; // Update current leader
 
@@ -150,6 +162,11 @@ else
 	{
 		_vehicle setVariable ["R3F_LOG_disabled", false, true];
 		_vehicle setVariable ["A3W_missionVehicle", true];
+
+		if (!isNil "fn_manualVehicleSave") then
+		{
+			_vehicle call fn_manualVehicleSave;
+		};
 	};
 
 	if (!isNil "_vehicles" && {typeName _vehicles == "ARRAY"}) then
@@ -159,6 +176,11 @@ else
 			{
 				_x setVariable ["R3F_LOG_disabled", false, true];
 				_x setVariable ["A3W_missionVehicle", true];
+
+				if (!isNil "fn_manualVehicleSave") then
+				{
+					_x call fn_manualVehicleSave;
+				};
 			};
 		} forEach _vehicles;
 	};

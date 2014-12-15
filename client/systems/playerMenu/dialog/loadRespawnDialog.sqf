@@ -15,7 +15,7 @@
 #define BEACON_CHECK_RADIUS 250
 
 disableSerialization;
-waitUntil {!isNil "bis_fnc_init"};
+waitUntil {!isNil "bis_fnc_init" && {bis_fnc_init}};
 
 createDialog "RespawnSelectionDialog";
 _display = uiNamespace getVariable ["RespawnSelectionDialog", displayNull];

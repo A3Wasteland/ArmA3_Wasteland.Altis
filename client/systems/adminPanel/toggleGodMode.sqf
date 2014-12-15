@@ -11,6 +11,8 @@ if ((getPlayerUID player) call isAdmin) then
 
 	if (!_curPlayerInvulnState) then
 	{
+		thirstLevel = 100;
+		hungerLevel = 100;
 		player setDamage 0;
 		player allowDamage false;
 		vehicle player setDamage 0;

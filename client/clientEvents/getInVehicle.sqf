@@ -7,6 +7,15 @@
 private "_veh";
 _veh = _this select 0;
 
+if (isNil {_veh getVariable "A3W_hitPointSelections"}) then
+{
+	{
+		_veh setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x, true];
+	} forEach ((typeOf _veh) call getHitPoints);
+
+	_veh setVariable ["A3W_hitPointSelections", true, true];
+};
+
 if (isNil {_veh getVariable "A3W_handleDamageEH"}) then
 {
 	_veh setVariable ["A3W_handleDamageEH", _veh addEventHandler ["HandleDamage", vehicleHandleDamage]];

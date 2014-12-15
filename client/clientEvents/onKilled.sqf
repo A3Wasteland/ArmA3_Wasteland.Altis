@@ -8,8 +8,9 @@
 
 _player = _this select 0;
 _presumedKiller = effectiveCommander (_this select 1);
-_killer = _player getVariable ["FAR_killerPrimeSuspect", objNull];
+_killer = _player getVariable "FAR_killerPrimeSuspect";
 
+if (isNil "_killer") then { _killer = _player call FAR_findKiller };
 if (isNull _killer) then { _killer = _presumedKiller };
 if (_killer == _player) then { _killer = objNull };
 
@@ -40,7 +41,8 @@ if (_player == player) then
 		["A3W_scoreboard", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 	}] call BIS_fnc_addStackedEventHandler;
 
-	playerData_gear = ""; // Reset gear data
+	playerData_infoPairs = nil;
+	playerData_savePairs = nil;
 	//combatTimestamp = -1; // Reset abort timer
 };
 
