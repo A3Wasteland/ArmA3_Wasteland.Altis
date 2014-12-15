@@ -6,9 +6,21 @@
 
 if (!isServer) exitWith {};
 
-private ["_player", "_UID", "_result", "_moneySaving", "_data", "_columns", "_bank"];
-//_player = _this;
-_UID = _this; //getPlayerUID _player;
+private ["_UID", "_bank", "_moneySaving", "_result", "_data", "_columns"];
+_UID = _this;
+
+_bank = 0;
+_moneySaving = ["A3W_moneySaving"] call isConfigOn;
+
+if (_moneySaving) then
+{
+	_result = ["getPlayerBankMoney:" + _UID, 2] call extDB_Database_async;
+
+	if (count _result > 0) then
+	{
+		_bank = _result select 0;
+	};
+};
 
 _result = ([format ["checkPlayerSave:%1:%2", _UID, call A3W_extDB_MapID], 2] call extDB_Database_async) select 0;
 
@@ -17,13 +29,11 @@ if (!_result) then
 	_data =
 	[
 		["PlayerSaveValid", false],
-		["BankMoney", 0]
+		["BankMoney", _bank]
 	];
 }
 else
 {
-	_moneySaving = ["A3W_moneySaving"] call isConfigOn;
-
 	// The order of these values is EXTREMELY IMPORTANT!
 	_data =
 	[
@@ -87,13 +97,6 @@ else
 	{
 		_data set [_forEachIndex, [_data select _forEachIndex, _x]];
 	} forEach _result;
-
-	_bank = 0;
-
-	if (_moneySaving) then
-	{
-		_bank = (["getPlayerBankMoney:" + _UID, 2] call extDB_Database_async) select 0;
-	};
 
 	_data pushBack ["BankMoney", _bank];
 	_data pushBack ["PlayerSaveValid", true];
