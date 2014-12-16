@@ -56,6 +56,12 @@ switch (_lockState) do
 		{
 			_object setVariable ["objectLocked", true, true];
 			_object setVariable ["ownerUID", getPlayerUID player, true];
+			_object setVariable ["ownerN", name player, true];
+
+      //tell the server that this object was locked
+			trackObject = _object;
+			publicVariableServer "trackObject";
+			
 
 			["Object locked!", 5] call mf_notify_client;
 		};
@@ -136,6 +142,11 @@ switch (_lockState) do
 			_object setVariable ["ownerUID", nil, true];
 			_object setVariable ["baseSaving_hoursAlive", nil, true];
 			_object setVariable ["baseSaving_spawningTime", nil, true];
+
+      //tell the server that this object was unlocked
+      untrackObject = _object;
+      publicVariableServer "untrackObject";
+			
 
 			["Object unlocked!", 5] call mf_notify_client;
 		};

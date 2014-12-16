@@ -70,6 +70,7 @@ mf_init =
 _clientFunc = "client\functions";
 _serverFunc = "server\functions";
 
+A3W_fnc_setLockState = { (objectFromNetId (_this select 0)) lock (_this select 1) } call mf_compile;
 A3W_fnc_pushVehicle = [_serverFunc, "pushVehicle.sqf"] call mf_compile;
 A3W_fnc_setName = [_clientFunc, "fn_setName.sqf"] call mf_compile;
 A3W_fnc_towingHelper = [_serverFunc, "towingHelper.sqf"] call mf_compile;
@@ -88,6 +89,7 @@ fn_forceAddItem = [_clientFunc, "fn_forceAddItem.sqf"] call mf_compile;
 fn_getFromPairs = [_serverFunc, "fn_getFromPairs.sqf"] call mf_compile;
 fn_getPos3D = [_serverFunc, "fn_getPos3D.sqf"] call mf_compile;
 fn_getScore = [_serverFunc, "fn_getScore.sqf"] call mf_compile;
+fn_setScore = [_serverFunc, "fn_setScore.sqf"] call mf_compile;
 fn_getTeamScore = [_serverFunc, "fn_getTeamScore.sqf"] call mf_compile;
 fn_magazineAmmoCargo = [_serverFunc, "fn_magazineAmmoCargo.sqf"] call mf_compile;
 fn_numbersText = [_serverFunc, "fn_numbersText.sqf"] call mf_compile;

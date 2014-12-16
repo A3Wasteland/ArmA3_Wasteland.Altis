@@ -11,12 +11,38 @@ R3F_LOG_CFG_remorqueurs =
 	"MRAP_01_base_F",
 	"MRAP_02_base_F",
 	"MRAP_03_base_F",
+	"Boat_Armed_01_base_F"
+];
+
+/**
+ * List of class names of (ground or air) vehicles which can tow heavy towables objects.
+ */
+R3F_LOG_CFG_remorqueursH =
+[
 	"Truck_01_base_F",
 	"Truck_02_base_F",
 	"Truck_03_base_F",
 	"Wheeled_APC_F",
-	"Tank_F",
-	"Boat_Armed_01_base_F"
+	"Tank_F"
+];
+
+/**
+ * List of class names of (ground or air) vehicles which can tow all towables objects.
+ */
+R3F_LOG_CFG_remorqueursALL =
+[
+	"SUV_01_base_F",
+	"Offroad_01_base_F",
+	"Van_01_base_F",
+	"MRAP_01_base_F",
+	"MRAP_02_base_F",
+	"MRAP_03_base_F",
+	"Boat_Armed_01_base_F",
+	"Truck_01_base_F",
+	"Truck_02_base_F",
+	"Truck_03_base_F",
+	"Wheeled_APC_F",
+	"Tank_F"
 ];
 
 /**
@@ -35,8 +61,76 @@ R3F_LOG_CFG_objets_remorquables =
 	"SDV_01_base_F",
 	"Boat_Civil_01_base_F",
 	"Boat_Armed_01_base_F",
-	"Helicopter_Base_F",
+	"O_Heli_Light_02_unarmed_F",
+	"I_Heli_light_03_unarmed_F",
+	"B_Heli_Transport_01_F",
+	"B_Heli_Transport_01_camo_F",
+	"O_Heli_Light_02_F",
+	"I_Heli_light_03_F",
+	"B_Heli_Attack_01_F",
+	"O_Heli_Attack_02_F",
+	"O_Heli_Attack_02_black_F",
+	"B_Heli_Light_01_F",
+	"B_Heli_Light_01_armed_F",
+	"C_Heli_Light_01_civil_F"
+];
+
+/**
+ * List of class names of heavy towables objects.
+ */
+R3F_LOG_CFG_objets_remorquablesH =
+[
+	"Hatchback_01_base_F",
+	"SUV_01_base_F",
+	"Offroad_01_base_F",
+	"Van_01_base_F",
+	"MRAP_01_base_F",
+	"MRAP_02_base_F",
+	"MRAP_03_base_F",
+	"Truck_01_base_F",
+	"Truck_02_base_F",
+	"Truck_03_base_F",
+	"Wheeled_APC_F",
+	"Tank_F",
+	"UGV_01_base_F",
+	"SDV_01_base_F",
+	"Boat_Civil_01_base_F",
+	"Boat_Armed_01_base_F",
+	"O_Heli_Light_02_unarmed_F",
+	"I_Heli_light_03_unarmed_F",
+	"B_Heli_Transport_01_F",
+	"B_Heli_Transport_01_camo_F",
+	"O_Heli_Light_02_F",
+	"I_Heli_light_03_F",
+	"B_Heli_Attack_01_F",
+	"O_Heli_Attack_02_F",
+	"O_Heli_Attack_02_black_F",
+	"B_Heli_Light_01_F",
+	"B_Heli_Light_01_armed_F",
+	"C_Heli_Light_01_civil_F",
+	"I_Heli_Transport_02_F",
+    "Heli_Transport_04_base_F",
+	"B_Heli_Transport_03_base_F",
 	"Plane"
+];
+
+/**
+ * List of class names of heavy.
+ */
+R3F_LOG_CFG_objets_remorquablesALL =
+[
+	"Truck_01_base_F",
+	"Truck_02_base_F",
+	"Truck_03_base_F",
+	"Wheeled_APC_F",
+	"Tank_F",
+	"I_Heli_Transport_02_F",
+    "Heli_Transport_04_base_F",
+	"B_Heli_Transport_03_base_F",
+	"I_Plane_Fighter_03_AA_F",
+	"I_Plane_Fighter_03_CAS_F",
+	"B_Plane_CAS_01_F",
+	"O_Plane_CAS_02_F"
 ];
 
 /****** LIFT WITH VEHICLE  ******/
@@ -46,7 +140,25 @@ R3F_LOG_CFG_objets_remorquables =
  */
 R3F_LOG_CFG_heliporteurs =
 [
-	"Helicopter_Base_F"
+	"O_Heli_Light_02_unarmed_F",
+	"I_Heli_light_03_unarmed_F",
+	"B_Heli_Transport_01_F",
+	"B_Heli_Transport_01_camo_F",
+	"O_Heli_Light_02_F",
+	"I_Heli_light_03_F",
+	"B_Heli_Attack_01_F",
+	"O_Heli_Attack_02_F",
+	"O_Heli_Attack_02_black_F"
+];
+
+/**
+ * List of class names of air vehicles which can lift heavy liftables objects.
+ */
+R3F_LOG_CFG_heliporteursH =
+[
+	"I_Heli_Transport_02_F",
+    "Heli_Transport_04_base_F",
+	"B_Heli_Transport_03_base_F"
 ];
 
 /**
@@ -61,12 +173,32 @@ R3F_LOG_CFG_objets_heliportables =
 	"MRAP_01_base_F",
 	"MRAP_02_base_F",
 	"MRAP_03_base_F",
-	"UGV_01_base_F",
 	"SDV_01_base_F",
 	"Boat_Civil_01_base_F",
 	"Boat_Armed_01_base_F"
 ];
 
+/**
+ * List of class names of heavy liftables objects.
+ */
+R3F_LOG_CFG_objets_heliportablesH =
+[
+	"Hatchback_01_base_F",
+	"SUV_01_base_F",
+	"Offroad_01_base_F",
+	"Van_01_base_F",
+	"MRAP_01_base_F",
+	"MRAP_02_base_F",
+	"MRAP_03_base_F",
+	"Truck_01_base_F",
+	"Truck_02_base_F",
+	"Truck_03_base_F",
+	"Wheeled_APC_F",
+	"Tank_F",
+	"SDV_01_base_F",
+	"Boat_Civil_01_base_F",
+	"Boat_Armed_01_base_F"
+];
 
 /****** LOAD IN VEHICLE / CHARGER DANS LE VEHICULE ******/
 
@@ -97,9 +229,9 @@ R3F_LOG_CFG_transporteurs =
 	["Heli_Light_02_base_F", 20],
 	["I_Heli_light_03_base_F", 20],
 	["Heli_Transport_01_base_F", 25],
-	["Heli_Transport_02_base_F", 30],
-	["B_Heli_Transport_03_base_F", 30],
-	["Heli_Transport_04_base_F", 30],
+	["Heli_Transport_02_base_F", 100],
+	["B_Heli_Transport_03_base_F", 100],
+	["Heli_Transport_04_base_F", 100],
 	["Heli_Attack_01_base_F", 10],
 	["Heli_Attack_02_base_F", 20]
 ];

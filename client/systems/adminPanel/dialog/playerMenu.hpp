@@ -170,7 +170,7 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 
-		class SlayButton: w_RscButton
+		/*class SlayButton: w_RscButton
 		{
 			idc = -1;
 			text = "Slay";
@@ -179,7 +179,7 @@ class PlayersMenu
 			y = 0.748 * safezoneH + safezoneY;
 			w = 0.05 * safezoneW;
 			h = 0.04 * safezoneH;
-		};
+		};*/
 
 		class UnlockTeamSwitchButton: w_RscButton
 		{

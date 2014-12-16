@@ -46,7 +46,7 @@ _minimumFog = 0;
 
 // Fog intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumFog
 // (0 = no fog, 1 = pea soup). (Suggested value: 0.1).
-_maximumFog = 0.1;
+_maximumFog = 0;
 
 // New ArmA3 facilities added by Bewilderbeest
 _minimumFogDecay = 0.001;
@@ -89,7 +89,7 @@ _windChangeProbability = 25;
 // Probability in percent (0-100) for rain to start at every rain interval. Set this to 0 if you don't want rain at all. Set this to 100
 // if you want it to rain constantly when overcast is greater than 0.75. In short: if you think that it generally rains to often then
 // lower this value and vice versa. (Suggested value: 50).
-_rainIntervalRainProbability = 50;
+_rainIntervalRainProbability = 30;
 
 // Minimum time in minutes for rain intervals. Must be greater or equal to 0 and less than or equal to _maxRainIntervalTimeMin.
 // (Suggested value: 0).

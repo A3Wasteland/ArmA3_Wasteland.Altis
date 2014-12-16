@@ -19,7 +19,7 @@ private ["_liste_objets_depl_heli_remorq_transp", "_liste_vehicules_connus", "_l
 
 #ifdef R3F_LOG_enable
 // Union des tableaux de types d'objets servant dans un isKindOf
-_liste_objets_depl_heli_remorq_transp = R3F_LOG_CFG_objets_deplacables + R3F_LOG_CFG_objets_heliportables + R3F_LOG_CFG_objets_remorquables + R3F_LOG_classes_objets_transportables;
+_liste_objets_depl_heli_remorq_transp = R3F_LOG_CFG_objets_deplacables + R3F_LOG_CFG_objets_heliportables + R3F_LOG_CFG_objets_heliportablesH + R3F_LOG_CFG_objets_remorquables + R3F_LOG_CFG_objets_remorquablesH + R3F_LOG_classes_objets_transportables;
 #endif
 
 // Contiendra la liste des véhicules (et objets) déjà initialisés
@@ -57,6 +57,11 @@ while {true} do
 						[_objet] spawn R3F_LOG_FNCT_heliporteur_init;
 					};
 
+					// If vehicle can airlift heavy
+					if ({_objet isKindOf _x} count R3F_LOG_CFG_heliporteursH > 0) then
+					{
+						[_objet] spawn R3F_LOG_FNCT_heliporteur_init;
+					};
 					// If vehicle can transport contents
 					if ({_objet isKindOf _x} count R3F_LOG_classes_transporteurs > 0) then
 					{
@@ -69,6 +74,11 @@ while {true} do
 						[_objet] spawn R3F_LOG_FNCT_remorqueur_init;
 					};
 
+					// If vehicle can tow heavy
+					if ({_objet isKindOf _x} count R3F_LOG_CFG_remorqueursH > 0) then
+					{
+						[_objet] spawn R3F_LOG_FNCT_remorqueur_init;
+					};					
 					_objet setVariable ["R3F_LOG_init_done", true];
 					if (!local _objet && !simulationEnabled _objet) then { _objet enableSimulation true };
 					#endif

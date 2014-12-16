@@ -39,3 +39,6 @@ if (_abs) then {
 } else {
 	_item set [QTY, _current + _qty];
 };
+
+trackMyInventory = [player, mf_inventory];
+publicVariableServer "trackMyInventory";

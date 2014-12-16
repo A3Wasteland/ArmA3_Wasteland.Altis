@@ -29,3 +29,4 @@ _hasInventory =
 };
 
 _fileName = "Objects" call PDB_objectFileName;
+_fileName2 = "Vehicles" call PDB_objectFileName;

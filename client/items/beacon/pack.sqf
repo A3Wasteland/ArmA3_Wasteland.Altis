@@ -43,6 +43,10 @@ _success =  [DURATION, ANIM, _hasFailed, [_beacon]] call a3w_actions_start;
 
 if (_success) then {
 	pvar_spawn_beacons = pvar_spawn_beacons - [_beacon];
+
+	untrackObject = _beacon;
+  publicVariableServer "untrackObject";
+
 	publicVariable "pvar_spawn_beacons";
 	deleteVehicle _beacon;
 	[MF_ITEMS_SPAWN_BEACON, 1] call mf_inventory_add;

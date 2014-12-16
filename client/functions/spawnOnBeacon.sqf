@@ -30,6 +30,8 @@ if (_preload) then { waitUntil {preloadCamera _playerPos} };
 player setPos _playerPos;
 
 respawnDialogActive = false;
+player setVariable ["respawnDialogActive", false, true];
+
 closeDialog 0;
 
 _owner spawn

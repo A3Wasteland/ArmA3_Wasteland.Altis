@@ -2,58 +2,38 @@
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
 //	@file Name: s_setupPlayerDB.sqf
-//	@file Author: AgentRev
+//	@file Author: AgentRev, micovery
 
 if (!isServer) exitWith {};
 
-fn_deletePlayerSave = "persistence\players\s_deletePlayerSave.sqf" call mf_compile;
-fn_loadAccount = "persistence\players\s_loadAccount.sqf" call mf_compile;
+#include "macro.h"
 
-"savePlayerData" addPublicVariableEventHandler
-{
-	_array = _this select 1;
+diag_log "Loading s_setupPlayerDB ...";
 
-	_UID = _array select 0;
-	_info = _array select 1;
-	_data = _array select 2;
-	_player = _array select 3;
+call compile preProcessFileLineNumbers "persistence\players\sFunctions.sqf";
 
-	if (!isNull _player && alive _player && _player getVariable ["FAR_isUnconscious", 0] == 0) then
-	{
-		{
-			[_UID call PDB_playerFileName, "PlayerInfo", _x select 0, _x select 1] call PDB_write; // iniDB_write
-		} forEach _info;
-
-		{
-			[_UID call PDB_playerFileName, "PlayerSave", _x select 0, _x select 1] call PDB_write; // iniDB_write
-		} forEach _data;
-	};
-
-	if (!isNull _player && !alive _player) then
-	{
-		_UID call fn_deletePlayerSave;
-	};
+fn_deletePlayerSave = {
+  init(_scope,_this call PDB_playerFileName);
+  [_scope, "PlayerSave", nil] call stats_set;
 };
 
-"requestPlayerData" addPublicVariableEventHandler
-{
-	_array = _this select 1;
-	_player = _array select 0;
-	_UID = _array select 1;
-	_pNetId = _array select 2;
 
-	if ((_UID call PDB_playerFileName) call PDB_exists) then // iniDB_exists
-	{
-		applyPlayerData = _UID call fn_loadAccount;
-	}
-	else
-	{
-		applyPlayerData = [];
-	};
-
-	(owner _player) publicVariableClient "applyPlayerData";
-
-	diag_log format ["requestPlayerData: %1", [_player, owner _player, objectFromNetId _pNetId]];
+"deletePlayerData" addPublicVariableEventHandler {
+  _player = _this select 1;
+  (getPlayerUID _player) call fn_deletePlayerSave;
 };
 
-"deletePlayerData" addPublicVariableEventHandler { (_this select 1) call fn_deletePlayerSave };
+
+def(_mScope);
+_mScope = "Messages" call PDB_messagesFileName;
+[_mScope] spawn s_messageLoop;
+
+
+def(_plScope);
+_plScope = "PlayersList" call PDB_playersListFileName;
+[_plScope] spawn pl_saveLoop;
+
+
+[] spawn p_saveLoop;
+
+diag_log "Loading s_setupPlayerDB complete";

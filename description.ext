@@ -4,11 +4,11 @@ disabledAI=1;
 disableChannels[] = {2}; // {0} to disable global, {2} for command channel
 joinUnassigned = 0;
 enableItemsDropping = 0;
-forceRotorLibSimulation = 0; // if you set this to 1, you deny freedom of choice to the players, which is the very principle this mission is built upon
+forceRotorLibSimulation = 0; // Force RotorLib (0 = disable, 1= enable)
 weaponPool = 0;
 corpseManagerMode = 1;
-corpseRemovalMinTime = 30*60;
-corpseRemovalMaxTime = 30*60;
+corpseRemovalMinTime = 15*60;
+corpseRemovalMaxTime = 20*60;
 wreckManagerMode = 1;
 wreckRemovalMinTime = 5*60;
 wreckRemovalMaxTime = 10*60;
@@ -53,24 +53,91 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
+#include "addons\JTS_PM\PM_Compact.hpp"
+#include "addons\outlw_magRepack\MagRepack_Config.hpp"
+#include "addons\taw_vd\dialog.hpp"
+
+#include "addons\bank\ui.hpp"
+#include "addons\bank\bank_menu.hpp"
+
 
 class RscTitles
 {
 	#include "addons\proving_ground\PG_rsctitles.hpp"
-	#include "client\systems\hud\dialog\hud.hpp"
+ 	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
 	#include "client\systems\scoreboard\score_gui.hpp"
 };
 
 class CfgFunctions
 {
-	class A3W
+  #include "addons\taw_vd\CfgFunctions.hpp"
+  class A3W
 	{
 		#include "server\CfgFunctions.hpp"
-	};
+  };
 };
 
 class CfgNotifications
 {
 	#include "client\CfgNotifications.hpp"
+};
+
+class CfgSounds
+{
+	sounds[] = 
+	{
+		beep, beep2, beep3, beep4, beep5, beep6, beep7, beep8, beep9, carlock
+	};
+		class beep
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.5};
+                                titles[] = {};
+			};		
+		class beep2
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.6};
+                                titles[] = {};
+			};
+		class beep3
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.7};
+                                titles[] = {};
+			};
+		class beep4
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.8};
+                                titles[] = {};
+			};
+		class beep5
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.9};
+                                titles[] = {};
+			};
+		class beep6
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 1.0};
+                                titles[] = {};
+			};
+		class beep7
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 1.2};
+                                titles[] = {};
+			};
+		class beep8
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 1.4};
+                                titles[] = {};
+			};
+		class beep9
+			{
+                                sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.1};
+                                titles[] = {};
+			};
+		class carlock
+			{
+								name = "carlock";
+								sound[] = {sounds\carlock.ogg,0.2,1};
+								titles[] = {};
+			};
 };
