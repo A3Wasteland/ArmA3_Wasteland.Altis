@@ -6,9 +6,11 @@
 
 if (!isServer) exitWith {};
 
+#include "macro.h"
+
 diag_log "Loading s_setupPlayerDB ...";
 
-#include "sFunctions.sqf"
+call compile preProcessFileLineNumbers "persistence\players\sFunctions.sqf";
 
 fn_deletePlayerSave = {
   init(_scope,_this call PDB_playerFileName);
