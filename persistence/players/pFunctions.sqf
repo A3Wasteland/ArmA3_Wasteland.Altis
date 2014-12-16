@@ -160,8 +160,6 @@ fn_applyPlayerData = {
   def(_vest_class);
   def(_vehicle_key);
   def(_position);
-  def(_position_altis);
-  def(_position_stratis);
 
   //iterate through the data, and extract the hash variables into local variables
   {
@@ -181,8 +179,6 @@ fn_applyPlayerData = {
       case "Vest": { _vest_class = _value};
       case "InVehicle": { _vehicle_key = _value};
       case "Position": {if (isPOS(_value)) then {_position = _value;}};
-      case "Position_Altis": {if (isPOS(_value)) then {_position_altis = _value;}};
-      case "Position_Stratis": {if (isPOS(_value)) then {_position_stratis = _value;}};
     };
   } forEach _data;
 
@@ -209,7 +205,7 @@ fn_applyPlayerData = {
   [OR(_uniform_class,nil)] call p_restoreUniform;
   [OR(_vest_class,nil)] call p_restoreVest;
 
-  [OR(_position,nil), OR(_position_altis,nil), OR(_position_stratis,nil)] call p_restorePosition;
+  [OR(_position,nil)] call p_restorePosition;
 
   //restore other stuff that is not order-dependent
   def(_name);
