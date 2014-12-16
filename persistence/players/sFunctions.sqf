@@ -263,6 +263,12 @@ p_addPlayerSave = {
     _hitPoints pushBack [_hitPoint, _player getHitPointDamage _hitPoint];
   } forEach (_player call getHitPoints);
 
+
+  def(_data);
+  def(_world_data);
+
+  _world_data = [];
+
   _data =
   [
     ["Damage", damage _player],
@@ -271,7 +277,6 @@ p_addPlayerSave = {
     ["Thirst", _player getVariable ["thirstLevel", 100]],
     ["Money", _player getVariable ["cmoney", 0]] // Money is always saved, but only restored if A3W_moneySaving = 1
   ];
-
 
   def(_pos);
   _pos = ASLtoATL getPosWorld _player;
@@ -283,13 +288,13 @@ p_addPlayerSave = {
     };
   };
 
-  _data pushBack [format["Position_%1", worldName], _pos];
-  _data pushBack ["Direction", direction _player];
+  _world_data pushBack ["Position", _pos];
+  _world_data pushBack ["Direction", direction _player];
 
   //only save animation, and current weapon if the player is not inside a vehicle
   if (vehicle _player == _player) then {
     _data pushBack ["CurrentWeapon", format ["%1", currentMuzzle _player]]; // currentMuzzle returns a number sometimes, hence the format
-    _data pushBack ["Animation", (animationState _player)];
+    _world_data pushBack ["Animation", (animationState _player)];
   };
 
 
@@ -395,6 +400,8 @@ p_addPlayerSave = {
   { _data pushBack _x } forEach _gear;
 
   _request pushBack ["PlayerSave", (_data call sock_hash)];
+  _request pushBack [format["PlayerSave_%1", worldName], (_world_data call sock_hash)];
+
 
   true
 };
