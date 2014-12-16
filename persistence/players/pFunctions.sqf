@@ -440,7 +440,7 @@ fn_requestPlayerData = {[] spawn {
         _worldData = xGet(_x,1);
       };
       case _infoKey: {
-        [] call p_restoreInfo;
+        [xGet(_x,1)] call p_restoreInfo;
       };
       case _scoreKey: {
         [xGet(_x,1)] call p_restoreScore;
