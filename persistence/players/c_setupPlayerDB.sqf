@@ -3,8 +3,8 @@
 
 if (isDedicated) exitWith {};
 
+#include "macro.h"
+
 call compile preProcessFileLineNumbers "persistence\sock\main.sqf";
-#include "pFunctions.sqf"
-
-
-
+call compile preProcessFileLineNumbers "persistence\lib\hash.sqf";
+call compile preProcessFileLineNumbers "persistence\players\pFunctions.sqf";

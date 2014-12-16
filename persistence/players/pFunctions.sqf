@@ -131,35 +131,13 @@ p_copy_pairs = {
 
 p_restorePosition = {
   ARGV3(0,_position,[]);
-  ARGV3(1,_position_altis,[]);
-  ARGV3(2,_position_stratis,[]);
 
-  def(_position_world);
-  if (worldName == "Altis") then {
-    _position_world = OR(_position_altis,nil);
-  }
-  else { if (worldName == "Stratis") then {
-    _position_world = OR(_position_stratis,nil);
-  };};
-
-
-  if (isPOS(_position_world)) exitWith {
-    diag_log format["Setting player position: %1 for world: %2", worldName];
-    player setPosATL _position_world;
-  };
-
-  diag_log format["WARNING: No %1 position available", worldName];
-
-  if (worldName == "Altis" && isPOS(_position)) exitWith {
-    diag_log format["WARNING: using legacy position for Altis (possition = %1)", _position];
+  if (isPOS(_position)) exitWith {
     player setPosATL _position;
   };
 
-  //at this point there is really no position that could be used ... get a random position
-  private["_msg"];
-  _msg = format["WARNING: could not find a %1 position. Putting you at a random safe location.", worldName];
-  player groupChat _msg;
-  diag_log _msg;
+  diag_log format["WARNING: No position available. Putting player at a random safe location."];
+  player groupChat format["WARNING: No position available. Putting you at a random safe location."];
   [nil,false] spawn spawnRandom;
 };
 
@@ -182,8 +160,6 @@ fn_applyPlayerData = {
   def(_vest_class);
   def(_vehicle_key);
   def(_position);
-  def(_position_altis);
-  def(_position_stratis);
 
   //iterate through the data, and extract the hash variables into local variables
   {
@@ -203,8 +179,6 @@ fn_applyPlayerData = {
       case "Vest": { _vest_class = _value};
       case "InVehicle": { _vehicle_key = _value};
       case "Position": {if (isPOS(_value)) then {_position = _value;}};
-      case "Position_Altis": {if (isPOS(_value)) then {_position_altis = _value;}};
-      case "Position_Stratis": {if (isPOS(_value)) then {_position_stratis = _value;}};
     };
   } forEach _data;
 
@@ -231,7 +205,7 @@ fn_applyPlayerData = {
   [OR(_uniform_class,nil)] call p_restoreUniform;
   [OR(_vest_class,nil)] call p_restoreVest;
 
-  [OR(_position,nil), OR(_position_altis,nil), OR(_position_stratis,nil)] call p_restorePosition;
+  [OR(_position,nil)] call p_restorePosition;
 
   //restore other stuff that is not order-dependent
   def(_name);
@@ -397,7 +371,7 @@ p_firstSpawn = {
 
 p_restoreData = {
   diag_log format["%1 call p_restoreData",_this];
-  ARGV2(0,_hash);
+  ARGV2(0,_data);
   format["%1 call p_restoreData;", _this] call p_log_finest;
 
   def(_exit);
@@ -406,9 +380,6 @@ p_restoreData = {
     call p_firstSpawn;
     playerData_loaded = true;
   };
-
-  def(_data);
-  _data = getIf(isCODE(_hash),call _hash,nil);
 
   def(_dataValid);
   _dataValid = (isARRAY(_data) && {count(_data) > 0});
@@ -431,7 +402,6 @@ p_getScope = {
   (format["%1%2",PDB_PlayerFileID,_id])
 };
 
-
 fn_requestPlayerData = {[] spawn {
   init(_player,player);
   init(_uid,getPlayerUID player);
@@ -442,24 +412,32 @@ fn_requestPlayerData = {[] spawn {
   playerData_alive = nil;
   playerData_loaded = nil;
   playerData_resetPos = nil;
-  init(_dataKey, "PlayerSave");
+  init(_genericDataKey, "PlayerSave");
   init(_infoKey, "PlayerInfo");
   init(_scoreKey, "PlayerScore");
 
+  def(_worldDataKey);
+  _worldDataKey = format["%1_%2", _genericDataKey, worldName];
 
   def(_pData);
-  _pData = [_scope, [_dataKey, nil], [_infoKey, nil],[_scoreKey, nil]] call stats_get;
+  _pData = [_scope, [_genericDataKey, nil], [_worldDataKey, nil], [_infoKey, nil], [_scoreKey, nil]] call stats_get;
   if (not(isARRAY(_pData))) exitWith {
     //player data did not load, force him back to lobby
     endMission "LOSER";
   };
 
+  def(_worldData);
+  def(_genericData);
+
   def(_key);
   {
     _key = xGet(_x,0);
     switch(_key) do {
-      case _dataKey: {
-        [xGet(_x,1)] call p_restoreData;
+      case _genericDataKey: {
+        _genericData = xGet(_x,1);
+      };
+      case _worldDataKey: {
+        _worldData = xGet(_x,1);
       };
       case _infoKey: {
         [xGet(_x,1)] call p_restoreInfo;
@@ -469,6 +447,15 @@ fn_requestPlayerData = {[] spawn {
       };
     };
   } forEach _pData;
+
+  //merge the world specific data, with the generic data
+  def(_allData);
+  diag_log format["_genericData = %1", OR(_genericData,nil)];
+  diag_log format["_worldData = %1", OR(_worldData,nil)];
+  _allData = [OR(call _genericData,[]), OR(call _worldData,[])] call hash_set_all;
+
+  [_allData] call p_restoreData;
+
 };};
 
 
