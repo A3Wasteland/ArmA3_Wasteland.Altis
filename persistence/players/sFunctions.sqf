@@ -1,7 +1,7 @@
-//	@file Version: 0.1
-//	@file Name: pFunctions.sqf
-//	@file Author: micovery
-//	@file Description: server functions
+//  @file Version: 0.1
+//  @file Name: sFunctions.sqf
+//  @file Author: micovery
+//  @file Description: server functions
 
 diag_log "sFunctions.sqf loading ...";
 
@@ -283,9 +283,8 @@ p_addPlayerSave = {
     };
   };
 
-  _data pushBack ["Position", _pos];
-	_data pushBack ["Direction", direction _player];
-
+  _data pushBack [format["Position_%1", worldName], _pos];
+  _data pushBack ["Direction", direction _player];
 
   //only save animation, and current weapon if the player is not inside a vehicle
   if (vehicle _player == _player) then {

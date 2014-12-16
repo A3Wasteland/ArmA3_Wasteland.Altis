@@ -129,6 +129,40 @@ p_copy_pairs = {
   } forEach _source;
 };
 
+p_restorePosition = {
+  ARGV3(0,_position,[]);
+  ARGV3(1,_position_altis,[]);
+  ARGV3(2,_position_stratis,[]);
+
+  def(_position_world);
+  if (worldName == "Altis") then {
+    _position_world = OR(_position_altis,nil);
+  }
+  else { if (worldName == "Stratis") then {
+    _position_world = OR(_position_stratis,nil);
+  };};
+
+
+  if (isPOS(_position_world)) exitWith {
+    diag_log format["Setting player position: %1 for world: %2", worldName];
+    player setPosATL _position_world;
+  };
+
+  diag_log format["WARNING: No %1 position available", worldName];
+
+  if (worldName == "Altis" && isPOS(_position)) exitWith {
+    diag_log format["WARNING: using legacy position for Altis (possition = %1)", _position];
+    player setPosATL _position;
+  };
+
+  //at this point there is really no position that could be used ... get a random position
+  private["_msg"];
+  _msg = format["WARNING: could not find a %1 position. Putting you at a random safe location.", worldName];
+  player groupChat _msg;
+  diag_log _msg;
+  [nil,false] spawn spawnRandom;
+};
+
 
 
 fn_applyPlayerData = {
@@ -147,6 +181,9 @@ fn_applyPlayerData = {
   def(_uniform_class);
   def(_vest_class);
   def(_vehicle_key);
+  def(_position);
+  def(_position_altis);
+  def(_position_stratis);
 
   //iterate through the data, and extract the hash variables into local variables
   {
@@ -165,9 +202,12 @@ fn_applyPlayerData = {
       case "Uniform":{ _uniform_class = _value};
       case "Vest": { _vest_class = _value};
       case "InVehicle": { _vehicle_key = _value};
-
+      case "Position": {if (isPOS(_value)) then {_position = _value;}};
+      case "Position_Altis": {if (isPOS(_value)) then {_position_altis = _value;}};
+      case "Position_Stratis": {if (isPOS(_value)) then {_position_stratis = _value;}};
     };
   } forEach _data;
+
 
   //Restore the weapons, backpack, uniform, and vest in correct order
   player addBackpack "B_Carryall_Base"; // add a temporary backpack for holding loaded weapon magazines
@@ -191,6 +231,8 @@ fn_applyPlayerData = {
   [OR(_uniform_class,nil)] call p_restoreUniform;
   [OR(_vest_class,nil)] call p_restoreVest;
 
+  [OR(_position,nil), OR(_position_altis,nil), OR(_position_stratis,nil)] call p_restorePosition;
+
   //restore other stuff that is not order-dependent
   def(_name);
   def(_value);
@@ -204,7 +246,6 @@ fn_applyPlayerData = {
       case "Hunger": { hungerLevel = OR(_value,nil); };
       case "Thirst": { thirstLevel = OR(_value,nil); };
       case "Money": { player setVariable ["cmoney", OR(_value,0), true] };
-      case "Position": { if (isARRAY(_value) && {count _value == 3}) then { player setPosATL _value } };
       case "Direction": { if (defined(_value)) then {player setDir _value} };
       case "Goggles": { if (isSTRING(_value) && {_value != ""}) then { player addGoggles _value } };
       case "Headgear": {

@@ -22,6 +22,10 @@
 #define isSIDE(x) \
 (not(isNil {x}) && {typeName x == typeName sideUnknown})
 
+#define isPOS(x) \
+(isARRAY(x) && {count(x) == 3})
+
+
 #define isNullable(x) (false ||{ \
   not(isNil {x}) &&{ \
   private["_t"]; \
