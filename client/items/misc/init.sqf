@@ -32,15 +32,6 @@ mf_repair_nearest_vehicle = {
 	["LandVehicle", "Air", "Ship"] call mf_nearest_vehicle
 } call mf_compile;
 
-mf_remote_repair = {
-	private "_vehicle";
-	_vehicle = objectFromNetId (_this select 0);
-	_vehicle setDamage 0;
-	if (_vehicle isKindOf "Boat_Armed_01_base_F" && count (_vehicle magazinesTurret [0]) == 0) then { _vehicle setHitPointDamage ["HitTurret", 1] }; // disable front GMG on speedboats
-	_vehicle setVariable ["FAR_killerVehicle", nil, true];
-	_vehicle setVariable ["FAR_killerAmmo", nil, true];
-} call mf_compile;
-
 // Setting up repairing action.
 mf_repair_can_repair = [_path, "can_repair.sqf"] call mf_compile;
 private ["_label1", "_execute1", "_condition1", "_action1"];
