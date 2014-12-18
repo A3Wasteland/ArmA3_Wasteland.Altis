@@ -42,6 +42,7 @@ if (!isNil "_setupObjects") then { call _setupObjects };
 
 _leader = leader _aiGroup;
 _marker = [_missionType, _missionPos] call createMissionMarker;
+_aiGroup setVariable ["A3W_missionMarkerName", _marker, true];
 
 if (isNil "_missionPicture") then { _missionPicture = "" };
 

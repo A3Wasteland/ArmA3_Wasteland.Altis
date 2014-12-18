@@ -55,7 +55,7 @@ if (isPlayer _player) then
 		// Log Scores to DB
 		if (["A3W_savingMethod", "profile"] call getPublicVar == "extDB") then
 		{
-			[format ["insertOrUpdatePlayerStats:%1:%2:%3", getPlayerUID _player, _column, _score]] spawn extDB_Database_async;
+			[format ["insertOrUpdatePlayerStats:%1:%2:%3:%4:%5", getPlayerUID _player, call A3W_extDB_ServerID, call A3W_extDB_MapID, _column, _score]] spawn extDB_Database_async;
 		};
 	};
 };

@@ -30,7 +30,7 @@ savePlayerHandle = _this spawn
 			["BankMoney", player getVariable ["bmoney", 0]]
 		];
 
-		_data = player call fn_getPlayerData;
+		_data = [player] call fn_getPlayerData;
 
 
 		if (!isNil "playerData_infoPairs") then
