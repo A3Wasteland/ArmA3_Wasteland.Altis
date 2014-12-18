@@ -30,6 +30,9 @@ _exclVehicleIDs = [];
 
 	if (!isNil "_class" && !isNil "_pos" && {count _pos == 3 && (_maxLifetime <= 0 || _hoursAlive < _maxLifetime) && (_maxUnusedTime <= 0 || _hoursUnused < _maxUnusedTime)}) then
 	{
+		_vehCount = _vehCount + 1;
+		_valid = true;
+
 		{ if (typeName _x == "STRING") then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
 
 		_isUAV = (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0);
@@ -169,9 +172,6 @@ _exclVehicleIDs = [];
 		if (!isNil "_repairCargo") then { _veh setRepairCargo _repairCargo };
 
 		reload _veh;
-
-		_vehCount = _vehCount + 1;
-		_valid = true;
 	};
 
 	if (!_valid && !isNil "_vehicleID") then
