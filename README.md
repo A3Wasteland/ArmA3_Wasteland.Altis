@@ -6,8 +6,8 @@ We are looking for active coders to take over our mission to support community i
 
 Notes about our fork:
 * We do not use iniDB, iniDB code may not be updated or merged. 
-* We use extDB, provided by torndeco (https://github.com/Torndeco/ArmA3_Wasteland.Altis) which is not updated anymore, it was used as a concept on how to use DB_CUSTOM_V3 of extDB. 
-* ExtDB files can be found here: https://github.com/l0dac/a3wasteland-extdb
+* We use extDB, initially provided by @Torndeco.
+
 
 We are not a support team. We are a community that enjoys playing arma and saw fit to modify our own A3Wasteland mission file. 
 
