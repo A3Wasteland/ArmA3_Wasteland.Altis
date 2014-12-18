@@ -48,5 +48,7 @@ publicVariable "currentInvites";
 	["pvar_updatePlayerScore", { PVAL call fn_updatePlayerScore }],
 	["pvar_manualObjectSave", { if (!isNil "fn_manualObjectSave") then { PVAL call fn_manualObjectSave } }],
 	["pvar_manualObjectDelete", { if (!isNil "fn_manualObjectDelete") then { PVAL call fn_manualObjectDelete } }],
-	["pvar_manualVehicleSave", { if (!isNil "fn_manualVehicleSave") then { PVAL call fn_manualVehicleSave } }]
+	["pvar_manualVehicleSave", { if (!isNil "fn_manualVehicleSave") then { PVAL call fn_manualVehicleSave } }],
+	["pvar_playerRespawn", { PVAL spawn playerRespawnServer }],
+	["pvar_waitUntilBagTaken", { PVAL spawn waitUntilBagTaken }]
 ];

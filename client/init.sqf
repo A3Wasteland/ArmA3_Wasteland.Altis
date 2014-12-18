@@ -56,6 +56,9 @@ player addEventHandler ["Killed", { _this spawn onKilled }];
 
 A3W_scriptThreads pushBack execVM "client\functions\evalManagedActions.sqf";
 
+pvar_playerRespawn = player;
+publicVariableServer "pvar_playerRespawn";
+
 //Player setup
 player call playerSetupStart;
 

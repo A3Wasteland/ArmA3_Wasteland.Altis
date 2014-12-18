@@ -18,6 +18,7 @@
 	["pvar_notifyClient", { PVAL spawn mf_notify_client }],
 	["pvar_playerEventServer", { PVAL spawn playerEventServer }],
 	["pvar_deleteEmptyGroup", { PVAL spawn deleteEmptyGroup }],
+	["pvar_weaponDisassembledEvent", { PVAL spawn weaponDisassembledEvent }],
 
 	["pvar_territoryActivityHandler", { PVAR_TARGET(_value call A3W_fnc_territoryActivityHandler) }],
 	["pvar_updateTerritoryMarkers", { PVAR_TARGET(_value call updateTerritoryMarkers) }]
