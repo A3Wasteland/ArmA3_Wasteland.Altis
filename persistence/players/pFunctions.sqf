@@ -449,11 +449,23 @@ fn_requestPlayerData = {[] spawn {
   } forEach _pData;
 
   //merge the world specific data, with the generic data
-  def(_allData);
-  diag_log format["_genericData = %1", OR(_genericData,nil)];
-  diag_log format["_worldData = %1", OR(_worldData,nil)];
-  _allData = [OR(call _genericData,[]), OR(call _worldData,[])] call hash_set_all;
+  _genericData = OR(call _genericData,[]);
+  _worldData = OR(call _worldData,[]);
 
+  diag_log ("_genericData = " + str(_genericData));
+  diag_log ("_worldData = " + str(_worldData));
+
+  /**
+   * If the world is Stratis, ignore the legacy generic "Position".
+   * The legacy "Position" field should only be used for "Altis"
+   */
+  if (worldName == "Stratis") then {
+    [_genericData, "Position", nil] call hash_set_key;
+  };
+
+  def(_allData);
+  _allData = [_genericData, _worldData] call hash_set_all;
+  diag_log ("_allData = " + str(_allData));
   [_allData] call p_restoreData;
 
 };};
