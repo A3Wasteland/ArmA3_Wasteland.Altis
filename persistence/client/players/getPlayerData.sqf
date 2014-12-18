@@ -4,8 +4,9 @@
 //	@file Name: getPlayerData.sqf
 //	@file Author: AgentRev
 
-private ["_player", "_data", "_hitPoints", "_hitPoint", "_pos", "_loadedMags", "_mag", "_ammo", "_loaded", "_type", "_wastelandItems"];
-_player = _this;
+private ["_player", "_saveLocation", "_data", "_hitPoints", "_hitPoint", "_pos", "_loadedMags", "_mag", "_ammo", "_loaded", "_type", "_wastelandItems"];
+_player = _this select 0;
+_saveLocation = if (count _this > 1) then { _this select 1 } else { true };
 
 _data = if (_player == player) then {
 	[
@@ -30,7 +31,7 @@ _hitPoints = [];
 ];
 
 // Only save those when on ground or underwater (you probably wouldn't want to spawn 500m in the air if you get logged off in flight)
-if (isTouchingGround vehicle _player || {(getPos _player) select 2 < 0.5 || (getPosASL _player) select 2 < 0.5}) then
+if (_saveLocation && {isTouchingGround vehicle _player || {(getPos _player) select 2 < 0.5 || (getPosASL _player) select 2 < 0.5}}) then
 {
 	_pos = getPosATL _player;
 	{ _pos set [_forEachIndex, _x call fn_numToStr] } forEach _pos;

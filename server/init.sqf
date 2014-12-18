@@ -26,7 +26,7 @@ addMissionEventHandler ["HandleDisconnect",
 	{
 		if !(_unit getVariable ["playerSpawning", false]) then
 		{
-			[_uid, [], _unit call fn_getPlayerData] spawn fn_saveAccount;
+			[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
 		};
 
 		deleteVehicle _unit;
