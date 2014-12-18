@@ -332,7 +332,12 @@ while {true} do
 
 			if (!isNull _mapCtrl) then
 			{
-				_mapCtrl ctrlAddEventHandler ["Draw", { _ctrl = _this select 0; { _ctrl drawIcon _x } forEach drawPlayerMarkers_array }];
+				_mapCtrl ctrlAddEventHandler ["Draw",
+				{
+					_mapCtrl = _this select 0;
+					{ _mapCtrl drawIcon _x } forEach drawPlayerMarkers_array;
+					{ _mapCtrl drawLine _x } forEach drawPlayerMarkers_arrayLines;
+				}];
 				_x set [1, _mapCtrl];
 			};
 		};
