@@ -14,7 +14,7 @@ call compile preProcessFileLineNumbers "persistence\players\sFunctions.sqf";
 
 fn_deletePlayerSave = {
   init(_scope,_this call PDB_playerFileName);
-  [_scope, "PlayerSave", nil] call stats_set;
+  [_scope, ["PlayerSave", nil], ["PlayerSave_Altis", nil], ["PlayerSave_Stratis", nil]] call stats_set;
 };
 
 
