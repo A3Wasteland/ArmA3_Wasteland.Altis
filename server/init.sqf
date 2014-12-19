@@ -21,28 +21,25 @@ addMissionEventHandler ["HandleDisconnect",
 	_id = _this select 1;
 	_uid = _this select 2;
 	_name = _this select 3;
-	
-	/*
-  if (alive _unit && (_unit getVariable ["FAR_isUnconscious", 0] == 0) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
-  {
-    if !(_unit getVariable ["playerSpawning", false]) then
-    {
-      [_uid, [], _unit call fn_getPlayerData] spawn fn_saveAccount;
-    };
 
-    deleteVehicle _unit;
-  };
+  /*
+	if (alive _unit && (_unit getVariable ["FAR_isUnconscious", 0] == 0) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
+	{
+		if !(_unit getVariable ["playerSpawning", false]) then
+		{
+			[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
+		};
+
+		deleteVehicle _unit;
+	};
   */
-  	
-  _this call p_disconnectSave;
-  deleteVehicle (_this select 0);
-  
-  if (!isNil "fn_onPlayerDisconnected") then
-  {
-    [_id, _uid, _name] spawn fn_onPlayerDisconnected;
-  };
-  
-  false
+
+	if (!isNil "fn_onPlayerDisconnected") then
+	{
+		[_id, _uid, _name, _unit] spawn fn_onPlayerDisconnected;
+	};
+
+	false
 }];
 
 //Execute Server Side Scripts.
@@ -101,7 +98,8 @@ forEach
 	"A3W_spawnBeaconCooldown",
 	"A3W_spawnBeaconSpawnHeight",
 	"A3W_purchasedVehicleSaving",
-	"A3W_missionVehicleSaving"
+	"A3W_missionVehicleSaving",
+	"A3W_missionFarAiDrawLines"
 ];
 
 ["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
@@ -147,57 +145,57 @@ if (_playerSavingOn || _serverSavingOn) then
 	if (_savingMethod == "extDB") then
 	{
 		_version = "extDB" callExtension "9:VERSION";
-		
-    if (parseNumber _version >= 20) then
-    {
-      A3W_savingMethodName = compileFinal "'extDB'";
-      A3W_savingMethodDir = compileFinal "'extDB'";
-      A3W_extDB_ConfigName = compileFinal str (["A3W_extDB_ConfigName", "A3W"] call getPublicVar);
-      A3W_extDB_IniName = compileFinal str (["A3W_extDB_IniName", "a3wasteland"] call getPublicVar);
-    }
-    else
-    {
-      if (_version != "") then
-      {
-        diag_log format "[INFO] ### extDB startup cancelled!";
-        diag_log format ["[INFO] ### A3W requires extDB v20 or later: v%1 detected", _result];
-      }
-      else
-      {
-        diag_log "[INFO] ### A3W NOT running with extDB!";
-      };
-  
-      _savingMethod = "profile"; // fallback
-    };
-  };
 
-  // iniDB
-  if (_savingMethod == "iniDB") then
-  {
-    _verIniDB = "iniDB" callExtension "version";
-  
-    if (_verIniDB != "") then
-    {
-      A3W_savingMethodName = compileFinal (if (parseNumber _verIniDB > 1) then { "'iniDBI'" } else { "'iniDB'" });
-      A3W_savingMethodDir = compileFinal "'default'";
-      diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
-    }
-    else
-    {
-      diag_log "[INFO] ### A3W NOT running with iniDB!";
-      _savingMethod = "profile"; // fallback
-    };
-  };
-  
-  if (_savingMethod == "profileNamespace") then { _savingMethod = "profile" };
+		if (parseNumber _version >= 20) then
+		{
+			A3W_savingMethodName = compileFinal "'extDB'";
+			A3W_savingMethodDir = compileFinal "'extDB'";
+			A3W_extDB_ConfigName = compileFinal str (["A3W_extDB_ConfigName", "A3W"] call getPublicVar);
+			A3W_extDB_IniName = compileFinal str (["A3W_extDB_IniName", "a3wasteland"] call getPublicVar);
+		}
+		else
+		{
+			if (_version != "") then
+			{
+				diag_log format "[INFO] ### extDB startup cancelled!";
+				diag_log format ["[INFO] ### A3W requires extDB v20 or later: v%1 detected", _result];
+			}
+			else
+			{
+				diag_log "[INFO] ### A3W NOT running with extDB!";
+			};
 
-  // profileNamespace
-  if (_savingMethod == "profile") then
-  {
-    A3W_savingMethodName = compileFinal "'profileNamespace'";
-    A3W_savingMethodDir = compileFinal "'default'";
-    diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
-  };
+			_savingMethod = "profile"; // fallback
+		};
+	};
+
+	// iniDB
+	if (_savingMethod == "iniDB") then
+	{
+		_verIniDB = "iniDB" callExtension "version";
+
+		if (_verIniDB != "") then
+		{
+			A3W_savingMethodName = compileFinal (if (parseNumber _verIniDB > 1) then { "'iniDBI'" } else { "'iniDB'" });
+			A3W_savingMethodDir = compileFinal "'default'";
+			diag_log format ["[INFO] ### A3W running with %1 v%2", call A3W_savingMethodName, _verIniDB];
+		}
+		else
+		{
+			diag_log "[INFO] ### A3W NOT running with iniDB!";
+			_savingMethod = "profile"; // fallback
+		};
+	};
+
+	if (_savingMethod == "profileNamespace") then { _savingMethod = "profile" };
+
+	// profileNamespace
+	if (_savingMethod == "profile") then
+	{
+		A3W_savingMethodName = compileFinal "'profileNamespace'";
+		A3W_savingMethodDir = compileFinal "'default'";
+		diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
+	};
 
 	A3W_savingMethod = compileFinal str _savingMethod;
 	publicVariable "A3W_savingMethod";
@@ -229,10 +227,10 @@ if (_playerSavingOn || _serverSavingOn) then
 		_playerSavingOn = _this select 0;
 		_serverSavingOn = _this select 1;
 		_vehicleSavingOn = _this select 2;
-		
+
 		_objectIDs = [];
 		_vehicleIDs = [];
-		
+
 		if (_serverSavingOn) then
 		{
 			_objectIDs = call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
@@ -243,13 +241,13 @@ if (_playerSavingOn || _serverSavingOn) then
 			_vehicleIDs = call compile preprocessFileLineNumbers "persistence\world\vLoad.sqf";
 		};
 
-    /*
-    if (_serverSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
-    {
-      [_objectIDs, _vehicleIDs] execVM "persistence\server\world\oSave.sqf";
-      waitUntil {!isNil "A3W_oSaveReady"};
-    };
-    */
+		/*
+		if (_serverSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
+		{
+			[_objectIDs, _vehicleIDs] execVM "persistence\server\world\oSave.sqf";
+			waitUntil {!isNil "A3W_oSaveReady"};
+		};
+		*/
 	};
 
 	{

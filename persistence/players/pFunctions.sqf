@@ -385,7 +385,7 @@ p_restoreData = {
   _dataValid = (isARRAY(_data) && {count(_data) > 0});
 
   if (!_dataValid) exitWith {
-    format["saved data for %1 is not valid;", player] call p_log_finest;
+    format["Saved data for %1 is not valid;", player] call p_log_finest;
     playerData_resetPos = true;
     call _exit;
   };

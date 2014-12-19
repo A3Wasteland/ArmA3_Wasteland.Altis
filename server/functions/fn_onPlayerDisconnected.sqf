@@ -4,12 +4,17 @@
 //	@file Name: fn_onPlayerDisconnected.sqf
 //	@file Author: AgentRev
 
-private ["_id", "_uid", "_name", "_resend"];
+private ["_unit", "_id", "_uid", "_name", "_resend"];
+
 _id = _this select 0;
 _uid = _this select 1;
 _name = _this select 2;
+_unit = _this select 3;
 
 diag_log format ["Player disconnected: %1 (%2)", _name, _uid];
+
+[_unit, _uid, _name] call p_disconnectSave;
+deleteVehicle _unit;
 
 _resend = false;
 

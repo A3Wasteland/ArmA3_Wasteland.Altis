@@ -638,7 +638,10 @@ v_loadVehicles = {
 
 
   //nothing to load
-  if (!isARRAY(_vehicles)) exitWith {};
+  if (!isARRAY(_vehicles)) exitWith {
+    diag_log format["WARNING: No vehicles loaded from the database"];
+    _vIds
+  };
 
   diag_log format["A3Wasteland - will restore %1 vehicles", count(_vehicles)];
   {

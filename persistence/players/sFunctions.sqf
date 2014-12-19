@@ -251,9 +251,12 @@ p_addPlayerSave = {
     _request pushBack ["PlayerScore",_scoreInfo];
   };
 
+  diag_log format["Disconnected %1(%2):  unconscious = %3, respawning = %4, alive = %5", _name,_uid,_FAR_isUnconscious, _respawnDialogActive, _alive];
   if (_reset_save) exitWith {
-     diag_log format["Resetting stats for %1(%2), unconscious = %3, respawning = %4, alive = %5",_name,_uid,_FAR_isUnconscious, _respawnDialogActive, _alive];
+     diag_log format["Resetting %1(%2) stats", _name, _uid];
      _request pushBack ["PlayerSave",nil];
+     _request pushBack [format["PlayerSave_Stratis", nil]];
+     _request pushBack [format["PlayerSave_Altis", nil]];
      true
   };
 
@@ -407,10 +410,10 @@ p_addPlayerSave = {
 };
 
 p_disconnectSave = {
-  //diag_log format["%1 call p_disconnectSave", _this];
+  diag_log format["%1 call p_disconnectSave", _this];
   ARGVX3(0,_player,objNull);
-  ARGVX3(2,_uid,"");
-  ARGVX3(3,_name,"");
+  ARGVX3(1,_uid,"");
+  ARGVX3(2,_name,"");
 
 
   init(_scope,_uid call PDB_playerFileName);

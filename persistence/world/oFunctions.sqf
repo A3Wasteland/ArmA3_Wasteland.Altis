@@ -626,7 +626,10 @@ o_loadObjects = {
   init(_oIds,[]);
   
   //nothing to load
-  if (!isARRAY(_objects)) exitWith {};
+  if (!isARRAY(_objects)) exitWith {
+    diag_log format["WARNING: No objects loaded from the database"];
+    _oIds
+  };
 
   diag_log format["A3Wasteland - will restore %1 objects", count(_objects)];
   {
