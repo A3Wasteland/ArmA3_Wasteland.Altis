@@ -110,6 +110,29 @@ hash_set_all = {
   (_target)
 };
 
+/**
+ * Delete a key from the hash (does not set it to nil), it actually removes it
+ */
+hash_remove_key = {
+  ARGVX3(0,_hash,[]);
+  ARGVX3(1,_key,"");
+
+  def(_ckey);
+  def(_index);
+  {
+    if(true) then {
+      if(!isARRAY(_x)) exitWith {};
+      _ckey = _x select 0;
+      if (!isSTRING(_ckey)) exitWith {};
+      if (_ckey != _key) exitWith {};
+      _index = _forEachIndex;
+    };
+    if (!isNil "_index") exitWith {};
+  } forEach _hash;
+
+  if (isNil "_index") exitWith {};
+  _hash deleteAt _index;
+};
 
 
 hash_loaded = true;
