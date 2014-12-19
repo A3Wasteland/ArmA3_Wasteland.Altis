@@ -460,7 +460,7 @@ fn_requestPlayerData = {[] spawn {
    * The legacy "Position" field should only be used for "Altis"
    */
   if (worldName == "Stratis") then {
-    [_genericData, "Position", nil] call hash_set_key;
+    [_genericData, "Position"] call hash_remove_key;
   };
 
   def(_allData);
