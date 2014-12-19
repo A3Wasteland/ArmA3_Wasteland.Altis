@@ -255,8 +255,8 @@ p_addPlayerSave = {
   if (_reset_save) exitWith {
      diag_log format["Resetting %1(%2) stats", _name, _uid];
      _request pushBack ["PlayerSave",nil];
-     _request pushBack [format["PlayerSave_Stratis", nil]];
-     _request pushBack [format["PlayerSave_Altis", nil]];
+     _request pushBack ["PlayerSave_Stratis",nil];
+     _request pushBack ["PlayerSave_Altis",nil];
      true
   };
 
@@ -608,9 +608,6 @@ p_saveAllPlayers = {
 
   diag_log format["p_saveLoop: total of %1 players saved in %2 ticks", (_count), (diag_tickTime - _start_time)];
 };
-
-
-
 
 
 
