@@ -36,7 +36,7 @@ addMissionEventHandler ["HandleDisconnect",
 
 	if (!isNil "fn_onPlayerDisconnected") then
 	{
-		[_id, _uid, _name, _unit] spawn fn_onPlayerDisconnected;
+		[_id, _uid, _name, _unit] call fn_onPlayerDisconnected;
 	};
 
 	false
