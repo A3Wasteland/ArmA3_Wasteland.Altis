@@ -5,12 +5,13 @@
 #define ERR_NOT_ENOUGH_FUNDS "You don't have enough money."
 #define ERR_LESS_THAN_ONE "The amount must be at least $1"
 disableSerialization;
-private ["_warchest", "_input", "_amount", "_money"];
-_warchest = findDisplay IDD_WARCHEST;
-if (isNull _warchest) exitWith {};
+private ["_dialog", "_input", "_amount", "_money"];
+_dialog = findDisplay IDD_WARCHEST;
+if (isNull _dialog) exitWith {};
 
-_input = _warchest displayCtrl IDC_AMOUNT;
+_input = _dialog displayCtrl IDC_AMOUNT;
 _amount = floor parseNumber ctrlText _input;
+_input ctrlSetText (_amount call fn_numToStr);
 
 if (_amount < 1) then
 {
@@ -27,29 +28,6 @@ else
 		playSound "FD_CP_Not_Clear_F";
 	};
 
-	player setVariable["cmoney", _money - _amount, true];
-
-	switch (playerSide) do
-	{
-		case EAST:
-		{
-			pvar_warchest_funds_east = pvar_warchest_funds_east + _amount;
-			publicVariable "pvar_warchest_funds_east";
-			playSound "defaultNotification";
-		};
-		case WEST:
-		{
-			pvar_warchest_funds_west = pvar_warchest_funds_west + _amount;
-			publicVariable "pvar_warchest_funds_west";
-			playSound "defaultNotification";
-		};
-		default {hint "Warchest Deposit - This Shouldnt Happen"};
-	};
-
-	if (["A3W_playerSaving"] call isConfigOn) then
-	{
-		[] spawn fn_savePlayerData;
-	};
+	pvar_processTransaction = ["warchest", player, _amount];
+	publicVariableServer "pvar_processTransaction";
 };
-
-call mf_items_warchest_refresh;

@@ -16,7 +16,7 @@
 	["pvar_groupNotify", { PVAL spawn groupNotify }],
 	["pvar_disableCollision", { PVAL call fn_disableCollision }],
 	["pvar_notifyClient", { PVAL spawn mf_notify_client }],
-	["pvar_playerEventServer", { PVAL spawn playerEventServer }],
+	["pvar_playerEventServer", { PVAL call playerEventServer }],
 	["pvar_deleteEmptyGroup", { PVAL spawn deleteEmptyGroup }],
 	["pvar_weaponDisassembledEvent", { PVAL spawn weaponDisassembledEvent }],
 

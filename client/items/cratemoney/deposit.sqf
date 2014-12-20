@@ -21,6 +21,7 @@ if (isNull _crate) exitWith { closeDialog IDD_WARCHEST };
 
 _input = _dialog displayCtrl IDC_AMOUNT;
 _amount = floor parseNumber ctrlText _input;
+_input ctrlSetText (_amount call fn_numToStr);
 
 if (_amount < 1) then
 {
@@ -37,15 +38,6 @@ else
 		playSound "FD_CP_Not_Clear_F";
 	};
 
-	player setVariable ["cmoney", _money - _amount, true];
-	_crate setVariable ["cmoney", (_crate getVariable ["cmoney", 0]) + _amount, true];
-
-	playSound "defaultNotification";
-
-	if (["A3W_playerSaving"] call isConfigOn) then
-	{
-		[] spawn fn_savePlayerData;
-	};
+	pvar_processTransaction = ["crateMoney", player, netId _crate, _amount];
+	publicVariableServer "pvar_processTransaction";
 };
-
-call mf_items_cratemoney_refresh;
