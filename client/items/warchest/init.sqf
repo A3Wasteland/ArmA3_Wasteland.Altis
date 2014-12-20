@@ -28,19 +28,19 @@ mf_items_warchest_withdraw = [_path, "withdraw.sqf"] call mf_compile;
 mf_items_warchest_deposit = [_path, "deposit.sqf"] call mf_compile;
 
 private ["_icon", "_condition", "_action"];
-_icon = "/client/icons/breifcase.paa";
+_icon = "client\icons\warchest.paa";
 [MF_ITEMS_WARCHEST, "Warchest", mf_items_warchest_deploy, "Land_SuitCase_F", _icon, 1] call mf_inventory_create;
 
 private ["_condition", "_action"];
 _condition = "'' == [] call mf_items_warchest_can_access;";
-_action = ["<img image='client\icons\money.paa'/> Access Warchest", mf_items_warchest_access, nil, 2, true, false, "", _condition];
+_action = [format ["<img image='%1'/> Access Warchest", _icon], mf_items_warchest_access, nil, 2, true, false, "", _condition];
 ["warchest-access", _action] call mf_player_actions_set;
 
 _condition = "'' == [] call mf_items_warchest_can_pack;";
-_action = ["Pack Warchest", mf_items_warchest_pack, nil, 1, true, false, "", _condition];
+_action = [format ["<img image='%1'/> Pack Warchest", _icon], mf_items_warchest_pack, nil, 1, true, false, "", _condition];
 ["warchest-pack", _action] call mf_player_actions_set;
 
 _condition = "'' == [] call mf_items_warchest_can_hack;";
-_action = ["Hack Warchest", mf_items_warchest_hack, nil, 2, true, false, "", _condition];
+_action = [format ["<img image='%1'/> Hack Warchest", _icon], mf_items_warchest_hack, nil, 2, true, false, "", _condition];
 ["warchest-hack", _action] call mf_player_actions_set;
 
