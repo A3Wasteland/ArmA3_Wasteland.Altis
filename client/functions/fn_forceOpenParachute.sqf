@@ -1,19 +1,15 @@
 // ******************************************************************************************
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
-//	@file Name: openParachute.sqf
+//	@file Name: fn_forceOpenParachute.sqf
 //	@file Author: AgentRev
 
 if (!alive player) exitWith {};
 if (vehicle player != player) exitWith {};
 
+openParachuteTimestamp = diag_tickTime;
+
 private ["_wait", "_pos", "_para"];
-
-// some aircrafts blow up on contact with parachutes, so we have to make sure none's close
-waitUntil {sleep 0.1; {player distance _x < 10 max (sizeOf typeOf _x)} count (player nearEntities ["Helicopter_Base_F", 20]) == 0};
-
-if (!alive player) exitWith {};
-
 _wait = false;
 _pos = getPosATL player;
 
