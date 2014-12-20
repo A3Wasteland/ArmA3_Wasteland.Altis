@@ -8,7 +8,7 @@
 # @@Modify Date: 2013-09-15 22:35:19
 # @@Function: Creates server-side capture zone triggers
 #*********************************************************/
-_currentGroup = A3W_territoryAllowed call BIS_fnc_selectRandom;
+_currentGroup = (call A3W_territoryAllowed) call BIS_fnc_selectRandom;
 current_territorygrp_rnd = _currentGroup;
 publicvariable "current_territorygrp_rnd";
 _territoryGroup = format ["Territory_%1",_currentgroup];
