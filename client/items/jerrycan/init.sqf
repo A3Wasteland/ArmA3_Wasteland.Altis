@@ -42,34 +42,6 @@ mf_jerrycan_nearest_vehicle = {
 	["LandVehicle", "Air", "Ship"] call mf_nearest_vehicle
 } call mf_compile;
 
-mf_jerrycan_fuel_amount = {
-	private ["_vehicle", "_fuel_amount", "_config", "_type"];
-	_vehicle = _this select 0;
-	_fuel_amount = ["config_refuel_amount_default", 0.25] call getPublicVar;
-	{
-		_type = _x select 0;
-		if (_vehicle isKindOf _type ) exitWith
-		{
-			_fuel_amount = _x select 1;
-		};
-	} forEach (["config_refuel_amounts", []] call getPublicVar);
-	_fuel_amount;
-} call mf_compile;
-
-mf_remote_refuel = {
-	private ["_vehicle", "_qty", "_fuel"];
-	_vehicle = objectFromNetId (_this select 0);
-	_fuel = fuel _vehicle + ([_vehicle] call mf_jerrycan_fuel_amount);
-	_vehicle setFuel (_fuel min 1);
-} call mf_compile;
-
-mf_remote_syphon = {
-	private ["_vehicle", "_qty", "_fuel"];
-	_vehicle = objectFromNetId (_this select 0);
-	_fuel = fuel _vehicle - ([_vehicle] call mf_jerrycan_fuel_amount);
-	_vehicle setFuel (_fuel max 0);
-} call mf_compile;
-
 
 [MF_ITEMS_JERRYCAN_EMPTY, "Empty Jerrycan", _refill, "Land_CanisterFuel_F", _icon, _max] call mf_inventory_create;
 [MF_ITEMS_JERRYCAN_FULL, "Full Jerrycan", _refuel, "Land_CanisterFuel_F", _icon, _max] call mf_inventory_create;
