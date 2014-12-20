@@ -61,7 +61,7 @@ else
 		[] spawn fn_deletePlayerData;
 
 		_unit allowDamage false;
-		if (vehicle _unit == _unit) then { [_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal };
+		//if (vehicle _unit == _unit) then { [_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal };
 		_unit enableFatigue true;
 		_unit setFatigue 1;
 
