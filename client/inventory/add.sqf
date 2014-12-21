@@ -33,6 +33,11 @@ if (count _this > 2) then {
 };
 private ["_item", "_current"];
 _item = _id call mf_inventory_get;
+
+if (isNil "_item" || {typeName _item != typeName []}) exitWith {
+  diag_log format["WARNING: Item ID ""%1"" is unknown, not adding to inventory", _id];
+};
+
 _current = _item select QTY;
 if (_abs) then {
 	_item set [QTY, _qty];
