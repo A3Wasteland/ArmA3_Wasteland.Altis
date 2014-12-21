@@ -29,7 +29,10 @@ _cash setVariable ["cmoney", _money, true];
 _cash setVariable ["owner", "world", true];
 player setVariable ["cmoney", (player getVariable "cmoney") - _money, true];
 
-[] spawn fn_savePlayerData;
+if (["A3W_playerSaving"] call isConfigOn) then
+{
+	[] spawn fn_savePlayerData;
+};
 
 sleep 0.5;
 mutexScriptInProgress = false;
