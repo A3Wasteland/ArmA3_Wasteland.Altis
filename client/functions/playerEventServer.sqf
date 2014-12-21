@@ -4,24 +4,48 @@
 //	@file Name: playerEventServer.sqf
 //	@file Author: AgentRev
 
-private ["_type", "_money"];
-
 _type = [_this, 0, "", [""]] call BIS_fnc_param;
 
-switch (_type) do
+switch (toLower _type) do
 {
-	case "pickupMoney":
+	case "pickupmoney":
 	{
-		_money = [_this, 1, 0, [0]] call BIS_fnc_param;
+		_amount = [_this, 1, 0, [0]] call BIS_fnc_param;
 
-		if (_money > 0) then
+		if (_amount > 0) then
 		{
-			[format ["You have picked up $%1", [_money] call fn_numbersText], 5] call mf_notify_client;
-			[] spawn fn_savePlayerData;
+			[format ["You have picked up $%1", [_amount] call fn_numbersText], 5] call mf_notify_client;
+
+			if (["A3W_playerSaving"] call isConfigOn) then
+			{
+				[] spawn fn_savePlayerData;
+			};
 		}
 		else
 		{
 			["The money was counterfeit!", 5] call mf_notify_client;
+		};
+	};
+
+	case "transaction":
+	{
+		_amount = [_this, 1, 0, [0]] call BIS_fnc_param;
+
+		if (_amount != 0) then
+		{
+			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) - _amount, true];
+
+			if (["A3W_playerSaving"] call isConfigOn) then
+			{
+				[] spawn fn_savePlayerData;
+			};
+
+			playSound "defaultNotification";
+		}
+		else
+		{
+			playSound "FD_CP_Not_Clear_F";
+			["Invalid transaction, please try again.", 5] call mf_notify_client;
 		};
 	};
 };

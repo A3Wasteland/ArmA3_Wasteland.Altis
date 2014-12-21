@@ -47,8 +47,7 @@ switch (true) do
 			{
 				if ((getPos player) select 2 > 2.5) then
 				{
-					openParachuteTimestamp = diag_tickTime;
-					execVM "client\actions\openParachute.sqf";
+					true call fn_openParachute;
 					_handled = true;
 				};
 			}

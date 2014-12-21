@@ -59,7 +59,7 @@ if (isNil "playerData_alive" || !isNil "playerData_resetPos") then
 
 	waitUntil {respawnDialogActive};
 	9999 cutText ["", "BLACK", 0.01];
-	waitUntil {!respawnDialogActive};
+	waitUntil {player setOxygenRemaining 1; !respawnDialogActive};
 
 	if (["A3W_playerSaving"] call isConfigOn) then
 	{

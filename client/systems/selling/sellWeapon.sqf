@@ -135,7 +135,7 @@ storeSellingHandle = [] spawn
 		{
 			for "_i" from 1 to (_x select 1) do
 			{
-				player removeMagazineGlobal (_x select 0);
+				player removeMagazine (_x select 0);
 			};
 		} forEach _invMagsToRemove;
 

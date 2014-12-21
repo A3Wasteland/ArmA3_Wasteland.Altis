@@ -28,7 +28,7 @@ class WarchestDialog {
 		class FundsTitle: RscText {
 			idc = IDC_FUNDSTITLE;
 			style = ST_LEFT;
-			text = "Team Funds:";
+			text = "Balance:";
 			x = 0.35;
 			y = 0.325;
 			w = 0.15;
