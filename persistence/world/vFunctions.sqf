@@ -5,7 +5,6 @@ diag_log "vFunctions.sqf loading ...";
 call compile preProcessFileLineNumbers "persistence\lib\shFunctions.sqf";
 
 
-
 v_restoreVehicle = {_this spawn {
   //diag_log format["%1 call v_restoreVehicle", _this];
   ARGVX3(0,_data_pair,[]);
@@ -33,13 +32,14 @@ v_restoreVehicle = {_this spawn {
   def(_cargo_magazines);
   def(_cargo_backpacks);
   def(_cargo_items);
-  def(_turret_magazines);
   def(_cargo_ammo);
   def(_cargo_fuel);
   def(_cargo_repair);
   def(_fuel);
   def(_hitPoints);
-
+  def(_turret0);
+  def(_turret1);
+  def(_turret2);
 
 
   def(_key);
@@ -63,7 +63,9 @@ v_restoreVehicle = {_this spawn {
       case "AmmoCargo": { _cargo_ammo = OR(_value,nil);};
       case "FuelCargo": { _cargo_fuel = OR(_value,nil);};
       case "RepairCargo": { _cargo_repair = OR(_value,nil);};
-      //case "TurretMagazines": { _turret_magazines = OR(_value,nil);};
+      case "TurretMagazines": { _turret0 = OR_ARRAY(_value,nil);};
+      case "TurretMagazines2": { _turret1 = OR_ARRAY(_value,nil);};
+      case "TurretMagazines3": { _turret2 = OR_ARRAY(_value,nil);};
       case "Fuel": { _fuel = OR(_value,nil);};
       case "Hitpoints": { _hitPoints = OR(_value,nil);};
     };
@@ -160,7 +162,8 @@ v_restoreVehicle = {_this spawn {
   clearMagazineCargoGlobal _obj;
   clearItemCargoGlobal _obj;
   clearBackpackCargoGlobal _obj;
-  //_obj setVehicleAmmo 0;
+
+  [_obj, OR(_turret0,nil), OR(_turret1,nil), OR(_turret2,nil)] call sh_restoreVehicleTurrets;
 
   if (isARRAY(_cargo_weapons)) then {
     { _obj addWeaponCargoGlobal _x } forEach _cargo_weapons;
@@ -180,10 +183,6 @@ v_restoreVehicle = {_this spawn {
 
   if (isARRAY(_cargo_magazines)) then {
     { _obj addMagazineCargoGlobal _x } forEach _cargo_magazines;
-  };
-
-  if (isARRAY(_turret_magazines)) then {
-    { _obj addMagazine _x } forEach _turret_magazines;
   };
 
   if (isSCALAR(_cargo_ammo)) then {
@@ -424,6 +423,7 @@ v_setupVehicleSavedVariables = {
 
 };
 
+
 v_addSaveVehicle = {
   ARGVX3(0,_list,[]);
   ARGVX3(1,_obj,objNull);
@@ -465,10 +465,14 @@ v_addSaveVehicle = {
   _items = (getItemCargo _obj) call cargoToPairs;
   _backpacks = (getBackpackCargo _obj) call cargoToPairs;
 
-  init(_turretMags,[]);
-  if (cfg_staticWeaponSaving_on && {[_obj] call sh_isStaticWeapon}) then {
-    _turretMags = magazinesAmmo _obj;
-  };
+
+
+  def(_all_turrets);
+  _all_turrets = [_obj] call sh_getVehicleTurrets;
+  init(_turret0,_all_turrets select 0);
+  init(_turret1,_all_turrets select 1);
+  init(_turret2,_all_turrets select 2);
+
 
   init(_hitPoints,[]);
   {
@@ -512,7 +516,9 @@ v_addSaveVehicle = {
     ["Magazines", _magazines],
     ["Items", _items],
     ["Backpacks", _backpacks],
-    ["TurretMagazines", _turretMags],
+    ["TurretMagazines", OR(_turret0,nil)],
+    ["TurretMagazines2", OR(_turret1,nil)],
+    ["TurretMagazines3", OR(_turret2,nil)],
     ["AmmoCargo", _ammoCargo],
     ["FuelCargo", _fuelCargo],
     ["RepairCargo", _repairCargo],

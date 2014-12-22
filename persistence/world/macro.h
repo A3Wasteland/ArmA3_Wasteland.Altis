@@ -144,3 +144,20 @@ if (undefined(_this) ||{ \
 
 
 #define isClient not(isServer) || {isServer && not(isDedicated)}
+
+#define IMPORT_FINALIZER if (isNil "finalize") then { \
+  finalizer = { \
+    if (isNil "_this" || {typeName _this != typeName {}}) exitWith {}; \
+    \
+    private["_str_data"]; \
+    _str_data = toArray str(_this); \
+    \
+    private["_space"];  \
+    _space = (toArray " ") select 0;\
+    _str_data set [0, _space]; \
+    _str_data set [((count _str_data)-1), _space]; \
+    \
+    (compileFinal (toString _str_data)) \
+  }; \
+  finalizer = finalizer call finalizer; \
+};

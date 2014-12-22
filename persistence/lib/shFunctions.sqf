@@ -108,5 +108,92 @@ sh_isUAV = {
 
 
 
+sh_getVehicleTurrets = {
+  def(_default);
+  _default = [nil,nil,nil];
+  ARGVX4(0,_veh,objNull,_default);
+
+  def(_all_turrets);
+  _all_turrets = [magazinesAmmo _veh, [], []];
+
+  def(_class);
+  _class = typeOf _veh;
+
+  def(_turretMags);
+  def(_turretMags2);
+  def(_turretMags3);
+
+  _turretMags = _all_turrets select 0;
+  _turretMags2 = _all_turrets select 1;
+  _turretMags3 = _all_turrets select 2;
+
+  def(_hasDoorGuns);
+  _hasDoorGuns = isClass (configFile >> "CfgVehicles" >> _class >> "Turrets" >> "RightDoorGun");
+
+  def(_turrets);
+  _turrets = allTurrets [_veh, false];
+
+  if !(_class isKindOf "B_Heli_Transport_03_unarmed_F") then {
+    _turrets = [[-1]] + _turrets; // only add driver turret if not unarmed Huron, otherwise flares get saved twice
+  };
+
+  if (_hasDoorGuns) then {
+    // remove left door turret, because its mags are already returned by magazinesAmmo
+    {
+      if (_x isEqualTo [1]) exitWith {
+        _turrets set [_forEachIndex, 1];
+      };
+    } forEach _turrets;
+
+    _turrets = _turrets - [1];
+  };
+
+  {
+    _path = _x;
+    {
+      if (([_turretMags, _x, -1] call fn_getFromPairs == -1) || {_hasDoorGuns}) then {
+        if (_veh currentMagazineTurret _path == _x && {count _turretMags3 == 0}) then {
+          _turretMags3 pushBack [_x, _path, [_veh currentMagazineDetailTurret _path] call getMagazineDetailAmmo];
+        }
+        else {
+          _turretMags2 pushBack [_x, _path];
+        };
+      };
+    } forEach (_veh magazinesTurret _path);
+  } forEach _turrets;
+
+  (_all_turrets)
+};
+
+
+sh_restoreVehicleTurrets = {
+  ARGVX3(0,_veh,objNull);
+  ARGV3(1,_turret0,[]);
+  ARGV3(2,_turret1,[]);
+  ARGV3(3,_turret2,[]);
+
+  //legacy data did not contain turret information, in that case, don't attempt to restore them
+  if (isNil "_turret0" && {isNil "_turret1" && {isNil "_turret3"}}) exitWith {};
+
+  _veh setVehicleAmmo 0;
+
+  if (!isNil "_turret2") then {
+    {
+      _veh addMagazineTurret [_x select 0, _x select 1];
+      _veh setVehicleAmmo (_x select 2);
+    } forEach _turret2;
+  };
+
+  if (!isNil "_turret0") then {
+    { _veh addMagazine _x } forEach _turret0;
+  };
+
+  if (!isNil "_turret1") then {
+    { _veh addMagazineTurret _x } forEach _turret1;
+  };
+
+};
+
+
 shFunctions_loased = true;
 diag_log "shFunctions loading complete";
