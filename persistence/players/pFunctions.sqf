@@ -132,12 +132,22 @@ p_copy_pairs = {
 p_restorePosition = {
   ARGV3(0,_position,[]);
 
-  if (isPOS(_position)) exitWith {
+  def(_nearSpawn);
+  _nearSpawn = (isPOS(_position) && {(player distance _position) < 100});
+
+  if (isPOS(_position) && {not(_nearSpawn)}) exitWith {
     player setPosATL _position;
   };
 
-  diag_log format["WARNING: No position available. Putting player at a random safe location."];
-  player groupChat format["WARNING: No position available. Putting you at a random safe location."];
+  if (_nearSpawn) then {
+    diag_log format["WARNING: Saved position is too near the spawn. Putting player at a random safe location."];
+    player groupChat format["WARNING: Saved position is too near the spawn. Putting you at a random safe location."];
+  }
+  else {
+    diag_log format["WARNING: No position available. Putting player at a random safe location."];
+    player groupChat format["WARNING: No position available. Putting you at a random safe location."];
+  };
+
   [nil,false] spawn spawnRandom;
 };
 
