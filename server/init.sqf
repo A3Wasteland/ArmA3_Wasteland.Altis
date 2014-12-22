@@ -24,7 +24,7 @@ addMissionEventHandler ["HandleDisconnect",
 
 	if (alive _unit && (_unit getVariable ["FAR_isUnconscious", 0] == 0) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
 	{
-		if !(_unit getVariable ["playerSpawning", false]) then
+		if (!(_unit getVariable ["playerSpawning", false]) && typeOf _unit != "HeadlessClient_F") then
 		{
 			[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
 		};
