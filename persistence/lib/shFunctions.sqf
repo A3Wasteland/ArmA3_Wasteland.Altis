@@ -148,8 +148,11 @@ sh_getVehicleTurrets = {
     _turrets = _turrets - [1];
   };
 
-  {
+
+  {if (true) then {
     _path = _x;
+    if (str(_path) == "[0]") exitWith {}; //don't look at the mags from the first turret again
+
     {
       if (([_turretMags, _x, -1] call fn_getFromPairs == -1) || {_hasDoorGuns}) then {
         if (_veh currentMagazineTurret _path == _x && {count _turretMags3 == 0}) then {
@@ -160,7 +163,7 @@ sh_getVehicleTurrets = {
         };
       };
     } forEach (_veh magazinesTurret _path);
-  } forEach _turrets;
+  }} forEach _turrets;
 
   (_all_turrets)
 };
