@@ -2,7 +2,7 @@
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
 //	@file Name: fn_enableSimulationGlobal.sqf
-//	@file Author: Farooq, AgentRev
+//	@file Author: AgentRev
 
 // Because some twat decided that enableSimulationGlobal was to be restricted to server only...
 
