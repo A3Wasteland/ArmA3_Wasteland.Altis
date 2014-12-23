@@ -151,7 +151,33 @@ p_restorePosition = {
   [nil,false] spawn spawnRandom;
 };
 
+p_restorePrimaryWeaponItems = {
+  ARGVX3(0,_items,[]);
+  {
+    if (_x != "") then {
+      player addPrimaryWeaponItem _x;
+    };
+  } forEach _items
+};
 
+p_restoreSecondaryWeaponItems = {
+  ARGVX3(0,_items,[]);
+  {
+    if (_x != "") then {
+      player addSecondaryWeaponItem _x;
+    };
+  } forEach _items;
+};
+
+p_restoreHandgunWeaponItems = {
+  ARGVX3(0,_items,[]);
+
+  {
+    if (_x != "") then {
+      player addHandgunItem _x;
+    };
+  } forEach _items;
+};
 
 fn_applyPlayerData = {
   ARGVX3(0,_data,[]);
@@ -170,6 +196,10 @@ fn_applyPlayerData = {
   def(_vest_class);
   def(_vehicle_key);
   def(_position);
+  def(_primary_weapon_items);
+  def(_secondary_weapon_items);
+  def(_handgun_weapon_items);
+
 
   //iterate through the data, and extract the hash variables into local variables
   {
@@ -189,9 +219,11 @@ fn_applyPlayerData = {
       case "Vest": { _vest_class = _value};
       case "InVehicle": { _vehicle_key = _value};
       case "Position": {if (isPOS(_value)) then {_position = _value;}};
+      case "PrimaryWeaponItems": {_primary_weapon_items = OR_ARRAY(_value,nil)};
+      case "SecondaryWeaponItems": {_secondary_weapon_items = OR_ARRAY(_value,nil)};
+      case "HandgunItems": {_handgun_weapon_items = OR_ARRAY(_value,nil)};
     };
   } forEach _data;
-
 
   //Restore the weapons, backpack, uniform, and vest in correct order
   player addBackpack "B_Carryall_Base"; // add a temporary backpack for holding loaded weapon magazines
@@ -199,6 +231,9 @@ fn_applyPlayerData = {
   [OR(_primary_weapon,nil)] call p_restorePrimaryWeapon;
   [OR(_secondary_weapon,nil)] call p_restoreSecondaryWeapon;
   [OR(_handgun_weapon,nil)] call p_restoreHandgunWeapon;
+  [OR(_primary_weapon_items,nil)] call p_restorePrimaryWeaponItems;
+  [OR(_secondary_weapon_items,nil)] call p_restoreSecondaryWeaponItems;
+  [OR(_handgun_weapon_items,nil)] call p_restoreSecondaryWeaponItems;
   removeBackpack player;  //remove the temporary backpack
 
   //Restore backpack, and stuff inside
@@ -251,9 +286,6 @@ fn_applyPlayerData = {
           };
         };
       };
-      case "PrimaryWeaponItems": { { if (_x != "") then { player addPrimaryWeaponItem _x } } forEach (OR(_value,[])) };
-      case "SecondaryWeaponItems": { { if (_x != "") then { player addSecondaryWeaponItem _x } } forEach (OR(_value,[])) };
-      case "HandgunItems": { { if (_x != "") then { player addHandgunItem _x } } forEach (OR(_value,[])) };
       case "AssignedItems": {
         {
           if ([player, _x] call isAssignableBinocular) then {
@@ -412,6 +444,18 @@ p_getScope = {
   (format["%1%2",PDB_PlayerFileID,_id])
 };
 
+p_dumpHash = {
+  ARGVX3(0,_data,[]);
+
+  def(_key);
+  def(_value);
+  {
+    _key = _x select 0;
+    _value = _x select 1;
+    diag_log (_key + " = " + str(OR(_value,nil)));
+  } forEach _data;
+};
+
 fn_requestPlayerData = {[] spawn {
   init(_player,player);
   init(_uid,getPlayerUID player);
@@ -462,9 +506,6 @@ fn_requestPlayerData = {[] spawn {
   _genericData = OR(call _genericData,[]);
   _worldData = OR(call _worldData,[]);
 
-  diag_log ("_genericData = " + str(_genericData));
-  diag_log ("_worldData = " + str(_worldData));
-
   /**
    * If the world is Stratis, ignore the legacy generic "Position".
    * The legacy "Position" field should only be used for "Altis"
@@ -473,9 +514,16 @@ fn_requestPlayerData = {[] spawn {
     [_genericData, "Position"] call hash_remove_key;
   };
 
+  diag_log "#############################################";
+  diag_log "Dumping _genericData";
+  [_genericData] call p_dumpHash;
+
+  diag_log "#############################################";
+  diag_log "Dumping _worldData";
+  [_worldData] call p_dumpHash;
+
   def(_allData);
   _allData = [_genericData, _worldData] call hash_set_all;
-  diag_log ("_allData = " + str(_allData));
   [_allData] call p_restoreData;
 
 };};
