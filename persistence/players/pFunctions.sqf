@@ -233,7 +233,7 @@ fn_applyPlayerData = {
   [OR(_handgun_weapon,nil)] call p_restoreHandgunWeapon;
   [OR(_primary_weapon_items,nil)] call p_restorePrimaryWeaponItems;
   [OR(_secondary_weapon_items,nil)] call p_restoreSecondaryWeaponItems;
-  [OR(_handgun_weapon_items,nil)] call p_restoreSecondaryWeaponItems;
+  [OR(_handgun_weapon_items,nil)] call p_restoreHandgunWeaponItems;
   removeBackpack player;  //remove the temporary backpack
 
   //Restore backpack, and stuff inside
