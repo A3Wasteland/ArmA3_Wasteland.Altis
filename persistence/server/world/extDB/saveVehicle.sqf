@@ -53,7 +53,7 @@ if ({isPlayer _x} count crew _veh > 0 || isPlayer ((uavControl _veh) select 0)) 
 	_veh setVariable ["vehSaving_lastUse", _lastUse];
 };
 
-if (_lastUse > _veh getVariable ["vehSaving_lastUseSave", 0]) then
+if (_lastUse > _veh getVariable ["vehSaving_lastUseSave", _spawningTime]) then
 {
 	_updateValues = _updateValues + ",LastUsed=NOW()";
 	_veh setVariable ["vehSaving_lastUseSave", diag_tickTime];
