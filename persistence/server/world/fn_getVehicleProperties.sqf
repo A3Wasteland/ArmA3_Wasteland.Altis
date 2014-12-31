@@ -134,9 +134,9 @@ _fuelCargo = getFuelCargo _veh;
 _repairCargo = getRepairCargo _veh;
 
 // Fix for -1.#IND
-if !(_ammoCargo >= 0) then { _ammoCargo = 0 };
-if !(_fuelCargo >= 0) then { _fuelCargo = 0 };
-if !(_repairCargo >= 0) then { _repairCargo = 0 };
+if (isNil "_ammoCargo" || {!finite _ammoCargo}) then { _ammoCargo = 0 };
+if (isNil "_fuelCargo" || {!finite _fuelCargo}) then { _fuelCargo = 0 };
+if (isNil "_repairCargo" || {!finite _repairCargo}) then { _repairCargo = 0 };
 
 _props =
 [

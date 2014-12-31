@@ -11,7 +11,7 @@ private ["_vehicleClass", "_vehicle", "_createVehicle", "_vehicles", "_leader", 
 
 _setupVars =
 {
-	_missionType = "Hostile Helicoper";
+	_missionType = "Hostile Helicopter";
 	_locationsArray = nil; // locations are generated on the fly from towns
 };
 
