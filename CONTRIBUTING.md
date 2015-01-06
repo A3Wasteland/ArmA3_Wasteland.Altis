@@ -150,8 +150,7 @@ This is unnecessary, and makes the code hard to maintain and understand. Instead
 The whole point of this is to try to keep the code as flat as possible, and thus improve readability and maintenance, and reduce chance of subtle bugs.
 
 * Use functions and modularize as much as possible. 
-  - Do not try to cram giant expressions into IF statements. If you can move a condition into a separate function, do so.
-
+* Do not try to cram giant expressions into IF statements (create new functions if needed)
 * Use underscore "_" instead of camel-casing for variable names, and function names.
 * Always be coding on the defensive, do not assume that all the parameters passed into a function will always be initialized
 * Use the utility macros from the macro.h file to help you out with type-checks, and processing of function arguments
