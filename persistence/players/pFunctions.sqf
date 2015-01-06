@@ -179,6 +179,49 @@ p_restoreHandgunWeaponItems = {
   } forEach _items;
 };
 
+p_restoreGoggles = {
+  ARGVX3(0,_goggles,"");
+  if (_goggles == "") exitWith {};
+  player addGoggles _goggles;
+};
+
+p_restoreHeadgear = {
+  ARGVX3(0,_headgear,"");
+
+  // If wearing one of the default headgears, give the one belonging to actual team instead
+  def(_defHeadgear);
+  def(_defHeadgears);
+
+  _defHeadgear = [player, "headgear"] call getDefaultClothing;
+  _defHeadgears =
+  [
+    [typeOf player, "headgear", BLUFOR] call getDefaultClothing,
+    [typeOf player, "headgear", OPFOR] call getDefaultClothing,
+    [typeOf player, "headgear", INDEPENDENT] call getDefaultClothing
+  ];
+
+  if (_headgear != _defHeadgear && {_defHeadgear != ""} && {{_headgear == _x} count _defHeadgears > 0}) then {
+    player addHeadgear _defHeadgear;
+  }
+  else {
+    player addHeadgear _headgear;
+  };
+};
+
+p_restoreAssignedItems = {
+  ARGVX3(0,_assigned_items,[]);
+
+  {
+    if ([player, _x] call isAssignableBinocular) then {
+      player addWeapon _x;
+    }
+    else {
+      player linkItem _x;
+    };
+  } forEach _assigned_items;
+};
+
+
 fn_applyPlayerData = {
   ARGVX3(0,_data,[]);
   format["%1 call fn_applyPlayerData;", _this] call p_log_finest;
@@ -199,6 +242,9 @@ fn_applyPlayerData = {
   def(_primary_weapon_items);
   def(_secondary_weapon_items);
   def(_handgun_weapon_items);
+  def(_headgear);
+  def(_goggles);
+  def(_assigned_items);
 
 
   //iterate through the data, and extract the hash variables into local variables
@@ -222,11 +268,18 @@ fn_applyPlayerData = {
       case "PrimaryWeaponItems": {_primary_weapon_items = OR_ARRAY(_value,nil)};
       case "SecondaryWeaponItems": {_secondary_weapon_items = OR_ARRAY(_value,nil)};
       case "HandgunItems": {_handgun_weapon_items = OR_ARRAY(_value,nil)};
+      case "Headgear": {_headgear = OR_STRING(_value,nil)};
+      case "Goggles": {_goggles = OR_STRING(_value,nil)};
+      case "AssignedItems": {_assigned_items = OR_ARRAY(_value,nil)};
+
     };
   } forEach _data;
 
   //Restore the weapons, backpack, uniform, and vest in correct order
   player addBackpack "B_Carryall_Base"; // add a temporary backpack for holding loaded weapon magazines
+  [OR(_headgear,nil)] call p_restoreHeadgear;
+  [OR(_assigned_items,nil)] call p_restoreAssignedItems;
+  [OR(_goggles,nil)] call p_restoreGoggles;
   [OR(_loaded_magazines,nil)] call p_restoreLoadedMagazines;
   [OR(_primary_weapon,nil)] call p_restorePrimaryWeapon;
   [OR(_secondary_weapon,nil)] call p_restoreSecondaryWeapon;
@@ -266,36 +319,6 @@ fn_applyPlayerData = {
       case "Thirst": { thirstLevel = OR(_value,nil); };
       case "Money": { player setVariable ["cmoney", OR(_value,0), true] };
       case "Direction": { if (defined(_value)) then {player setDir _value} };
-      case "Goggles": { if (isSTRING(_value) && {_value != ""}) then { player addGoggles _value } };
-      case "Headgear": {
-        // If wearing one of the default headgears, give the one belonging to actual team instead
-        if (isSTRING(_value) && {_value != ""}) then {
-          _defHeadgear = [player, "headgear"] call getDefaultClothing;
-          _defHeadgears =
-          [
-            [typeOf player, "headgear", BLUFOR] call getDefaultClothing,
-            [typeOf player, "headgear", OPFOR] call getDefaultClothing,
-            [typeOf player, "headgear", INDEPENDENT] call getDefaultClothing
-          ];
-
-          if (_value != _defHeadgear && {_defHeadgear != ""} && {{_value == _x} count _defHeadgears > 0}) then {
-            player addHeadgear _defHeadgear;
-          }
-          else {
-            player addHeadgear _value;
-          };
-        };
-      };
-      case "AssignedItems": {
-        {
-          if ([player, _x] call isAssignableBinocular) then {
-            player addWeapon _x;
-          }
-          else {
-            player linkItem _x;
-          };
-        } forEach (OR(_value,[]));
-      };
       case "CurrentWeapon": { player selectWeapon OR(_value,"") };
       case "Animation": { if (isSTRING(_value) && {_value != ""}) then {[player, _value] call switchMoveGlobal};};
       case "UniformWeapons": { { (uniformContainer player) addWeaponCargoGlobal _x } forEach (OR(_value,[])) };
