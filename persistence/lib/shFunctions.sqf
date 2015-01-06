@@ -198,5 +198,28 @@ sh_restoreVehicleTurrets = {
 };
 
 
+sh_getValueFromPairs = {
+  private ["_result"];
+  ARGVX3(0,_object_data,[]);
+  ARGVX3(1,_searchForKey,"");
+  
+  if (!(isARRAY(_object_data))) exitWith {};
+  if (!(isSTRING(_searchForKey))) exitWith {};
+  
+  {
+    _key = _x select 0;
+    _value = _x select 1;
+    switch (_key) do {
+      case _searchForKey: { _result = OR(_value,nil);};
+    };
+  } forEach _object_data;
+  
+  if (isNil "_result") then {
+    diag_log format ["Error: %1 does not have %2!"],_x,_searchForKey;
+  }else{
+    (_result);
+  };
+};
+
 shFunctions_loased = true;
 diag_log "shFunctions loading complete";
