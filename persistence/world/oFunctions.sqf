@@ -10,7 +10,7 @@ call compile preProcessFileLineNumbers "persistence\lib\shFunctions.sqf";
 
 #include "macro.h";
 
-o_loadingOrderArray = ["Building","StaticWeapon","ReammoBox_F"];
+o_loadingOrderArray = ["Building","StaticWeapon","ReammoBox_F", "All"];
 
 diag_log format ["===== Loading order: ====="];
 {
@@ -647,14 +647,15 @@ o_loadObjects = {
   };
 
   diag_log format["A3Wasteland - will restore %1 objects", count(_objects)];
-  def(_realRestoredCounter);
   def(_type);
-  def(_className);
+  def(_class);
+  def(_object_data);
+  init(_restored_objects,0);
+  init(_total_objects,(count(_objects)-1)); //-1 because the "Info" section is not an object
 
-  _realRestoredCounter = 0;
   {
     _type = _x;
-    //diag_log format ["o_loadObjects type: %1",_type];
+
     {if (true) then {
 
       if (!(isARRAY(_x))) exitWith {
@@ -666,21 +667,23 @@ o_loadObjects = {
       };
 
       _object_data = call (_x select 1);
-      _className = [_object_data, "Class"] call sh_getValueFromPairs;
+      _class = [_object_data, "Class"] call sh_getValueFromPairs;
       
-      //diag_log format ["_className: %1 || _type: %2", _className, _type];
-      if ((isNil "_className") || {not(_className isKindOf _type)}) exitWith {};
+      //diag_log format ["_class: %1 || _type: %2", _class, _type];
+      if ((isNil "_class") || {not(_class isKindOf _type)}) exitWith {};
 
-      diag_log format ["Loading %1 type of %2", _className, _type];
+      diag_log format ["Loading %1 type of %2", _class, _type];
       _oIds pushBack (_x select 0);
       [_x] call o_restoreObject;
-      _realRestoredCounter = _realRestoredCounter + 1;
+      _restored_objects = _restored_objects + 1;
+      _objects set [_forEachIndex, objNull]; //mark the object fro deletion once it's loaded
 
     }} forEach _objects;
+    _objects = _objects - [objNull];
   } forEach o_loadingOrderArray;
   
-  diag_log format["A3Wasteland - Total database objects: %1 ", count(_objects)];
-  diag_log format["A3Wasteland - Real restored objects: %1 ", _realRestoredCounter];
+  diag_log format["A3Wasteland - Total database objects: %1 ", _total_objects];
+  diag_log format["A3Wasteland - Real restored objects: %1 ", _restored_objects];
 
   (_oIds)
 };
