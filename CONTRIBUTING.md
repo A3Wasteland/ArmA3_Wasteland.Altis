@@ -1,18 +1,14 @@
-###Contributing to A3Wasteland (sock-rpc-stats) fork###
-
+###Contributing to this A3Wasteland fork###
 This fork of A3Wasteland is an open source project and we love to receive contributions from the community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into A3Wasteland itself.
 
 ####Why does this fork exist####
-
-
 This fork exists to provide an alternate way of stats persistence that is more scalable than extDB, and iniDB, and that is easier to maintain and update due to its schemaless nature.
   
-The fork maintains a main branch called "Development_main", which closely follows the development of the the parent (official) A3Wasteland repository. The "Development_main" should not deviate feature-wise from the official A3Wasteland development.
+The fork maintains a main branch called *Development_main*, which closely follows the development of the the parent (official) A3Wasteland repository. The *Development_main* should not deviate feature-wise from the official A3Wasteland development.
  
-The only changes that are allowed to go into the "Development_main" branch are those that are persistence related.
+The only changes that are allowed to go into the *Development_main* branch are those that are persistence related.
  
- 
-The fork also maintains a branch called "Development_main_addons". This branch is where we put those features that are not accepted (or not being implemented) into the official A3Wasteland repository (for whatever reasons). Some examples of these features are:
+The fork also maintains a branch called *Development_main_addons*. This branch is where we put those features that are not accepted (or not being implemented) into the official A3Wasteland repository (for whatever reasons). Some examples of these features are:
  
  * Private Storage
  * Private Parking
