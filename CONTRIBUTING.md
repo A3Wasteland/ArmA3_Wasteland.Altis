@@ -50,6 +50,8 @@ See more details below for the process of contributing code to this fork of A3Wa
 You will need to fork this repository and clone it to your local machine. See 
 [github help page](https://help.github.com/articles/fork-a-repo) for help.
 
+**Repository:** [https://github.com/micovery/ArmA3_Wasteland.Altis](https://github.com/micovery/ArmA3_Wasteland.Altisb)
+
 #### Submitting your changes ####
 
 Once your changes and tests are ready to submit for review:
@@ -74,9 +76,6 @@ Then sit back and wait. There will probably be discussion about the pull request
 
 
 #### Follow these coding guidelines ####
-
-**Repository:** [https://github.com/micovery/ArmA3_Wasteland.Altis](https://github.com/micovery/ArmA3_Wasteland.Altisb)
-
 
 * SQF indent is 2 spaces (no tabs)
 * No unnecessary aligning of code to make it "Look nice". For example
