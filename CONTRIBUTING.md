@@ -159,6 +159,7 @@ The whole point of this is to try to keep the code as flat as possible, and thus
 * Do not re-format existing code. If there is legacy code form the A3Wasteland vanilla mission, do not reformat it. Follow the existing style instead.
 * Wherever possible avoid making changes to the A3Wasteland vanilla files.
 * Always define local variables before using them (use the "def", or "init" macros).
-* Do not bulk-up local variable definitions all in one place. Try to define the local variable as close to the place where it's first used.
+* Do not bulk-up local variable definitions all in one place. 
+* Try to define the local variable as close to the place where it's first used.
 * Familiarize yourself with the "ARGV", and "ARGVX" macros for processing function parameters, and use them.
 * Use the "init", and "def" macros instead of the "private" keyword
