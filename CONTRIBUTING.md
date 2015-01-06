@@ -1,18 +1,14 @@
-###Contributing to A3Wasteland (sock-rpc-stats) fork###
-
+###Contributing to this A3Wasteland fork###
 This fork of A3Wasteland is an open source project and we love to receive contributions from the community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into A3Wasteland itself.
 
 ####Why does this fork exist####
-
-
 This fork exists to provide an alternate way of stats persistence that is more scalable than extDB, and iniDB, and that is easier to maintain and update due to its schemaless nature.
   
-The fork maintains a main branch called "Development_main", which closely follows the development of the the parent (official) A3Wasteland repository. The "Development_main" should not deviate feature-wise from the official A3Wasteland development.
+The fork maintains a main branch called *Development_main*, which closely follows the development of the the parent (official) A3Wasteland repository. The *Development_main* should not deviate feature-wise from the official A3Wasteland development.
  
-The only changes that are allowed to go into the "Development_main" branch are those that are persistence related.
+The only changes that are allowed to go into the *Development_main* branch are those that are persistence related.
  
- 
-The fork also maintains a branch called "Development_main_addons". This branch is where we put those features that are not accepted (or not being implemented) into the official A3Wasteland repository (for whatever reasons). Some examples of these features are:
+The fork also maintains a branch called *Development_main_addons*. This branch is where we put those features that are not accepted (or not being implemented) into the official A3Wasteland repository (for whatever reasons). Some examples of these features are:
  
  * Private Storage
  * Private Parking
@@ -54,29 +50,29 @@ See more details below for the process of contributing code to this fork of A3Wa
 You will need to fork this repository and clone it to your local machine. See 
 [github help page](https://help.github.com/articles/fork-a-repo) for help.
 
+**Repository:** [https://github.com/micovery/ArmA3_Wasteland.Altis](https://github.com/micovery/ArmA3_Wasteland.Altisb)
+
 #### Submitting your changes ####
 
 Once your changes and tests are ready to submit for review:
 
 1. Test your changes
-Load up the mission with your changes, and make sure that your feature actually works as expected, and that it does not negatively impact other areas.
+
+    Load up the mission with your changes, and make sure that your feature actually works as expected, and that it does not negatively impact other areas.
 
 2. Sign the Contributor License Agreement
-Please make sure you have signed our [Contributor License Agreement](https://www.clahub.com/agreements/micovery/ArmA3_Wasteland.Altis). We are not asking you to assign copyright to us, but to give us the right to distribute your code without restriction. We ask this of all contributors in order to assure our users of the origin and continuing existence of the code. You only need to sign the CLA once.
+
+    Please make sure you have signed our [Contributor License Agreement](https://www.clahub.com/agreements/micovery/ArmA3_Wasteland.Altis). We are not asking you to assign copyright to us, but to give us the right to distribute your code without restriction. We ask this of all contributors in order to assure our users of the origin and continuing existence of the code. You only need to sign the CLA once.
 
 3. Rebase your changes
-Update your local repository with the most recent code from the main A3Wasteland (sock-rpc-stats) repository, and rebase your branch on top of the latest "Development_main" branch. We prefer your changes to be squashed into a single commit.
+
+    Update your local repository with the most recent code from the main A3Wasteland (sock-rpc-stats) repository, and rebase your branch on top of the latest "Development_main" branch. We prefer your changes to be squashed into a single commit.
 
 4. Submit a pull request
-Push your local changes to your forked copy of the repository and [submit a pull request](https://help.github.com/articles/using-pull-requests). In the pull request, describe what your changes do and mention the number of the issue where discussion has taken place, eg "Closes #123".
+
+    Push your local changes to your forked copy of the repository and [submit a pull request](https://help.github.com/articles/using-pull-requests). In the pull request, describe what your changes do and mention the number of the issue where discussion has taken place, eg "Closes #123".
 
 Then sit back and wait. There will probably be discussion about the pull request and, if any changes are needed, we would love to work with you to get your pull request merged into A3Wasteland (sock-rpc-stats).
-
-
-#### Contributing to the A3Wasteland (sock-rpc-stats) fork ####
------------------------------------------------------
-
-**Repository:** [https://github.com/micovery/ArmA3_Wasteland.Altis](https://github.com/micovery/ArmA3_Wasteland.Altisb)
 
 
 #### Follow these coding guidelines ####
@@ -153,16 +149,16 @@ This is unnecessary, and makes the code hard to maintain and understand. Instead
 The whole point of this is to try to keep the code as flat as possible, and thus improve readability and maintenance, and reduce chance of subtle bugs.
 
 * Use functions and modularize as much as possible. 
-  - Do not try to cram giant expressions into IF statements. If you can move a condition into a separate function, do so.
-
+* Do not try to cram giant expressions into IF statements (create new functions if needed)
 * Use underscore "_" instead of camel-casing for variable names, and function names.
 * Always be coding on the defensive, do not assume that all the parameters passed into a function will always be initialized
 * Use the utility macros from the macro.h file to help you out with type-checks, and processing of function arguments
-* Use the "init", and "def" macros instead of the "private" keyword (the reason for this, is that we we want later to initialize all variables a certain way, we just need to modify the macro).
 * Line width is 140 characters
 * Follow the Google [JavaScript style guidelines](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
 * Do not re-format existing code. If there is legacy code form the A3Wasteland vanilla mission, do not reformat it. Follow the existing style instead.
 * Wherever possible avoid making changes to the A3Wasteland vanilla files.
 * Always define local variables before using them (use the "def", or "init" macros).
-* Do not bulk-up local variable definitions all in one place. Try to define the local variable as close to the place where it's first used.
+* Do not bulk-up local variable definitions all in one place. 
+* Try to define the local variable as close to the place where it's first used.
 * Familiarize yourself with the "ARGV", and "ARGVX" macros for processing function parameters, and use them.
+* Use the "init", and "def" macros instead of the "private" keyword
