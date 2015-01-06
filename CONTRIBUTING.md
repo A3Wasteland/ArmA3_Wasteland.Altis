@@ -154,7 +154,6 @@ The whole point of this is to try to keep the code as flat as possible, and thus
 * Use underscore "_" instead of camel-casing for variable names, and function names.
 * Always be coding on the defensive, do not assume that all the parameters passed into a function will always be initialized
 * Use the utility macros from the macro.h file to help you out with type-checks, and processing of function arguments
-* Use the "init", and "def" macros instead of the "private" keyword (the reason for this, is that we we want later to initialize all variables a certain way, we just need to modify the macro).
 * Line width is 140 characters
 * Follow the Google [JavaScript style guidelines](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
 * Do not re-format existing code. If there is legacy code form the A3Wasteland vanilla mission, do not reformat it. Follow the existing style instead.
@@ -162,3 +161,4 @@ The whole point of this is to try to keep the code as flat as possible, and thus
 * Always define local variables before using them (use the "def", or "init" macros).
 * Do not bulk-up local variable definitions all in one place. Try to define the local variable as close to the place where it's first used.
 * Familiarize yourself with the "ARGV", and "ARGVX" macros for processing function parameters, and use them.
+* Use the "init", and "def" macros instead of the "private" keyword
