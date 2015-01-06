@@ -625,15 +625,11 @@ o_loadObjects = {
     //diag_log format ["o_loadObjects type: %1",_type];
     {
       private ["_className"];
+      
+      if (!(isARRAY(_x))) exitWith {diag_log format ["ERROR: o_loadObjects : _objects is not ARRAY. Sth is terribly wrong."];};
+      if (!(isCODE((_x select 1)))) exitWith {diag_log format ["ERROR: o_loadObjects : _objects select 1 is not CODE. Sth is terribly wrong."];};
       _object_data = call (_x select 1);
-      {
-        _key = _x select 0;
-        _value = _x select 1;
-        switch (_key) do {
-          case "Class": { _className = OR(_value,nil);};
-        };
-        if (isNil "_className") then { diag_log format ["Error: %1 does not have class!"],_x};
-      } forEach _object_data;
+      _className = [_object_data, "Class"] call sh_getValueFromPairs;
       
       //diag_log format ["_className: %1 || _type: %2", _className, _type];
       if (!(isNil "_className") && {_className isKindOf _type}) then {
