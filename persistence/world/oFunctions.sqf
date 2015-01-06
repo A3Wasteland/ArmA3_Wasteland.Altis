@@ -619,27 +619,36 @@ o_loadObjects = {
   if (!isARRAY(_objects)) exitWith {};
 
   diag_log format["A3Wasteland - will restore %1 objects", count(_objects)];
+  def(_realRestoredCounter);
+  def(_type);
+  def(_className);
+
   _realRestoredCounter = 0;
   {
     _type = _x;
     //diag_log format ["o_loadObjects type: %1",_type];
-    {
-      private ["_className"];
-      
-      if (!(isARRAY(_x))) exitWith {diag_log format ["ERROR: o_loadObjects : _objects is not ARRAY. Sth is terribly wrong."];};
-      if (!(isCODE((_x select 1)))) exitWith {diag_log format ["ERROR: o_loadObjects : _objects select 1 is not CODE. Sth is terribly wrong."];};
+    {if (true) then {
+
+      if (!(isARRAY(_x))) exitWith {
+        diag_log format ["ERROR: o_loadObjects : _objects is not ARRAY. Sth is terribly wrong."];
+      };
+
+      if (!(isCODE((_x select 1)))) exitWith {
+        diag_log format ["ERROR: o_loadObjects : _objects select 1 is not CODE. Sth is terribly wrong."];
+      };
+
       _object_data = call (_x select 1);
       _className = [_object_data, "Class"] call sh_getValueFromPairs;
       
       //diag_log format ["_className: %1 || _type: %2", _className, _type];
-      if (!(isNil "_className") && {_className isKindOf _type}) then {
-        diag_log format ["Loading %1 type of %2", _className, _type];
-        _oIds pushBack (_x select 0);
-        [_x] call o_restoreObject;
-        _realRestoredCounter = _realRestoredCounter + 1;     
-      };
+      if ((isNil "_className") || {not(_className isKindOf _type)}) exitWith {};
 
-    } forEach _objects;
+      diag_log format ["Loading %1 type of %2", _className, _type];
+      _oIds pushBack (_x select 0);
+      [_x] call o_restoreObject;
+      _realRestoredCounter = _realRestoredCounter + 1;
+
+    }} forEach _objects;
   } forEach o_loadingOrderArray;
   
   diag_log format["A3Wasteland - Total database objects: %1 ", count(_objects)];
