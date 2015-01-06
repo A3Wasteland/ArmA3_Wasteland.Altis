@@ -55,27 +55,28 @@ You will need to fork this repository and clone it to your local machine. See
 Once your changes and tests are ready to submit for review:
 
 1. Test your changes
-Load up the mission with your changes, and make sure that your feature actually works as expected, and that it does not negatively impact other areas.
+
+    Load up the mission with your changes, and make sure that your feature actually works as expected, and that it does not negatively impact other areas.
 
 2. Sign the Contributor License Agreement
-Please make sure you have signed our [Contributor License Agreement](https://www.clahub.com/agreements/micovery/ArmA3_Wasteland.Altis). We are not asking you to assign copyright to us, but to give us the right to distribute your code without restriction. We ask this of all contributors in order to assure our users of the origin and continuing existence of the code. You only need to sign the CLA once.
+
+    Please make sure you have signed our [Contributor License Agreement](https://www.clahub.com/agreements/micovery/ArmA3_Wasteland.Altis). We are not asking you to assign copyright to us, but to give us the right to distribute your code without restriction. We ask this of all contributors in order to assure our users of the origin and continuing existence of the code. You only need to sign the CLA once.
 
 3. Rebase your changes
-Update your local repository with the most recent code from the main A3Wasteland (sock-rpc-stats) repository, and rebase your branch on top of the latest "Development_main" branch. We prefer your changes to be squashed into a single commit.
+
+    Update your local repository with the most recent code from the main A3Wasteland (sock-rpc-stats) repository, and rebase your branch on top of the latest "Development_main" branch. We prefer your changes to be squashed into a single commit.
 
 4. Submit a pull request
-Push your local changes to your forked copy of the repository and [submit a pull request](https://help.github.com/articles/using-pull-requests). In the pull request, describe what your changes do and mention the number of the issue where discussion has taken place, eg "Closes #123".
+
+    Push your local changes to your forked copy of the repository and [submit a pull request](https://help.github.com/articles/using-pull-requests). In the pull request, describe what your changes do and mention the number of the issue where discussion has taken place, eg "Closes #123".
 
 Then sit back and wait. There will probably be discussion about the pull request and, if any changes are needed, we would love to work with you to get your pull request merged into A3Wasteland (sock-rpc-stats).
 
 
-#### Contributing to the A3Wasteland (sock-rpc-stats) fork ####
------------------------------------------------------
+#### Follow these coding guidelines ####
 
 **Repository:** [https://github.com/micovery/ArmA3_Wasteland.Altis](https://github.com/micovery/ArmA3_Wasteland.Altisb)
 
-
-#### Follow these coding guidelines ####
 
 * SQF indent is 2 spaces (no tabs)
 * No unnecessary aligning of code to make it "Look nice". For example
