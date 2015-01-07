@@ -451,7 +451,6 @@ p_restoreData = {
 
   if (!_dataValid) exitWith {
     format["Saved data for %1 is not valid;", player] call p_log_finest;
-    playerData_resetPos = true;
     call _exit;
   };
 
