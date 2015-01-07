@@ -24,6 +24,7 @@ if (!isNil "pvar_teamKillList" && {playerSide in [BLUFOR,OPFOR]}) then
 		_time = diag_tickTime;
 
 		waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 20};
+		player setVariable ["initComplete", false, true];
 		endMission "LOSER";
 		waitUntil {uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; closeDialog 0; false};
 	};
@@ -39,10 +40,11 @@ if (!isNil "pvar_teamSwitchList" && playerSide in [BLUFOR,OPFOR]) then
 		0 fadeSound 0;
 
 		uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-		_msgBox = [localize "STR_WL_Loading_Teamswitched"] spawn BIS_fnc_guiMessage;
+		_msgBox = [format[localize "STR_WL_Loading_Teamswitched", playerSide]] spawn BIS_fnc_guiMessage;
 		_time = diag_tickTime;
 
 		waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 20};
+		player setVariable ["initComplete", false, true];
 		endMission "LOSER";
 		waitUntil {uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; closeDialog 0; false};
 	};
