@@ -24,8 +24,7 @@ The fork also maintains a branch called *Development_main_addons*. This branch i
 
 
 If you think you have found a bug in this fork of the A3Wasteland mission, first make sure that you test against [the official A3Wasteland vanilla mission](https://github.com/A3Wasteland/ArmA3_Wasteland.Altis) - If the issue exists over there, then please create the issue over there instead. Unless the issues are related to persistence, or to an addon, it's very likely that the issue exists as well in the vanilla mission.
-Only create issues in this repository for 
- 
+
 Also, make sure to search our [issues list](https://github.com/micovery/ArmA3_Wasteland.Altis/issues) on GitHub in case a similar issue has already been opened.
 
 It is very helpful if you can prepare a reproduction of the bug. In other words, provide a small test case (or series of steps) which we can do in order to consistently reproduce the bug. It makes it easier to find the problem and to fix it. Do not simply say "XYZ is not working", please explain how exactly is it not working (what is the expectation vs what is actually happening),  and under what circumstances. 
@@ -93,7 +92,7 @@ Then sit back and wait. There will probably be discussion about the pull request
     case (<some expression>): {
     
     }
-    case (<some other expression): {
+    case (<some other expression>): {
     
     }
     default: {
