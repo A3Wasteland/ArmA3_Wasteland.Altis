@@ -218,21 +218,23 @@ p_addPlayerSave = {
   init(_alive, alive _player);
   diag_log format["p_addPlayerSave: Saving stats for %1(%2)", _name, _uid];
 
-  def(_initComplete);
-  _initComplete = _player getVariable ["initComplete", false];
-  //diag_log format["_initComplete = %1", _initComplete];
-  if (not(_initComplete)) exitWith {};
+  def(_init_complete);
+  _init_complete = _player getVariable ["initComplete", false];
 
-  def(_respawnDialogActive);
-  _respawnDialogActive = _player getVariable ["respawnDialogActive", false];
-  //diag_log format["_respawnDialogActive = %1", _respawnDialogActive];
+  if (not(_init_complete)) exitWith {
+    diag_log format["%1(%2) exited without completing initialization", _name, _uid];
+  };
 
-  def(_FAR_isUnconscious);
-  _FAR_isUnconscious = (_player getVariable ["FAR_isUnconscious", 0] != 0);
-  //diag_log format["_FAR_isUnconscious = %1", _FAR_isUnconscious];
+  def(_respawn_active);
+  _respawn_active = _player getVariable ["respawnDialogActive", false];
+  //diag_log format["_respawn_active = %1", _respawn_active];
+
+  def(_unconscious);
+  _unconscious = (_player getVariable ["FAR_isUnconscious", 0] != 0);
+  //diag_log format["_unconscious = %1", _unconscious];
 
   def(_reset_save);
-  _reset_save = (_respawnDialogActive || {_FAR_isUnconscious || {not(_alive)}}); //or not alive
+  _reset_save = (_respawn_active || {_unconscious || {not(_alive)}}); //or not alive
   //diag_log format["_reset_save = %1", _reset_save];
 
 
@@ -251,7 +253,7 @@ p_addPlayerSave = {
     _request pushBack ["PlayerScore",_scoreInfo];
   };
 
-  diag_log format["Disconnected %1(%2):  unconscious = %3, respawning = %4, alive = %5", _name,_uid,_FAR_isUnconscious, _respawnDialogActive, _alive];
+  diag_log format["Disconnected %1(%2):  unconscious = %3, respawning = %4, alive = %5", _name,_uid, _unconscious, _respawn_active, _alive];
   if (_reset_save) exitWith {
      diag_log format["Resetting %1(%2) stats", _name, _uid];
      _request pushBack ["PlayerSave",nil];
@@ -426,6 +428,7 @@ p_disconnectSave = {
 
   _request call stats_set;
   [_scope] call stats_flush;
+  diag_log format["Stats for %1(%2) saved", _name, _uid];
 };
 
 
