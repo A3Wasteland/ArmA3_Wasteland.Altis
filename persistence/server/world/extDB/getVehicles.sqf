@@ -54,7 +54,10 @@ _vehicles = [];
 	_vehData = [];
 
 	{
-		_vehData pushBack [(_vars select _forEachIndex) select 1, _x];
+		if (!isNil "_x") then
+		{
+			_vehData pushBack [(_vars select _forEachIndex) select 1, _x];
+		};
 	} forEach _x;
 
 	_vehicles pushBack _vehData;
