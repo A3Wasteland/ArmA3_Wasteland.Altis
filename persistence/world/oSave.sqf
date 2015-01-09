@@ -379,9 +379,9 @@ while {true} do
 					_repairCargo = getRepairCargo _veh;
 
 					// Fix for -1.#IND
-					if !(_ammoCargo >= 0) then { _ammoCargo = 0 };
-					if !(_fuelCargo >= 0) then { _fuelCargo = 0 };
-					if !(_repairCargo >= 0) then { _repairCargo = 0 };
+					if !(finite(_ammoCargo)) then { _ammoCargo = 0};
+					if !(finite(_fuelCargo)) then { _fuelCargo = 0};
+					if !(finite(_repairCargo)) then { _repairCargo = 0};
 
 					// Save data
 
