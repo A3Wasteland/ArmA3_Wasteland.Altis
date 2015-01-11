@@ -16,7 +16,10 @@ s_processRestartMessage = {
   ARGV2(5,_body);
   
   //End Misson for all players
-  [[], "A3W_fnc_reboot", true, true] call BIS_fnc_MP;
+  [[], "A3W_fnc_reboot", BLUFOR, true] call BIS_fnc_MP;
+  [[], "A3W_fnc_reboot", OPFOR, true] call BIS_fnc_MP;
+  [[], "A3W_fnc_reboot", Independent, true] call BIS_fnc_MP;
+  
 
   //halt all the save loops
   p_saveLoopActive = false;
