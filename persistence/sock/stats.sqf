@@ -256,7 +256,11 @@ stats_write = {
   def(_fsm);
   _fsm = [_var_name, _this, stats_write_wrapped] execFSM "persistence\sock\call.fsm";
   waitUntil {completedFSM _fsm};
-  (missionNamespace getVariable _var_name)
+
+  def(_result);
+  _result = (missionNamespace getVariable _var_name);
+  missionNamespace setVariable [_var_name, nil];
+  OR(_result,nil)
 };
 
 stats_write_wrapped = {
@@ -601,7 +605,11 @@ stats_read_fsm = {
   def(_fsm);
   _fsm = [_var_name, _this, stats_read_wrapped] execFSM "persistence\sock\call.fsm";
   waitUntil {completedFSM _fsm};
-  (missionNamespace getVariable _var_name)
+
+  def(_result);
+  _result = (missionNamespace getVariable _var_name);
+  missionNamespace setVariable [_var_name, nil];
+  OR(_result,nil)
 };
 
 stats_read = {
