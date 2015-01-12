@@ -23,5 +23,5 @@ if (_sentChecksum == _flagChecksum) then {
     ["value",_value]
   ];
 
-	["AdminLog2" call PDB_adminLogFileName, _uid + ".records", (_record call sock_hash)] call stats_push;
+	["AdminLog2" call PDB_adminLogFileName, _uid + ".records", (_record call sock_hash)] spawn stats_push;
 };

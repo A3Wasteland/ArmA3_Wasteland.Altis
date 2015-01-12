@@ -453,6 +453,15 @@ p_addPlayerSave = {
   true
 };
 
+
+ordered_invoke = {
+  if (isNil "_this" || {typeName _this != typeName []}) exitWith {};
+  {
+    (_x select 0) call (_x select 1);
+  } forEach _this;
+};
+
+
 p_disconnectSave = {
   diag_log format["%1 call p_disconnectSave", _this];
   ARGVX3(0,_player,objNull);
@@ -465,11 +474,14 @@ p_disconnectSave = {
 
   if (isNil{[_request,_player,_uid,_name] call p_addPlayerSave}) exitWith {
     diag_log format["WARNING: No stats saved for %1(%2) on disconnect", _name, _uid];
-    [_scope] call stats_flush;
+    [_scope] spawn stats_flush;
   };
 
-  _request spawn stats_set;
-  [_scope] spawn stats_flush;
+  [
+    [_request, stats_set],
+    [[_scope], stats_flush]
+  ] spawn ordered_invoke;
+
   diag_log format["Stats for %1(%2) saved", _name, _uid];
 };
 
