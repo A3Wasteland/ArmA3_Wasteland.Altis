@@ -68,6 +68,8 @@ if (_return) then
 		extDB_Misc_async = [_setupDir, "async_misc.sqf"] call mf_compile;
 	};
 
+	extDB_pairsToSQL = [_setupDir, "fn_pairsToSQL.sqf"] call mf_compile;
+
 	_result = (["getDBVersion", 2] call extDB_Database_async) select 0;
 	if (_result < MIN_DB_VERSION) exitWith { diag_log format ["[extDB] ### Outdated A3Wasteland database version! %1 - min: %2", _result, MIN_DB_VERSION]; _return = false };
 
