@@ -75,6 +75,35 @@ s_processRestartMessage = {
   true
 };
 
+
+s_processBootMessage = {
+  ARGVX3(0,_scope,"");
+  ARGVX3(1,_id,"");
+  ARGVX3(2,_from,"");
+  ARGVX3(3,_to,"");
+  ARGVX3(4,_subject,"");
+  ARGV2(5,_body);
+
+  //End Misson for all players
+  [[], "A3W_fnc_reboot", BLUFOR, true] call BIS_fnc_MP;
+  [[], "A3W_fnc_reboot", OPFOR, true] call BIS_fnc_MP;
+  [[], "A3W_fnc_reboot", Independent, true] call BIS_fnc_MP;
+
+  diag_log format["Sending boot message ack"];
+  //send ack that the message has been processed
+  def(_res);
+  _res =
+  [
+    ["id", _id],
+    ["from", "server"],
+    ["to", _from],
+    ["subject", "ack"],
+    ["body", _id]
+  ] call sock_hash;
+
+  true
+};
+
 s_processMessage = {
   ARGVX3(0,_scope,"");
   ARGV2(1,_message);
@@ -110,6 +139,11 @@ s_processMessage = {
   if (_subject == "restart" && _to == "server" && _from != "server") exitWith {
     ([_scope,_id,_from,_to,_subject, OR(_body,nil)] call s_processRestartMessage)
   };
+
+  if (_subject == "boot" && _to == "server" && _from != "server") exitWith {
+    ([_scope,_id,_from,_to,_subject, OR(_body,nil)] call s_processBootMessage)
+  };
+
   diag_log format["message queue: process(id:%1): complete"];
 
   false
