@@ -464,7 +464,7 @@ p_disconnectSave = {
 
   if (isNil{[_request,_player,_uid,_name] call p_addPlayerSave}) exitWith {
     diag_log format["WARNING: No stats saved for %1(%2) on disconnect", _name, _uid];
-    [_scope] call stats_flush;
+    [_scope] spawn stats_flush;
   };
 
   _request spawn stats_set;

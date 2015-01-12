@@ -36,7 +36,7 @@ if (typeName _this == "ARRAY" && {count _this > 4}) then
       ["hackType",_hackType],
       ["hackValue",_hackValue]
     ];
-    ["Hackers2" call PDB_hackerLogFileName, _playerID + ".records", (_record call sock_hash)] call stats_push;
+    ["Hackers2" call PDB_hackerLogFileName, _playerID + ".records", (_record call sock_hash)] spawn stats_push;
 
 	};
 };
