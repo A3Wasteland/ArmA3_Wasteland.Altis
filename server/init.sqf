@@ -323,6 +323,9 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 	};
 };
 
+A3W_serverSpawningComplete = compileFinal "true";
+publicVariable "A3W_serverSpawningComplete";
+
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
 	diag_log "[INFO] A3W territory capturing is ENABLED";
