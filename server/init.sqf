@@ -26,7 +26,7 @@ addMissionEventHandler ["HandleDisconnect",
 	{
 		if (!(_unit getVariable ["playerSpawning", false]) && typeOf _unit != "HeadlessClient_F") then
 		{
-			[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
+			[_uid, [["BankMoney", _unit getVariable ["bmoney", 0]]], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
 		};
 
 		deleteVehicle _unit;
@@ -97,7 +97,12 @@ forEach
 	"A3W_spawnBeaconSpawnHeight",
 	"A3W_purchasedVehicleSaving",
 	"A3W_missionVehicleSaving",
-	"A3W_missionFarAiDrawLines"
+	"A3W_missionFarAiDrawLines",
+	"A3W_atmEnabled",
+	"A3W_atmMaxBalance",
+	"A3W_atmTransferFee",
+	"A3W_atmTransferAllTeams",
+	"A3W_atmEditorPlacedOnly"
 ];
 
 ["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;

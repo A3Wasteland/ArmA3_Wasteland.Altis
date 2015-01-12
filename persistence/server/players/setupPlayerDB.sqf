@@ -12,6 +12,7 @@ fn_deletePlayerSave = [_playerFuncs, "deletePlayerSave.sqf"] call mf_compile;
 fn_loadAccount = [_playerFuncs, "loadAccount.sqf"] call mf_compile;
 fn_saveAccount = [_playerFuncs, "saveAccount.sqf"] call mf_compile;
 fn_getPlayerFlag = [_playerFuncs, "getPlayerFlag.sqf"] call mf_compile;
+fn_logBankTransfer = [_playerFuncs, "logBankTransfer.sqf"] call mf_compile;
 fn_kickPlayerIfFlagged = "persistence\server\players\fn_kickPlayerIfFlagged.sqf" call mf_compile;
 
 "pvar_savePlayerData" addPublicVariableEventHandler
@@ -25,6 +26,7 @@ fn_kickPlayerIfFlagged = "persistence\server\players\fn_kickPlayerIfFlagged.sqf"
 
 		if (!isNull _player && alive _player && _player getVariable ["FAR_isUnconscious", 0] == 0) then
 		{
+			_info pushBack ["BankMoney", _player getVariable ["bmoney", 0]];
 			[_UID, _info, _data] call fn_saveAccount;
 		};
 
@@ -39,16 +41,32 @@ fn_kickPlayerIfFlagged = "persistence\server\players\fn_kickPlayerIfFlagged.sqf"
 {
 	(_this select 1) spawn
 	{
-		_player = _this select 0;
 		_UID = _this select 1;
-		_pNetId = _this select 2;
+		_data = _UID call fn_loadAccount;
 
-		_pvarName = "pvar_applyPlayerData_" + _UID;
+		[[_this, _data],
+		{
+			_pVal = _this select 0;
+			_data = _this select 1;
 
-		missionNamespace setVariable [_pvarName, _UID call fn_loadAccount];
-		(owner _player) publicVariableClient _pvarName;
+			_player = _pVal select 0;
+			_UID = _pVal select 1;
+			_pNetId = _pVal select 2;
 
-		diag_log format ["pvar_requestPlayerData: %1", [owner _player, _player, objectFromNetId _pNetId]];
+			_pvarName = "pvar_applyPlayerData_" + _UID;
+
+			missionNamespace setVariable [_pvarName, _data];
+			(owner _player) publicVariableClient _pvarName;
+
+			{
+				if (_x select 0 == "BankMoney") exitWith
+				{
+					_player setVariable ["bmoney", _x select 1, true];
+				};
+			} forEach _data;
+
+			diag_log format ["pvar_requestPlayerData: %1", [owner _player, _player, objectFromNetId _pNetId]];
+		}] execFSM "call.fsm";
 	};
 };
 

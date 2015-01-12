@@ -4,7 +4,7 @@
 //	@file Name: init.sqf
 //	@file Author: Torndeco, AgentRev
 
-#define MIN_DB_VERSION 2.0
+#define MIN_DB_VERSION 2.03
 
 private ["_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
 

@@ -20,10 +20,6 @@ switch (toLower _type) do
 			{
 				[] spawn fn_savePlayerData;
 			};
-		}
-		else
-		{
-			["The money was counterfeit!", 5] call mf_notify_client;
 		};
 	};
 
@@ -41,11 +37,55 @@ switch (toLower _type) do
 			};
 
 			playSound "defaultNotification";
+			call mf_items_warchest_refresh;
+			call mf_items_cratemoney_refresh;
+			true call mf_items_atm_refresh;
 		}
 		else
 		{
 			playSound "FD_CP_Not_Clear_F";
 			["Invalid transaction, please try again.", 5] call mf_notify_client;
 		};
+	};
+
+	case "atmtransfersent":
+	{
+		_amount = [_this, 1, 0, [0]] call BIS_fnc_param;
+		_name = [_this, 2, "", [""]] call BIS_fnc_param;
+
+		if (_amount != 0) then
+		{
+			_message = if (isStreamFriendlyUIEnabled) then {
+				"You have successfully transferred $%1"
+			} else {
+				"You have successfully transferred $%1 to %2"
+			};
+
+			playSound "defaultNotification";
+			[format [_message, [_amount] call fn_numbersText, _name], 5] call mf_notify_client;
+			true call mf_items_atm_refresh;
+		}
+		else
+		{
+			playSound "FD_CP_Not_Clear_F";
+			["Invalid transaction, please try again.", 5] call mf_notify_client;
+			true call mf_items_atm_refresh;
+		};
+	};
+
+	case "atmtransferreceived":
+	{
+		_amount = [_this, 1, 0, [0]] call BIS_fnc_param;
+		_name = [_this, 2, "", [""]] call BIS_fnc_param;
+
+		_message = if (isStreamFriendlyUIEnabled) then {
+			"You have received $%1 from a bank transfer" 
+		} else {
+			"%2 has transferred $%1 to your bank account"
+		};
+
+		playSound "FD_Finish_F";
+		[format [_message, [_amount] call fn_numbersText, _name], 5] call mf_notify_client;
+		true call mf_items_atm_refresh;
 	};
 };

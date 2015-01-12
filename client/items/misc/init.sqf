@@ -40,3 +40,5 @@ _execute1 = {MF_ITEMS_REPAIR_KIT call mf_inventory_use};
 _condition1 = "[] call mf_repair_can_repair == ''";
 _action1 = [_label1, _execute1, [], 1, false, false, "", _condition1];
 ["repairkit-use", _action1] call mf_player_actions_set;
+
+mf_verify_money_input = [_path, "verify_money_input.sqf"] call mf_compile;

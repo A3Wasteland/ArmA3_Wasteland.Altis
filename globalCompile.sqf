@@ -95,6 +95,7 @@ fn_numbersText = [_serverFunc, "fn_numbersText.sqf"] call mf_compile;
 fn_numToStr = [_serverFunc, "fn_numToStr.sqf"] call mf_compile;
 fn_removeFromPairs = [_serverFunc, "fn_removeFromPairs.sqf"] call mf_compile;
 fn_setToPairs = [_serverFunc, "fn_setToPairs.sqf"] call mf_compile;
+fn_sortAlphabetically = [_serverFunc, "fn_sortAlphabetically.sqf"] call mf_compile;
 fn_splitString = [_serverFunc, "fn_splitString.sqf"] call mf_compile;
 fn_startsWith = [_serverFunc, "fn_startsWith.sqf"] call mf_compile;
 //fn_vehicleInit = [_serverFunc, "fn_vehicleInit.sqf"] call mf_compile;
