@@ -594,7 +594,7 @@ stats_keys = {
 };
 
 
-stats_read = {
+stats_read_fsm = {
   def(_var_name);
   _var_name = format["var_%1",ceil(random 10000)];
 
@@ -604,7 +604,7 @@ stats_read = {
   (missionNamespace getVariable _var_name)
 };
 
-stats_read_wrapped = {
+stats_read = {
   if (isNil "_this") exitWith {};
   format["%1 stats_get;", _this] call stats_log_fine;
 
