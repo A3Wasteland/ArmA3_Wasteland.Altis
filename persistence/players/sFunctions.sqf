@@ -101,6 +101,8 @@ s_processBootMessage = {
     ["body", _id]
   ] call sock_hash;
 
+  [_scope, format["%1.recv", _from], _res] call stats_push;
+
   true
 };
 
