@@ -465,8 +465,8 @@ p_disconnectSave = {
     [_scope] call stats_flush;
   };
 
-  _request call stats_set;
-  [_scope] call stats_flush;
+  _request spawn stats_set;
+  [_scope] spawn stats_flush;
   diag_log format["Stats for %1(%2) saved", _name, _uid];
 };
 
