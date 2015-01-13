@@ -18,6 +18,8 @@
 private ["_number","_mod","_digots","_digitsCount","_modBase","_numberText"];
 
 _number = [_this,0,0,[0]] call BIS_fnc_param;
+if (!finite _number) exitWith { str _number };
+
 _mod = [_this,1,3,[0]] call BIS_fnc_param;
 
 _digits = _number call BIS_fnc_numberDigits;

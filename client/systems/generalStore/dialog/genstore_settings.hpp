@@ -100,7 +100,7 @@ class genstored
 			idc = genstore_item_list;
 			onLBSelChanged = "[] execVM 'client\systems\generalStore\itemInfo.sqf'";
 			sizeEx = 0.04 * TEXT_SCALE;
-			rowHeight = 0.04 * TEXT_SCALE;
+			rowHeight = 0.05 * TEXT_SCALE;
 
 			x = GenStoreMainBG_X + (0.1533 * SZ_SCALE);
 			y = GenStoreMainBG_Y + (0.075 * SZ_SCALE);
@@ -125,7 +125,7 @@ class genstored
 			idc = genstore_sell_list;
 			onLBSelChanged = "[] execVM 'client\systems\generalStore\sellInfo.sqf'";
 			sizeEx = 0.04 * TEXT_SCALE;
-			rowHeight = 0.04 * TEXT_SCALE;
+			rowHeight = 0.05 * TEXT_SCALE;
 
 			x = GenStoreMainBG_X + (0.4433 * SZ_SCALE);
 			y = GenStoreMainBG_Y + (0.075 * SZ_SCALE);

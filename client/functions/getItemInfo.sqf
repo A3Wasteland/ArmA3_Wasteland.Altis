@@ -155,7 +155,7 @@ if (!isNil "_itemEntry") then
 					case (["_Wetsuit", _itemType] call fn_findString != -1):
 					{
 						//_name = _itemText;
-						_description = "Allows faster swimming";
+						_description = "Allows faster swimming<br/>Required to fire SDAR underwater";
 					};
 					default
 					{

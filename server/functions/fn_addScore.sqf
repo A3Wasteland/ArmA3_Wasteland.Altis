@@ -49,5 +49,4 @@ if (isPlayer _player) then
 
 	// sync Steam scoreboard
 	_player addScore ((([_player, "playerKills"] call fn_getScore) - ([_player, "teamKills"] call fn_getScore)) - score _player);
-
 };

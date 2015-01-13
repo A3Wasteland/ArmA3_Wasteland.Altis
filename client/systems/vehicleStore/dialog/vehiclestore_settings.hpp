@@ -89,7 +89,7 @@ class vehshopd
 			idc = vehshop_veh_list;
 			onLBSelChanged = "[] execVM 'client\systems\vehicleStore\vehicleInfo.sqf'";
 			sizeEx = 0.04 * TEXT_SCALE;
-			rowHeight = 0.04 * TEXT_SCALE;
+			rowHeight = 0.05 * TEXT_SCALE;
 
 			x = VehStoreMainBG_X + (0.1533 * SZ_SCALE);
 			y = VehStoreMainBG_Y + (0.075 * SZ_SCALE);
@@ -102,7 +102,7 @@ class vehshopd
 			idc = vehshop_color_list;
 			onLBSelChanged = "[] execVM 'client\systems\vehicleStore\colorInfo.sqf'";
 			sizeEx = 0.04 * TEXT_SCALE;
-			rowHeight = 0.04 * TEXT_SCALE;
+			rowHeight = 0.06 * TEXT_SCALE;
 
 			x = VehStoreMainBG_X + (0.4433 * SZ_SCALE);
 			y = VehStoreMainBG_Y + (0.075 * SZ_SCALE);

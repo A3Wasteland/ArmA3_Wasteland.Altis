@@ -17,15 +17,15 @@ class ScoreGUI : IGUIBack
 	onLoad = "uiNamespace setVariable ['ScoreGUI', _this select 0]";
 	controlsBackground[] = {};
 
-	#define EXT_MARGIN 0.025
-	#define EXT_MARGIN_X (EXT_MARGIN * X_SCALE)
-	#define EXT_MARGIN_Y (EXT_MARGIN * Y_SCALE)
+	#define Score_EXT_MARGIN 0.025
+	#define Score_EXT_MARGIN_X (Score_EXT_MARGIN * X_SCALE)
+	#define Score_EXT_MARGIN_Y (Score_EXT_MARGIN * Y_SCALE)
 
 	#define PListBG_H (0.38 * Y_SCALE)
 	#define PRespawnTimerBG_H (0.033 * Y_SCALE)
 	#define TListBG_H (0.23 * Y_SCALE)
 
-	#define ScoreGUI_FullHeight (PListBG_H + (EXT_MARGIN_Y / 2) + PRespawnTimerBG_H + (EXT_MARGIN_Y / 2) + TListBG_H)
+	#define ScoreGUI_FullHeight (PListBG_H + (Score_EXT_MARGIN_Y / 2) + PRespawnTimerBG_H + (Score_EXT_MARGIN_Y / 2) + TListBG_H)
 
 	class Controls
 	{
@@ -36,9 +36,9 @@ class ScoreGUI : IGUIBack
 			idc = -1;
 			colorBackground[] = {0, 0, 0, 0.4};
 
-			#define PListBG_W ((0.825 * X_SCALE) - (EXT_MARGIN_X / 2))
-			#define PListBG_X (0.5 - (PListBG_W / 2)) //(PListBG_W + (EXT_MARGIN_X / 2))) // center left + margin
-			#define PListBG_Y (0.5 - (ScoreGUI_FullHeight / 2)) // middle of screen //(SZ_TOP + EXT_MARGIN_Y)
+			#define PListBG_W ((0.825 * X_SCALE) - (Score_EXT_MARGIN_X / 2))
+			#define PListBG_X (0.5 - (PListBG_W / 2)) //(PListBG_W + (Score_EXT_MARGIN_X / 2))) // center left + margin
+			#define PListBG_Y (0.5 - (ScoreGUI_FullHeight / 2)) // middle of screen //(SZ_TOP + Score_EXT_MARGIN_Y)
 
 			x = PListBG_X;
 			y = PListBG_Y;
@@ -324,7 +324,7 @@ class ScoreGUI : IGUIBack
 
 		#define PRespawnTimerBG_W (0.286 * X_SCALE)
 		#define PRespawnTimerBG_X (0.5 - (PRespawnTimerBG_W / 2))
-		#define PRespawnTimerBG_Y (PListBG_Y + PListBG_H + (EXT_MARGIN_Y / 2))
+		#define PRespawnTimerBG_Y (PListBG_Y + PListBG_H + (Score_EXT_MARGIN_Y / 2))
 
 		class PRespawnTimer : RscControlsGroup_NoScroll
 		{
@@ -381,9 +381,9 @@ class ScoreGUI : IGUIBack
 			idc = -1;
 			colorBackground[] = {0, 0, 0, 0.3};
 
-			#define TListBG_W ((0.825 * X_SCALE) - (EXT_MARGIN_X / 2))
-			#define TListBG_X (0.5 - (TListBG_W / 2)) //(TListBG_W + (EXT_MARGIN_X / 2))) // center left + margin
-			#define TListBG_Y (PRespawnTimerBG_Y + PRespawnTimerBG_H + (EXT_MARGIN_X / 2)) // (0.5 - (TListBG_H / 2)) // middle of screen
+			#define TListBG_W ((0.825 * X_SCALE) - (Score_EXT_MARGIN_X / 2))
+			#define TListBG_X (0.5 - (TListBG_W / 2)) //(TListBG_W + (Score_EXT_MARGIN_X / 2))) // center left + margin
+			#define TListBG_Y (PRespawnTimerBG_Y + PRespawnTimerBG_H + (Score_EXT_MARGIN_X / 2)) // (0.5 - (TListBG_H / 2)) // middle of screen
 
 			x = TListBG_X;
 			y = TListBG_Y;
@@ -612,10 +612,10 @@ class ScoreGUI : IGUIBack
 			idc = -1;
 			colorBackground[] = {0, 0, 0, 0.3};
 
-			#define BountyBG_W ((0.825 * X_SCALE) - (EXT_MARGIN_X / 2))
+			#define BountyBG_W ((0.825 * X_SCALE) - (Score_EXT_MARGIN_X / 2))
 			#define BountyBG_X (0.5 - (BountyBG_W / 2))
-			#define BountyBG_Y (TListBG_Y + TListBG_H + EXT_MARGIN_Y)
-			#define BountyBG_H ((SZ_BOTTOM - EXT_MARGIN_Y) - BountyBG_Y)
+			#define BountyBG_Y (TListBG_Y + TListBG_H + Score_EXT_MARGIN_Y)
+			#define BountyBG_H ((SZ_BOTTOM - Score_EXT_MARGIN_Y) - BountyBG_Y)
 
 			x = BountyBG_X;
 			y = BountyBG_Y;
@@ -658,8 +658,8 @@ class ScoreGUI : IGUIBack
 			idc = -1;
 
 			#define TListBG_W PListBG_W
-			#define TListBG_H ((PListBG_H / 2) - (EXT_MARGIN_X / 2))
-			#define TListBG_X (PListBG_X + EXT_MARGIN_X) // center right + margin
+			#define TListBG_H ((PListBG_H / 2) - (Score_EXT_MARGIN_X / 2))
+			#define TListBG_X (PListBG_X + Score_EXT_MARGIN_X) // center right + margin
 			#define TListBG_Y PListBG_Y // center top
 
 			x = TListBG_X;

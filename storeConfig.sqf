@@ -37,7 +37,7 @@ rifleArray = compileFinal str
 
 	// Assault Rifles
 	["Mk20 Carbine", "arifle_Mk20C_plain_F", 150],
-	["Mk20 Carbine (Camo)", "arifle_Mk20C_F", 175],
+	["Mk20 Carbine (Camo)", "arifle_Mk20C_F", 150],
 	["Mk20 Rifle", "arifle_Mk20_plain_F", 200],
 	["Mk20 Rifle (Camo)", "arifle_Mk20_F", 200],
 	["Mk20 EGLM Rifle", "arifle_Mk20_GL_plain_F", 250],
@@ -61,14 +61,14 @@ rifleArray = compileFinal str
 	// Markman Rifles
 	["MXM Rifle", "arifle_MXM_F", 300],
 	["MXM Rifle (Black)", "arifle_MXM_Black_F", 325],
-	["DMR Rifle", "srifle_DMR_01_F", 400],
+	["DMR Rifle", "srifle_DMR_01_F", 375],
 	["Mk18 ABR Rifle", "srifle_EBR_F", 450],
 
 	// Sniper Rifles
 	["M320 LRR Sniper", "srifle_LRR_SOS_F", 1000],
 	["M320 LRR Sniper (Camo)", "srifle_LRR_camo_SOS_F", 1150],
 	["GM6 Lynx Sniper", "srifle_GM6_SOS_F", 1100],
-	["GM6 Lynx Sniper (camo)", "srifle_GM6_camo_SOS_F", 1250]
+	["GM6 Lynx Sniper (Camo)", "srifle_GM6_camo_SOS_F", 1250]
 ];
 
 lmgArray = compileFinal str
@@ -107,18 +107,18 @@ staticGunsArray = compileFinal str
 	["Static Titan AA 4Rnd (NATO)", "B_static_AA_F", 3000],
 	["Static Titan AA 4Rnd (CSAT)", "O_static_AA_F", 3000],
 	["Static Titan AA 4Rnd (AAF)", "I_static_AA_F", 3000],
-	["Mk30 HMG .50 Low tripod (NATO)", "B_HMG_01_F", 2500],
-	["Mk30 HMG .50 Low tripod (CSAT)", "O_HMG_01_F", 2500],
-	["Mk30 HMG .50 Low tripod (AAF)", "I_HMG_01_F", 2500],
+	["Mk30 HMG .50 Low tripod (NATO)", "B_HMG_01_F", 2000],
+	["Mk30 HMG .50 Low tripod (CSAT)", "O_HMG_01_F", 2000],
+	["Mk30 HMG .50 Low tripod (AAF)", "I_HMG_01_F", 2000],
 	// ["Mk30A HMG .50 Sentry (NATO)", "B_HMG_01_A_F", 5000], // "A" = Autonomous = Overpowered
 	// ["Mk30A HMG .50 Sentry (CSAT)", "O_HMG_01_A_F", 5000],
 	// ["Mk30A HMG .50 Sentry (AAF)", "I_HMG_01_A_F", 5000],
 	["Mk30 HMG .50 High tripod (NATO)", "B_HMG_01_high_F", 3000],
 	["Mk30 HMG .50 High tripod (CSAT)", "O_HMG_01_high_F", 3000],
 	["Mk30 HMG .50 High tripod (AAF)", "I_HMG_01_high_F", 3000],
-	["Mk32 GMG 20mm Low tripod (NATO)", "B_GMG_01_F", 5500],
-	["Mk32 GMG 20mm Low tripod (CSAT)", "O_GMG_01_F", 5500],
-	["Mk32 GMG 20mm Low tripod (AAF)", "I_GMG_01_F", 5500],
+	["Mk32 GMG 20mm Low tripod (NATO)", "B_GMG_01_F", 5000],
+	["Mk32 GMG 20mm Low tripod (CSAT)", "O_GMG_01_F", 5000],
+	["Mk32 GMG 20mm Low tripod (AAF)", "I_GMG_01_F", 5000],
 	// ["Mk32A GMG 20mm Sentry (NATO)", "B_GMG_01_A_F", 10000],
 	// ["Mk32A GMG 20mm Sentry (CSAT)", "O_GMG_01_A_F", 10000],
 	// ["Mk32A GMG 20mm Sentry (AAF)", "I_GMG_01_A_F", 10000],
@@ -742,50 +742,119 @@ rgbOnlyVehicles = compileFinal str
 	// Deprecated
 ];
 
+_color = "#(rgb,1,1,1)color";
+_texDir = "client\images\vehicleTextures\";
+_kartDir = "\A3\soft_f_kart\Kart_01\Data\";
+_mh9Dir = "\A3\air_f\Heli_Light_01\Data\";
+_mohawkDir = "\A3\air_f_beta\Heli_Transport_02\Data\";
+_taruDir = "\A3\air_f_heli\Heli_Transport_04\Data\";
+
 colorsArray = compileFinal str
 [
 	[ // Main colors
 		"All",
 		[
-			["Black", "#(rgb,1,1,1)color(0.01,0.01,0.01,1)"], // #(argb,8,8,3)color(0.1,0.1,0.1,0.1)
-			["Grey", "#(rgb,1,1,1)color(0.15,0.151,0.152,1)"], // #(argb,8,8,3)color(0.5,0.51,0.512,0.3)
-			["White", "#(rgb,1,1,1)color(0.75,0.75,0.75,1)"], // #(argb,8,8,3)color(1,1,1,0.5)
-			["Dark Blue", "#(rgb,1,1,1)color(0,0.05,0.15,1)"], // #(argb,8,8,3)color(0,0.3,0.6,0.05)
-			["Blue", "#(rgb,1,1,1)color(0,0.03,0.5,1)"], // #(argb,8,8,3)color(0,0.2,1,0.75)
-			["Teal", "#(rgb,1,1,1)color(0,0.3,0.3,1)"], // #(argb,8,8,3)color(0,1,1,0.15)
-			["Green", "#(rgb,1,1,1)color(0,0.5,0,1)"], // #(argb,8,8,3)color(0,1,0,0.15)
-			["Yellow", "#(rgb,1,1,1)color(0.5,0.4,0,1)"], // #(argb,8,8,3)color(1,0.8,0,0.4)
-			["Orange", "#(rgb,1,1,1)color(0.4,0.09,0,1)"], // #(argb,8,8,3)color(1,0.5,0,0.4)
-			["Red", "#(rgb,1,1,1)color(0.45,0.005,0,1)"], // #(argb,8,8,3)color(1,0.1,0,0.3)
-			["Pink", "#(rgb,1,1,1)color(0.5,0.03,0.3,1)"], // #(argb,8,8,3)color(1,0.06,0.6,0.5)
-			["Purple", "#(rgb,1,1,1)color(0.1,0,0.3,1)"], // #(argb,8,8,3)color(0.8,0,1,0.1)
-			["NATO Tan", "client\images\vehicleTextures\nato.jpg"], // #(argb,8,8,3)color(0.584,0.565,0.515,0.3)
-			["CSAT Brown", "client\images\vehicleTextures\csat.jpg"], // #(argb,8,8,3)color(0.624,0.512,0.368,0.3)
-			["AAF Green", "client\images\vehicleTextures\aaf.jpg"], // #(argb,8,8,3)color(0.546,0.59,0.363,0.2)
-			["Trippy", "client\images\vehicleTextures\rainbow.jpg"],
-			["Carbon", "client\images\vehicleTextures\carbon.jpg"],
-			["Rusty", "client\images\vehicleTextures\rusty.jpg"],
-			["Denim", "client\images\vehicleTextures\denim.jpg"],
-			["Psych", "client\images\vehicleTextures\psych.jpg"],
-			["Leopard", "client\images\vehicleTextures\leopard.jpg"],
-			["'Murica", "client\images\vehicleTextures\murica.jpg"],
-			["Confederate", "client\images\vehicleTextures\confederate.jpg"],
-			["Yellow Camo", "client\images\vehicleTextures\camo_fuel.jpg"],
-			["Orange Camo", "client\images\vehicleTextures\camo_fack.jpg"],
-			["Red Camo", "client\images\vehicleTextures\camo_deser.jpg"],
-			["Pink Camo", "client\images\vehicleTextures\camo_pank.jpg"]
+			["Black", _color + "(0.01,0.01,0.01,1)"], // #(argb,8,8,3)color(0.1,0.1,0.1,0.1)
+			["Grey", _color + "(0.15,0.151,0.152,1)"], // #(argb,8,8,3)color(0.5,0.51,0.512,0.3)
+			["White", _color + "(0.75,0.75,0.75,1)"], // #(argb,8,8,3)color(1,1,1,0.5)
+			["Dark Blue", _color + "(0,0.05,0.15,1)"], // #(argb,8,8,3)color(0,0.3,0.6,0.05)
+			["Blue", _color + "(0,0.03,0.5,1)"], // #(argb,8,8,3)color(0,0.2,1,0.75)
+			["Teal", _color + "(0,0.3,0.3,1)"], // #(argb,8,8,3)color(0,1,1,0.15)
+			["Green", _color + "(0,0.5,0,1)"], // #(argb,8,8,3)color(0,1,0,0.15)
+			["Yellow", _color + "(0.5,0.4,0,1)"], // #(argb,8,8,3)color(1,0.8,0,0.4)
+			["Orange", _color + "(0.4,0.09,0,1)"], // #(argb,8,8,3)color(1,0.5,0,0.4)
+			["Red", _color + "(0.45,0.005,0,1)"], // #(argb,8,8,3)color(1,0.1,0,0.3)
+			["Pink", _color + "(0.5,0.03,0.3,1)"], // #(argb,8,8,3)color(1,0.06,0.6,0.5)
+			["Purple", _color + "(0.1,0,0.3,1)"], // #(argb,8,8,3)color(0.8,0,1,0.1)
+			["NATO Tan", _texDir + "nato.jpg"], // #(argb,8,8,3)color(0.584,0.565,0.515,0.3)
+			["CSAT Brown", _texDir + "csat.jpg"], // #(argb,8,8,3)color(0.624,0.512,0.368,0.3)
+			["AAF Green", _texDir + "aaf.jpg"], // #(argb,8,8,3)color(0.546,0.59,0.363,0.2)
+			["Trippy", _texDir + "rainbow.jpg"],
+			["Carbon", _texDir + "carbon.jpg"],
+			["Rusty", _texDir + "rusty.jpg"],
+			["Denim", _texDir + "denim.jpg"],
+			["Psych", _texDir + "psych.jpg"],
+			["Leopard", _texDir + "leopard.jpg"],
+			["'Murica", _texDir + "murica.jpg"],
+			["Confederate", _texDir + "confederate.jpg"],
+			["Union Jack", _texDir + "unionjack.jpg"],
+			["Yellow Camo", _texDir + "camo_fuel.jpg"],
+			["Orange Camo", _texDir + "camo_fack.jpg"],
+			["Red Camo", _texDir + "camo_deser.jpg"],
+			["Pink Camo", _texDir + "camo_pank.jpg"]
 		]
 	],
 	[ // Kart colors
 		"Kart_01_Base_F",
 		[
-			["Black", "\A3\Soft_F_Kart\Kart_01\Data\Kart_01_base_black_CO.paa"],
-			["White", "\A3\Soft_F_Kart\Kart_01\Data\Kart_01_base_white_CO.paa"],
-			["Blue", "\A3\Soft_F_Kart\Kart_01\Data\Kart_01_base_blue_CO.paa"],
-			["Green", "\A3\Soft_F_Kart\Kart_01\Data\Kart_01_base_green_CO.paa"],
-			["Yellow", "\A3\Soft_F_Kart\Kart_01\Data\Kart_01_base_yellow_CO.paa"],
-			["Orange", "\A3\Soft_F_Kart\Kart_01\Data\Kart_01_base_orange_CO.paa"],
-			["Red", "\A3\Soft_F_Kart\Kart_01\Data\Kart_01_base_red_CO.paa"]
+			["Black (Kart)", [[0, _kartDir + "kart_01_base_black_co.paa"]]],
+			["White (Kart)", [[0, _kartDir + "kart_01_base_white_co.paa"]]],
+			["Blue (Kart)", [[0, _kartDir + "kart_01_base_blue_co.paa"]]],
+			["Green (Kart)", [[0, _kartDir + "kart_01_base_green_co.paa"]]],
+			["Yellow (Kart)", [[0, _kartDir + "kart_01_base_yellow_co.paa"]]],
+			["Orange (Kart)", [[0, _kartDir + "kart_01_base_orange_co.paa"]]],
+			["Red (Kart)", [[0, _kartDir + "kart_01_base_red_co.paa"]]]
+		]
+	],
+	[ // MH-9 colors
+		"Heli_Light_01_base_F",
+		[
+			["AAF Camo (MH-9)", [[0, _mh9Dir + "heli_light_01_ext_indp_co.paa"]]],
+			["Blue 'n White (MH-9)", [[0, _mh9Dir + "heli_light_01_ext_blue_co.paa"]]],
+			["Blueline (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_blueline_co.paa"]]],
+			["Cream Gravy (MH-9)", [[0, _mh9Dir + "heli_light_01_ext_co.paa"]]],
+			["Digital (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_digital_co.paa"]]],
+			["Elliptical (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_elliptical_co.paa"]]],
+			["Furious (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_furious_co.paa"]]],
+			["Graywatcher (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_graywatcher_co.paa"]]],
+			["ION (MH-9)", [[0, _mh9Dir + "heli_light_01_ext_ion_co.paa"]]],
+			["Jeans (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_jeans_co.paa"]]],
+			["Light (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_light_co.paa"]]],
+			["Shadow (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_shadow_co.paa"]]],
+			["Sheriff (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_sheriff_co.paa"]]],
+			["Speedy (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_speedy_co.paa"]]],
+			["Sunset (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_sunset_co.paa"]]],
+			["Vrana (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_vrana_co.paa"]]],
+			["Wasp (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_wasp_co.paa"]]],
+			["Wave (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_wave_co.paa"]]]
+		]
+	],
+	[ // Mohawk colors
+		"Heli_Transport_02_base_F",
+		[
+			["Dahoman (Mohawk)", [
+				[0, _mohawkDir + "Skins\heli_transport_02_1_dahoman_co.paa"],
+				[1, _mohawkDir + "Skins\heli_transport_02_2_dahoman_co.paa"],
+				[2, _mohawkDir + "Skins\heli_transport_02_3_dahoman_co.paa"]
+			]],
+			["ION (Mohawk)", [
+				[0, _mohawkDir + "Skins\heli_transport_02_1_ion_co.paa"],
+				[1, _mohawkDir + "Skins\heli_transport_02_2_ion_co.paa"],
+				[2, _mohawkDir + "Skins\heli_transport_02_3_ion_co.paa"]
+			]]
+		]
+	],
+	[ // Taru base colors
+		"Heli_Transport_04_base_F",
+		[
+			["Black (Taru)", [
+				[0, _taruDir + "heli_transport_04_base_01_black_co.paa"],
+				[1, _taruDir + "heli_transport_04_base_02_black_co.paa"],
+				[2, _taruDir + "heli_transport_04_pod_ext01_black_co.paa"],
+				[3, _taruDir + "heli_transport_04_pod_ext02_black_co.paa"]
+			]]
+		]
+	],
+	[ // Taru bench colors
+		"O_Heli_Transport_04_bench_F",
+		[
+			["Black (Taru)", [[2, _taruDir + "heli_transport_04_bench_black_co.paa"]]]
+		]
+	],
+	[ // Taru fuel colors
+		"O_Heli_Transport_04_fuel_F",
+		[
+			["Black (Taru)", [[2, _taruDir + "heli_transport_04_fuel_black_co.paa"]]]
 		]
 	]
 ];

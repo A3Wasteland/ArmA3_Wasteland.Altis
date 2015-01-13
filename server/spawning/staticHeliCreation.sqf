@@ -24,15 +24,16 @@ _spawnPos = _this select 1;
 	if (count _finalPos == 0) then { _finalPos = _spawnPos };
 
 	_currHeli = createVehicle [_spawnType, _finalPos, [], 0, "None"];
-	[_currHeli] call vehicleSetup;
 
 	_currHeli setPosATL [_finalPos select 0, _finalPos select 1, (_finalPos select 2) + 0.1];
+	_currHeli setDir random 360;
 	_currHeli setVelocity [0,0,0.01];
+
+	[_currHeli] call vehicleSetup;
 
 	_currHeli setFuel (0.1 + random 0.2);
 	_currHeli setVehicleAmmo 0.5;
 	// _currHeli spawn cleanVehicleWreck;
-	_currHeli setDir (random 360);
 
 	_currHeli enableSimulationGlobal true;
 /*}

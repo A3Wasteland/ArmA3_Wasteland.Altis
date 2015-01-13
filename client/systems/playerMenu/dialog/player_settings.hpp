@@ -47,7 +47,7 @@ class playerSettings {
 		class waterIcon : w_RscPicture {
 			idc = -1;
 			text = "client\icons\water.paa";
-			x = 0.022; y = 0.21;
+			x = 0.022; y = 0.2;
 			w = 0.04 / (4/3); h = 0.04;
 		};
 

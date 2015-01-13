@@ -14,6 +14,6 @@ if (isNull findDisplay IDD_WARCHEST) then { createDialog "WarchestDialog" };
 		_escMenu = findDisplay 49;
 		if (!isNull _escMenu) then { _escMenu closeDisplay 0 }; // Force close Esc menu if open
 		call mf_items_warchest_refresh;
-		sleep 0.1;
+		uiSleep 0.1;
 	};
 };
