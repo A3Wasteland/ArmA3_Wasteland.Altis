@@ -745,6 +745,9 @@ rgbOnlyVehicles = compileFinal str
 _color = "#(rgb,1,1,1)color";
 _texDir = "client\images\vehicleTextures\";
 _kartDir = "\A3\soft_f_kart\Kart_01\Data\";
+_mh9Dir = "\A3\air_f\Heli_Light_01\Data\";
+_mohawkDir = "\A3\air_f_beta\Heli_Transport_02\Data\";
+_taruDir = "\A3\air_f_heli\Heli_Transport_04\Data\";
 
 colorsArray = compileFinal str
 [
@@ -774,6 +777,7 @@ colorsArray = compileFinal str
 			["Leopard", _texDir + "leopard.jpg"],
 			["'Murica", _texDir + "murica.jpg"],
 			["Confederate", _texDir + "confederate.jpg"],
+			["Union Jack", _texDir + "unionjack.jpg"],
 			["Yellow Camo", _texDir + "camo_fuel.jpg"],
 			["Orange Camo", _texDir + "camo_fack.jpg"],
 			["Red Camo", _texDir + "camo_deser.jpg"],
@@ -790,6 +794,67 @@ colorsArray = compileFinal str
 			["Yellow (Kart)", [[0, _kartDir + "kart_01_base_yellow_co.paa"]]],
 			["Orange (Kart)", [[0, _kartDir + "kart_01_base_orange_co.paa"]]],
 			["Red (Kart)", [[0, _kartDir + "kart_01_base_red_co.paa"]]]
+		]
+	],
+	[ // MH-9 colors
+		"Heli_Light_01_base_F",
+		[
+			["AAF Camo (MH-9)", [[0, _mh9Dir + "heli_light_01_ext_indp_co.paa"]]],
+			["Blue 'n White (MH-9)", [[0, _mh9Dir + "heli_light_01_ext_blue_co.paa"]]],
+			["Blueline (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_blueline_co.paa"]]],
+			["Cream Gravy (MH-9)", [[0, _mh9Dir + "heli_light_01_ext_co.paa"]]],
+			["Digital (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_digital_co.paa"]]],
+			["Elliptical (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_elliptical_co.paa"]]],
+			["Furious (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_furious_co.paa"]]],
+			["Graywatcher (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_graywatcher_co.paa"]]],
+			["ION (MH-9)", [[0, _mh9Dir + "heli_light_01_ext_ion_co.paa"]]],
+			["Jeans (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_jeans_co.paa"]]],
+			["Light (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_light_co.paa"]]],
+			["Shadow (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_shadow_co.paa"]]],
+			["Sheriff (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_sheriff_co.paa"]]],
+			["Speedy (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_speedy_co.paa"]]],
+			["Sunset (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_sunset_co.paa"]]],
+			["Vrana (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_vrana_co.paa"]]],
+			["Wasp (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_wasp_co.paa"]]],
+			["Wave (MH-9)", [[0, _mh9Dir + "Skins\heli_light_01_ext_wave_co.paa"]]]
+		]
+	],
+	[ // Mohawk colors
+		"Heli_Transport_02_base_F",
+		[
+			["Dahoman (Mohawk)", [
+				[0, _mohawkDir + "Skins\heli_transport_02_1_dahoman_co.paa"],
+				[1, _mohawkDir + "Skins\heli_transport_02_2_dahoman_co.paa"],
+				[2, _mohawkDir + "Skins\heli_transport_02_3_dahoman_co.paa"]
+			]],
+			["ION (Mohawk)", [
+				[0, _mohawkDir + "Skins\heli_transport_02_1_ion_co.paa"],
+				[1, _mohawkDir + "Skins\heli_transport_02_2_ion_co.paa"],
+				[2, _mohawkDir + "Skins\heli_transport_02_3_ion_co.paa"]
+			]]
+		]
+	],
+	[ // Taru base colors
+		"Heli_Transport_04_base_F",
+		[
+			["Black (Taru)", [
+				[0, _taruDir + "heli_transport_04_base_01_black_co.paa"],
+				[1, _taruDir + "heli_transport_04_base_02_black_co.paa"],
+				[2, _taruDir + "heli_transport_04_pod_ext01_black_co.paa"],
+				[3, _taruDir + "heli_transport_04_pod_ext02_black_co.paa"]
+			]]
+		]
+	],
+	[ // Taru bench colors
+		"O_Heli_Transport_04_bench_F",
+		[
+			["Black (Taru)", [[2, _taruDir + "heli_transport_04_bench_black_co.paa"]]]
+		]
+	],
+	[ // Taru fuel colors
+		"O_Heli_Transport_04_fuel_F",
+		[
+			["Black (Taru)", [[2, _taruDir + "heli_transport_04_fuel_black_co.paa"]]]
 		]
 	]
 ];
