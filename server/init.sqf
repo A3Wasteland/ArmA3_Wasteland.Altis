@@ -321,6 +321,11 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 	{
 		call compile preprocessFileLineNumbers "server\functions\boxSpawning.sqf";
 	};
+
+	if (["A3W_vehicleSpawning"] call isConfigOn || ["A3W_boatSpawning"] call isConfigOn) then
+	{
+		execVM "server\spawning\vehicleRespawnManager.sqf";
+	};
 };
 
 A3W_serverSpawningComplete = compileFinal "true";
