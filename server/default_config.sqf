@@ -35,7 +35,7 @@ A3W_atmEnabled = 1;
 A3W_atmMaxBalance = 1000000;       // Maximum amount of money that can be stored in a bank account (recommended: 1 million)
 A3W_atmTransferFee = 5;            // Fee in percent charged to players for money transfers to other players (0 to 50)
 A3W_atmTransferAllTeams = 0;       // Allow money transfers between players of all teams/sides (0 = same team only, 1 = all teams)
-A3W_atmEditorPlacedOnly = 0;       // Only allow access via ATMs placed from the mission editor (0 = all ATMs from towns & editor allowed, 1 = ATMs from editor only)
+A3W_atmEditorPlacedOnly = 0;       // Only allow access via ATMs placed from the mission editor (0 = all ATMs from towns & editor allowed, 1 = ATMs from editor only) Note: Stratis has no town ATMs, only editor ones.
 
 // Persistence settings
 A3W_savingMethod = "profile";      // Method used for saving data ("profile", "iniDB", "extDB")

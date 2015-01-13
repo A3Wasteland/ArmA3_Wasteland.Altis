@@ -41,7 +41,7 @@ if (_saveLocation && {isTouchingGround vehicle _player || {(getPos _player) sele
 
 	if (vehicle _player == player) then
 	{
-		_data pushBack ["CurrentWeapon", format ["%1", currentMuzzle player]]; // currentMuzzle returns a number sometimes, hence the format
+		_data pushBack ["CurrentWeapon", currentWeapon player];
 		_data pushBack ["Stance", [player, ["P"]] call getMoveParams];
 	};
 };
