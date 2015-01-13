@@ -27,6 +27,12 @@ if !(_vehicle isKindOf "UAV_02_base_F") then
 	_vehicle disableTIEquipment true;
 };
 
+{
+	_vehicle setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x, true];
+} forEach (_class call getHitPoints);
+
+_vehicle setVariable ["A3W_hitPointSelections", true, true];
+
 _vehicle setVariable ["A3W_handleDamageEH", _vehicle addEventHandler ["HandleDamage", vehicleHandleDamage]];
 _vehicle setVariable ["A3W_dammagedEH", _vehicle addEventHandler ["Dammaged", vehicleDammagedEvent]];
 _vehicle setVariable ["A3W_engineEH", _vehicle addEventHandler ["Engine", vehicleEngineEvent]];
@@ -47,7 +53,16 @@ _vehicle addEventHandler ["GetIn", _getInOut];
 _vehicle addEventHandler ["GetOut", _getInOut];
 
 // Wreck cleanup
-_vehicle addEventHandler ["Killed", { (_this select 0) setVariable ["processedDeath", diag_tickTime] }];
+_vehicle addEventHandler ["Killed",
+{
+	_veh = _this select 0;
+	_veh setVariable ["processedDeath", diag_tickTime];
+
+	if (!isNil "fn_manualVehicleDelete") then
+	{
+		[objNull, _veh getVariable "A3W_vehicleID"] call fn_manualVehicleDelete;
+	};
+}];
 
 // Vehicle customization
 switch (true) do

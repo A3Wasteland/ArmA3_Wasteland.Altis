@@ -56,6 +56,9 @@ player addEventHandler ["Killed", { _this spawn onKilled }];
 
 A3W_scriptThreads pushBack execVM "client\functions\evalManagedActions.sqf";
 
+pvar_playerRespawn = player;
+publicVariableServer "pvar_playerRespawn";
+
 //Player setup
 player call playerSetupStart;
 
@@ -63,23 +66,25 @@ player call playerSetupStart;
 _baseMoney = ["A3W_startingMoney", 100] call getPublicVar;
 player setVariable ["cmoney", _baseMoney, true];
 
-// Player saving - Load from iniDB
+// Player saving - load data
 if (["A3W_playerSaving"] call isConfigOn) then
 {
-	call compile preprocessFileLineNumbers "persistence\players\c_setupPlayerDB.sqf";
+	call compile preprocessFileLineNumbers "persistence\client\players\setupPlayerDB.sqf";
 	call fn_requestPlayerData;
 
 	waitUntil {!isNil "playerData_loaded"};
 
-	[] spawn
+	A3W_scriptThreads pushBack ([] spawn
 	{
+		scriptName "savePlayerLoop";
+
 		// Save player every 60s
 		while {true} do
 		{
 			sleep 60;
 			call fn_savePlayerData;
 		};
-	};
+	});
 };
 
 if (isNil "playerData_alive") then
@@ -89,7 +94,7 @@ if (isNil "playerData_alive") then
 
 player call playerSetupEnd;
 
-diag_log format ["Player starting with $%1", player getVariable ["cmoney", 0]];
+diag_log format ["Player starting with $%1", (player getVariable ["cmoney", 0]) call fn_numToStr];
 
 [] execVM "territory\client\hideDisabledTerritories.sqf";
 
@@ -128,10 +133,8 @@ A3W_scriptThreads pushBack execVM "addons\Lootspawner\LSclientScan.sqf";
 [] execVM "client\functions\drawPlayerIcons.sqf";
 [] execVM "addons\far_revive\FAR_revive_init.sqf";
 
-if (["A3W_teamPlayersMap"] call isConfigOn) then
-{
-	[] execVM "client\functions\drawPlayerMarkers.sqf";
-};
+call compile preprocessFileLineNumbers "client\functions\generateAtmArray.sqf";
+[] execVM "client\functions\drawPlayerMarkers.sqf";
 
 // update player's spawn beaoon
 {

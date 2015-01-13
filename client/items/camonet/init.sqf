@@ -12,8 +12,8 @@ _path = _this;
 
 MF_ITEMS_CAMO_NET = "camonet";
 MF_ITEMS_CAMO_NET_TYPE = "CamoNet_INDP_open_F";
-_ground_type = "CamoNet_INDP_open_F";
-_icon = "client\icons\take.paa";
+_ground_type = "Land_Ground_sheet_folded_OPFOR_F";
+_icon = "client\icons\camonet.paa";
 
 _pack = [_path, "pack.sqf"] call mf_compile;
 _unpack = [_path, "unpack.sqf"] call mf_compile;

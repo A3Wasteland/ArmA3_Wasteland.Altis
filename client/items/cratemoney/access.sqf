@@ -18,8 +18,8 @@ if (isNull findDisplay IDD_WARCHEST) then
 	_menuTitle = _dialog displayCtrl IDC_MENUTITLE;
 	_menuTitle ctrlSetText "Money Stash";
 
-	_fundsTitle = _dialog displayCtrl IDC_FUNDSTITLE;
-	_fundsTitle ctrlSetText "Funds:";
+	//_fundsTitle = _dialog displayCtrl IDC_FUNDSTITLE;
+	//_fundsTitle ctrlSetText "Funds:";
 
 	_withdraw = _dialog displayCtrl IDC_WITHDRAWBUTTON;
 	_withdraw buttonSetAction "call mf_items_cratemoney_withdraw";
@@ -28,8 +28,6 @@ if (isNull findDisplay IDD_WARCHEST) then
 	_deposit buttonSetAction "call mf_items_cratemoney_deposit";
 };
 
-call mf_items_cratemoney_refresh;
-
 [] spawn
 {
 	disableSerialization;
@@ -37,7 +35,8 @@ call mf_items_cratemoney_refresh;
 	while {!isNull _dialog} do
 	{
 		_escMenu = findDisplay 49;
-		if (!isNull _escMenu) exitWith { _escMenu closeDisplay 0 }; // Force close Esc menu if open
-		sleep 0.1;
+		if (!isNull _escMenu) then { _escMenu closeDisplay 0 }; // Force close Esc menu if open
+		call mf_items_cratemoney_refresh;
+		uiSleep 0.1;
 	};
 };

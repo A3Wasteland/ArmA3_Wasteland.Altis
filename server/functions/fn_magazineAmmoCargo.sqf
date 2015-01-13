@@ -7,7 +7,7 @@
 private ["_container", "_mags", "_mag", "_ammo", "_added", "_ammoArr"];
 _container = _this;
 
-if (isNull _container) exitWith {};
+if (isNull _container) exitWith {[]};
 
 _mags = [];
 

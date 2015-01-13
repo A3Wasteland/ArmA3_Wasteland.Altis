@@ -12,6 +12,8 @@ private ["_cheatFlag", "_cfgPatches", "_patchClass", "_ctrlCfg", "_minRecoil", "
 
 waitUntil {!isNull player};
 
+if (!hasInterface && typeOf player == "HeadlessClient_F") exitWith {};
+
 // diag_log "ANTI-HACK starting...";
 
 _cfgPatches = configFile >> "CfgPatches";
@@ -82,7 +84,7 @@ if (isNil "_cheatFlag") then
 				[166, "RscDisplayPublishMissionSelectTags (Gladtwoown)"],
 				[167, "RscDisplayFileSelect (Lystic)"],
 				[2727, "RscDisplayLocWeaponInfo"],
-				[3030, "RscConfigEditor_Main (ShadowyFaze/Wookie/Lystic)"]
+				[3030, "RscConfigEditor_Main (ShadowyFaze)"]
 			];
 
 			_isAdmin = serverCommandAvailable "#kick";
@@ -206,7 +208,7 @@ while { true } do
 				_cheatFlag = ["hack variable", _x];
 			};
 			sleep 0.01;
-		} forEach ["fzhgdhhbzfhzfghz", "dgbfzhg5ey456w6s", "asdsgxfvzv5345", "dadsasdsada", "aw235resfzdfcs", "d3245resfrsd", "DurkSintax_Pro_RE", "iBeFlying", "feastge4rt636te5", "sfsdfsdf4333", "dayz_godmode", "Hack_Pos_Orig", "sdgff4535hfgvcxghn", "REdasfsfwef", "FUNMENUON", "JJMMEE_INIT_MENU", "dfhfgkjjhkhjkdgfg", "activeITEMlistanzahl", "Detected_Remote_Execution", "g0dmode", "adadadad23444", "poiuytfczsvtg", "Pro_RE", "xyzaa", "HaxSmokeOn", "Lysto_Lyst", "pathtoscrdir", "ewrfdfcsf", "Ug8YtyGyvguGF", "sr3453sdfsfe33", "rgyehgdrfhg", "d121435rdsczcawddawdsf", "qofjqpofq", "fsfw34r534fsedsf", "adawredzfdsf", "c0lorthem", "srgte54y6rdgtrg", "shnmenu", "letmeknow", "DAYZ_CA1_Lollipops", "TONIC_HAS_A_GAPER_NUKE_2", "oighijkfcjloypysh", "fazelist", "faze_fill", "PL4YER_CANN0N_T0GGLE", "dfgrgdrfgretg345t345", "aKTitans", "LY_Exec", "inf_ammo_loop_infiSTAR", "Wookie_Pro_RE", "awrdw4355345sfs", "Wookie_Init_Menu", "asdr432r5edfsad", "fsfgdggdzgfd", "fdsgdr42424ZombieColor", "TTT5OptionNR", "adasdawer4w3r", "hthxhzhgcbcxvb", "sdfwesrfwesf233", "dsagfgbdfhgsd", "htrukilojhkukvh", "d4t365tearfsafgrg", "ddsfsdfv", "faze_funcs_inited", "godlol", "fetg5e4ytdrg", "Lystic_Init", "FAG_NEON", "Lystic_Exec", "faze_getControl", "vehicleg0dv3_BushWookie", "dsfsgfsfsdfsdf", "yer652374rfd", "t0ggl3", "d45y6w45ytrdfragsrega", "morphm3", "sgdfgzgdzfrgfdg", "q25t3qttsdfaf", "fsdddInfectLOL", "lkjhgfuyhgfd", "cargod", "abcdefGEH", "Wep_Spawn_Shitt", "faze_hax_dbclick", "LY_Init", "fzgrfg4536tq3tds", "dawerdsczcdsf", "gdzhzthtdhxthh6757", "W00kie_Pro_RE", "fdsgdr42424", "battleHIGH_vehpub", "WHY_ARE_THERE_SO_MANY_FISH_IN_THE_BIG_BLUE_OCEAN", "sdsf45t3rsgfd", "hdtrhyztyh", "MenuInitLol", "few3t5364etsfg", "adadgvdthw54y64", "sfsefse", "eeeeeeewwwwwwwww", "wierdo", "efr4243234", "faze_initMenu", "fuckfestv2", "adawedr3q4r3w2qr4", "xZombieBait", "eyghrdfyh", "W00kie_Init_Menu", "awdet3465taddd", "rainbow_var", "iluio9pilkgvuk", "POOP_Main", "awer234rrsdfcsd", "W_O_O_K_I_E_Pro_RE", "toggle_keyEH", "JME_M_E_N_U_initMenu", "dawr5wdfsf23", "sgstgr4stwe4t", "gffffffffffffffh", "LOKI_GUI_Key_Color", "rdgfdzgzrfgr", "gzgdghragfzdgvdz", "MPGHALLDAYEVRYDAY47LETSDOTHISBBYYAAAAAAA", "sdfxdcfs3", "infi_STAR_exec", "xtags_star_xx", "ChangingBullets_xx", "ljkluilufgdsgzgzdrf324", "hgjghjfrdfeewrferrt43", "byebyezombies", "Root_Main4", "adr4w5trsdef", "wadgrfgzrd", "igodokxtt", "unlimammo", "tw4etinitMenu", "plrshldblckls", "dasd324r245rdsfs", "Jme_Is_God", "Monky_funcs_inited", "fuckmegrandma", "qopfkqpofqk", "da124q3easds", "awdadr3q42", "awde3q4erasd", "ShadowyFaz3VehZ", "Veh_Spawn_Shitt", "wuat_fpsMonitor", "sfg4w3t5esfsdf", "asdw435r325efdsd", "Monky_hax_toggled", "asd34r253453453", "mehatingjews", "da342szvcxzcvx", "W_0_0_K_I_E_Pro_RE", "InfiniteAmmo", "debug_star_colorful", "neo_fnc_throw", "fryt5tytfshyfkj", "sfewsrw", "W00kieMenu_hax_toggled", "AntiAntiAntiAntiHax", "thuytshujsr65uy", "adawdawe21", "ad44234efdzsf", "ffafsafafsfsgol", "shth654436tj", "gyjjgcjcj", "aim", "GodLolPenis", "vehiclegooov3ood_BushWookie", "htjhytu6waqe3q45", "y6sretysrt", "ANTI_ANTI_HAX", "antiantiantiantih4x", "riasgremory_G0d_Mode", "monkytp", "hax_toggled", "JJJJ_MMMM___EEEEEEE_INIT_MENU", "yiukfligzsgargfrae", "B0X_CANN0N_T0GGLE", "omgwtfbbq", "asdddddddddddad", "bowonky", "ExtasyMenu_Binds", "dontAddToTheArray", "adddaaaaaaaaa", "fesf4535teaf", "rainbowbitch", "ads2542345esfds", "n0clip", "saddaaaaaaaadd23", "GLASS911_Init", "fefq34tqtrafg", "f313131FukDaPolice1324e", "fuckfest", "BigFuckinBullets", "lmzsjgnas"];
+		} forEach ["DurkSintax_Pro_RE", "iBeFlying", "dayz_godmode", "Main_Fury_Menu_", "Hack_Pos_Orig", "REdasfsfwef", "XXMMWW_keybinds", "FUNMENUON", "JJMMEE_INIT_MENU", "activeITEMlistanzahl", "Detected_Remote_Execution", "g0dmode", "Pro_RE", "xyzaa", "GOLDENS_GLOBAL_SHIT_YEAH", "HaxSmokeOn", "Lysto_Lyst", "pathtoscrdir", "ewrfdfcsf", "Ug8YtyGyvguGF", "LYSTIC_MENU_LOADED", "qofjqpofq", "c0lorthem", "shnmenu", "letmeknow", "DAYZ_CA1_Lollipops", "TONIC_HAS_A_GAPER_NUKE_2", "fazelist", "faze_fill", "PL4YER_CANN0N_T0GGLE", "aKTitans", "Fury_Are_G0ds", "LY_Exec", "inf_ammo_loop_infiSTAR", "Wookie_Pro_RE", "nook3_vars", "Wookie_Init_Menu", "TTT5OptionNR", "Team_Fury_Reck_Prebs", "faze_funcs_inited", "biggies_pro_re", "godlol", "Lystic_Init", "FAG_NEON", "Lystic_Exec", "faze_getControl", "vehicleg0dv3_BushWookie", "t0ggl3", "morphm3", "fsdddInfectLOL", "cargod", "abcdefGEH", "Wep_Spawn_Shitt", "Fury_Nuke", "faze_hax_dbclick", "LY_Init", "W00kie_Pro_RE", "fdsgdr42424", "battleHIGH_vehpub", "WHY_ARE_THERE_SO_MANY_FISH_IN_THE_BIG_BLUE_OCEAN", "MenuInitLol", "wierdo", "mdh_ash", "faze_initMenu", "fuckfestv2", "xZombieBait", "W00kie_Init_Menu", "rainbow_var", "biggies_menu_open", "HAAJASDOKAD_mein", "CharlieSheenkeybinds", "POOP_Main", "colt_lmaoooo", "W_O_O_K_I_E_Pro_RE", "toggle_keyEH", "JME_M_E_N_U_initMenu", "dawr5wdfsf23", "LOKI_GUI_Key_Color", "MPGHALLDAYEVRYDAY47LETSDOTHISBBYYAAAAAAA", "infi_STAR_exec", "M_R_IRecommend", "xtags_star_xx", "ChangingBullets_xx", "byebyezombies", "Root_Main4", "igodokxtt", "unlimammo", "tw4etinitMenu", "oh_nmoe_pls", "plrshldblckls", "Jme_Is_God", "Monky_funcs_inited", "fuckmegrandma", "qopfkqpofqk", "ShadowyFaz3VehZ", "Veh_Spawn_Shitt", "wuat_fpsMonitor", "Monky_hax_toggled", "mehatingjews", "W_0_0_K_I_E_Pro_RE", "InfiniteAmmo", "PersonWhomMadeThisCorroded_Init", "nuke_vars", "debug_star_colorful", "neo_fnc_throw", "W00kieMenu_hax_toggled", "AntiAntiAntiAntiHax", "XMVJEIUI133794_mein", "aim", "GodLolPenis", "vehiclegooov3ood_BushWookie", "biggies_scroll_open", "ANTI_ANTI_HAX", "antiantiantiantih4x", "riasgremory_G0d_Mode", "BigFuckinBullets_0202020DDDEEDED", "monkytp", "hax_toggled", "JJJJ_MMMM___EEEEEEE_INIT_MENU", "B0X_CANN0N_T0GGLE", "omgwtfbbq", "bowonky", "ExtasyMenu_Binds", "PRO_SKILLZ_2015_ALLDAY_Noobs", "dontAddToTheArray", "rainbowbitch", "n0clip", "GLASS911_Init", "fuckfest", "BigFuckinBullets", "lmzsjgnas"];
 	};
 
 	if (isNil "_cheatFlag" && _loopCount >= 24) then
@@ -258,7 +260,7 @@ while { true } do
 		// diag_log "ANTI-HACK: Recoil hack check started!";
 
 		_currentRecoil = unitRecoilCoefficient player;
-		_minRecoil = (["A3W_antiHackMinRecoil", 1.0] call getPublicVar) - 0.001;
+		_minRecoil = ((["A3W_antiHackMinRecoil", 1.0] call getPublicVar) max 0.02) - 0.001;
 
 		if (_currentRecoil < _minRecoil && _currentRecoil != -1) then
 		{

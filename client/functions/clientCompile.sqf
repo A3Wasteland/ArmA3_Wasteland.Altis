@@ -20,6 +20,7 @@ onKeyRelease = "client\clientEvents\onKeyRelease.sqf" call mf_compile;
 A3W_fnc_copilotTakeControl = "client\functions\copilotTakeControl.sqf" call mf_compile;
 A3W_fnc_titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
 addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
+canForceSaveVehicle = "client\functions\canForceSaveVehicle.sqf" call mf_compile;
 canPushPlaneBack = "client\functions\canPushPlaneBack.sqf" call mf_compile;
 canPushVehicleOnFoot = "client\functions\canPushVehicleOnFoot.sqf" call mf_compile;
 canPushWatercraft = "client\functions\canPushWatercraft.sqf" call mf_compile;
@@ -32,6 +33,8 @@ fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
 fn_formatTimer = "client\functions\fn_formatTimer.sqf" call mf_compile;
 fn_removeAllManagedActions = "client\functions\fn_removeAllManagedActions.sqf" call mf_compile;
 fn_removeManagedAction = "client\functions\fn_removeManagedAction.sqf" call mf_compile;
+fn_forceOpenParachute = "client\functions\fn_forceOpenParachute.sqf" call mf_compile;
+fn_openParachute = "client\functions\fn_openParachute.sqf" call mf_compile;
 getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;
 getFullMove = "client\functions\getFullMove.sqf" call mf_compile;
 getMoveParams = "client\functions\getMoveParams.sqf" call mf_compile;
@@ -48,6 +51,7 @@ uniformConverter = "client\functions\uniformConverter.sqf" call mf_compile;
 unitHandleDamage = "client\functions\unitHandleDamage.sqf" call mf_compile;
 updateTerritoryMarkers = "territory\client\updateTerritoryMarkers.sqf" call mf_compile;
 vehicleSideCfg = "client\functions\vehicleSideCfg.sqf" call mf_compile;
+weaponDisassembledEvent = "client\functions\weaponDisassembledEvent.sqf" call mf_compile;
 
 // Player details and actions
 loadPlayerMenu = "client\systems\playerMenu\init.sqf" call mf_compile;

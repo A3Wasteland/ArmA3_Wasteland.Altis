@@ -1,12 +1,12 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright Â© 2014 A3Wasteland.com *
 // ******************************************************************************************
 //	@file Name: manageUnit.sqf
 //	@file Author: AgentRev
 
 #define UNIT_POS_ATL [-999999,-999999,1]
 
-private ["_unit", "_params", "_assignPacketKey", "_assignChecksum"];
+private ["_unit", "_params"];
 
 _unit = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _params = [_this, 1, [], [[]]] call BIS_fnc_param;

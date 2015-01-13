@@ -99,7 +99,7 @@ class gunshopd
 			idc = gunshop_gun_list;
 			onLBSelChanged = "[] execVM 'client\systems\gunStore\weaponInfo.sqf'";
 			sizeEx = 0.04 * TEXT_SCALE;
-			rowHeight = 0.04 * TEXT_SCALE;
+			rowHeight = 0.05 * TEXT_SCALE;
 
 			x = GunStoreMainBG_X + (0.1533 * SZ_SCALE);
 			y = GunStoreMainBG_Y + (0.075 * SZ_SCALE);
@@ -124,7 +124,7 @@ class gunshopd
 			idc = gunshop_ammo_list;
 			onLBSelChanged = "[] execVM 'client\systems\gunStore\ammoInfo.sqf'";
 			sizeEx = 0.04 * TEXT_SCALE;
-			rowHeight = 0.04 * TEXT_SCALE;
+			rowHeight = 0.05 * TEXT_SCALE;
 
 			x = GunStoreMainBG_X + (0.4433 * SZ_SCALE);
 			y = GunStoreMainBG_Y + (0.075 * SZ_SCALE);

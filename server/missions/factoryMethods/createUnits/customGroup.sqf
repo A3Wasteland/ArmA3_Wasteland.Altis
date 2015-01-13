@@ -81,6 +81,9 @@ for "_i" from 1 to _nbUnits do
 		};
 	};
 
+	_unit addPrimaryWeaponItem "acc_flashlight";
+	_unit enablegunlights "forceOn";
+
 	_unit addRating 1e11;
 	_unit spawn addMilCap;
 	_unit spawn refillPrimaryAmmo;

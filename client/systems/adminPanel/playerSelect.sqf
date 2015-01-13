@@ -94,14 +94,8 @@ if (_uid call isAdmin) then
 		};
 		case 4: //Unlock Team Killer
 		{
-			_targetUID = getPlayerUID _target;
-			{
-				if(_x select 0 == _targetUID) then
-				{
-					pvar_teamKillList = [pvar_teamKillList, _forEachIndex] call BIS_fnc_removeIndex;
-					publicVariable "pvar_teamKillList";
-				};
-			}forEach pvar_teamKillList;
+			pvar_teamKillUnlock = getPlayerUID _target;
+			publicVariableServer "pvar_teamKillUnlock";
 		};
 		case 5: //Remove All Money
 		{

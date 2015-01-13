@@ -9,3 +9,5 @@
 _group = group player;
 [_group getVariable ["currentTerritories", []], false, _group, false] call updateTerritoryMarkers;
 [player] join grpNull;
+player setVariable ["currentGroupRestore", grpNull, true];
+player setVariable ["currentGroupIsLeader", false, true];

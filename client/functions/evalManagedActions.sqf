@@ -6,43 +6,52 @@
 
 if (!hasInterface) exitWith {};
 
+#define MAIN_LOOP_INTERVAL 0.333
+#define START_LOOP_QTY_PER_FRAME 2
+#define MAX_LOOP_QTY_PER_FRAME 10
+
 scriptName "evalManagedActions";
 waitUntil {!isNull player};
 
 managedActions_array = [];
 managedActions_arrayCleanup = false;
 managedActions_arrayEval = false;
+managedActions_doCleanup = false;
+
+_loopQty = START_LOOP_QTY_PER_FRAME;
+_oldCount = 0;
+_totalTime = 0;
 
 while {true} do
 {
-	// Only evaluate conditions if no menus or dialogs are open
-	_doEval = (!visibleMap && isNull findDisplay 49 && !dialog && alive player);
+	_startTime = diag_tickTime;
 
-	_cleanup = false;
-	_evalSleepTime = 0.333;
+	// Only evaluate conditions if no menus or dialogs are open
+	managedActions_doEval = (!visibleMap && isNull findDisplay 49 && !dialog && alive player);
+	managedActions_doCleanup = false;
+
 	_actionsCount = count managedActions_array;
 
 	if (_actionsCount > 0) then
 	{
 		managedActions_arrayEval = true;
 
-		_evalSleepTime = (_evalSleepTime / _actionsCount) max 0.005;
-
-		{
-			if !(_x isEqualTo -1) then
+		_loopQty = 
+		[{
+			if !(_this isEqualTo -1) then
 			{
-				_target = _x select 0;
+				_target = _this select 0;
 
 				if (isNull _target) then
 				{
-					_cleanup = true;
+					managedActions_doCleanup = true;
 				}
 				else
 				{
-					if (_doEval) then
+					if (managedActions_doEval) then
 					{
-						_pvar = _x select 2;
-						_cond = _x select 3;
+						_pvar = _this select 2;
+						_cond = _this select 3;
 
 						if (!isNil _pvar) then
 						{
@@ -51,18 +60,14 @@ while {true} do
 					};
 				};
 			};
-
-			uiSleep _evalSleepTime;
-		} forEach managedActions_array;
+		}, managedActions_array, MAIN_LOOP_INTERVAL, _oldCount, _totalTime, _loopQty, false, MAX_LOOP_QTY_PER_FRAME] call fn_loopSpread;
 
 		managedActions_arrayEval = false;
-	}
-	else
-	{
-		sleep 1;
 	};
 
-	if (_cleanup) then
+	_oldCount = _actionsCount;
+
+	if (managedActions_doCleanup) then
 	{
 		[] spawn
 		{
@@ -88,5 +93,6 @@ while {true} do
 		};
 	};
 
-	//uiSleep 0.15;
+	_totalTime = diag_tickTime - _startTime;
+	uiSleep (MAIN_LOOP_INTERVAL - _totalTime);
 };

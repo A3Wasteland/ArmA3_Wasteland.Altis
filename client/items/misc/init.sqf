@@ -32,13 +32,6 @@ mf_repair_nearest_vehicle = {
 	["LandVehicle", "Air", "Ship"] call mf_nearest_vehicle
 } call mf_compile;
 
-mf_remote_repair = {
-	private "_vehicle";
-	_vehicle = objectFromNetId (_this select 0);
-	_vehicle setDamage 0;
-	if (_vehicle isKindOf "Boat_Armed_01_base_F" && count (_vehicle magazinesTurret [0]) == 0) then { _vehicle setHitPointDamage ["HitTurret", 1] }; // disable front GMG on speedboats
-} call mf_compile;
-
 // Setting up repairing action.
 mf_repair_can_repair = [_path, "can_repair.sqf"] call mf_compile;
 private ["_label1", "_execute1", "_condition1", "_action1"];
@@ -47,3 +40,5 @@ _execute1 = {MF_ITEMS_REPAIR_KIT call mf_inventory_use};
 _condition1 = "[] call mf_repair_can_repair == ''";
 _action1 = [_label1, _execute1, [], 1, false, false, "", _condition1];
 ["repairkit-use", _action1] call mf_player_actions_set;
+
+mf_verify_money_input = [_path, "verify_money_input.sqf"] call mf_compile;

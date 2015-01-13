@@ -12,21 +12,30 @@ _unit = _this select 0;
 _class = _this select 1;
 _qty = if (count _this > 2) then { _this select 2 } else { 1 };
 
-_container = switch (true) do
+switch (true) do
 {
-	case ([_unit, _class, "uniform"] call fn_fitsInventory):  { uniformContainer _unit };
-	case ([_unit, _class, "vest"] call fn_fitsInventory):     { vestContainer _unit };
-	default                                                   { backpackContainer _unit };
-};
+	case (_unit canAddItemToUniform _class):   { _unit addItemToUniform _class };
+	case (_unit canAddItemToVest _class):      { _unit addItemToVest _class };
+	case (_unit canAddItemToBackpack _class):  { _unit addItemToBackpack _class };
+	default
+	{
+		_container = switch (true) do
+		{
+			case ([_unit, _class, "uniform"] call fn_fitsInventory):  { uniformContainer _unit };
+			case ([_unit, _class, "vest"] call fn_fitsInventory):     { vestContainer _unit };
+			default                                                   { backpackContainer _unit };
+		};
 
-if (!isNull _container) then
-{
-	if (isClass (configFile >> "CfgMagazines" >> _class)) then
-	{
-		_container addMagazineCargoGlobal [_class, _qty];
-	}
-	else
-	{
-		_container addItemCargoGlobal [_class, _qty];
+		if (!isNull _container) then
+		{
+			if (isClass (configFile >> "CfgMagazines" >> _class)) then
+			{
+				_container addMagazineCargoGlobal [_class, _qty];
+			}
+			else
+			{
+				_container addItemCargoGlobal [_class, _qty];
+			};
+		};
 	};
 };

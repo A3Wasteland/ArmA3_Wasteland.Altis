@@ -11,6 +11,8 @@ if ((getPlayerUID player) call isAdmin) then
 
 	if (!_curPlayerInvulnState) then
 	{
+		thirstLevel = 100;
+		hungerLevel = 100;
 		player setDamage 0;
 		player allowDamage false;
 		vehicle player setDamage 0;
@@ -19,12 +21,10 @@ if ((getPlayerUID player) call isAdmin) then
 		if (player getVariable ["FAR_isUnconscious", 0] == 1) then
 		{
 			player setVariable ["FAR_isUnconscious", 0, true];
-			[] spawn
-			{
-				sleep 1;
-				closeDialog 27911; // ReviveGUI_IDD
-			};
 		};
+
+		(findDisplay 27910) closeDisplay 0; // ReviveBlankGUI_IDD
+		(findDisplay 27911) closeDisplay 0; // ReviveGUI_IDD
 
 		hint "You are now invulnerable";
 	}

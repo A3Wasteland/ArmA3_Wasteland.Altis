@@ -36,6 +36,7 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\ui_toolkit.hpp"
 #include "client\systems\common.hpp"
 #include "client\items\warchest\dialog.hpp"
+#include "client\items\atm\atm_gui.hpp"
 #include "client\actions\gui.hpp"
 #include "addons\far_revive\revive_gui.hpp"
 #include "client\systems\playerMenu\dialog\player_settings.hpp"

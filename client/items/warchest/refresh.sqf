@@ -3,7 +3,7 @@
 // ******************************************************************************************
 #include "defines.sqf"
 disableSerialization;
-private ["_warchest", "_funds", "_text", "_input", "_amount"];
+private ["_warchest", "_funds", "_text"];
 _warchest = findDisplay IDD_WARCHEST;
 if (isNull _warchest) exitWith {};
 
@@ -17,11 +17,3 @@ switch (playerSide) do
 
 _text = _warchest displayCtrl IDC_FUNDS;
 _text ctrlSetText format ["$%1", [_funds] call fn_numbersText];
-
-_input = _warchest displayCtrl IDC_AMOUNT;
-_amount = floor parseNumber ctrlText _input;
-
-if (_amount < 1e6 && _amount > -1e6) then
-{
-	_input ctrlSetText str _amount;
-};

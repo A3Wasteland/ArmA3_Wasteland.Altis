@@ -20,7 +20,6 @@ _code =
 
 	if (!isNull _display) then
 	{
-		
 		_bluforColor = ["Map", "BLUFOR"] call BIS_fnc_displayColorGet;
 		_opforColor = ["Map", "OPFOR"] call BIS_fnc_displayColorGet;
 		_indieColor = ["Map", "Independent"] call BIS_fnc_displayColorGet;
@@ -29,7 +28,7 @@ _code =
 
 		_allPlayers = call allPlayers;
 
-		_scoreOrdering = { (([_x, "playerKills"] call fn_getScore) * 1000) + ([_x, "deathCount"] call fn_getScore) };
+		_scoreOrdering = { ((([_x, "playerKills"] call fn_getScore) - ([_x, "teamKills"] call fn_getScore)) * 1000) + ([_x, "aiKills"] call fn_getScore) };
 		_players = [_allPlayers, [], _scoreOrdering, "DESCEND"] call BIS_fnc_sortBy;
 		_playerCount = count _players;
 		_playerShown = isNull player;
@@ -86,7 +85,7 @@ _code =
 				_entryName ctrlSetTextColor _textColor;
 
 				_entryPKills = _display displayCtrl scoreGUI_PListEntry_PKills(_id);
-				_entryPKills ctrlSetText str ([_player, "playerKills"] call fn_getScore);
+				_entryPKills ctrlSetText str (([_player, "playerKills"] call fn_getScore) - ([_player, "teamKills"] call fn_getScore));
 				_entryPKills ctrlSetTextColor _textColor;
 
 				_entryAIKills = _display displayCtrl scoreGUI_PListEntry_AIKills(_id);

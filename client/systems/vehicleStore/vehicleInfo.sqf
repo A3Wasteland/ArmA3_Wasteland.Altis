@@ -10,7 +10,7 @@
 #include "dialog\vehiclestoreDefines.hpp";
 
 disableSerialization;
-private ["_vehClass", "_price", "_dialog", "_vehlist", "_vehText", "_colorlist", "_itemIndex", "_itemText", "_itemData", "_colorsArray", "_colorlistIndex"];
+private ["_vehClass", "_price", "_dialog", "_vehlist", "_vehText", "_colorlist", "_itemIndex", "_itemText", "_itemData", "_colorsArray", "_cfgColors", "_class", "_texs", "_color", "_tex", "_added", "_existingTex", "_colorlistIndex"];
 
 //Initialize Values
 _vehClass = "";
@@ -42,17 +42,43 @@ _vehText ctrlSetText "";
 
 _colorsArray  = [];
 
-{
-	if (_x select 0 == "All" || {_vehClass isKindOf (_x select 0)}) then
-	{
-		{
-			[_colorsArray, _x select 0, _x select 1] call fn_setToPairs;
-		} forEach (_x select 1);
-	};
-} forEach call colorsArray;
+_cfgColors = call colorsArray;
+reverse _cfgColors;
 
 {
+	_class = _x select 0;
+	_texs = _x select 1;
+
+	if (_class == "All" || {_vehClass isKindOf _class}) then
+	{
+		{
+			_color = _x select 0;
+			_tex = _x select 1;
+			_added = false;
+
+			if (typeName _tex == "ARRAY") then
+			{
+				_existingTex = [_colorsArray, _color, ""] call fn_getFromPairs;
+
+				if (typeName _existingTex == "ARRAY") then
+				{
+					{
+						[_existingTex, _x select 0, _x select 1] call fn_setToPairs;
+					} forEach _tex;
+				};
+			};
+
+			if (!_added) then
+			{
+				[_colorsArray, _color, _tex] call fn_setToPairs;
+			};
+		} forEach _texs;
+	};
+} forEach _cfgColors;
+
+{
+	_tex = _x select 1;
 	_colorlistIndex = _colorlist lbAdd (_x select 0);
-	_colorlist lbSetPicture [_colorlistIndex, _x select 1];
-	_colorlist lbSetData [_colorlistIndex, _x select 1];
+	_colorlist lbSetPicture [_colorlistIndex, if (typeName _tex == "ARRAY") then { _tex select 0 select 1 } else { _tex }];
+	_colorlist lbSetData [_colorlistIndex, str _tex];
 } forEach _colorsArray;

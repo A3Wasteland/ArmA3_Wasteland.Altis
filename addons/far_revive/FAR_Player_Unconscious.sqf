@@ -15,6 +15,47 @@ _unit = _this select 0;
 
 _unit setCaptive true;
 
+_unit spawn
+{
+	_unit = _this;
+
+	while {UNCONSCIOUS(_unit)} do
+	{
+		if (vehicle _unit == _unit) then
+		{
+			_draggedBy = DRAGGED_BY(_unit);
+			_anim = animationState _unit;
+
+			if ((getPos _unit select 2 < 0.5 && vectorMagnitude velocity _unit < 5) || {alive _draggedBy && !UNCONSCIOUS(_draggedBy)}) then
+			{
+				// Anim is stuck due to stance change in progress during injury
+				if (_anim == "AinjPpneMstpSnonWrflDnon_rolltofront") then
+				{
+					_unit switchMove "";
+					sleep 0.01;
+					waitUntil {count animationState _unit <= 24}; // > 24 usually means the anim is still in transition
+					[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
+					_anim = animationState _unit;
+				};
+
+				if !((toLower _anim) in ["ainjppnemstpsnonwrfldnon","unconscious"]) then
+				{
+					[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
+				};
+			}
+			else
+			{
+				if (_anim == "AinjPpneMstpSnonWrflDnon") then
+				{
+					[_unit, ""] call switchMoveGlobal;
+				};
+			};
+		};
+
+		sleep 0.2;
+	};
+};
+
 if (_unit == player) then
 {
 	if (createDialog "ReviveBlankGUI") then
@@ -85,23 +126,12 @@ if (!alive vehicle _unit) exitWith
 _unit spawn
 {
 	_unit = _this;
-
-	if (vehicle _unit == _unit) then
-	{
-		[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
-	};
+	_unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
 
 	sleep 1;
 
-	_unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
-
 	while {UNCONSCIOUS(_unit)} do
 	{
-		if (vehicle _unit == _unit && animationState _unit != "AinjPpneMstpSnonWrflDnon") then
-		{
-			[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
-		};
-
 		if (_unit == player && cameraView != "INTERNAL") then
 		{
 			(vehicle player) switchCamera "INTERNAL";
@@ -118,7 +148,8 @@ _unit spawn
 				_unit setFatigue (0.4 max getFatigue _unit);
 			};
 		};
-		sleep 0.1;
+
+		uiSleep 0.25;
 	};
 
 	if (_unit == player && !alive player) then
@@ -358,7 +389,10 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 
 	if (isPlayer _unit) then
 	{
-		[] spawn fn_savePlayerData;
+		if (["A3W_playerSaving"] call isConfigOn) then
+		{
+			[] spawn fn_savePlayerData;
+		};
 
 		// Unmute ACRE
 		_unit setVariable ["ace_sys_wounds_uncon", false];

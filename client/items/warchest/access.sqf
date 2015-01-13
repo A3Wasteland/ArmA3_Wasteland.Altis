@@ -3,8 +3,7 @@
 // ******************************************************************************************
 #include "defines.sqf"
 disableSerialization;
-if (isNull findDisplay IDD_WARCHEST) then { createDialog "WarchestDialog"; };
-call mf_items_warchest_refresh;
+if (isNull findDisplay IDD_WARCHEST) then { createDialog "WarchestDialog" };
 
 [] spawn
 {
@@ -13,7 +12,8 @@ call mf_items_warchest_refresh;
 	while {!isNull _dialog} do
 	{
 		_escMenu = findDisplay 49;
-		if (!isNull _escMenu) exitWith { _escMenu closeDisplay 0 }; // Force close Esc menu if open
-		sleep 0.1;
+		if (!isNull _escMenu) then { _escMenu closeDisplay 0 }; // Force close Esc menu if open
+		call mf_items_warchest_refresh;
+		uiSleep 0.1;
 	};
 };
