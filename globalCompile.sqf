@@ -91,6 +91,7 @@ fn_getFromPairs = [_serverFunc, "fn_getFromPairs.sqf"] call mf_compile;
 fn_getPos3D = [_serverFunc, "fn_getPos3D.sqf"] call mf_compile;
 fn_getScore = [_serverFunc, "fn_getScore.sqf"] call mf_compile;
 fn_getTeamScore = [_serverFunc, "fn_getTeamScore.sqf"] call mf_compile;
+fn_hideObjectGlobal = [_serverFunc, "fn_hideObjectGlobal.sqf"] call mf_compile;
 fn_loopSpread = [_serverFunc, "fn_loopSpread.sqf"] call mf_compile;
 fn_magazineAmmoCargo = [_serverFunc, "fn_magazineAmmoCargo.sqf"] call mf_compile;
 fn_numbersText = [_serverFunc, "fn_numbersText.sqf"] call mf_compile;

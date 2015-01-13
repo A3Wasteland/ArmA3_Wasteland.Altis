@@ -94,7 +94,7 @@ if (isNil "playerData_alive") then
 
 player call playerSetupEnd;
 
-diag_log format ["Player starting with $%1", player getVariable ["cmoney", 0]];
+diag_log format ["Player starting with $%1", (player getVariable ["cmoney", 0]) call fn_numToStr];
 
 [] execVM "territory\client\hideDisabledTerritories.sqf";
 

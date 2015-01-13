@@ -29,7 +29,7 @@ removeHeadgear player;
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
 		case "Money": { player setVariable ["cmoney", _value, true] };
-		case "Position":
+		/*case "Position":
 		{
 			if (count _value == 3) then
 			{
@@ -37,7 +37,7 @@ removeHeadgear player;
 				player setPosATL _value;
 			};
 		};
-		case "Direction": { player setDir _value };
+		case "Direction": { player setDir _value };*/
 		case "Uniform":
 		{
 			// If uniform cannot be worn by player due to different team, try to convert it, else give default instead

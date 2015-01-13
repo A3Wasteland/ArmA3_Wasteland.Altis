@@ -37,6 +37,8 @@ fn_deletePlayerData =
 		_data = _this;
 		_saveValid = [_data, "PlayerSaveValid", false] call fn_getFromPairs;
 
+		private "_pos";
+
 		if (_saveValid) then
 		{
 			playerData_alive = true;
@@ -73,15 +75,12 @@ fn_deletePlayerData =
 
 		if (_saveValid) then
 		{
-			player groupChat "Player account loaded!";
-
 			if (isNil "playerData_resetPos") then
 			{
-				player enableSimulation true;
-				player allowDamage true;
-				player setVelocity [0,0,0];
-
 				execVM "client\functions\firstSpawn.sqf";
+
+				playerData_spawnPos = _pos;
+				playerData_spawnDir = [_data, "Direction"] call fn_getFromPairs;
 			}
 			else
 			{
