@@ -2317,6 +2317,7 @@ class Mission
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
 			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item25
 		{
@@ -2327,6 +2328,7 @@ class Mission
 			vehicle="Land_Atm_01_F";
 			skill=0.60000002;
 			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item26
 		{
@@ -2337,6 +2339,7 @@ class Mission
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
 			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item27
 		{
@@ -2347,6 +2350,7 @@ class Mission
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
 			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item28
 		{
@@ -2357,6 +2361,7 @@ class Mission
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
 			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item29
 		{
@@ -2367,6 +2372,7 @@ class Mission
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
 			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 	};
 	class Markers
