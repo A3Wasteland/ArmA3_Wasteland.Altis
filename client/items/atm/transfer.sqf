@@ -8,7 +8,6 @@
 #include "gui_defines.hpp"
 
 #define ERR_NOT_ENOUGH_FUNDS "You don't have enough money in your account."
-#define ERR_LESS_THAN_ONE "The amount must be at least $1"
 #define ERR_INVALID_ACCOUNT "The selected account is invalid."
 #define ERR_MAX_BALANCE_REACHED "The selected account has reached its maximum balance.\nYou cannot send any more money to it."
 #define ERR_MAX_BALANCE_LIMIT "Due to balance restrictions, you cannot transfer more than $%1 to this account."
@@ -18,15 +17,13 @@
 #define MSG_CONFIRM_LINE3 "Total cost: $%1"
 
 disableSerialization;
-private ["_dialog", "_input", "_amount", "_accDropdown", "_selAcc", "_selAccName", "_fee", "_feeAmount", "_total", "_balance", "_maxBalance", "_destBalance", "_confirmMsg", "_transferKey", "_deposit", "_withdraw", "_controls"];
+private ["_dialog", "_input", "_accDropdown", "_selAcc", "_selAccName", "_amount", "_fee", "_feeAmount", "_total", "_balance", "_maxBalance", "_destBalance", "_confirmMsg", "_transferKey", "_deposit", "_withdraw", "_controls"];
 
 _dialog = findDisplay AtmGUI_IDD;
 
 if (isNull _dialog) exitWith {};
 
 _input = _dialog displayCtrl AtmAmountInput_IDC;
-_amount = 0 max floor parseNumber ctrlText _input;
-_input ctrlSetText (_amount call fn_numToStr);
 _accDropdown = _dialog displayCtrl AtmAccountDropdown_IDC;
 _selAcc = call compile (_accDropdown lbData lbCurSel _accDropdown);
 
@@ -38,11 +35,9 @@ if (isNil "_selAcc" || {!isPlayer _selAcc || _selAcc == player}) exitWith
 
 _selAccName = name _selAcc;
 
-if (_amount < 1) exitWith
-{
-	[ERR_LESS_THAN_ONE, 5] call mf_notify_client;
-	playSound "FD_CP_Not_Clear_F";
-};
+_amount = _input call mf_verify_money_input;
+
+if (_amount < 1) exitWith {};
 
 _fee = (["A3W_atmTransferFee", 5] call getPublicVar) max 0 min 50;
 _feeAmount = ceil (_amount * (_fee / 100));
