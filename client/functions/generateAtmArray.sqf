@@ -28,31 +28,38 @@ if (isNil "A3W_atmArray") then
 	} forEach nearestObjects [_x, [], 5];
 } forEach call compile preprocessFileLineNumbers "mapConfig\atmPositions.sqf";
 
-if (["A3W_atmEnabled"] call isConfigOn) then
+// Get rid of map ATMs that are within 3m of mission ones
 {
-	// Get rid of map ATMs that are within 3m of mission ones
+	if (_x getVariable ["A3W_atmEditorPlaced", false]) then
 	{
-		if (_x getVariable ["A3W_atmEditorPlaced", false]) then
 		{
+			if ((str _x) find ": atm_" != -1 && {alive _x && !(_x getVariable ["A3W_atmEditorPlaced", false])}) then
 			{
-				if ((str _x) find ": atm_" != -1 && {alive _x && !(_x getVariable ["A3W_atmEditorPlaced", false])}) then
+				_x setDamage 1;
+			};
+		} forEach nearestObjects [_x, [], 3];
+	};
+} forEach A3W_atmArray;
+
+if !(["A3W_atmEnabled"] call isConfigOn) then
+{
+	// Remove ATMs so as not to confuse people into thinking that they might be able to use them when they actually can't
+	if (["A3W_atmRemoveIfDisabled"] call isConfigOn) then
+	{
+		{
+			if (alive _x) then
+			{
+				if (_x getVariable ["A3W_atmEditorPlaced", false]) then
+				{
+					hideObject _x; // only hide since it's owned by the server
+				}
+				else
 				{
 					_x setDamage 1;
 				};
-			} forEach nearestObjects [_x, [], 3];
-		};
-	} forEach A3W_atmArray;
-}
-else
-{
-	// Delete all ATMs
-	{
-		if (local _x) then
-		{
-			deleteVehicle _x; // mission ATMs
-			_x setDamage 1; // map ATMs
-		};
-	} forEach A3W_atmArray;
+			};
+		} forEach A3W_atmArray;
+	};
 
-	A3W_atmArray = [];
+	A3W_atmArray = nil; // prevent icons from being drawn
 };
