@@ -18,6 +18,8 @@ player createDiaryRecord ["changelog",
 <br/>[Added] ATMs
 <br/>[Added] Union Jack vehicle color
 <br/>[Added] Skins hidden in gamefiles for MH-9, Mohawk, and Taru
+<br/>[Added] Improved admin spectate camera by micovery
+<br/>[Added] Earplugs (End key)
 <br/>[Changed] Full rewrite of vehicle respawning system
 <br/>[Fixed] Player moved to position too early during save restore
 <br/>[Fixed] Mission timeout not extending on AI kill
