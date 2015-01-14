@@ -672,7 +672,7 @@ camera_enabled = {
 
   def(_camera);
   _camera = [_player,"camera"] call object_getVariable;
-  not(undefined(_camera))
+  not(isNil "_camera" || {isNull _camera})
 };
 
 camera_keyDownHandler = {
@@ -1169,7 +1169,7 @@ camera_hud_update = {
 };
 
 camera_toggle = {
-  if (!isOBJECT(camera_unit)) then {
+  if (!isOBJECT(camera_unit) || {isNull camera_unit || {!alive camera_unit}}) then {
     camera_unit = player;
   };
 
