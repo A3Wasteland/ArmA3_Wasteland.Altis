@@ -37,7 +37,7 @@ A3W_atmTransferFee = 5;            // Fee in percent charged to players for mone
 A3W_atmTransferAllTeams = 0;       // Allow money transfers between players of all teams/sides (0 = same team only, 1 = all teams)
 A3W_atmEditorPlacedOnly = 0;       // Only allow access via ATMs placed from the mission editor (0 = all ATMs from towns & editor allowed, 1 = ATMs from editor only) Note: Stratis has no town ATMs, only editor ones.
 A3W_atmMapIcons = 1;               // Draw small icons on the map that indicate ATM locations (0 = no, 1 = yes)
-A3W_atmRemoveIfDisabled = 1;       // Remove town ATMs from map if A3W_atmEnabled is set to 0 (0 = no, 1 = yes); editor ATMs get removed regardless of this setting
+A3W_atmRemoveIfDisabled = 1;       // Remove all ATMs from map if A3W_atmEnabled is set to 0 (0 = no, 1 = yes)
 
 // Persistence settings
 A3W_savingMethod = "profile";      // Method used for saving data ("profile", "iniDB", "extDB")
