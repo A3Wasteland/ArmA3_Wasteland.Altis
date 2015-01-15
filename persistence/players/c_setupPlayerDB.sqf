@@ -5,6 +5,7 @@ if (isDedicated) exitWith {};
 
 #include "macro.h"
 
-call compile preProcessFileLineNumbers "persistence\sock\main.sqf";
-call compile preProcessFileLineNumbers "persistence\lib\hash.sqf";
-call compile preProcessFileLineNumbers "persistence\players\pFunctions.sqf";
+call compile preprocessFileLineNumbers "persistence\sock\main.sqf";
+call compile preprocessFileLineNumbers "persistence\lib\hash.sqf";
+call compile preprocessFileLineNumbers "persistence\lib\shFunctions.sqf";
+call compile preprocessFileLineNumbers "persistence\players\pFunctions.sqf";

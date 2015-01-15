@@ -6,11 +6,14 @@
 
 if (!isServer) exitWith {};
 
-#include "macro.h"
 
 diag_log "Loading s_setupPlayerDB ...";
 
-call compile preProcessFileLineNumbers "persistence\players\sFunctions.sqf";
+call compile preprocessFileLineNumbers "persistence\lib\shFunctions.sqf";
+call compile preprocessFileLineNumbers "persistence\players\sFunctions.sqf";
+
+#include "macro.h"
+
 
 fn_deletePlayerSave = {
   init(_scope,_this call PDB_playerFileName);

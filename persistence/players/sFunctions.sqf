@@ -1,7 +1,4 @@
-//  @file Version: 0.1
-//  @file Name: sFunctions.sqf
-//  @file Author: micovery
-//  @file Description: server functions
+if (!isNil "s_functions_defined") exitWith {};
 
 diag_log "sFunctions.sqf loading ...";
 
@@ -23,23 +20,28 @@ s_processRestartMessage = {
 
   diag_log format["Saving players all player stats"];
   //save all player stats
-  call p_saveAllPlayers;
+  [nil, p_saveAllPlayers] call sh_fsm_invoke;
+
 
   diag_log format["Saving active players list"];
   //save all player stats
   init(_plScope, "PlayersList" call PDB_playersListFileName);
-  [_plScope] call pl_savePlayersList;
+  [[_plScope], pl_savePlayersList] call sh_fsm_invoke;
+
 
   diag_log format["Saving all vehicles on the map"];
   //save all vehilce stats
   init(_vScope, "Vehicles" call PDB_objectFileName);
-  [_vScope] call v_saveAllVechiles;
+  [[_vScope], v_saveAllVechiles] call sh_fsm_invoke;
+
 
   diag_log format["Saving all objects on the map"];
   //save all object scopes
   init(_oScope, "Objects" call PDB_objectFileName);
-  [_oScope] call o_saveAllObjects;
-  [_oScope] call o_saveInfo;
+  [[_oScope], o_saveAllObjects] call sh_fsm_invoke;
+
+  //save object info
+  [[_oScope], o_saveInfo] call sh_fsm_invoke;
 
 
   diag_log format["Sending restart message ack"];
@@ -289,7 +291,7 @@ p_addPlayerSave = {
     _request pushBack ["PlayerScore",_scoreInfo];
   };
 
-  diag_log format["Disconnected %1(%2):  unconscious = %3, respawning = %4, alive = %5", _name,_uid, _unconscious, _respawn_active, _alive];
+  diag_log format["Saving %1(%2):  unconscious = %3, respawning = %4, alive = %5", _name,_uid, _unconscious, _respawn_active, _alive];
   if (_reset_save) exitWith {
      diag_log format["Resetting %1(%2) stats", _name, _uid];
      _request pushBack ["PlayerSave",nil];
@@ -448,14 +450,6 @@ p_addPlayerSave = {
 };
 
 
-ordered_invoke = {
-  if (isNil "_this" || {typeName _this != typeName []}) exitWith {};
-  {
-    (_x select 0) call (_x select 1);
-  } forEach _this;
-};
-
-
 p_disconnectSave = {
   diag_log format["%1 call p_disconnectSave", _this];
   ARGVX3(0,_player,objNull);
@@ -468,13 +462,11 @@ p_disconnectSave = {
 
   if (isNil{[_request,_player,_uid,_name] call p_addPlayerSave}) exitWith {
     diag_log format["WARNING: No stats saved for %1(%2) on disconnect", _name, _uid];
-    [_scope] spawn stats_flush;
+    [_scope] call stats_flush;
   };
 
-  [
-    [_request, stats_set],
-    [[_scope], stats_flush]
-  ] spawn ordered_invoke;
+  _request call stats_set;
+  [_scope] call stats_flush;
 
   diag_log format["Stats for %1(%2) saved", _name, _uid];
 };
@@ -754,11 +746,16 @@ pl_saveLoop = {
   while {true} do {
     sleep A3W_playersList_saveInterval;
     if (not(isBOOLEAN(pl_saveLoopActive) && {!pl_saveLoopActive})) then {
-      diag_log format["saving player list"];
-      [_scope] call pl_savePlayersList;
+      diag_log format["pl_saveLoop: Saving player list"];
+      init(_start_time,diag_tickTime);
+      [[_scope], pl_savePlayersList] call sh_fsm_invoke;
+      init(_end_time,diag_tickTime);
+      diag_log format["pl_saveLoop: Took %1 ticks to save players list", (_end_time - _start_time)];
     };
   };
 };
+
+s_functions_defined = true;
 
 
 diag_log "sFunctions.sqf loading complete";

@@ -223,5 +223,35 @@ sh_getValueFromPairs = {
   (_result);
 };
 
+
+sh_fsm_invoke = {
+  //diag_log format["%1 call sh_fsm_invoke", _this];
+  ARGV2(0,_left);
+  ARGVX2(1,_right);
+  ARGV4(2,_async,false,false);
+
+  if (!isCODE(_right)) exitWith {};
+  if (isNil "_left") then {
+    _left = [];
+  };
+
+
+  def(_var_name);
+  _var_name = format["var_%1",ceil(random 10000)];
+
+  def(_fsm);
+  _fsm = [_var_name, _left, _right] execFSM "persistence\sock\call3.fsm";
+
+  //if async, return the name of the variable that will hold the results
+  if (_async) exitWith {_var_name};
+
+  waitUntil {completedFSM _fsm};
+
+  def(_result);
+  _result = (missionNamespace getVariable _var_name);
+  missionNamespace setVariable [_var_name, nil];
+  OR(_result,nil)
+};
+
 shFunctions_loased = true;
 diag_log "shFunctions loading complete";

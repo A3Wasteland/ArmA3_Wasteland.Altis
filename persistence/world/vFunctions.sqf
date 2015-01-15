@@ -629,7 +629,7 @@ v_saveLoop = {
   while {true} do {
     sleep A3W_vehicle_saveInterval;
     if (not(isBOOLEAN(v_saveLoopActive) && {!v_saveLoopActive})) then {
-      [_scope] call v_saveAllVechiles;
+      [[_scope], v_saveAllVechiles] call sh_fsm_invoke;
     };
   };
 };
