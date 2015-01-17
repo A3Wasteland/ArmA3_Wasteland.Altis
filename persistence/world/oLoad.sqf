@@ -17,7 +17,7 @@ call compile preprocessFileLineNumbers "persistence\world\oFunctions.sqf";
 init(_oScope, "Objects" call PDB_objectFileName);
 
 def(_oIds);
-_oIds = [_oScope] call o_loadObjects;
+_oIds = [[_oScope], o_loadObjects] call sh_fsm_invoke;
 [_oScope] call o_loadInfo;
 [_oScope] spawn o_saveLoop;
 
