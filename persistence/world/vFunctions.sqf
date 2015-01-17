@@ -2,7 +2,7 @@ diag_log "vFunctions.sqf loading ...";
 
 #include "macro.h"
 
-call compile preProcessFileLineNumbers "persistence\lib\shFunctions.sqf";
+call compile preprocessFileLineNumbers "persistence\lib\shFunctions.sqf";
 
 
 v_restoreVehicle = {_this spawn {
@@ -91,11 +91,22 @@ v_restoreVehicle = {_this spawn {
   };
 
 
-  def(_obj);
-  _obj = createVehicle [_class, _pos, [], 0, "CAN_COLLIDE"];
+  def(_is_flying);
+  _is_flying = [_pos] call sh_isFlying;
+
+  def(_special);
+  _special = if (_is_flying) then {"FLY"} else {"CAN_COLLIDE"};
+  
+   def(_obj);
+  _obj = createVehicle [_class, _pos, [], 0, _special];
+  
   if (!isOBJECT(_obj)) exitWith {
     diag_log format["Could not create vehicle of class: %1", _class];
   };
+
+  _obj allowDamage false;
+  [_obj] spawn { ARGVX3(0,_obj,objNull); sleep 3; _obj allowDamage true;}; //hack so that vehicle does not take damage while spawning
+
 
   [_obj, false] call vehicleSetup;
 
@@ -152,10 +163,22 @@ v_restoreVehicle = {_this spawn {
     } forEach _textures;
   };
 
-  //AddAi to vehicle
-  if ([_obj] call sh_isUAV) then {
+  //Add AI to vehicle
+  if ([_obj] call sh_isUAV_UGV) then {
     createVehicleCrew _obj;
   };
+
+  if (_is_flying && {[_obj] call sh_isUAV}) then {
+    _obj flyInHeight (((_obj call fn_getPos3D) select 2) max 500);
+    [_obj] spawn {
+      ARGVX3(0,_obj,objNull);
+      waitUntil {!isNull driver _obj};
+      def(_wp);
+      _wp = (group _obj) addWaypoint [getPosATL _obj, 0];
+      _wp setWaypointType "MOVE";
+    };
+  };
+
 
   //restore the stuff inside the vehicle
   clearWeaponCargoGlobal _obj;
@@ -424,6 +447,27 @@ v_setupVehicleSavedVariables = {
 };
 
 
+v_getSavePosition = {
+  ARGVX3(0,_obj,objNull);
+
+  def(_pos);
+  _pos = ASLtoATL getPosWorld _obj;
+  _pos set [2, (_pos select 2) + 0.3];
+
+  if ([_obj] call sh_isUAV_UGV) exitWith {_pos}; //no special processing for UAVs
+  if (isTouchingGround _obj) exitWith {_pos}; //directly in contact with ground, or on a roof
+  if ((getPos _obj) select 2 < 0.5) exitWith {_pos}; //FIXME: not exactly sure what this one is for
+  if ((getPosASL _obj) select 2 < 0.5) exitWith {_pos}; //underwater
+
+  //force the Z-axis if the vehicle is high above ground, or deep underwater (bring it to the surface)
+  _pos set [2, 0];
+  if (surfaceIsWater _pos) then {
+    _pos = ASLToATL (_pos);
+  };
+
+  (_pos)
+};
+
 v_addSaveVehicle = {
   ARGVX3(0,_list,[]);
   ARGVX3(1,_obj,objNull);
@@ -493,15 +537,7 @@ v_addSaveVehicle = {
     _obj setVariable ["vehicle_key", _objName, true];
   };
 
-  _pos = ASLtoATL getPosWorld _obj;
-  _pos set [2, ((_pos select 2) + 0.3)];
-  //force the Z-axis if the vehicle is high above ground, or deep underwater (bring it to the surface)
-  if (!(isTouchingGround _obj || {(getPos _obj) select 2 < 0.5 || (getPosASL _obj) select 2 < 0.5})) then {
-    _pos set [2, 0];
-    if (surfaceIsWater _pos) then {
-      _pos = ASLToATL (_pos);
-    };
-  };
+  _pos = [_obj] call v_getSavePosition;
 
   _list pushBack [_objName, ([
     ["Class", _class],

@@ -256,7 +256,7 @@ o_restoreObject = {
   };
 
   //AddAi to vehicle
-  if ([_obj] call sh_isUAV) then {
+  if ([_obj] call sh_isUAV_UGV) then {
     createVehicleCrew _obj;
   };
 
