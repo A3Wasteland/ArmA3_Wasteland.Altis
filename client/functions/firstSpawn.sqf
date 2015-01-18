@@ -88,6 +88,24 @@ player addEventHandler ["InventoryClosed",
 	_obj setVariable ["inventoryIsOpen", nil];
 }];
 
+
+//handler for UAV assembly
+player addEventHandler ["WeaponAssembled", {
+  private["_player", "_vehicle"];
+  _player = _this select 0;
+  _vehicle = _this select 1;
+
+  if (_player != player) exitWith {};
+  if (!(_vehicle isKindOf "UAV_01_base_F")) exitWith {};
+
+  private["_uid"];
+  _uid = getPlayerUID _player;
+  if (_uid == "") exitWith {};
+
+  _vehicle setVariable ["ownerUID", _uid, true]
+}];
+
+
 // Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan, among a LOT of other things
 [] spawn
 {
