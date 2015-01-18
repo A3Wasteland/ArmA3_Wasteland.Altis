@@ -102,7 +102,10 @@ player addEventHandler ["WeaponAssembled", {
   _uid = getPlayerUID _player;
   if (_uid == "") exitWith {};
 
-  _vehicle setVariable ["ownerUID", _uid, true]
+  _vehicle setVariable ["ownerUID", _uid, true];
+  _vehicle setVariable ["A3W_purchasedVehicle", true, true];
+  trackVehicle = _vehicle;
+  publicVariableServer "trackVehicle";
 }];
 
 
