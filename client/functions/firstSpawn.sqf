@@ -104,6 +104,7 @@ player addEventHandler ["WeaponAssembled", {
 
   _vehicle setVariable ["ownerUID", _uid, true];
   _vehicle setVariable ["A3W_purchasedVehicle", true, true];
+	_vehicle setVariable ["ownerN", name _player, true];
   trackVehicle = _vehicle;
   publicVariableServer "trackVehicle";
 }];
