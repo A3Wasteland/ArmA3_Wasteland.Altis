@@ -20,6 +20,7 @@ if (!isServer) exitWith {};
 PDB_ServerID = if (isNil "PDB_ServerID") then {"A3W_"} else {PDB_ServerID};
 PDB_PlayerFileID = if (isNil "PDB_PlayerFileID") then {PDB_ServerID} else {PDB_PlayerFileID};
 PDB_ObjectFileID = if (isNil "PDB_ObjectFileID") then {PDB_ServerID} else {PDB_ObjectFileID};
+PDB_VehicleFileID = if (isNil "PDB_VehicleFileID") then {PDB_ServerID} else {PDB_VehicleFileID};
 PDB_MessagesFileID = if (isNil "PDB_MessagesFileID") then {PDB_ServerID} else {PDB_MessagesFileID};
 PDB_AdminLogFileID = if (isNil "PDB_AdminLogFileID") then {PDB_ServerID} else {PDB_AdminLogFileID};
 PDB_HackerLogFileID = if (isNil "PDB_HackerLogFileID") then {PDB_ServerID} else {PDB_HackerLogFileID};
@@ -29,6 +30,7 @@ PDB_PlayersListFileID = if (isNil "PDB_PlayersListFileID") then {PDB_ServerID} e
 
 PDB_playerFileName = compileFinal ("format ['%1%2', '" + PDB_PlayerFileID + "', _this]");
 PDB_objectFileName = compileFinal ("format ['%1%2', '" + PDB_ObjectFileID + "', _this]");
+PDB_vehicleFileName = compileFinal ("format ['%1%2', '" + PDB_VehicleFileID + "', _this]");
 PDB_messagesFileName = compileFinal ("format ['%1%2', '" + PDB_MessagesFileID + "', _this]");
 PDB_adminLogFileName = compileFinal ("format ['%1%2', '" + PDB_AdminLogFileID + "', _this]");
 PDB_hackerLogFileName = compileFinal ("format ['%1%2', '" + PDB_HackerLogFileID + "', _this]");
@@ -37,13 +39,11 @@ PDB_playersListFileName = compileFinal ("format ['%1%2', '" + PDB_PlayersListFil
 
 diag_log format["[INFO] config: PDB_PlayerFileID = %1", PDB_PlayerFileID];
 diag_log format["[INFO] config: PDB_ObjectFileID = %1", PDB_ObjectFileID];
+diag_log format["[INFO] config: PDB_VehicleFileID = %1", PDB_VehicleFileID];
 diag_log format["[INFO] config: PDB_MessagesFileID = %1", PDB_MessagesFileID];
 diag_log format["[INFO] config: PDB_AdminLogFileID = %1", PDB_AdminLogFileID];
 diag_log format["[INFO] config: PDB_HackerLogFileID = %1", PDB_HackerLogFileID];
 diag_log format["[INFO] config: PDB_PlayersListFileID = %1", PDB_PlayersListFileID];
-
-
-PDB_databaseNameCompiler = PDB_objectFileName;
 
 
 call compile preProcessFileLineNumbers "persistence\sock\inidb_adapter.sqf";

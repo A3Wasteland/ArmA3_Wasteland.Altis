@@ -14,7 +14,7 @@ call compile preprocessFileLineNumbers "persistence\world\vFunctions.sqf";
 
 #include "macro.h"
   
-init(_vScope, "Vehicles" call PDB_objectFileName);
+init(_vScope, "Vehicles" call PDB_vehicleFileName);
 
 def(_vIds);
 _vIds = [_vScope] call v_loadVehicles;

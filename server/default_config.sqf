@@ -62,10 +62,11 @@ A3W_vehicleMaxUnusedTime = 2*24;   // Maximum parking time in hours after which 
 
 PDB_PlayerFileID = "A3W_";         // Player savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_ObjectFileID = "A3W_";         // Object savefile prefix (change this in case you run multiple servers from the same folder)
+PDB_VehicleFileID = "A3W_";        // Vehicle savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_MessagesFileID = "A3W_";       // Messages savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_AdminLogFileID = "A3W_";       // Admin log savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_HackerLogFileID = "A3W_";      // Hacker log savefile prefix (change this in case you run multiple servers from the same folder)
-PDB_PlayersListFileID = "A3W_";     // PlayerList savefile prefix (change this in case you run multiple servers from the same folder)
+PDB_PlayersListFileID = "A3W_";    // PlayerList savefile prefix (change this in case you run multiple servers from the same folder)
 
 
 A3W_vehicle_saveInterval = 300;     // Number of seconds between vehicle saves

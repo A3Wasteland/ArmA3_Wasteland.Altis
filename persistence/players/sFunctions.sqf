@@ -31,7 +31,7 @@ s_processRestartMessage = {
 
   diag_log format["Saving all vehicles on the map"];
   //save all vehilce stats
-  init(_vScope, "Vehicles" call PDB_objectFileName);
+  init(_vScope, "Vehicles" call PDB_vehicleFileName);
   [[_vScope], v_saveAllVechiles] call sh_fsm_invoke;
 
 
