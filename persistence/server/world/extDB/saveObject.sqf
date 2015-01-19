@@ -12,6 +12,8 @@ _manual = if (count _this > 2) then { _this select 2 } else { false };
 
 _objectID = _obj getVariable "A3W_objectID";
 
+if (!alive _obj) exitWith {nil};
+
 if (isNil "_objectID") then
 {
 	_objectID = ([format ["newServerObject:%1:%2", call A3W_extDB_ServerID, call A3W_extDB_MapID], 2] call extDB_Database_async) select 0;

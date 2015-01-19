@@ -11,6 +11,8 @@ _veh = _this select 0;
 
 _vehicleID = _veh getVariable "A3W_vehicleID";
 
+if (!alive _veh) exitWith {nil};
+
 if (isNil "_vehicleID") then
 {
 	_vehicleID = ([format ["newServerVehicle:%1:%2", call A3W_extDB_ServerID, call A3W_extDB_MapID], 2] call extDB_Database_async) select 0;
