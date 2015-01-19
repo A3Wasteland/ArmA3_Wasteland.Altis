@@ -8,7 +8,7 @@ private ["_obj", "_objCount", "_spawningTime", "_hoursAlive", "_props", "_fileNa
 _obj = _this select 0;
 _objCount = if (count _this > 1) then { _this select 1 } else { nil };
 
-if (isNil "_objCount") exitWith {nil}; // profileNamespace and iniDB require sequential _objCount to save properly
+if (!alive _obj || isNil "_objCount") exitWith {nil}; // profileNamespace and iniDB require sequential _objCount to save properly
 
 _spawningTime = _obj getVariable "baseSaving_spawningTime";
 
