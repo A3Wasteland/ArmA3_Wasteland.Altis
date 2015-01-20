@@ -14,7 +14,12 @@ _unit = _this select 3;
 diag_log format ["Player disconnected: %1 (%2)", _name, _uid];
 
 [_unit, _uid, _name] call p_disconnectSave;
-deleteVehicle _unit;
+if (_unit getVariable ["stats_reset",false]) then {
+	_unit spawn sh_drop_player_inventory;
+	_unit setDamage 1;
+}else{ 
+	deleteVehicle _unit;
+};
 
 _resend = false;
 

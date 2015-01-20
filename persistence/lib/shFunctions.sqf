@@ -284,5 +284,40 @@ sh_isFlying = {
   false
 };
 
+sh_drop_player_inventory = {
+  //Taken from onKilled. Drop player items and money.
+  private["_player", "_money"];
+  _player = _this;
+  _money = _player getVariable ["cmoney", 0];
+  _player setVariable ["cmoney", 0, true];
+
+  // wait until corpse stops moving before dropping stuff
+  waitUntil {(getPos _player) select 2 < 1 && vectorMagnitude velocity _player < 1};
+
+  // Drop money
+  private["_m"];
+  if (_money > 0) then
+  {
+    _m = createVehicle ["Land_Money_F", getPosATL _player, [], 0.5, "CAN_COLLIDE"];
+    _m setDir random 360;
+    _m setVariable ["cmoney", _money, true];
+    _m setVariable ["owner", "world", true];
+  };
+
+  // Drop items
+  private["_inventory", "_id", "_qty",  "_type", "_object"];
+  _inventory = _player getVariable ["inventory",[]];
+  {   
+    _id = _x select 0;
+    _qty = _x select 1;
+    _type = _x select 4;
+    for "_i" from 1 to _qty do {
+    _obj = createVehicle [_type, getPosATL _player, [], 0.5, "CAN_COLLIDE"];
+    _obj setDir getDir _player;
+    _obj setVariable ["mf_item_id", _id, true];
+    };
+  } forEach _inventory;
+};
+
 shFunctions_loaded = true;
 diag_log "shFunctions loading complete";

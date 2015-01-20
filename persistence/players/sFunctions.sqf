@@ -293,6 +293,7 @@ p_addPlayerSave = {
 
   diag_log format["Saving %1(%2):  unconscious = %3, respawning = %4, alive = %5", _name,_uid, _unconscious, _respawn_active, _alive];
   if (_reset_save) exitWith {
+     _player setVariable ["stats_reset",true];
      diag_log format["Resetting %1(%2) stats", _name, _uid];
      _request pushBack ["PlayerSave",nil];
      _request pushBack ["PlayerSave_Stratis",nil];
