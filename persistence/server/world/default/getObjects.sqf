@@ -4,7 +4,7 @@
 //	@file Name: getObjects.sqf
 //	@file Author: AgentRev
 
-private ["_objFileName", "_exists", "_objCount", "_vars", "_objects", "_objData", "_objName", "_params"];
+private ["_objFileName", "_exists", "_objCount", "_vars", "_objects", "_objData", "_objName", "_params", "_value"];
 
 _objFileName = "Objects" call PDB_objectFileName;
 
@@ -44,7 +44,8 @@ for "_i" from 1 to _objCount do
 
 	{
 		_params = _x select 0;
-		_objData pushBack [_x select 1, [_objFileName, _objName, _params select 0, _params select 1] call PDB_read];
+		_value = [_objFileName, _objName, _params select 0, _params select 1] call PDB_read;
+		if (!isNil "_value") then { _objData pushBack [_x select 1, _value] };
 	} forEach _vars;
 
 	_objects pushBack _objData;

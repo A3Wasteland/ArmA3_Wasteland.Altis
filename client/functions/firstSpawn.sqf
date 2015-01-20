@@ -88,15 +88,15 @@ player addEventHandler ["InventoryClosed",
 	_obj setVariable ["inventoryIsOpen", nil];
 }];
 
-// Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan, among a LOT of other things
 [] spawn
 {
 	_lastVeh = vehicle player;
 
-	while {true} do
+	waitUntil
 	{
 		_currVeh = vehicle player;
 
+		// Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan
 		if (_lastVeh != _currVeh) then
 		{
 			if (_currVeh != player) then
@@ -110,7 +110,14 @@ player addEventHandler ["InventoryClosed",
 		};
 
 		_lastVeh = _currVeh;
-		uiSleep 0.25;
+
+		// Prevent usage of commander camera
+		if (cameraView == "GROUP") then
+		{
+			cameraOn switchCamera "EXTERNAL";
+		};
+
+		false
 	};
 };
 

@@ -12,4 +12,6 @@ _playerName = _this select 1;
 _actionType = _this select 2;
 _actionValue = _this select 3;
 
+if (_actionValue isEqualTo "") exitWith {};
+
 [format ["addAdminLog:%1:%2:%3:%4:%5", call A3W_extDB_ServerID, toString (toArray _playerName - FILTERED_CHARS), _playerUID, _actionType, _actionValue]] call extDB_Database_async;

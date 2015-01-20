@@ -8,7 +8,7 @@ private ["_veh", "_vehCount", "_spawningTime", "_lastUse", "_hoursAlive", "_hour
 _veh = _this select 0;
 _vehCount = if (count _this > 1) then { _this select 1 } else { nil };
 
-if (isNil "_vehCount") exitWith {nil}; // profileNamespace and iniDB require sequential _vehCount to save properly
+if (!alive _veh || isNil "_vehCount") exitWith {nil}; // profileNamespace and iniDB require sequential _vehCount to save properly
 
 _spawningTime = _veh getVariable "vehSaving_spawningTime";
 
