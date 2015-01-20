@@ -47,8 +47,8 @@ class WastelandHud {
 			type = CT_STRUCTURED_TEXT;
 			size = 0.040;
 			x = safeZoneX + (safeZoneW * (1 - (0.24 / SafeZoneW)));
-			y = safeZoneY + (safeZoneH * (1 - (0.26 / SafeZoneH)));
-			w = 0.22; h = 0.26;
+			y = safeZoneY + (safeZoneH * (1 - (0.28 / SafeZoneH)));
+			w = 0.22; h = 0.28;
 			colorText[] = {1,1,1,1};
 			lineSpacing = 3;
 			colorBackground[] = {0,0,0,0};

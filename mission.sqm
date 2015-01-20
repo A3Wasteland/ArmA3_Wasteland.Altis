@@ -97,7 +97,7 @@ class Mission
 	randomSeed=14957468;
 	class Intel
 	{
-		briefingName="TOP A3Wasteland Altis v1.0c extDB";
+		briefingName="TOP A3Wasteland Altis v1.1 extDB";
 		overviewText="TOP Wasteland Conquest Altis by TOPARMA.com. Core developed by A3Wasteland.com";
 		resistanceWest=0;
 		startWeather=0.10000001;
@@ -2317,57 +2317,62 @@ class Mission
 		};
 		class Item24
 		{
-			position[]={14493.499,18.768188,16383.846};
-			azimut=-176.547;
+			position[]={3574.9937,11.526847,12800.598};
+			azimut=302.65201;
+			offsetY=0.15;
 			id=183;
-			side="EMPTY";
-			vehicle="Land_Atm_01_F";
-			skill=0.60000002;
-			text="ATM";
-			init="this addAction [""Use ATM"", ""addons\atm\ATM.sqf""];";
-		};
-		class Item25
-		{
-			position[]={25618.781,20.873209,21353.176};
-			azimut=137.07899;
-			offsetY=0.25;
-			id=184;
 			side="EMPTY";
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
-			init="this addAction [""Use ATM"", ""addons\atm\ATM.sqf""];";
+			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
+		};
+		class Item25
+		{
+			position[]={14492,18.768188,16383.846};
+			azimut=185.518;
+			id=184;
+			side="EMPTY";
+			vehicle="Land_Atm_01_F";
+			skill=0.60000002;
+			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item26
 		{
-			position[]={16774.646,18.403027,12594.591};
-			azimut=269.349;
+			position[]={25618.681,20.873209,21353.276};
+			azimut=136.1844;
+			offsetY=0.15;
 			id=185;
 			side="EMPTY";
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
-			init="this addAction [""Use ATM"", ""addons\atm\ATM.sqf""];";
+			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item27
 		{
-			position[]={9507.4814,118.30473,15937.552};
-			azimut=1.3209668;
-			offsetY=0.25;
+			position[]={16774.646,18.403027,12594.591};
+			azimut=270.281;
+			offsetY=0.15;
 			id=186;
 			side="EMPTY";
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
-			init="this addAction [""Use ATM"", ""addons\atm\ATM.sqf""];";
+			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item28
 		{
-			position[]={3574.9937,11.526847,12800.598};
-			azimut=303.048;
-			offsetY=0.25;
+			position[]={9507.4814,118.30473,15937.552};
+			azimut=4.3657;
+			offsetY=0.15;
 			id=187;
 			side="EMPTY";
 			vehicle="Land_Atm_02_F";
 			skill=0.60000002;
-			init="this addAction [""Use ATM"", ""addons\atm\ATM.sqf""];";
+			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
 		};
 		class Item29
 		{

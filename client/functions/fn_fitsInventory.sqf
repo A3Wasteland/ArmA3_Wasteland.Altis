@@ -6,7 +6,7 @@
 
 // This script is much more complicated than it should be, because canAddItemToXXX is not detecting free inventory space correctly in Arma 3 v1.34, another bug courtesy of BIS...
 
-private ["_unit", "_item", "_allowedContainers", "_allSlots", "_wpSlotsInfo", "_allowedSlots", "_uniformFree", "_vestFree", "_backpackFree", "_uniform", "_vest", "_backpack", "_containerClass", "_uniformCapacity", "_vestCapacity", "_backpackCapacity", "_itemSize", "_linkedItems", "_linkedItem"];
+private ["_unit", "_item", "_allowedContainers", "_allSlots", "_wpSlotsInfo", "_magCfg", "_allowedSlots", "_uniformFree", "_vestFree", "_backpackFree", "_uniform", "_vest", "_backpack", "_containerClass", "_uniformCapacity", "_vestCapacity", "_backpackCapacity", "_itemSize", "_linkedItems", "_linkedItem"];
 
 _unit = _this select 0;
 _item = _this select 1;
@@ -15,13 +15,25 @@ if (count _this > 2) then { _allowedContainers = _this select 2 };
 
 _allSlots = true;
 _wpSlotsInfo = configFile >> "CfgWeapons" >> _item >> "WeaponSlotsInfo";
+_magCfg = configFile >> "CfgMagazines" >> _item;
 
-if (isClass _wpSlotsInfo) then
+switch (true) do
 {
-	if (isArray (_wpSlotsInfo >> "allowedSlots")) then
+	case (isClass _wpSlotsInfo):
 	{
-		_allowedSlots = getArray (_wpSlotsInfo >> "allowedSlots");
-		_allSlots = false;
+		if (isArray (_wpSlotsInfo >> "allowedSlots")) then
+		{
+			_allowedSlots = getArray (_wpSlotsInfo >> "allowedSlots");
+			_allSlots = false;
+		};
+	};
+	case (isClass _magCfg):
+	{
+		if (isArray (_magCfg >> "allowedSlots")) then
+		{
+			_allowedSlots = getArray (_magCfg >> "allowedSlots");
+			_allSlots = false;
+		};
 	};
 };
 

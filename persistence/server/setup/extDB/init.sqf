@@ -4,7 +4,7 @@
 //	@file Name: init.sqf
 //	@file Author: Torndeco, AgentRev
 
-#define MIN_DB_VERSION 2.0
+#define MIN_DB_VERSION 2.03
 
 private ["_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
 
@@ -67,6 +67,8 @@ if (_return) then
 		extDB_Database_async = [_setupDir, "async_database.sqf"] call mf_compile;
 		extDB_Misc_async = [_setupDir, "async_misc.sqf"] call mf_compile;
 	};
+
+	extDB_pairsToSQL = [_setupDir, "fn_pairsToSQL.sqf"] call mf_compile;
 
 	_result = (["getDBVersion", 2] call extDB_Database_async) select 0;
 	if (_result < MIN_DB_VERSION) exitWith { diag_log format ["[extDB] ### Outdated A3Wasteland database version! %1 - min: %2", _result, MIN_DB_VERSION]; _return = false };

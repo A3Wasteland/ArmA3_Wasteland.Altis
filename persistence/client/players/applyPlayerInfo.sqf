@@ -4,7 +4,7 @@
 //	@file Name: applyPlayerInfo.sqf
 //	@file Author: AgentRev
 
-// This is where you load custom player variables that must persist between deaths, i.e. bank money amount for ATM addon
+// This is where you load custom player variables that must persist between deaths
 
 private ["_data", "_name", "_value"];
 
@@ -16,7 +16,7 @@ _data = _this;
 
 	switch (_name) do
 	{
-		//case "Donator": { player setVariable ["isDonator", _value > 0] }; // deprecated
-		case "BankMoney": { player setVariable ["bmoney", _value max 0, true] };
+		//case "Donator": { player setVariable ["Donator", _value > 0] }; // deprecated
+		//case "BankMoney": { player setVariable ["bmoney", _value max 0, true] }; // NOTE: Bank money assignation has been moved server-side
 	};
 } forEach _data;

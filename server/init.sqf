@@ -26,7 +26,7 @@ addMissionEventHandler ["HandleDisconnect",
 	{
 		if (!(_unit getVariable ["playerSpawning", false]) && typeOf _unit != "HeadlessClient_F") then
 		{
-			[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
+			[_uid, [["BankMoney", _unit getVariable ["bmoney", 0]]], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
 		};
 
 		deleteVehicle _unit;
@@ -98,6 +98,13 @@ forEach
 	"A3W_purchasedVehicleSaving",
 	"A3W_missionVehicleSaving",
 	"A3W_missionFarAiDrawLines",
+	"A3W_atmEnabled",
+	"A3W_atmMaxBalance",
+	"A3W_atmTransferFee",
+	"A3W_atmTransferAllTeams",
+	"A3W_atmEditorPlacedOnly",
+	"A3W_atmMapIcons",
+	"A3W_atmRemoveIfDisabled",
 	"A3W_extDB_ServerID",
 	"A3W_extDB_PlayerSave_ServerID",
 	"A3W_extension",
@@ -325,7 +332,15 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 	{
 		call compile preprocessFileLineNumbers "server\functions\boxSpawning.sqf";
 	};
+
+	if (["A3W_vehicleSpawning"] call isConfigOn || ["A3W_boatSpawning"] call isConfigOn) then
+	{
+		execVM "server\spawning\vehicleRespawnManager.sqf";
+	};
 };
+
+A3W_serverSpawningComplete = compileFinal "true";
+publicVariable "A3W_serverSpawningComplete";
 
 if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 {
