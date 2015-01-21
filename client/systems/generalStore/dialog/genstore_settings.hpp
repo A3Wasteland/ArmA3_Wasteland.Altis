@@ -10,7 +10,7 @@ class genstored
 	idd = genstore_DIALOG;
 	movingEnable = true;
 	enableSimulation = true;
-	onLoad = "[0] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+	onLoad = "[[0], populateGeneralStore] execFSM 'call.fsm'";
 
 	class ControlsBackground
 	{
@@ -136,7 +136,7 @@ class genstored
 		class BuyItem: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[0] execVM 'client\systems\generalStore\buyItems.sqf'";
+			action = "[0] execVM 'client\systems\generalStore\buyItems.sqf'";
 			text = "Buy";
 			sizeEx = GenStoreButton_textSize;
 
@@ -149,7 +149,7 @@ class genstored
 		class SellItem: w_RscButton
 		{
 			idc = genstore_sell;
-			onButtonClick = "[0] execVM 'client\systems\generalStore\sellItems.sqf'";
+			action = "[0] execVM 'client\systems\generalStore\sellItems.sqf'";
 			text = "Sell";
 			sizeEx = GenStoreButton_textSize;
 
@@ -162,7 +162,7 @@ class genstored
 		class StoreButton0: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[0] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+			action = "[0] call populateGeneralStore";
 			text = "Headgear";
 			sizeEx = GenStoreButton_textSize;
 
@@ -175,7 +175,7 @@ class genstored
 		class StoreButton1: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[1] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+			action = "[1] call populateGeneralStore";
 			text = "Uniforms";
 			sizeEx = GenStoreButton_textSize;
 
@@ -188,7 +188,7 @@ class genstored
 		class StoreButton2: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[2] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+			action = "[2] call populateGeneralStore";
 			text = "Vests";
 			sizeEx = GenStoreButton_textSize;
 
@@ -201,7 +201,7 @@ class genstored
 		class StoreButton3: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[3] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+			action = "[3] call populateGeneralStore";
 			text = "Backpacks";
 			sizeEx = GenStoreButton_textSize;
 
@@ -214,7 +214,7 @@ class genstored
 		class StoreButton4: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[4] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+			action = "[4] call populateGeneralStore";
 			text = "Items";
 			sizeEx = GenStoreButton_textSize;
 
@@ -227,7 +227,7 @@ class genstored
 		class StoreButton5: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[5] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+			action = "[5] call populateGeneralStore";
 			text = "Supplies";
 			sizeEx = GenStoreButton_textSize;
 
@@ -240,7 +240,7 @@ class genstored
 		class StoreButton6: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[6] execVM 'client\systems\generalStore\populateGenStore.sqf'";
+			action = "[6] call populateGeneralStore";
 			text = "Objects";
 			sizeEx = GenStoreButton_textSize;
 
@@ -253,7 +253,7 @@ class genstored
 		class SellWeapon: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\selling\sellWeapon.sqf'";
+			action = "[] execVM 'client\systems\selling\sellWeapon.sqf'";
 			text = "Sell Weapon";
 			sizeEx = GenStoreButton_textSize;
 
@@ -266,7 +266,7 @@ class genstored
 		class SellUniform: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\selling\sellUniform.sqf'";
+			action = "[] execVM 'client\systems\selling\sellUniform.sqf'";
 			text = "Sell Uniform";
 			sizeEx = GenStoreButton_textSize;
 
@@ -279,7 +279,7 @@ class genstored
 		class SellVest: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\selling\sellVest.sqf'";
+			action = "[] execVM 'client\systems\selling\sellVest.sqf'";
 			text = "Sell Vest";
 			sizeEx = GenStoreButton_textSize;
 
@@ -292,7 +292,7 @@ class genstored
 		class SellBackpack: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[] execVM 'client\systems\selling\sellBackpack.sqf'";
+			action = "[] execVM 'client\systems\selling\sellBackpack.sqf'";
 			text = "Sell Backpack";
 			sizeEx = GenStoreButton_textSize;
 
@@ -305,7 +305,7 @@ class genstored
 		class CancelButton: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "closeDialog 0";
+			action = "closeDialog 0";
 			text = "Cancel";
 			sizeEx = GenStoreButton_textSize;
 
