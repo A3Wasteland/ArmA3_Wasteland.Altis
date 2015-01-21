@@ -41,7 +41,6 @@ fn_manualObjectSave = [_worldDir, "fn_manualObjectSave.sqf"] call mf_compile;
 fn_manualObjectDelete = [_worldDir, "fn_manualObjectDelete.sqf"] call mf_compile;
 fn_saveObject = [_methodDir, "saveObject.sqf"] call mf_compile;
 fn_postObjectSave = [_methodDir, "postObjectSave.sqf"] call mf_compile;
-fn_deleteObjects = [_methodDir, "deleteObjects.sqf"] call mf_compile;
 fn_saveWarchestMoney = [_methodDir, "saveWarchestMoney.sqf"] call mf_compile;
 
 if (_vehicleSaving) then
@@ -52,7 +51,6 @@ if (_vehicleSaving) then
 	fn_manualVehicleDelete = [_worldDir, "fn_manualVehicleDelete.sqf"] call mf_compile;
 	fn_saveVehicle = [_methodDir, "saveVehicle.sqf"] call mf_compile;
 	fn_postVehicleSave = [_methodDir, "postVehicleSave.sqf"] call mf_compile;
-	fn_deleteVehicles = [_methodDir, "deleteVehicles.sqf"] call mf_compile;
 };
 
 if (_savingMethod == "iniDB") then

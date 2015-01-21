@@ -14,7 +14,7 @@ if (isNil "_exists" || {!_exists}) exitWith {[]};
 _objCount = [_objFileName, "Info", "ObjCount", "NUMBER"] call PDB_read; // iniDB_read
 if (isNil "_objCount" || {_objCount <= 0}) exitWith {[]};
 
-// [key name, data type], vLoad variable name
+// [key name, data type], oLoad variable name
 _vars =
 [
 	[["Class", "STRING"], "_class"],

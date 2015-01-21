@@ -90,17 +90,17 @@ if (_uid call isAdmin) then
 				case 0: //Access Gun Store
 				{
 					closeDialog 0;
-					execVM "client\systems\gunStore\loadGunStore.sqf";
+					[] call loadGunStore;
 				};
 				case 1: //Access General Store
 				{
 					closeDialog 0;
-					execVM "client\systems\generalStore\loadGenStore.sqf";
+					[] call loadGeneralStore;
 				};
 				case 2: //Access ATM Interface
 				{
 					closeDialog 0;
-					execVM "addons\atm\atm.sqf";
+					[] call loadVehicleStore;
 				};
 				case 3: //Access ATM Dialog
 				{
