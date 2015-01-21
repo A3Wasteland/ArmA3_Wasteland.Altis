@@ -27,6 +27,8 @@ if !(_vehicle isKindOf "UAV_02_base_F") then
 	_vehicle disableTIEquipment true;
 };
 
+_vehicle setUnloadInCombat [true, false]; // Prevent AI gunners from getting out of vehicle while in combat if it's in working condition
+
 {
 	_vehicle setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x, true];
 } forEach (_class call getHitPoints);
