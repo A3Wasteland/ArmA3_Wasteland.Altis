@@ -22,19 +22,24 @@ addMissionEventHandler ["HandleDisconnect",
 	_uid = _this select 2;
 	_name = _this select 3;
 
-	if (alive _unit && (_unit getVariable ["FAR_isUnconscious", 0] == 0) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
+	if (alive _unit) then
 	{
-		if (!(_unit getVariable ["playerSpawning", false]) && typeOf _unit != "HeadlessClient_F") then
+		if ((_unit getVariable ["FAR_isUnconscious", 0] == 0) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
 		{
-			[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
+			if (!(_unit getVariable ["playerSpawning", false]) && typeOf _unit != "HeadlessClient_F") then
+			{
+				[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
+			};
+
+			deleteVehicle _unit;
 		};
-
-		deleteVehicle _unit;
-	};
-
-	if (!isNil "fn_onPlayerDisconnected") then
+	}
+	else
 	{
-		[_id, _uid, _name] spawn fn_onPlayerDisconnected;
+		if (vehicle _unit != _unit && !isNil "fn_ejectCorpse") then
+		{
+			_unit spawn fn_ejectCorpse;
+		};
 	};
 
 	false
