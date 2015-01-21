@@ -101,6 +101,7 @@ fn_setToPairs = [_serverFunc, "fn_setToPairs.sqf"] call mf_compile;
 fn_sortAlphabetically = [_serverFunc, "fn_sortAlphabetically.sqf"] call mf_compile;
 fn_splitString = [_serverFunc, "fn_splitString.sqf"] call mf_compile;
 fn_startsWith = [_serverFunc, "fn_startsWith.sqf"] call mf_compile;
+fn_ejectCorpse = [_serverFunc, "fn_ejectCorpse.sqf"] call mf_compile;
 //fn_vehicleInit = [_serverFunc, "fn_vehicleInit.sqf"] call mf_compile;
 getBallMagazine = [_serverFunc, "getBallMagazine.sqf"] call mf_compile;
 getFwdVelocity = [_serverFunc, "getFwdVelocity.sqf"] call mf_compile;
