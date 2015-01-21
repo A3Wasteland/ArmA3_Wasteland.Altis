@@ -56,8 +56,7 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
-#include "addons\atm\defines.hpp"
-#include "addons\atm\bank.hpp"
+
 #include "addons\outlw_magRepack\MagRepack_config.hpp"
 #include "addons\beacondetector\sound\cfgsounds.hpp"
 
