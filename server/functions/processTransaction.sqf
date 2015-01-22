@@ -96,13 +96,21 @@ switch (toLower _type) do
 			_balance = _player getVariable ["bmoney", 0];
 
 			if (_amount < 0 && _balance < abs _amount) exitWith {}; // player has not enough funds for withdrawal
-			if (_balance + _amount > ["A3W_atmMaxBalance", 1000000] call getPublicVar) exitWith {}; // account would exceed or has reached max balance
 
-			_player setVariable ["bmoney", _balance + _amount, true];
+			_newBalance = _balance + _amount;
+
+			if (_newBalance > ["A3W_atmMaxBalance", 1000000] call getPublicVar) exitWith {}; // account would exceed or has reached max balance
+
+			_player setVariable ["bmoney", _newBalance, true];
 
 			if (!local _player) then
 			{
 				_player setVariable ["cmoney", _wallet - _amount, false]; // do NOT set to true, this is only a temporary server-side change
+			};
+
+			if (["A3W_playerSaving"] call isConfigOn) then
+			{
+				[getPlayerUID _player, [["BankMoney", _newBalance]], []] call fn_saveAccount;
 			};
 
 			_result = _amount;

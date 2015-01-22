@@ -115,10 +115,11 @@ player addEventHandler ["WeaponAssembled", {
 {
 	_lastVeh = vehicle player;
 
-	while {true} do
+	waitUntil
 	{
 		_currVeh = vehicle player;
 
+		// Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan
 		if (_lastVeh != _currVeh) then
 		{
 			if (_currVeh != player) then
@@ -132,7 +133,15 @@ player addEventHandler ["WeaponAssembled", {
 		};
 
 		_lastVeh = _currVeh;
-		uiSleep 0.25;
+
+		// Prevent usage of commander camera
+		if (cameraView == "GROUP") then
+		{
+			cameraOn switchCamera "EXTERNAL";
+		};
+		
+ 		uiSleep 0.25;
+		false
 	};
 };
 

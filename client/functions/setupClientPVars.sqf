@@ -19,6 +19,7 @@
 	["pvar_playerEventServer", { PVAL call playerEventServer }],
 	["pvar_deleteEmptyGroup", { PVAL spawn deleteEmptyGroup }],
 	["pvar_weaponDisassembledEvent", { PVAL spawn weaponDisassembledEvent }],
+	["pvar_ejectCorpse", { PVAL spawn fn_ejectCorpse }],
 
 	["pvar_territoryActivityHandler", { PVAR_TARGET(_value call A3W_fnc_territoryActivityHandler) }],
 	["pvar_updateTerritoryMarkers", { PVAR_TARGET(_value call updateTerritoryMarkers) }]

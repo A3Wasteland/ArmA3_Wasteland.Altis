@@ -10,7 +10,7 @@ class vehshopd
 	idd = vehshop_DIALOG;
 	movingEnable = true;
 	enableSimulation = true;
-	onLoad = "[0] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
+	onLoad = "[[0], populateVehicleStore] execFSM 'call.fsm'";
 
 	class ControlsBackground
 	{
@@ -87,7 +87,7 @@ class vehshopd
 		class SelectionList: w_RscList
 		{
 			idc = vehshop_veh_list;
-			onLBSelChanged = "[] execVM 'client\systems\vehicleStore\vehicleInfo.sqf'";
+			onLBSelChanged = "call vehicleInfo";
 			sizeEx = 0.04 * TEXT_SCALE;
 			rowHeight = 0.05 * TEXT_SCALE;
 
@@ -113,7 +113,7 @@ class vehshopd
 		class BuyVehicle: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "[0] execVM 'client\systems\vehicleStore\buyVehicles.sqf'";
+			action = "[0] execVM 'client\systems\vehicleStore\buyVehicles.sqf'";
 			text = "Buy";
 			sizeEx = VehStoreButton_textSize;
 
@@ -126,7 +126,7 @@ class vehshopd
 		class CancelButton: w_RscButton
 		{
 			idc = -1;
-			onButtonClick = "closeDialog 0";
+			action = "closeDialog 0";
 			text = "Cancel";
 			sizeEx = VehStoreButton_textSize;
 
@@ -139,7 +139,7 @@ class vehshopd
 		class StoreButton0: w_RscButton
 		{
 			idc = vehshop_button0;
-			onButtonClick = "[0] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
+			action = "[0] call populateVehicleStore";
 			text = "Land";
 			sizeEx = VehStoreButton_textSize;
 
@@ -152,7 +152,7 @@ class vehshopd
 		class StoreButton1: w_RscButton
 		{
 			idc = vehshop_button1;
-			onButtonClick = "[1] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
+			action = "[1] call populateVehicleStore";
 			text = "Armored";
 			sizeEx = VehStoreButton_textSize;
 
@@ -165,7 +165,7 @@ class vehshopd
 		class StoreButton2: w_RscButton
 		{
 			idc = vehshop_button2;
-			onButtonClick = "[2] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
+			action = "[2] call populateVehicleStore";
 			text = "Tanks";
 			sizeEx = VehStoreButton_textSize;
 
@@ -178,7 +178,7 @@ class vehshopd
 		class StoreButton3: w_RscButton
 		{
 			idc = vehshop_button3;
-			onButtonClick = "[3] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
+			action = "[3] call populateVehicleStore";
 			text = "Helicopters";
 			sizeEx = VehStoreButton_textSize;
 
@@ -191,7 +191,7 @@ class vehshopd
 		class StoreButton4: w_RscButton
 		{
 			idc = vehshop_button4;
-			onButtonClick = "[4] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
+			action = "[4] call populateVehicleStore";
 			text = "Planes";
 			sizeEx = VehStoreButton_textSize;
 
@@ -204,7 +204,7 @@ class vehshopd
 		class StoreButton5: w_RscButton
 		{
 			idc = vehshop_button5;
-			onButtonClick = "[5] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
+			action = "[5] call populateVehicleStore";
 			text = "Boats";
 			sizeEx = VehStoreButton_textSize;
 
@@ -219,7 +219,7 @@ class vehshopd
 		class StoreButton6: w_RscButton
 		{
 			idc = vehshop_button6;
-			onButtonClick = "[6] execVM 'client\systems\vehicleStore\populateVehicleStore.sqf'";
+			action = "[6] call populateVehicleStore";
 			text = "Submarines";
 			sizeEx = VehStoreButton_textSize;
 

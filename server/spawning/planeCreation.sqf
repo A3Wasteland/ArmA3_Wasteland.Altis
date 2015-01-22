@@ -21,7 +21,7 @@ if (_noBuzzard && {_planeType isKindOf "Plane_Fighter_03_base_F"}) exitWith {};
 
 _pos = _markerPos;
 
-//Car Initialization
+//Plane Initialization
 _plane = createVehicle [_planeType, _pos, [], 0, "None"];
 
 [_plane] call vehicleSetup;
@@ -32,21 +32,16 @@ _plane setFuel (0.4 + random 0.2);
 
 _plane setDir _markerDir;
 
+// Remove AGM missiles for balance
 switch (true) do
 {
 	case (_planeType isKindOf "Plane_CAS_01_base_F"):
 	{
-		_plane removeMagazines "4Rnd_Bomb_04_F";
-		_plane removeMagazines "6Rnd_Missile_AGM_02_F";
-		_plane addMagazine ["6Rnd_Missile_AGM_02_F", 0];
-		_plane addMagazine "4Rnd_Bomb_04_F";
+		_plane setMagazineTurretAmmo ["6Rnd_Missile_AGM_02_F", 0, [-1]];
 	};
 	case (_planeType isKindOf "Plane_CAS_02_base_F"):
 	{
-		_plane removeMagazines "2Rnd_Bomb_03_F";
-		_plane removeMagazines "4Rnd_Missile_AGM_01_F";
-		_plane addMagazine ["4Rnd_Missile_AGM_01_F", 0];
-		_plane addMagazine "2Rnd_Bomb_03_F";
+		_plane setMagazineTurretAmmo ["4Rnd_Missile_AGM_01_F", 0, [-1]];
 	};
 };
 
