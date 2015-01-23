@@ -4,9 +4,6 @@
 //	@file Name: oSave.sqf
 //	@file Author: AgentRev, [GoT] JoSchaap
 
-_objectIDs = _this select 0;
-_vehicleIDs = _this select 1;
-
 #include "functions.sqf"
 
 A3W_saveableObjects = [];
@@ -104,9 +101,10 @@ while {true} do
 		call fn_saveWarchestMoney;
 	};
 
-	[_objectIDs - _newObjectIDs, _objCount] call fn_postObjectSave;
+	_oldIDs = A3W_objectIDs - _newObjectIDs;
+	A3W_objectIDs = _newObjectIDs;
 
-	_objectIDs = _newObjectIDs;
+	[_oldIDs, _objCount] call fn_postObjectSave;
 
 	uiSleep _savingInterval;
 
@@ -135,8 +133,9 @@ while {true} do
 
 		diag_log format ["A3W - %1 vehicles have been saved with %2", _vehCount, call A3W_savingMethodName];
 
-		[_vehicleIDs - _newVehicleIDs, _vehCount] call fn_postVehicleSave;
+		_oldIDs = A3W_vehicleIDs - _newVehicleIDs;
+		A3W_vehicleIDs = _newVehicleIDs;
 
-		_vehicleIDs = _newVehicleIDs;
+		[_oldIDs, _vehCount] call fn_postVehicleSave;
 	};
 };
