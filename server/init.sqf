@@ -15,7 +15,7 @@ externalConfigFolder = "\A3Wasteland_settings";
 vChecksum = compileFinal str call A3W_fnc_generateKey;
 
 // Corpse deletion on disconnect if player alive and player saving on + inventory save
-addMissionEventHandler ["HandleDisconnect", 
+addMissionEventHandler ["HandleDisconnect",
 {
 	_unit = _this select 0;
 	_id = _this select 1;
@@ -132,18 +132,18 @@ _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
 _purchasedVehicleSavingOn = ["A3W_purchasedVehicleSaving"] call isConfigOn;
 _missionVehicleSavingOn = ["A3W_missionVehicleSaving"] call isConfigOn;
 
-_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn || _purchasedVehicleSavingOn || _missionVehicleSavingOn);
+_objectSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
 _vehicleSavingOn = (_purchasedVehicleSavingOn || _purchasedVehicleSavingOn);
 
 _setupPlayerDB = scriptNull;
 
 // Do we need any persistence?
-if (_playerSavingOn || _serverSavingOn) then
+if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 {
- 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 	
- 	_savingMethod = ["A3W_savingMethod", "profile"] call getPublicVar;
- 	if (_savingMethod == "iniDBI") then { _savingMethod = "iniDB" };
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	_savingMethod = ["A3W_savingMethod", "profile"] call getPublicVar;
+	if (_savingMethod == "iniDBI") then { _savingMethod = "iniDB" };
 
   _savingMethod = "sock";
   
@@ -239,16 +239,16 @@ if (_playerSavingOn || _serverSavingOn) then
 		};
 	};
 
-	[_playerSavingOn, _serverSavingOn, _vehicleSavingOn] spawn
+	[_playerSavingOn, _objectSavingOn, _vehicleSavingOn] spawn
 	{
 		_playerSavingOn = _this select 0;
-		_serverSavingOn = _this select 1;
+		_objectSavingOn = _this select 1;
 		_vehicleSavingOn = _this select 2;
 
 		_objectIDs = [];
 		_vehicleIDs = [];
 
-		if (_serverSavingOn) then
+		if (_objectSavingOn) then
 		{
 			_objectIDs = call compile preprocessFileLineNumbers "persistence\world\oLoad.sqf";
 		};
@@ -259,10 +259,10 @@ if (_playerSavingOn || _serverSavingOn) then
 		};
 
 		/*
-		if (_serverSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
+		if (_objectSavingOn || _vehicleSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
 		{
-			[_objectIDs, _vehicleIDs] execVM "persistence\server\world\oSave.sqf";
-			waitUntil {!isNil "A3W_oSaveReady"};
+			execVM "persistence\server\world\oSave.sqf";
+			//waitUntil {!isNil "A3W_oSaveReady"};
 		};
 		*/
 	};
