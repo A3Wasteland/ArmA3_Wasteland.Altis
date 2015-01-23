@@ -10,6 +10,8 @@ _vehCount = _this select 1;
 _fileName = "Vehicles" call PDB_objectFileName;
 _oldVehCount = [_fileName, "Info", "VehCount", "NUMBER"] call PDB_read; // iniDB_read
 
+[_fileName, "Info", "VehCount", _vehCount] call PDB_write; // iniDB_write
+
 // Reverse-delete old vehicles
 if (_oldVehCount > _vehCount) then
 {
