@@ -2376,83 +2376,84 @@ class Mission
 		};
 		class Item29
 		{
+			position[]={21647.465,14.035986,7676.2676};
+			azimut=230.96605;
+			id=188;
+			side="EMPTY";
+			vehicle="Land_Atm_02_F";
+			skill=0.60000002;
+			init="[this] call A3W_fnc_setupMissionATM";
+			description="DO NOT MODIFY IN EDITOR";
+		};
+		class Item30
+		{
 			position[]={6924.1587,77.704575,15909.887};
 			azimut=-90.979599;
-			id=188;
+			id=189;
 			side="EMPTY";
 			vehicle="Land_Cargo_Tower_V1_No3_F";
 			skill=0.60000002;
 			text="Tower_4_C";
 		};
-		class Item30
+		class Item31
 		{
 			position[]={14490.53,18.768085,16383.853};
 			azimut=186.14101;
 			offsetY=1;
-			id=189;
+			id=190;
 			side="EMPTY";
 			vehicle="UserTexture1m_F";
 			skill=0.60000002;
 			text="PROMOTOR_GORACK_A_1";
 			init="this setObjectTexture [0, ""client\images\promoteTextures\gorack_dot_net-001.jpg""]; this attachTo [sign, [0,-0.05,0.6]]; ";
 		};
-		class Item31
+		class Item32
 		{
 			position[]={16645.922,11.120999,12800.047};
 			azimut=300.155;
 			offsetY=7;
-			id=190;
+			id=191;
 			side="EMPTY";
 			vehicle="UserTexture10m_F";
 			skill=0.60000002;
 			text="PROMOTOR_GORACK_A_4";
 			init="this setObjectTexture [0, ""client\images\promoteTextures\gorack_dot_net-001.jpg""]; this attachTo [sign, [0,-0.05,0.6]]; ";
 		};
-		class Item32
+		class Item33
 		{
 			position[]={16774.535,18.351353,12592.921};
 			azimut=269.535;
 			offsetY=2;
-			id=191;
+			id=192;
 			side="EMPTY";
 			vehicle="UserTexture1m_F";
 			skill=0.60000002;
 			text="PROMOTOR_GORACK_A_5";
 			init="this setObjectTexture [0, ""client\images\promoteTextures\gorack_dot_net-001.jpg""]; this attachTo [sign, [0,-0.05,0.6]]; ";
 		};
-		class Item33
+		class Item34
 		{
 			position[]={3574.2017,11.456248,12799.036};
 			azimut=-57.8895;
 			offsetY=2;
-			id=192;
+			id=193;
 			side="EMPTY";
 			vehicle="UserTexture1m_F";
 			skill=0.60000002;
 			text="PROMOTOR_GORACK_A_6";
 			init="this setObjectTexture [0, ""client\images\promoteTextures\gorack_dot_net-001.jpg""]; this attachTo [sign, [0,-0.05,0.6]]; ";
 		};
-		class Item34
+		class Item35
 		{
 			position[]={25620.197,20.901987,21354.568};
 			azimut=495.431;
 			offsetY=2;
-			id=193;
+			id=194;
 			side="EMPTY";
 			vehicle="UserTexture1m_F";
 			skill=0.60000002;
 			text="PROMOTOR_GORACK_A_3";
 			init="this setObjectTexture [0, ""client\images\promoteTextures\gorack_dot_net-001.jpg""]; this attachTo [sign, [0,-0.05,0.6]]; ";
-		};
-		class Item35
-		{
-			position[]={21647.465,14.035986,7676.2676};
-			azimut=230.96605;
-			id=194;
-			side="EMPTY";
-			vehicle="Land_Atm_02_F";
-			skill=0.60000002;
-			init="this addAction [""Use ATM"", ""addons\atm\ATM.sqf""];";
 		};
 		class Item36
 		{
