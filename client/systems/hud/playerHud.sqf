@@ -101,7 +101,7 @@ while {true} do
 {
 	private ["_ui","_vitals","_hudVehicle","_health","_tempString","_yOffset","_vehicle"];
 
-	1000 cutRsc ["WastelandHud","PLAIN"];
+	1000 cutRsc ["WastelandHud","PLAIN",1e10];
 	_ui = uiNameSpace getVariable "WastelandHud";
 	_vitals = _ui displayCtrl hud_status_idc;
 	_hudVehicle = _ui displayCtrl hud_vehicle_idc;
