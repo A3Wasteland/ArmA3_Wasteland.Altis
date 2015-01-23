@@ -18,6 +18,7 @@ if (isNil "_objectID") then
 {
 	_objectID = ([format ["newServerObject:%1:%2", call A3W_extDB_ServerID, call A3W_extDB_MapID], 2] call extDB_Database_async) select 0;
 	_obj setVariable ["A3W_objectID", _objectID, true];
+	A3W_objectIDs pushBack _objectID;
 };
 
 _updateValues = [[_obj] call fn_getObjectProperties, 0] call extDB_pairsToSQL;

@@ -125,13 +125,13 @@ _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
 _purchasedVehicleSavingOn = ["A3W_purchasedVehicleSaving"] call isConfigOn;
 _missionVehicleSavingOn = ["A3W_missionVehicleSaving"] call isConfigOn;
 
-_serverSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn || _purchasedVehicleSavingOn || _missionVehicleSavingOn);
+_objectSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
 _vehicleSavingOn = (_purchasedVehicleSavingOn || _purchasedVehicleSavingOn);
 
 _setupPlayerDB = scriptNull;
 
 // Do we need any persistence?
-if (_playerSavingOn || _serverSavingOn) then
+if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -203,7 +203,7 @@ if (_playerSavingOn || _serverSavingOn) then
 
 	if (_playerSavingOn) then
 	{
-		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\server\players\setupPlayerDB.sqf"; // scriptDone stays stuck on false on Linux servers when using execVM
+		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\server\players\setupPlayerDB.sqf"; // scriptDone stays stuck on false when using execVM on Linux
 
 		// profileNamespace doesn't save antihack logs
 		if (_savingMethod != "profile") then
@@ -219,29 +219,29 @@ if (_playerSavingOn || _serverSavingOn) then
 		};
 	};
 
-	[_playerSavingOn, _serverSavingOn, _vehicleSavingOn] spawn
+	[_playerSavingOn, _objectSavingOn, _vehicleSavingOn] spawn
 	{
 		_playerSavingOn = _this select 0;
-		_serverSavingOn = _this select 1;
+		_objectSavingOn = _this select 1;
 		_vehicleSavingOn = _this select 2;
 
-		_objectIDs = [];
-		_vehicleIDs = [];
+		A3W_objectIDs = [];
+		A3W_vehicleIDs = [];
 
-		if (_serverSavingOn) then
+		if (_objectSavingOn) then
 		{
-			_objectIDs = call compile preprocessFileLineNumbers "persistence\server\world\oLoad.sqf";
+			call compile preprocessFileLineNumbers "persistence\server\world\oLoad.sqf";
 		};
 
 		if (_vehicleSavingOn) then
 		{
-			_vehicleIDs = call compile preprocessFileLineNumbers "persistence\server\world\vLoad.sqf";
+			call compile preprocessFileLineNumbers "persistence\server\world\vLoad.sqf";
 		};
 
-		if (_serverSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
+		if (_objectSavingOn || _vehicleSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
 		{
-			[_objectIDs, _vehicleIDs] execVM "persistence\server\world\oSave.sqf";
-			waitUntil {!isNil "A3W_oSaveReady"};
+			execVM "persistence\server\world\oSave.sqf";
+			//waitUntil {!isNil "A3W_oSaveReady"};
 		};
 	};
 
