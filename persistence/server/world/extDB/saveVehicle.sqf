@@ -17,6 +17,7 @@ if (isNil "_vehicleID") then
 {
 	_vehicleID = ([format ["newServerVehicle:%1:%2", call A3W_extDB_ServerID, call A3W_extDB_MapID], 2] call extDB_Database_async) select 0;
 	_veh setVariable ["A3W_vehicleID", _vehicleID, true];
+	A3W_vehicleIDs pushBack _vehicleID;
 };
 
 _spawningTime = _veh getVariable "vehSaving_spawningTime";
