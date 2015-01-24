@@ -14,7 +14,7 @@
 
 #define __DEBUG_INIDB_CALLS__ 0
 
-if (!isServer) exitWith {};
+if (hasInterface) exitWith {};
 
 
 PDB_ServerID = if (isNil "PDB_ServerID") then {"A3W_"} else {PDB_ServerID};

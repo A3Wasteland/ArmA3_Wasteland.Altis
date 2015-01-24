@@ -741,17 +741,46 @@ pl_savePlayersList = {
   call p_ActivePlayersListCleanup;
 };
 
+pl_saveLoop_iteration = {
+  ARGVX3(0,_scope,"");
+  diag_log format["pl_saveLoop: Saving player list"];
+  init(_start_time,diag_tickTime);
+  [[_scope], pl_savePlayersList] call sh_fsm_invoke;
+  init(_end_time,diag_tickTime);
+  diag_log format["pl_saveLoop: Took %1 ticks to save players list", (_end_time - _start_time)];
+};
+
+pl_saveLoop_iteration_hc = {
+  ARGVX3(0,_scope,"");
+  init(_hc_id,owner HeadlessClient);
+  diag_log format["pl_saveLoop: Offloading player list saving to headless client (id = %1)", _hc_id];
+
+  _hc_id publicVariableClient "active_players_list";
+  pl_saveLoop_iteration_hc_handler = [_scope];
+  _hc_id publicVariableClient "pl_saveLoop_iteration_hc_handler";
+};
+
+if (!(hasInterface || isDedicated)) then {
+  //diag_log format["Setting up HC handler for players list"];
+  "pl_saveLoop_iteration_hc_handler" addPublicVariableEventHandler {
+    diag_log format["pl_saveLoop_iteration_hc_handler = %1", _this];
+    ARGVX3(1,_this,[]);
+    ARGVX3(0,_scope,"");
+    _this spawn pl_saveLoop_iteration;
+  };
+};
 
 pl_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
     sleep A3W_playersList_saveInterval;
     if (not(isBOOLEAN(pl_saveLoopActive) && {!pl_saveLoopActive})) then {
-      diag_log format["pl_saveLoop: Saving player list"];
-      init(_start_time,diag_tickTime);
-      [[_scope], pl_savePlayersList] call sh_fsm_invoke;
-      init(_end_time,diag_tickTime);
-      diag_log format["pl_saveLoop: Took %1 ticks to save players list", (_end_time - _start_time)];
+      if (call sh_hc_ready) then {
+        [_scope] call pl_saveLoop_iteration_hc;
+      }
+      else {
+        [_scope] call pl_saveLoop_iteration;
+      };
     };
   };
 };

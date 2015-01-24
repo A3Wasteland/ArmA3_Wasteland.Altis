@@ -4,4 +4,5 @@
 //	@file Name: init.sqf
 //	@file Author: AgentRev
 
-execVM "addons\fpsFix\vehicleManagerHC.sqf";
+[] spawn compile preprocessFileLineNumbers "persistence\world\hLoad.sqf";
+[] execVM "addons\fpsFix\vehicleManagerHC.sqf";

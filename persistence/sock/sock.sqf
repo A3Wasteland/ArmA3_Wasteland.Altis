@@ -166,7 +166,7 @@ sock_rpc = {
   if (isNil "_this") exitWith {nil};
   format["%1 call sock_rpc;", _this] call sock_log_finest;
 
-  if (not(isServer)) exitWith {
+  if (not(isServer || !hasInterface)) exitWith {
     (_this call sock_rpc_remote)
   };
 

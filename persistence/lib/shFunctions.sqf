@@ -319,5 +319,11 @@ sh_drop_player_inventory = {
   } forEach _inventory;
 };
 
+sh_hc_ready = {
+  (!isNil "HeadlessClient" && {
+   !isNull HeadlessClient && {
+   HeadlessClient getVariable ["hc_ready",false]}})
+};
+
 shFunctions_loaded = true;
 diag_log "shFunctions loading complete";

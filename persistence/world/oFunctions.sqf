@@ -270,8 +270,8 @@ o_restoreObject = {
 //pre-define a list of objects that can be saved
 o_saveList = [];
 {if (true) then {
-
   if (not(cfg_baseSaving_on)) exitWith {};
+  if (!isARRAY(_x) || {count(_x) == 0}) exitWith {};
   def(_obj);
   _obj = _x select 1;
   
@@ -280,7 +280,7 @@ o_saveList = [];
   if ((o_saveList find _obj) >= 0) exitWith {};
   
   o_saveList pushBack _obj;
-};} forEach [objectList, call genObjectsArray];
+};} forEach [OR(objectList,[]), OR(call genObjectsArray,[])];
 
 
 o_isInSaveList = {
@@ -583,14 +583,20 @@ fn_manualObjectDelete = {
   [_object] call o_untrackObject;
 };
 
+o_saveLoop_iteration = {
+  ARGVX3(0,_scope,"");
+  diag_log format["o_saveLoop: Saving all objects ... "];
+  [[_scope], o_saveAllObjects] call sh_fsm_invoke;
+  [_scope] call o_saveInfo;
+  diag_log format["o_saveLoop: Saving all objects complete"];
+};
+
 o_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
     sleep A3W_object_saveInterval;
     if (not(isBOOLEAN(o_saveLoopActive) && {!o_saveLoopActive})) then {
-      diag_log format["saving all objects"];
-      [[_scope], o_saveAllObjects] call sh_fsm_invoke;
-      [_scope] call o_saveInfo;
+      [_scope] call o_saveLoop_iteration;
     };
   };
 };
