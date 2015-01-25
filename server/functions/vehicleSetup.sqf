@@ -22,7 +22,8 @@ if !(_class isKindOf "AllVehicles") exitWith {}; // if not actual vehicle, finis
 
 clearBackpackCargoGlobal _vehicle;
 
-if !(_vehicle isKindOf "UAV_02_base_F") then
+// Disable thermal on all manned vehicles
+if (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") < 1) then
 {
 	_vehicle disableTIEquipment true;
 };
