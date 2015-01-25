@@ -655,8 +655,16 @@ if (isServer) then {
 			_rain = 0;
 		};
 
-		3 setRain _rain;
-		3 setFog [fog max (_rain / 4), 0.001, 1000];
+		if (rain != _rain) then
+		{
+			3 setRain _rain;
+		};
+
+		_tempFog = fog max (_rain / 4);
+		if (_tempFog > fog + 0.001 || _tempFog < fog - 0.001) then
+		{
+			3 setFog [_tempFog, 0.001, 1000];
+		};
 
 		sleep 10;
 	};
