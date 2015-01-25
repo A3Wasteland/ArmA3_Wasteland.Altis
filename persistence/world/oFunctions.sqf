@@ -591,12 +591,39 @@ o_saveLoop_iteration = {
   diag_log format["o_saveLoop: Saving all objects complete"];
 };
 
+
+o_saveLoop_iteration_hc = {
+  ARGVX3(0,_scope,"");
+  init(_hc_id,owner HeadlessClient);
+  diag_log format["o_saveLoop: Offloading objects saving to headless client (id = %1)", _hc_id];
+
+  _hc_id publicVariableClient "tracked_objects_list";
+
+  o_saveLoop_iteration_hc_handler = [_scope];
+  _hc_id publicVariableClient "o_saveLoop_iteration_hc_handler";
+};
+
+if (!(hasInterface || isDedicated)) then {
+  diag_log format["Setting up HC handler for objects"];
+  "o_saveLoop_iteration_hc_handler" addPublicVariableEventHandler {
+    //diag_log format["o_saveLoop_iteration_hc_handler = %1", _this];
+    ARGVX3(1,_this,[]);
+    ARGVX3(0,_scope,"");
+    _this spawn o_saveLoop_iteration;
+  };
+};
+
 o_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
     sleep A3W_object_saveInterval;
     if (not(isBOOLEAN(o_saveLoopActive) && {!o_saveLoopActive})) then {
-      [_scope] call o_saveLoop_iteration;
+      if (call sh_hc_ready) then {
+        [_scope] call o_saveLoop_iteration_hc;
+      }
+      else {
+        [_scope] call o_saveLoop_iteration;
+      };
     };
   };
 };
