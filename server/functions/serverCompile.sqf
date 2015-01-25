@@ -44,6 +44,7 @@ basePartSetup = [_path, "basePartSetup.sqf"] call mf_compile;
 cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
 convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_compile;
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
+dropPlayerItems = [_path, "dropPlayerItems.sqf"] call mf_compile;
 getMagazineDetailAmmo = [_path, "getMagazineDetailAmmo.sqf"] call mf_compile;
 findClientPlayer = [_path, "findClientPlayer.sqf"] call mf_compile;
 fn_onPlayerConnected = [_path, "fn_onPlayerConnected.sqf"] call mf_compile;

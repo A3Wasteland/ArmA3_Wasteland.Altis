@@ -9,4 +9,7 @@ _player = _this;
 
 //diag_log format ["playerRespawnServer: %1", _this];
 
-_player addEventHandler ["WeaponDisassembled", weaponDisassembledServer];
+if (!local _player) then
+{
+	_player addEventHandler ["WeaponDisassembled", weaponDisassembledServer];
+};
