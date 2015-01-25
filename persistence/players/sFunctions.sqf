@@ -562,7 +562,7 @@ fn_kickPlayerIfFlagged = {
 
 };
 
-active_players_list = [];
+active_players_list = OR_ARRAY(active_players_list,[]);
 
 p_getActivePlayerIndex = {
   ARGVX4(0,_player,objNull,-1);
@@ -614,6 +614,7 @@ p_ActivePlayersListCleanup = {
 
 //event handlers for when player spawns
 "trackMe" addPublicVariableEventHandler {
+  _this call sh_hc_forward;
   //diag_log format["%1 call trackMe", _this];
   ARGVX3(1,_this,[]);
   [_this select 0] call p_trackPlayer;
@@ -753,12 +754,9 @@ pl_saveLoop_iteration = {
 pl_saveLoop_iteration_hc = {
   ARGVX3(0,_scope,"");
 
-  call p_ActivePlayersListCleanup;
-
   init(_hc_id,owner HeadlessClient);
   diag_log format["pl_saveLoop: Offloading player list saving to headless client (id = %1)", _hc_id];
 
-  _hc_id publicVariableClient "active_players_list";
   pl_saveLoop_iteration_hc_handler = [_scope];
   _hc_id publicVariableClient "pl_saveLoop_iteration_hc_handler";
 };

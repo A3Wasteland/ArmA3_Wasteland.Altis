@@ -324,5 +324,65 @@ sh_hc_ready = {
    HeadlessClient getVariable ["hc_ready",false]}})
 };
 
+
+sh_sync_request_handler = {
+  if (!isServer) exitWith {};
+  ARGVX3(1,_this,[]);
+  ARGVX3(0,_client,objNull);
+  ARGVX3(1,_var,"");
+  ARGVX3(2,_flag,"");
+
+  init(_id,owner _client);
+  diag_log format["Syncing %1 to client (_id = %2)" ,_var, _id];
+  _id publicVariableClient _var;
+
+  //set flag to indicate result is ready
+  missionNamespace setVariable [_flag, true];
+  _id publicVariableClient _flag;
+  missionNamespace setVariable [_flag, nil];
+};
+
+if (isServer) then {
+  "sh_sync_request" addPublicVariableEventHandler { _this spawn sh_sync_request_handler;};
+};
+
+if (not(hasInterface || isDedicated)) then {
+  sh_sync = {
+    if (isServer) exitWith {};
+    ARGVX3(0,_var);
+
+    def(_flag);
+    _flag = format["sync_flag_%1_%2", ceil(random 1000), ceil(random 1000)];
+    sh_sync_request = [player,_var,_flag];
+    publicVariableServer "sh_sync_request";
+
+    init(_timed_out,false);
+    init(_end_time,diag_tickTime + 10);
+    waitUntil {
+      if (not(isNil{missionNamespace getVariable _flag})) exitWith {true};
+      if (diag_tickTime > _end_time) exitWith {
+        _timed_out = true;
+        true
+      };
+      uiSleep 0.5;
+    };
+
+    if (_timed_out) exitWith {
+      diag_log format["WARNING: Timeout occurred while waiting for value of variable %2", _var];
+      false
+    };
+  };
+};
+
+sh_hc_forward = {_this spawn {
+  ARGVX3(0,_var,"");
+  if (not(hasInterface || isDedicated)) exitWith {};
+  if (not(call sh_hc_ready)) exitWith {};
+  init(_id, owner HeadlessClient);
+
+  //diag_log format["Forwarding %1 to headless client (_id = %2)", _var, _id];
+  _id publicVariableClient _var;
+}};
+
 shFunctions_loaded = true;
 diag_log "shFunctions loading complete";

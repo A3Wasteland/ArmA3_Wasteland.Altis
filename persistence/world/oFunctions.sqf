@@ -529,7 +529,7 @@ o_trackedObjectsListCleanup = {
 
 
 
-tracked_objects_list = [];
+tracked_objects_list = OR_ARRAY(tracked_objects_list,[]);
 
 o_getTrackedObjectIndex = {
   ARGVX4(0,_obj,objNull,-1);
@@ -549,7 +549,7 @@ o_trackObject = {
 };
 
 //event handlers for object tracking, and untracking
-"trackObject" addPublicVariableEventHandler { _this call o_trackObject; };
+"trackObject" addPublicVariableEventHandler { _this call sh_hc_forward; _this call o_trackObject;};
 
 o_untrackObject = {
   private["_index","_object"];
@@ -561,7 +561,7 @@ o_untrackObject = {
   tracked_objects_list deleteAt _index;
 };
 
-"untrackObject" addPublicVariableEventHandler { _this call o_untrackObject; };
+"untrackObject" addPublicVariableEventHandler { _this call sh_hc_forward; _this call o_untrackObject; };
 
 fn_manualObjectSave = {
   ARGVX3(0,_netId,"");
@@ -595,12 +595,9 @@ o_saveLoop_iteration = {
 o_saveLoop_iteration_hc = {
   ARGVX3(0,_scope,"");
 
-  call o_trackedObjectsListCleanup;
 
   init(_hc_id,owner HeadlessClient);
   diag_log format["o_saveLoop: Offloading objects saving to headless client (id = %1)", _hc_id];
-
-  _hc_id publicVariableClient "tracked_objects_list";
 
   o_saveLoop_iteration_hc_handler = [_scope];
   _hc_id publicVariableClient "o_saveLoop_iteration_hc_handler";
@@ -717,6 +714,8 @@ o_loadObjects = {
     }} forEach _objects;
     _objects = _objects - [objNull];
   } forEach o_loadingOrderArray;
+
+  ["tracked_objects_list"] call sh_hc_forward; //forward to headless client (if connected)
   
   diag_log format["A3Wasteland - Total database objects: %1 ", _total_objects];
   diag_log format["A3Wasteland - Real restored objects: %1 ", _restored_objects];
