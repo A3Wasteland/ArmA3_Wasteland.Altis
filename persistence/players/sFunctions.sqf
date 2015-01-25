@@ -761,9 +761,9 @@ pl_saveLoop_iteration_hc = {
 };
 
 if (!(hasInterface || isDedicated)) then {
-  //diag_log format["Setting up HC handler for players list"];
+  diag_log format["Setting up HC handler for players list"];
   "pl_saveLoop_iteration_hc_handler" addPublicVariableEventHandler {
-    diag_log format["pl_saveLoop_iteration_hc_handler = %1", _this];
+    //diag_log format["pl_saveLoop_iteration_hc_handler = %1", _this];
     ARGVX3(1,_this,[]);
     ARGVX3(0,_scope,"");
     _this spawn pl_saveLoop_iteration;
