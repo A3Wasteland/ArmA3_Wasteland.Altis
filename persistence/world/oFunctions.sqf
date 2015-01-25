@@ -601,6 +601,8 @@ o_saveLoop_iteration_hc = {
 
   o_saveLoop_iteration_hc_handler = [_scope];
   _hc_id publicVariableClient "o_saveLoop_iteration_hc_handler";
+
+  call o_trackedObjectsListCleanup;
 };
 
 if (!(hasInterface || isDedicated)) then {

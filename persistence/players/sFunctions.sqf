@@ -759,6 +759,8 @@ pl_saveLoop_iteration_hc = {
 
   pl_saveLoop_iteration_hc_handler = [_scope];
   _hc_id publicVariableClient "pl_saveLoop_iteration_hc_handler";
+
+  call p_ActivePlayersListCleanup;
 };
 
 if (!(hasInterface || isDedicated)) then {
