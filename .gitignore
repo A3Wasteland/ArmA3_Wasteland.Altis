@@ -1,0 +1,9 @@
+# Skip PBO files
+*.pdo
+
+# Vi stuff
+*.swp
+*~
+
+# Don't import Thumbs.db
+Thumbs.db
