@@ -68,37 +68,8 @@ _player spawn
 		[_id, _qty] call mf_inventory_remove;
 	} forEach call mf_inventory_all;
 
-	// wait until corpse stops moving before dropping stuff
-	waitUntil {(getPos _player) select 2 < 1 && vectorMagnitude velocity _player < 1};
-
-	// Drop money
-	if (_money > 0) then
-	{
-		_m = createVehicle ["Land_Money_F", getPosATL _player, [], 0.5, "CAN_COLLIDE"];
-		_m setDir random 360;
-		_m setVariable ["cmoney", _money, true];
-		_m setVariable ["owner", "world", true];
-	};
-
-	// Drop items
-	_itemsDroppedOnDeath = [];
-
-	{
-		_id = _x select 0;
-		_qty = _x select 1;
-		_type = _x select 2;
-
-		for "_i" from 1 to _qty do
-		{
-			_obj = createVehicle [_type, getPosATL _player, [], 0.5, "CAN_COLLIDE"];
-			_obj setDir random 360;
-			_obj setVariable ["mf_item_id", _id, true];
-			_itemsDroppedOnDeath pushBack netId _obj;
-		};
-	} forEach _items;
-
-	itemsDroppedOnDeath = _itemsDroppedOnDeath;
-	publicVariableServer "itemsDroppedOnDeath";
+	pvar_dropPlayerItems = [_player, _money, _items];
+	publicVariableServer "pvar_dropPlayerItems";
 };
 
 _player spawn fn_removeAllManagedActions;
