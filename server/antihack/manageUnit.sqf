@@ -7,28 +7,27 @@
 #define UNIT_POS_ATL [-999999,-999999,1]
 
 private ["_unit", "_params"];
-
 _unit = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _params = [_this, 1, [], [[]]] call BIS_fnc_param;
 
 _unit hideObject true;
 _unit allowDamage false;
-{ _unit disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
+{ _unit disableAI _x } forEach ["MOVE","ANIM","FSM","TARGET","AUTOTARGET"];
 
 if (isServer) then
 {
-	removeAllWeapons _unit;
-	removeAllAssignedItems _unit;
-	removeUniform _unit;
-	removeVest _unit;
-	removeBackpack _unit;
-	removeGoggles _unit;
+	// removeAllWeapons _unit;
+	// removeAllAssignedItems _unit;
+	// removeUniform _unit;
+	// removeVest _unit;
+	// removeBackpack _unit;
+	// removeGoggles _unit;
 
-	_unit addUniform "U_B_Wetsuit";
-	_unit addVest "V_RebreatherB";
-	_unit addGoggles "G_Diving";
+	// _unit addUniform "U_B_Wetsuit";
+	// _unit addVest "V_RebreatherB";
+	// _unit addGoggles "G_Diving";
 	_unit setPosATL UNIT_POS_ATL;
-	_unit switchMove "";
+	// _unit switchMove "";
 
 	[_unit, _params] spawn
 	{
@@ -41,6 +40,8 @@ if (isServer) then
 			sleep 1;
 			if ((getPosATL _unit) vectorDistance UNIT_POS_ATL > 5) then { _unit setPosATL UNIT_POS_ATL };
 		};
+
+		diag_log "ANTI-HACK: PROBLEM WITH STARTUP UNIT DETECTED!";
 
 		_unit enableSimulationGlobal true;
 		deleteVehicle _unit;
