@@ -26,8 +26,8 @@ onLoadName = "A3Wasteland Altis"; // it would be great if you could keep "A3" in
 onLoadMission = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewText = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
-overviewPicture = "mapConfig\Loading.jpg";
-loadScreen = "mapConfig\Loading.jpg";
+overviewPicture = "mapConfig\Loading.paa";
+loadScreen = "mapConfig\Loading.paa";
 
 //Dialog includes
 

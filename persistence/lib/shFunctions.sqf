@@ -3,7 +3,6 @@ diag_log "shFunctions loading ...";
 
 #include "macro.h"
 
-call compile preprocessFileLineNumbers "persistence\lib\normalize_config.sqf";
 
 sh_isSaveableVehicle = {
   ARGVX4(0,_obj,objNull,false);
@@ -317,6 +316,12 @@ sh_drop_player_inventory = {
     _obj setVariable ["mf_item_id", _id, true];
     };
   } forEach _inventory;
+};
+
+sh_hc_ready = {
+  (!isNil "HeadlessClient" && {
+   !isNull HeadlessClient && {
+   HeadlessClient getVariable ["hc_ready",false]}})
 };
 
 shFunctions_loaded = true;

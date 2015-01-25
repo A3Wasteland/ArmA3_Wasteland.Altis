@@ -295,13 +295,14 @@ v_trackedVehiclesListCleanup = {
 //build list of object that should not be saved
 v_skipList = [];
 def(_obj);
-{
+{if (true) then {
+  if (!isARRAY(_x) || {count(_x) == 0}) exitWith {};
   _obj = _x select 1;
   if (isOBJECT(_obj)) then {
     v_skipList pushBack _obj;
   };
   v_skipList pushBack _obj;
-} forEach [civilianVehicles, call allVehStoreVehicles];
+}} forEach [OR(civilianVehicles,[]), OR(call allVehStoreVehicles,[])];
 
 
 v_isSaveable = {
@@ -671,13 +672,19 @@ v_saveAllVechiles = {
   call v_trackedVehiclesListCleanup;
 };
 
+v_saveLoop_iteration = {
+  ARGVX3(0,_scope,"");
+  diag_log format["v_saveLoop: Saving all objects ... "];
+  [[_scope], v_saveAllVechiles] call sh_fsm_invoke;
+  diag_log format["v_saveLoop: Saving all objects complete"];
+};
 
 v_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
     sleep A3W_vehicle_saveInterval;
     if (not(isBOOLEAN(v_saveLoopActive) && {!v_saveLoopActive})) then {
-      [[_scope], v_saveAllVechiles] call sh_fsm_invoke;
+      [_scope] call v_saveLoop_iteration;
     };
   };
 };

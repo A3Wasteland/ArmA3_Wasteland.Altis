@@ -14,7 +14,7 @@
 
 #define __DEBUG_INIDB_CALLS__ 0
 
-if (!isServer) exitWith {};
+if (hasInterface) exitWith {};
 
 
 PDB_ServerID = if (isNil "PDB_ServerID") then {"A3W_"} else {PDB_ServerID};
@@ -46,7 +46,7 @@ diag_log format["[INFO] config: PDB_HackerLogFileID = %1", PDB_HackerLogFileID];
 diag_log format["[INFO] config: PDB_PlayersListFileID = %1", PDB_PlayersListFileID];
 
 
-call compile preProcessFileLineNumbers "persistence\sock\inidb_adapter.sqf";
+call compile preprocessFileLineNumbers "persistence\sock\inidb_adapter.sqf";
 publicVariable "PDB_PlayerFileID";
 
 
@@ -72,3 +72,5 @@ PDB_read = iniDB_read;
 PDB_write = iniDB_write;
 PDB_delete = iniDB_delete;
 PDB_deleteSection = iniDB_deleteSection;
+
+call compile preprocessFileLineNumbers "persistence\lib\normalize_config.sqf";

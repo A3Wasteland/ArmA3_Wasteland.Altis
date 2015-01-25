@@ -1,4 +1,8 @@
+if (!isNil "normalize_config_loaded") exitWith {};
+diag_log format["Loading normalize_config.sqf ... "];
+
 #include "macro.h"
+
 
 #define ON_SCALAR(v) (if(isCODE(v)) then { private["_val"]; _val = call v; (isSCALAR(_val) && {_val == 1})} else {(isSCALAR(v) && {v == 1})})
 
@@ -62,5 +66,8 @@ diag_log ("[INFO] config: A3W_saveable_vehicles_list = " + str(A3W_saveable_vehi
 diag_log format["[INFO] config: A3W_healthTime = %1", A3W_healthTime];
 diag_log format["[INFO] config: A3W_hungerTime = %1", A3W_hungerTime];
 diag_log format["[INFO] config: A3W_thirstTime = %1", A3W_thirstTime];
+
+normalize_config_loaded = true;
+diag_log format["Loading normalize_config.sqf complete"];
 
 
