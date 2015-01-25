@@ -188,9 +188,9 @@ o_restoreObject = {
     _obj setVectorDirAndUp _dir;
   };
   
-  _obj setVariable ["baseSaving_spawningTime", diag_tickTime];
+  _obj setVariable ["baseSaving_spawningTime", diag_tickTime, true];
   if (isSCALAR(_hours_alive)) then {
-    _obj setVariable ["baseSaving_hoursAlive", _hours_alive];
+    _obj setVariable ["baseSaving_hoursAlive", _hours_alive, true];
   };
   
 
