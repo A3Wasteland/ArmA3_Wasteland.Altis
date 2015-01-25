@@ -752,6 +752,9 @@ pl_saveLoop_iteration = {
 
 pl_saveLoop_iteration_hc = {
   ARGVX3(0,_scope,"");
+
+  call p_ActivePlayersListCleanup;
+
   init(_hc_id,owner HeadlessClient);
   diag_log format["pl_saveLoop: Offloading player list saving to headless client (id = %1)", _hc_id];
 

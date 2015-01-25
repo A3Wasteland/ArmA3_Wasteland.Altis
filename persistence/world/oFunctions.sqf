@@ -594,6 +594,9 @@ o_saveLoop_iteration = {
 
 o_saveLoop_iteration_hc = {
   ARGVX3(0,_scope,"");
+
+  call o_trackedObjectsListCleanup;
+
   init(_hc_id,owner HeadlessClient);
   diag_log format["o_saveLoop: Offloading objects saving to headless client (id = %1)", _hc_id];
 
