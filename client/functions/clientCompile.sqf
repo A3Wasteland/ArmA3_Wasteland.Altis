@@ -28,6 +28,7 @@ deleteEmptyGroup = "client\functions\deleteEmptyGroup.sqf" call mf_compile;
 findHackedVehicles = "client\systems\adminPanel\findHackedVehicles.sqf" call mf_compile;
 fn_addManagedAction = "client\functions\fn_addManagedAction.sqf" call mf_compile;
 fn_disableCollision = "client\functions\fn_disableCollision.sqf" call mf_compile;
+fn_emergencyEject = "client\functions\fn_emergencyEject.sqf" call mf_compile;
 fn_encodeText = "client\functions\fn_encodeText.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
 fn_formatTimer = "client\functions\fn_formatTimer.sqf" call mf_compile;
