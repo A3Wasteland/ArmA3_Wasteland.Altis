@@ -2,6 +2,7 @@ if (hasInterface) exitWith {};
 diag_log "hLoad.sqf loading ...";
 
 externalConfigFolder = "\A3Wasteland_settings";
+call compile preprocessFileLineNumbers "server\default_config.sqf";
 call compile preprocessFileLineNumbers (externalConfigFolder + "\main_config.sqf");
 call compile preprocessFileLineNumbers "persistence\fn_sock_custom.sqf";
 call compile preprocessFileLineNumbers "persistence\lib\hash.sqf";
