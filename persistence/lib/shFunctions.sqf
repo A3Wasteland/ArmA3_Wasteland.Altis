@@ -3,7 +3,6 @@ diag_log "shFunctions loading ...";
 
 #include "macro.h"
 
-call compile preprocessFileLineNumbers "persistence\lib\normalize_config.sqf";
 
 sh_isSaveableVehicle = {
   ARGVX4(0,_obj,objNull,false);

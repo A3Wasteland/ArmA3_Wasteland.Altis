@@ -6,7 +6,7 @@
 diag_log "oFunctions.sqf loading ...";
 
 
-call compile preProcessFileLineNumbers "persistence\lib\shFunctions.sqf";
+call compile preprocessFileLineNumbers "persistence\lib\shFunctions.sqf";
 
 #include "macro.h";
 
