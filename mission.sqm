@@ -70,21 +70,23 @@ class Mission
 		"A3_Modules_F_Sites",
 		"a3_characters_f_beta",
 		"a3_characters_f_gamma",
-		"a3_characters_f"
+		"a3_characters_f",
+		"A3_Structures_F_EPC_Civ_Accessories"
 	};
 	addOnsAuto[]=
 	{
-		"A3_Characters_F_Civil",
-		"a3_characters_f",
 		"A3_Characters_F_BLUFOR",
+		"a3_characters_f",
 		"A3_Characters_F_OPFOR",
 		"A3_Characters_F_INDEP",
+		"A3_Characters_F_Civil",
 		"A3_Structures_F_Households_House_Big01",
 		"A3_Structures_F_Households_House_Small02",
 		"A3_Structures_F_Mil_Cargo",
 		"A3_Structures_F_Households_Slum",
 		"A3_Structures_F_Civ_Market",
 		"A3_Structures_F_Civ_Camping",
+		"A3_Structures_F_EPC_Civ_Accessories",
 		"a3_map_altis"
 	};
 	randomSeed=14957468;
@@ -93,19 +95,18 @@ class Mission
 		briefingName="A3Wasteland Altis v1.1"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
 		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3Wasteland.com for more details";
 		resistanceWest=0;
-		startWeather=0.10000001;
-		startWind=0.30000001;
-		startWaves=0.40000001;
-		forecastWeather=0.40000004;
-		forecastWind=0.69999999;
-		forecastWaves=0.89999998;
-		forecastLightnings=0.30000001;
+		timeOfChanges=3e+038;
+		startWeather=0;
+		startWind=0;
+		forecastWeather=0;
+		forecastWind=0;
+		forecastWaves=0;
 		year=2035;
 		month=6;
 		hour=6;
 		minute=0;
-		startFogDecay=0.0029333001;
-		forecastFogDecay=0.0039332998;
+		startFogDecay=0.001;
+		forecastFogDecay=0.001;
 	};
 	class Groups
 	{
@@ -2312,7 +2313,7 @@ class Mission
 		{
 			position[]={3574.9937,11.526847,12800.598};
 			azimut=302.65201;
-			offsetY=0.15;
+			offsetY=0.15000001;
 			id=183;
 			side="EMPTY";
 			vehicle="Land_Atm_02_F";
@@ -2323,7 +2324,7 @@ class Mission
 		class Item25
 		{
 			position[]={14492,18.768188,16383.846};
-			azimut=185.518;
+			azimut=185.51801;
 			id=184;
 			side="EMPTY";
 			vehicle="Land_Atm_01_F";
@@ -2333,9 +2334,9 @@ class Mission
 		};
 		class Item26
 		{
-			position[]={25618.681,20.873209,21353.276};
+			position[]={25618.682,20.873209,21353.275};
 			azimut=136.1844;
-			offsetY=0.15;
+			offsetY=0.15000001;
 			id=185;
 			side="EMPTY";
 			vehicle="Land_Atm_02_F";
@@ -2346,8 +2347,8 @@ class Mission
 		class Item27
 		{
 			position[]={16774.646,18.403027,12594.591};
-			azimut=270.281;
-			offsetY=0.15;
+			azimut=270.28101;
+			offsetY=0.15000001;
 			id=186;
 			side="EMPTY";
 			vehicle="Land_Atm_02_F";
@@ -2358,8 +2359,8 @@ class Mission
 		class Item28
 		{
 			position[]={9507.4814,118.30473,15937.552};
-			azimut=4.3657;
-			offsetY=0.15;
+			azimut=4.3656998;
+			offsetY=0.15000001;
 			id=187;
 			side="EMPTY";
 			vehicle="Land_Atm_02_F";
@@ -3715,20 +3716,18 @@ class Intro
 	randomSeed=11737026;
 	class Intel
 	{
-		timeOfChanges=1800.0002;
-		startWeather=0.10000001;
-		startWind=0.30000001;
-		startWaves=0.40000001;
-		forecastWeather=0.40000004;
-		forecastWind=0.69999999;
-		forecastWaves=0.89999998;
-		forecastLightnings=0.30000001;
+		timeOfChanges=3e+038;
+		startWeather=0;
+		startWind=0;
+		forecastWeather=0;
+		forecastWind=0;
+		forecastWaves=0;
 		year=2035;
 		month=6;
 		hour=6;
 		minute=0;
-		startFogDecay=0.0029333001;
-		forecastFogDecay=0.0039332998;
+		startFogDecay=0.001;
+		forecastFogDecay=0.001;
 	};
 };
 class OutroWin
@@ -3744,20 +3743,18 @@ class OutroWin
 	randomSeed=16432731;
 	class Intel
 	{
-		timeOfChanges=1800.0002;
-		startWeather=0.10000001;
-		startWind=0.30000001;
-		startWaves=0.40000001;
-		forecastWeather=0.40000004;
-		forecastWind=0.69999999;
-		forecastWaves=0.89999998;
-		forecastLightnings=0.30000001;
+		timeOfChanges=3e+038;
+		startWeather=0;
+		startWind=0;
+		forecastWeather=0;
+		forecastWind=0;
+		forecastWaves=0;
 		year=2035;
 		month=6;
 		hour=6;
 		minute=0;
-		startFogDecay=0.0029333001;
-		forecastFogDecay=0.0039332998;
+		startFogDecay=0.001;
+		forecastFogDecay=0.001;
 	};
 };
 class OutroLoose
@@ -3773,19 +3770,17 @@ class OutroLoose
 	randomSeed=2588275;
 	class Intel
 	{
-		timeOfChanges=1800.0002;
-		startWeather=0.10000001;
-		startWind=0.30000001;
-		startWaves=0.40000001;
-		forecastWeather=0.40000004;
-		forecastWind=0.69999999;
-		forecastWaves=0.89999998;
-		forecastLightnings=0.30000001;
+		timeOfChanges=3e+038;
+		startWeather=0;
+		startWind=0;
+		forecastWeather=0;
+		forecastWind=0;
+		forecastWaves=0;
 		year=2035;
 		month=6;
 		hour=6;
 		minute=0;
-		startFogDecay=0.0029333001;
-		forecastFogDecay=0.0039332998;
+		startFogDecay=0.001;
+		forecastFogDecay=0.001;
 	};
 };

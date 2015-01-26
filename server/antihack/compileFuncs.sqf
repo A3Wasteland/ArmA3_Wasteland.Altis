@@ -6,18 +6,19 @@
 //	@file Author: AgentRev
 //	@file Created: 04/01/2014 02:51
 
-private ["_assignCompileKey", "_assignChecksum", "_assignPacketKey", "_compileKey", "_checksum", "_packetKey"];
+private ["_assignCompileKey", "_assignChecksum", "_assignPacketKey", "_rscParams", "_compileKey", "_checksum", "_packetKey"];
 
 _assignCompileKey = [_this, 0, "", [""]] call BIS_fnc_param;
 _assignChecksum = [_this, 1, "", [""]] call BIS_fnc_param;
 _assignPacketKey = [_this, 2, "", [""]] call BIS_fnc_param;
+_rscParams = [_this, 3, [], [[]]] call BIS_fnc_param;
 
 _compileKey = call compile (_assignCompileKey + "_compileKey");
 _checksum = call compile (_assignChecksum + "_flagChecksum");
 _packetKey = call compile (_assignPacketKey + "_mpPacketKey");
 
-if (isNil {missionNamespace getVariable _compileKey}) then
-{
+//if (isNil {missionNamespace getVariable _compileKey}) then
+//{
 	{
 		_func = _x select 0;
 		_assign = _x select 1;
@@ -52,16 +53,16 @@ if (isNil {missionNamespace getVariable _compileKey}) then
 
 	if (isServer) then
 	{
-		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\serverSide.sqf"));
+		[_checksum] execVM "server\antihack\serverSide.sqf";
 	};
 
 	if (!isDedicated) then
 	{
-		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\payload.sqf"));
+		[_checksum, _rscParams] execVM "server\antihack\payload.sqf";
 	};
 
 	missionNamespace setVariable [_compileKey, compileFinal "true"];
-};
+//};
 
 _packetKey addPublicVariableEventHandler A3W_fnc_MPexec;
 

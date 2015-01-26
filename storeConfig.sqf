@@ -79,11 +79,6 @@ lmgArray = compileFinal str
 	["Zafir LMG", "LMG_Zafir_F", 450]
 ];
 
-shotgunArray = compileFinal str
-[
-	// Currently unused
-];
-
 launcherArray = compileFinal str
 [
 	["RPG-42 Alamut", "launch_RPG32_F", 400],
@@ -96,7 +91,7 @@ launcherArray = compileFinal str
 	["Titan MPRL AA (Digi)", "launch_I_Titan_F", 600]
 ];
 
-allGunStoreFirearms = compileFinal str (call pistolArray + call smgArray + call rifleArray + call lmgArray + call shotgunArray + call launcherArray);
+allGunStoreFirearms = compileFinal str (call pistolArray + call smgArray + call rifleArray + call lmgArray + call launcherArray);
 
 staticGunsArray = compileFinal str
 [
