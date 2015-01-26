@@ -219,7 +219,7 @@ while { true } do
 			} forEach ["DurkSintax_Pro_RE", "iBeFlying", "dayz_godmode", "Main_Fury_Menu_", "Hack_Pos_Orig", "REdasfsfwef", "XXMMWW_keybinds", "FUNMENUON", "JJMMEE_INIT_MENU", "activeITEMlistanzahl", "Detected_Remote_Execution", "g0dmode", "Pro_RE", "xyzaa", "GOLDENS_GLOBAL_SHIT_YEAH", "HaxSmokeOn", "Lysto_Lyst", "pathtoscrdir", "ewrfdfcsf", "Ug8YtyGyvguGF", "LYSTIC_MENU_LOADED", "qofjqpofq", "c0lorthem", "shnmenu", "letmeknow", "DAYZ_CA1_Lollipops", "TONIC_HAS_A_GAPER_NUKE_2", "fazelist", "faze_fill", "PL4YER_CANN0N_T0GGLE", "aKTitans", "Fury_Are_G0ds", "LY_Exec", "inf_ammo_loop_infiSTAR", "Wookie_Pro_RE", "nook3_vars", "Wookie_Init_Menu", "TTT5OptionNR", "Team_Fury_Reck_Prebs", "faze_funcs_inited", "mein1", "biggies_pro_re", "godlol", "Lystic_Init", "FAG_NEON", "Lystic_Exec", "faze_getControl", "vehicleg0dv3_BushWookie", "t0ggl3", "morphm3", "fsdddInfectLOL", "cargod", "abcdefGEH", "Wep_Spawn_Shitt", "Fury_Nuke", "faze_hax_dbclick", "LY_Init", "W00kie_Pro_RE", "fdsgdr42424", "battleHIGH_vehpub", "WHY_ARE_THERE_SO_MANY_FISH_IN_THE_BIG_BLUE_OCEAN", "MenuInitLol", "wierdo", "mdh_ash", "faze_initMenu", "fuckfestv2", "xZombieBait", "W00kie_Init_Menu", "rainbow_var", "biggies_menu_open", "HAAJASDOKAD_mein", "CharlieSheenkeybinds", "POOP_Main", "colt_lmaoooo", "W_O_O_K_I_E_Pro_RE", "toggle_keyEH", "JME_M_E_N_U_initMenu", "dawr5wdfsf23", "LOKI_GUI_Key_Color", "MPGHALLDAYEVRYDAY47LETSDOTHISBBYYAAAAAAA", "infi_STAR_exec", "M_R_IRecommend", "xtags_star_xx", "ChangingBullets_xx", "byebyezombies", "Root_Main4", "igodokxtt", "unlimammo", "tw4etinitMenu", "oh_nmoe_pls", "Team_OMFG_WE_ARE_SEXC", "plrshldblckls", "Jme_Is_God", "Monky_funcs_inited", "fuckmegrandma", "qopfkqpofqk", "ShadowyFaz3VehZ", "Veh_Spawn_Shitt", "wuat_fpsMonitor", "Monky_hax_toggled", "mehatingjews", "InfiniteAmmo", "PersonWhomMadeThisCorroded_Init", "nuke_vars", "debug_star_colorful", "neo_fnc_throw", "W00kieMenu_hax_toggled", "AntiAntiAntiAntiHax", "XMVJEIUI133794_mein", "aim", "GodLolPenis", "vehiclegooov3ood_BushWookie", "biggies_scroll_open", "ANTI_ANTI_HAX", "antiantiantiantih4x", "riasgremory_G0d_Mode", "BigFuckinBullets_0202020DDDEEDED", "monkytp", "hax_toggled", "JJJJ_MMMM___EEEEEEE_INIT_MENU", "B0X_CANN0N_T0GGLE", "omgwtfbbq", "bowonky", "ExtasyMenu_Binds", "PRO_SKILLZ_2015_ALLDAY_Noobs", "dontAddToTheArray", "rainbowbitch", "n0clip", "GLASS911_Init", "fuckfest", "BigFuckinBullets", "lmzsjgnas"];
 		};
 
-		if (isNil "_cheatFlag") then
+		/*if (isNil "_cheatFlag") then
 		{
 			// Diplay validator based on Tonic's SpyGlass
 			{
@@ -236,7 +236,7 @@ while { true } do
 				};
 				sleep 0.01;
 			} forEach _rscParams;
-		};
+		};*/
 
 		_loopCount = 0;
 	};
