@@ -544,12 +544,15 @@ o_trackObject = {
   _index = [OR(_object,nil)] call o_getTrackedObjectIndex;
   if (_index >= 0) exitWith {};
 
+  //forward to HC
+  ["trackObject", _object] call sh_hc_forward;
+
   //diag_log format["%1 is being added to the tracked list", _object];
   tracked_objects_list pushBack _object;
 };
 
 //event handlers for object tracking, and untracking
-"trackObject" addPublicVariableEventHandler { _this call sh_hc_forward; _this call o_trackObject;};
+"trackObject" addPublicVariableEventHandler { _this call o_trackObject;};
 
 o_untrackObject = {
   private["_index","_object"];
@@ -557,11 +560,14 @@ o_untrackObject = {
   _index = [OR(_object,nil)] call o_getTrackedObjectIndex;
   if (_index < 0) exitWith {};
 
+  //forward to HC
+  ["untrackObject", _object] call sh_hc_forward;
+
   //diag_log format["%1 is being removed from the tracked list", _object];
   tracked_objects_list deleteAt _index;
 };
 
-"untrackObject" addPublicVariableEventHandler { _this call sh_hc_forward; _this call o_untrackObject; };
+"untrackObject" addPublicVariableEventHandler { _this call o_untrackObject; };
 
 fn_manualObjectSave = {
   ARGVX3(0,_netId,"");

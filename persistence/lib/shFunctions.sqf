@@ -374,15 +374,21 @@ if (not(hasInterface || isDedicated)) then {
   };
 };
 
-sh_hc_forward = {_this spawn {
+sh_hc_forward = {
+  //diag_log format["%1 call sh_hc_forward", _this];
   ARGVX3(0,_var,"");
+  ARGV2(1,_val);
   if (not(hasInterface || isDedicated)) exitWith {};
   if (not(call sh_hc_ready)) exitWith {};
   init(_id, owner HeadlessClient);
 
+  if (!isNil "_val") then {
+    missionNamespace setVariable [_var, _val];
+  };
+
   //diag_log format["Forwarding %1 to headless client (_id = %2)", _var, _id];
   _id publicVariableClient _var;
-}};
+};
 
 shFunctions_loaded = true;
 diag_log "shFunctions loading complete";

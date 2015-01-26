@@ -11,13 +11,23 @@ call compile preprocessFileLineNumbers "persistence\lib\shFunctions.sqf";
 
 
 def(_var);
+def(_val);
 {
   _var = _x;
   diag_log format["Syncing variable %1 ...", _var];
   [_var] call sh_sync;
-    diag_log format["%1 = %2", _var, missionNamespace getVariable _var];
+  _val = missionNamespace getVariable _var;
+
+  if (isARRAY(_val)) then {
+    diag_log format["count(%1) = %2", _var, count(_val)];
+  }
+  else {
+    diag_log format["%1 = %2", _var,OR(_val,nil)];
+  };
+
   diag_log format["Syncing variable %1 complete", _var];
-} forEach ["active_players_list", "tracked_objects_list"];
+
+} forEach ["active_players_list", "tracked_objects_list", "tracked_vehicles_list"];
 
 call compile preprocessFileLineNumbers "persistence\players\sFunctions.sqf";
 call compile preprocessFileLineNumbers "persistence\players\pFunctions.sqf";

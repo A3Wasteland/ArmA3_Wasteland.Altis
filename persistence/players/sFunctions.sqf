@@ -578,6 +578,9 @@ p_trackPlayer = {
   _index = [_player] call p_getActivePlayerIndex;
   if (_index >= 0) exitWith {};
 
+  //forward to HC
+  ["trackMe", _player] call sh_hc_forward;
+
   //diag_log format["%1 is being added to the active list", _player];
   active_players_list pushBack _player;
 };
@@ -588,6 +591,9 @@ p_untrackPlayer = {
   def(_index);
   _index = [_player] call p_getActivePlayerIndex;
   if (_index < 0) exitWith {};
+
+  //forward to HC
+  ["untrackMe", _player] call sh_hc_forward;
 
   //diag_log format["%1 is being removed from the active list", _player];
   active_players_list deleteAt _index;
@@ -614,7 +620,6 @@ p_ActivePlayersListCleanup = {
 
 //event handlers for when player spawns
 "trackMe" addPublicVariableEventHandler {
-  _this call sh_hc_forward;
   //diag_log format["%1 call trackMe", _this];
   ARGVX3(1,_this,[]);
   [_this select 0] call p_trackPlayer;

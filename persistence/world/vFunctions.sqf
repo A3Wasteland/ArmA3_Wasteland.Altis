@@ -118,14 +118,14 @@ v_restoreVehicle = {_this spawn {
     _obj setVectorDirAndUp _dir;
   };
 
-  _obj setVariable ["baseSaving_spawningTime", diag_tickTime];
+  _obj setVariable ["baseSaving_spawningTime", diag_tickTime, true];
   if (isSCALAR(_hours_alive)) then {
-    _obj setVariable ["baseSaving_hoursAlive", _hours_alive];
+    _obj setVariable ["baseSaving_hoursAlive", _hours_alive, true];
   };
 
-  _obj setVariable ["vehicle_abandoned_time", diag_tickTime];  //the moment the vehicle is restored, consider it abandoned
+  _obj setVariable ["vehicle_abandoned_time", diag_tickTime, true];  //the moment the vehicle is restored, consider it abandoned
   if (isSCALAR(_hours_abandoned)) then {
-    _obj setVariable ["vehicle_abandoned_hours", _hours_abandoned];
+    _obj setVariable ["vehicle_abandoned_hours", _hours_abandoned, true];
   };
 
   // disables thermal equipment on loaded vehicles, comment out if you want thermal
@@ -226,7 +226,7 @@ v_restoreVehicle = {_this spawn {
 }};;
 
 
-tracked_vehicles_list = [];
+tracked_vehicles_list = OR_ARRAY(tracked_vehicles_list,[]);
 
 v_getTrackedVehicleIndex = {
   ARGVX4(0,_obj,objNull,-1);
@@ -240,6 +240,9 @@ v_trackVehicle = {
   _object = _this select 0;
   _index = [OR(_object,nil)] call v_getTrackedVehicleIndex;
   if (_index >= 0) exitWith {};
+
+  //forward to HC
+  ["trackVehicle", _object] call sh_hc_forward;
 
   //diag_log format["%1 is being added to the tracked list", _object];
   tracked_vehicles_list pushBack _object;
@@ -255,9 +258,15 @@ v_untrackVehicle = {
   _index = [OR(_object,nil)] call v_getTrackedVehicleIndex;
   if (_index < 0) exitWith {};
 
+  //forward to HC
+  ["untrackVehicle", _object] call sh_hc_forward;
+
   //diag_log format["%1 is being removed from the tracked list", _object];
   tracked_vehicles_list deleteAt _index;
 };
+
+//event handlers for object tracking, and untracking
+"untrackVehicle" addPublicVariableEventHandler { [_this select 1] call v_untrackVehicle;};
 
 fn_manualVehicleSave = {
   ARGVX2(0,_object);
@@ -269,8 +278,8 @@ fn_manualVehicleSave = {
   if (!isOBJECT(_object)) exitWith {};
   if (diag_tickTime - (_object getVariable ["vehSaving_lastSave", 0]) <= MANUAL_VEH_SAVE_COOLDOWN) exitWith {};
 
-  _object setVariable ["vehSaving_lastUse", diag_tickTime];
-  _object setVariable ["vehSaving_lastSave", diag_tickTime];
+  _object setVariable ["vehSaving_lastUse", diag_tickTime, true];
+  _object setVariable ["vehSaving_lastSave", diag_tickTime, true];
   [_object] call v_trackVehicle;
 };
 
@@ -393,12 +402,12 @@ v_trackVehicleHoursAbandoned = {
 
   if (!isSCALAR(_abandonedTime)) then {
     _abandonedTime = diag_tickTime;
-    _obj setVariable ["vehicle_abandoned_time", _abandonedTime];
+    _obj setVariable ["vehicle_abandoned_time", _abandonedTime, true];
   };
 
   if (!isSCALAR(_hoursAbandoned)) then {
     _hoursAbandoned = 0;
-    _obj setVariable ["vehicle_abandoned_hours", _hoursAbandoned];
+    _obj setVariable ["vehicle_abandoned_hours", _hoursAbandoned, true];
   };
 
 
@@ -599,13 +608,13 @@ v_GetIn_handler = {
   init(_uid,getPlayerUID _player);
 
   if ([_obj] call v_isVehicleVirgin) then {
-    _obj setVariable ["vehicle_first_user", _uid];
+    _obj setVariable ["vehicle_first_user", _uid, true];
   };
 
   //diag_log format["%1 entered vehicle by %2", _obj, _player];
-  _obj setVariable ["vehicle_abandoned_by", nil];
-  _obj setVariable ["vehicle_abandoned_time", nil];
-  _obj setVariable ["vehicle_abandoned_hours", nil];
+  _obj setVariable ["vehicle_abandoned_by", nil, true];
+  _obj setVariable ["vehicle_abandoned_time", nil, true];
+  _obj setVariable ["vehicle_abandoned_hours", nil, true];
 
   [_obj] call v_trackVehicle;
 };
@@ -621,14 +630,14 @@ v_GetOut_handler = {
 
   //in case the player was already inside the vehicle ... (the get-in handler did not catch it)
   if ([_obj] call v_isVehicleVirgin) then {
-    _obj setVariable ["vehicle_first_user", _uid];
+    _obj setVariable ["vehicle_first_user", _uid, true];
   };
 
   if ([_obj] call v_isVehicleEmpty) then {
     //diag_log format["%1 left abandoned by %2", _obj, _player];
-    _obj setVariable ["vehicle_abandoned_by", _uid];
-    _obj setVariable ["vehicle_abandoned_time", diag_tickTime];
-    _obj setVariable ["vehicle_abandoned_hours", nil]; //start counting the hours form 0 again
+    _obj setVariable ["vehicle_abandoned_by", _uid, true];
+    _obj setVariable ["vehicle_abandoned_time", diag_tickTime, true];
+    _obj setVariable ["vehicle_abandoned_hours", nil, true]; //start counting the hours form 0 again
 
   };
 };
@@ -679,12 +688,41 @@ v_saveLoop_iteration = {
   diag_log format["v_saveLoop: Saving all objects complete"];
 };
 
+
+v_saveLoop_iteration_hc = {
+  ARGVX3(0,_scope,"");
+
+  init(_hc_id,owner HeadlessClient);
+  diag_log format["v_saveLoop: Offloading vehicles saving to headless client (id = %1)", _hc_id];
+
+  v_saveLoop_iteration_hc_handler = [_scope];
+  _hc_id publicVariableClient "v_saveLoop_iteration_hc_handler";
+
+  call v_trackedVehiclesListCleanup;
+};
+
+if (!(hasInterface || isDedicated)) then {
+  diag_log format["Setting up HC handler for objects"];
+  "v_saveLoop_iteration_hc_handler" addPublicVariableEventHandler {
+    //diag_log format["v_saveLoop_iteration_hc_handler = %1", _this];
+    ARGVX3(1,_this,[]);
+    ARGVX3(0,_scope,"");
+    _this spawn v_saveLoop_iteration;
+  };
+};
+
+
 v_saveLoop = {
   ARGVX3(0,_scope,"");
   while {true} do {
     sleep A3W_vehicle_saveInterval;
     if (not(isBOOLEAN(v_saveLoopActive) && {!v_saveLoopActive})) then {
-      [_scope] call v_saveLoop_iteration;
+      if (call sh_hc_ready) then {
+        [_scope] call v_saveLoop_iteration_hc;
+      }
+      else {
+        [_scope] call v_saveLoop_iteration;
+      };
     };
   };
 };
@@ -711,6 +749,9 @@ v_loadVehicles = {
   } forEach _vehicles;
 
   v_loadVehicles_complete = true;
+
+ ["tracked_vehicles_list"] call sh_hc_forward; //forward to headless client (if connected)
+
 
   (_vIds)
 };
