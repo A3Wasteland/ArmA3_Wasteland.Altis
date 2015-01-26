@@ -68,8 +68,11 @@ if (isServer) then
 	[] execVM "server\init.sqf";
 };
 
-//init 3rd Party Scripts
-[] execVM "addons\R3F_ARTY_AND_LOG\init.sqf";
-[] execVM "addons\proving_ground\init.sqf";
-[] execVM "addons\scripts\DynamicWeatherEffects.sqf";
-[] execVM "addons\JumpMF\init.sqf";
+//init 3rd Party Scripts (not supposed to run on HC)
+if (hasInterface || isServer) then
+{
+	[] execVM "addons\R3F_ARTY_AND_LOG\init.sqf";
+	[] execVM "addons\proving_ground\init.sqf";
+	[] execVM "addons\scripts\DynamicWeatherEffects.sqf";
+	[] execVM "addons\JumpMF\init.sqf";
+};
