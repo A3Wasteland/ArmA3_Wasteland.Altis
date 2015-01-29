@@ -10,7 +10,7 @@ if (!isServer) exitWith {};
 
 if (isNil "A3W_network_compileFuncs") then
 {
-	private ["_compileKey", "_assignCompileKey", "_packetKey", "_assignPacketKey", "_packetKeyArray", "_checksum", "_assignChecksum", "_checksumArray"];
+	private ["_compileKey", "_assignCompileKey", "_packetKey", "_assignPacketKey", "_packetKeyArray", "_checksum", "_assignChecksum", "_checksumArray", "_rscList", "_rscParams", "_rscCfg"];
 
 	_compileKey = call A3W_fnc_generateKey;
 
@@ -57,7 +57,19 @@ if (isNil "A3W_network_compileFuncs") then
 	} forEach toArray _checksum;
 	_assignChecksum = _assignChecksum + (str toArray _checksumArray) + "; ";
 
-	[_assignCompileKey, _assignChecksum, _assignPacketKey] call compile preprocessFileLineNumbers "server\antihack\createUnit.sqf";
+	_rscList = ["RscDisplayAVTerminal", "RscDisplayCommonHint", "RscDisplayCommonMessage", "RscDisplayCommonMessagePause", "RscDisplayConfigureAction", "RscDisplayConfigureControllers", "RscDisplayControlSchemes", "RscDisplayCustomizeController", "RscDisplayDebriefing", "RscDisplayDiary", "RscDisplayFieldManual", "RscDisplayGameOptions", "RscDisplayGetReady", "RscDisplayInsertMarker", "RscDisplayInterrupt", "RscDisplayInventory", "RscDisplayJoystickSchemes", "RscDisplayLoading", "RscDisplayLoadMission", "RscDisplayMainMap", "RscDisplayMicSensitivityOptions", "RscDisplayOptions", "RscDisplayOptionsAudio", "RscDisplayOptionsLayout", "RscDisplayOptionsVideo", "RscDisplayStart", "RscDisplayVehicleMsgBox", "RscDisplayVoiceChat"];
+	_rscParams = [];
+
+	{
+		_rscCfg = configFile >> _x;
+
+		if (isClass _rscCfg) then
+		{
+			_rscParams pushBack [_x, toArray getText (_rscCfg >> "onLoad"), toArray getText (_rscCfg >> "onUnload")];
+		};
+	} forEach _rscList;
+
+	[_assignCompileKey, _assignChecksum, _assignPacketKey, str _rscParams] call compile preprocessFileLineNumbers "server\antihack\createUnit.sqf";
 	waitUntil {!isNil {missionNamespace getVariable _compileKey}};
 
 	diag_log "ANTI-HACK: Started.";

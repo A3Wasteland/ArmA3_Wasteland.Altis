@@ -1,7 +1,7 @@
 // ******************************************************************************************
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
-//	@file Name: forceEject.sqf
+//	@file Name: fn_emergencyEject.sqf
 //	@file Author: AgentRev
 
 if (!alive player) exitWith {};

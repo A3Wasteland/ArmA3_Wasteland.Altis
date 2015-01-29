@@ -23,16 +23,6 @@ publicVariable "currentInvites";
 
 #define PVAL (_this select 1)
 
-"itemsDroppedOnDeath" addPublicVariableEventHandler
-{
-	{
-		if (!isNil "_x") then
-		{
-			(objectFromNetId _x) setVariable ["processedDeath", diag_tickTime];
-		};
-	} forEach PVAL;
-};
-
 { (_x select 0) addPublicVariableEventHandler (_x select 1) } forEach
 [
 	["PlayerCDeath", { PVAL call server_playerDied }],
@@ -54,5 +44,6 @@ publicVariable "currentInvites";
 	["pvar_manualObjectDelete", { if (!isNil "fn_manualObjectDelete") then { PVAL call fn_manualObjectDelete } }],
 	["pvar_manualVehicleSave", { if (!isNil "fn_manualVehicleSave") then { PVAL call fn_manualVehicleSave } }],
 	["pvar_playerRespawn", { PVAL spawn playerRespawnServer }],
-	["pvar_waitUntilBagTaken", { PVAL spawn waitUntilBagTaken }]
+	["pvar_waitUntilBagTaken", { PVAL spawn waitUntilBagTaken }],
+	["pvar_dropPlayerItems", { PVAL spawn dropPlayerItems }]
 ];
