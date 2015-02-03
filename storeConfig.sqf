@@ -766,12 +766,14 @@ colorsArray = compileFinal str
 			["NATO Tan", _texDir + "nato.jpg"], // #(argb,8,8,3)color(0.584,0.565,0.515,0.3)
 			["CSAT Brown", _texDir + "csat.jpg"], // #(argb,8,8,3)color(0.624,0.512,0.368,0.3)
 			["AAF Green", _texDir + "aaf.jpg"], // #(argb,8,8,3)color(0.546,0.59,0.363,0.2)
-			["Trippy", _texDir + "rainbow.jpg"],
-			["Carbon", _texDir + "carbon.jpg"],
+			["TOP Pussy Patrol", _texDir + "top-pussy-1.jpg"],
+			["TOP Pussy Pounders", _texDir + "top-pussy-2.jpg"],
+			["TOP Titty Touchers", _texDir + "top-boobs-1.jpg"],
+			["TOP Pirates & Weed", _texDir + "top-weed-1.jpg"],
+			["TOP Death Dealer", _texDir + "top-skulls-1.jpg"],
+			["TOP LGBT Parade", _texDir + "top-lgbt-1.jpg"],
+			["TOP Dildo Brigade", _texDir + "top-dildo-1.jpg"],
 			["Rusty", _texDir + "rusty.jpg"],
-			["Denim", _texDir + "denim.jpg"],
-			["Psych", _texDir + "psych.jpg"],
-			["Leopard", _texDir + "leopard.jpg"],
 			["'Murica", _texDir + "murica.jpg"],
 			["Confederate", _texDir + "confederate.jpg"],
 			["Union Jack", _texDir + "unionjack.jpg"],
