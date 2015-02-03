@@ -48,7 +48,6 @@ _message = format ["<t shadow=""1"">%1<br/>%2<br/>%3<br/></t>",
 
 _control ctrlSetStructuredText (parseText _message);
 
-["MAKE ARMA NOT WAR ENTRY:<br/>A3WASTELAND ALTIS<br/>http://a3wasteland.com Click SUPPORT US!<br/>", "SUPPORT A3WASTELAND in MANW"] spawn BIS_fnc_guiMessage;
 
 sleep 20;
 
