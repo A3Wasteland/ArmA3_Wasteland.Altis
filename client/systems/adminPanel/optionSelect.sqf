@@ -97,7 +97,7 @@ if (_uid call isAdmin) then
 					closeDialog 0;
 					[] call loadGeneralStore;
 				};
-				case 2: //Access ATM Interface
+				case 2: //Access Vehicle Store
 				{
 					closeDialog 0;
 					[] call loadVehicleStore;
