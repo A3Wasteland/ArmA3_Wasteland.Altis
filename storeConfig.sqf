@@ -773,6 +773,7 @@ colorsArray = compileFinal str
 			["TOP Death Dealer", _texDir + "top-skulls-1.jpg"],
 			["TOP LGBT Parade", _texDir + "top-lgbt-1.jpg"],
 			["TOP Dildo Brigade", _texDir + "top-dildo-1.jpg"],
+			["Carbon", _texDir + "carbon.jpg"],
 			["Rusty", _texDir + "rusty.jpg"],
 			["'Murica", _texDir + "murica.jpg"],
 			["Confederate", _texDir + "confederate.jpg"],
