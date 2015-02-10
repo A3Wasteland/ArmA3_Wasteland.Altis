@@ -15,7 +15,8 @@ FAR_Player_Actions =
 		[
 			["<t color='#00C900'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", FAR_Check_Revive],
 			["<t color='#00C900'>" + "Stabilize" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_stabilize"], 99, true, true, "", FAR_Check_Stabilize],
-			["<t color='#C9C900'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, true, true, "", FAR_Check_Dragging]
+			["<t color='#C9C900'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, true, true, "", FAR_Check_Dragging],
+			["<t color='#C90000'>" + "Gut" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_gut"], 97, true, true, "", FAR_Check_Dragging]
 		];
 	};
 }
@@ -280,6 +281,26 @@ call mf_compile;
 FAR_Check_Revive =
 {
 	call FAR_Check_Dragging && IS_MEDIC(player)
+}
+call mf_compile;
+
+////////////////////////////////////////////////
+// Gut Player Action
+////////////////////////////////////////////////
+ 
+FAR_Gut =
+{	
+	private ["_target"];
+	_target = _this select 0;
+	_medicMove = format ["AinvPknlMstpSlayW%1Dnon_medic", [_target, true] call getMoveWeapon];
+	player playMove _medicMove;
+	
+	if (CAN_PERFORM) then
+	{
+		[100] call BIS_fnc_bloodEffect;
+		[player, "gutCount", 1] call fn_addScore;
+		_target setdamage 1;
+	};
 }
 call mf_compile;
 
