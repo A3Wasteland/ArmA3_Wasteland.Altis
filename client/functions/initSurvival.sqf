@@ -17,7 +17,7 @@
 #define STARVATION "<t size='2' color='#ffff00'> R.I.P.</t><br/><br/>You have died from: <br/><t size='2' color='#ff0000'>starvation</t><br/><br/>You need to eat to survive here!<br/>"
 #define DEHYDRATION "<t size='2' color='#ffff00'> R.I.P.</t><br/><br/>You have died from: <br/><t size='2' color='#ff0000'>dehydration</t><br/><br/>You need to drink to survive here!<br/>"
 
-private["_warnf1","_warnf2","_warnf3","_warnf4","_warnd1","_warnd2","_warnd3","_warnd4"];
+private["_warnf1","_warnf2","_warnf3","_warnf4","_warnd1","_warnd2","_warnd3","_warnd4", "_donatorEnabled", "_donatorLevel"];
 
 _warnf1 = true;
 _warnf2 = true;
@@ -27,6 +27,16 @@ _warnd1 = true;
 _warnd2 = true;
 _warnd3 = true;
 _warnd4 = true;
+
+_donatorEnabled = ["A3W_donatorEnabled"] call isConfigOn;
+_donatorLevel = player getVariable ["donator", 0];
+
+
+if (_donatorEnabled && _donatorLevel > 1) exitWith
+{
+	thirstLevel = 100;
+	hungerLevel = 100;
+};
 
 if (!isNil "mf_survival_handle1") then { terminate mf_survival_handle1 };
 mf_survival_handle1 = [] spawn
