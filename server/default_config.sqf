@@ -24,6 +24,8 @@ A3W_resupplyCostPR = 4;			   // Determine resupply cost by vehicle store cost / 
 A3W_firstPersonCamOnFoot = 0;	   // Lock infantry to first person view
 A3W_firstPersonCamNotDriver = 0;   // Lock all vehicle seating positions besides driver to first person view
 A3W_donatorEnabled = 1;				// Enable/Disable Donator Features
+A3W_tkAutoKickEnabled = 1;			// Enable/Disable Autokick for teamkillers
+A3W_tkKickAmount = 10;			// TeamKill amount needed before Kick.
 
 // Store settings
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)

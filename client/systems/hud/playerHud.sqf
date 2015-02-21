@@ -110,8 +110,8 @@ while {true} do
 	_hudActivityTextbox = _ui displayCtrl hud_activity_textbox_idc;
 	_hudServerTextbox = _ui displayCtrl hud_server_idc;
 	
-	_serverString = format ["<t color='#A0FFFFFF'>Server: TOP #%1 Wasteland Altis</t>", call A3W_extDB_ServerID];
-	_serverString = format ["%1<br/><t color='#A0FFFFFF'>Teamspeak: ts.toparma.com<br/>Website: TOPARMA.COM</t>",_serverString];
+	_serverString = format ["<t color='#A0FFFFFF'>TOP #%1 Wasteland %2 : Server</t>", call A3W_extDB_ServerID, worldName];
+	_serverString = format ["%1<br/><t color='#A0FFFFFF'>ts.toparma.com : TeamSpeak<br/>TOPARMA.COM : Website/Stats/Forum</t>",_serverString];
 	_hudServerTextbox ctrlSetStructuredText parseText _serverString;
 	_hudServerTextbox ctrlCommit 0;
 
