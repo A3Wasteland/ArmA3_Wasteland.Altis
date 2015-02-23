@@ -16,7 +16,7 @@ currentOwnerName = "";
 pistolArray = compileFinal str
 [
 	// Handguns
-    ["Starter Pistol", "hgun_Pistol_Signal_F", 50],
+        ["Starter Pistol", "hgun_Pistol_Signal_F", 50],
 	["P07 Pistol", "hgun_P07_F", 50],
 	["Rook-40 Pistol", "hgun_Rook40_F", 50],
 	["ACP-C2 Pistol", "hgun_ACPC2_F", 75],
@@ -151,8 +151,8 @@ throwputArray = compileFinal str
 //Text name, classname, buy cost
 ammoArray = compileFinal str
 [
-    ["Starter Pistol Rounds (Red)", "6Rnd_RedSignal_F", 25],
-    ["Starter Pistol Rounds (Green)", "6Rnd_GreenSignal_F", 25],
+        ["Starter Pistol Rounds (Red)", "6Rnd_RedSignal_F", 25],
+        ["Starter Pistol Rounds (Green)", "6Rnd_GreenSignal_F", 25],
 	["9mm 16Rnd Mag", "16Rnd_9x21_Mag", 10],
 	["9mm 30Rnd Mag", "30Rnd_9x21_Mag", 15],
 	[".45 ACP 6Rnd Cylinder", "6Rnd_45ACP_Cylinder", 5],
@@ -527,9 +527,9 @@ allStoreGear = compileFinal str (call headArray + call uniformArray + call vestA
 genObjectsArray = compileFinal str
 [
 	["Empty Ammo Crate", "Box_NATO_Ammo_F", 200, "ammocrate"],
-    ["Mid Ammo Crate", "Box_East_WpsSpecial_F", 150, "ammocrate"],
-    ["Large Ammo Crate","B_supplyCrate_F",700,"ammocrate"],
-    ["Large Cargo Crate","Box_IND_AmmoVeh_F",500,"ammocrate"],
+        ["Mid Ammo Crate", "Box_East_WpsSpecial_F", 150, "ammocrate"],
+        ["Large Ammo Crate","B_supplyCrate_F",700,"ammocrate"],
+        ["Large Cargo Crate","Box_IND_AmmoVeh_F",500,"ammocrate"],
 	//["Metal Barrel", "Land_MetalBarrel_F", 25, "object"],
 	//["Toilet Box", "Land_ToiletBox_F", 25, "object"],
 	["Lamp Post (Harbour)", "Land_LampHarbour_F", 100, "object"],
@@ -567,7 +567,7 @@ genObjectsArray = compileFinal str
 	["Military Cargo Tower", "Land_Cargo_Tower_V1_F", 10000, "object"],
 	["Concrete Ramp", "Land_RampConcrete_F", 350, "object"],
 	["Concrete Ramp (High)", "Land_RampConcreteHigh_F", 500, "object"],
-	["Scaffolding", "Land_Scaffolding_F", 250, "object"]
+	["Scaffolding", "Land_Scaffolding_F", 250, "object"],
     //Custom Buildings
 	["Air Traffic Control Tower", "Land_Airport_Tower_F", 20000, "object"],
 	["Barracks", "Land_i_Barracks_V2_F", 30000, "object"],
