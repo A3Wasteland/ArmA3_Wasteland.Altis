@@ -40,6 +40,20 @@ while {true} do
 
 		Object_canLock = !(_objet_pointe getVariable ['objectLocked', false]);
 
+        Object_safePos = {
+			_obj = cursorTarget;
+			_maxDist = 200;
+			_allowed = true;
+
+				{
+			//diag_log format ["Checking %1 with coords %2. Distance: %3, max: %4",_obj,_x,_obj distance _x,_maxDist];
+			if ((_obj distance _x)<_maxDist) then {
+			_allowed=false;
+			};
+		} forEach R3F_disallowedLocations;
+
+		(_allowed);
+		};
 		// Si l'objet est un objet déplaçable
 		if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 		{
