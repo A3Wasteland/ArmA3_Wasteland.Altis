@@ -73,3 +73,7 @@ if (isServer) then
 [] execVM "addons\proving_ground\init.sqf";
 [] execVM "addons\scripts\DynamicWeatherEffects.sqf";
 [] execVM "addons\JumpMF\init.sqf";
+[] execVM "addons\snafu\outlw_magRepack\MagRepack_init_sv.sqf";
+[] execVM "addons\vactions\functions.sqf";
+if (isServer) then {call compile preprocessFile "addons\snafu\extra_sites\initBuildings.sqf";};	//add extra buildings
+[] execVM "addons\zlt_fastrope\zlt_fastrope.sqf";
