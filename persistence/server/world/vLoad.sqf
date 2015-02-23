@@ -118,7 +118,13 @@ _exclVehicleIDs = [];
 		};
 
 		{ _veh setVariable [_x select 0, _x select 1, true] } forEach _variables;
-
+         //Cael817, SNAFU, If vehicle is owned by a player, lock it and make it untowable/unliftable.
+		if (!isNil {_veh getVariable "ownerUID"}) then {
+		_veh setVariable ["R3F_LOG_disabled",true,true];
+		_veh lock 2;
+		};
+		{ _veh setVariable [_x select 0, _x select 1, true] } forEach _variables;
+		
 		clearWeaponCargoGlobal _veh;
 		clearMagazineCargoGlobal _veh;
 		clearItemCargoGlobal _veh;
