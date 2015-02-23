@@ -28,5 +28,8 @@
 	["TERRITORY_ARTINARKI_RUINS", "Artinarki Ruins", 500, "RUINS"],
 	["TERRITORY_MAGOS_TRANSMITTER", "Magos Transmitter", 500, "TRANSMITTER"],
 	["TERRITORY_PYRSOS_TRANSMITTER", "Pyrsos Transmitter", 500, "TRANSMITTER"],
+	["TERRITORY_solarfarm2", "Solarfarm2", 500, "MILITARY"],
+	["TERRITORY_solarfarm1", "Solarfarm1", 500, "MILITARY"],
+	["TERRITORY_moonpool", "MoonPool", 7500, "MILITARY"],
 	["TERRITORY_MILITARY_RESEARCH", "Telos Military Base", 500, "MILITARY"]
 ]
