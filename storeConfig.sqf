@@ -16,6 +16,7 @@ currentOwnerName = "";
 pistolArray = compileFinal str
 [
 	// Handguns
+    ["Starter Pistol", "hgun_Pistol_Signal_F", 50],
 	["P07 Pistol", "hgun_P07_F", 50],
 	["Rook-40 Pistol", "hgun_Rook40_F", 50],
 	["ACP-C2 Pistol", "hgun_ACPC2_F", 75],
@@ -150,6 +151,8 @@ throwputArray = compileFinal str
 //Text name, classname, buy cost
 ammoArray = compileFinal str
 [
+    ["Starter Pistol Rounds (Red)", "6Rnd_RedSignal_F", 25],
+    ["Starter Pistol Rounds (Green)", "6Rnd_GreenSignal_F", 25],
 	["9mm 16Rnd Mag", "16Rnd_9x21_Mag", 10],
 	["9mm 30Rnd Mag", "30Rnd_9x21_Mag", 15],
 	[".45 ACP 6Rnd Cylinder", "6Rnd_45ACP_Cylinder", 5],
@@ -524,6 +527,9 @@ allStoreGear = compileFinal str (call headArray + call uniformArray + call vestA
 genObjectsArray = compileFinal str
 [
 	["Empty Ammo Crate", "Box_NATO_Ammo_F", 200, "ammocrate"],
+    ["Mid Ammo Crate", "Box_East_WpsSpecial_F", 150, "ammocrate"],
+    ["Large Ammo Crate","B_supplyCrate_F",700,"ammocrate"],
+    ["Large Cargo Crate","Box_IND_AmmoVeh_F",500,"ammocrate"],
 	//["Metal Barrel", "Land_MetalBarrel_F", 25, "object"],
 	//["Toilet Box", "Land_ToiletBox_F", 25, "object"],
 	["Lamp Post (Harbour)", "Land_LampHarbour_F", 100, "object"],
@@ -562,6 +568,39 @@ genObjectsArray = compileFinal str
 	["Concrete Ramp", "Land_RampConcrete_F", 350, "object"],
 	["Concrete Ramp (High)", "Land_RampConcreteHigh_F", 500, "object"],
 	["Scaffolding", "Land_Scaffolding_F", 250, "object"]
+    //Custom Buildings
+	["Air Traffic Control Tower", "Land_Airport_Tower_F", 20000, "object"],
+	["Barracks", "Land_i_Barracks_V2_F", 30000, "object"],
+	["Cargo House", "Land_Cargo_House_V1_F", 3000, "object"],
+	["Cargo HQ", "Land_Cargo_HQ_V1_F", 3500, "object"],
+	["Castle Tower", "Land_Castle_01_tower_F", 7000,"object"],
+	["City Gate", "Land_City_Gate_F", 500, "object"],
+	["Fence Gate", "Land_Net_Fence_Gate_F",500,"object"],
+	["Construction Site Massive", "Land_WIP_F", 30000, "object"],
+	["Crane", "Land_Crane_F", 8000, "object"],
+	["Two Story House Large", "Land_i_House_Big_01_V1_F", 22000, "object"],
+	["Two Story House V2 Large", "Land_i_House_Big_02_V1_F", 22000, "object"],
+	["One Story House Medium", "Land_i_House_Small_01_V1_F", 19000, "object"],
+	["One Story House Add-on", "Land_i_Addon_02_V1_F", 10000, "object"],
+	["Garage", "Land_i_Garage_V1_F", 4000, "object"],
+	["Hanger Metal/Large", "Land_Hangar_F", 30000, "object"],
+	["Hanger Tent/Medium", "Land_TentHangar_V1_F", 25000, "object"],
+	["Hospital Main", "Land_Hospital_main_F", 50000, "object"],
+	["Hospital Left Wing", "Land_Hospital_side1_F", 50000, "object"],
+	["Hospital Right Wing", "Land_Hospital_side2_F", 50000, "object"],
+	["Lighthouse Tower", "Land_LightHouse_F", 50000, "object"],
+	["Military Office Building", "Land_MilOffices_V1_F", 50000, "object"],
+	["Metal Barrel Burning", "MetalBarrel_burning_F", 250, "object"],
+	["Office Building Massive", "Land_Offices_01_V1_F", 45000, "object"],
+	["Radar Tower Only Aesthetics Medium", "Land_Radar_Small_F", 15000, "object"],
+	["Research Dome Massive", "Land_Dome_Big_F", 35000, "object"],
+	["Research Dome Large", "Land_Dome_Small_F", 25000, "object"],
+	["Repair ShopMedium", "Land_CarService_F", 15000, "object"],
+	["Shed Cover", "Land_Shed_Big_F", 5000, "object"],
+    ["Indust Shed", "Land_i_Shed_Ind_F", 15000, "object"],
+	["Shop House Large", "Land_i_Shop_01_V1_F", 20000, "object"],
+	["Shop House Large V2", "Land_i_Shop_02_V1_F", 20000, "object"],
+	["Slum Cargo House ", "Land_cargo_house_slum_F", 500, "object"]
 ];
 
 allGenStoreVanillaItems = compileFinal str (call genItemArray + call genObjectsArray + call allStoreGear);
