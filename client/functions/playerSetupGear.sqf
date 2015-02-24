@@ -134,6 +134,11 @@ switch (true) do
 	};
 };
 
+//Fix Vests for Diver After Perk
+_vest = [_player, "vest"] call getDefaultClothing;
+if (_vest != "") then { _player addVest _vest };
+
+
 if (_player == player) then
 {
 	thirstLevel = 100;
