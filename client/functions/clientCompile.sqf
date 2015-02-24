@@ -56,6 +56,7 @@ weaponDisassembledEvent = "client\functions\weaponDisassembledEvent.sqf" call mf
 
 // Player details and actions
 loadPlayerMenu = "client\systems\playerMenu\init.sqf" call mf_compile;
+playerCustomUniform = "client\functions\playerCustomUniform.sqf" call mf_compile;
 playerSpawn = "client\functions\playerSpawn.sqf" call mf_compile;
 playerSetup = "client\functions\playerSetup.sqf" call mf_compile;
 playerSetupStart = "client\functions\playerSetupStart.sqf" call mf_compile;
