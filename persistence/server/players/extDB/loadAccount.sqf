@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_UID", "_bank", "_moneySaving", "_donator", "_donatorEnabled", "_teamkiller", "_tkCount", "_tkAutoKickEnabled", "_tkKickAmount", "_result", "_data", "_columns"];
+private ["_UID", "_bank", "_moneySaving", "_donator", "_donatorEnabled", "_teamkiller", "_tkCount", "_tkAutoKickEnabled", "_tkKickAmount", "_customUniformEnabled", "_uniformNumber", "_result", "_data", "_columns"];
 _UID = _this;
 
 _bank = 0;
@@ -14,10 +14,13 @@ _donator = 0;
 _teamkiller = 0;
 _tkCount = 0;
 _tkKickAmount = 0;
+_uniformNumber = 0;
 _moneySaving = ["A3W_moneySaving"] call isConfigOn;
 _donatorEnabled = ["A3W_donatorEnabled"] call isConfigOn;
 _tkAutoKickEnabled = ["A3W_tkAutoKickEnabled"] call isConfigOn;
 _tkKickAmount = ["A3W_tkKickAmount", 0] call getPublicVar;
+_customUniformEnabled = ["A3W_customUniformEnabled"] call isConfigOn;
+
 
 if (_donatorEnabled) then
 {
@@ -26,6 +29,16 @@ if (_donatorEnabled) then
 	if (count _result > 0) then
 	{
 		_donator = _result select 0;
+	};
+};
+
+if (_customUniformEnabled) then
+{
+	_result = ["getPlayerCustomUniform:" + _UID, 2] call extDB_Database_async;
+
+	if (count _result > 0) then
+	{
+		_uniformNumber = _result select 0;
 	};
 };
 
@@ -75,7 +88,8 @@ if (!_result) then
 	[
 		["PlayerSaveValid", false],
 		["BankMoney", _bank],
-		["DonatorLevel", _donator]
+		["DonatorLevel", _donator],
+		["CustomUniform", _uniformNumber]
 	];
 }
 else
@@ -146,6 +160,7 @@ else
 
 	_data pushBack ["BankMoney", _bank];
 	_data pushBack ["DonatorLevel", _donator];
+	_data pushBack ["CustomUniform", _uniformNumber];
 	_data pushBack ["PlayerSaveValid", true];
 };
 

@@ -131,6 +131,7 @@ A3W_scriptThreads pushBack execVM "client\systems\hud\playerHud.sqf";
 };
 
 [] spawn playerSpawn;
+[] spawn playerCustomUniform;
 
 A3W_scriptThreads pushBack execVM "addons\fpsFix\vehicleManager.sqf";
 A3W_scriptThreads pushBack execVM "addons\Lootspawner\LSclientScan.sqf";
