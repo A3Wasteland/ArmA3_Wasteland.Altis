@@ -42,7 +42,10 @@ switch (_donatorLevel) do
 	case 1:
 	{
 		_player addBackpack "B_AssaultPack_rgr";
-		_player addVest "V_BandollierB_cbr";
+		if (["_diver_", typeOf _player] call fn_findString != -1) then {} else 
+		{
+			_player addVest "V_BandollierB_cbr";
+		};
 		_player addMagazine "11Rnd_45ACP_Mag";
 		_player addWeapon "hgun_Pistol_heavy_01_F";
 		_player addMagazine "11Rnd_45ACP_Mag";
@@ -55,7 +58,10 @@ switch (_donatorLevel) do
 	case 2:
 	{
 		_player addBackpack "B_FieldPack_khk";
-		_player addVest "V_HarnessOGL_brn";
+		if (["_diver_", typeOf _player] call fn_findString != -1) then {} else 
+		{
+			_player addVest "V_HarnessOGL_brn";
+		};
 		_player addHeadgear "H_HelmetB";
 		_player addMagazine "11Rnd_45ACP_Mag";
 		_player addWeapon "hgun_Pistol_heavy_01_F";
@@ -71,7 +77,10 @@ switch (_donatorLevel) do
 	case 3:
 	{
 		_player addBackpack "B_Kitbag_rgr";
-		_player addVest "V_TacVest_brn";
+		if (["_diver_", typeOf _player] call fn_findString != -1) then {} else 
+		{
+			_player addVest "V_TacVest_brn";
+		};
 		_player addHeadgear "H_HelmetSpecB_blk";
 		_player addMagazine "11Rnd_45ACP_Mag";
 		_player addWeapon "hgun_Pistol_heavy_01_F";
@@ -88,7 +97,10 @@ switch (_donatorLevel) do
 	case 4:
 	{
 		_player addBackpack "B_Carryall_oli";
-		_player addVest "V_PlateCarrier3_rgr";
+		if (["_diver_", typeOf _player] call fn_findString != -1) then {} else 
+		{
+			_player addVest "V_PlateCarrier3_rgr";
+		};
 		_player addHeadgear "H_HelmetLeaderO_ocamo";
 		_player addMagazine "11Rnd_45ACP_Mag";
 		_player addWeapon "hgun_Pistol_heavy_01_F";
@@ -134,9 +146,6 @@ switch (true) do
 	};
 };
 
-//Fix Vests for Diver After Perk
-_vest = [_player, "vest"] call getDefaultClothing;
-if (_vest != "") then { _player addVest _vest };
 
 
 if (_player == player) then
