@@ -110,7 +110,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=53;
+		items=54;
 		class Item0
 		{
 			side="WEST";
@@ -2082,6 +2082,27 @@ class Mission
 					text="VehStore6";
 					init="[this] spawn A3W_fnc_setupStoreNPC";
 					description="DO NOT MODIFY IN EDITOR";
+				};
+			};
+		};
+		class Item53
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={2632.1201,4.9813228,9850.7295};
+					azimut=61.018932;
+					id=160;
+					side="LOGIC";
+					vehicle="C_man_1_1_F";
+					leader=1;
+					skill=0.60000002;
+					text="missile_man_mike";
+					init="missile_man_mike setPosATL [2632.8479,9850.6299,5.0096421];  removeAllWeapons missile_man_mike;  missile_man_mike addAction [""<t color='#ff0000'>Buy Missile Strike $100000</t>"", ""missile_strike.sqf""];  missile_man_mike allowDamage false;  missile_man_mike disableAI ""MOVE"";  missile_man_mike disableAI ""ANIM"";";
+					description="BOOM";
 				};
 			};
 		};
@@ -16690,7 +16711,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=224;
+		items=227;
 		class Item0
 		{
 			position[]={3612.1487,12.11851,13020.892};
@@ -18411,7 +18432,22 @@ class Mission
 			type="Empty";
 			colorName="ColorOrange";
 		};
-		class Item223
+	    class Item223
+		{
+			position[]={11120.604,127.00127,20500.342};
+			name="Mission_27";
+			type="Empty";
+			colorName="ColorOrange";
+		};
+		class Item224
+		{
+			position[]={20032.211,33.846123,16914.594};
+			name="Mission_28";
+			type="Empty";
+			colorName="ColorOrange";
+		};
+
+		class Item225
 		{
 			position[]={14482.361,12.690088,5877.5005};
 			name="Warning";
@@ -18420,6 +18456,14 @@ class Mission
 			colorName="ColorRed";
 			a=0.80000001;
 			b=0.80000001;
+		};
+		class Item226
+		{
+			position[]={2632.8479,5.0096421,9850.6299};
+			name="Missile Mike";
+			text="Missile Mike";
+			type="o_service";
+			colorName="ColorCIV";
 		};
     };
 	class Sensors
