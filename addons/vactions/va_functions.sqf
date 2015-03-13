@@ -439,23 +439,23 @@ va_outside_add_actions = {
   };
   
   //Add unfliping action
-  _action_id = _player addaction [format["<img image='addons\vactions\icons\flip.paa'/> Unflip %1", _display_name], {_this call va_unflip_action;}, [_player, _vehicle],10,false,false,"",
+  _action_id = _player addaction [format["<img image='addons\vactions\icons\flip.paa'/> Unflip %1", _display_name], {_this call va_unflip_action;}, [_player, _vehicle],0,false,false,"",
   format["([objectFromNetId %1] call va_unflip_action_available)",str(netId _vehicle)]];
   va_outside_actions = va_outside_actions + [_action_id];
   
 
   //Add view vehicle information action
-  _action_id = player addaction [format["<img image='addons\vactions\icons\info.paa'/> %1 info", _display_name], {_this call va_information_action;}, [_player, _vehicle],10,false,false,"",
+  _action_id = player addaction [format["<img image='addons\vactions\icons\info.paa'/> %1 info", _display_name], {_this call va_information_action;}, [_player, _vehicle],0,false,false,"",
   format["([objectFromNetId %1, objectFromNetId %2] call va_information_action_available)", str(netId _player), str(netId _vehicle)]];
   va_outside_actions = va_outside_actions + [_action_id];
   
   //Add vehicle lock action
-  _action_id = player addaction [format["<img image='addons\vactions\icons\lock.paa'/> Lock %1", _display_name], {_this call va_lock_action;}, [_player, _vehicle],10,false,false,"",
+  _action_id = player addaction [format["<img image='addons\vactions\icons\lock.paa'/> Lock %1", _display_name], {_this call va_lock_action;}, [_player, _vehicle],0,false,false,"",
   format["([objectFromNetId %1, objectFromNetId %2] call va_lock_action_available)", str(netId _player), str(netId _vehicle)]];
   va_outside_actions = va_outside_actions + [_action_id];
   
   //Add vehicle unlock action
-  _action_id = player addaction [format["<img image='addons\vactions\icons\key.paa'/> Unlock %1", _display_name], {_this call va_unlock_action;}, [_player, _vehicle],10,false,false,"",
+  _action_id = player addaction [format["<img image='addons\vactions\icons\key.paa'/> Unlock %1", _display_name], {_this call va_unlock_action;}, [_player, _vehicle],0,false,false,"",
   format["([objectFromNetId %1, objectFromNetId %2] call va_unlock_action_available)", str(netId _player), str(netId _vehicle)]];
   va_outside_actions = va_outside_actions + [_action_id];
 };
@@ -474,12 +474,12 @@ va_inside_add_actions = {
   _display_name = [typeOf _vehicle] call generic_display_name;
   
   //Add vehicle lock action
-  _action_id = player addaction [format["<img image='addons\vactions\icons\lock.paa'/> Lock %1", _display_name], {_this call va_lock_action;}, [_player, _vehicle],10,false,false,"",
+  _action_id = player addaction [format["<img image='addons\vactions\icons\lock.paa'/> Lock %1", _display_name], {_this call va_lock_action;}, [_player, _vehicle],0,false,false,"",
   format["([objectFromNetId %1, objectFromNetId %2] call va_lock_action_available)", str(netId _player), str(netId _vehicle)]];
   va_inside_actions = va_inside_actions + [_action_id];
   
   //Add vehicle unlock action
-  _action_id = player addaction [format["<img image='addons\vactions\icons\key.paa'/> Unlock %1", _display_name], {_this call va_unlock_action;}, [_player, _vehicle],10,false,false,"",
+  _action_id = player addaction [format["<img image='addons\vactions\icons\key.paa'/> Unlock %1", _display_name], {_this call va_unlock_action;}, [_player, _vehicle],0,false,false,"",
   format["([objectFromNetId %1, objectFromNetId %2] call va_unlock_action_available)", str(netId _player), str(netId _vehicle)]];
   va_inside_actions = va_inside_actions + [_action_id];
 };
