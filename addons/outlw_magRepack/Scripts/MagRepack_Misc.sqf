@@ -1,7 +1,8 @@
 
 #define UNCONSCIOUS(UNIT) (UNIT getVariable ["FAR_isUnconscious", 0] == 1)
 #define STABILIZED(UNIT) (UNIT getVariable ["FAR_isStabilized", 0] == 1)
-
+#define DRAGGED_BY(UNIT) (UNIT getVariable ["FAR_draggedBy", objNull])
+#define DRAGGED(UNIT) (!isNull DRAGGED_BY(UNIT))
 
 outlw_MR_modifierCheck =
 {
@@ -37,7 +38,7 @@ outlw_MR_keyDown =
 {		
 	_key = _this select 1;
 	_unit = player;
-	if (UNCONSCIOUS(_unit) || STABILIZED(_unit)) then
+	if (UNCONSCIOUS(_unit) || STABILIZED(_unit) || DRAGGED(_unit)) then
 	{
 		false;
 	}
