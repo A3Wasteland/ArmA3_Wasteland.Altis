@@ -1,4 +1,9 @@
 
+#define UNCONSCIOUS(UNIT) (UNIT getVariable ["FAR_isUnconscious", 0] == 1)
+#define STABILIZED(UNIT) (UNIT getVariable ["FAR_isStabilized", 0] == 1)
+#define DRAGGED_BY(UNIT) (UNIT getVariable ["FAR_draggedBy", objNull])
+#define DRAGGED(UNIT) (!isNull DRAGGED_BY(UNIT))
+
 outlw_MR_modifierCheck =
 {
 	_shift = _this select 2;
@@ -32,29 +37,36 @@ outlw_MR_modifierCheck =
 outlw_MR_keyDown =
 {		
 	_key = _this select 1;
-	
-	if (_key == outlw_MR_keybinding && {_this call outlw_MR_modifierCheck}) then
+	_unit = player;
+	if (UNCONSCIOUS(_unit) || STABILIZED(_unit) || DRAGGED(_unit)) then
 	{
-		if (outlw_MR_canCreateDialog) then
-		{
-			call outlw_MR_createDialog;
-			true;
-		}
-		else
-		{
-			if (!outlw_MR_keybindingMenuActive) then
-			{
-				closeDialog 0;
-				true;
-			};
-		};
+		false;
 	}
 	else
-	{		
-		if (_key == 14 && {_this select 2} && {_this select 3} && {_this select 4} && {outlw_MR_canCreateDialog}) then
+	{
+		if (_key == outlw_MR_keybinding && {_this call outlw_MR_modifierCheck}) then
 		{
-			[outlw_MR_defaultKeybinding, true] call outlw_MR_applyKeybinding;
-			true;
+			if (outlw_MR_canCreateDialog) then
+			{
+				call outlw_MR_createDialog;
+				true;
+			}
+			else
+			{
+				if (!outlw_MR_keybindingMenuActive) then
+				{
+					closeDialog 0;
+					true;
+				};
+			};
+		}
+		else
+		{		
+			if (_key == 14 && {_this select 2} && {_this select 3} && {_this select 4} && {outlw_MR_canCreateDialog}) then
+			{
+				[outlw_MR_defaultKeybinding, true] call outlw_MR_applyKeybinding;
+				true;
+			};
 		};
 	};
 };
