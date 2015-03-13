@@ -13,6 +13,7 @@
 #define DISABLE_ALL_BUTTONS format ["{ ctrlEnable [_x, false] } forEach %1;", [respawn_Random_Button, respawn_Spawn_Button, respawn_Locations_Type, respawn_Locations_List, respawn_Preload_Checkbox]]
 #define SPAWN_BEACON_COOLDOWN (["A3W_spawnBeaconCooldown", 5*60] call getPublicVar)
 #define BEACON_CHECK_RADIUS 250
+#define UNCONSCIOUS(UNIT) (UNIT getVariable ["FAR_isUnconscious", 0] == 1)
 
 disableSerialization;
 waitUntil {!isNil "bis_fnc_init" && {bis_fnc_init}};
@@ -83,7 +84,7 @@ _setPlayersInfo =
 	};
 
 	{
-		if (alive _x && {_x isKindOf "CAManBase"} && {_x distance _centerPos <= _maxRad}) then
+		if (alive _x && !UNCONSCIOUS(_x) && {_x isKindOf "CAManBase"} && {_x distance _centerPos <= _maxRad}) then
 		{
 			if (FRIENDLY_CONDITION) then
 			{
