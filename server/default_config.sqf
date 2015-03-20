@@ -69,8 +69,13 @@ A3W_extDB_ServerID = 1;            // Server ID to use in the database for the p
 A3W_extDB_Environment = "normal";  // Value used to separate player & object data from multiple environments running on the same map (e.g. "normal", "hardcore", "dev", etc. can be whatever you want)
 A3W_extDB_SaveUnlockedObjects = 1; // Save and restore unlocked baseparts that were locked at least once during their lifetime (0 = no, 1 = yes)
 A3W_extDB_ConfigName = "A3W";      // Name of the connection config from extdb-conf.ini to be used (the one within [brackets])
-A3W_extDB_IniName = "a3wasteland"; // Name of the INI file in extDB\db_custom to be used
-A3W_extDB_Debug = 0;               // Log all queries to server RPT (0 = no, 1 = yes)
+A3W_extDB_IniName = "a3wasteland"; // Name of the INI file in extDB\sql_custom to be used
+A3W_extDB_RconName = "RCON";       // Name of the rcon config from extdb-conf.ini to be used (the one within [brackets])
+A3W_extDB_Misc = 0;                // Enable extDB Misc Protocol (0 = no, 1 = yes)
+A3W_extDB_Rcon = 0;                // Enable extDB Rcon Protocol (0 = no, 1 = yes)
+A3W_extDB_rconCommands = "KICK-ADDBAN";	// List of RCON Commands Allowed via extDB_Rcon
+A3W_extDB_Steam = 0;               // Enable extDB Steam Protocol (0 = no, 1 = yes)
+
 
 // Spawning settings
 A3W_serverSpawning = 1;            // Vehicle, object, and loot spawning (0 = no, 1 = yes)

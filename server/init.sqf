@@ -146,20 +146,21 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 	// extDB
 	if (_savingMethod == "extDB") then
 	{
-		_version = "extDB" callExtension "9:VERSION";
+		_version = "extDB2" callExtension "9:VERSION";
 
-		if (parseNumber _version >= 20) then
+		if (parseNumber _version >= 47) then
 		{
 			A3W_savingMethodName = compileFinal "'extDB'";
 			A3W_savingMethodDir = compileFinal "'extDB'";
 			A3W_extDB_ConfigName = compileFinal str (["A3W_extDB_ConfigName", "A3W"] call getPublicVar);
 			A3W_extDB_IniName = compileFinal str (["A3W_extDB_IniName", "a3wasteland"] call getPublicVar);
+			A3W_extDB_RconName = compileFinal str (["A3W_extDB_RconName", "A3W"] call getPublicVar);
 		}
 		else
 		{
 			if (_version != "") then
 			{
-				diag_log format "[INFO] ### extDB startup cancelled!";
+				diag_log format "[INFO] ### extDB2 startup cancelled!";
 				diag_log format ["[INFO] ### A3W requires extDB v20 or later: v%1 detected", _result];
 			}
 			else
