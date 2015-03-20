@@ -11,7 +11,7 @@ _maxUnusedTime = ["A3W_vehicleMaxUnusedTime", 0] call getPublicVar;
 
 if (_maxLifetime > 0 || _maxUnusedTime > 0) then
 {
-	[format ["deleteExpiredServerVehicles:%1:%2:%3:%4", call A3W_extDB_ServerID, call A3W_extDB_MapID, _maxLifetime, _maxUnusedTime], 2] call extDB_Database_async;
+	[format ["deleteExpiredServerVehicles:%1:%2:%3:%4", call A3W_extDB_ServerID, call A3W_extDB_MapID, _maxLifetime, _maxUnusedTime], 2, true] call extDB_Database_async;
 };
 
 // DB column name, vLoad variable name
