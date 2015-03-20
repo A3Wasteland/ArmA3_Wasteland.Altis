@@ -87,7 +87,7 @@ if (_return) then
 	};
 	if  (["A3W_extDB_steam"] call isConfigOn) then
 	{
-		extDB_Misc_async = [_setupDir, "async_steam.sqf"] call mf_compile;
+		extDB_Steam_async = [_setupDir, "async_steam.sqf"] call mf_compile;
 	};
 
 	_result = (["getDBVersion", 2] call extDB_Database_async) select 0;
