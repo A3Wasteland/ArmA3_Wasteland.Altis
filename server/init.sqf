@@ -148,7 +148,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 	{
 		_version = "extDB2" callExtension "9:VERSION";
 
-		if (parseNumber _version >= 47) then
+		if (parseNumber _version >= 49) then
 		{
 			A3W_savingMethodName = compileFinal "'extDB'";
 			A3W_savingMethodDir = compileFinal "'extDB'";
