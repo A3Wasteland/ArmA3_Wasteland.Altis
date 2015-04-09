@@ -15,7 +15,9 @@ FAR_Player_Actions =
 		[
 			["<t color='#00C900'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", FAR_Check_Revive],
 			["<t color='#00C900'>" + "Stabilize" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_stabilize"], 99, true, true, "", FAR_Check_Stabilize],
-			["<t color='#C9C900'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, true, true, "", FAR_Check_Dragging]
+			["<t color='#C9C900'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, true, true, "", FAR_Check_Dragging],
+			["<t color='#C90000'>" + "Gut" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_gut"], 97, true, true, "", FAR_Check_Dragging]
+			
 		];
 	};
 }
@@ -232,6 +234,17 @@ FAR_public_EH =
 			};
 		};
 	};
+	
+	if (_EH == "FAR_gutMessage") then
+	{
+		_names = _value select 0;
+		_unitName = _names select 0;
+		_killerName = [_names, 1] call BIS_fnc_param;
+		_unit = objectFromNetId (_value select 1);
+
+		systemChat format ["%1 was gutted by %2", toString _unitName, toString _killerName];
+
+	};
 }
 call mf_compile;
 
@@ -280,6 +293,34 @@ call mf_compile;
 FAR_Check_Revive =
 {
 	call FAR_Check_Dragging && IS_MEDIC(player)
+}
+call mf_compile;
+
+////////////////////////////////////////////////
+// Gut Player Action
+////////////////////////////////////////////////
+ 
+FAR_Gut =
+{	
+	private ["_target", "_killer", "_unit"];
+	_target = _this select 0;
+	_killer = player;
+	
+	_medicMove = format ["AinvPknlMstpSlayW%1Dnon_medic", [_target, true] call getMoveWeapon];
+	player playMove _medicMove;
+
+	waitUntil {sleep 0.1; animationState player == _medicMove || !CAN_PERFORM};
+	waitUntil {sleep 0.1; animationState player != _medicMove || !CAN_PERFORM};
+	
+	sleep 2;
+	
+	if (CAN_PERFORM) then
+	{
+		[100] call BIS_fnc_bloodEffect;
+		[player, "gutCount", 1] call fn_addScore;
+		_target allowDamage true;
+		_target setDamage 1;
+	};
 }
 call mf_compile;
 

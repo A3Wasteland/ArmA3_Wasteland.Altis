@@ -3,9 +3,10 @@
 // ******************************************************************************************
 // A3Wasteland config file
 // You will need to shutdown the server to edit settings in this file!
+
 // All saving is done via the server's profileNamespace by default; iniDBI will be automatically used if you have if installed
-// if you have any doubts and/or questions about the mission find us at a3wasteland.com
-// This file is overriden by the external file "A3Wasteland_settings\main_config.sqf" if present
+// if you have any doubts and/or questions about the mission find us at a3wasteland.com 
+// This file is overridden by the external file "A3Wasteland_settings\main_config.sqf" if present
 
 // General settings
 A3W_startHour = 15;                // In-game hour at mission start (0 to 23)
@@ -18,12 +19,21 @@ A3W_globalVoiceMaxWarns = 5;       // Number of global voice warnings after whic
 A3W_antiHackMinRecoil = 1.0;       // Mininum recoil coefficient enforced by the antihack (recommended values: default = 1.0, TMR Mod = 0.5, VTS Weapon Resting = 0.25) (minimum: 0.02)
 A3W_spawnBeaconCooldown = 5*60;    // Number of seconds to wait between each use of an individual spawn beacon (0 = disabled)
 A3W_spawnBeaconSpawnHeight = 1500; // Altitude in meters at which players will spawn when using spawn beacons (0 = ground/sea)
+A3W_vehicleThermals = 0;		   // Allow vehicles to use thermals (0 = disabled)
+A3W_resupplyCostPR = 4;			   // Determine resupply cost by vehicle store cost / A3W_resupplyCostPR. (4 = default, %25 percent)
+A3W_firstPersonCamOnFoot = 0;	   // Lock infantry to first person view
+A3W_firstPersonCamNotDriver = 0;   // Lock all vehicle seating positions besides driver to first person view
+A3W_donatorEnabled = 1;				// Enable/Disable Donator Features
+A3W_customUniformEnabled = 1;		// Enable/Disable Custom Uniforms
+A3W_tkAutoKickEnabled = 1;			// Enable/Disable Autokick for teamkillers
+A3W_tkKickAmount = 10;			// TeamKill amount needed before Kick.
 
 // Store settings
 A3W_showGunStoreStatus = 1;        // Show enemy and friendly presence at gunstores on map (0 = no, 1 = yes)
 A3W_gunStoreIntruderWarning = 1;   // Warn players in gunstore areas of enemy intruders (0 = no, 1 = yes)
 A3W_remoteBombStoreRadius = 75;    // Prevent players from placing remote explosives within this distance from any store (0 = disabled)
 A3W_vehiclePurchaseCooldown = 60;  // Number of seconds to wait before allowing someone to purchase another vehicle, don't bother setting it too high because it can be bypassed by rejoining
+
 
 // Player settings
 A3W_startingMoney = 100;           // Amount of money that players start with
@@ -40,7 +50,7 @@ A3W_atmMapIcons = 1;               // Draw small icons on the map that indicate 
 A3W_atmRemoveIfDisabled = 1;       // Remove all ATMs from map if A3W_atmEnabled is set to 0 (0 = no, 1 = yes)
 
 // Persistence settings
-A3W_savingMethod = "profile";      // Method used for saving data ("profile", "iniDB", "extDB")
+A3W_savingMethod = "extDB";      // Method used for saving data ("profile", "iniDB", "extDB")
 A3W_playerSaving = 1;              // Save player data like position, health, inventory, etc. (0 = no, 1 = yes)
 A3W_moneySaving = 1;               // If playerSaving = 1, save player money amount (0 = no, 1 = yes)
 A3W_combatAbortDelay = 60;         // If playerSaving = 1, delay in seconds for which to disable abort and respawn buttons after firing or being shot (0 = none)
@@ -78,6 +88,8 @@ A3W_heliSpawning = 1;              // If serverSpawning = 1, spawn helicopters i
 A3W_planeSpawning = 1;             // If serverSpawning = 1, spawn planes at some airfields (0 = no, 1 = yes)
 A3W_boxSpawning = 0;               // If serverSpawning = 1, spawn weapon crates in 50% towns (0 = no, 1 = yes)
 A3W_baseBuilding = 1;              // If serverSpawning = 1, spawn base parts in towns (0 = no, 1 = yes)
+A3W_essentialsSpawning = 1;			// If serverSpawning = 1, spawn essential items (food, water and ammo crates) in towns (0 = no, 1 = yes. If A3W_baseBuilding = 1, then essentialsSpawning = 1;)
+
 
 // Loot settings
 A3W_buildingLootWeapons = 0;       // Spawn weapon loot in all buildings (0 = no, 1 = yes)
@@ -90,6 +102,7 @@ A3W_territoryCaptureTime = 3*60;   // Time in seconds needed to capture a territ
 A3W_territoryPayroll = 1;          // Periodically reward sides and indie groups based on how many territories they own (0 = no, 1 = yes)
 A3W_payrollInterval = 30*60;       // Delay in seconds between each payroll
 A3W_payrollAmount = 100;           // Amount of money rewarded per territory on each payroll
+A3W_territoryAllowed = [0,1,2,3,4,5,6,7,8,9]; //Territory Allowed (0:KAVALA,1:ALTISAIR,2:PYRGOS,3:SELANKANO,4:KORE,5:ZAROS,6:DOCKS,7:GHOST,8:ABDERA,9:PANOCHORI)
 
 // Mission settings
 A3W_serverMissions = 1;            // Enable server missions (0 = no, 1 = yes)

@@ -119,6 +119,7 @@ _exclVehicleIDs = [];
 
 		{ _veh setVariable [_x select 0, _x select 1, true] } forEach _variables;
 
+
 		clearWeaponCargoGlobal _veh;
 		clearMagazineCargoGlobal _veh;
 		clearItemCargoGlobal _veh;

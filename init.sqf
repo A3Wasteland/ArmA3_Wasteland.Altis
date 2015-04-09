@@ -65,6 +65,7 @@ if (isServer) then
 {
 	diag_log format ["############################# %1 #############################", missionName];
 	diag_log "WASTELAND SERVER - Initializing Server";
+	call compile preprocessFile "mapConfig\territories\init_external.sqf";
 	[] execVM "server\init.sqf";
 };
 
@@ -72,4 +73,8 @@ if (isServer) then
 [] execVM "addons\R3F_ARTY_AND_LOG\init.sqf";
 [] execVM "addons\proving_ground\init.sqf";
 [] execVM "addons\scripts\DynamicWeatherEffects.sqf";
+[] execVM "addons\zlt_fastrope\zlt_fastrope.sqf";
 [] execVM "addons\JumpMF\init.sqf";
+[] execVM "addons\EtV\init.sqf";
+[] execVM "addons\outlw_magRepack\MagRepack_init_sv.sqf";
+

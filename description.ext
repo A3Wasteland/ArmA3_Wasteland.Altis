@@ -21,13 +21,15 @@ class Header
 	minPlayers=1;
 	maxPlayers=145; // 144 players, 1 headless client
 };
-author="AgentRev - A3Wasteland.com"; // it would be if you could keep "A3Wasteland.com" in the name, like "YourName and A3Wasteland.com" :)
-onLoadName = "A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
-onLoadMission = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
-overviewText = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
-overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
+
+author="TOPARMA.COM - Core by A3Wasteland.com";
+onLoadName = "TOP A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
+onLoadMission = "Website: toparma.com Teamspeak: ts.toparma.com CORE MISSION: a3wasteland.com";
+overviewText = "Website: toparma.com Teamspeak: ts.toparma.com";
+overviewTextLocked = "Website: toparma.com Teamspeak: ts.toparma.com";
 overviewPicture = "mapConfig\Loading.jpg";
 loadScreen = "mapConfig\Loading.jpg";
+
 
 //Dialog includes
 
@@ -54,6 +56,10 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
+
+#include "addons\outlw_magRepack\MagRepack_config.hpp"
+#include "addons\beacondetector\sound\cfgsounds.hpp"
+
 
 class RscTitles
 {

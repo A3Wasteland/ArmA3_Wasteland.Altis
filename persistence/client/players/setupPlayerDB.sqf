@@ -91,3 +91,6 @@ fn_deletePlayerData =
 		playerData_loaded = true;
 	};
 };
+
+addPlayerInfo = player;
+publicVariableServer "addPlayerInfo";

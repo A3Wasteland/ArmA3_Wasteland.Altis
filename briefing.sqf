@@ -160,6 +160,54 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
+"0.9gh",
+"
+<br/> 10/01/2014
+<br/> [Community update] Base building features tweaked
+<br/> [Added] Base objects - Land Piers
+<br/> [Added] Base objects - Fuel Pumps
+<br/> [Added] Mag Repack by Outlawled
+<br/> 
+<br/> 09/22/2014
+<br/> [Merge] A3Wasteland - 964 commits
+<br/>
+<br/>
+<br/> 09/14/2014
+<br/> 
+<br/> [Changed] Island and Ghost Hotel to Selakano and Kore
+<br/> [Added] Town spawn Kore, Selakano, Panagia
+<br/> [Merge] A3Wasteland - 960 commits 
+<br/>
+<br/> 09/11/2014
+<br/> [Removed] Ammo Trunks
+<br/> [Added] Resupply Trunk - Mobile resupply truck, resupply cost is pulled from Bank.
+<br/>
+<br/> 09/05/2014 
+<br/> [Removed] UAV Terminal, unable to get out of vehicle.
+<br/> [Added] New Money Shipment Missions. 
+<br/> [Added] Vehicle Store north of Kavala - Power Plant area.
+<br/> [Fixed] Money values display correctly over 1 Mil.
+<br/> [Changed] Resupply cost is 25% of cost of vehicle - pulls cost from storeconfig. 
+<br/> [Fixed] deletePlayerData to deletePlayerSave - Money lost glitch in heli.
+<br/> 
+<br/> 08/09/2014 - 1pm
+<br/> [Added] Vehicle Lock once Vehicle Saved.
+<br/> 
+<br/> 08/08/2014 - 10pm
+<br/> [Fixed] Bank Money (ATM) deletes on death.
+<br/> [Added] ALL helicopters come with flares. 
+<br/> [Changed] - Helicopter price increase.
+<br/> 
+<br/> 07/28/2014 - 11am
+<br/> [Changed] - Altis Airport Conquest Territories - $15,000 Payout
+<br/> [Changed] - Able to tow or lift any vehicle with all vehicles. 
+<br/> [Added] - Server Cleanup process - FPS boost
+<br/> 
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "0.9g",
 "
 <br/>[Added] - Vehicle stores
@@ -324,19 +372,17 @@ player createDiaryRecord ["infos",
 [
 "Hints and Tips",
 "
-<br/><font size='18'>A3Wasteland</font>
+<br/><font size='18'>TOP Wasteland</font>
 <br/>
-<br/>* At the start of the game, spread out and find supplies before worrying about where to establish a meeting place or a base, supplies are important and very valuable.
 <br/>
-<br/>* When picking a base location, it is best advised to pick a place that is out of the way and not so obvious such as airports, cities, map-bound bases, etc. remember, players randomly spawn in and around towns and could even spawn inside your base should you set it up in a town.
-<br/>
-<br/>* If you spawn in an area with no vehicles or supplies in the immediate area, DO NOT just click respawn from the pause menu, chances are if you search an area of a few hundred meters, you will find something.
-<br/>
-<br/>* Always be on the lookout for nightvision. they are located in the ammo crates, and there are pairs scattered throughout vehicles. You can also purchase them from the gunstores. Nighttime without them SUCKS, and if you have them, you can conduct stealth raids on enemy bases under the cover of complete darkness.
-<br/>
-<br/>* When you set up a base, never leave your supplies unguarded, one guard will suffice, but it is recommended you have at least 2, maybe 3 guards at base at all times.
-<br/>
-<br/>* There are very aggressive AI characters that spawn with most missions and will protect the mission objectives with deadly force, be aware of them.
+<br/>* Loot spawns in vehicles or purchased from the Gun Store.
+<br/>* Base items can be purchased from General Store, no base loot will be spawned in server. 
+<br/>* Use ATM to save your money, in the event that you are killed, it will be safe.
+<br/>* Planes are spawned, not able for purchase. Planes cannot be saved.
+<br/>* Vehicles can be saved, use action item to Save Vehicle before log off or after moving it. 
+<br/>* Base items need to be locked for save. Spawn beacon save automatically on restart.
+<br/>* Conquest territories, $15,000 pay out. 
+<br/>* AI are set to Hard.
 "
 ]];
 

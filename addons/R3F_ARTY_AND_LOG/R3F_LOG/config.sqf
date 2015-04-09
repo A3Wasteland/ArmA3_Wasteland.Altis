@@ -5,18 +5,9 @@
  */
 R3F_LOG_CFG_remorqueurs =
 [
-	"SUV_01_base_F",
-	"Offroad_01_base_F",
-	"Van_01_base_F",
-	"MRAP_01_base_F",
-	"MRAP_02_base_F",
-	"MRAP_03_base_F",
-	"Truck_01_base_F",
-	"Truck_02_base_F",
-	"Truck_03_base_F",
-	"Wheeled_APC_F",
-	"Tank_F",
-	"Boat_Armed_01_base_F"
+	"Car_F",
+	"Ship_F",
+	"Tank_F"
 ];
 
 /**
@@ -24,19 +15,12 @@ R3F_LOG_CFG_remorqueurs =
  */
 R3F_LOG_CFG_objets_remorquables =
 [
-	"Hatchback_01_base_F",
-	"SUV_01_base_F",
-	"Offroad_01_base_F",
-	"Van_01_base_F",
-	"MRAP_01_base_F",
-	"MRAP_02_base_F",
-	"MRAP_03_base_F",
-	"UGV_01_base_F",
-	"SDV_01_base_F",
-	"Boat_Civil_01_base_F",
-	"Boat_Armed_01_base_F",
+	"Car_F",
+	"Ship_F",
+	"Tank_F",
+	"Plane",
 	"Helicopter_Base_F",
-	"Plane"
+	"Land_Pod_Heli_Transport_04_ammo_F"
 ];
 
 /****** LIFT WITH VEHICLE  ******/
@@ -54,17 +38,10 @@ R3F_LOG_CFG_heliporteurs =
  */
 R3F_LOG_CFG_objets_heliportables =
 [
-	"Hatchback_01_base_F",
-	"SUV_01_base_F",
-	"Offroad_01_base_F",
-	"Van_01_base_F",
-	"MRAP_01_base_F",
-	"MRAP_02_base_F",
-	"MRAP_03_base_F",
-	"UGV_01_base_F",
-	"SDV_01_base_F",
-	"Boat_Civil_01_base_F",
-	"Boat_Armed_01_base_F"
+	"Car_F",
+	"Ship_F",
+	"Tank_F",
+	"Land_Pier_F"
 ];
 
 
@@ -97,9 +74,9 @@ R3F_LOG_CFG_transporteurs =
 	["Heli_Light_02_base_F", 20],
 	["I_Heli_light_03_base_F", 20],
 	["Heli_Transport_01_base_F", 25],
-	["Heli_Transport_02_base_F", 30],
-	["B_Heli_Transport_03_base_F", 30],
-	["Heli_Transport_04_base_F", 30],
+	["Heli_Transport_02_base_F", 150],
+	["B_Heli_Transport_03_base_F", 150],
+	["Heli_Transport_04_base_F", 125],
 	["Heli_Attack_01_base_F", 10],
 	["Heli_Attack_02_base_F", 20]
 ];
@@ -158,7 +135,11 @@ R3F_LOG_CFG_objets_transportables =
 	["Land_Shoot_House_Wall_F", 3],
 	["Land_Stone_8m_F", 5],
 	["Land_ToiletBox_F", 2],
-	["Land_BarrelWater_F", 2]
+	["Land_BarrelWater_F", 2],
+	["Land_Pier_F", 150],  
+	["Land_FuelStation_Feed_F", 75],
+	["Land_Pod_Heli_Transport_04_ammo_F", 150]
+	
 ];
 
 /****** MOVABLE-BY-PLAYER OBJECTS / OBJETS DEPLACABLES PAR LE JOUEUR ******/
@@ -214,6 +195,9 @@ R3F_LOG_CFG_objets_deplacables =
 	"Land_Scaffolding_F",
 	"Land_Shoot_House_Wall_F",
 	"Land_Stone_8m_F",
-	"Land_ToiletBox_F",
-	"Land_BarrelWater_F"
+	// "Land_ToiletBox_F",
+	"Land_BarrelWater_F",
+	"Land_Pier_F",  
+	"Land_FuelStation_Feed_F",
+	"Land_Pod_Heli_Transport_04_ammo_F"
 ];

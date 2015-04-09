@@ -11,6 +11,7 @@
 #define hud_vehicle_idc 3601
 #define hud_activity_icon_idc 3602
 #define hud_activity_textbox_idc 3603
+#define hud_server_idc 3604
 
 scriptName "playerHud";
 
@@ -107,6 +108,12 @@ while {true} do
 	_hudVehicle = _ui displayCtrl hud_vehicle_idc;
 	_hudActivityIcon = _ui displayCtrl hud_activity_icon_idc;
 	_hudActivityTextbox = _ui displayCtrl hud_activity_textbox_idc;
+	_hudServerTextbox = _ui displayCtrl hud_server_idc;
+	
+	_serverString = format ["<t color='#A0FFFFFF'>TOP #%1 Wasteland %2 : Server</t>", call A3W_extDB_ServerID, worldName];
+	_serverString = format ["%1<br/><t color='#A0FFFFFF'>ts.toparma.com : TeamSpeak<br/>TOPARMA.COM : Website/Stats/Forum</t>",_serverString];
+	_hudServerTextbox ctrlSetStructuredText parseText _serverString;
+	_hudServerTextbox ctrlCommit 0;
 
 	//Calculate Health 0 - 100
 	_health = ((1 - damage player) * 100) max 0;
@@ -165,7 +172,7 @@ while {true} do
 
 	if (isStreamFriendlyUIEnabled) then
 	{
-		_tempString = format ["<t color='#A0FFFFFF'>A3Wasteland %1<br/>www.a3wasteland.com</t>", getText (configFile >> "CfgWorlds" >> worldName >> "description")];
+		_tempString = format ["<t color='#A0FFFFFF'>TOP A3Wasteland %1<br/>www.toparma.com</t>", getText (configFile >> "CfgWorlds" >> worldName >> "description")];
 		_yOffset = 0.28;
 
 		_hudVehicle ctrlSetStructuredText parseText _tempString;
@@ -282,7 +289,7 @@ while {true} do
 	// Global voice warning system
 	if (_globalVoiceWarnTimer > 0 && _globalVoiceMaxWarns > 0) then
 	{
-		if (!isNull findDisplay 55 && ctrlText (findDisplay 63 displayCtrl 101) == localize "str_channel_global" && !((getPlayerUID player) call isAdmin)) then
+		if (!isNull findDisplay 55 && (ctrlText (findDisplay 63 displayCtrl 101) == localize "str_channel_global" || ctrlText (findDisplay 63 displayCtrl 101) == localize "str_channel_side")) then
 		{
 			if (isNil "_globalVoiceTimestamp") then
 			{
@@ -302,8 +309,12 @@ while {true} do
 
 					if (_globalVoiceWarning < _globalVoiceMaxWarns) then
 					{
-						uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-						["Please stop using the global voice channel, or you will be killed and crashed.", _msgTitle] spawn BIS_fnc_guiMessage;
+						//uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
+						//["Please stop using the global voice channel, or you will be killed and crashed.", _msgTitle] spawn BIS_fnc_guiMessage;
+						_msgTitle spawn
+						{
+							_this hintC parseText "You will be kicked/banned for using VON in GLOBAL/SIDE channels. Download TeamSpeak and join TS.TOPARMA.COM. <br/><br/> <t color='#ff0000'>How to unbind Push to Talk and default to Group:</t><br/> <img size='30'  image='client\images\information\von.jpg'/>";
+						};						
 					}
 					else
 					{
@@ -313,7 +324,7 @@ while {true} do
 							setPlayerRespawnTime 1e11;
 							player setDamage 1;
 							uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-							_msgBox = ["You have exceeded the tolerance limit for using the global voice channel. Goodbye.", _this] spawn BIS_fnc_guiMessage;
+							_msgBox = ["You have exceeded the tolerance limit for using the global/side voice channel. Goodbye.", _this] spawn BIS_fnc_guiMessage;
 							_time = diag_tickTime;
 							waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 5};
 							preprocessFile "client\functions\quit.sqf"; // CTD

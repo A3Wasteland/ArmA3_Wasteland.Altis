@@ -50,7 +50,7 @@ while{_loop} do
 		if (_queryResult == "[3]") then
 		{
 			//diag_log format ["[extDB] Sleep [4]: %1", diag_tickTime];
-			sleep 0.1;
+			sleep 0.3;
 		} else {
 			_loop = false;
 		};

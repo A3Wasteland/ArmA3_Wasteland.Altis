@@ -72,7 +72,7 @@ if (_uid call isAdmin) then
 	    {
 	        if (str(_x) == _data1) exitwith {
 	            _itemsText ctrlSetText format["Items: %1",weapons _x];
-	            _currentGunText ctrlSetText format["Money: %1",_x getVariable "cmoney"];
+	            _currentGunText ctrlSetText format["Money: %1 Bank: %2",_x getVariable "cmoney",_x getVariable "bmoney"];
 	            _skinText ctrlSetText format["Skin: %1",typeOf(_x)];
 	            _posText ctrlSetText format["Position: %1",position _x];
 	            _objectText ctrlSetText format["Slot: %1",_x];

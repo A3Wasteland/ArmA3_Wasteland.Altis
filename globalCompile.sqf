@@ -43,13 +43,13 @@ mf_compile = compileFinal
 		if (_isDebug) then {
 			compile format ["call compile preProcessFileLineNumbers ""%1""", _path]
 		} else {
-			compileFinal preProcessFileLineNumbers _path
+			compileFinal preProcessFileLineNumbers _path;
 		};
 	} else {
 		if (_isDebug) then {
 			compile toString _code
 		} else {
-			compileFinal toString _code
+			compileFinal toString _code;
 		};
 	};
 ');

@@ -34,6 +34,9 @@ _spawnPos = _this select 1;
 	_currHeli setFuel (0.1 + random 0.2);
 	_currHeli setVehicleAmmo 0.5;
 	// _currHeli spawn cleanVehicleWreck;
+	//Add Chaff
+	_currHeli addweapon "CMFlareLauncher";
+	_currHeli addmagazine "168Rnd_CMFlare_Chaff_Magazine";
 
 	_currHeli enableSimulationGlobal true;
 /*}

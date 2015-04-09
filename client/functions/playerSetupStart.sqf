@@ -19,6 +19,9 @@ if (["A3W_unlimitedStamina"] call isConfigOn) then
 	_player enableFatigue false;
 };
 
+//AJ Custom Camera Functions
+[] spawn fn_cameracheck;
+
 enableSentences false;
 
 removeAllWeapons _player;
