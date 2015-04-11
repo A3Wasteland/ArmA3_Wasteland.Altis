@@ -121,7 +121,7 @@ else
 		_picture = getText (_weapon >> "picture");
 
 		// Show scope on sniper rifle pictures
-		if (["_SOS_F", _weaponClass] call fn_findString != -1) then
+		if ([["_SOS_F", "_LRPS_F"], _weaponClass] call fn_findString != -1) then
 		{
 			private ["_picArr", "_picLen"];
 			_picArr = toArray _picture;

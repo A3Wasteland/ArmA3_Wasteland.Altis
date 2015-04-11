@@ -131,6 +131,10 @@ if (!isNil "_itemEntry") then
 						//_name = getText (_weapon >> "displayName") + " UAV";
 						_description = "Remote-controlled quadcopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
 					};
+					case (["_Static_Designator_", _itemType] call fn_findString != -1):
+					{
+						_description = "Remote-controlled laser designator.<br/>UAV Terminal sold separately.";
+					};
 					default
 					{
 						//_name = _itemText;

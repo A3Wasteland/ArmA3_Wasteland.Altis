@@ -20,6 +20,9 @@ if !(_unit isUniformAllowed _uniform) then
 	[
 		["U_B_CombatUniform_mcam", "U_O_CombatUniform_ocamo", "U_I_CombatUniform"],
 		["U_B_GhillieSuit", "U_O_GhillieSuit", "U_I_GhillieSuit"],
+		["U_B_FullGhillie_ard", "U_O_FullGhillie_ard", "U_I_FullGhillie_ard"],
+		["U_B_FullGhillie_lsh", "U_O_FullGhillie_lsh", "U_I_FullGhillie_lsh"],
+		["U_B_FullGhillie_sard", "U_O_FullGhillie_sard", "U_I_FullGhillie_sard"],
 		["U_B_Wetsuit", "U_O_Wetsuit", "U_I_Wetsuit"],
 		["U_B_PilotCoveralls", "U_O_PilotCoveralls", "U_I_PilotCoveralls"],
 		["U_BG_Guerilla1_1", "U_OG_Guerilla1_1", "U_IG_Guerilla1_1"],
