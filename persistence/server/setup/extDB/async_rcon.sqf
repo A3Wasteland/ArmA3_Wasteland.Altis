@@ -21,7 +21,7 @@ _queryStmt = [_this,0,"",[""]] call BIS_fnc_param;
 _mode = [_this,1,1,[0]] call BIS_fnc_param;
 _multiarr = [_this,2,false,[false]] call BIS_fnc_param;
 
-_key = "extDB2" callExtension format["%1:%2:%3",_mode, (call A3W_extDB_miscID), _queryStmt];
+_key = "extDB2" callExtension format["%1:%2:%3",_mode, (call A3W_extDB_rconID), _queryStmt];
 
 if(_mode == 1) exitWith {true};
 
@@ -48,7 +48,7 @@ while{_loop} do
 	{
 		if (_queryResult == "[3]") then
 		{
-			diag_log format ["[extDB2] Sleep [4]: %1", diag_tickTime]; // Helps highlight if someone SQL Queries are running slow
+			diag_log format ["[extDB2] Sleep [4]: %1", diag_tickTime]; // Helps highlight if someone Queries are running slow
 			sleep 0.1;
 		} else {
 			_loop = false;
