@@ -36,6 +36,11 @@ switch (toLower _type) do
 			missionNamespace setVariable [_var, _balance + _amount];
 			publicVariable _var;
 
+			if (!isNil "fn_saveWarchestMoney") then
+			{
+				[] spawn fn_saveWarchestMoney;
+			};
+
 			if (!local _player) then
 			{
 				_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, false]; // do NOT set to true, this is only a temporary server-side change
@@ -67,6 +72,11 @@ switch (toLower _type) do
 			if (_amount < 0 && _balance < abs _amount) exitWith {}; // crate has not enough funds for withdrawal
 
 			_crate setVariable ["cmoney", _balance + _amount, true];
+
+			if (!isNil "fn_manualObjectSave") then
+			{
+				_crate spawn fn_manualObjectSave;
+			};
 
 			if (!local _player) then
 			{

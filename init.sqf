@@ -46,7 +46,6 @@ if (!isDedicated) then
 
 			// Reset group & side
 			[player] joinSilent createGroup playerSide;
-			player setVariable ["playerSpawning", true, true];
 
 			execVM "client\init.sqf";
 		}

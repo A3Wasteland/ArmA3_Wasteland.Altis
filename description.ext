@@ -67,6 +67,7 @@ class CfgFunctions
 {
 	class A3W
 	{
+		#include "client\CfgFunctions.hpp"
 		#include "server\CfgFunctions.hpp"
 	};
 };
