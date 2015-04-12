@@ -67,25 +67,26 @@ rifleArray = compileFinal str
 	// DLC
 	["Mk14 Rifle (Camo) [DLC]", "srifle_DMR_06_camo_F", 450],
 	["Mk14 Rifle (Olive) [DLC]", "srifle_DMR_06_olive_F", 450],
-	["Mk-I EMR Rifle (Black) [DLC]", "srifle_DMR_03_F", 500],
-	["Mk-I EMR Rifle (Camo) [DLC]", "srifle_DMR_03_multicam_F", 500],
-	["Mk-I EMR Rifle (Khaki) [DLC]", "srifle_DMR_03_khaki_F", 500],
-	["Mk-I EMR Rifle (Sand) [DLC]", "srifle_DMR_03_tan_F", 500],
-	["Mk-I EMR Rifle (Woodland) [DLC]", "srifle_DMR_03_woodland_F", 500],
-	["MAR-10 Rifle (Black) [DLC]", "srifle_DMR_02_F", 750],
+	["Mk-I EMR Rifle [DLC]", "srifle_DMR_03_F", 500],
+	["Mk-I EMR Rifle (Camo) [DLC]", "srifle_DMR_03_multicam_F", 550],
+	["Mk-I EMR Rifle (Khaki) [DLC]", "srifle_DMR_03_khaki_F", 550],
+	["Mk-I EMR Rifle (Sand) [DLC]", "srifle_DMR_03_tan_F", 550],
+	["Mk-I EMR Rifle (Woodland) [DLC]", "srifle_DMR_03_woodland_F", 550],
+	["MAR-10 Rifle [DLC]", "srifle_DMR_02_F", 750],
 	["MAR-10 Rifle (Camo) [DLC]", "srifle_DMR_02_camo_F", 800],
 	["MAR-10 Rifle (Sand) [DLC]", "srifle_DMR_02_sniper_F", 800],
-	["Cyrus Rifle (Black) [DLC]", "srifle_DMR_05_blk_F", 750],
+	["Cyrus Rifle [DLC]", "srifle_DMR_05_blk_F", 750],
 	["Cyrus Rifle (Hex) [DLC]", "srifle_DMR_05_hex_F", 800],
 	["Cyrus Rifle (Tan) [DLC]", "srifle_DMR_05_tan_f", 800],
-	["ASP-1 Kir Rifle [DLC]", "srifle_DMR_04_F", 900],
-	["ASP-1 Kir Rifle (Tan) [DLC]", "srifle_DMR_04_Tan_F", 950],
 
 	// Sniper Rifles
 	["M320 LRR Sniper", "srifle_LRR_LRPS_F", 1000],
 	["M320 LRR Sniper (Camo)", "srifle_LRR_camo_LRPS_F", 1200],
-	["GM6 Lynx Sniper", "srifle_GM6_LRPS_F", 1100],
-	["GM6 Lynx Sniper (Camo)", "srifle_GM6_camo_LRPS_F", 1300]
+	["GM6 Lynx Sniper", "srifle_GM6_LRPS_F", 1250],
+	["GM6 Lynx Sniper (Camo)", "srifle_GM6_camo_LRPS_F", 1500],
+
+	["ASP-1 Kir Rifle [DLC]", "srifle_DMR_04_F", 2000],
+	["ASP-1 Kir Rifle (Tan) [DLC]", "srifle_DMR_04_tan_F", 2250]
 ];
 
 lmgArray = compileFinal str
@@ -206,7 +207,7 @@ ammoArray = compileFinal str
 	[".408 7Rnd Cheetah Mag", "7Rnd_408_Mag", 50],
 	["12.7mm 5Rnd Mag", "5Rnd_127x108_Mag", 50],
 	["12.7mm 5Rnd Armor-Piercing Mag", "5Rnd_127x108_APDS_Mag", 60],
-	["12.7mm 10Rnd Subsonic Mag", "10Rnd_127x54_Mag", 50],
+	["12.7mm 10Rnd Subsonic Mag", "10Rnd_127x54_Mag", 75],
 	["RPG-42 Anti-Tank Rocket", "RPG32_F", 250],              // Direct damage: high      | Splash damage: low    | Guidance: none
 	["RPG-42 High-Explosive Rocket", "RPG32_HE_F", 250],      // Direct damage: medium    | Splash damage: medium | Guidance: none
 	["PCML Anti-Tank Missile", "NLAW_F", 400],                // Direct damage: very high | Splash damage: low    | Guidance: laser, ground vehicles
@@ -256,14 +257,14 @@ accessoriesArray = compileFinal str
 	["Suppressor .338 (Sand) [DLC]", "muzzle_snds_338_sand", 175, "item"],
 	["Suppressor 9.3mm [DLC]", "muzzle_snds_93mmg", 175, "item"],
 	["Suppressor 9.3mm (Tan) [DLC]", "muzzle_snds_93mmg_tan", 175, "item"],
-	["Bipod (NATO)", "bipod_01_F_blk", 500, "item"],
-	["Bipod (CSAT)", "bipod_02_F_blk", 500, "item"],
-	["Bipod (AAF)", "bipod_03_F_blk", 500, "item"],
-	["Bipod (MTP)", "bipod_01_F_mtp", 500, "item"],
-	["Bipod (Hex)", "bipod_02_F_hex", 500, "item"],
-	["Bipod (Olive)", "bipod_03_F_oli", 500, "item"],
-	["Bipod (Sand)", "bipod_01_F_snd", 500, "item"],
-	["Bipod (Tan)", "bipod_02_F_tan", 500, "item"], 
+	["Bipod (NATO)", "bipod_01_F_blk", 250, "item"],
+	["Bipod (CSAT)", "bipod_02_F_blk", 250, "item"],
+	["Bipod (AAF)", "bipod_03_F_blk", 250, "item"],
+	["Bipod (MTP)", "bipod_01_F_mtp", 250, "item"],
+	["Bipod (Hex)", "bipod_02_F_hex", 250, "item"],
+	["Bipod (Olive)", "bipod_03_F_oli", 250, "item"],
+	["Bipod (Sand)", "bipod_01_F_snd", 250, "item"],
+	["Bipod (Tan)", "bipod_02_F_tan", 250, "item"], 
 	["Flashlight", "acc_flashlight", 25, "item"],
 	["IR Laser Pointer", "acc_pointer_IR", 25, "item"],
 	["Yorris Sight (Zubr Revolver)", "optic_Yorris", 50, "item"],
@@ -278,7 +279,7 @@ accessoriesArray = compileFinal str
 	["RCO", "optic_Hamr", 150, "item"],
 	["MOS", "optic_SOS", 150, "item"],
 	["DMS", "optic_DMS", 175, "item"],
-	["Kahlia (Black) [DLC]", "optic_KHS_blk", 200, "item"],
+	["Kahlia [DLC]", "optic_KHS_blk", 200, "item"],
 	["Kahlia (Hex) [DLC]", "optic_KHS_hex", 200, "item"],
 	["Kahlia (Old) [DLC]", "optic_KHS_old", 200, "item"],
 	["Kahlia (Tan) [DLC]", "optic_KHS_tan", 200, "item"],
