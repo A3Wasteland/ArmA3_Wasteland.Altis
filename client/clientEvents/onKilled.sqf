@@ -41,6 +41,11 @@ if (_player == player) then
 		["A3W_scoreboard", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 	}] call BIS_fnc_addStackedEventHandler;
 
+	if (!isNil "savePlayerHandle" && {typeName savePlayerHandle == "SCRIPT" && {!scriptDone savePlayerHandle}}) then
+	{
+		terminate savePlayerHandle;
+	};
+
 	playerData_infoPairs = nil;
 	playerData_savePairs = nil;
 	//combatTimestamp = -1; // Reset abort timer
