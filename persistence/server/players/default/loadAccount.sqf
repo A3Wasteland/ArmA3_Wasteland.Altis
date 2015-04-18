@@ -34,8 +34,6 @@ _getValue =
 
 ["Damage", "NUMBER"] call _getValue;
 ["HitPoints", "ARRAY"] call _getValue;
-["Hunger", "NUMBER"] call _getValue;
-["Thirst", "NUMBER"] call _getValue;
 
 if (["A3W_moneySaving"] call isConfigOn) then
 {
@@ -78,6 +76,9 @@ if (["A3W_moneySaving"] call isConfigOn) then
 ["PartialMagazines", "ARRAY"] call _getValue; // legacy
 
 ["WastelandItems", "ARRAY"] call _getValue;
+
+["Hunger", "NUMBER"] call _getValue;
+["Thirst", "NUMBER"] call _getValue;
 
 ["Position", "ARRAY"] call _getValue;
 ["Direction", "NUMBER"] call _getValue;
