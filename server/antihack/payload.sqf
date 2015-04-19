@@ -34,10 +34,14 @@ for "_i" from 0 to (count _cfgPatches - 1) do
 			_cheatFlag = ["hacking addon", configName _patchClass];
 		};
 
-		if (_patchName in ["rhs_main","mcc_sandbox","agm_core"]) then
-		{
-			_escCheck = false;
-		};
+		if (_patchName in
+		[
+			"rhs_main", // RHS - Game Options
+			"mcc_sandbox", // MCC keys
+			"agm_core", // AGM Options
+			"ace_optionsmenu" // ACE Options
+		])
+		then { _escCheck = false };
 	};
 };
 
