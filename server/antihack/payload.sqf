@@ -8,7 +8,7 @@
 
 if (isDedicated) exitWith {};
 
-private ["_flagChecksum", "_rscParams", "_cheatFlag", "_cfgPatches", "_patchClass", "_ctrlCfg", "_memAnomaly", "_minRecoil", "_currentRecoil", "_loopCount"];
+private ["_flagChecksum", "_rscParams", "_cheatFlag", "_cfgPatches", "_escCheck", "_patchClass", "_patchName", "_ctrlCfg", "_memAnomaly", "_minRecoil", "_currentRecoil", "_loopCount"];
 _flagChecksum = _this select 0;
 _rscParams = _this select 1;
 
@@ -19,18 +19,29 @@ if (!hasInterface && typeOf player == "HeadlessClient_F") exitWith {};
 // diag_log "ANTI-HACK starting...";
 
 _cfgPatches = configFile >> "CfgPatches";
+_escCheck = true;
 
 for "_i" from 0 to (count _cfgPatches - 1) do
 {
 	_patchClass = _cfgPatches select _i;
 
-	if (isClass _patchClass && {(toLower configName _patchClass) in ["devcon","loki_lost_key"]}) then
+	if (isClass _patchClass) then
 	{
-		_cheatFlag = ["hacking addon", configName _patchClass];
+		_patchName = toLower configName _patchClass;
+
+		if (_patchName in ["devcon","loki_lost_key"]) exitWith
+		{
+			_cheatFlag = ["hacking addon", configName _patchClass];
+		};
+
+		if (_patchName in ["rhs_main","mcc_sandbox","agm_core"]) then
+		{
+			_escCheck = false;
+		};
 	};
 };
 
-if (isNil "_cheatFlag") then
+if (isNil "_cheatFlag" && _escCheck) then
 {
 	{
 		for "_i" from 0 to (count _x - 1) do
@@ -81,7 +92,6 @@ if (isNil "_cheatFlag") then
 				[71, "RscDisplayFilter (Gladtwoown)"],
 				[125, "RscDisplayEditDiaryRecord (Gladtwoown)"],
 				[132, "RscDisplayHostSettings"],
-				[157, "RscDisplayPhysX3Debug"],
 				[165, "RscDisplayPublishMission"],
 				[166, "RscDisplayPublishMissionSelectTags (Gladtwoown)"],
 				[167, "RscDisplayFileSelect (Lystic)"],
@@ -95,6 +105,7 @@ if (isNil "_cheatFlag") then
 			if (!isNull findDisplay 17 && !isServer && !_isAdmin) exitWith { _cheatFlag = "RscDisplayRemoteMissions (Wookie)" };
 			if (!isNull findDisplay 316000 && !_isAdmin) exitWith { _cheatFlag = "Debug console" }; // RscDisplayDebugPublic
 			if (!isNull (uiNamespace getVariable ["RscDisplayArsenal", displayNull]) && !_isAdmin) exitWith { _cheatFlag = "Virtual Arsenal" };
+			if (!isNull findDisplay 157 && isNull (uiNamespace getVariable ["RscDisplayModLauncher", displayNull])) exitWith { _cheatFlag = "RscDisplayPhysX3Debug" };
 
 			_display = findDisplay 54;
 			if (!isNull _display) then
