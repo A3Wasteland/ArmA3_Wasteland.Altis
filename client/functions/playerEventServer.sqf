@@ -29,7 +29,8 @@ switch (toLower _type) do
 
 		if (_amount != 0) then
 		{
-			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) - _amount, true];
+			// temporarily offloaded to server due to negative wallet glitch
+			//player setVariable ["cmoney", (player getVariable ["cmoney", 0]) - _amount, true];
 
 			if (["A3W_playerSaving"] call isConfigOn) then
 			{
