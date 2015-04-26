@@ -23,6 +23,12 @@ waitUntil
 if (!INVALID_CORPSE) then
 {
 	_vehSize = sizeOf typeOf _veh;
-	_targetPos = (_corpse call fn_getPos3D) vectorAdd ([[0, ((_vehSize / 2) + random (_vehSize / 6)) - (_corpse distance _veh), 1], -([_veh, _corpse] call BIS_fnc_dirTo)] call BIS_fnc_rotateVector2D);
+	_targetPos = _corpse call fn_getPos3D;
+
+	if (_veh != _corpse && damage _veh > 0.99) then
+	{
+		_targetPos = _targetPos vectorAdd ([[0, ((_vehSize / 2) + random (_vehSize / 6)) - (_corpse distance _veh), 1], -([_veh, _corpse] call BIS_fnc_dirTo)] call BIS_fnc_rotateVector2D);
+	};
+
 	_corpse setPos _targetPos;
 };
