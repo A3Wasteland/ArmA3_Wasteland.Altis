@@ -13,6 +13,7 @@
 #define DISABLE_ALL_BUTTONS format ["{ ctrlEnable [_x, false] } forEach %1;", [respawn_Random_Button, respawn_Spawn_Button, respawn_Locations_Type, respawn_Locations_List, respawn_Preload_Checkbox]]
 #define SPAWN_BEACON_COOLDOWN (["A3W_spawnBeaconCooldown", 5*60] call getPublicVar)
 #define BEACON_CHECK_RADIUS 250
+#define SPAWN_TOWN_COOLDOWN (["A3W_townSpawnCooldown", 5*60] call getPublicVar)
 
 disableSerialization;
 waitUntil {!isNil "bis_fnc_init" && {bis_fnc_init}};
@@ -36,6 +37,7 @@ _locList = _display displayCtrl respawn_Locations_List;
 _locMap = _display displayCtrl respawn_Locations_Map;
 
 _spawnBeaconCooldown = SPAWN_BEACON_COOLDOWN;
+_townSpawnCooldown = SPAWN_TOWN_COOLDOWN;
 
 _side = switch (playerSide) do
 {
@@ -239,14 +241,49 @@ _selLocChanged =
 			{
 				_isValid = true;
 				_location call _getPlayersInfo;
-
-				if (_enemyPlayers > _friendlyPlayers) then
+				
+				_text = "";
+				
 				{
-					_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
+				if (_x select 0 == _location) exitWith
+				{
+					_text = (_x select 2);
+				};
+				} forEach (call cityList);
+
+				_lastUseTown = player getVariable _text;
+
+				if (!isNil "_lastUseTown") then
+				{
+					_townSpawnCooldown = SPAWN_TOWN_COOLDOWN;
+					_remaining = _townSpawnCooldown - (diag_tickTime - _lastUseTown);
+					
+					if (_townSpawnCooldown > 0 && _remaining > 0) then
+					{
+						_textStr = _textStr + format ["[<t color='#ffff00'>%1</t>] ", _remaining call fn_formatTimer];
+					}
+					else
+					{
+						if (_enemyPlayers > _friendlyPlayers) then
+						{
+							_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
+						}
+						else
+						{
+							_spawnBtnEnabled = true;
+						};
+					};
 				}
 				else
 				{
-					_spawnBtnEnabled = true;
+					if (_enemyPlayers > _friendlyPlayers) then
+					{
+						_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
+					}
+					else
+					{
+						_spawnBtnEnabled = true;
+					};
 				};
 			};
 		};

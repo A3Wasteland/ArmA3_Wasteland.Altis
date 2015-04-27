@@ -27,6 +27,8 @@ _preload = [_this, 1, false, [false]] call BIS_fnc_param;
 	};
 } forEach (call cityList);
 
+player setVariable [_townName, diag_tickTime];
+
 respawnDialogActive = false;
 closeDialog 0;
 
