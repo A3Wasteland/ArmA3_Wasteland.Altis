@@ -10,7 +10,16 @@ _vehicles = _this;
 _values = "";
 
 {
-	_id = if (typeName _x == "OBJECT") then { _x getVariable "A3W_vehicleID" } else { _x };
+	_id = 0;
+	if (typeName _x == "OBJECT") then
+	{
+		_id = _x getVariable "A3W_vehicleID";
+		_x setVariable ["A3W_vehicleID", nil];
+	}
+	else
+	{
+		_id = _x;
+	};
 
 	if (!isNil "_id") then
 	{
