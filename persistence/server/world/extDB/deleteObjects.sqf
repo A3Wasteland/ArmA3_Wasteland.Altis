@@ -10,8 +10,17 @@ _objects = _this;
 _values = "";
 
 {
-	_id = if (typeName _x == "OBJECT") then { _x getVariable "A3W_objectID" } else { _x };
-	_x setVariable ["A3W_objectID", nil];
+	_id = 0;
+	if (typeName _x == "OBJECT") then
+	{
+		_id = _x getVariable "A3W_objectID";
+		_x setVariable ["A3W_objectID", nil];
+	}
+	else
+	{
+		_id = _x;
+	};
+	
 	if (!isNil "_id") then
 	{
 		_values = _values + ((if (_values != "") then { "," } else { "" }) + str _id);
