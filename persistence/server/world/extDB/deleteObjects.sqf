@@ -11,7 +11,7 @@ _values = "";
 
 {
 	_id = if (typeName _x == "OBJECT") then { _x getVariable "A3W_objectID" } else { _x };
-
+	_x setVariable ["A3W_objectID", nil];
 	if (!isNil "_id") then
 	{
 		_values = _values + ((if (_values != "") then { "," } else { "" }) + str _id);
