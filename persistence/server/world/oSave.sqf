@@ -75,6 +75,7 @@ while {true} do
 	uiSleep _savingInterval;
 
 	_objCount = 0;
+	_currObjectIDs = +A3W_objectIDs;
 	_newObjectIDs = [];
 
 	{
@@ -101,8 +102,8 @@ while {true} do
 		call fn_saveWarchestMoney;
 	};
 
-	_oldIDs = A3W_objectIDs - _newObjectIDs;
-	A3W_objectIDs = _newObjectIDs;
+	_oldIDs = _currObjectIDs - _newObjectIDs;
+	A3W_objectIDs = A3W_objectIDs - _oldIDs;
 
 	[_oldIDs, _objCount] call fn_postObjectSave;
 
@@ -112,6 +113,7 @@ while {true} do
 	if (_vehicleSaving) then
 	{
 		_vehCount = 0;
+		_currVehicleIDs = +A3W_vehicleIDs;
 		_newVehicleIDs = [];
 
 		{
@@ -133,8 +135,8 @@ while {true} do
 
 		diag_log format ["A3W - %1 vehicles have been saved with %2", _vehCount, call A3W_savingMethodName];
 
-		_oldIDs = A3W_vehicleIDs - _newVehicleIDs;
-		A3W_vehicleIDs = _newVehicleIDs;
+		_oldIDs = _currVehicleIDs - _newVehicleIDs;
+		A3W_vehicleIDs = A3W_vehicleIDs - _oldIDs;
 
 		[_oldIDs, _vehCount] call fn_postVehicleSave;
 	};
