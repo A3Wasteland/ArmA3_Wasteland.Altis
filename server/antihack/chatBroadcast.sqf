@@ -11,7 +11,7 @@ _playerUID = [_this, 1, "", [""]] call BIS_fnc_param;
 _sentChecksum = [_this, 2, "", [""]] call BIS_fnc_param;
 _excludeGroup = [_this, 3, false, [false]] call BIS_fnc_param;
 
-if (_sentChecksum == _flagChecksum && {_playerUID != getPlayerUID player} && {!_excludeGroup || {{getPlayerUID _x == _playerUID} count units player == 0}}) then
+if (_sentChecksum == _flagChecksum && {_playerUID != getPlayerUID player} && {!_excludeGroup || {{getPlayerUID _x == _playerUID} count units player == 0}) then
 {
 	player commandChat format ["%1", _this select 0];
 };

@@ -52,6 +52,20 @@ switch (true) do
 			["You've taken out your earplugs.", 5] call mf_notify_client;
 		};
 	};
+	// Holster /Unholster Weapon - H Key
+	case (_key == 35):
+	{
+		if (currentweapon player != "") then
+		{
+			player action ["SwitchWeapon", player, player, 100];
+			["You holster your weapon!", 5] call mf_notify_client;
+		}
+		else
+		{
+			player action ["SwitchWeapon", player, player, 0];
+			["You Unholster your weapon!", 5] call mf_notify_client;
+		};
+	};
 };
 
 // ********** Action keys **********

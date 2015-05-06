@@ -21,9 +21,9 @@ addMissionEventHandler ["HandleDisconnect",
 	_id = _this select 1;
 	_uid = _this select 2;
 	_name = _this select 3;
-
+	
+	
 	diag_log format ["HandleDisconnect - %1", [_name, _uid]];
-
 	if (alive _unit) then
 	{
 		if ((_unit getVariable ["FAR_isUnconscious", 0] == 0) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
@@ -49,6 +49,12 @@ addMissionEventHandler ["HandleDisconnect",
 
 //Execute Server Side Scripts.
 call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
+[] execVM (externalConfigFolder + "\Donator.sqf");
+[] execVM (externalConfigFolder + "\AdminbaseIDs.sqf");
+[] execVM (externalConfigFolder + "\MHIDs.sqf");
+[] execVM (externalConfigFolder + "\TBEIDs.sqf");
+[] execVM (externalConfigFolder + "\VTIDs.sqf");
+[] execVM (externalConfigFolder + "\ATIDs.sqf");
 [] execVM "server\admins.sqf";
 [] execVM "server\functions\serverVars.sqf";
 _serverCompileHandle = [] spawn compile preprocessFileLineNumbers "server\functions\serverCompile.sqf"; // scriptDone stays stuck on false when using execVM on Linux

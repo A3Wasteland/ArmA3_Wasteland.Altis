@@ -46,20 +46,21 @@ if (hasInterface) then
 		case (["VehStore", _npcName] call _startsWith):
 		{
 			_npc addAction ["<img image='client\icons\store.paa'/> Open Vehicle Store", "client\systems\vehicleStore\loadVehicleStore.sqf", [], 1, true, true, "", STORE_ACTION_CONDITION];
+			_npc addAction ["<img image='client\icons\money.paa'/> Sell Vehicle", "client\systems\selling\sellVehicle.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
+			_npc addAction ["<img image='client\icons\money.paa'/> Sell Vehicle Contents", "client\systems\selling\sellVehicleItems.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
+			_npc addAction ["<img image='client\icons\r3f_unlock.paa'/> License Vehicle", "client\systems\selling\licenseVehicle.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
+			_npc addAction ["<img image='client\icons\repair.paa'/> Service Vehicle", "client\systems\selling\serviceVehicle.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
 		};
 	};
 
-	_npc addAction ["<img image='client\icons\money.paa'/> Sell crate", "client\systems\selling\sellCrateItems.sqf", [false, false, true], 0.99, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_CRATE_CONDITION];
-	_npc addAction ["<img image='client\icons\money.paa'/> Sell contents", "client\systems\selling\sellCrateItems.sqf", [], 0.98, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_CONTENTS_CONDITION];
-	_npc addAction ["<img image='client\icons\money.paa'/> Sell last vehicle contents", "client\systems\selling\sellVehicleItems.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
+	_npc addAction ["<img image='client\icons\money.paa'/> Sell Crate", "client\systems\selling\sellCrateItems.sqf", [false, false, true], 0.99, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_CRATE_CONDITION];
+	_npc addAction ["<img image='client\icons\money.paa'/> Sell Crate Contents", "client\systems\selling\sellCrateItems.sqf", [], 0.98, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_CONTENTS_CONDITION];
+
 };
 
 if (isServer) then
 {
-	// nearestBuilding no longer detects barracks since A3 v1.42, so we need this shitty workaround
-	_building = (_npc modelToWorld [0,0,0]) nearestObject "House";
-	if !(_building isKindOf "Land_i_Barracks_V1_F") then { _building = nearestBuilding _npc };
-
+	_building = (_npc modelToWorld [0,0,0]) nearestObject "House"; // nearestBuilding _npc; has been acting weird since A3 v1.42
 	_npc setVariable ["storeNPC_nearestBuilding", netId _building, true];
 
 	_facesCfg = configFile >> "CfgFaces" >> "Man_A3";
@@ -99,8 +100,7 @@ else
 
 if (isNil "_building" || {isNull _building}) then
 {
-	_building = (_npc modelToWorld [0,0,0]) nearestObject "House";
-	if !(_building isKindOf "Land_i_Barracks_V1_F") then { _building = nearestBuilding _npc };
+	_building = (_npc modelToWorld [0,0,0]) nearestObject "House"; // nearestBuilding _npc;
 };
 
 _building allowDamage true;
