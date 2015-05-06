@@ -8,6 +8,23 @@
 
 client_firstSpawn = true;
 
+//whitelisting
+// [] execVM "addons\whitelist\whitelist.sqf";
+
+// display server watermark
+["<img size='3' image='addons\Watermark\Watermark.paa'/>",(safezoneX- 1.10)/2,-(safezoneY-2.1)/2,99999999,0,0,3054] spawn bis_fnc_dynamicText;
+
+//set client side view distance on spawn
+systemChat format["Optimizing Video Settings"];
+setViewDistance 1000;
+setObjectViewDistance 900;
+setTerrainGrid 40;
+
+
+//play intro sound
+//playsound "kickass"; 
+
+
 [] execVM "client\functions\welcomeMessage.sqf";
 
 player addEventHandler ["Take",

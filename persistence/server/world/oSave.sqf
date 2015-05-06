@@ -75,7 +75,6 @@ while {true} do
 	uiSleep _savingInterval;
 
 	_objCount = 0;
-	_currObjectIDs = +A3W_objectIDs;
 	_newObjectIDs = [];
 
 	{
@@ -89,7 +88,6 @@ while {true} do
 			if (!isNil "_objID") then 
 			{
 				_newObjectIDs pushBack _objID;
-				if !(_objID in A3W_objectIDs) then { A3W_objectIDs pushBack _objID };
 			};
 
 			sleep 0.01;
@@ -103,8 +101,8 @@ while {true} do
 		call fn_saveWarchestMoney;
 	};
 
-	_oldIDs = _currObjectIDs - _newObjectIDs;
-	A3W_objectIDs = A3W_objectIDs - _oldIDs;
+	_oldIDs = A3W_objectIDs - _newObjectIDs;
+	A3W_objectIDs = _newObjectIDs;
 
 	[_oldIDs, _objCount] call fn_postObjectSave;
 
@@ -114,7 +112,6 @@ while {true} do
 	if (_vehicleSaving) then
 	{
 		_vehCount = 0;
-		_currVehicleIDs = +A3W_vehicleIDs;
 		_newVehicleIDs = [];
 
 		{
@@ -128,7 +125,6 @@ while {true} do
 				if (!isNil "_vehID") then 
 				{
 					_newVehicleIDs pushBack _vehID;
-					if !(_vehID in A3W_vehicleIDs) then { A3W_vehicleIDs pushBack _vehID };
 				};
 
 				sleep 0.01;
@@ -137,8 +133,8 @@ while {true} do
 
 		diag_log format ["A3W - %1 vehicles have been saved with %2", _vehCount, call A3W_savingMethodName];
 
-		_oldIDs = _currVehicleIDs - _newVehicleIDs;
-		A3W_vehicleIDs = A3W_vehicleIDs - _oldIDs;
+		_oldIDs = A3W_vehicleIDs - _newVehicleIDs;
+		A3W_vehicleIDs = _newVehicleIDs;
 
 		[_oldIDs, _vehCount] call fn_postVehicleSave;
 	};

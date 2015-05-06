@@ -25,7 +25,7 @@ while {true} do
 
 			// Check if vehicle is not being towed or moved
 			if (isNull (_veh getVariable ["R3F_LOG_est_transporte_par", objNull]) &&
-				isNull (_veh getVariable ["R3F_LOG_est_deplace_par", objNull])) then
+				isNull (_veh getVariable ["R3F_LOG_est_deplace_par", objNull]) && isNil {_veh getVariable "ownerUID"}) then
 			{
 				_settings = _x;
 

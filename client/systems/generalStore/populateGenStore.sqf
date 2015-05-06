@@ -110,7 +110,6 @@ _playerSideNum = switch (playerSide) do
 			{
 				{
 					_sideCfg = call _x;
-
 					if (isNumber _sideCfg) then
 					{
 						_side = getNumber _sideCfg;

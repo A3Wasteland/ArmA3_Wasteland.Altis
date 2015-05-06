@@ -22,6 +22,7 @@ if (_uid call isAdmin) then
 		adminPlayerMarkers = false;
 		hint "Player Markers OFF";
 	};
+	if (!isNil "notifyAdminMenu") then { ["markers",adminPlayerMarkers] spawn notifyAdminMenu };
 
 	setGroupIconsVisible [true, true];
 	while {adminPlayerMarkers} do

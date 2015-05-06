@@ -21,8 +21,8 @@ if (_goggles != "") then { _player addGoggles _goggles };
 
 sleep 0.1;
 
-// Remove GPS
-_player unlinkItem "ItemGPS";
+// Add GPS
+_player linkItem "ItemGPS";
 
 // Remove radio
 //_player unlinkItem "ItemRadio";
@@ -31,7 +31,15 @@ _player unlinkItem "ItemGPS";
 if (hmd _player != "") then { _player unlinkItem hmd _player };
 
 // Add NVG
-_player linkItem "NVGoggles";
+//_player linkItem "NVGoggles";
+
+if ((getPlayerUID player) in (call Donator)) then 
+{
+	//load supporter loadouts
+_this call kits;
+}
+
+else{
 
 _player addBackpack "B_AssaultPack_rgr";
 
@@ -60,6 +68,8 @@ switch (true) do
 		_player addWeapon "Rangefinder";
 	};
 };
+};
+
 
 if (_player == player) then
 {

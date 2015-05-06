@@ -274,6 +274,37 @@ player createDiaryRecord ["changelog",
 "
 ]];
 
+player createDiaryRecord ["changelog",
+ [
+"Northern-Gaming.com",
+"
+<br/> [Added] Vehicle locking and info script by Micovery
+<br/> [Added] Intro script
+<br/> [Added] MagRepack (Access by Ctrl+R inGame)
+<br/> [Added] extra Missions (Sniper Nest, Weapon Smuggler ...)
+<br/> [Added] Status Bar
+<br/> [Added] Hide Body Menu
+<br/> [Added] Request Airdrop
+<br/> [Added] Donator Base Area
+<br/> [Added] Buy license for vehicles
+<br/> [Added] Beacondetector
+<br/> [Added] Break and HotWire for locked cars
+<br/> [Added] Watermark
+<br/> [Added] Marksmen DLC Weapon and Loadout Support
+<br/> [Added] Custom view distance settings in player menu
+<br/> [Added] Custom loadout for donator
+<br/> [Added] Resupply stations for armed vehicles
+<br/> [Added] High value target (Bountyhunt)
+<br/> [Added] GeoCache Mission
+<br/> [Added] Holster/Unholster Weapon on key -H-
+<br/> [Added] new player HUD
+<br/> [Adjust] Hide body 1000 $
+<br/> [Changed] Airdrop decrease vehicles/added DLC boxes
+<br/> [Changed] Now you can lock planes/heli and boats as well
+<br/> [Changed] Move iniDB to extDB for better performance
+<br/> [Changed] Raise some prices
+"
+]];
 
 player createDiaryRecord ["credits",
 [
