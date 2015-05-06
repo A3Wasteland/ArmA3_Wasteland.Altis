@@ -15,9 +15,9 @@
 	["TERRITORY_THRONOS_CASTLE", "Thronos Castle", 500, "CASTLE"],
 	//["TERRITORY_KASTRO_CASTLE", "Kastro Castle", 500, "CASTLE"],
 	["TERRITORY_SW_AIRFIELD", "AAC Airfield", 500, "AIRFIELD"],
-	["TERRITORY_MAIN_AIRBASE_SW", "Altis Airport (SW)", 750, "AIRBASE"],
-	["TERRITORY_MAIN_AIRBASE_CENTER", "Altis Airport (Center)", 750, "AIRBASE"],
-	["TERRITORY_MAIN_AIRBASE_NE", "Altis Airport (NE)", 750, "AIRBASE"],
+	//["TERRITORY_MAIN_AIRBASE_SW", "Altis Airport (SW)", 750, "AIRBASE"],
+	//["TERRITORY_MAIN_AIRBASE_CENTER", "Altis Airport (Center)", 750, "AIRBASE"],
+	//["TERRITORY_MAIN_AIRBASE_NE", "Altis Airport (NE)", 750, "AIRBASE"],
 	["TERRITORY_NE_AIRFIELD", "Molos Airfield", 500, "AIRFIELD"],
 	["TERRITORY_SE_AIRFIELD", "Selakano Airfield", 500, "AIRFIELD"],
 	["TERRITORY_NW_AIRFIELD", "Northwest Airfield", 500, "AIRFIELD"],
@@ -28,5 +28,16 @@
 	["TERRITORY_ARTINARKI_RUINS", "Artinarki Ruins", 500, "RUINS"],
 	["TERRITORY_MAGOS_TRANSMITTER", "Magos Transmitter", 500, "TRANSMITTER"],
 	["TERRITORY_PYRSOS_TRANSMITTER", "Pyrsos Transmitter", 500, "TRANSMITTER"],
-	["TERRITORY_MILITARY_RESEARCH", "Telos Military Base", 500, "MILITARY"]
+	["TERRITORY_MILITARY_RESEARCH", "Telos Military Base", 500, "MILITARY"],
+	// Added extra territories from the TOP servers
+	["TERRITORY_0_KAVALA_A", "Kavala (A)", 500],
+	["TERRITORY_0_KAVALA_B", "Kavala (B)", 500],
+	["TERRITORY_0_KAVALA_C", "Kavala (C)", 500],
+	["TERRITORY_1_ALTISAIR_A", "Altis Airport (A)", 500],
+	["TERRITORY_1_ALTISAIR_B", "Altis Airport (B)", 500],
+	["TERRITORY_1_ALTISAIR_C", "Altis Airport (C)", 500],
+	["TERRITORY_6_DOCKS_A", "DOCKS (A)", 500],
+	["TERRITORY_6_DOCKS_B", "DOCKS (B)", 500],
+	["TERRITORY_6_DOCKS_C", "DOCKS (C)", 500],
+	["TERRITORY_6_DOCKS_D", "DOCKS (D)", 500]
 ]

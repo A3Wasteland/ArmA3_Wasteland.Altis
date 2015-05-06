@@ -8,8 +8,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_flagChecksum", "_serverID", "_cheatFlag", "_unit"];
-_flagChecksum = _this select 0;
+private ["_serverID", "_cheatFlag", "_unit"];
 
 waitUntil {!isNil "bis_functions_mainscope"};
 _serverID = owner bis_functions_mainscope;
@@ -22,7 +21,7 @@ while { true } do
 {
 	waitUntil {time > 0.1};
 
-	if (isNil "_cheatFlag") then
+/*	if (isNil "_cheatFlag") then
 	{
 		{
 			_unit = _x;
@@ -49,7 +48,7 @@ while { true } do
 			};
 		} forEach (allUnits - playableUnits);
 	};
-
+*/
 	if (!isNil "_cheatFlag") then
 	{
 		{

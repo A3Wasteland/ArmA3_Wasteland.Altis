@@ -6,19 +6,18 @@
 //	@file Author: AgentRev
 //	@file Created: 04/01/2014 02:51
 
-private ["_assignCompileKey", "_assignChecksum", "_assignPacketKey", "_rscParams", "_compileKey", "_checksum", "_packetKey"];
+private ["_assignCompileKey", "_assignChecksum", "_assignPacketKey", "_compileKey", "_checksum", "_packetKey"];
 
 _assignCompileKey = [_this, 0, "", [""]] call BIS_fnc_param;
 _assignChecksum = [_this, 1, "", [""]] call BIS_fnc_param;
 _assignPacketKey = [_this, 2, "", [""]] call BIS_fnc_param;
-_rscParams = [_this, 3, [], [[]]] call BIS_fnc_param;
 
 _compileKey = call compile (_assignCompileKey + "_compileKey");
 _checksum = call compile (_assignChecksum + "_flagChecksum");
 _packetKey = call compile (_assignPacketKey + "_mpPacketKey");
 
-//if (isNil {missionNamespace getVariable _compileKey}) then
-//{
+if (isNil {missionNamespace getVariable _compileKey}) then
+{
 	{
 		_func = _x select 0;
 		_assign = _x select 1;
@@ -48,22 +47,21 @@ _packetKey = call compile (_assignPacketKey + "_mpPacketKey");
 		["A3W_fnc_clientFlagHandler", _assignChecksum, "server\antihack\clientFlagHandler.sqf"],
 		["A3W_fnc_chatBroadcast", _assignChecksum, "server\antihack\chatBroadcast.sqf"],
 		["A3W_fnc_adminMenuLog", _assignChecksum, "server\antihack\adminMenuLog.sqf"],
-		["A3W_fnc_logMemAnomaly", _assignChecksum, "server\antihack\logMemAnomaly.sqf"],
 		["notifyAdminMenu", _assignChecksum, "server\antihack\notifyAdminMenu.sqf"]
 	];
 
 	if (isServer) then
 	{
-		[_checksum] execVM "server\antihack\serverSide.sqf"; // COMMENT THIS LINE IF YOU HAVE ISSUES WITH CUSTOM UNIT SCRIPTS, LIKE AI RECRUITMENT
+		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\serverSide.sqf"));
 	};
 
 	if (!isDedicated) then
 	{
-		[_checksum, _rscParams] execVM "server\antihack\payload.sqf";
+		[] spawn compile (_assignChecksum + (preprocessFileLineNumbers "server\antihack\payload.sqf"));
 	};
 
 	missionNamespace setVariable [_compileKey, compileFinal "true"];
-//};
+};
 
 _packetKey addPublicVariableEventHandler A3W_fnc_MPexec;
 

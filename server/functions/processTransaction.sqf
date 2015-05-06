@@ -35,18 +35,17 @@ switch (toLower _type) do
 
 			missionNamespace setVariable [_var, _balance + _amount];
 			publicVariable _var;
-
+			
 			if (!isNil "fn_saveWarchestMoney") then
 			{
 				[] spawn fn_saveWarchestMoney;
 			};
 
-			_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, true]; // temp fix for negative wallet glitch
 
-			/*if (!local _player) then
+			if (!local _player) then
 			{
 				_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, false]; // do NOT set to true, this is only a temporary server-side change
-			};*/
+			};
 
 			_result = _amount;
 		};
@@ -74,18 +73,16 @@ switch (toLower _type) do
 			if (_amount < 0 && _balance < abs _amount) exitWith {}; // crate has not enough funds for withdrawal
 
 			_crate setVariable ["cmoney", _balance + _amount, true];
-
-			if (!isNil "fn_manualObjectSave") then
+			
+				if (!isNil "fn_manualObjectSave") then
 			{
 				_crate spawn fn_manualObjectSave;
 			};
 
-			_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, true]; // temp fix for negative wallet glitch
-
-			/*if (!local _player) then
+			if (!local _player) then
 			{
 				_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, false]; // do NOT set to true, this is only a temporary server-side change
-			};*/
+			};
 
 			_result = _amount;
 		};
@@ -117,12 +114,10 @@ switch (toLower _type) do
 
 			_player setVariable ["bmoney", _newBalance, true];
 
-			_player setVariable ["cmoney", _wallet - _amount, true]; // temp fix for negative wallet glitch
-
-			/*if (!local _player) then
+			if (!local _player) then
 			{
 				_player setVariable ["cmoney", _wallet - _amount, false]; // do NOT set to true, this is only a temporary server-side change
-			};*/
+			};
 
 			if (["A3W_playerSaving"] call isConfigOn) then
 			{

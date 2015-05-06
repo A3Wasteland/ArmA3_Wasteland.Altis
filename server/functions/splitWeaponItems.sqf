@@ -33,7 +33,6 @@ for "_i" from 4 to (count _array - 2) do
 		_mags pushBack _mag;
 	};
 };
-
 // bipod
 _item = _array select (count _array - 1);
 if (_item != "") then

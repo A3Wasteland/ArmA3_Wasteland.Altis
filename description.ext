@@ -7,8 +7,8 @@ enableItemsDropping = 0;
 forceRotorLibSimulation = 0; // if you set this to 1, you deny freedom of choice to the players, which is the very principle this mission is built upon
 weaponPool = 0;
 corpseManagerMode = 1;
-corpseRemovalMinTime = 30*60;
-corpseRemovalMaxTime = 30*60;
+corpseRemovalMinTime = 10*60;
+corpseRemovalMaxTime = 15*60;
 wreckManagerMode = 1;
 wreckRemovalMinTime = 5*60;
 wreckRemovalMaxTime = 10*60;
@@ -22,8 +22,8 @@ class Header
 	maxPlayers=145; // 144 players, 1 headless client
 };
 author="AgentRev - A3Wasteland.com"; // it would be if you could keep "A3Wasteland.com" in the name, like "YourName and A3Wasteland.com" :)
-onLoadName = "A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
-onLoadMission = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
+onLoadName = "NG A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
+onLoadMission = "Created by AgentRev - A3Wasteland, edited by Northern-Gaming.com Community Admins.";
 overviewText = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewPicture = "mapConfig\Loading.jpg";
@@ -54,6 +54,10 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
+#include "addons\outlw_magRepack\MagRepack_Config.hpp"
+#include "client\systems\hud\dialog\downloadData.hpp"
+#include "addons\beacondetector\sound\cfgsounds.hpp"
+#include "addons\taw_vd\dialog.hpp"
 
 class RscTitles
 {
@@ -61,10 +65,13 @@ class RscTitles
 	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
 	#include "client\systems\scoreboard\score_gui.hpp"
+	//#include "addons\dialog\statusBar.hpp"
+	#include "addons\statusBar\statusBar.hpp"
 };
 
 class CfgFunctions
 {
+	#include "addons\taw_vd\CfgFunctions.hpp"
 	class A3W
 	{
 		#include "client\CfgFunctions.hpp"
