@@ -72,7 +72,6 @@ teamSwitchLock = [_path, "teamSwitchLock.sqf"] call mf_compile;
 teamSwitchUnlock = [_path, "teamSwitchUnlock.sqf"] call mf_compile;
 updateConnectingClients = "territory\client\updateConnectingClients.sqf" call mf_compile;
 vehicleRepair = [_path, "vehicleRepair.sqf"] call mf_compile;
-vehicleRespawnCheck = [_path, "vehicle.sqf"] call mf_compile;
 vehicleSetup = [_path, "vehicleSetup.sqf"] call mf_compile;
 waitUntilBagTaken = [_path, "waitUntilBagTaken.sqf"] call mf_compile;
 weaponDisassembledServer = [_path, "weaponDisassembledServer.sqf"] call mf_compile;
