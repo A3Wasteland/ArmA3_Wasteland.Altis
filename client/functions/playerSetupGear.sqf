@@ -40,7 +40,13 @@ _player addWeapon "hgun_ACPC2_F";
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addMagazine "9Rnd_45ACP_Mag";
 _player addMagazine "9Rnd_45ACP_Mag";
-_player addItem "FirstAidKit";
+_player addItem "ACE_fieldDressing";
+_player addItem "ACE_fieldDressing";
+_player addItem "ACE_fieldDressing";
+_player addItem "ACE_fieldDressing";
+_player addItem "ACE_fieldDressing";
+_player addItem "ACE_morphine";
+_player addItem "ACE_epinephrine";
 _player selectWeapon "hgun_ACPC2_F";
 
 switch (true) do
