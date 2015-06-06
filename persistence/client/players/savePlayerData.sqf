@@ -12,7 +12,7 @@ savePlayerHandle = _this spawn
 	   {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}} &&
 	   {!isNil "playerSetupComplete" && {playerSetupComplete}} &&
 	   {!isNil "respawnDialogActive" && {!respawnDialogActive}} &&
-	   {player getVariable ["FAR_isUnconscious", 0] == 0}) then
+	   {!(player call A3W_fnc_isUnconscious)}) then
 	{
 		_UID = getPlayerUID player;
 		_manualSave = [_this, 0, false, [false]] call BIS_fnc_param;

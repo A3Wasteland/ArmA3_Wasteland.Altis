@@ -135,7 +135,7 @@ A3W_mapDraw_thread = [] spawn
 						_pos = if (_mapIconsEnabled) then { DEFAULT_ICON_POS(_veh) } else { getPosASLVisual _veh };
 						_dir = if (_icon == "iconParachute") then { 0 } else { getDir _veh };
 
-						if (_veh == _x && _x getVariable ["FAR_isUnconscious", 0] == 1) then { _vehColor = [1,0.25,0,1] }; // make icon orange if awaiting revive
+						if (_veh == _x && _x call A3W_fnc_isUnconscious) then { _vehColor = [1,0.25,0,1] }; // make icon orange if awaiting revive
 
 						_newArrayIcons pushBack [_icon, _vehColor, _pos, 24, 24, _dir, "", 1]; // draw icon
 
