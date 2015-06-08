@@ -11,9 +11,9 @@
 // Check if both players are on the same side, and that our player is BLUFOR or OPFOR, or that both are in the same group
 #define FRIENDLY_CONDITION (side group _x == playerSide && {playerSide in [BLUFOR,OPFOR] || group _x == group player})
 #define DISABLE_ALL_BUTTONS format ["{ ctrlEnable [_x, false] } forEach %1;", [respawn_Random_Button, respawn_Spawn_Button, respawn_Locations_Type, respawn_Locations_List, respawn_Preload_Checkbox]]
+#define TOWN_SPAWN_COOLDOWN (["A3W_townSpawnCooldown", 5*60] call getPublicVar)
 #define SPAWN_BEACON_COOLDOWN (["A3W_spawnBeaconCooldown", 5*60] call getPublicVar)
 #define BEACON_CHECK_RADIUS 250
-#define SPAWN_TOWN_COOLDOWN (["A3W_townSpawnCooldown", 5*60] call getPublicVar)
 
 disableSerialization;
 waitUntil {!isNil "bis_fnc_init" && {bis_fnc_init}};
@@ -36,8 +36,8 @@ _locType = _display displayCtrl respawn_Locations_Type;
 _locList = _display displayCtrl respawn_Locations_List;
 _locMap = _display displayCtrl respawn_Locations_Map;
 
+_townSpawnCooldown = TOWN_SPAWN_COOLDOWN;
 _spawnBeaconCooldown = SPAWN_BEACON_COOLDOWN;
-_townSpawnCooldown = SPAWN_TOWN_COOLDOWN;
 
 _side = switch (playerSide) do
 {
@@ -241,49 +241,28 @@ _selLocChanged =
 			{
 				_isValid = true;
 				_location call _getPlayersInfo;
-				
-				_text = "";
-				
-				{
-				if (_x select 0 == _location) exitWith
-				{
-					_text = (_x select 2);
-				};
-				} forEach (call cityList);
+				_lastSpawn = player getVariable (_location + "_lastSpawn");
+				_cooldown = false;
 
-				_lastUseTown = player getVariable _text;
-
-				if (!isNil "_lastUseTown") then
+				if (!isNil "_lastSpawn") then
 				{
-					_townSpawnCooldown = SPAWN_TOWN_COOLDOWN;
-					_remaining = _townSpawnCooldown - (diag_tickTime - _lastUseTown);
-					
+					_townSpawnCooldown = TOWN_SPAWN_COOLDOWN;
+					_remaining = _townSpawnCooldown - (diag_tickTime - _lastSpawn);
+
 					if (_townSpawnCooldown > 0 && _remaining > 0) then
 					{
 						_textStr = _textStr + format ["[<t color='#ffff00'>%1</t>] ", _remaining call fn_formatTimer];
-					}
-					else
-					{
-						if (_enemyPlayers > _friendlyPlayers) then
-						{
-							_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
-						}
-						else
-						{
-							_spawnBtnEnabled = true;
-						};
+						_cooldown = true;
 					};
+				};
+
+				if (_enemyPlayers > _friendlyPlayers) then
+				{
+					_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
 				}
 				else
 				{
-					if (_enemyPlayers > _friendlyPlayers) then
-					{
-						_textStr = _textStr + "[<t color='#ff0000'>Blocked by enemy</t>] ";
-					}
-					else
-					{
-						_spawnBtnEnabled = true;
-					};
+					_spawnBtnEnabled = !_cooldown;
 				};
 			};
 		};
@@ -528,7 +507,21 @@ while {!isNull _display} do
 		}
 		else
 		{
-			_enabled = (_enemyPlayers <= _friendlyPlayers);
+			_lastSpawn = player getVariable (_location + "_lastSpawn");
+			_cooldown = false;
+
+			if (!isNil "_lastSpawn") then
+			{
+				_remaining = _townSpawnCooldown - (diag_tickTime - _lastSpawn);
+
+				if (_townSpawnCooldown > 0 && _remaining > 0) then
+				{
+					_picture = "\A3\ui_f\Data\gui\Rsc\RscDisplayMultiplayer\sessions_locked_ca.paa";
+					_cooldown = true;
+				};
+			};
+
+			_enabled = (!_cooldown && _enemyPlayers <= _friendlyPlayers);
 		};
 
 		if (isNil "_picture") then
