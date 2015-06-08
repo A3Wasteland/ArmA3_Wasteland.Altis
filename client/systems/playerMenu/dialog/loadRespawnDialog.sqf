@@ -85,7 +85,7 @@ _setPlayersInfo =
 	};
 
 	{
-		if (alive _x && {_x isKindOf "CAManBase"} && {_x distance _centerPos <= _maxRad}) then
+		if (alive _x && {_x isKindOf "CAManBase" && {!(_x call A3W_fnc_isUnconscious) && _x distance _centerPos <= _maxRad}}) then
 		{
 			if (FRIENDLY_CONDITION) then
 			{
