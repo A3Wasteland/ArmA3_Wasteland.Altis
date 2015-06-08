@@ -5,6 +5,12 @@
 
 if (!hasInterface) exitWith {};
 
+_trimName = { _this select [1, count _this - 2] };
+_aKeyName = { _arr = actionKeysNamesArray _this; if (count _arr == 0) exitWith {"<UNDEFINED>"}; _arr select 0 };
+
+#define NKEYNAME(DIK) (keyName DIK call _trimName)
+#define AKEYNAME(ACT) (ACT call _aKeyName)
+
 waitUntil {!isNull player};
 
 player createDiarySubject ["infos", "Infos and Help"];
@@ -17,7 +23,7 @@ player createDiaryRecord ["changelog",
 "
 <br/>[Added] Marksmen DLC content
 <br/>[Added] Prevent usage of commander camera
-<br/>[Added] Emergency eject hotkey (Ctrl + " + actionKeysNames "GetOut" + ")
+<br/>[Added] Emergency eject hotkey (Ctrl + " + AKEYNAME("GetOut") + ")
 <br/>[Added] Restricted UAV connection to owner's group
 <br/>[Changed] Improved purchased vehicle setup time
 <br/>[Changed] Admins can now use global voice chat
@@ -338,6 +344,46 @@ player createDiaryRecord ["credits",
 "
 ]];
 
+
+_WASD = AKEYNAME("MoveForward") + "," + AKEYNAME("MoveBack") + "," + AKEYNAME("TurnLeft") + "," + AKEYNAME("TurnRight");
+
+player createDiaryRecord ["infos",
+[
+"Admin Spectate keys",
+"
+<br/>Admin menu Spectate camera controls:
+<br/>
+<br/>Shift + " + AKEYNAME("NextChannel") + " (next player)
+<br/>Shift + " + AKEYNAME("PrevChannel") + " (previous player)
+<br/>Ctrl + " + NKEYNAME(17) + " (exit camera)
+<br/>Ctrl + " + AKEYNAME("Chat") + " (attach/detach camera from target)
+<br/>Ctrl + " + NKEYNAME(35) + " (toggle target HUD)
+<br/>" + AKEYNAME("NightVision") + " (nightvision, thermal)
+<br/>" + _WASD + " (move camera around)
+<br/>" + NKEYNAME(16) + " (move camera up)
+<br/>" + NKEYNAME(44) + " (move camera down)
+<br/>Mouse Move (rotate camera)
+<br/>Mouse Wheel Up (increase camera speed)
+<br/>Mouse Wheel Down (decrease camera speed)
+<br/>Shift + " + _WASD + " (move camera around faster)
+<br/>" + AKEYNAME("ShowMap") + " (open/close map - click on map to teleport camera)
+"
+]];
+
+player createDiaryRecord ["infos",
+[
+"Player hotkeys",
+"
+<br/>List of player hotkeys and functions:
+<br/>
+<br/>" + NKEYNAME(41) + " (open player menu)
+<br/>" + NKEYNAME(207) + " (toggle earplugs)
+<br/>" + NKEYNAME(199) + ", " + NKEYNAME(219) + ", " + NKEYNAME(220) + " (toggle player names)
+<br/>Ctrl + " + AKEYNAME("GetOut") + " (emergency eject)
+<br/>" + AKEYNAME("GetOver") + " (open parachute)
+<br/>" + NKEYNAME(22) + " (admin menu)
+"
+]];
 
 player createDiaryRecord ["infos",
 [
