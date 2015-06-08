@@ -31,6 +31,8 @@ outlw_MR_modifierCheck =
 
 outlw_MR_keyDown =
 {
+	if (!alive player || player getVariable ["playerSpawning", true] || player call A3W_fnc_isUnconscious) exitWith {false};
+
 	_key = _this select 1;
 
 	if (_key == outlw_MR_keybinding && {_this call outlw_MR_modifierCheck}) then
