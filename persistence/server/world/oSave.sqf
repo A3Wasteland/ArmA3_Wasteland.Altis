@@ -18,7 +18,7 @@ A3W_saveableObjects = [];
 
 		if (!(_obj isKindOf "ReammoBox_F") && {!(_obj call _isSaveable)}) then
 		{
-			A3W_saveableObjects pushBack _obj;
+			A3W_saveableObjects pushBack toLower _obj;
 		};
 	} forEach _x;
 } forEach [objectList, call genObjectsArray];

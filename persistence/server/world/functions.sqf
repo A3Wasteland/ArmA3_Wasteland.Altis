@@ -20,9 +20,4 @@ _isStaticWeapon = { _this isKindOf "StaticWeapon" };
 _isWarchest = { _this getVariable ["a3w_warchest", false] && {(_this getVariable ["side", sideUnknown]) in [WEST,EAST]} };
 _isBeacon = { _this getVariable ["a3w_spawnBeacon", false] };
 
-_isSaveable =
-{
-	_result = false;
-	{ if (_this == _x) exitWith { _result = true } } forEach A3W_saveableObjects;
-	_result
-};
+_isSaveable = { (toLower _this) in A3W_saveableObjects };
