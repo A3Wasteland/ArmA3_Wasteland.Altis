@@ -135,20 +135,22 @@ _vehicleSavingOn = (_purchasedVehicleSavingOn || _purchasedVehicleSavingOn);
 
 _setupPlayerDB = scriptNull;
 
+#define MIN_EXTDB_VERSION 49
+
 // Do we need any persistence?
 if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	_savingMethod = ["A3W_savingMethod", "profile"] call getPublicVar;
-	if (_savingMethod == "iniDBI") then { _savingMethod = "iniDB" };
+	if (_savingMethod == "extDB2") then { _savingMethod = "extDB" };
 
 	// extDB
 	if (_savingMethod == "extDB") then
 	{
 		_version = "extDB2" callExtension "9:VERSION";
 
-		if (parseNumber _version >= 49) then
+		if (parseNumber _version >= MIN_EXTDB_VERSION) then
 		{
 			A3W_savingMethodName = compileFinal "'extDB'";
 			A3W_savingMethodDir = compileFinal "'extDB'";
@@ -160,17 +162,19 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 		{
 			if (_version != "") then
 			{
-				diag_log format "[INFO] ### extDB2 startup cancelled!";
-				diag_log format ["[INFO] ### A3W requires extDB v20 or later: v%1 detected", _result];
+				diag_log format "[INFO] ███ extDB2 startup cancelled!";
+				diag_log format ["[INFO] ███ A3W requires extDB2 v%1 or later: v%2 detected", MIN_EXTDB_VERSION, _result];
 			}
 			else
 			{
-				diag_log "[INFO] ### A3W NOT running with extDB!";
+				diag_log "[INFO] ███ A3W NOT running with extDB!";
 			};
 
 			_savingMethod = "profile"; // fallback
 		};
 	};
+
+	if (_savingMethod == "iniDBI") then { _savingMethod = "iniDB" };
 
 	// iniDB
 	if (_savingMethod == "iniDB") then
@@ -185,7 +189,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 		}
 		else
 		{
-			diag_log "[INFO] ### A3W NOT running with iniDB!";
+			diag_log "[INFO] ███ A3W NOT running with iniDB!";
 			_savingMethod = "profile"; // fallback
 		};
 	};

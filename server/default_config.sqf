@@ -70,11 +70,11 @@ A3W_extDB_Environment = "normal";  // Value used to separate player & object dat
 A3W_extDB_SaveUnlockedObjects = 1; // Save and restore unlocked baseparts that were locked at least once during their lifetime (0 = no, 1 = yes)
 A3W_extDB_ConfigName = "A3W";      // Name of the connection config from extdb-conf.ini to be used (the one within [brackets])
 A3W_extDB_IniName = "a3wasteland"; // Name of the INI file in extDB\sql_custom to be used
-A3W_extDB_RconName = "RCON";       // Name of the rcon config from extdb-conf.ini to be used (the one within [brackets])
 A3W_extDB_Misc = 0;                // Enable extDB Misc Protocol (0 = no, 1 = yes)
-A3W_extDB_Rcon = 0;                // Enable extDB Rcon Protocol (0 = no, 1 = yes)
-A3W_extDB_rconCommands = "KICK-ADDBAN";	// List of RCON Commands Allowed via extDB_Rcon
 A3W_extDB_Steam = 0;               // Enable extDB Steam Protocol (0 = no, 1 = yes)
+A3W_extDB_Rcon = 0;                // Enable extDB Rcon Protocol (0 = no, 1 = yes)
+A3W_extDB_RconName = "RCON";       // Name of the Rcon config from extdb-conf.ini to be used (the one within [brackets])
+A3W_extDB_RconCommands = "KICK-ADDBAN";	// List of RCON Commands Allowed via extDB_Rcon
 
 
 // Spawning settings

@@ -15,40 +15,42 @@ private ["_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
 	diag_log "[extDB2] Startup...";
 
 	_result = call compile ("extDB2" callExtension format ["9:ADD_DATABASE:%1", call A3W_extDB_ConfigName]);
-	if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ### Database error! %1", _result]; false };
+	if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ Database error! %1", _result]; false };
 
 	diag_log "[extDB2] Connected to database";
 
-	A3W_extDB_databaseID = compileFinal str floor random 999999;
+	A3W_extDB_databaseID = compileFinal str floor random 999997;
 	A3W_extDB_miscID = compileFinal str (call A3W_extDB_databaseID + 1);
 	A3W_extDB_rconID = compileFinal str (call A3W_extDB_databaseID + 2);
 	A3W_extDB_steamID = compileFinal str (call A3W_extDB_databaseID + 3);
-	
+
 	_result = call compile ("extDB2" callExtension format ["9:ADD_DATABASE_PROTOCOL:%1:SQL_CUSTOM:%2:%3", call A3W_extDB_ConfigName, call A3W_extDB_databaseID, call A3W_extDB_IniName]);
-	if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ### SQL_CUSTOM Protocol error! %1", _result]; false };
+	if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ SQL_CUSTOM Protocol error! %1", _result]; false };
 	diag_log "[extDB2] Initialized SQL_CUSTOM protocol";
-	
-	if  (["A3W_extDB_Misc"] call isConfigOn) then
-	{	
+
+	if (["A3W_extDB_Misc"] call isConfigOn) then
+	{
 		_result = call compile ("extDB2" callExtension format ["9:ADD_PROTOCOL:MISC:%1", call A3W_extDB_miscID]);
-		if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ### MISC Protocol error! %1", _result]; false };
+		if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ MISC Protocol error! %1", _result]; false };
 		diag_log "[extDB2] Initialized MISC protocol";
 	};
-	if  (["A3W_extDB_Rcon"] call isConfigOn) then
-	{	
+
+	if (["A3W_extDB_Rcon"] call isConfigOn) then
+	{
 		"extDB2" callExtension format ["9:START_RCON:RCON:%1", call A3W_extDB_RconName];
-		_result = call compile ("extDB2" callExtension format ["9:ADD_PROTOCOL:RCON:%1:%2", call A3W_extDB_rconID, call A3W_extDB_rconCommands]);
-		if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ### Rcon Protocol error! %1", _result]; false };
+		_result = call compile ("extDB2" callExtension format ["9:ADD_PROTOCOL:RCON:%1:%2", call A3W_extDB_rconID, ["A3W_extDB_RconCommands", "KICK-ADDBAN"] call getPublicVar]);
+		if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ Rcon Protocol error! %1", _result]; false };
 		diag_log "[extDB2] Initialized RCON protocol";
 	};
-	if  (["A3W_extDB_Steam"] call isConfigOn) then
-	{	
+
+	if (["A3W_extDB_Steam"] call isConfigOn) then
+	{
 		"extDB2" callExtension "9:START_STEAM";
 		_result = call compile ("extDB2" callExtension format ["9:ADD_PROTOCOL:STEAM:%1", call A3W_extDB_steamID]);
-		if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ### Steam Protocol error! %1", _result]; false };
+		if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ Steam Protocol error! %1", _result]; false };
 		diag_log "[extDB2] Initialized STEAM protocol";
 	};
-	
+
 	uiNamespace setVariable ["A3W_extDB_databaseID", call A3W_extDB_databaseID];
 	uiNamespace setVariable ["A3W_extDB_miscID", call A3W_extDB_miscID];
 	uiNamespace setVariable ["A3W_extDB_rconID", call A3W_extDB_rconID];
@@ -77,21 +79,24 @@ if (_return) then
 
 	extDB_pairsToSQL = [_setupDir, "fn_pairsToSQL.sqf"] call mf_compile;
 	extDB_Database_async = [_setupDir, "async_database.sqf"] call mf_compile;
-	if  (["A3W_extDB_rcon"] call isConfigOn) then
+
+	if (["A3W_extDB_Rcon"] call isConfigOn) then
 	{
 		extDB_Rcon_async = [_setupDir, "async_rcon.sqf"] call mf_compile;
 	};
-	if  (["A3W_extDB_misc"] call isConfigOn) then
+
+	if (["A3W_extDB_Misc"] call isConfigOn) then
 	{
 		extDB_Misc_async = [_setupDir, "async_misc.sqf"] call mf_compile;
 	};
-	if  (["A3W_extDB_steam"] call isConfigOn) then
+
+	if (["A3W_extDB_Steam"] call isConfigOn) then
 	{
 		extDB_Steam_async = [_setupDir, "async_steam.sqf"] call mf_compile;
 	};
 
 	_result = (["getDBVersion", 2] call extDB_Database_async) select 0;
-	if (_result < MIN_DB_VERSION) exitWith { diag_log format ["[extDB] ### Outdated A3Wasteland database version! %1 - min: %2", _result, MIN_DB_VERSION]; _return = false };
+	if (_result < MIN_DB_VERSION) exitWith { diag_log format ["[extDB2] ███ Outdated A3Wasteland database version! %1 - min: %2", _result, MIN_DB_VERSION]; _return = false };
 
 	_serverID = ["A3W_extDB_ServerID", 1] call getPublicVar;
 	A3W_extDB_ServerID = compileFinal str _serverID;
@@ -105,7 +110,7 @@ if (_return) then
 		_result = ([format ["checkServerInstance:%1", _serverID], 2] call extDB_Database_async) select 0;
 		if (!_result) then
 		{
-			diag_log format ["[extDB2] ### Unable to create ServerInstance with ServerID %1", _serverID];
+			diag_log format ["[extDB2] ███ Unable to create ServerInstance with ServerID %1", _serverID];
 			_return = false;
 			breakOut "extDB_envSetup";
 		};
@@ -120,19 +125,19 @@ if (_return) then
 		_mapID = ([format ["getServerMapID:%1:%2", worldName, _env], 2] call extDB_Database_async) select 0;
 		if (_mapID == 0) then
 		{
-			diag_log format ["[extDB2] ### Unable to create ServerMap with WorldName '%1'", worldName];
+			diag_log format ["[extDB2] ███ Unable to create ServerMap with WorldName '%1'", worldName];
 			_return = false;
 			breakOut "extDB_envSetup";
 		};
 	};
+
 	A3W_extDB_MapID = compileFinal str _mapID;
-	
 	_return = true;
 };
 
 if (!_return) exitWith
 {
-	diag_log "[extDB2] ### ERROR - Startup aborted";
+	diag_log "[extDB2] ███ ERROR - Startup aborted";
 	false
 };
 
