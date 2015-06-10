@@ -355,7 +355,7 @@ player createDiaryRecord ["infos",
 <br/>
 <br/>Shift + " + AKEYNAME("NextChannel") + " (next player)
 <br/>Shift + " + AKEYNAME("PrevChannel") + " (previous player)
-<br/>Ctrl + " + NKEYNAME(17) + " (exit camera)
+<br/>Ctrl + " + NKEYNAME(18) + " (exit camera)
 <br/>Ctrl + " + AKEYNAME("Chat") + " (attach/detach camera from target)
 <br/>Ctrl + " + NKEYNAME(35) + " (toggle target HUD)
 <br/>" + AKEYNAME("NightVision") + " (nightvision, thermal)
