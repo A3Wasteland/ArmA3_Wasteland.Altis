@@ -64,6 +64,8 @@ _exclObjectIDs = [];
 		{ if (typeName _x == "STRING") then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
 
 		_obj = createVehicle [_class, _pos, [], 0, "None"];
+		_obj allowDamage false;
+		_obj hideObjectGlobal true;
 		_obj setPosWorld ATLtoASL _pos;
 
 		if (!isNil "_dir") then
@@ -86,12 +88,9 @@ _exclObjectIDs = [];
 
 		if (_allowDamage > 0) then
 		{
+			_obj allowDamage true;
 			_obj setDamage _damage;
 			_obj setVariable ["allowDamage", true];
-		}
-		else
-		{
-			_obj allowDamage false;
 		};
 
 		{
@@ -183,6 +182,7 @@ _exclObjectIDs = [];
 		if (!isNil "_repairCargo") then { _obj setRepairCargo _repairCargo };
 
 		reload _obj;
+		_obj hideObjectGlobal false;
 	};
 
 	if (!_valid && !isNil "_objectID") then

@@ -38,6 +38,8 @@ _exclVehicleIDs = [];
 		_flying = (_flying > 0);
 
 		_veh = createVehicle [_class, _pos, [], 0, if (_isUAV && _flying) then { "FLY" } else { "None" }];
+		_veh allowDamage false;
+		_veh hideObjectGlobal true;
 
 		_velMag = vectorMagnitude velocity _veh;
 
@@ -96,6 +98,7 @@ _exclVehicleIDs = [];
 		_veh setVariable ["vehSaving_hoursAlive", _hoursAlive];
 		_veh setVariable ["vehSaving_spawningTime", diag_tickTime];
 
+		_veh allowDamage true;
 		_veh setDamage _damage;
 		{ _veh setHitPointDamage _x } forEach _hitPoints;
 
@@ -171,6 +174,7 @@ _exclVehicleIDs = [];
 		if (!isNil "_repairCargo") then { _veh setRepairCargo _repairCargo };
 
 		reload _veh;
+		_veh hideObjectGlobal false;
 	};
 
 	if (!_valid && !isNil "_vehicleID") then
