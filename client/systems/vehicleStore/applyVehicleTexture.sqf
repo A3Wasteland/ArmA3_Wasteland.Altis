@@ -33,7 +33,7 @@ if (typeName _texture == "STRING") then
 			case (_veh isKindOf "Van_01_base_F"):                 { [0,1] };
 
 			case (_veh isKindOf "MRAP_01_base_F"):                { [0,2] };
-			case (_veh isKindOf "MRAP_02_base_F"):                { [0,2] };
+			case (_veh isKindOf "MRAP_02_base_F"):                { [0,1,2] };
 			case (_veh isKindOf "MRAP_03_base_F"):                { [0,1] };
 
 			case (_veh isKindOf "Truck_01_base_F"):               { [0,1,2] };
