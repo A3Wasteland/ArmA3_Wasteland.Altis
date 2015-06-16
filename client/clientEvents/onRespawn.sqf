@@ -20,7 +20,7 @@ _corpse = _this select 1;
 _corpse setVariable ["newRespawnedUnit", _player, true];
 _player setVariable ["playerSpawning", true, true];
 
-pvar_playerRespawn = _player;
+pvar_playerRespawn = _this;
 publicVariableServer "pvar_playerRespawn";
 
 _group = _player getVariable ["currentGroupRestore", grpNull];

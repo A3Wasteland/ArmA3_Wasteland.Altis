@@ -22,7 +22,7 @@ addMissionEventHandler ["HandleDisconnect",
 	_uid = _this select 2;
 	_name = _this select 3;
 
-	diag_log format ["HandleDisconnect - %1", [_name, _uid]];
+	diag_log format ["HandleDisconnect - %1 - alive: %2 - local: %3", [_name, _uid], alive _unit, local _unit];
 
 	if (alive _unit) then
 	{
