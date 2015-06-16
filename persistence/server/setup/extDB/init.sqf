@@ -74,7 +74,7 @@ if (_return) then
 
 	_setupDir = "persistence\server\setup\extDB";
 
-	if (["A3W_extDB_Lock", 1] call getPublicVar == 0) then
+	if (["A3W_extDB_Lock", 1] call getPublicVar != 0) then
 	{
 		"extDB2" callExtension "9:LOCK";
 		diag_log "[extDB2] Locked";
