@@ -33,7 +33,7 @@ player createDiaryRecord ["changelog",
 <br/>[Fixed] Multiple money duping exploits
 <br/>[Fixed] Vehicles and objects sometimes disappearing from DB
 <br/>[Fixed] Severe injuries caused by jumping over small ledges
-<br/>[Fixed] Antihack kicks related to RHS, MCC, AGM, ACE3
+<br/>[Fixed] Antihack kicks due to RHS, MCC, AGM, ACE3, ALiVE
 <br/>[Fixed] Various minor bugfixes and optimizations
 "
 ]];

@@ -39,7 +39,8 @@ for "_i" from 0 to (count _cfgPatches - 1) do
 			"rhs_main", // RHS - Game Options
 			"mcc_sandbox", // MCC keys
 			"agm_core", // AGM Options
-			"ace_optionsmenu" // ACE Options
+			"ace_optionsmenu", // ACE Options
+			"alive_ui" // ALiVE
 		])
 		then { _escCheck = false };
 	};
