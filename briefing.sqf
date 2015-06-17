@@ -19,6 +19,27 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.2",
+"
+<br/>[Added] Mag Repack by Outlawled
+<br/>[Added] New vehicle store paintjobs
+<br/>[Added] Town spawn cooldown
+<br/>[Added] Object lock restriction near stores and missions
+<br/>[Changed] Upgraded saving system to extDB2 by Torndeco
+<br/>[Changed] Expanded UAV control restriction to quadcopters
+<br/>[Changed] Downed players no longer count as town enemies
+<br/>[Changed] Updated antihack
+<br/>[Fixed] Old spawn beacons no longer shown on spawn menu
+<br/>[Fixed] Multiple money duping exploits
+<br/>[Fixed] Vehicles and objects sometimes disappearing from DB
+<br/>[Fixed] Severe injuries caused by jumping over small ledges
+<br/>[Fixed] Antihack kicks related to RHS, MCC, AGM, ACE3
+<br/>[Fixed] Various minor bugfixes and optimizations
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.1b",
 "
 <br/>[Added] Marksmen DLC content
@@ -123,7 +144,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9h",
+"v0.9h",
 "
 <br/>[Added] Custom revive system based on Farooq's Revive
 <br/>[Added] Territory payroll at regular intervals
@@ -183,7 +204,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9g",
+"v0.9g",
 "
 <br/>[Added] - Vehicle stores
 <br/>[Added] - New lootspawner by Na_Palm, stuff in ALL buildings
@@ -225,7 +246,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9f",
+"v0.9f",
 "
 <br/>[Added] - Money missions
 <br/>[Added] - Sell Crate Items option at stores when moving crate
@@ -240,7 +261,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9e",
+"v0.9e",
 "
 <br/>[Added] - Territory system
 <br/>[Added] - Jumping option (step over while running)
@@ -254,7 +275,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9d",
+"v0.9d",
 "
 <br/>[Added] - Store object purchases
 <br/>[Changed] - New UI by KoS
@@ -263,7 +284,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9c",
+"v0.9c",
 "
 <br/>[Changed] - Instant money pickup and drop
 <br/>[Changed] - Increased plane and heli spawning odds
@@ -274,7 +295,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9b",
+"v0.9b",
 "
 <br/>[Initial release] - Welcome to Altis!
 "
