@@ -24,7 +24,7 @@ if (!isNil "_getPublicVar" && !isNil "_isConfigOn") then
 		disableSerialization;
 		while {!isNull findDisplay 49} do
 		{
-			if (!alive player || player getVariable ["playerSpawning", false]) then
+			if (!alive player || (player getVariable ["playerSpawning", false] && !(missionNamespace getVariable ["playerData_ghostingTimer", false]))) then
 			{
 				_respawnBtn = (findDisplay 49) displayCtrl 1010;
 				if (ctrlEnabled _respawnBtn) then

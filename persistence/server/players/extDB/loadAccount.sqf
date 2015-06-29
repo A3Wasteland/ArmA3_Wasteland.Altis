@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_UID", "_bank", "_moneySaving", "_result", "_data", "_columns"];
+private ["_UID", "_bank", "_moneySaving", "_result", "_data", "_columns", "_dataTemp", "_ghostingTimer", "_secs"];
 _UID = _this;
 
 _bank = 0;
@@ -99,8 +99,28 @@ else
 		_data set [_forEachIndex, [_data select _forEachIndex, _x]];
 	} forEach _result;
 
+	_dataTemp = _data;
+	_data = [["PlayerSaveValid", true]];
+
+	_ghostingTimer = ["A3W_extDB_GhostingTimer", 5*60] call getPublicVar;
+
+	if (_ghostingTimer > 0) then
+	{
+		_result = [format ["getTimeSinceServerSwitch:%1:%2:%3", _UID, call A3W_extDB_MapID, call A3W_extDB_ServerID], 2] call extDB_Database_async;
+
+		if (count _result > 0) then
+		{
+			_secs = _result select 0;
+
+			if (_secs < _ghostingTimer) then
+			{
+				_data pushBack ["GhostingTimer", _ghostingTimer - _secs];
+			};
+		};
+	};
+
+	_data append _dataTemp;
 	_data pushBack ["BankMoney", _bank];
-	_data pushBack ["PlayerSaveValid", true];
 };
 
 _data

@@ -114,7 +114,8 @@ forEach
 	"A3W_atmRemoveIfDisabled",
 	"A3W_uavControl",
 	"A3W_townSpawnCooldown",
-	"A3W_survivalSystem"
+	"A3W_survivalSystem",
+	"A3W_extDB_GhostingAdmins"
 ];
 
 ["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
