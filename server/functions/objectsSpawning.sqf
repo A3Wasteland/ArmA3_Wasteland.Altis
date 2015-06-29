@@ -9,7 +9,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_counter","_townname","_tradius","_pos","_objammount","_minrad","_maxrad","_lcounter","_spawnedObjects","_createRandomObject","_angleIncr","_langle","_lpos"];
+private ["_counter","_townname","_tradius","_pos","_objammount","_minrad","_maxrad","_lcounter","_spawnedObjects","_baseBuilding","_essentials","_objList","_sradius","_createRandomObject","_angleIncr","_langle","_lpos"];
 _tradius = 0;
 _townname = "debug";
 _counter = 1;
@@ -20,16 +20,25 @@ _lcounter = 0;
 
 _spawnedObjects = [];
 
+_baseBuilding = ["A3W_baseBuilding"] call isConfigOn;
+_essentials = ["A3W_essentialsSpawning"] call isConfigOn;
+_objList = [];
+
+if (_baseBuilding) then { _objList append objectList };
+if (_essentials) then { _objList append essentialsList };
+
+_sradius = if (!_baseBuilding && _essentials) then { 75 } else { 15 };
+
 _createRandomObject =
 {
-	private ["_pos", "_minrad", "_maxrad", "_counter"];
 	_pos = _this select 0;
 	_minrad = _this select 1;
 	_maxrad = _this select 2;
 	_counter = _this select 3;
+	_objList = _this select 4;
 
 	_pos = [_pos, _minrad, _maxrad, 2, 0, 60*(pi/180), 0] call findSafePos;
-	[_pos] call objectCreation;
+	[_pos, _objList] call objectCreation;
 
 	//diag_log format ["Object spawn #%1 done", _counter];
 };
@@ -38,7 +47,7 @@ _createRandomObject =
 	_pos = getMarkerPos (_x select 0);
 	_tradius = _x select 1;
 	_townname = _x select 2;
-	_objammount = ceil (_tradius / 15);  // spawns an object for every 15m radius the townmarker has, this might need tweaking!
+	_objammount = ceil (_tradius / _sradius);  // spawns an object for every "_sradius" meters the townmarker has, this might need tweaking!
 	_angleIncr = 360 / _objammount;
 	_langle = random _angleIncr;
 	//_minrad = 15;
@@ -49,7 +58,7 @@ _createRandomObject =
 	while {_lcounter < _objammount} do
 	{
 		_lpos = _pos vectorAdd ([[_maxrad, 0, 0], _langle] call BIS_fnc_rotateVector2D);
-		_spawnedObjects pushBack ([_lpos, _minrad, _maxrad, _counter] spawn _createRandomObject);
+		_spawnedObjects pushBack ([_lpos, _minrad, _maxrad, _counter, _objList] spawn _createRandomObject);
 		//_minrad = _minrad + 15;
 		//_maxrad = _maxrad + 15;
 		_langle = _langle + _angleIncr;

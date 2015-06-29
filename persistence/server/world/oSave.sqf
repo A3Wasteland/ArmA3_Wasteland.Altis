@@ -13,15 +13,14 @@ A3W_saveableObjects = [];
 	_idx = _forEachIndex;
 
 	{
-		_obj = _x;
-		if (_idx > 0) then { _obj = _x select 1 };
+		_obj = if (typeName _x == "ARRAY") then { _x select 1 } else { _x }; // get class if store config array
 
 		if (!(_obj isKindOf "ReammoBox_F") && {!(_obj call _isSaveable)}) then
 		{
 			A3W_saveableObjects pushBack toLower _obj;
 		};
 	} forEach _x;
-} forEach [objectList, call genObjectsArray];
+} forEach [objectList, essentialsList, call genObjectsArray];
 
 _purchasedVehicleSaving = ["A3W_purchasedVehicleSaving"] call isConfigOn;
 _missionVehicleSaving = ["A3W_missionVehicleSaving"] call isConfigOn;

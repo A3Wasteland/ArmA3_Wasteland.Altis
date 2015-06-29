@@ -6,10 +6,11 @@
 
 if (!isServer) exitWith {};
 
-private ["_objPos", "_objClass", "_obj", "_adjustZ", "_pos"];
+private ["_objPos", "_objList", "_objClass", "_obj", "_adjustZ", "_pos"];
 _objPos = _this select 0;
+_objList = _this select 1;
 
-_objClass = objectList call BIS_fnc_selectRandom;
+_objClass = _objList call BIS_fnc_selectRandom;
 _obj = createVehicle [_objClass, _objPos, [], 50, "None"];
 
 switch (true) do

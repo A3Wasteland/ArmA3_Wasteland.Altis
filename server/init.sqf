@@ -329,7 +329,7 @@ if (["A3W_serverSpawning"] call isConfigOn) then
 		call compile preprocessFileLineNumbers "server\functions\boatSpawning.sqf";
 	};
 
-	if (["A3W_baseBuilding"] call isConfigOn) then
+	if (["A3W_baseBuilding"] call isConfigOn || ["A3W_essentialsSpawning"] call isConfigOn) then
 	{
 		call compile preprocessFileLineNumbers "server\functions\objectsSpawning.sqf";
 	};
