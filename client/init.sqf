@@ -117,7 +117,11 @@ call compile preprocessFileLineNumbers "client\functions\setupClientPVars.sqf";
 
 //client Executes
 A3W_scriptThreads pushBack execVM "client\systems\hud\playerHud.sqf";
-[] execVM "client\functions\initSurvival.sqf";
+
+if (["A3W_survivalSystem"] call isConfigOn) then
+{
+	execVM "client\functions\initSurvival.sqf";
+};
 
 [] spawn
 {

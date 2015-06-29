@@ -64,6 +64,12 @@ switch(_switch) do
 			_excludedItems pushBack "energydrink";
 		};
 
+		if !(["A3W_survivalSystem"] call isConfigOn) then
+		{
+			_excludedItems pushBack "water";
+			_excludedItems pushBack "cannedfood";
+		};
+
 		if (count _excludedItems > 0) then
 		{
 			_itemsArray = [_itemsArray, { !((_x select 1) in _excludedItems) }] call BIS_fnc_conditionalSelect;
