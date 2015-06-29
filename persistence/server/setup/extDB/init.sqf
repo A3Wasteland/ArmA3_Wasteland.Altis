@@ -4,7 +4,7 @@
 //	@file Name: init.sqf
 //	@file Author: Torndeco, AgentRev
 
-#define MIN_DB_VERSION 2.03
+#define MIN_DB_VERSION 2.04
 
 private ["_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
 
@@ -18,15 +18,14 @@ private ["_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
 	if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ Database error! %1", _result]; false };
 
 	diag_log "[extDB2] Connected to database";
-
 	A3W_extDB_databaseID = compileFinal str floor random 999997;
 	A3W_extDB_miscID = compileFinal str (call A3W_extDB_databaseID + 1);
 	A3W_extDB_rconID = compileFinal str (call A3W_extDB_databaseID + 2);
 	A3W_extDB_steamID = compileFinal str (call A3W_extDB_databaseID + 3);
 
-	_result = call compile ("extDB2" callExtension format ["9:ADD_DATABASE_PROTOCOL:%1:SQL_CUSTOM:%2:%3", call A3W_extDB_ConfigName, call A3W_extDB_databaseID, call A3W_extDB_IniName]);
-	if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ SQL_CUSTOM Protocol error! %1", _result]; false };
-	diag_log "[extDB2] Initialized SQL_CUSTOM protocol";
+	_result = call compile ("extDB2" callExtension format ["9:ADD_DATABASE_PROTOCOL:%1:SQL_CUSTOM_V2:%2:%3", call A3W_extDB_ConfigName, call A3W_extDB_databaseID, call A3W_extDB_IniName]);
+	if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ SQL_CUSTOM_V2 Protocol error! %1", _result]; false };
+	diag_log "[extDB2] Initialized SQL_CUSTOM_V2 protocol";
 
 	if (["A3W_extDB_Misc"] call isConfigOn) then
 	{

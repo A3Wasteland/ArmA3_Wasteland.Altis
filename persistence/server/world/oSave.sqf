@@ -38,6 +38,7 @@ fn_manualObjectDelete = [_worldDir, "fn_manualObjectDelete.sqf"] call mf_compile
 fn_saveObject = [_methodDir, "saveObject.sqf"] call mf_compile;
 fn_postObjectSave = [_methodDir, "postObjectSave.sqf"] call mf_compile;
 fn_saveWarchestMoney = [_methodDir, "saveWarchestMoney.sqf"] call mf_compile;
+fn_saveTime = [_methodDir, "saveTime.sqf"] call mf_compile;
 
 if (_vehicleSaving) then
 {
@@ -100,6 +101,11 @@ while {true} do
 	if (_warchestMoneySavingOn) then
 	{
 		call fn_saveWarchestMoney;
+	};
+
+	if ((_timeSavingOn && !isNil "A3W_timeSavingInitDone") || (!_timeSavingOn && _weatherSavingOn)) then
+	{
+		call fn_saveTime;
 	};
 
 	_oldIDs = _currObjectIDs - _newObjectIDs;

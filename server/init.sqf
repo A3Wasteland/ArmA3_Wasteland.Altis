@@ -127,6 +127,8 @@ _staticWeaponSavingOn = ["A3W_staticWeaponSaving"] call isConfigOn;
 _warchestSavingOn = ["A3W_warchestSaving"] call isConfigOn;
 _warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
 _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
+_timeSavingOn = ["A3W_timeSaving"] call isConfigOn;
+_weatherSavingOn = ["A3W_weatherSaving"] call isConfigOn;
 
 _purchasedVehicleSavingOn = ["A3W_purchasedVehicleSaving"] call isConfigOn;
 _missionVehicleSavingOn = ["A3W_missionVehicleSaving"] call isConfigOn;
@@ -139,7 +141,7 @@ _setupPlayerDB = scriptNull;
 #define MIN_EXTDB_VERSION 49
 
 // Do we need any persistence?
-if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
+if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _weatherSavingOn) then
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -230,11 +232,13 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 		};
 	};
 
-	[_playerSavingOn, _objectSavingOn, _vehicleSavingOn] spawn
+	[_playerSavingOn, _objectSavingOn, _vehicleSavingOn, _timeSavingOn, _weatherSavingOn] spawn
 	{
 		_playerSavingOn = _this select 0;
 		_objectSavingOn = _this select 1;
 		_vehicleSavingOn = _this select 2;
+		_timeSavingOn = _this select 3;
+		_weatherSavingOn = _this select 4;
 
 		A3W_objectIDs = [];
 		A3W_vehicleIDs = [];
@@ -249,7 +253,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 			call compile preprocessFileLineNumbers "persistence\server\world\vLoad.sqf";
 		};
 
-		if (_objectSavingOn || _vehicleSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
+		if (_objectSavingOn || _vehicleSavingOn || _timeSavingOn || _weatherSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
 		{
 			execVM "persistence\server\world\oSave.sqf";
 			//waitUntil {!isNil "A3W_oSaveReady"};
@@ -268,7 +272,9 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn) then
 		["staticWeaponSaving", _staticWeaponSavingOn],
 		["warchestSaving", _warchestSavingOn],
 		["warchestMoneySaving", _warchestMoneySavingOn],
-		["spawnBeaconSaving", _beaconSavingOn]
+		["spawnBeaconSaving", _beaconSavingOn],
+		["timeSaving", _timeSavingOn],
+		["weatherSaving", _weatherSavingOn]
 	];
 };
 
@@ -296,6 +302,11 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 	_monthDay = if (["A3W_moonLight"] call isConfigOn) then { 9 } else { 24 };
 	_startHour = ["A3W_startHour", date select 2] call getPublicVar;
 	setDate [2035, 6, _monthDay, _startHour, 0];
+};
+
+if (_timeSavingOn || _weatherSavingOn) then
+{
+	execVM "persistence\server\world\tLoad.sqf";
 };
 
 if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then
