@@ -344,6 +344,7 @@ player createDiaryRecord ["credits",
 <br/>	* HatchetHarry (GitHub)
 <br/>	* Hub (TeamPlayerGaming)
 <br/>	* k4n30 (GitHub)
+<br/>	* Killzone_Kid (KillzoneKid.com)
 <br/>	* Krunch (GitHub)
 <br/>	* LouDnl (GitHub)
 <br/>	* madbull (R3F)
@@ -364,6 +365,7 @@ player createDiaryRecord ["credits",
 <br/>	* spunFIN (BIS forums)
 <br/>	* Tonic (BIS forums)
 <br/>	* wiking.at (A3W forums)
+<br/>	* xx-LSD-xx (Armaholic)
 <br/>	* Zenophon (BIS Forums)
 <br/>
 <br/><font size='16'>Thanks A LOT to everyone involved for the help and inspiration!</font>
