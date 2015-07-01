@@ -4,8 +4,6 @@
 //	@file Name: saveAccount.sqf
 //	@file Author: AgentRev
 
-#define FILTERED_CHARS [39,58] // single quote, colon
-
 private ["_UID", "_info", "_data", "_sqlValues"];
 _UID = _this select 0;
 _info = _this select 1;

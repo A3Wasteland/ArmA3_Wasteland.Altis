@@ -4,8 +4,6 @@
 //	@file Name: saveVehicle.sqf
 //	@file Author: AgentRev
 
-#define FILTERED_CHARS [39,58] // single quote, colon
-
 private ["_veh", "_vehicleID", "_spawningTime", "_lastUse", "_flying", "_updateValues"];
 _veh = _this select 0;
 

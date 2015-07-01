@@ -91,7 +91,7 @@ player createDiaryRecord ["changelog",
 <br/>[Changed] Spawn beacon item drop to sleeping bag
 <br/>[Fixed] More money exploits
 <br/>[Fixed] Scoreboard ordering
-<br/>[Fixed] Vehicle repair & refuel sometimes not working
+<br/>[Fixed] Vehicle repair and refuel sometimes not working
 <br/>[Fixed] Injured players' corpses being deleted on disconnect
 <br/>[Fixed] Static weapon disassembly prevention
 <br/>[Fixed] Excess bought rockets ending up in uniform or vest

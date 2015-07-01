@@ -6,18 +6,21 @@
 
 #define MIN_DB_VERSION 2.04
 
-private ["_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
+private ["_lock", "_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
+_lock = (["A3W_extDB_Lock", 1] call getPublicVar != 0);
 
 // uiNamespace is persistent across mission restarts (but not game restarts)
 
- _return = if (isNil {uiNamespace getVariable "A3W_extDB_databaseID"}) then
+ _return = if (isNil {uiNamespace getVariable "A3W_extDB_databaseID"} || !_lock) then
 {
 	diag_log "[extDB2] Startup...";
 
-	_result = call compile ("extDB2" callExtension format ["9:ADD_DATABASE:%1", call A3W_extDB_ConfigName]);
-	if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ Database error! %1", _result]; false };
+	if (isNil {uiNamespace getVariable "A3W_extDB_databaseID"}) then
+	{
+		_result = call compile ("extDB2" callExtension format ["9:ADD_DATABASE:%1", call A3W_extDB_ConfigName]);
+		if (_result select 0 == 0) exitWith { diag_log format ["[extDB2] ███ Database error! %1", _result]; false };
+	};
 
-	diag_log "[extDB2] Connected to database";
 	A3W_extDB_databaseID = compileFinal str floor random 999997;
 	A3W_extDB_miscID = compileFinal str (call A3W_extDB_databaseID + 1);
 	A3W_extDB_rconID = compileFinal str (call A3W_extDB_databaseID + 2);
@@ -73,7 +76,7 @@ if (_return) then
 
 	_setupDir = "persistence\server\setup\extDB";
 
-	if (["A3W_extDB_Lock", 1] call getPublicVar != 0) then
+	if (_lock) then
 	{
 		"extDB2" callExtension "9:LOCK";
 		diag_log "[extDB2] Locked";

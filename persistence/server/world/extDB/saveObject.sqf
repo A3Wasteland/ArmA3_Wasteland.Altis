@@ -4,8 +4,6 @@
 //	@file Name: saveObject.sqf
 //	@file Author: AgentRev
 
-#define FILTERED_CHARS [39,58] // single quote, colon
-
 private ["_obj", "_manual", "_objectID", "_updateValues", "_locked", "_deployable"];
 _obj = _this select 0;
 _manual = if (count _this > 2) then { _this select 2 } else { false };
