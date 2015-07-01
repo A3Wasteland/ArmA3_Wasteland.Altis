@@ -35,7 +35,7 @@ _objects = call compile preprocessFileLineNumbers format ["%1\getObjects.sqf", _
 _exclObjectIDs = [];
 
 {
-	private ["_allowed", "_obj", "_objectID", "_class", "_pos", "_dir", "_locked", "_damage", "_allowDamage", "_variables", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_valid"];
+	private ["_allowed", "_obj", "_objectID", "_class", "_pos", "_dir", "_locked", "_damage", "_allowDamage", "_owner", "_variables", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_valid"];
 
 	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
 
@@ -92,6 +92,11 @@ _exclObjectIDs = [];
 			_obj allowDamage true;
 			_obj setDamage _damage;
 			_obj setVariable ["allowDamage", true];
+		};
+
+		if (!isNil "_owner") then
+		{
+			_obj setVariable ["ownerUID", _owner, true];
 		};
 
 		{

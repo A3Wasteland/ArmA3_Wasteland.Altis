@@ -24,6 +24,7 @@ _vars =
 	["Locked", "_locked"],
 	["Damage", "_damage"],
 	["AllowDamage", "_allowDamage"],
+	["OwnerUID", "_owner"],
 	["Variables", "_variables"],
 	["Weapons", "_weapons"],
 	["Magazines", "_magazines"],

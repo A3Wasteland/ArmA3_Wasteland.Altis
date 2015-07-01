@@ -26,6 +26,7 @@ _vars =
 	["Damage", "_damage"],
 	["Fuel", "_fuel"],
 	["HitPoints", "_hitPoints"],
+	["OwnerUID", "_owner"],
 	["Variables", "_variables"],
 	["Textures", "_textures"],
 	["Weapons", "_weapons"],

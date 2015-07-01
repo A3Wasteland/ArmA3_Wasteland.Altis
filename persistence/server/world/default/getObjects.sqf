@@ -24,6 +24,7 @@ _vars =
 	[["HoursUnused", "NUMBER"], "_hoursUnused"],
 	[["Damage", "NUMBER"], "_damage"],
 	[["AllowDamage", "NUMBER"], "_allowDamage"],
+	[["OwnerUID", "STRING"], "_owner"],
 	[["Variables", "ARRAY"], "_variables"],
 	[["Weapons", "ARRAY"], "_weapons"],
 	[["Magazines", "ARRAY"], "_magazines"],

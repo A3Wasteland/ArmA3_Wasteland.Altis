@@ -18,7 +18,7 @@ _vehicles = call compile preprocessFileLineNumbers format ["%1\getVehicles.sqf",
 _exclVehicleIDs = [];
 
 {
-	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
+	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_owner", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
 
 	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
 
@@ -119,6 +119,11 @@ _exclVehicleIDs = [];
 			} forEach _textures;
 
 			_veh setVariable ["A3W_objectTextures", _objTextures, true];
+		};
+
+		if (!isNil "_owner") then
+		{
+			_veh setVariable ["ownerUID", _owner, true];
 		};
 
 		{ _veh setVariable [_x select 0, _x select 1, true] } forEach _variables;
