@@ -21,13 +21,17 @@ player createDiaryRecord ["changelog",
 [
 "v1.2",
 "
-<br/>[Added] Mag Repack by Outlawled
+<br/>[Added] Mag Repack by Outlawled (Ctrl + " + NKEYNAME(19) + ")
+<br/>[Added] Adjustable NV by xx-LSD-xx (Shift + PageUp/Down)
 <br/>[Added] New vehicle store paintjobs
 <br/>[Added] Town spawn cooldown
+<br/>[Added] Ghosting timer
 <br/>[Added] Object lock restriction near stores and missions
-<br/>[Changed] Upgraded saving system to extDB2 by Torndeco
+<br/>[Added] Headless client object saving
+<br/>[Added] Time and weather saving
 <br/>[Changed] Expanded UAV control restriction to quadcopters
-<br/>[Changed] Downed players no longer count as town enemies
+<br/>[Changed] Injured players no longer count as town enemies
+<br/>[Changed] Upgraded extDB to extDB2 by Torndeco
 <br/>[Changed] Updated antihack
 <br/>[Fixed] Old spawn beacons no longer shown on spawn menu
 <br/>[Fixed] Multiple money duping exploits
@@ -403,6 +407,7 @@ player createDiaryRecord ["infos",
 <br/>" + NKEYNAME(199) + ", " + NKEYNAME(219) + ", " + NKEYNAME(220) + " (toggle player names)
 <br/>Ctrl + " + AKEYNAME("GetOut") + " (emergency eject)
 <br/>" + AKEYNAME("GetOver") + " (open parachute)
+<br/>Shift + " + NKEYNAME(201) + " / " + NKEYNAME(209) + " (adjust nightvision)
 <br/>" + NKEYNAME(22) + " (admin menu)
 "
 ]];
