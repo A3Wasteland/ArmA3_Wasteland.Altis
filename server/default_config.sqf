@@ -89,6 +89,20 @@ A3W_extDB_Rcon = 0;                // Enable extDB Rcon Protocol (0 = no, 1 = ye
 A3W_extDB_RconName = "RCON";       // Name of the Rcon config from extdb-conf.ini to be used (the one within [brackets])
 A3W_extDB_RconCommands = "KICK-ADDBAN";	// List of dash-separated RCON commands allowed via extDB_Rcon
 
+// Headless client settings
+A3W_hcPrefix = "A3W_HC";           // Prefix of the headless client unit names in mission.sqm
+A3W_hcObjCaching = 1;              // Enable headless client object caching (0 = no, 1 = yes)
+A3W_hcObjCachingID = 1;            // ID of the headless client in charge of object caching (1 or 2)
+A3W_hcObjSaving = 0;               // Enable headless client vehicle & object saving (0 = no, 1 = yes)
+A3W_hcObjSavingID = 2;             // ID of the headless client in charge of object saving (1 or 2)
+
+// HEADLESS CLIENT NOTES:
+// The IDs of HCs are assigned according to the order they connect to the server. The first HC to connect will have ID 1, and the second one will have ID 2.
+// It is possible to set both caching and saving IDs to 1, which means both features will run on a single HC, therefore eliminating the need for a second one.
+// For object saving, you must make sure that the HC runs from the same folder as your server, or that it has the same config files, as the HC will read them directly like the server.
+// For saving with extDB, both server and HC need to connect to the same database, and with iniDB, both server and HC need to access the same db folder.
+// HC saving only works with extDB and iniDB. It does NOT work with profileNamespace, as loading takes place on the server and saving on the HC, so loading will fail as profile files are separate.
+
 // Server spawn settings
 A3W_serverSpawning = 1;            // Vehicle, object, and loot spawning (0 = no, 1 = yes)
 A3W_vehicleSpawning = 1;           // If serverSpawning = 1, spawn vehicles in towns (0 = no, 1 = yes)

@@ -102,6 +102,8 @@ _lastLog = 0;
 
 waitUntil {!isNil "A3W_serverSpawningComplete"};
 
+diag_log "WASTELAND HEADLESS - Object caching enabled";
+
 while {true} do
 {
 	_startTime = diag_tickTime;

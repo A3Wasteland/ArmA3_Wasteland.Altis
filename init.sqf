@@ -50,17 +50,17 @@ if (!isDedicated) then
 			[player] joinSilent createGroup playerSide;
 
 			execVM "client\init.sqf";
+
+			if ((vehicleVarName player) select [0,17] == "BIS_fnc_objectVar") then { player setVehicleVarName "" }; // undo useless crap added by BIS
 		}
 		else // Headless
 		{
 			waitUntil {!isNull player};
-			if (typeOf player == "HeadlessClient_F") then
+			if (getText (configFile >> "CfgVehicles" >> typeOf player >> "simulation") == "headlessclient") then
 			{
 				execVM "client\headless\init.sqf";
 			};
 		};
-
-		player setVehicleVarName ""; // undo BIS_fnc_objectVar crap
 	};
 };
 

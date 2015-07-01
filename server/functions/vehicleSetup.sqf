@@ -64,6 +64,7 @@ _vehicle addEventHandler ["Killed",
 	if (!isNil "fn_manualVehicleDelete") then
 	{
 		[objNull, _veh getVariable "A3W_vehicleID"] call fn_manualVehicleDelete;
+		_veh setVariable ["A3W_vehicleSaved", false, false];
 	};
 }];
 

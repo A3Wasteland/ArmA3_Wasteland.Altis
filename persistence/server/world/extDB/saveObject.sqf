@@ -17,7 +17,9 @@ if (!alive _obj) exitWith {nil};
 if (isNil "_objectID") then
 {
 	_objectID = ([format ["newServerObject:%1:%2", call A3W_extDB_ServerID, call A3W_extDB_MapID], 2] call extDB_Database_async) select 0;
-	_obj setVariable ["A3W_objectID", _objectID, true];
+	[_obj, ["A3W_objectID", _objectID, true]] call fn_secureSetVar;
+	[_obj, ["A3W_objectSaved", true, true]] call fn_secureSetVar;
+
 	A3W_objectIDs pushBack _objectID;
 };
 

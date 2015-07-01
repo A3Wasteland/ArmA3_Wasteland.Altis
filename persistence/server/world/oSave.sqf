@@ -4,78 +4,42 @@
 //	@file Name: oSave.sqf
 //	@file Author: AgentRev, [GoT] JoSchaap
 
-#include "functions.sqf"
+#include "oSaveSetup.sqf"
 
-A3W_saveableObjects = [];
+_isHC = !isNil "A3W_hcObjSaving_isClient";
 
-// Add objectList & general store objects
+// the profileNamespace A3W_objectIDs and A3W_vehicleIDs thing is if the HC crashes and is restarted during the server session, then the ID arrays can be restored
+
+if (_isHC) then
 {
-	_idx = _forEachIndex;
+	if (isNil "A3W_objectIDs") then { A3W_objectIDs = [] };
+	if (isNil "A3W_vehicleIDs") then { A3W_vehicleIDs = [] };
 
+	if (!isNil "A3W_hcObjSaving_mergeIDs") then
 	{
-		_obj = if (typeName _x == "ARRAY") then { _x select 1 } else { _x }; // get class if store config array
+		_objVar = "A3W_objectIDs" call _hcProfileVarName;
+		_objIDs = if (!isNil "_objVar") then { profileNamespace getVariable [_objVar, []] } else { [] };
 
-		if (!(_obj isKindOf "ReammoBox_F") && {!(_obj call _isSaveable)}) then
-		{
-			A3W_saveableObjects pushBack toLower _obj;
-		};
-	} forEach _x;
-} forEach [objectList, essentialsList, call genObjectsArray];
+		{ if !(_x in A3W_objectIDs) then { A3W_objectIDs pushBack _x } } forEach _objIDs;
 
-_purchasedVehicleSaving = ["A3W_purchasedVehicleSaving"] call isConfigOn;
-_missionVehicleSaving = ["A3W_missionVehicleSaving"] call isConfigOn;
-_vehicleSaving = (_purchasedVehicleSaving || _missionVehicleSaving);
-_savingInterval = (["A3W_serverSavingInterval", 60] call getPublicVar) / 2;
+		"A3W_objectIDs" call _hcSaveProfileVar;
 
-_worldDir = "persistence\server\world";
-_methodDir = format ["%1\%2", _worldDir, call A3W_savingMethodDir];
+		_vehVar = "A3W_vehicleIDs" call _hcProfileVarName;
+		_vehIDs = if (!isNil "_vehVar") then { profileNamespace getVariable [_vehVar, []] } else { [] };
 
-fn_hasInventory = [_worldDir, "fn_hasInventory.sqf"] call mf_compile;
-fn_isObjectSaveable = [_worldDir, "fn_isObjectSaveable.sqf"] call mf_compile;
-fn_getObjectProperties = [_worldDir, "fn_getObjectProperties.sqf"] call mf_compile;
-fn_manualObjectSave = [_worldDir, "fn_manualObjectSave.sqf"] call mf_compile;
-fn_manualObjectDelete = [_worldDir, "fn_manualObjectDelete.sqf"] call mf_compile;
-fn_saveObject = [_methodDir, "saveObject.sqf"] call mf_compile;
-fn_postObjectSave = [_methodDir, "postObjectSave.sqf"] call mf_compile;
-fn_saveWarchestMoney = [_methodDir, "saveWarchestMoney.sqf"] call mf_compile;
-fn_saveTime = [_methodDir, "saveTime.sqf"] call mf_compile;
+		{ if !(_x in A3W_vehicleIDs) then { A3W_vehicleIDs pushBack _x } } forEach _vehIDs;
 
-if (_vehicleSaving) then
-{
-	fn_isVehicleSaveable = [_worldDir, "fn_isVehicleSaveable.sqf"] call mf_compile;
-	fn_getVehicleProperties = [_worldDir, "fn_getVehicleProperties.sqf"] call mf_compile;
-	fn_manualVehicleSave = [_worldDir, "fn_manualVehicleSave.sqf"] call mf_compile;
-	fn_manualVehicleDelete = [_worldDir, "fn_manualVehicleDelete.sqf"] call mf_compile;
-	fn_saveVehicle = [_methodDir, "saveVehicle.sqf"] call mf_compile;
-	fn_postVehicleSave = [_methodDir, "postVehicleSave.sqf"] call mf_compile;
-};
-
-if (_savingMethod == "iniDB") then
-{
-	_objFileName = "Objects" call PDB_objectFileName;
-	_vehFileName = "Vehicles" call PDB_objectFileName;
-
-	// If file doesn't exist, create Info section at the top
-	if !(_objFileName call PDB_exists) then // iniDB_exists
-	{
-		[_objFileName, "Info", "ObjCount", 0] call PDB_write; // iniDB_write
-	};
-
-	// If file doesn't exist, create Info section at the top
-	if (_vehicleSaving && !(_vehFileName call PDB_exists)) then // iniDB_exists
-	{
-		[_vehFileName, "Info", "VehCount", 0] call PDB_write; // iniDB_write
+		"A3W_vehicleIDs" call _hcSaveProfileVar;
 	};
 };
-
-A3W_oSaveReady = compileFinal "true";
 
 while {true} do
 {
 	uiSleep _savingInterval;
 
 	_objCount = 0;
-	_currObjectIDs = +A3W_objectIDs;
+	_currObjectIDs = [];
+	_currObjectIDs append A3W_objectIDs;
 	_newObjectIDs = [];
 
 	{
@@ -86,7 +50,7 @@ while {true} do
 			_objCount = _objCount + 1;
 			_objID = [_obj, _objCount] call fn_saveObject;
 
-			if (!isNil "_objID") then 
+			if (!isNil "_objID") then
 			{
 				_newObjectIDs pushBack _objID;
 				if !(_objID in A3W_objectIDs) then { A3W_objectIDs pushBack _objID };
@@ -95,6 +59,8 @@ while {true} do
 			sleep 0.01;
 		};
 	} forEach allMissionObjects "All";
+
+	if (_isHC) then { "A3W_objectIDs" call _hcSaveProfileVar };
 
 	diag_log format ["A3W - %1 baseparts and objects have been saved with %2", _objCount, call A3W_savingMethodName];
 
@@ -113,13 +79,16 @@ while {true} do
 
 	[_oldIDs, _objCount] call fn_postObjectSave;
 
+	if (_isHC) then { "A3W_objectIDs" call _hcSaveProfileVar };
+
 	uiSleep _savingInterval;
 
 	// Vehicle saving
 	if (_vehicleSaving) then
 	{
 		_vehCount = 0;
-		_currVehicleIDs = +A3W_vehicleIDs;
+		_currVehicleIDs = [];
+		_currVehicleIDs append A3W_vehicleIDs;
 		_newVehicleIDs = [];
 
 		{
@@ -130,7 +99,7 @@ while {true} do
 				_vehCount = _vehCount + 1;
 				_vehID = [_veh, _vehCount] call fn_saveVehicle;
 
-				if (!isNil "_vehID") then 
+				if (!isNil "_vehID") then
 				{
 					_newVehicleIDs pushBack _vehID;
 					if !(_vehID in A3W_vehicleIDs) then { A3W_vehicleIDs pushBack _vehID };
@@ -144,6 +113,8 @@ while {true} do
 
 		_oldIDs = _currVehicleIDs - _newVehicleIDs;
 		A3W_vehicleIDs = A3W_vehicleIDs - _oldIDs;
+
+		if (_isHC) then { "A3W_vehicleIDs" call _hcSaveProfileVar };
 
 		[_oldIDs, _vehCount] call fn_postVehicleSave;
 	};

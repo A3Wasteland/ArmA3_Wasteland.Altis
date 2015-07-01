@@ -7,11 +7,14 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-if (!isServer) exitWith {};
+if (!isServer && hasInterface) exitWith {};
 
 diag_log "WASTELAND SERVER - Initializing Server Vars";
 
-#include "setupServerPVars.sqf"
+if (isServer) then
+{
+	#include "setupServerPVars.sqf"
+};
 
 currentStaticHelis = []; // Storage for the heli marker numbers so that we don't spawn wrecks on top of live helis
 

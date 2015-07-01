@@ -6,15 +6,13 @@
 //	@file Author: AgentRev, Tonic, AWA (OpenDayZ.net)
 //	@file Created: 01/06/2013 21:31
 
-if (isDedicated) exitWith {};
+if (!hasInterface) exitWith {};
 
 private ["_flagChecksum", "_rscParams", "_cheatFlag", "_cfgPatches", "_escCheck", "_patchClass", "_patchName", "_ctrlCfg", "_memAnomaly", "_minRecoil", "_currentRecoil", "_loopCount"];
 _flagChecksum = _this select 0;
 _rscParams = _this select 1;
 
 waitUntil {!isNull player};
-
-if (!hasInterface && typeOf player == "HeadlessClient_F") exitWith {};
 
 // diag_log "ANTI-HACK starting...";
 

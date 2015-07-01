@@ -8,60 +8,71 @@
 //	@file Description: The server init.
 //	@file Args:
 
-if (!isServer) exitWith {};
+// All the "hasInterface" and "isServer" checks are to allow this file to be executed on a headless client to offload object saving
+
+if (!isServer && hasInterface) exitWith {};
 
 externalConfigFolder = "\A3Wasteland_settings";
 
-vChecksum = compileFinal str call A3W_fnc_generateKey;
-
-// Corpse deletion on disconnect if player alive and player saving on + inventory save
-addMissionEventHandler ["HandleDisconnect",
+if (isServer) then
 {
-	_unit = _this select 0;
-	_id = _this select 1;
-	_uid = _this select 2;
-	_name = _this select 3;
+	vChecksum = compileFinal str call A3W_fnc_generateKey;
 
-	diag_log format ["HandleDisconnect - %1 - alive: %2 - local: %3", [_name, _uid], alive _unit, local _unit];
-
-	if (alive _unit) then
+	// Corpse deletion on disconnect if player alive and player saving on + inventory save
+	addMissionEventHandler ["HandleDisconnect",
 	{
-		if (!(_unit call A3W_fnc_isUnconscious) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
+		_unit = _this select 0;
+		_id = _this select 1;
+		_uid = _this select 2;
+		_name = _this select 3;
+
+		diag_log format ["HandleDisconnect - %1 - alive: %2 - local: %3", [_name, _uid], alive _unit, local _unit];
+
+		if (alive _unit) then
 		{
-			if (!(_unit getVariable ["playerSpawning", false]) && typeOf _unit != "HeadlessClient_F") then
+			if (!(_unit call A3W_fnc_isUnconscious) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
 			{
-				[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
+				if (!(_unit getVariable ["playerSpawning", false]) && getText (configFile >> "CfgVehicles" >> typeOf _unit >> "simulation") != "headlessclient") then
+				{
+					[_uid, [], [_unit, false] call fn_getPlayerData] spawn fn_saveAccount;
+				};
+
+				deleteVehicle _unit;
 			};
-
-			deleteVehicle _unit;
-		};
-	}
-	else
-	{
-		if (vehicle _unit != _unit && !isNil "fn_ejectCorpse") then
+		}
+		else
 		{
-			_unit spawn fn_ejectCorpse;
+			if (vehicle _unit != _unit && !isNil "fn_ejectCorpse") then
+			{
+				_unit spawn fn_ejectCorpse;
+			};
 		};
-	};
 
-	false
-}];
+		false
+	}];
 
-//Execute Server Side Scripts.
-call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
-[] execVM "server\admins.sqf";
+	//Execute Server Side Scripts.
+	call compile preprocessFileLineNumbers "server\antihack\setup.sqf";
+	[] execVM "server\admins.sqf";
+};
+
 [] execVM "server\functions\serverVars.sqf";
-_serverCompileHandle = [] spawn compile preprocessFileLineNumbers "server\functions\serverCompile.sqf"; // scriptDone stays stuck on false when using execVM on Linux
-[] execVM "server\functions\broadcaster.sqf";
-[] execVM "server\functions\relations.sqf";
-[] execVM (externalConfigFolder + "\init.sqf");
 
-waitUntil {scriptDone _serverCompileHandle};
-
-// Broadcast server rules
-if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
+if (isServer) then
 {
-	[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call A3W_fnc_MP;
+	_serverCompileHandle = [] spawn compile preprocessFileLineNumbers "server\functions\serverCompile.sqf"; // scriptDone stays stuck on false when using execVM on Linux
+
+	[] execVM "server\functions\broadcaster.sqf";
+	[] execVM "server\functions\relations.sqf";
+	[] execVM (externalConfigFolder + "\init.sqf");
+
+	waitUntil {scriptDone _serverCompileHandle};
+
+	// Broadcast server rules
+	if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
+	{
+		[[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"], "BIS_fnc_execVM", true, true] call A3W_fnc_MP;
+	};
 };
 
 diag_log "WASTELAND SERVER - Server Compile Finished";
@@ -80,46 +91,54 @@ else
 	diag_log "[WARNING] For more information go to http://forums.a3wasteland.com/";
 };
 
-// compileFinal & broadcast client config variables
+if (isServer) then
 {
-	missionNamespace setVariable [_x, compileFinal str (missionNamespace getVariable _x)];
-	publicVariable _x;
-}
-forEach
-[
-	"A3W_startingMoney",
-	"A3W_showGunStoreStatus",
-	"A3W_gunStoreIntruderWarning",
-	"A3W_playerSaving",
-	"A3W_combatAbortDelay",
-	"A3W_unlimitedStamina",
-	"A3W_bleedingTime",
-	"A3W_teamPlayersMap",
-	"A3W_remoteBombStoreRadius",
-	"A3W_vehiclePurchaseCooldown",
-	"A3W_globalVoiceWarnTimer",
-	"A3W_globalVoiceMaxWarns",
-	"A3W_antiHackMinRecoil",
-	"A3W_spawnBeaconCooldown",
-	"A3W_spawnBeaconSpawnHeight",
-	"A3W_purchasedVehicleSaving",
-	"A3W_missionVehicleSaving",
-	"A3W_missionFarAiDrawLines",
-	"A3W_atmEnabled",
-	"A3W_atmMaxBalance",
-	"A3W_atmTransferFee",
-	"A3W_atmTransferAllTeams",
-	"A3W_atmEditorPlacedOnly",
-	"A3W_atmMapIcons",
-	"A3W_atmRemoveIfDisabled",
-	"A3W_uavControl",
-	"A3W_townSpawnCooldown",
-	"A3W_survivalSystem",
-	"A3W_extDB_GhostingAdmins"
-];
+	// compileFinal & broadcast client config variables
+	{
+		missionNamespace setVariable [_x, compileFinal str (missionNamespace getVariable _x)];
+		publicVariable _x;
+	}
+	forEach
+	[
+		"A3W_startingMoney",
+		"A3W_showGunStoreStatus",
+		"A3W_gunStoreIntruderWarning",
+		"A3W_playerSaving",
+		"A3W_combatAbortDelay",
+		"A3W_unlimitedStamina",
+		"A3W_bleedingTime",
+		"A3W_teamPlayersMap",
+		"A3W_remoteBombStoreRadius",
+		"A3W_vehiclePurchaseCooldown",
+		"A3W_globalVoiceWarnTimer",
+		"A3W_globalVoiceMaxWarns",
+		"A3W_antiHackMinRecoil",
+		"A3W_spawnBeaconCooldown",
+		"A3W_spawnBeaconSpawnHeight",
+		"A3W_purchasedVehicleSaving",
+		"A3W_missionVehicleSaving",
+		"A3W_missionFarAiDrawLines",
+		"A3W_atmEnabled",
+		"A3W_atmMaxBalance",
+		"A3W_atmTransferFee",
+		"A3W_atmTransferAllTeams",
+		"A3W_atmEditorPlacedOnly",
+		"A3W_atmMapIcons",
+		"A3W_atmRemoveIfDisabled",
+		"A3W_uavControl",
+		"A3W_townSpawnCooldown",
+		"A3W_survivalSystem",
+		"A3W_extDB_GhostingAdmins",
+		"A3W_hcPrefix",
+		"A3W_hcObjCaching",
+		"A3W_hcObjCachingID",
+		"A3W_hcObjSaving",
+		"A3W_hcObjSavingID"
+	];
 
-["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
-["A3W_quit", "onPlayerDisconnected", { diag_log format ["onPlayerDisconnected - %1", [_name, _uid]] }] call BIS_fnc_addStackedEventHandler;
+	["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
+	["A3W_quit", "onPlayerDisconnected", { diag_log format ["onPlayerDisconnected - %1", [_name, _uid]] }] call BIS_fnc_addStackedEventHandler;
+};
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
@@ -136,6 +155,24 @@ _missionVehicleSavingOn = ["A3W_missionVehicleSaving"] call isConfigOn;
 
 _objectSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
 _vehicleSavingOn = (_purchasedVehicleSavingOn || _purchasedVehicleSavingOn);
+_hcObjSavingOn = ["A3W_hcObjSaving"] call isConfigOn;
+
+if (_hcObjSavingOn) then
+{
+	A3W_hcObjSaving_unitName = format ["%1%2", ["A3W_hcPrefix", "A3W_HC"] call getPublicVar, ["A3W_hcObjSavingID", 2] call getPublicVar];
+
+	if (!isServer && {vehicleVarName player == A3W_hcObjSaving_unitName}) then
+	{
+		diag_log "WASTELAND HEADLESS - Object saving enabled";
+		A3W_hcObjSaving_isClient = compileFinal "true";
+
+		if (_timeSavingOn || _weatherSavingOn) then
+		{
+			"currentDate" addPublicVariableEventHandler ("client\functions\clientTimeSync.sqf" call mf_compile);
+			drn_DynamicWeather_MainThread = [] execVM "addons\scripts\DynamicWeatherEffects.sqf";
+		};
+	};
+};
 
 _setupPlayerDB = scriptNull;
 
@@ -208,14 +245,17 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 		diag_log format ["[INFO] ### Saving method = %1", call A3W_savingMethodName];
 	};
 
-	A3W_savingMethod = compileFinal str _savingMethod;
-	publicVariable "A3W_savingMethod";
+	if (isServer) then
+	{
+		A3W_savingMethod = compileFinal str _savingMethod;
+		publicVariable "A3W_savingMethod";
+	};
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	call compile preProcessFileLineNumbers format ["persistence\server\setup\%1\init.sqf", call A3W_savingMethodDir];
 
-	if (_playerSavingOn) then
+	if (isServer && _playerSavingOn) then
 	{
 		_setupPlayerDB = [] spawn compile preprocessFileLineNumbers "persistence\server\players\setupPlayerDB.sqf"; // scriptDone stays stuck on false when using execVM on Linux
 
@@ -233,51 +273,135 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 		};
 	};
 
-	[_playerSavingOn, _objectSavingOn, _vehicleSavingOn, _timeSavingOn, _weatherSavingOn] spawn
+	[_playerSavingOn, _objectSavingOn, _vehicleSavingOn, _timeSavingOn, _weatherSavingOn, _hcObjSavingOn] spawn
 	{
 		_playerSavingOn = _this select 0;
 		_objectSavingOn = _this select 1;
 		_vehicleSavingOn = _this select 2;
 		_timeSavingOn = _this select 3;
 		_weatherSavingOn = _this select 4;
+		_hcObjSavingOn = _this select 5;
 
-		A3W_objectIDs = [];
-		A3W_vehicleIDs = [];
+		_oSave = (_objectSavingOn || _vehicleSavingOn || _timeSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"});
 
-		if (_objectSavingOn) then
+		if (_oSave) then
 		{
-			call compile preprocessFileLineNumbers "persistence\server\world\oLoad.sqf";
+			[_objectSavingOn, _vehicleSavingOn] call compile preprocessFileLineNumbers "persistence\server\world\precompile.sqf";
 		};
 
-		if (_vehicleSavingOn) then
+		if (isServer) then
 		{
-			call compile preprocessFileLineNumbers "persistence\server\world\vLoad.sqf";
+			A3W_objectIDs = [];
+			A3W_vehicleIDs = [];
+
+			if (_objectSavingOn) then
+			{
+				call compile preprocessFileLineNumbers "persistence\server\world\oLoad.sqf";
+			};
+
+			if (_vehicleSavingOn) then
+			{
+				call compile preprocessFileLineNumbers "persistence\server\world\vLoad.sqf";
+			};
 		};
 
-		if (_objectSavingOn || _vehicleSavingOn || _timeSavingOn || _weatherSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"}) then
+		if (_oSave) then
 		{
-			execVM "persistence\server\world\oSave.sqf";
-			//waitUntil {!isNil "A3W_oSaveReady"};
+			if (isServer && _hcObjSavingOn) then
+			{
+				call compile preprocessFileLineNumbers "persistence\server\world\oSaveSetup.sqf";
+
+				_hcUnit = objNull;
+				_firstRun = true;
+
+				_key = call A3W_fnc_generateKey;
+				A3W_hcObjSaving_serverKey = compileFinal str _key;
+				A3W_hcObjSaving_serverReady = compileFinal "true";
+				A3W_hcObjSaving_mergeIDs = compileFinal "true";
+
+				"pvar_hcObjSaving_setVariable" addPublicVariableEventHandler compileFinal ("_val = _this select 1; if (_val select 0 == '" + _key + "') then { (_val select 1) setVariable (_val select 2) }");
+				"pvar_hcObjSaving_setTickTime" addPublicVariableEventHandler compileFinal ("_val = _this select 1; if (_val select 0 == '" + _key + "') then { (_val select 1) setVariable [_val select 2, diag_tickTime] }");
+				"pvar_hcObjSaving_deleteVehicle" addPublicVariableEventHandler compileFinal ("_val = _this select 1; if (_val select 0 == '" + _key + "') then { deleteVehicle (_val select 1) }");
+
+				while {true} do
+				{
+					waitUntil {sleep 1; _hcUnit = missionNamespace getVariable [A3W_hcObjSaving_unitName, objNull]; !isNull _hcUnit}; // wait until HC connects
+
+					_pvarList = if (_firstRun) then { [] } else { ["A3W_hcObjSaving_mergeIDs"] };
+					_pvarList append
+					[
+						"A3W_objectIDs",
+						"A3W_vehicleIDs",
+						/*"A3W_baseSaving",
+						"A3W_boxSaving",
+						"A3W_staticWeaponSaving",
+						"A3W_warchestSaving",
+						"A3W_warchestMoneySaving",
+						"A3W_spawnBeaconSaving",
+						"A3W_timeSaving",
+						"A3W_weatherSaving",
+						"A3W_serverSavingInterval",*/
+						"A3W_hcObjSaving_serverKey",
+						"A3W_hcObjSaving_serverReady"
+					];
+
+					{ (owner _hcUnit) publicVariableClient _x } forEach _pvarList;
+
+					A3W_hcObjSaving_unit = _hcUnit;
+
+					/*if (_firstRun) then
+					{
+						A3W_objectIDs = [];
+						A3W_vehicleIDs = [];*/
+						_firstRun = false;
+					//};
+
+					waitUntil {sleep 5; isNull _hcUnit}; // in case HC crashes, resend vars on reconnect
+				};
+			}
+			else
+			{
+				_isHC = (_hcObjSavingOn && {vehicleVarName player == A3W_hcObjSaving_unitName});
+
+				if ((!_hcObjSavingOn && isServer) || _isHC) then
+				{
+					if (_isHC) then
+					{
+						"A3W_hcObjSaving_setTickTime" addPublicVariableEventHandler { _val = _this select 1; (_val select 0) setVariable [_val select 1, diag_tickTime] };
+						"A3W_hcObjSaving_trackObjID" addPublicVariableEventHandler { _val = _this select 1; if !(_val in A3W_objectIDs) then { A3W_objectIDs pushBack _val } };
+						"A3W_hcObjSaving_trackVehID" addPublicVariableEventHandler { _val = _this select 1; if !(_val in A3W_vehicleIDs) then { A3W_vehicleIDs pushBack _val } };
+					};
+
+					execVM "persistence\server\world\oSave.sqf";
+					//waitUntil {!isNil "A3W_oSaveReady"};
+				};
+			};
 		};
 	};
 
+	if (isServer) then
 	{
-		diag_log format ["[INFO] A3W %1 = %2", _x select 0, if (_x select 1) then { "ON" } else { "OFF" }];
-	}
-	forEach
-	[
-		["playerSaving", _playerSavingOn],
-		["baseSaving", _baseSavingOn],
-		["vehicleSaving", _vehicleSavingOn],
-		["boxSaving", _boxSavingOn],
-		["staticWeaponSaving", _staticWeaponSavingOn],
-		["warchestSaving", _warchestSavingOn],
-		["warchestMoneySaving", _warchestMoneySavingOn],
-		["spawnBeaconSaving", _beaconSavingOn],
-		["timeSaving", _timeSavingOn],
-		["weatherSaving", _weatherSavingOn]
-	];
+		{
+			diag_log format ["[INFO] A3W %1 = %2", _x select 0, if (_x select 1) then { "ON" } else { "OFF" }];
+		}
+		forEach
+		[
+			["playerSaving", _playerSavingOn],
+			["baseSaving", _baseSavingOn],
+			["vehicleSaving", _vehicleSavingOn],
+			["boxSaving", _boxSavingOn],
+			["staticWeaponSaving", _staticWeaponSavingOn],
+			["warchestSaving", _warchestSavingOn],
+			["warchestMoneySaving", _warchestMoneySavingOn],
+			["spawnBeaconSaving", _beaconSavingOn],
+			["timeSaving", _timeSavingOn],
+			["weatherSaving", _weatherSavingOn],
+			["hcObjSaving", _hcObjSavingOn]
+		];
+	};
 };
+
+if (!isServer) exitWith {}; // Headless client stops here
 
 if (isNil "A3W_savingMethod") then
 {

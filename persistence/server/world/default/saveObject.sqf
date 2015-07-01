@@ -15,7 +15,7 @@ _spawningTime = _obj getVariable "baseSaving_spawningTime";
 if (isNil "_spawningTime") then
 {
 	_spawningTime = diag_tickTime;
-	_obj setVariable ["baseSaving_spawningTime", _spawningTime];
+	[_obj, "baseSaving_spawningTime"] call fn_setTickTime;
 };
 
 _hoursAlive = (_obj getVariable ["baseSaving_hoursAlive", 0]) + ((diag_tickTime - _spawningTime) / 3600);

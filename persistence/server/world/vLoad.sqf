@@ -90,6 +90,7 @@ _exclVehicleIDs = [];
 		if (!isNil "_vehicleID") then
 		{
 			_veh setVariable ["A3W_vehicleID", _vehicleID, true];
+			_veh setVariable ["A3W_vehicleSaved", true, true];
 			A3W_vehicleIDs pushBack _vehicleID;
 		};
 
@@ -185,5 +186,4 @@ _exclVehicleIDs = [];
 
 diag_log format ["A3Wasteland - world persistence loaded %1 vehicles from %2", _vehCount, call A3W_savingMethodName];
 
-fn_deleteVehicles = [_methodDir, "deleteVehicles.sqf"] call mf_compile;
 _exclVehicleIDs call fn_deleteVehicles;
