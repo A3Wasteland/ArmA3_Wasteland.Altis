@@ -82,7 +82,6 @@ A3W_extDB_GhostingAdmins = 0;      // Apply ghosting restriction to server admin
 A3W_extDB_SaveUnlockedObjects = 1; // Save and restore unlocked baseparts that were locked at least once during their lifetime (0 = no, 1 = yes)
 A3W_extDB_ConfigName = "A3W";      // Name of the connection config from extdb-conf.ini to be used (the one within [brackets])
 A3W_extDB_IniName = "a3wasteland"; // Name of the INI file in extDB\sql_custom to be used
-A3W_extDB_Lock = 1;                // Lock extDB parameters after server startup to prevent tampering (0 = no, 1 = yes) - only disable if debugging startup scripts
 A3W_extDB_Misc = 0;                // Enable extDB Misc Protocol (0 = no, 1 = yes) - no associated features implemented in vanilla A3W
 A3W_extDB_Steam = 0;               // Enable extDB Steam Protocol (0 = no, 1 = yes) - no associated features implemented in vanilla A3W
 A3W_extDB_Rcon = 0;                // Enable extDB Rcon Protocol (0 = no, 1 = yes) - no associated features implemented in vanilla A3W
