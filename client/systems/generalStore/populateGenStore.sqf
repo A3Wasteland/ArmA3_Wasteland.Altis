@@ -163,7 +163,7 @@ _playerSideNum = switch (playerSide) do
 
 	if (_showItem) then
 	{
-		_listIndex = _itemlist lbAdd format ["%1", _x select 0];
+		_listIndex = _itemlist lbAdd format ["%1", if (!isNil "_parentCfg" && _x select 0 == "") then { getText (_parentCfg >> _weaponClass >> "displayName") } else { _x select 0 }];
 
 		if (isNil "_parentCfg") then
 		{

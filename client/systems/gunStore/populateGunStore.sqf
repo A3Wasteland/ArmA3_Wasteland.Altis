@@ -104,8 +104,6 @@ else
 
 {
 	_weaponClass = _x select 1;
-	_gunlistIndex = _gunlist lbAdd format ["%1", _x select 0];
-	_gunlist lbSetData [_gunlistIndex, _weaponClass];
 
 	switch (true) do
 	{
@@ -120,6 +118,9 @@ else
 		_weapon = _parentCfg >> _weaponClass;
 		_picture = getText (_weapon >> "picture");
 
+		_gunlistIndex = _gunlist lbAdd format ["%1", [_x select 0, getText (_weapon >> "displayName")] select (_x select 0 == "")];
+		_gunlist lbSetData [_gunlistIndex, _weaponClass];
+	
 		// Show scope on sniper rifle pictures
 		if ([["_SOS_F", "_LRPS_F"], _weaponClass] call fn_findString != -1) then
 		{
