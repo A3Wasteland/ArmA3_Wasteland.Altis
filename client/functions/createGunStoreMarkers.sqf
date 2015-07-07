@@ -16,7 +16,7 @@ _col_mixed = "ColorOrange";
 
 //Creates the markers around gunstores.
 {
-	if (!isPlayer _x && {(vehicleVarName _x) select [0,8] == "GunStore") then
+	if (!isPlayer _x && {(vehicleVarName _x) select [0,8] == "GunStore"}) then
 	{
 		_npcPos = getPosATL _x;
 
