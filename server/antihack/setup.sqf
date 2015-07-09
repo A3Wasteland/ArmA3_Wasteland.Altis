@@ -10,7 +10,7 @@ if (!isServer) exitWith {};
 
 if (isNil "A3W_network_compileFuncs") then
 {
-	private ["_compileKey", "_assignCompileKey", "_packetKey", "_assignPacketKey", "_packetKeyArray", "_checksum", "_assignChecksum", "_checksumArray", "_rscList", "_rscParams", "_rscCfg"];
+	private ["_compileKey", "_assignCompileKey", "_packetKey", "_assignPacketKey", "_packetKeyArray", "_checksum", "_assignChecksum", "_checksumArray", "_rscList", "_rscParams", "_rscCfg", "_payload", "_externPayload"];
 
 	_compileKey = call A3W_fnc_generateKey;
 
@@ -69,7 +69,20 @@ if (isNil "A3W_network_compileFuncs") then
 		};
 	} forEach _rscList;
 
-	[_assignCompileKey, _assignChecksum, _assignPacketKey, str _rscParams] call compile preprocessFileLineNumbers "server\antihack\createUnit.sqf";
+	_payload = 0;
+	_externPayload = preprocessFile (externalConfigFolder + "\antihack\payload.sqf");
+
+	if (_externPayload == "") then
+	{
+		diag_log "ANTI-HACK: External payload unavailable, using internal payload";
+	}
+	else
+	{
+		diag_log "ANTI-HACK: Using external payload";
+		_payload = compile _externPayload;
+	};
+
+	[_assignCompileKey, _assignChecksum, _assignPacketKey, str _rscParams, _payload] call compile preprocessFileLineNumbers "server\antihack\createUnit.sqf";
 	waitUntil {!isNil {missionNamespace getVariable _compileKey}};
 
 	diag_log "ANTI-HACK: Started.";
