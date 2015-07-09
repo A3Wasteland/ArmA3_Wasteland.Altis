@@ -852,6 +852,7 @@ colorsArray = compileFinal str
 			["Nazi", _texDir + "nazi.paa"],
 			["Orange Camo", _texDir + "camo_orange.paa"],
 			["Pink Camo", _texDir + "camo_pink.paa"],
+			["Pride", _texDir + "pride.paa"],
 			["Psych", _texDir + "psych.paa"],
 			["Red Camo", _texDir + "camo_red.paa"],
 			["Rusty", _texDir + "rusty.paa"],
