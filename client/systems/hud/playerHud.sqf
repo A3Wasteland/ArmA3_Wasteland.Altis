@@ -88,7 +88,6 @@ _displayTerritoryActivity =
 _survivalSystem = ["A3W_survivalSystem"] call isConfigOn;
 _unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
 _atmEnabled = ["A3W_atmEnabled"] call isConfigOn;
-_disableGlobalVoice = ["A3W_disableGlobalVoice"] call isConfigOn;
 
 private ["_mapCtrls", "_mapCtrl"];
 
@@ -276,20 +275,8 @@ while {true} do
 	if (!isNil "BIS_fnc_feedback_damageBlur" && {ppEffectCommitted BIS_fnc_feedback_damageBlur}) then { ppEffectDestroy BIS_fnc_feedback_damageBlur };
 	if (!isNil "BIS_fnc_feedback_fatigueBlur" && {ppEffectCommitted BIS_fnc_feedback_fatigueBlur}) then { ppEffectDestroy BIS_fnc_feedback_fatigueBlur };
 
-	// Global voice monitoring
-	if (!isNull findDisplay 55) then
-	{
-		if (_disableGlobalVoice && currentChannel == 0 && !((getPlayerUID player) call isAdmin)) then
-		{
-			setCurrentChannel 5; // swith to direct
-
-			0 spawn
-			{
-				waitUntil {isNull findDisplay 55};
-				setCurrentChannel 5; // re-force switch after voice is off
-			};
-		};
-	};
+	// Voice monitoring
+	[false] call fn_voiceChatControl;
 
 	if (isNil "_mapCtrls") then
 	{
