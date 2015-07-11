@@ -88,13 +88,7 @@ _displayTerritoryActivity =
 _survivalSystem = ["A3W_survivalSystem"] call isConfigOn;
 _unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
 _atmEnabled = ["A3W_atmEnabled"] call isConfigOn;
-
-private ["_globalVoiceTimer", "_globalVoiceWarnTimer", "_globalVoiceWarning", "_globalVoiceMaxWarns", "_globalVoiceTimestamp"];
-
-_globalVoiceTimer = 0;
-_globalVoiceWarnTimer = ["A3W_globalVoiceWarnTimer", 5] call getPublicVar;
-_globalVoiceWarning = 0;
-_globalVoiceMaxWarns = ceil (["A3W_globalVoiceMaxWarns", 5] call getPublicVar);
+_disableGlobalVoice = ["A3W_disableGlobalVoice"] call isConfigOn;
 
 private ["_mapCtrls", "_mapCtrl"];
 
@@ -282,52 +276,18 @@ while {true} do
 	if (!isNil "BIS_fnc_feedback_damageBlur" && {ppEffectCommitted BIS_fnc_feedback_damageBlur}) then { ppEffectDestroy BIS_fnc_feedback_damageBlur };
 	if (!isNil "BIS_fnc_feedback_fatigueBlur" && {ppEffectCommitted BIS_fnc_feedback_fatigueBlur}) then { ppEffectDestroy BIS_fnc_feedback_fatigueBlur };
 
-	// Global voice warning system
-	if (_globalVoiceWarnTimer > 0 && _globalVoiceMaxWarns > 0) then
+	// Global voice monitoring
+	if (!isNull findDisplay 55) then
 	{
-		if (!isNull findDisplay 55 && currentChannel == 0 && !((getPlayerUID player) call isAdmin)) then
+		if (_disableGlobalVoice && currentChannel == 0 && !((getPlayerUID player) call isAdmin)) then
 		{
-			if (isNil "_globalVoiceTimestamp") then
+			setCurrentChannel 5; // swith to direct
+
+			0 spawn
 			{
-				_globalVoiceTimestamp = diag_tickTime;
-			}
-			else
-			{
-				_globalVoiceTimer = _globalVoiceTimer + (diag_tickTime - _globalVoiceTimestamp);
-
-				if (_globalVoiceTimer >= _globalVoiceWarnTimer) then
-				{
-					_globalVoiceWarning = _globalVoiceWarning + 1;
-					_globalVoiceTimestamp = diag_tickTime;
-					_globalVoiceTimer = 0;
-
-					_msgTitle = format ["Warning %1 of %2", _globalVoiceWarning, _globalVoiceMaxWarns];
-
-					if (_globalVoiceWarning < _globalVoiceMaxWarns) then
-					{
-						uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-						["Please stop using the global voice channel, or you will be killed and crashed.", _msgTitle] spawn BIS_fnc_guiMessage;
-					}
-					else
-					{
-						_globalVoiceTimestamp = 1e11;
-						_msgTitle spawn
-						{
-							setPlayerRespawnTime 1e11;
-							player setDamage 1;
-							uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-							_msgBox = ["You have exceeded the tolerance limit for using the global voice channel. Goodbye.", _this] spawn BIS_fnc_guiMessage;
-							_time = diag_tickTime;
-							waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 5};
-							preprocessFile "client\functions\quit.sqf"; // CTD
-						};
-					};
-				};
+				waitUntil {isNull findDisplay 55};
+				setCurrentChannel 5; // re-force switch after voice is off
 			};
-		}
-		else
-		{
-			_globalVoiceTimestamp = nil;
 		};
 	};
 
