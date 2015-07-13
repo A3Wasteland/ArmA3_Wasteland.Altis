@@ -10,6 +10,7 @@
 private ["_player", "_corpse"];
 
 playerSetupComplete = false;
+playerSpawning = true;
 
 9999 cutText ["", "BLACK", 0.01];
 9123 cutRsc ["RscEmpty", "PLAIN"];
