@@ -28,13 +28,6 @@ _hitPoints = [];
 
 _variables = [];
 
-_owner = _veh getVariable ["ownerUID", ""];
-
-if !(_owner in ["","0"]) then
-{
-	_variables pushBack ["ownerUID", _owner];
-};
-
 switch (true) do
 {
 	case _purchasedVehicle:
@@ -46,6 +39,8 @@ switch (true) do
 		_variables pushBack ["A3W_missionVehicle", true];
 	};
 };
+
+_owner = _veh getVariable ["ownerUID", ""];
 
 _doubleBSlash = (call A3W_savingMethod == "extDB");
 
@@ -147,6 +142,7 @@ _props =
 	["Fuel", _fuel],
 	["Damage", _damage],
 	["HitPoints", _hitPoints],
+	["OwnerUID", _owner],
 	["Variables", _variables],
 	["Textures", _textures],
 

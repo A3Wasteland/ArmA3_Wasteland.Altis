@@ -6,12 +6,13 @@
 //	@file Author: AgentRev
 //	@file Created: 04/01/2014 02:51
 
-private ["_assignCompileKey", "_assignChecksum", "_assignPacketKey", "_rscParams", "_compileKey", "_checksum", "_packetKey"];
+private ["_assignCompileKey", "_assignChecksum", "_assignPacketKey", "_rscParams", "_payload", "_compileKey", "_checksum", "_packetKey"];
 
 _assignCompileKey = [_this, 0, "", [""]] call BIS_fnc_param;
 _assignChecksum = [_this, 1, "", [""]] call BIS_fnc_param;
 _assignPacketKey = [_this, 2, "", [""]] call BIS_fnc_param;
 _rscParams = [_this, 3, [], [[]]] call BIS_fnc_param;
+_payload = [_this, 4, 0, [{}]] call BIS_fnc_param;
 
 _compileKey = call compile (_assignCompileKey + "_compileKey");
 _checksum = call compile (_assignChecksum + "_flagChecksum");
@@ -54,12 +55,19 @@ _packetKey = call compile (_assignPacketKey + "_mpPacketKey");
 
 	if (isServer) then
 	{
-		[_checksum] execVM "server\antihack\serverSide.sqf"; // COMMENT THIS LINE IF YOU HAVE ISSUES WITH CUSTOM UNIT SCRIPTS, LIKE AI RECRUITMENT
+		[_checksum] execVM "server\antihack\serverSide.sqf";
 	};
 
 	if (!isDedicated) then
 	{
-		[_checksum, _rscParams] execVM "server\antihack\payload.sqf";
+		if (typeName _payload == "CODE") then
+		{
+			[_checksum, _rscParams] spawn _payload;
+		}
+		else
+		{
+			[_checksum, _rscParams] execVM "server\antihack\payload.sqf";
+		};
 	};
 
 	missionNamespace setVariable [_compileKey, compileFinal "true"];

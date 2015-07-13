@@ -36,6 +36,7 @@ fn_removeAllManagedActions = "client\functions\fn_removeAllManagedActions.sqf" c
 fn_removeManagedAction = "client\functions\fn_removeManagedAction.sqf" call mf_compile;
 fn_forceOpenParachute = "client\functions\fn_forceOpenParachute.sqf" call mf_compile;
 fn_openParachute = "client\functions\fn_openParachute.sqf" call mf_compile;
+fn_voiceChatControl = "client\functions\fn_voiceChatControl.sqf" call mf_compile;
 getDefaultClothing = "client\functions\getDefaultClothing.sqf" call mf_compile;
 getFullMove = "client\functions\getFullMove.sqf" call mf_compile;
 getMoveParams = "client\functions\getMoveParams.sqf" call mf_compile;

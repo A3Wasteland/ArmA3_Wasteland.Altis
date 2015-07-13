@@ -115,7 +115,7 @@ storePurchaseHandle = _this spawn
 		_vehicle
 	};
 	{
-		if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+		if (_itemData == _x select 1) exitWith
 		{
 			_class = _x select 1;
 			_price = _x select 2;

@@ -25,6 +25,7 @@ _vars =
 	[["Damage", "NUMBER"], "_damage"],
 	[["Fuel", "NUMBER"], "_fuel"],
 	[["HitPoints", "ARRAY"], "_hitPoints"],
+	[["OwnerUID", "STRING"], "_owner"],
 	[["Variables", "ARRAY"], "_variables"],
 	[["Textures", "ARRAY"], "_textures"],
 	[["Weapons", "ARRAY"], "_weapons"],

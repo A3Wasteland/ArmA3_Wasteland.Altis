@@ -18,7 +18,7 @@ class WastelandHud {
 	idd = -1;
 	fadeout=0;
 	fadein=0;
-	duration = 20;
+	duration = 1e10;
 	name= "WastelandHud";
 	onLoad = "uiNamespace setVariable ['WastelandHud', _this select 0]";
 
@@ -28,8 +28,8 @@ class WastelandHud {
 			idc = hud_vehicle_idc;
 			type = CT_STRUCTURED_TEXT;
 			size = 0.040;
-			x = safeZoneX + (safeZoneW * (1 - (0.42 / SafeZoneW)));
-			y = safeZoneY + (safeZoneH * (1 - (0.33 / SafeZoneH)));
+			x = safeZoneX + safeZoneW - 0.42;
+			y = safeZoneY + safeZoneH - 0.33;
 			w = 0.4; h = 0.65;
 			colorText[] = {1,1,1,1};
 			lineSpacing = 3;
@@ -45,8 +45,8 @@ class WastelandHud {
 			idc = hud_status_idc;
 			type = CT_STRUCTURED_TEXT;
 			size = 0.040;
-			x = safeZoneX + (safeZoneW * (1 - (0.24 / SafeZoneW)));
-			y = safeZoneY + (safeZoneH * (1 - (0.28 / SafeZoneH)));
+			x = safeZoneX + safeZoneW - 0.24;
+			y = safeZoneY + safeZoneH - 0.28;
 			w = 0.22; h = 0.28;
 			colorText[] = {1,1,1,1};
 			lineSpacing = 3;

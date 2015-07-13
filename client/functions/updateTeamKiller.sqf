@@ -11,6 +11,9 @@ if (_this < 2) exitWith
 	call teamkillMessage;
 };
 
+pvar_teamSwitchUnlock = getPlayerUID player;
+publicVariableServer "pvar_teamSwitchUnlock";
+
 setPlayerRespawnTime 1e11;
 player setDamage 1;
 sleep 1;

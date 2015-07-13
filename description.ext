@@ -54,10 +54,12 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
+#include "addons\outlw_magrepack\config.hpp"
 
 class RscTitles
 {
 	#include "addons\proving_ground\PG_rsctitles.hpp"
+	#include "addons\lsd_nvg\RscTitles.hpp"
 	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
 	#include "client\systems\scoreboard\score_gui.hpp"

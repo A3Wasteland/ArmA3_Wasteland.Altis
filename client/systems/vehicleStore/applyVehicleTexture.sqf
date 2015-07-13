@@ -33,7 +33,7 @@ if (typeName _texture == "STRING") then
 			case (_veh isKindOf "Van_01_base_F"):                 { [0,1] };
 
 			case (_veh isKindOf "MRAP_01_base_F"):                { [0,2] };
-			case (_veh isKindOf "MRAP_02_base_F"):                { [0,2] };
+			case (_veh isKindOf "MRAP_02_base_F"):                { [0,1,2] };
 			case (_veh isKindOf "MRAP_03_base_F"):                { [0,1] };
 
 			case (_veh isKindOf "Truck_01_base_F"):               { [0,1,2] };
@@ -54,7 +54,7 @@ if (typeName _texture == "STRING") then
 
 			case (_veh isKindOf "Heli_Transport_01_base_F"):      { [0,1] };
 			case (_veh isKindOf "Heli_Transport_02_base_F"):      { [0,1,2] };
-			case (_veh isKindOf "B_Heli_Transport_03_base_F"):    { [0,1] };
+			case (_veh isKindOf "Heli_Transport_03_base_F"):      { [0,1] };
 			case (_veh isKindOf "Heli_Transport_04_base_F"):      { [0,1,2,3] };
 			case (_veh isKindOf "Heli_Attack_02_base_F"):         { [0,1] };
 

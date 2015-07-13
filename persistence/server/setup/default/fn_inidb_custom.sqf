@@ -6,8 +6,6 @@
 
 #define __DEBUG_INIDB_CALLS__ 0
 
-if (!isServer) exitWith {};
-
 private ["_savingMethod", "_pFileID", "_oFileID"];
 
 _savingMethod = ["A3W_savingMethod", "profile"] call getPublicVar;

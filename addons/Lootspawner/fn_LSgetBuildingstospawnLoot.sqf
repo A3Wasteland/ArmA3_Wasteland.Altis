@@ -127,7 +127,9 @@ _begintime = diag_tickTime;
 							{
 								_loot = ((lootworldObject_list select _lootClass) select 1) call BIS_fnc_selectRandom;
 
-								if (_loot == "Land_Can_V3_F" && {["A3W_unlimitedStamina"] call isConfigOn}) exitWith {
+								if (_loot == "Land_Can_V3_F" && {["A3W_unlimitedStamina"] call isConfigOn} ||
+								   {(_loot == "Land_BakedBeans_F" || _loot == "Land_BottlePlastic_V2_F") && !(["A3W_survivalSystem"] call isConfigOn)}) exitWith
+								{
 									_lootholder = objNull;
 								};
 

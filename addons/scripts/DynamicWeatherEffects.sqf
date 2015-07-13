@@ -14,12 +14,12 @@ private ["_minWeatherChangeTimeMin", "_maxWeatherChangeTimeMin", "_minTimeBetwee
 private ["_minimumFog", "_maximumFog", "_minimumOvercast", "_maximumOvercast", "_minimumRain", "_maximumRain", "_minimumWind", "_maximumWind", "_minRainIntervalTimeMin", "_maxRainIntervalTimeMin", "_forceRainToStopAfterOneRainInterval", "_maxWind"];
 private ["_minimumFogDecay", "_maximumFogDecay", "_minimumFogBase", "_maximumFogBase"];
 
-if (isNil "_this") then { _this = []; };
-if (count _this > 0) then { _initialFog = _this select 0; } else { _initialFog = -1; };
-if (count _this > 1) then { _initialOvercast = _this select 1; } else { _initialOvercast = -1; };
-if (count _this > 2) then { _initialRain = _this select 2; } else { _initialRain = -1; };
-if (count _this > 3) then { _initialWind = _this select 3; } else { _initialWind = [-1, -1]; };
-if (count _this > 4) then { _debug = _this select 4; } else { _debug = false; };
+if (isNil "_this") then { _this = [] };
+_initialFog = [_this, 0, -1, [0]] call BIS_fnc_param;
+_initialOvercast = [_this, 1, -1, [0]] call BIS_fnc_param;
+_initialRain = [_this, 2, -1, [0]] call BIS_fnc_param;
+_initialWind = [_this, 3, [-1,-1], [[]]] call BIS_fnc_param;
+_debug = [_this, 4, false, [false]] call BIS_fnc_param;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The following variables can be changed to tweak weather behaviour
@@ -374,7 +374,8 @@ if (isServer) then {
 	publicVariable "drn_var_DynamicWeather_ServerInitialized";
 
 	// Start weather thread
-	[_minWeatherChangeTimeMin, _maxWeatherChangeTimeMin, _minTimeBetweenWeatherChangesMin, _maxTimeBetweenWeatherChangesMin, _minimumFog, _maximumFog, _minimumFogDecay, _maximumFogDecay, _minimumFogBase, _maximumFogBase, _minimumOvercast, _maximumOvercast, _minimumWind, _maximumWind, _windChangeProbability, _debug] spawn {
+	if (!isNil "drn_DynamicWeather_WeatherThread") then { terminate drn_DynamicWeather_WeatherThread };
+	drn_DynamicWeather_WeatherThread = [_minWeatherChangeTimeMin, _maxWeatherChangeTimeMin, _minTimeBetweenWeatherChangesMin, _maxTimeBetweenWeatherChangesMin, _minimumFog, _maximumFog, _minimumFogDecay, _maximumFogDecay, _minimumFogBase, _maximumFogBase, _minimumOvercast, _maximumOvercast, _minimumWind, _maximumWind, _windChangeProbability, _debug] spawn {
 		private ["_minWeatherChangeTimeMin", "_maxWeatherChangeTimeMin", "_minTimeBetweenWeatherChangesMin", "_maxTimeBetweenWeatherChangesMin", "_minimumFog", "_maximumFog", "_minimumOvercast", "_maximumOvercast", "_minimumWind", "_maximumWind", "_windChangeProbability", "_debug"];
 		private ["_weatherType", "_fogLevel", "_overcastLevel", "_oldFogLevel", "_oldOvercastLevel", "_weatherChangeTimeSek"];
 		private ["_fogValue", "_fogBase", "_fogDecay"];
@@ -540,7 +541,8 @@ if (isServer) then {
 
 	// Start rain thread
 	if (_rainIntervalRainProbability > 0) then {
-		[_minimumRain, _maximumRain, _forceRainToStopAfterOneRainInterval, _minRainIntervalTimeMin, _maxRainIntervalTimeMin, _rainIntervalRainProbability, _debug] spawn {
+		if (!isNil "drn_DynamicWeather_RainThread") then { terminate drn_DynamicWeather_RainThread };
+		drn_DynamicWeather_RainThread = [_minimumRain, _maximumRain, _forceRainToStopAfterOneRainInterval, _minRainIntervalTimeMin, _maxRainIntervalTimeMin, _rainIntervalRainProbability, _debug] spawn {
 			private ["_minimumRain", "_maximumRain", "_forceRainToStopAfterOneRainInterval", "_minRainIntervalTimeMin", "_maxRainIntervalTimeMin", "_rainIntervalRainProbability", "_debug"];
 			private ["_nextRainEventTime", "_forceStop"];
 
@@ -615,7 +617,8 @@ if (isServer) then {
 	};
 };
 
-[_rainIntervalRainProbability, _debug] spawn {
+if (!isNil "drn_DynamicWeather_FogThread") then { terminate drn_DynamicWeather_FogThread };
+drn_DynamicWeather_FogThread = [_rainIntervalRainProbability, _debug] spawn {
 	private ["_rainIntervalRainProbability", "_debug"];
 	private ["_rain", "_rainPerSecond"];
 

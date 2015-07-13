@@ -24,7 +24,7 @@ _index = lbCurSel _groupListBox;
 _playerData = _groupListBox lbData _index;
 
 //Check selected data is valid
-{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call allPlayers);
+{ if (getPlayerUID _x == _playerData) exitWith { _target = _x } } forEach (call fn_allPlayers);
 //diag_log "Promote to leader: Before the checks";
 
 //Checks

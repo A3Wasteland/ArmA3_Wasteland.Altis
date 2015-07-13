@@ -5,6 +5,12 @@
 
 if (!hasInterface) exitWith {};
 
+_trimName = { _this select [1, count _this - 2] };
+_aKeyName = { _arr = actionKeysNamesArray _this; if (count _arr == 0) exitWith {"<UNDEFINED>"}; _arr select 0 };
+
+#define NKEYNAME(DIK) (keyName DIK call _trimName)
+#define AKEYNAME(ACT) (ACT call _aKeyName)
+
 waitUntil {!isNull player};
 
 player createDiarySubject ["infos", "Infos and Help"];
@@ -13,11 +19,36 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.2",
+"
+<br/>[Added] Mag Repack by Outlawled (Ctrl + " + NKEYNAME(19) + ")
+<br/>[Added] Adjustable NV by xx-LSD-xx (Shift + PageUp/Down)
+<br/>[Added] New vehicle store paintjobs
+<br/>[Added] Town spawn cooldown
+<br/>[Added] Ghosting timer
+<br/>[Added] Object lock restriction near stores and missions
+<br/>[Added] Headless client object saving
+<br/>[Added] Time and weather saving
+<br/>[Changed] Expanded UAV control restriction to quadcopters
+<br/>[Changed] Injured players no longer count as town enemies
+<br/>[Changed] Upgraded extDB to extDB2 by Torndeco
+<br/>[Changed] Updated antihack
+<br/>[Fixed] Old spawn beacons no longer shown on spawn menu
+<br/>[Fixed] Multiple money duping exploits
+<br/>[Fixed] Vehicles and objects sometimes disappearing from DB
+<br/>[Fixed] Severe injuries caused by jumping over small ledges
+<br/>[Fixed] Antihack kicks due to RHS, MCC, AGM, ACE3, ALiVE
+<br/>[Fixed] Various minor bugfixes and optimizations
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.1b",
 "
 <br/>[Added] Marksmen DLC content
 <br/>[Added] Prevent usage of commander camera
-<br/>[Added] Emergency eject hotkey (Ctrl + " + actionKeysNames "GetOut" + ")
+<br/>[Added] Emergency eject hotkey (Ctrl + " + AKEYNAME("GetOut") + ")
 <br/>[Added] Restricted UAV connection to owner's group
 <br/>[Changed] Improved purchased vehicle setup time
 <br/>[Changed] Admins can now use global voice chat
@@ -64,7 +95,7 @@ player createDiaryRecord ["changelog",
 <br/>[Changed] Spawn beacon item drop to sleeping bag
 <br/>[Fixed] More money exploits
 <br/>[Fixed] Scoreboard ordering
-<br/>[Fixed] Vehicle repair & refuel sometimes not working
+<br/>[Fixed] Vehicle repair and refuel sometimes not working
 <br/>[Fixed] Injured players' corpses being deleted on disconnect
 <br/>[Fixed] Static weapon disassembly prevention
 <br/>[Fixed] Excess bought rockets ending up in uniform or vest
@@ -117,7 +148,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9h",
+"v0.9h",
 "
 <br/>[Added] Custom revive system based on Farooq's Revive
 <br/>[Added] Territory payroll at regular intervals
@@ -177,7 +208,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9g",
+"v0.9g",
 "
 <br/>[Added] - Vehicle stores
 <br/>[Added] - New lootspawner by Na_Palm, stuff in ALL buildings
@@ -219,7 +250,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9f",
+"v0.9f",
 "
 <br/>[Added] - Money missions
 <br/>[Added] - Sell Crate Items option at stores when moving crate
@@ -234,7 +265,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9e",
+"v0.9e",
 "
 <br/>[Added] - Territory system
 <br/>[Added] - Jumping option (step over while running)
@@ -248,7 +279,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9d",
+"v0.9d",
 "
 <br/>[Added] - Store object purchases
 <br/>[Changed] - New UI by KoS
@@ -257,7 +288,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9c",
+"v0.9c",
 "
 <br/>[Changed] - Instant money pickup and drop
 <br/>[Changed] - Increased plane and heli spawning odds
@@ -268,7 +299,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"0.9b",
+"v0.9b",
 "
 <br/>[Initial release] - Welcome to Altis!
 "
@@ -309,15 +340,19 @@ player createDiaryRecord ["credits",
 <br/>	* Das Attorney (Jump MF)
 <br/>	* Ed! (404Games forums)
 <br/>	* Farooq (GitHub)
+<br/>	* gtoddc (A3W forums)
 <br/>	* HatchetHarry (GitHub)
 <br/>	* Hub (TeamPlayerGaming)
 <br/>	* k4n30 (GitHub)
+<br/>	* Killzone_Kid (KillzoneKid.com)
 <br/>	* Krunch (GitHub)
+<br/>	* LouDnl (GitHub)
 <br/>	* madbull (R3F)
 <br/>	* Mainfrezzer (Magnon)
 <br/>	* meat147 (GitHub)
 <br/>	* micovery (GitHub)
 <br/>	* Na_Palm (BIS forums)
+<br/>	* Outlawled (Armaholic)
 <br/>	* red281gt (GitHub)
 <br/>	* RockHound (BierAG)
 <br/>	* s3kShUn61 (GitHub)
@@ -330,12 +365,54 @@ player createDiaryRecord ["credits",
 <br/>	* spunFIN (BIS forums)
 <br/>	* Tonic (BIS forums)
 <br/>	* wiking.at (A3W forums)
+<br/>	* xx-LSD-xx (Armaholic)
 <br/>	* Zenophon (BIS Forums)
 <br/>
 <br/><font size='16'>Thanks A LOT to everyone involved for the help and inspiration!</font>
 "
 ]];
 
+
+_WASD = AKEYNAME("MoveForward") + "," + AKEYNAME("MoveBack") + "," + AKEYNAME("TurnLeft") + "," + AKEYNAME("TurnRight");
+
+player createDiaryRecord ["infos",
+[
+"Admin Spectate keys",
+"
+<br/>Admin menu Spectate camera controls:
+<br/>
+<br/>Shift + " + AKEYNAME("NextChannel") + " (next player)
+<br/>Shift + " + AKEYNAME("PrevChannel") + " (previous player)
+<br/>Ctrl + " + NKEYNAME(18) + " (exit camera)
+<br/>Ctrl + " + AKEYNAME("Chat") + " (attach/detach camera from target)
+<br/>Ctrl + " + NKEYNAME(35) + " (toggle target HUD)
+<br/>" + AKEYNAME("NightVision") + " (nightvision, thermal)
+<br/>" + _WASD + " (move camera around)
+<br/>" + NKEYNAME(16) + " (move camera up)
+<br/>" + NKEYNAME(44) + " (move camera down)
+<br/>Mouse Move (rotate camera)
+<br/>Mouse Wheel Up (increase camera speed)
+<br/>Mouse Wheel Down (decrease camera speed)
+<br/>Shift + " + _WASD + " (move camera around faster)
+<br/>" + AKEYNAME("ShowMap") + " (open/close map - click on map to teleport camera)
+"
+]];
+
+player createDiaryRecord ["infos",
+[
+"Player hotkeys",
+"
+<br/>List of player hotkeys and functions:
+<br/>
+<br/>" + NKEYNAME(41) + " (open player menu)
+<br/>" + NKEYNAME(207) + " (toggle earplugs)
+<br/>" + NKEYNAME(199) + ", " + NKEYNAME(219) + ", " + NKEYNAME(220) + " (toggle player names)
+<br/>Ctrl + " + AKEYNAME("GetOut") + " (emergency eject)
+<br/>" + AKEYNAME("GetOver") + " (open parachute)
+<br/>Shift + " + NKEYNAME(201) + " / " + NKEYNAME(209) + " (adjust nightvision)
+<br/>" + NKEYNAME(22) + " (admin menu)
+"
+]];
 
 player createDiaryRecord ["infos",
 [

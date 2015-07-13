@@ -26,6 +26,11 @@ _unit spawn
 			_draggedBy = DRAGGED_BY(_unit);
 			_anim = animationState _unit;
 
+			if (isWeaponDeployed _unit || isWeaponRested _unit) then
+			{
+				_unit playMove "";
+			};
+
 			if ((getPos _unit select 2 < 0.5 && vectorMagnitude velocity _unit < 5) || {alive _draggedBy && !UNCONSCIOUS(_draggedBy)}) then
 			{
 				// Anim is stuck due to stance change in progress during injury

@@ -20,7 +20,7 @@ _showAmmo = false;
 if (isNil "_itemEntry") then
 {
 	{
-		if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+		if (_itemData == _x select 1) exitWith
 		{
 			_itemEntry = _x;
 			_parentCfg = "CfgWeapons";
@@ -32,7 +32,7 @@ if (isNil "_itemEntry") then
 if (isNil "_itemEntry") then
 {
 	{
-		if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+		if (_itemData == _x select 1) exitWith
 		{
 			_itemEntry = _x;
 			_parentCfg = "CfgMagazines";
@@ -46,7 +46,7 @@ if (isNil "_itemEntry") then
 		if (!isNil "_itemEntry") exitWith {};
 
 		{
-			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			if (_itemData == _x select 1) exitWith
 			{
 				_itemEntry = _x;
 				_itemType = _x select 3;
@@ -69,7 +69,7 @@ if (isNil "_itemEntry") then
 		if (!isNil "_itemEntry") exitWith {};
 
 		{
-			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			if (_itemData == _x select 1) exitWith
 			{
 				_itemEntry = _x;
 				_parentCfg = "CfgWeapons";
@@ -84,7 +84,7 @@ if (isNil "_itemEntry") then
 		if (!isNil "_itemEntry") exitWith {};
 
 		{
-			if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
+			if (_itemData == _x select 1) exitWith
 			{
 				_itemEntry = _x;
 				_parentCfg = "CfgVehicles";

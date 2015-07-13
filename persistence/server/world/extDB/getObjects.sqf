@@ -11,7 +11,7 @@ _saveUnlockedObjects = ["A3W_extDB_SaveUnlockedObjects", 0] call getPublicVar;
 
 if (_maxLifetime > 0 || _saveUnlockedObjects <= 0) then
 {
-	[format ["deleteExpiredServerObjects:%1:%2:%3:%4", call A3W_extDB_ServerID, call A3W_extDB_MapID, _maxLifetime, _saveUnlockedObjects], 2] call extDB_Database_async;
+	[format ["deleteExpiredServerObjects:%1:%2:%3:%4", call A3W_extDB_ServerID, call A3W_extDB_MapID, _maxLifetime, _saveUnlockedObjects], 2, true] call extDB_Database_async;
 };
 
 // DB column name, oLoad variable name
@@ -24,6 +24,7 @@ _vars =
 	["Locked", "_locked"],
 	["Damage", "_damage"],
 	["AllowDamage", "_allowDamage"],
+	["OwnerUID", "_owner"],
 	["Variables", "_variables"],
 	["Weapons", "_weapons"],
 	["Magazines", "_magazines"],

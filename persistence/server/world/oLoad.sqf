@@ -35,7 +35,7 @@ _objects = call compile preprocessFileLineNumbers format ["%1\getObjects.sqf", _
 _exclObjectIDs = [];
 
 {
-	private ["_allowed", "_obj", "_objectID", "_class", "_pos", "_dir", "_locked", "_damage", "_allowDamage", "_variables", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_valid"];
+	private ["_allowed", "_obj", "_objectID", "_class", "_pos", "_dir", "_locked", "_damage", "_allowDamage", "_owner", "_variables", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_valid"];
 
 	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
 
@@ -64,6 +64,8 @@ _exclObjectIDs = [];
 		{ if (typeName _x == "STRING") then { _pos set [_forEachIndex, parseNumber _x] } } forEach _pos;
 
 		_obj = createVehicle [_class, _pos, [], 0, "None"];
+		_obj allowDamage false;
+		_obj hideObjectGlobal true;
 		_obj setPosWorld ATLtoASL _pos;
 
 		if (!isNil "_dir") then
@@ -77,6 +79,7 @@ _exclObjectIDs = [];
 		if (!isNil "_objectID") then
 		{
 			_obj setVariable ["A3W_objectID", _objectID, true];
+			_obj setVariable ["A3W_objectSaved", true, true];
 			A3W_objectIDs pushBack _objectID;
 		};
 
@@ -86,12 +89,14 @@ _exclObjectIDs = [];
 
 		if (_allowDamage > 0) then
 		{
+			_obj allowDamage true;
 			_obj setDamage _damage;
 			_obj setVariable ["allowDamage", true];
-		}
-		else
+		};
+
+		if (!isNil "_owner") then
 		{
-			_obj allowDamage false;
+			_obj setVariable ["ownerUID", _owner, true];
 		};
 
 		{
@@ -183,6 +188,7 @@ _exclObjectIDs = [];
 		if (!isNil "_repairCargo") then { _obj setRepairCargo _repairCargo };
 
 		reload _obj;
+		_obj hideObjectGlobal false;
 	};
 
 	if (!_valid && !isNil "_objectID") then
@@ -203,5 +209,4 @@ if (_warchestMoneySavingOn) then
 
 diag_log format ["A3Wasteland - world persistence loaded %1 objects from %2", _objCount, call A3W_savingMethodName];
 
-fn_deleteObjects = [_methodDir, "deleteObjects.sqf"] call mf_compile;
 _exclObjectIDs call fn_deleteObjects;

@@ -4,8 +4,6 @@
 //	@file Name: saveObject.sqf
 //	@file Author: AgentRev
 
-#define FILTERED_CHARS [39,58] // single quote, colon
-
 private ["_obj", "_manual", "_objectID", "_updateValues", "_locked", "_deployable"];
 _obj = _this select 0;
 _manual = if (count _this > 2) then { _this select 2 } else { false };
@@ -17,7 +15,9 @@ if (!alive _obj) exitWith {nil};
 if (isNil "_objectID") then
 {
 	_objectID = ([format ["newServerObject:%1:%2", call A3W_extDB_ServerID, call A3W_extDB_MapID], 2] call extDB_Database_async) select 0;
-	_obj setVariable ["A3W_objectID", _objectID, true];
+	[_obj, ["A3W_objectID", _objectID, true]] call fn_secureSetVar;
+	[_obj, ["A3W_objectSaved", true, true]] call fn_secureSetVar;
+
 	A3W_objectIDs pushBack _objectID;
 };
 

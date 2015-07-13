@@ -18,7 +18,7 @@ _vehicles = call compile preprocessFileLineNumbers format ["%1\getVehicles.sqf",
 _exclVehicleIDs = [];
 
 {
-	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
+	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_owner", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
 
 	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
 
@@ -38,6 +38,8 @@ _exclVehicleIDs = [];
 		_flying = (_flying > 0);
 
 		_veh = createVehicle [_class, _pos, [], 0, if (_isUAV && _flying) then { "FLY" } else { "None" }];
+		_veh allowDamage false;
+		_veh hideObjectGlobal true;
 
 		_velMag = vectorMagnitude velocity _veh;
 
@@ -88,6 +90,7 @@ _exclVehicleIDs = [];
 		if (!isNil "_vehicleID") then
 		{
 			_veh setVariable ["A3W_vehicleID", _vehicleID, true];
+			_veh setVariable ["A3W_vehicleSaved", true, true];
 			A3W_vehicleIDs pushBack _vehicleID;
 		};
 
@@ -96,6 +99,7 @@ _exclVehicleIDs = [];
 		_veh setVariable ["vehSaving_hoursAlive", _hoursAlive];
 		_veh setVariable ["vehSaving_spawningTime", diag_tickTime];
 
+		_veh allowDamage true;
 		_veh setDamage _damage;
 		{ _veh setHitPointDamage _x } forEach _hitPoints;
 
@@ -115,6 +119,11 @@ _exclVehicleIDs = [];
 			} forEach _textures;
 
 			_veh setVariable ["A3W_objectTextures", _objTextures, true];
+		};
+
+		if (!isNil "_owner") then
+		{
+			_veh setVariable ["ownerUID", _owner, true];
 		};
 
 		{ _veh setVariable [_x select 0, _x select 1, true] } forEach _variables;
@@ -171,6 +180,7 @@ _exclVehicleIDs = [];
 		if (!isNil "_repairCargo") then { _veh setRepairCargo _repairCargo };
 
 		reload _veh;
+		_veh hideObjectGlobal false;
 	};
 
 	if (!_valid && !isNil "_vehicleID") then
@@ -181,5 +191,4 @@ _exclVehicleIDs = [];
 
 diag_log format ["A3Wasteland - world persistence loaded %1 vehicles from %2", _vehCount, call A3W_savingMethodName];
 
-fn_deleteVehicles = [_methodDir, "deleteVehicles.sqf"] call mf_compile;
 _exclVehicleIDs call fn_deleteVehicles;

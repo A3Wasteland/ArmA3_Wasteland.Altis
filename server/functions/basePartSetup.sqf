@@ -17,5 +17,6 @@ _obj addEventHandler ["Killed",
 	if (!isNil "fn_manualObjectDelete") then
 	{
 		[objNull, _obj getVariable "A3W_objectID"] call fn_manualObjectDelete;
+		_obj setVariable ["A3W_objectSaved", false, true];
 	};
 }];
