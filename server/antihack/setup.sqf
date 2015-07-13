@@ -70,16 +70,24 @@ if (isNil "A3W_network_compileFuncs") then
 	} forEach _rscList;
 
 	_payload = 0;
-	_externPayload = preprocessFile (externalConfigFolder + "\antihack\payload.sqf");
 
-	if (_externPayload == "") then
+	if (!hasInterface) then
 	{
-		diag_log "ANTI-HACK: External payload unavailable, using internal payload";
+		_externPayload = preprocessFile (externalConfigFolder + "\antihack\payload.sqf");
+
+		if (_externPayload == "") then
+		{
+			diag_log "ANTI-HACK: External payload unavailable, using internal payload";
+		}
+		else
+		{
+			diag_log "ANTI-HACK: Using external payload";
+			_payload = compile _externPayload;
+		};
 	}
 	else
 	{
-		diag_log "ANTI-HACK: Using external payload";
-		_payload = compile _externPayload;
+		diag_log "ANTI-HACK: In-game hosting, using internal payload"; // to avoid script not found messagebox
 	};
 
 	[_assignCompileKey, _assignChecksum, _assignPacketKey, str _rscParams, _payload] call compile preprocessFileLineNumbers "server\antihack\createUnit.sqf";
