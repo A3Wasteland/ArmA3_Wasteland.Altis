@@ -4,7 +4,7 @@
 //	@file Name: savePlayerData.sqf
 //	@file Author: AgentRev
 
-#define PLAYER_CONDITION (alive player && !(missionNamespace getVariable ["playerSpawning", true]))
+#define PLAYER_CONDITION (alive player && !(missionNamespace getVariable ["playerSpawning", true]) && (isNil "A3W_fnc_isUnconscious" || {!(player call A3W_fnc_isUnconscious)}))
 
 if (!isNil "savePlayerHandle" && {typeName savePlayerHandle == "SCRIPT"} && {!scriptDone savePlayerHandle}) exitWith {};
 
