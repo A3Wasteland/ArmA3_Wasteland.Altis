@@ -8,10 +8,10 @@
 
 #define ADD_IF_PLAYER { if (isPlayer _x) then { _players pushBack _x } }
 
-private "_players";
-_players = [];
+private "_myplayers";
+_myplayers = [];
 
 ADD_IF_PLAYER forEach playableUnits;
 ADD_IF_PLAYER forEach allDeadMen;
 
-_players
+_myplayers
