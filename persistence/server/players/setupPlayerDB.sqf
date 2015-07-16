@@ -27,7 +27,7 @@ fn_kickPlayerIfFlagged = "persistence\server\players\fn_kickPlayerIfFlagged.sqf"
 		_data = _this select 2;
 		_player = _this select 3;
 
-		if (!isNull _player && alive _player && _player getVariable ["FAR_isUnconscious", 0] == 0) then
+		if (!isNull _player && alive _player && !(_player call A3W_fnc_isUnconscious)) then
 		{
 			_info pushBack ["BankMoney", _player getVariable ["bmoney", 0]];
 			[_UID, _info, _data] call fn_saveAccount;

@@ -17,7 +17,7 @@
 */
 if (!finite _this) exitWith { "0" };
 
-private ["_tmp", "_buf", "_rem"];
+private ["_tmp", "_buf"];
 _tmp = abs _this;
 _buf = [];
 
@@ -40,5 +40,4 @@ if (_this < 0) then
 };
 
 reverse _buf;
-_rem = str (_this % 1);
-toString _buf + (_rem select [_rem find "."])
+toString _buf + (str (abs _this % 1) select [1])

@@ -66,13 +66,13 @@ drawPlayerIcons_thread = [] spawn
 						_icon = _teamIcon;
 						_size = 0;
 
-						if (_unit getVariable ["FAR_isUnconscious", 0] == 1) then
+						if (_unit call A3W_fnc_isUnconscious) then
 						{
 							_icon = _reviveIcon;
 							_size = (2 - ((_dist / ICON_limitDistance) * 0.8)) * _uiScale;
 
 							// Revive icon blinking code
-							if (_unit getVariable ["FAR_isStabilized", 0] == 0) then
+							if (_unit call A3W_fnc_isBleeding) then
 							{
 								_blink = false;
 								_timestamp = _unit getVariable ["FAR_iconBlinkTimestamp", 0];
