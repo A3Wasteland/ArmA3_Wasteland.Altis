@@ -90,11 +90,16 @@ _unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
 _atmEnabled = ["A3W_atmEnabled"] call isConfigOn;
 
 private ["_mapCtrls", "_mapCtrl"];
+_ui = displayNull;
 
 while {true} do
 {
-	1000 cutRsc ["WastelandHud","PLAIN",1e10];
-	_ui = uiNameSpace getVariable "WastelandHud";
+	if (isNull _ui) then
+	{
+		1000 cutRsc ["WastelandHud","PLAIN"];
+		_ui = uiNamespace getVariable ["WastelandHud", displayNull];
+	};
+
 	_vitals = _ui displayCtrl hud_status_idc;
 	_hudVehicle = _ui displayCtrl hud_vehicle_idc;
 	_hudActivityIcon = _ui displayCtrl hud_activity_icon_idc;
