@@ -101,8 +101,13 @@ while {true} do
 {
 	private ["_ui","_vitals","_hudVehicle","_health","_tempString","_yOffset","_vehicle"];
 
-	1000 cutRsc ["WastelandHud","PLAIN",1e10];
+//	1000 cutRsc ["WastelandHud","PLAIN",1e10];
+
+// Fix flickering of the HUD on some Clients
 	_ui = uiNameSpace getVariable "WastelandHud";
+	if(isNil "_ui") then {1000 cutRsc ["WastelandHud","PLAIN",1e10]; _ui = uiNameSpace getVariable "WastelandHud";};
+	if(isNull _ui) then {1000 cutRsc ["WastelandHud","PLAIN",1e10]; _ui = uiNameSpace getVariable "WastelandHud";};
+	
 	_vitals = _ui displayCtrl hud_status_idc;
 	_hudVehicle = _ui displayCtrl hud_vehicle_idc;
 	_hudActivityIcon = _ui displayCtrl hud_activity_icon_idc;
