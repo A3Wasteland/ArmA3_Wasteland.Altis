@@ -24,4 +24,4 @@ A list of other contributors can be found in the "Credits" section from the in-g
 
 ---
 
-This project is licensed under the [GNU Affero GPL v3](http://www.tldrlegal.com/l/agpl3). Copyright © 2013 - 2015 [A3Wasteland.com](http://a3wasteland.com/)
+This project is licensed under the [GNU Affero GPL v3](http://tldrlegal.com/l/agpl3). Copyright © 2013 - 2015 [A3Wasteland.com](http://a3wasteland.com/)

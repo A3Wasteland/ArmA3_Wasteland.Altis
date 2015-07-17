@@ -33,7 +33,7 @@
 	</Package>
 	<Package name="WelcomeMessage">
 		<Key ID="STR_WL_WelcomeToWasteland">
-			<English>&lt;t color='#FF8000' size='2.5' &gt;A3Wasteland Altis v1.2 Beta &lt;/t&gt;</English>
+			<English>&lt;t color='#FF8000' size='2.5' &gt;A3Wasteland Altis v1.2 &lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_YouAreInTeam">
 			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* Attacking or stealing from other %4 players is &lt;t color="#FF1111"&gt;FORBIDDEN&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;br/&gt;* You will be locked to your team after 3 minutes.&lt;/t&gt;</English>
