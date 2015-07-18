@@ -26,7 +26,7 @@ _code =
 		_civColor = ["Map", "Civilian"] call BIS_fnc_displayColorGet;
 		_defColor = ["Map", "Unknown"] call BIS_fnc_displayColorGet;
 
-		_allPlayers = call fn_allPlayers;
+		_allPlayers = allPlayers;
 
 		_scoreOrdering = { ((([_x, "playerKills"] call fn_getScore) - ([_x, "teamKills"] call fn_getScore)) * 1000) + ([_x, "aiKills"] call fn_getScore) };
 		_players = [_allPlayers, [], _scoreOrdering, "DESCEND"] call BIS_fnc_sortBy;

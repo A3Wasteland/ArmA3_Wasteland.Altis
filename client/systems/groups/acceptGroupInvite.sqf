@@ -27,7 +27,7 @@ if (!isNil "_senderUID") then
 			_sender = _x;
 			_newGroup = group _sender;
 		};
-	} forEach call fn_allPlayers;
+	} forEach allPlayers;
 };
 
 if (!isNil "_sender" && {side _newGroup == playerSide}) then
