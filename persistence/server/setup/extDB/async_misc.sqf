@@ -17,9 +17,9 @@ private["_queryStmt","_queryResult","_key","_mode","_return","_loop"];
 
 _tickTime = diag_tickTime;
 
-_queryStmt = [_this,0,"",[""]] call BIS_fnc_param;
-_mode = [_this,1,1,[0]] call BIS_fnc_param;
-_multiarr = [_this,2,false,[false]] call BIS_fnc_param;
+_queryStmt = param [0,"",[""]];
+_mode = param [1,1,[0]];
+_multiarr = param [2,false,[false]];
 
 _key = "extDB2" callExtension format["%1:%2:%3",_mode, (call A3W_extDB_miscID), _queryStmt];
 

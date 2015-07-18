@@ -10,9 +10,9 @@
 private ["_territories", "_ownerCheck", "_isOwner", "_getTeamMarkerColor", "_marker", "_team", "_playerTeam"];
 
 _territories = _this select 0;
-_ownerCheck = [_this, 1, false, [false]] call BIS_fnc_param;
-_team = [_this, 2, sideUnknown, [sideUnknown,grpNull]] call BIS_fnc_param;
-_isOwner = [_this, 3, false, [false]] call BIS_fnc_param;
+_ownerCheck = param [1, false, [false]];
+_team = param [2, sideUnknown, [sideUnknown,grpNull]];
+_isOwner = param [3, false, [false]];
 
 _getTeamMarkerColor = if (isNil "getTeamMarkerColor") then
 {

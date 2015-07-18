@@ -15,11 +15,11 @@
 
 private ["_vehicle", "_customInit", "_persistence", "_thisCheck", "_target"];
 
-_vehicle = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_customInit = [_this, 1, "", ["",{}]] call BIS_fnc_param; // string or code
-_persistence = [_this, 2, true, [true]] call BIS_fnc_param; // same as BIS_fnc_MP "isPersistent" - see http://community.bistudio.com/wiki/BIS_fnc_MP
-_thisCheck = [_this, 3, true, [true]] call BIS_fnc_param; // convert all "this" keywords to "_this"
-_target = [_this, 4, true, [objNull,[],true,0,sideUnknown]] call BIS_fnc_param; // same as BIS_fnc_MP "target"
+_vehicle = param [0, objNull, [objNull]];
+_customInit = param [1, "", ["",{}]]; // string or code
+_persistence = param [2, true, [true]]; // same as BIS_fnc_MP "isPersistent" - see http://community.bistudio.com/wiki/BIS_fnc_MP
+_thisCheck = param [3, true, [true]]; // convert all "this" keywords to "_this"
+_target = param [4, true, [objNull,[],true,0,sideUnknown]]; // same as BIS_fnc_MP "target"
 
 if (isNull _vehicle) exitWith {};
 if ([_customInit, ""] call BIS_fnc_areEqual) exitWith {};

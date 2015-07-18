@@ -10,8 +10,8 @@ private ["_group", "_pos", "_nbUnits", "_unitTypes", "_uPos", "_unit"];
 
 _group = _this select 0;
 _pos = _this select 1;
-_nbUnits = [_this, 2, 7, [0]] call BIS_fnc_param;
-_radius = [_this, 3, 10, [0]] call BIS_fnc_param;
+_nbUnits = param [2, 7, [0]];
+_radius = param [3, 10, [0]];
 
 _unitTypes =
 [

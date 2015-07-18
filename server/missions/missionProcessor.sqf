@@ -14,7 +14,7 @@ private ["_controllerSuffix", "_missionTimeout", "_availableLocations", "_missio
 // Variables that can be defined in the mission script :
 private ["_missionType", "_locationsArray", "_aiGroup", "_missionPos", "_missionPicture", "_missionHintText", "_successHintMessage", "_failedHintMessage"];
 
-_controllerSuffix = [_this, 0, "", [""]] call BIS_fnc_param;
+_controllerSuffix = param [0, "", [""]];
 _aiGroup = grpNull;
 
 if (!isNil "_setupVars") then { call _setupVars };
@@ -27,7 +27,7 @@ if (!isNil "_locationsArray") then
 {
 	while {true} do
 	{
-		_availableLocations = [_locationsArray, { !(_x select 1) && diag_tickTime - ([_x, 2, -1e11] call BIS_fnc_param) >= MISSION_LOCATION_COOLDOWN}] call BIS_fnc_conditionalSelect;
+		_availableLocations = [_locationsArray, { !(_x select 1) && diag_tickTime - (_x param [2, -1e11]) >= MISSION_LOCATION_COOLDOWN}] call BIS_fnc_conditionalSelect;
 
 		if (count _availableLocations > 0) exitWith {};
 		uiSleep 60;

@@ -12,10 +12,10 @@ if (!isServer) exitWith {};
 scopeName "spawnStoreObject";
 private ["_player", "_class", "_marker", "_key", "_isGenStore", "_isGunStore", "_isVehStore", "_timeoutKey", "_objectID", "_playerSide", "_objectsArray", "_itemEntry", "_itemPrice", "_safePos", "_object"];
 
-_player = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_class = [_this, 1, "", [""]] call BIS_fnc_param;
-_marker = [_this, 2, "", [""]] call BIS_fnc_param;
-_key = [_this, 3, "", [""]] call BIS_fnc_param;
+_player = param [0, objNull, [objNull]];
+_class = param [1, "", [""]];
+_marker = param [2, "", [""]];
+_key = param [3, "", [""]];
 
 _isGenStore = ["GenStore", _marker] call fn_startsWith;
 _isGunStore = ["GunStore", _marker] call fn_startsWith;

@@ -70,13 +70,13 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 
-		if ([_this, 1, false, [false]] call BIS_fnc_param) then
+		if (param [1, false, [false]]) then
 		{
 			_itemText = format ["Purchasing these %1 will replace your current ones.", _itemText];
 		}
 		else
 		{
-			if ([_this, 2, false, [false]] call BIS_fnc_param) then
+			if (param [2, false, [false]]) then
 			{
 				_itemText = format ["Purchasing this %1 will replace your current one.", _itemText];
 			}
@@ -100,7 +100,7 @@ storePurchaseHandle = _this spawn
 	{
 		_itemText = _this select 0;
 
-		if ([_this, 1, false, [false]] call BIS_fnc_param) then
+		if (param [1, false, [false]]) then
 		{
 			_itemText = format ["You already have these %1.", _itemText];
 		}

@@ -7,23 +7,23 @@
 //	@file Created: 14/07/2013 13:10
 
 private "_packetName";
-_packetName = [_this, 0, "", [""]] call BIS_fnc_param;
+_packetName = param [0, "", [""]];
 
 if (_packetName == "BIS_fnc_MP_packet") then
 {
 	private ["_values", "_args", "_function", "_whitelisted", "_filePath", "_argsType", "_argsStr", "_buffer"];
 
-	_values = [_this, 1, [], [[]]] call BIS_fnc_param;
+	_values = param [1, [], [[]]];
 
 	if (count _values < 3) exitWith {};
 
-	_args = [_values, 1, []] call BIS_fnc_param;
-	_function = [_values, 2, "", [""]] call BIS_fnc_param;
+	_args = _values param [1, []];
+	_function = _values param [2, "", [""]];
 	_whitelisted = false;
 
 	if (_function == "BIS_fnc_execVM") then
 	{
-		_filePath = if (typeName _args == "STRING") then { _args } else { [_args, 1, "", [""]] call BIS_fnc_param };
+		_filePath = if (typeName _args == "STRING") then { _args } else { _args param [1, "", [""]] };
 
 		{
 			if (_filePath == _x) exitWith

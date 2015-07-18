@@ -10,16 +10,16 @@ if (!isServer) exitWith {};
 
 private ["_locArray", "_locName", "_locPos"];
 
-_locArray = [_this, 0, [], [[]]] call BIS_fnc_param;
-_locName = [_this, 1, "", [""]] call BIS_fnc_param;
-_locPos = [_this, 2, [], [[]]] call BIS_fnc_param;
+_locArray = param [0, [], [[]]];
+_locName = param [1, "", [""]];
+_locPos = param [2, [], [[]]];
 
 if (_locPos isEqualTo [0,0,0]) exitWith {};
 
 {
 	if (_x select 0 == _locName) exitWith
 	{
-		_locObjects = [_x, 3, [], [[]]] call BIS_fnc_param;
+		_locObjects = _x param [3, [], [[]]];
 
 		{
 			if (_x distance _locPos <= CLEANUP_RADIUS && _x getVariable ["ownerUID", ""] == "") then

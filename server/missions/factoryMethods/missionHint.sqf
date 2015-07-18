@@ -8,11 +8,11 @@
 
 private ["_title", "_subTitle", "_picture", "_text", "_titleColor"];
 
-_title = [_this, 0, "?"] call BIS_fnc_param;
-_subtitle = [_this, 1, ""] call BIS_fnc_param;
-_picture = [_this, 2, "", [""]] call BIS_fnc_param;
-_text = [_this, 3, ""] call BIS_fnc_param;
-_titleColor = [_this, 4, "", [""]] call BIS_fnc_param;
+_title = param [0, "?"];
+_subtitle = param [1, ""];
+_picture = param [2, "", [""]];
+_text = param [3, ""];
+_titleColor = param [4, "", [""]];
 
 [
 	parseText format

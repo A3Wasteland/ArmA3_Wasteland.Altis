@@ -9,7 +9,7 @@ _time = call compile preprocessFileLineNumbers ("persistence\server\world\" + ca
 
 if (["A3W_timeSaving"] call isConfigOn) then
 {
-	_dayTime = [_time, 0, dayTime, [0]] call BIS_fnc_param;
+	_dayTime = _time param [0, dayTime, [0]];
 	_date = date;
 	_date set [3, 0];
 	_date set [4, _dayTime * 60];
