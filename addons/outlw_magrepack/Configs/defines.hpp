@@ -208,6 +208,7 @@ class outlw_MR_RscActiveText
 	type = 11;
 	color[] = {1,1,1,0.7};
 	colorActive[] = {1,1,1,1};
+	colorDisabled[] = {1,1,1,0.7};
 	colorText[] = {1,1,1,0.7};
 	soundClick[] = {"",0.1,1};
 	soundEnter[] = {"",0.1,1};
