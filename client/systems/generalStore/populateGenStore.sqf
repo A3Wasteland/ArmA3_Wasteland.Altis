@@ -161,6 +161,12 @@ _playerSideNum = switch (playerSide) do
 		};
 	};
 
+	_side = _x param [4, "", [""]];
+	if !(_side in [str playerSide, ""]) then
+	{
+		_showItem = false;
+	};
+
 	if (_showItem) then
 	{
 		_listIndex = _itemlist lbAdd format ["%1", if (!isNil "_parentCfg" && _x select 0 == "") then { getText (_parentCfg >> _weaponClass >> "displayName") } else { _x select 0 }];
