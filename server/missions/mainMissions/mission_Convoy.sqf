@@ -15,6 +15,10 @@ _setupVars =
 {
 	_missionType = "Armed Convoy";
 	_locationsArray = LandConvoyPaths;
+	
+	_reinforceChance = 30; // Chance of reinforcements being called
+	_minReinforceGroups = 1; //minimum number of paradrop groups that will respond to call
+	_maxReinforceGroups = 3; //maximum number of paradrop groups that will respond to call	
 };
 
 _setupObjects =

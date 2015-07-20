@@ -1,4 +1,4 @@
-// ******************************************************************************************
+﻿// ******************************************************************************************
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
 //	@file Version: 1.2
@@ -74,16 +74,23 @@ if (isServer) then
 {
 	diag_log format ["############################# %1 #############################", missionName];
 	diag_log "WASTELAND SERVER - Initializing Server";
+	call compile preprocessFile "mapConfig\territories\init_external.sqf";
 	[] execVM "server\init.sqf";
 };
 
 if (hasInterface || isServer) then
 {
+	
 	//init 3rd Party Scripts
+	if (isServer) then {call compile preprocessFile "addons\scripts\initBuildings.sqf";};
 	[] execVM "addons\R3F_ARTY_AND_LOG\init.sqf";
 	[] execVM "addons\proving_ground\init.sqf";
+	[] execVM "addons\lsd_nvg\init.sqf";
+	[] execVM "addons\zlt_fastrope\zlt_fastrope.sqf";
 	[] execVM "addons\JumpMF\init.sqf";
 	[] execVM "addons\outlw_magRepack\MagRepack_init.sqf";
-	[] execVM "addons\lsd_nvg\init.sqf";
+	[] execVM "addons\laptop\init.sqf";
+	[] execVM "addons\vactions\functions.sqf";				// Micovery vehicle actions
+	[] execVM "addons\APOC_Airdrop_Assistance\init.sqf";
 	if (isNil "drn_DynamicWeather_MainThread") then { drn_DynamicWeather_MainThread = [] execVM "addons\scripts\DynamicWeatherEffects.sqf" };
 };

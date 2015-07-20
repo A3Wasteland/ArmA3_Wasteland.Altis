@@ -54,7 +54,11 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
+//#include "addons\outlw_magRepack\MagRepack_config.hpp"
 #include "addons\outlw_magrepack\config.hpp"
+#include "LxOPS\lxOPS_dlg.hpp" 
+
+
 
 class RscTitles
 {
@@ -78,3 +82,19 @@ class CfgNotifications
 {
 	#include "client\CfgNotifications.hpp"
 };
+
+class params
+{
+	class marker3D
+	{
+		title = "3D markers";
+		values[] = {0,1};
+		texts[] = {$STR_DISABLED,$STR_ENABLED};
+		default = 1;
+		isGlobal = 1;		
+		file = "addons\3D_Markers\3Dmarkers.sqf";
+	};
+};
+
+#include "addons\APOC_Property_Manager\APOC_PM_Defines.hpp"
+#include "addons\APOC_Property_Manager\APOC_PM_Dialog.hpp"

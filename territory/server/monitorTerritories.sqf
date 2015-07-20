@@ -624,5 +624,5 @@ while {true} do
 
 	sleep BASE_SLEEP_INTERVAL;
 	_realLoopTime = diag_tickTime - _initTime;
-	diag_log format["TERRITORY SYSTEM: _realLoopTime was %1", _realLoopTime];
+	//diag_log format["TERRITORY SYSTEM: _realLoopTime was %1", _realLoopTime];
 };

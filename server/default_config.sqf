@@ -137,3 +137,7 @@ A3W_sideMissionDelay = 5*60;       // Time in seconds between Side Missions
 A3W_sideMissionTimeout = 45*60;    // Time in seconds that a Side Mission will run for, unless completed
 A3W_moneyMissionDelay = 15*60;     // Time in seconds between Money Missions
 A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
+A3W_extraMissionDelay = 10*60;     	// Time in seconds between Extra Missions
+A3W_extraMissionTimeout = 45*60;   	// Time in seconds that a Extra Mission will run for, unless completed
+A3W_patrolMissionDelay = 30*60;    	// Time in seconds between Patrol Missions
+A3W_patrolMissionTimeout = 30*60;  	// Time in seconds that a Patrol Mission will run for, unless completed

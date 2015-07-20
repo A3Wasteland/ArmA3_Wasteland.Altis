@@ -95,7 +95,7 @@ player createDiaryRecord ["changelog",
 <br/>[Changed] Spawn beacon item drop to sleeping bag
 <br/>[Fixed] More money exploits
 <br/>[Fixed] Scoreboard ordering
-<br/>[Fixed] Vehicle repair and refuel sometimes not working
+<br/>[Fixed] Vehicle repair & refuel sometimes not working
 <br/>[Fixed] Injured players' corpses being deleted on disconnect
 <br/>[Fixed] Static weapon disassembly prevention
 <br/>[Fixed] Excess bought rockets ending up in uniform or vest
@@ -148,7 +148,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"v0.9h",
+"0.9h",
 "
 <br/>[Added] Custom revive system based on Farooq's Revive
 <br/>[Added] Territory payroll at regular intervals
@@ -208,7 +208,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"v0.9g",
+"0.9g",
 "
 <br/>[Added] - Vehicle stores
 <br/>[Added] - New lootspawner by Na_Palm, stuff in ALL buildings
@@ -250,7 +250,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"v0.9f",
+"0.9f",
 "
 <br/>[Added] - Money missions
 <br/>[Added] - Sell Crate Items option at stores when moving crate
@@ -265,7 +265,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"v0.9e",
+"0.9e",
 "
 <br/>[Added] - Territory system
 <br/>[Added] - Jumping option (step over while running)
@@ -279,7 +279,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"v0.9d",
+"0.9d",
 "
 <br/>[Added] - Store object purchases
 <br/>[Changed] - New UI by KoS
@@ -288,7 +288,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"v0.9c",
+"0.9c",
 "
 <br/>[Changed] - Instant money pickup and drop
 <br/>[Changed] - Increased plane and heli spawning odds
@@ -299,7 +299,7 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"v0.9b",
+"0.9b",
 "
 <br/>[Initial release] - Welcome to Altis!
 "
@@ -340,19 +340,15 @@ player createDiaryRecord ["credits",
 <br/>	* Das Attorney (Jump MF)
 <br/>	* Ed! (404Games forums)
 <br/>	* Farooq (GitHub)
-<br/>	* gtoddc (A3W forums)
 <br/>	* HatchetHarry (GitHub)
 <br/>	* Hub (TeamPlayerGaming)
 <br/>	* k4n30 (GitHub)
-<br/>	* Killzone_Kid (KillzoneKid.com)
 <br/>	* Krunch (GitHub)
-<br/>	* LouDnl (GitHub)
 <br/>	* madbull (R3F)
 <br/>	* Mainfrezzer (Magnon)
 <br/>	* meat147 (GitHub)
 <br/>	* micovery (GitHub)
 <br/>	* Na_Palm (BIS forums)
-<br/>	* Outlawled (Armaholic)
 <br/>	* red281gt (GitHub)
 <br/>	* RockHound (BierAG)
 <br/>	* s3kShUn61 (GitHub)
@@ -365,7 +361,6 @@ player createDiaryRecord ["credits",
 <br/>	* spunFIN (BIS forums)
 <br/>	* Tonic (BIS forums)
 <br/>	* wiking.at (A3W forums)
-<br/>	* xx-LSD-xx (Armaholic)
 <br/>	* Zenophon (BIS Forums)
 <br/>
 <br/><font size='16'>Thanks A LOT to everyone involved for the help and inspiration!</font>
