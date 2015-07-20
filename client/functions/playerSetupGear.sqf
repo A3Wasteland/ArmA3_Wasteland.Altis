@@ -22,7 +22,7 @@ if (_goggles != "") then { _player addGoggles _goggles };
 sleep 0.1;
 
 // Remove GPS
-_player unlinkItem "ItemGPS";
+_player linkItem "ItemGPS";
 
 // Remove radio
 //_player unlinkItem "ItemRadio";

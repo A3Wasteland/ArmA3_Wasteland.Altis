@@ -31,6 +31,8 @@ storeSellingHandle = [] spawn
 	_itemText = _itemlist lbText _itemIndex;
 	_itemData = _itemlist lbData _itemIndex;
 
+	//price = 0;
+
 	{
 		if (_itemText == _x select 0 && _itemData == _x select 1) exitWith
 		{

@@ -16,6 +16,10 @@ _setupVars =
 	_missionType = "Supply Truck";
 	_locationsArray = MissionSpawnMarkers;
 	_nbUnits = if (missionDifficultyHard) then { AI_GROUP_LARGE } else { AI_GROUP_MEDIUM };
+
+	_reinforceChance = 20; // Chance of reinforcements being called
+	_minReinforceGroups = 1; //minimum number of paradrop groups that will respond to call
+	_maxReinforceGroups = 1; //maximum number of paradrop groups that will respond to call	
 };
 
 _setupObjects =
