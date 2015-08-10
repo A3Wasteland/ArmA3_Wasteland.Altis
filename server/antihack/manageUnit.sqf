@@ -7,8 +7,8 @@
 #define UNIT_POS_ATL [-999999,-999999,1]
 
 private ["_unit", "_params"];
-_unit = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_params = [_this, 1, [], [[]]] call BIS_fnc_param;
+_unit = param [0, objNull, [objNull]];
+_params = param [1, [], [[]]];
 
 _unit hideObject true;
 _unit allowDamage false;

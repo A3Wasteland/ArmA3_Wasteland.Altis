@@ -38,17 +38,35 @@ if (_pressedKey in actionKeys "GetOver") then
 
 				[player, "AovrPercMrunSrasWrflDf"] call switchMoveGlobal;
 
+				horde_jumpmf_var_vel2 = _prevVel select 2;
+
+				["A3W_horde_jumpmf_vel", "onEachFrame",
+				{
+					horde_jumpmf_var_vel1 = (velocity player) select 2;
+
+					// Ignore very high downward accelerations caused by step transitions, otherwise it kills the player
+					if (horde_jumpmf_var_vel1 - horde_jumpmf_var_vel2 < -7) then
+					{
+						horde_jumpmf_var_vel1 = horde_jumpmf_var_vel2;
+					};
+
+					player setVelocity
+					[
+						(_this select 0) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
+						(_this select 1) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
+						horde_jumpmf_var_vel1 min 1
+					];
+
+					horde_jumpmf_var_vel2 = (velocity player) select 2;
+				}, _prevVel] call BIS_fnc_addStackedEventHandler;
+
 				waitUntil
 				{
 					player setFatigue (_fatigue + 0.05 + (_load / 5000));
-					player setVelocity
-					[
-						(_prevVel select 0) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
-						(_prevVel select 1) * HORDE_JUMPMF_SLOWING_MULTIPLIER,
-						((velocity player) select 2) min 1
-					];
 					(animationState player != "AovrPercMrunSrasWrflDf")
 				};
+
+				["A3W_horde_jumpmf_vel", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 
 				[player, _prevMove] call switchMoveGlobal;
 				player setVelocity

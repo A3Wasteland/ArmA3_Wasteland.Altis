@@ -217,7 +217,7 @@ FAR_public_EH =
 	{
 		_names = _value select 0;
 		_unitName = _names select 0;
-		_killerName = [_names, 1] call BIS_fnc_param;
+		_killerName = _names param [1, nil];
 		_unit = objectFromNetId (_value select 1);
 
 		if (alive _unit) then

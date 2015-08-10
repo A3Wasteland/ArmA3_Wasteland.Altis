@@ -9,7 +9,7 @@
 
 //Creates the markers around vehicle stores.
 {
-	if (!isPlayer _x && {["VehStore", vehicleVarName _x] call fn_startsWith}) then
+	if (!isPlayer _x && {(vehicleVarName _x) select [0,8] == "VehStore"}) then
 	{
 		_npcPos = getPosATL _x;
 

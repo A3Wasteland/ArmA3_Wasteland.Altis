@@ -4,8 +4,6 @@
 //	@file Name: logAdminMenu.sqf
 //	@file Author: AgentRev
 
-#define FILTERED_CHARS [58] // colon
-
 private ["_playerUID", "_playerName", "_actionType", "_actionValue"];
 _playerUID = _this select 0;
 _playerName = _this select 1;

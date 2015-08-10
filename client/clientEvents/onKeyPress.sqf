@@ -124,4 +124,10 @@ if (!_handled && _key in actionKeys "NetworkStats") then
 	};
 };
 
+// Push-to-talk
+if (!_handled && _key in (actionKeys "PushToTalk" + actionKeys "PushToTalkAll")) then
+{
+	[true] call fn_voiceChatControl;
+};
+
 _handled

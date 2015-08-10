@@ -6,10 +6,11 @@
 
 if (!isServer) exitWith {};
 
-private ["_objPos", "_objClass", "_obj", "_adjustZ", "_pos"];
+private ["_objPos", "_objList", "_objClass", "_obj", "_adjustZ", "_pos"];
 _objPos = _this select 0;
+_objList = _this select 1;
 
-_objClass = objectList call BIS_fnc_selectRandom;
+_objClass = _objList call BIS_fnc_selectRandom;
 _obj = createVehicle [_objClass, _objPos, [], 50, "None"];
 
 switch (true) do
@@ -30,9 +31,11 @@ switch (true) do
 		clearWeaponCargoGlobal _obj;
 		clearItemCargoGlobal _obj;
 
+		_obj addMagazineCargoGlobal ["16Rnd_9x21_Mag", 10];
 		_obj addMagazineCargoGlobal ["9Rnd_45ACP_Mag", 10];
-		_obj addMagazineCargoGlobal ["Laserbatteries", 1];
-		_obj addWeaponCargoGlobal ["Laserdesignator", 1];
+		//_obj addMagazineCargoGlobal ["Laserbatteries", 1];
+		//_obj addWeaponCargoGlobal ["Laserdesignator", 1];
+		_obj addWeaponCargoGlobal ["Rangefinder", 2];
 		_obj addWeaponCargoGlobal ["Binocular", 5];
 		_obj addItemCargoGlobal ["FirstAidKit", 10];
 		_obj addItemCargoGlobal ["ItemGPS", 5];

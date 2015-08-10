@@ -10,8 +10,8 @@ _player = _this select 0;
 _presumedKiller = effectiveCommander (_this select 1);
 _killer = _player getVariable "FAR_killerPrimeSuspect";
 
-if (isNil "_killer") then { _killer = _player call FAR_findKiller };
-if (isNull _killer) then { _killer = _presumedKiller };
+if (isNil "_killer" && !isNil "FAR_findKiller") then { _killer = _player call FAR_findKiller };
+if (isNil "_killer" || {isNull _killer}) then { _killer = _presumedKiller };
 if (_killer == _player) then { _killer = objNull };
 
 [_player, _killer, _presumedKiller] spawn
@@ -40,6 +40,11 @@ if (_player == player) then
 		call loadScoreboard;
 		["A3W_scoreboard", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 	}] call BIS_fnc_addStackedEventHandler;
+
+	if (!isNil "savePlayerHandle" && {typeName savePlayerHandle == "SCRIPT" && {!scriptDone savePlayerHandle}}) then
+	{
+		terminate savePlayerHandle;
+	};
 
 	playerData_infoPairs = nil;
 	playerData_savePairs = nil;

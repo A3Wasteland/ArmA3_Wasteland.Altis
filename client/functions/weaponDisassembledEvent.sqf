@@ -8,7 +8,7 @@ _unit = _this select 0;
 _bag1 = _this select 1;
 _bag2 = _this select 2;
 
-if (_bag1 isKindOf "B_UAV_01_backpack_F") exitWith {};
+if ({_bag1 isKindOf _x} count ["B_UAV_01_backpack_F", "B_Static_Designator_01_weapon_F", "O_Static_Designator_02_weapon_F"] > 0) exitWith {};
 
 _currBag = unitBackpack _unit;
 

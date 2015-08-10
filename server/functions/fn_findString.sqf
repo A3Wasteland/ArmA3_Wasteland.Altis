@@ -15,9 +15,9 @@
 
 private ["_needles", "_haystack", "_caseSensitive", "_found"];
 
-_needles = [_this, 0, [], ["",[]]] call BIS_fnc_param;
-_haystack = [_this, 1, "", [""]] call BIS_fnc_param;
-_caseSensitive = [_this, 2, false, [false]] call BIS_fnc_param;
+_needles = param [0, [], ["",[]]];
+_haystack = param [1, "", [""]];
+_caseSensitive = param [2, false, [false]];
 
 if (typeName _needles != "ARRAY") then
 {

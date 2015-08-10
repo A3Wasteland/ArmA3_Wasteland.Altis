@@ -7,11 +7,14 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-if (!isServer) exitWith {};
+if (!isServer && hasInterface) exitWith {};
 
 diag_log "WASTELAND SERVER - Initializing Server Vars";
 
-#include "setupServerPVars.sqf"
+if (isServer) then
+{
+	#include "setupServerPVars.sqf"
+};
 
 currentStaticHelis = []; // Storage for the heli marker numbers so that we don't spawn wrecks on top of live helis
 
@@ -75,11 +78,17 @@ waterVehicles =
 	"C_Boat_Civil_01_rescue_F"
 ];
 
+//Essential List - Random Spawns.
+essentialsList =
+[
+	"B_supplyCrate_F",
+	"Land_Sacks_goods_F",
+	"Land_BarrelWater_F"
+];
+
 //Object List - Random Spawns.
 objectList =
 [
-	"B_supplyCrate_F",
-	"B_supplyCrate_F",
 	"CamoNet_INDP_open_F",
 	"CamoNet_INDP_open_F",
 	"Land_BagBunker_Large_F",
@@ -117,9 +126,7 @@ objectList =
 	"Land_Pipes_large_F",
 	"Land_RampConcrete_F",
 	"Land_RampConcreteHigh_F",
-	"Land_Sacks_goods_F",
-	"Land_Shoot_House_Wall_F",
-	"Land_BarrelWater_F"
+	"Land_Shoot_House_Wall_F"
 ];
 
 //Object List - Random Spawns.

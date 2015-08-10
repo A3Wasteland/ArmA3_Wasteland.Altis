@@ -6,14 +6,14 @@
 
 private ["_type", "_sender", "_receiver", "_invite", "_senderUID", "_receiverUID"];
 
-_type = [_this, 0, "", [""]] call BIS_fnc_param;
+_type = param [0, "", [""]];
 
 switch (_type) do
 {
 	case "send":
 	{
-		_sender = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
-		_receiver = [_this, 2, objNull, [objNull]] call BIS_fnc_param;
+		_sender = param [1, objNull, [objNull]];
+		_receiver = param [2, objNull, [objNull]];
 
 		if (isPlayer _sender && isPlayer _receiver && {count units _receiver == 1}) then
 		{
@@ -37,7 +37,7 @@ switch (_type) do
 	};
 	case "accept":
 	{
-		_receiverUID = [_this, 1, "", [""]] call BIS_fnc_param;
+		_receiverUID = param [1, "", [""]];
 
 		// Clear any invites sent from or to him
 		{
@@ -52,8 +52,8 @@ switch (_type) do
 	};
 	case "decline":
 	{
-		_senderUID = [_this, 1, "", [""]] call BIS_fnc_param;
-		_receiverUID = [_this, 2, "", [""]] call BIS_fnc_param;
+		_senderUID = param [1, "", [""]];
+		_receiverUID = param [2, "", [""]];
 		_invite = [_senderUID, _receiverUID];
 
 		// Clear the first matching invite

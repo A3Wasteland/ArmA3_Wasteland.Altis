@@ -10,10 +10,10 @@ if (!isServer) exitWith {};
 
 private ["_object", "_r3fDisabled", "_straightenUp", "_customCode", "_pos"];
 
-_object = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_r3fDisabled = [_this, 1, true, [true]] call BIS_fnc_param;
-_straightenUp = [_this, 2, false, [true]] call BIS_fnc_param;
-_customCode = [_this, 3, nil, [{}]] call BIS_fnc_param;
+_object = param [0, objNull, [objNull]];
+_r3fDisabled = param [1, true, [true]];
+_straightenUp = param [2, false, [true]];
+_customCode = param [3, nil, [{}]];
 
 if (isNull _object) exitWith {};
 

@@ -6,7 +6,7 @@
 //	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap, AgentRev
 
 private ["_preload", "_randomLoc", "_pos", "_rad", "_townName", "_playerPos"];
-_preload = [_this, 1, false, [false]] call BIS_fnc_param;
+_preload = param [1, false, [false]];
 
 _randomLoc = (call cityList) call BIS_fnc_selectRandom;
 

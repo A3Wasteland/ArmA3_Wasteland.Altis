@@ -7,9 +7,9 @@
 //	@file Created: 02/06/2013 16:23
 
 private ["_playerUID", "_sentChecksum", "_excludeGroup"];
-_playerUID = [_this, 1, "", [""]] call BIS_fnc_param;
-_sentChecksum = [_this, 2, "", [""]] call BIS_fnc_param;
-_excludeGroup = [_this, 3, false, [false]] call BIS_fnc_param;
+_playerUID = param [1, "", [""]];
+_sentChecksum = param [2, "", [""]];
+_excludeGroup = param [3, false, [false]];
 
 if (_sentChecksum == _flagChecksum && {_playerUID != getPlayerUID player} && {!_excludeGroup || {{getPlayerUID _x == _playerUID} count units player == 0}}) then
 {

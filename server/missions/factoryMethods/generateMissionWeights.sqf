@@ -11,8 +11,8 @@ _missionTypes = [];
 _missionOdds = [];
 
 {
-	_missionTypes set [_forEachIndex, [_x, 0, "", [""]] call BIS_fnc_param];
-	_missionOdds set [_forEachIndex, [_x, 1, 1, [1]] call BIS_fnc_param];
+	_missionTypes set [_forEachIndex, _x param [0, "", [""]]];
+	_missionOdds set [_forEachIndex, _x param [1, 1, [1]]];
 } forEach _missionsArray;
 
 [_missionTypes, _missionOdds]

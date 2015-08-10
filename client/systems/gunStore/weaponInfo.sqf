@@ -68,7 +68,7 @@ if (_showAmmo) then
 				_conf = configFile >> "CfgMagazines" >> _shopMagClass;
 				_name = _shopMag select 0;
 				_picture = getText (_conf >> "picture");
-				_ammolistIndex = _ammolist lbAdd format ["%1", _name];
+				_ammolistIndex = _ammolist lbAdd format ["%1", if (_name == "") then { getText (_conf >> "displayName") } else { _name }];
 				_ammolist lbSetPicture [_ammolistIndex,_picture];
 				_ammolist lbSetData [_ammolistIndex, _shopMagClass];
 			};

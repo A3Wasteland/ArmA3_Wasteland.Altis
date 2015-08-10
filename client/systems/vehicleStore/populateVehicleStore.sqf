@@ -54,7 +54,7 @@ _playerSideNum = switch (playerSide) do
 		if (getNumber (_vehCfg >> "isUav") <= 0 || {getNumber (_vehCfg >> "side") == _playerSideNum}) then
 		{
 			_vehPicture = getText (configFile >> "CfgVehicles" >> _vehClass >> "picture");
-			_vehlistIndex = _vehlist lbAdd format ["%1", _x select 0];
+			_vehlistIndex = _vehlist lbAdd format ["%1", [_x select 0, getText (_vehCfg >> "displayName")] select (_x select 0 == "")];
 			_vehlist lbSetPicture [_vehlistIndex, _vehPicture];
 			_vehlist lbSetData [_vehlistIndex, _vehClass];
 		};

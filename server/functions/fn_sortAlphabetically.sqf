@@ -20,8 +20,8 @@
 #define CONTROL	((findDisplay 0) displayCtrl 1555)
 
 private ["_array", "_objCode", "_isStr", "_i"];
-_array = [_this, 0, [], [[]]] call BIS_fnc_param;
-_objCode = [_this, 1, {}, [{}]] call BIS_fnc_param;
+_array = param [0, [], [[]]];
+_objCode = param [1, {}, [{}]];
 
 lbClear CONTROL;
 

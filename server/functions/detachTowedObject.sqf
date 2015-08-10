@@ -8,14 +8,14 @@
 
 private ["_object", "_tower", "_airdrop", "_pos", "_altitude", "_vel"];
 
-_object = [_this, 0, objNull, [objNull,""]] call BIS_fnc_param;
+_object = param [0, objNull, [objNull,""]];
 
 if (typeName _object == "STRING") then { _object = objectFromNetId _object };
 
 if (local _object) then
 {
 	_tower = attachedTo _object;
-	_airdrop = [_this, 1, false, [false]] call BIS_fnc_param;
+	_airdrop = param [1, false, [false]];
 
 	_object enableSimulation true; // FPS fix safeguard
 	_tower enableSimulation true;

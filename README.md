@@ -54,15 +54,18 @@ For defects related to the mission please visit their [forums](http://forums.a3w
 For defects related to persistence, use the [issue tracker](https://github.com/micovery/ArmA3_Wasteland.Altis/issues) in this repository.
 
 
-
 ### *Team Wasteland* ###
 
-       GoT - JoSchaap
-       TPG - AgentRev
-           - MercyfulFate
-       KoS - His_Shadow
-       KoS - Bewilderbeest
-       404 - Del1te
+* AgentRev
+* [GoT] JoSchaap
+* MercyfulFate
+* [KoS] His_Shadow
+* [KoS] Bewilderbeest
+* Torndeco
+* [404] Del1te
 
-           
+A list of other contributors can be found in the "Credits" section from the in-game map menu, or near the bottom of `briefing.sqf`
 
+---
+
+This project is licensed under the [GNU Affero GPL v3](http://tldrlegal.com/l/agpl3). Copyright © 2013 - 2015 [A3Wasteland.com](http://a3wasteland.com/)

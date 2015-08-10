@@ -10,7 +10,7 @@ if(R3F_LOG_mutex_local_verrou) exitWith {
 	player globalChat STR_R3F_LOG_mutex_action_en_cours;
 };
 
-private["_locking", "_object", "_lockState", "_lockDuration", "_stringEscapePercent", "_iteration", "_unlockDuration", "_totalDuration", "_checks", "_success"];
+private["_locking", "_object", "_lockState", "_lockDuration", "_stringEscapePercent", "_iteration", "_unlockDuration", "_totalDuration", "_poiDist", "_poiMarkers", "_checks", "_success"];
 
 _object = _this select 0;
 _lockState = _this select 3;
@@ -26,6 +26,24 @@ switch (_lockState) do
 		_totalDuration = 5;
 		//_lockDuration = _totalDuration;
 		//_iteration = 0;
+
+		// Points of interest
+		_poiDist = ["A3W_poiObjLockDistance", 100] call getPublicVar;
+		_poiMarkers = [];
+
+		{
+			if (getMarkerType _x == "Empty" && {(toLower (_x select [0,8])) in ["genstore","gunstore","vehstore","mission_"]}) then
+			{
+				_poiMarkers pushBack _x;
+			};
+		} forEach allMapMarkers;
+
+		if ({(getPosASL player) vectorDistance (ATLtoASL getMarkerPos _x) < _poiDist} count _poiMarkers > 0) exitWith
+		{
+			playSound "FD_CP_Not_Clear_F";
+			[format ["You are not allowed to lock objects within %1m of stores and mission spawns", _poiDist], 5] call mf_notify_client;
+			R3F_LOG_mutex_local_verrou = false;
+		};
 
 		_checks =
 		{

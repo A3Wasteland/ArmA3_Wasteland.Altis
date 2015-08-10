@@ -10,6 +10,11 @@
 
 enableSaving [false, false];
 
+// block script injection exploit
+inGameUISetEventHandler ["PrevAction", ""];
+inGameUISetEventHandler ["Action", ""];
+inGameUISetEventHandler ["NextAction", ""];
+
 _descExtPath = str missionConfigFile;
 currMissionDir = compileFinal str (_descExtPath select [0, count _descExtPath - 15]);
 
@@ -41,19 +46,23 @@ if (!isDedicated) then
 			9999 cutText ["Welcome to A3Wasteland, please wait for your client to initialize", "BLACK", 0.01];
 
 			waitUntil {!isNull player};
+			player setVariable ["playerSpawning", true, true];
+			playerSpawning = true;
+
 			removeAllWeapons player;
 			client_initEH = player addEventHandler ["Respawn", { removeAllWeapons (_this select 0) }];
 
 			// Reset group & side
 			[player] joinSilent createGroup playerSide;
-			player setVariable ["playerSpawning", true, true];
 
 			execVM "client\init.sqf";
+
+			if ((vehicleVarName player) select [0,17] == "BIS_fnc_objectVar") then { player setVehicleVarName "" }; // undo useless crap added by BIS
 		}
 		else // Headless
 		{
 			waitUntil {!isNull player};
-			if (typeOf player == "HeadlessClient_F") then
+			if (getText (configFile >> "CfgVehicles" >> typeOf player >> "simulation") == "headlessclient") then
 			{
 				execVM "client\headless\init.sqf";
 			};
@@ -68,11 +77,13 @@ if (isServer) then
 	[] execVM "server\init.sqf";
 };
 
-//init 3rd Party Scripts (not supposed to run on HC)
 if (hasInterface || isServer) then
 {
+	//init 3rd Party Scripts
 	[] execVM "addons\R3F_ARTY_AND_LOG\init.sqf";
 	[] execVM "addons\proving_ground\init.sqf";
-	[] execVM "addons\scripts\DynamicWeatherEffects.sqf";
 	[] execVM "addons\JumpMF\init.sqf";
+	[] execVM "addons\outlw_magRepack\MagRepack_init.sqf";
+	[] execVM "addons\lsd_nvg\init.sqf";
+	if (isNil "drn_DynamicWeather_MainThread") then { drn_DynamicWeather_MainThread = [] execVM "addons\scripts\DynamicWeatherEffects.sqf" };
 };

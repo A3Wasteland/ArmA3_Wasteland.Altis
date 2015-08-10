@@ -4,21 +4,22 @@
 //	@file Name: fn_openParachute.sqf
 //	@file Author: AgentRev
 
-if (!alive player) exitWith {};
-if (vehicle player != player) exitWith {};
+#define PARACHUTE_PRECHECK ({player distance _x < 10 max (sizeOf typeOf _x)} count (player nearEntities ["Helicopter_Base_F", 20]) == 0)
 
-private "_preCheck";
-_preCheck = {{player distance _x < 10 max (sizeOf typeOf _x)} count (player nearEntities ["Helicopter_Base_F", 20]) == 0};
+if (!alive player || vehicle player != player) exitWith {};
 
-if (call _preCheck) then
+if (PARACHUTE_PRECHECK) then
 {
 	call fn_forceOpenParachute;
 }
 else
 {
-	_preCheck spawn
+	["A3W_openParachute_preCheck", "onEachFrame",
 	{
-		waitUntil {sleep 0.1; call _this};
-		[[], fn_forceOpenParachute] execFSM "call.fsm"; // force non-scheduled
-	};
+		if (PARACHUTE_PRECHECK) then
+		{
+			call fn_forceOpenParachute;
+			["A3W_openParachute_preCheck", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
+		};
+	}] call BIS_fnc_addStackedEventHandler;
 };

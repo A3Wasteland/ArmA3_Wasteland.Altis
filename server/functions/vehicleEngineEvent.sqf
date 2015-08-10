@@ -13,7 +13,7 @@ if (local _veh && _running) then
 	if (isNil "_driver") then { _driver = objNull };
 	_dmg = _veh getHitPointDamage "HitEngine";
 
-	if (_driver getVariable ["FAR_isUnconscious", 0] == 1 || (!isNil "_dmg" && {_dmg >= 0.9})) then
+	if (_driver call A3W_fnc_isUnconscious || (!isNil "_dmg" && {_dmg >= 0.9})) then
 	{
 		_veh engineOn false;
 	};

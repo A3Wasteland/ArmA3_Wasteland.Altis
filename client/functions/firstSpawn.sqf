@@ -54,6 +54,12 @@ player addEventHandler ["Put",
 }];
 
 player addEventHandler ["WeaponDisassembled", { _this spawn weaponDisassembledEvent }];
+player addEventHandler ["WeaponAssembled",
+{
+	_player = _this select 0;
+	_obj = _this select 1;
+	if (_obj isKindOf "UAV_01_base_F") then { _obj setVariable ["ownerUID", getPlayerUID _player, true] };
+}];
 
 player addEventHandler ["InventoryOpened",
 {

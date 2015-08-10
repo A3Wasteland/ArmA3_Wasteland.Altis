@@ -22,7 +22,7 @@ else
 
 	_heliporteur = _this select 0;
 	_objet = _heliporteur getVariable "R3F_LOG_heliporte";
-	_parachute = [_this, 3, false, [false]] call BIS_fnc_param;
+	_parachute = param [3, false, [false]];
 
 	// On mémorise sur le réseau que le véhicule n'héliporte plus rien
 	_heliporteur setVariable ["R3F_LOG_heliporte", objNull, true];

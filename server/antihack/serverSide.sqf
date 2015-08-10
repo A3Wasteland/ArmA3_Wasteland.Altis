@@ -8,6 +8,9 @@
 
 if (!isServer) exitWith {};
 
+waitUntil {!isNil "A3W_serverSetupComplete"};
+if !(["A3W_antiHackUnitCheck"] call isConfigOn) exitWith {};
+
 private ["_flagChecksum", "_serverID", "_cheatFlag", "_unit"];
 _flagChecksum = _this select 0;
 

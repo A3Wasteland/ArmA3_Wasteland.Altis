@@ -8,9 +8,9 @@ if (!isServer) exitWith {};
 
 private ["_locArray", "_locName", "_locState"];
 
-_locArray = [_this, 0, [], [[]]] call BIS_fnc_param;
-_locName = [_this, 1, "", [""]] call BIS_fnc_param;
-_locState = [_this, 2, false, [false]] call BIS_fnc_param;
+_locArray = param [0, [], [[]]];
+_locName = param [1, "", [""]];
+_locState = param [2, false, [false]];
 
 {
 	if (_x select 0 == _locName) exitWith

@@ -4,14 +4,14 @@
 //	@file Name: processTransaction.sqf
 //	@file Author: AgentRev
 
-_type = [_this, 0, "", [""]] call BIS_fnc_param;
+_type = param [0, "", [""]];
 
 switch (toLower _type) do
 {
 	case "warchest":
 	{
-		_player = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
-		_amount = [_this, 2, 0, [0]] call BIS_fnc_param;
+		_player = param [1, objNull, [objNull]];
+		_amount = param [2, 0, [0]];
 
 		_side = side group _player;
 		_result = 0;
@@ -36,10 +36,17 @@ switch (toLower _type) do
 			missionNamespace setVariable [_var, _balance + _amount];
 			publicVariable _var;
 
-			if (!local _player) then
+			if (!isNil "fn_saveWarchestMoney") then
+			{
+				[] spawn fn_saveWarchestMoney;
+			};
+
+			_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, true]; // temp fix for negative wallet glitch
+
+			/*if (!local _player) then
 			{
 				_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, false]; // do NOT set to true, this is only a temporary server-side change
-			};
+			};*/
 
 			_result = _amount;
 		};
@@ -50,9 +57,9 @@ switch (toLower _type) do
 
 	case "cratemoney":
 	{
-		_player = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
-		_crate = [_this, 2, objNull, ["",objNull]] call BIS_fnc_param;
-		_amount = [_this, 3, 0, [0]] call BIS_fnc_param;
+		_player = param [1, objNull, [objNull]];
+		_crate = param [2, objNull, ["",objNull]];
+		_amount = param [3, 0, [0]];
 
 		if (typeName _crate == "STRING") then { _crate = objectFromNetId _crate };
 
@@ -68,10 +75,17 @@ switch (toLower _type) do
 
 			_crate setVariable ["cmoney", _balance + _amount, true];
 
-			if (!local _player) then
+			if (!isNil "fn_manualObjectSave") then
+			{
+				_crate spawn fn_manualObjectSave;
+			};
+
+			_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, true]; // temp fix for negative wallet glitch
+
+			/*if (!local _player) then
 			{
 				_player setVariable ["cmoney", (_player getVariable ["cmoney", 0]) - _amount, false]; // do NOT set to true, this is only a temporary server-side change
-			};
+			};*/
 
 			_result = _amount;
 		};
@@ -82,8 +96,8 @@ switch (toLower _type) do
 
 	case "atm":
 	{
-		_player = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
-		_amount = [_this, 2, 0, [0]] call BIS_fnc_param;
+		_player = param [1, objNull, [objNull]];
+		_amount = param [2, 0, [0]];
 
 		_result = 0;
 
@@ -103,10 +117,12 @@ switch (toLower _type) do
 
 			_player setVariable ["bmoney", _newBalance, true];
 
-			if (!local _player) then
+			_player setVariable ["cmoney", _wallet - _amount, true]; // temp fix for negative wallet glitch
+
+			/*if (!local _player) then
 			{
 				_player setVariable ["cmoney", _wallet - _amount, false]; // do NOT set to true, this is only a temporary server-side change
-			};
+			};*/
 
 			if (["A3W_playerSaving"] call isConfigOn) then
 			{
@@ -122,11 +138,11 @@ switch (toLower _type) do
 
 	case "atmtranfer":
 	{
-		_sender = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
-		_recipient = [_this, 2, objNull, [objNull]] call BIS_fnc_param;
-		_amount = [_this, 3, 0, [0]] call BIS_fnc_param;
-		_feeAmount = [_this, 4, 0, [0]] call BIS_fnc_param;
-		_transferKey = [_this, 5, "", [""]] call BIS_fnc_param;
+		_sender = param [1, objNull, [objNull]];
+		_recipient = param [2, objNull, [objNull]];
+		_amount = param [3, 0, [0]];
+		_feeAmount = param [4, 0, [0]];
+		_transferKey = param [5, "", [""]];
 
 		_result = 0;
 		_total = _amount + _feeAmount;
