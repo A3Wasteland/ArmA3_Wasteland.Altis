@@ -25,6 +25,9 @@ PDB_MessagesFileID = if (isNil "PDB_MessagesFileID") then {PDB_ServerID} else {P
 PDB_AdminLogFileID = if (isNil "PDB_AdminLogFileID") then {PDB_ServerID} else {PDB_AdminLogFileID};
 PDB_HackerLogFileID = if (isNil "PDB_HackerLogFileID") then {PDB_ServerID} else {PDB_HackerLogFileID};
 PDB_PlayersListFileID = if (isNil "PDB_PlayersListFileID") then {PDB_ServerID} else {PDB_PlayersListFileID};
+PDB_ServerTimeFileID = if (isNil "PDB_ServerTimeFileID") then {PDB_ServerID} else {PDB_ServerTimeFileID};
+
+
 
 
 
@@ -35,6 +38,8 @@ PDB_messagesFileName = compileFinal ("format ['%1%2', '" + PDB_MessagesFileID + 
 PDB_adminLogFileName = compileFinal ("format ['%1%2', '" + PDB_AdminLogFileID + "', _this]");
 PDB_hackerLogFileName = compileFinal ("format ['%1%2', '" + PDB_HackerLogFileID + "', _this]");
 PDB_playersListFileName = compileFinal ("format ['%1%2', '" + PDB_PlayersListFileID + "', _this]");
+PDB_ServerTimeFileName = compileFinal ("format ['%1%2', '" + PDB_ServerTimeFileID + "', _this]");
+
 
 
 diag_log format["[INFO] config: PDB_PlayerFileID = %1", PDB_PlayerFileID];
@@ -44,6 +49,8 @@ diag_log format["[INFO] config: PDB_MessagesFileID = %1", PDB_MessagesFileID];
 diag_log format["[INFO] config: PDB_AdminLogFileID = %1", PDB_AdminLogFileID];
 diag_log format["[INFO] config: PDB_HackerLogFileID = %1", PDB_HackerLogFileID];
 diag_log format["[INFO] config: PDB_PlayersListFileID = %1", PDB_PlayersListFileID];
+diag_log format["[INFO] config: PDB_ServerTimeFileID = %1", PDB_ServerTimeFileID];
+
 
 
 call compile preprocessFileLineNumbers "persistence\sock\inidb_adapter.sqf";

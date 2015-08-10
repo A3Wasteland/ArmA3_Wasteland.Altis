@@ -17,6 +17,14 @@ s_processRestartMessage = {
   pl_saveLoopActive = false;
   v_saveLoopActive = false;
   o_saveLoopActive = false;
+  t_saveLoopActive = false;
+
+
+  diag_log format["Saving server time"];
+  //save server time
+  init(_tScope, "Time" call PDB_ServerTimeFileName);
+  [[_tScope], t_saveTime] call sh_fsm_invoke;
+
 
   diag_log format["Saving players all player stats"];
   //save all player stats
@@ -66,6 +74,7 @@ s_processRestartMessage = {
     o_saveLoopActive = true;
     p_saveLoopActive = true;
     pl_saveLoopActive = true;
+    t_saveLoopActive = true;
   };
 
   true

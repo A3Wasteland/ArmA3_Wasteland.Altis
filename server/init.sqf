@@ -454,7 +454,7 @@ if (!isNil "A3W_startHour" || !isNil "A3W_moonLight") then
 
 if (_timeSavingOn || _weatherSavingOn) then
 {
-  execVM "persistence\server\world\tLoad.sqf";
+  execVM "persistence\world\tLoad.sqf";
 };
 
 if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then

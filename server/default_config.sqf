@@ -83,12 +83,15 @@ PDB_MessagesFileID = "A3W_";       // Messages savefile prefix (change this in c
 PDB_AdminLogFileID = "A3W_";       // Admin log savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_HackerLogFileID = "A3W_";      // Hacker log savefile prefix (change this in case you run multiple servers from the same folder)
 PDB_PlayersListFileID = "A3W_";    // PlayerList savefile prefix (change this in case you run multiple servers from the same folder)
+PDB_ServerTimeFileID = "A3W_";     // ServerTime savefile prefix (change this in case you run multiple servers from the same folder)
 
 
 A3W_vehicle_saveInterval = 300;     // Number of seconds between vehicle saves
 A3W_object_saveInterval = 300;      // Number of seconds between object saves
 A3W_player_saveInterval = 300;      // Number of seconds between player saves
 A3W_playersList_saveInterval = 120; // Number of seconds between player list saves
+A3W_time_saveInterval = 300;        // Number of seconds between time saves
+
 
                                    // List of classes for vehicles that are saveable
                                    // You can add/remove classes from this list for fine grained control which kind of vehicles can be saved
