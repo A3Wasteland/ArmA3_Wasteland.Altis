@@ -20,7 +20,7 @@ if ([_uid, 3] call isAdmin) then {
 
 	_panelOptions = ["Player Management",
 					"Vehicle Management",
-					"Player Markers",
+					"Group Leader Markers",
 					"Teleport",
 	                "Money",
 	                "Debug Menu",
