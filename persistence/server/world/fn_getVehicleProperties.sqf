@@ -4,7 +4,7 @@
 //	@file Name: fn_getVehicleProperties.sqf
 //	@file Author: AgentRev
 
-private ["_veh", "_flying", "_class", "_purchasedVehicle", "_missionVehicle", "_pos", "_dir", "_vel", "_fuel", "_damage", "_hitPoints", "_variables", "_owner", "_doubleBSlash", "_textures", "_tex", "_texArr", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_hasDoorGuns", "_turrets", "_path", "_ammoCargo", "_fuelCargo", "_repairCargo", "_props"];
+private ["_veh", "_flying", "_class", "_purchasedVehicle", "_missionVehicle", "_pos", "_dir", "_vel", "_fuel", "_damage", "_hitPoints", "_hpDamage", "_variables", "_owner", "_doubleBSlash", "_textures", "_tex", "_texArr", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_hasDoorGuns", "_turrets", "_path", "_ammoCargo", "_fuelCargo", "_repairCargo", "_props"];
 
 _veh = _this select 0;
 _flying = if (count _this > 1) then { _this select 1 } else { false };
@@ -20,11 +20,11 @@ _vel = velocity _veh;
 _fuel = fuel _veh;
 _damage = damage _veh;
 _hitPoints = [];
+_hpDamage = getAllHitPointsDamage _veh;
 
 {
-	_hitPoint = configName _x;
-	_hitPoints set [count _hitPoints, [_hitPoint, _veh getHitPointDamage _hitPoint]];
-} forEach (_class call getHitPoints);
+	_hitPoints pushBack [_x, (_hpDamage select 2) select _forEachIndex];
+} forEach (_hpDamage select 0);
 
 _variables = [];
 
