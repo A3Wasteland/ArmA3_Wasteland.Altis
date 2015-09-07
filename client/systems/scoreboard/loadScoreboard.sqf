@@ -28,6 +28,15 @@ _code =
 
 		_allPlayers = allPlayers;
 
+		// Exclude headless
+		for "_i" from (count _allPlayers - 1) to 0 step -1 do
+		{
+			if (side (_allPlayers select _i) == sideLogic) then
+			{
+				_allPlayers deleteAt _i;
+			};
+		};
+
 		_scoreOrdering = { ((([_x, "playerKills"] call fn_getScore) - ([_x, "teamKills"] call fn_getScore)) * 1000) + ([_x, "aiKills"] call fn_getScore) };
 		_players = [_allPlayers, [], _scoreOrdering, "DESCEND"] call BIS_fnc_sortBy;
 		_playerCount = count _players;
