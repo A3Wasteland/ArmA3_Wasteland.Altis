@@ -41,7 +41,7 @@ class AtmGUI
 	class AtmTopBG : IGUIBack
 	{
 		idc = -1;
-		colorBackground[] = {0.25, 0.51, 0.96, 0.8};
+		colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
 
 		#define AtmTopBG_Y AtmBG_Y
 		#define AtmTopBG_H (0.08 * Y_SCALE)

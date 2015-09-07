@@ -29,6 +29,12 @@ overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and 
 overviewPicture = "mapConfig\Loading.jpg";
 loadScreen = "mapConfig\Loading.jpg";
 
+// A3W UI color (default = sky blue)
+
+#define A3W_UICOLOR_R  0.25 // default = 0.25
+#define A3W_UICOLOR_G  0.51 // default = 0.51
+#define A3W_UICOLOR_B  0.96 // default = 0.96
+
 //Dialog includes
 
 #include "client\gui_base.hpp"

@@ -15,12 +15,11 @@ class RespawnSelectionDialog
 
 	class ControlsBackground
 	{
-		class RspnMainBG: w_RscPicture
+		class RspnMainBG: IGUIBack
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0};
-			text = "#(argb,8,8,3)color(1,1,1,0.09)";
+			colorBackground[] = {1,1,1,0.09};
 
 			#define RspnMainBG_W ((0.809 * X_SCALE) min safezoneW)
 			#define RspnMainBG_H ((0.620 * Y_SCALE) min safezoneH)
@@ -33,12 +32,11 @@ class RespawnSelectionDialog
 			h = RspnMainBG_H;
 		};
 
-		class RspnTopBar: w_RscPicture
+		class RspnTopBar: IGUIBack
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0};
-			text = "#(argb,8,8,3)color(0.25,0.51,0.96,0.8)";
+			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
 
 			// relative to RspnMainBG
 			#define RspnTopBar_W RspnMainBG_W // match RspnMainBG width
