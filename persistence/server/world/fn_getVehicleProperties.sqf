@@ -50,18 +50,7 @@ _textures = [];
 
 	if (_doubleBSlash) then
 	{
-		_texArr = [];
-
-		{
-			_texArr pushBack _x;
-
-			if (_x == 92) then // backslash
-			{
-				_texArr pushBack 92; // double it
-			};
-		} forEach toArray _tex;
-
-		_tex = toString _texArr;
+		_tex = (_tex splitString "\") joinString "\\";
 	};
 
 	[_textures, _tex, [_x select 0]] call fn_addToPairs;

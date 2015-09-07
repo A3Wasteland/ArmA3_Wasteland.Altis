@@ -41,13 +41,10 @@ _vars =
 	["RepairCargo", "_repairCargo"]
 ];
 
-_columns = "";
+_columns = [];
+{ _columns pushBack (_x select 0) } forEach _vars;
 
-{
-	_columns = _columns + ((if (_columns != "") then { "," } else { "" }) + (_x select 0));
-} forEach _vars;
-
-_result = [format ["getServerVehicles:%1:%2:%3", call A3W_extDB_ServerID, call A3W_extDB_MapID, _columns], 2, true] call extDB_Database_async;
+_result = [format ["getServerVehicles:%1:%2:%3", call A3W_extDB_ServerID, call A3W_extDB_MapID, _columns joinString ","], 2, true] call extDB_Database_async;
 
 _vehicles = [];
 

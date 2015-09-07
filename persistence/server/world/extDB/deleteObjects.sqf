@@ -6,7 +6,7 @@
 
 private ["_objects", "_values", "_hcObjSavingOn", "_id"];
 _objects = _this;
-_values = "";
+_values = [];
 _hcObjSavingOn = (isServer && ["A3W_hcObjSaving"] call isConfigOn);
 
 {
@@ -28,11 +28,11 @@ _hcObjSavingOn = (isServer && ["A3W_hcObjSaving"] call isConfigOn);
 
 	if (!isNil "_id") then
 	{
-		_values = _values + ((if (_values != "") then { "," } else { "" }) + str _id);
+		_values pushBack str _id;
 	};
 } forEach _objects;
 
-if (_values != "") then
+if (count _values > 0) then
 {
-	["deleteServerObjects:" + _values] call extDB_Database_async;
+	["deleteServerObjects:" + (_values joinString ",")] call extDB_Database_async;
 };
