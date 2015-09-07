@@ -26,3 +26,4 @@
 #define respawn_Locations_Map 3451
 #define respawn_Locations_Text 3452
 #define respawn_Spawn_Button 3453
+#define respawn_GroupMgmt_Button 34600

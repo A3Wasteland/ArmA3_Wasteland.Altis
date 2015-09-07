@@ -303,7 +303,7 @@ class RespawnSelectionDialog
 
 		class RspnGroupButton: RspnButton
 		{
-			idc = -1;
+			idc = respawn_GroupMgmt_Button;
 			text = "Group Management";
 			onButtonClick = "[] execVM 'client\systems\groups\loadGroupManagement.sqf'";
 
