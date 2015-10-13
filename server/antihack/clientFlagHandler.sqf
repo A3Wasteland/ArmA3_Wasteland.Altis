@@ -33,6 +33,6 @@ if (typeName _this == "ARRAY" && {count _this > 1}) then
 		sleep 5;
 
 		// baibai hacker
-		preprocessFile "client\functions\quit.sqf";
+		call compile preprocessFile "client\functions\quit.sqf";
 	};
 };

@@ -27,7 +27,7 @@ if (!isNil "_flag" && {count _flag > 1}) then
 			waitUntil {!isNull player};
 			if (getPlayerUID player == '" + _UID + "') then
 			{
-				preprocessFile 'client\functions\quit.sqf';
+				call compile preprocessFile 'client\functions\quit.sqf';
 			};
 		};
 	}")];
