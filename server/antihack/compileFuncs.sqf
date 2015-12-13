@@ -12,7 +12,7 @@ _assignCompileKey = param [0, "", [""]];
 _assignChecksum = param [1, "", [""]];
 _assignPacketKey = param [2, "", [""]];
 _rscParams = param [3, [], [[]]];
-_payload = param [4, 0, [{}]];
+_payload = param [4, 0];
 
 _compileKey = call compile (_assignCompileKey + "_compileKey");
 _checksum = call compile (_assignChecksum + "_flagChecksum");
