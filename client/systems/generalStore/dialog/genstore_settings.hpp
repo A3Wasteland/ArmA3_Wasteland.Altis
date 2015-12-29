@@ -34,7 +34,7 @@ class genstored
 		class TopBar: IGUIBack
 		{
 			idc = -1;
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0.546,0.59,0.363,0.4};
 
 			#define GenStoreTopBar_H (0.05 * SZ_SCALE)
 
@@ -246,6 +246,19 @@ class genstored
 
 			x = GenStoreMainBG_X + (0.0167 * SZ_SCALE);
 			y = GenStoreMainBG_Y + (0.375 * SZ_SCALE);
+			w = 0.1173 * SZ_SCALE;
+			h = 0.040 * SZ_SCALE;
+		};
+		
+		class StoreButton7: w_RscButton
+		{
+			idc = -1;
+			action = "closeDialog 0;[] execVM 'addons\UniformPainter\UniformPainter_Menu.sqf'";
+			text = "Paint Uniform";
+			sizeEx = GenStoreButton_textSize;
+
+			x = GenStoreMainBG_X + (0.0167 * SZ_SCALE);
+			y = GenStoreMainBG_Y + (0.425 * SZ_SCALE);
 			w = 0.1173 * SZ_SCALE;
 			h = 0.040 * SZ_SCALE;
 		};

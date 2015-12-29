@@ -10,7 +10,7 @@
 if (!isServer) exitwith {};
 #include "mainMissionDefines.sqf"
 
-private ["_vehChoices", "_convoyVeh", "_veh1", "_veh2", "_veh3", "_createVehicle", "_vehicles", "_leader", "_speedMode", "_waypoint", "_vehicleName", "_vehicleName2", "_numWaypoints", "_box1", "_box2", "_box3"];
+private ["_vehChoices", "_convoyVeh", "_veh1", "_veh2", "_veh3", "_createVehicle", "_vehicles", "_leader", "_speedMode", "_waypoint", "_vehicleName", "_vehicleName2", "_numWaypoints", "_box1", "_box2", "_box3", "_mortar"];
 
 _setupVars =
 {
@@ -177,8 +177,14 @@ _successExec =
 	_box3 = createVehicle ["Box_IND_WpsSpecial_F", _lastPos, [], 5, "None"];
 	_box3 setDir random 360;
 	[_box3, "mission_Main_A3snipers"] call fn_refillbox;
-
-	_successHintMessage = "The patrol has been stopped, the ammo crates are yours to take. Find them near the wreck!";
+	
+	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1, _box2, _box3];
+	
+	_mortar = createVehicle ["I_Mortar_01_F", _lastPos, [], 5, "None"];
+	_mortar setVariable ["R3F_LOG_Disabled", false, true];
+	_mortar setDir random 360;
+	
+	_successHintMessage = "The patrol has been stopped, the ammo crates and mortar are yours to take. Find them near the wreck!";
 };
 
 _this call mainMissionProcessor;

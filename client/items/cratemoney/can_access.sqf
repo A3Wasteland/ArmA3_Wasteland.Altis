@@ -7,6 +7,7 @@
 
 #define ERR_IN_VEHICLE "Can't do that while in a vehicle"
 #define ERR_TOO_FAR "You are too far away"
+#define ERR_LOCKED "This safe is locked" // Added for safe locking
 
 private ["_crate", "_error"];
 
@@ -21,6 +22,7 @@ switch (true) do
 
 	case (player distance _crate > 3): {_error = ERR_TOO_FAR};
 	case (vehicle player != player): {_error = ERR_IN_VEHICLE};
+	case (_crate getVariable ["lockedSafe", false]): {_error = ERR_LOCKED}; // Added for safe locking
 
 	default {_error = ""};
 };

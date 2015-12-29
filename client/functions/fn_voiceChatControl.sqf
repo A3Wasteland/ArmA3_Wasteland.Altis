@@ -4,7 +4,7 @@
 //	@file Name: fn_voiceChatControl.sqf
 //	@file Author: AgentRev
 
-#define SWITCH_DIRECT if (currentChannel == 0 && !((getPlayerUID player) call isAdmin)) then { setCurrentChannel 5 }
+#define SWITCH_DIRECT if ((currentChannel in [0,1]) && !((getPlayerUID player) call isAdmin)) then { setCurrentChannel 5 }
 
 private "_waitSpeak";
 _waitSpeak = _this select 0;

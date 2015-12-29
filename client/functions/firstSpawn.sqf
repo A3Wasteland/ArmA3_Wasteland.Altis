@@ -5,10 +5,19 @@
 //	@file Name: firstSpawn.sqf
 //	@file Author: [404] Deadbeat
 //	@file Created: 28/12/2013 19:42
+#define A3W_teamSwitchLock (["A3W_teamSwitchLock", 180] call getPublicVar)
 
 client_firstSpawn = true;
 
-[] execVM "client\functions\welcomeMessage.sqf";
+//[] execVM "client\functions\welcomeMessage.sqf";
+[] execVM "addons\TOParmaInfo\loadTOParmaInfo.sqf";
+
+// GoT addition - if this is the first spawn start the loyalty-timer
+if(format["%1",firstspawn] == format["%1","1"]) then 
+{
+	[] spawn fn_rewardLoyalty;
+	firstspawn = 0;
+};
 
 player addEventHandler ["Take",
 {
@@ -18,7 +27,14 @@ player addEventHandler ["Take",
 	{
 		_vehicle setVariable ["itemTakenFromVehicle", true, true];
 	};
-}];
+
+	// Persistent player textures addition
+	([uniformContainer player getVariable "uniformTexture"])
+	params ["_texCustom"];
+	if (isNil "_texCustom") exitWith {};
+	player setObjectTextureGlobal [0, _texCustom];
+	false
+}];	
 
 player addEventHandler ["Put",
 {
@@ -135,7 +151,8 @@ if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 		{
 			_ammo = _this select 4;
 
-			if ({_ammo isKindOf _x} count ["PipeBombBase", "ClaymoreDirectionalMine_Remote_Ammo"] > 0) then
+			//if ({_ammo isKindOf _x} count ["PipeBombBase", "ClaymoreDirectionalMine_Remote_Ammo"] > 0) then
+			if ({_ammo isKindOf _x} count ["PipeBombBase", "ClaymoreDirectionalMine_Remote_Ammo", "APERSTripMine_Wire_Ammo", "APERSBoundingMine_Range_Ammo", "APERSMine_Range_Ammo", "SLAMDirectionalMine_Wire_Ammo", "ATMine_Range_Ammo", "SatchelCharge_Remote_Ammo", "DemoCharge_Remote_Ammo", "IEDUrbanBig_Remote_Ammo", "IEDLandBig_Remote_Ammo", "IEDUrbanSmall_Remote_Ammo", "IEDLandSmall_Remote_Ammo"] > 0) then
 			{
 				_mag = _this select 5;
 				_bomb = _this select 6;
@@ -147,7 +164,7 @@ if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 						deleteVehicle _bomb;
 						player addMagazine _mag;
 						playSound "FD_CP_Not_Clear_F";
-						titleText [format ["You are not allowed to place remote explosives within %1m of a store.\nThe explosive has been re-added to your inventory.", _minDist], "PLAIN DOWN", 0.5];
+						titleText [format ["You are not allowed to place explosives within %1m of a store.\nThe explosive has been re-added to your inventory.", _minDist], "PLAIN DOWN", 0.5];
 					};
 				} forEach entities "CAManBase";
 			};
@@ -173,10 +190,10 @@ if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 
 _uid = getPlayerUID player;
 
-if (playerSide in [BLUFOR,OPFOR] && {{_x select 0 == _uid} count pvar_teamSwitchList == 0}) then
+if (playerSide in [BLUFOR,OPFOR,INDEPENDENT] && {{_x select 0 == _uid} count pvar_teamSwitchList == 0}) then
 {
 	_startTime = diag_tickTime;
-	waitUntil {sleep 1; diag_tickTime - _startTime >= 180};
+	waitUntil {sleep 1; diag_tickTime - _startTime >= A3W_teamSwitchLock};
 
 	pvar_teamSwitchLock = [_uid, playerSide];
 	publicVariableServer "pvar_teamSwitchLock";
@@ -185,6 +202,7 @@ if (playerSide in [BLUFOR,OPFOR] && {{_x select 0 == _uid} count pvar_teamSwitch
 	{
 		case BLUFOR: { "BLUFOR" };
 		case OPFOR:  { "OPFOR" };
+		case INDEPENDENT:  { "INDEPENDENT" };
 	};
 
 	titleText [format ["You have been locked to %1", _side], "PLAIN", 0.5];

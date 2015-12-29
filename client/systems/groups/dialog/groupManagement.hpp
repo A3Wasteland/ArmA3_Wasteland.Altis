@@ -21,21 +21,22 @@ class GroupManagement {
 
 	class controlsBackground {
 
-		class MainBG : IGUIBack {
+		class MainBG : w_RscPicture {
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0.6};
-
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
 			moving = true;
 			x = 0.0; y = 0.1;
 			w = 0.745; h = 0.65;
 		};
 
-		class TopBar: IGUIBack
+		class TopBar: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.546,0.59,0.363,0.4)";
 
 			x = 0.0; y = 0.1;
 			w = 0.745; h = 0.05;

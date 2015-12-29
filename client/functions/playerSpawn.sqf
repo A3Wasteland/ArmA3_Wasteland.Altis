@@ -18,7 +18,13 @@ if (!isNil "pvar_teamKillList" && {playerSide in [BLUFOR,OPFOR]}) then
 		[player, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
 		9999 cutText ["", "BLACK", 0.01];
 		0 fadeSound 0;
+		
+		pvar_teamSwitchUnlock = getPlayerUID player;
+		publicVariableServer "pvar_teamSwitchUnlock";
 
+		pvar_teamSwitchLock = [getPlayerUID player, INDEPENDENT];
+		publicVariableServer "pvar_teamSwitchLock";
+		
 		uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
 		_msgBox = [localize "STR_WL_Loading_Teamkiller"] spawn BIS_fnc_guiMessage;
 		_time = diag_tickTime;
@@ -29,7 +35,7 @@ if (!isNil "pvar_teamKillList" && {playerSide in [BLUFOR,OPFOR]}) then
 	};
 };
 //Teamswitcher Kick
-if (!isNil "pvar_teamSwitchList" && playerSide in [BLUFOR,OPFOR]) then
+if (!isNil "pvar_teamSwitchList" && playerSide in [BLUFOR,OPFOR,INDEPENDENT]) then
 {
 	_prevSide = [pvar_teamSwitchList, getPlayerUID player, playerSide] call fn_getFromPairs;
 
@@ -46,6 +52,7 @@ if (!isNil "pvar_teamSwitchList" && playerSide in [BLUFOR,OPFOR]) then
 		{
 			case BLUFOR: { "BLUFOR" };
 			case OPFOR:  { "OPFOR" };
+			case INDEPENDENT:  { "INDEPENDENT" };
 		};
 
 		_msgBox = [format [localize "STR_WL_Loading_Teamswitched", _sideName]] spawn BIS_fnc_guiMessage;

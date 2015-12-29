@@ -72,11 +72,13 @@ for "_i" from 1 to _nbUnits do
 			if (_unit == leader _group) then
 			{
 				_unit addWeapon "arifle_TRG21_F";
+				_unit addMagazine "HandGrenade";
 				_unit setRank "SERGEANT";
 			}
 			else
 			{
 				_unit addWeapon "arifle_TRG20_F";
+				_unit addMagazine "HandGrenade";
 			};
 		};
 	};

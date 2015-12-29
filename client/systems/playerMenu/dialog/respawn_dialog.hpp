@@ -15,11 +15,12 @@ class RespawnSelectionDialog
 
 	class ControlsBackground
 	{
-		class RspnMainBG: IGUIBack
+		class RspnMainBG: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {1,1,1,0.09};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(1,1,1,0.09)";
 
 			#define RspnMainBG_W ((0.809 * X_SCALE) min safezoneW)
 			#define RspnMainBG_H ((0.620 * Y_SCALE) min safezoneH)
@@ -32,11 +33,12 @@ class RespawnSelectionDialog
 			h = RspnMainBG_H;
 		};
 
-		class RspnTopBar: IGUIBack
+		class RspnTopBar: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.546,0.59,0.363,0.4)";
 
 			// relative to RspnMainBG
 			#define RspnTopBar_W RspnMainBG_W // match RspnMainBG width
@@ -301,7 +303,7 @@ class RespawnSelectionDialog
 
 		class RspnGroupButton: RspnButton
 		{
-			idc = respawn_GroupMgmt_Button;
+			idc = -1;
 			text = "Group Management";
 			onButtonClick = "[] execVM 'client\systems\groups\loadGroupManagement.sqf'";
 

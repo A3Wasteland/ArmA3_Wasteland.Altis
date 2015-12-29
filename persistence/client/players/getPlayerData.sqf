@@ -4,7 +4,7 @@
 //	@file Name: getPlayerData.sqf
 //	@file Author: AgentRev
 
-private ["_player", "_saveLocation", "_data", "_hitPoints", "_hpDamage", "_pos", "_loadedMags", "_mag", "_ammo", "_loaded", "_type", "_wastelandItems"];
+private ["_player", "_saveLocation", "_data", "_hitPoints", "_hitPoint", "_pos", "_loadedMags", "_mag", "_ammo", "_loaded", "_type", "_wastelandItems"];
 _player = _this select 0;
 _saveLocation = if (count _this > 1) then { _this select 1 } else { true };
 
@@ -18,11 +18,10 @@ _data = if (_player == player) then {
 };
 
 _hitPoints = [];
-_hpDamage = getAllHitPointsDamage _player;
-
 {
-	_hitPoints pushBack [_x, (_hpDamage select 2) select _forEachIndex];
-} forEach (_hpDamage select 0);
+	_hitPoint = configName _x;
+	_hitPoints pushBack [_hitPoint, _player getHitPointDamage _hitPoint];
+} forEach (_player call getHitPoints);
 
 { _data pushBack _x } forEach
 [
@@ -111,5 +110,48 @@ if (_player == player) then
 
 	_data pushBack ["WastelandItems", _wastelandItems];
 };
+
+// Uniform and backpack texture saving
+_uniformTexture = uniformContainer _player getVariable ["uniformTexture", ""];
+
+if (call A3W_savingMethod == "extDB") then
+{
+	_texArr = [];
+
+	{
+		_texArr pushBack _x;
+
+		if (_x == 92) then // backslash
+		{
+			_texArr pushBack 92; // double it
+		};
+	} forEach toArray _uniformTexture;
+
+	_uniformTexture = toString _texArr;
+};
+
+_backpackTexture = backpackContainer _player getVariable ["backpackTexture", ""];
+
+if (call A3W_savingMethod == "extDB") then
+{
+	_btexArr = [];
+
+	{
+		_btexArr pushBack _x;
+
+		if (_x == 92) then // backslash
+		{
+			_btexArr pushBack 92; // double it
+		};
+	} forEach toArray _backpackTexture;
+
+	_backpackTexture = toString _btexArr;
+};
+
+{ _data pushBack _x } forEach
+[
+	["UniformTexture", _uniformTexture],
+	["BackpackTexture", _backpackTexture]
+];
 
 _data

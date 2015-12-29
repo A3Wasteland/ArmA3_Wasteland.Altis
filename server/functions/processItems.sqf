@@ -13,7 +13,7 @@ _items = _this select 1;
 
 // Add items
 {
-	_type = _x select 0; // Item type ("I" for item, "W" for weapon, "M" for magazine)
+	_type = _x select 0; // Item type ("I" for item, "W" for weapon, "M" for magazine, "B" for backpack)
 	_class = _x select 1; // Item class (string or array of strings)
 	_quantity = floor (_x select 2); // Item quantity
 	_magsQty = if (count _x > 3) then { floor (_x select 3) } else { 0 }; // If item is weapon, quantity of magazines for each weapon (default = 0)
@@ -81,6 +81,21 @@ _items = _this select 1;
 					_vehicle addItemCargoGlobal [_class, _quantity];
 				};
 			};
+			case "B":
+			{
+				if (typeName _class == "ARRAY") then
+				{
+					for "_i" from 1 to _quantity do
+					{
+						_randomClass = _class call BIS_fnc_selectRandom;
+						_vehicle addBackpackCargoGlobal [_randomClass, 1];
+					};
+				}
+				else
+				{
+					_vehicle addBackpackCargoGlobal [_class, _quantity];
+				};
+			};	
 		};
 	};
 } forEach _items;

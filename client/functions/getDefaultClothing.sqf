@@ -24,7 +24,7 @@ else
 _isSniper = (["_sniper_", _unit] call fn_findString != -1);
 _isDiver = (["_diver_", _unit] call fn_findString != -1);
 
-_defaultVest = "V_Rangemaster_Belt";
+_defaultVest = "";
 
 _result = "";
 

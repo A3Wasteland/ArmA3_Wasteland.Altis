@@ -12,6 +12,7 @@
 #define playerMenuPlayerHealth 55508
 #define playerMenuWarnMessage 55509
 #define playerMenuPlayerUID 55510
+#define playerMenuPlayerBank 55511
 
 class PlayersMenu
 {
@@ -21,23 +22,24 @@ class PlayersMenu
 
 	class controlsBackground {
 
-		class MainBackground: IGUIBack
+		class MainBackground: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0.6};
-
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
 			x = 0.1875 * safezoneW + safezoneX;
 			y = 0.15 * safezoneH + safezoneY;
 			w = 0.60 * safezoneW;
 			h = 0.661111 * safezoneH;
 		};
 
-		class TopBar: IGUIBack
+		class TopBar: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.546,0.59,0.363,0.4)";
 
 			x = 0.1875 * safezoneW + safezoneX;
 			y = 0.15 * safezoneH + safezoneY;
@@ -102,13 +104,24 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 
+		class PlayerBankText: w_RscText
+		{
+			idc = playerMenuPlayerBank;
+			text = "Money:";
+			sizeEx = 0.030;
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.295 * safezoneH + safezoneY;
+			w = 0.25 * safezoneW;
+			h = 0.04 * safezoneH;
+		};
+		
 		class PlayerItemsText: w_RscText
 		{
 			idc = playerMenuPlayerItems;
 			text = "Items:";
 			sizeEx = 0.030;
 			x = 0.52 * safezoneW + safezoneX;
-			y = 0.295 * safezoneH + safezoneY;
+			y = 0.315 * safezoneH + safezoneY;
 			w = 0.40 * safezoneW;
 			h = 0.04 * safezoneH;
 		};
@@ -119,7 +132,7 @@ class PlayersMenu
 			text = "Health:";
 			sizeEx = 0.030;
 			x = 0.52 * safezoneW + safezoneX;
-			y = 0.315 * safezoneH + safezoneY;
+			y = 0.335 * safezoneH + safezoneY;
 			w = 0.25 * safezoneW;
 			h = 0.04 * safezoneH;
 		};
@@ -130,7 +143,7 @@ class PlayersMenu
 			text = "Position:";
 			sizeEx = 0.030;
 			x = 0.52 * safezoneW + safezoneX;
-			y = 0.335 * safezoneH + safezoneY;
+			y = 0.355 * safezoneH + safezoneY;
 			w = 0.25 * safezoneW;
 			h = 0.04 * safezoneH;
 		};

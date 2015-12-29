@@ -20,6 +20,10 @@ switch (toLower _type) do
 			{
 				[] spawn fn_savePlayerData;
 			};
+		}
+		else
+		{
+			["The money was counterfeit!", 5] call mf_notify_client;
 		};
 	};
 

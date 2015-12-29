@@ -106,7 +106,7 @@ storeSellingHandle = _this spawn
 				{
 					if (_crate getVariable ["R3F_LOG_est_deplace_par", objNull] == player) then
 					{
-						[_crate, player, -1, false] execVM "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\relacher.sqf";
+						[_crate, player, -1, false] execVM "addons\R3F_LOG\objet_deplacable\relacher.sqf";
 						waitUntil {_crate getVariable ["R3F_LOG_est_deplace_par", objNull] != player};
 					};
 
