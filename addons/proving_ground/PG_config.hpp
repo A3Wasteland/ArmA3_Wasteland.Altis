@@ -244,7 +244,7 @@ class balca_debug_veh_creator
 				balca_VC_fill_ship,
 				balca_VC_class_to_clipboard_btn,
 				balca_VC_info_to_clipboard_btn,
-				balca_VC_create_veh_core_btn,
+				//balca_VC_create_veh_core_btn,
 				balca_VC_create_veh_player_btn,
 				balca_VC_close_btn
 				};
@@ -387,13 +387,13 @@ class balca_debug_veh_creator
 		action = "[5] call c_proving_ground_fnc_create_vehicle";
 	};
 
-	class balca_VC_create_veh_core_btn : balca_debug_btn
+	/*class balca_VC_create_veh_core_btn : balca_debug_btn
 	{
 		x = safezoneX_PG+column_weight; w = column_weight-column_div;
 		y = safezoneY_PG + offset_top*2+img_height;
 		text = "Create at core";
 		action = "[2] call c_proving_ground_fnc_create_vehicle";
-	};
+	};*/
 
 	class balca_VC_create_veh_player_btn : balca_debug_btn
 	{
