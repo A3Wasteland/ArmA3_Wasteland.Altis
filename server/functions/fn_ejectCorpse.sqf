@@ -4,9 +4,10 @@
 //	@file Name: fn_ejectCorpse.sqf
 //	@file Author: AgentRev
 
-private ["_corpse", "_veh", "_pos", "_vehSize", "_targetPos"];
+private ["_corpse", "_veh", "_firstVeh", "_pos", "_vehSize", "_targetPos"];
 _corpse = _this;
 _veh = vehicle _corpse;
+_firstVeh = _veh;
 
 #define INVALID_CORPSE (!local _corpse || alive _corpse || isNull _veh || _veh == _corpse)
 
@@ -16,8 +17,15 @@ waitUntil
 {
 	sleep 0.1;
 	_veh = vehicle _corpse;
+
+	// apparently, if the corpse is in a destroyed vehicle, "vehicle _corpse" returns the corpse itself, hence why the workaround below is needed; as usual, thanks BIS for breaking stuff all the time!!!!!!!!
+	if (_veh != _firstVeh && _corpse in crew _firstVeh) then
+	{
+		_veh = _firstVeh;
+	};
+
 	_pos = getPos _veh;
-	INVALID_CORPSE || {(isTouchingGround _veh || _pos select 2 < 5) && {vectorMagnitude velocity _veh < (if (surfaceIsWater _pos) then { 5 } else { 1 })}}
+	INVALID_CORPSE || {(isTouchingGround _veh || _pos select 2 < 5) && {vectorMagnitude velocity _veh < [1,5] select surfaceIsWater _pos}}
 };
 
 if (!INVALID_CORPSE) then
@@ -31,4 +39,5 @@ if (!INVALID_CORPSE) then
 	};
 
 	_corpse setPos _targetPos;
+	_corpse setVariable ["A3W_corpseEjected", true, true];
 };
