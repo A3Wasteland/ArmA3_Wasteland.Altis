@@ -158,6 +158,7 @@ _exclVehicleIDs = [];
 		};
 
 		_veh setVehicleAmmo 0;
+		{ _veh removeMagazineTurret [_x select 0, _x select 1] } forEach magazinesAllTurrets _veh;
 
 		if (!isNil "_turretMags3") then
 		{
