@@ -18,6 +18,7 @@ _player allowDamage false;
 if (["A3W_unlimitedStamina"] call isConfigOn) then
 {
 	_player enableFatigue false;
+	_player enableStamina false;
 };
 
 enableSentences false;
