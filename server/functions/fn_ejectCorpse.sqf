@@ -4,10 +4,9 @@
 //	@file Name: fn_ejectCorpse.sqf
 //	@file Author: AgentRev
 
-private ["_corpse", "_veh", "_firstVeh", "_pos", "_targetPos"];
+private ["_corpse", "_veh", "_pos", "_targetPos"];
 _corpse = _this;
 _veh = vehicle _corpse;
-_firstVeh = _veh;
 
 #define INVALID_CORPSE (isNull _corpse || alive _corpse || isNull _veh || _veh == _corpse)
 
@@ -18,7 +17,8 @@ waitUntil
 	sleep 0.1;
 
 	// apparently, if the corpse is stuck in a vehicle wreck, "vehicle _corpse" returns the corpse itself, hence why the workaround below is needed; as usual, thanks BIS for breaking stuff all the time!!!!!!!!
-	_veh = if (_corpse in crew _firstVeh) then { _firstVeh } else { vehicle _corpse };
+	_veh = objectParent _corpse;
+	if (isNull _veh) then { _veh = _corpse };
 
 	_pos = getPos _veh;
 	INVALID_CORPSE || {(isTouchingGround _veh || _pos select 2 < 5) && {vectorMagnitude velocity _veh < [1,5] select surfaceIsWater _pos}}

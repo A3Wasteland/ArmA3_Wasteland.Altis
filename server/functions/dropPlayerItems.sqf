@@ -4,12 +4,10 @@
 //	@file Name: dropPlayerItems.sqf
 //	@file Author: AgentRev
 
-private ["_corpse", "_money", "_items", "_firstVeh", "_veh", "_targetPos"];
+private ["_corpse", "_money", "_items", "_veh", "_targetPos"];
 _corpse = param [0, objNull, [objNull]];
 _money = param [1, 0, [0]];
 _items = param [2, [], [[]]];
-
-_firstVeh = vehicle _corpse;
 
 if (isNull _corpse || alive _corpse || (_money < 1 && count _items == 0)) exitWith {};
 
@@ -18,7 +16,8 @@ waitUntil
 	sleep 0.1;
 
 	// apparently, if the corpse is stuck in a vehicle wreck, "vehicle _corpse" returns the corpse itself, hence why the workaround below is needed; as usual, thanks BIS for breaking stuff all the time!!!!!!!!
-	_veh = if (_corpse in crew _firstVeh) then { _firstVeh } else { vehicle _corpse };
+	_veh = objectParent _corpse;
+	if (isNull _veh) then { _veh = _corpse };
 
 	isNull _corpse || (_veh == _corpse && {(isTouchingGround _corpse || (getPos _corpse) select 2 < 1) && vectorMagnitude velocity _corpse < 1}) || _corpse getVariable ["A3W_corpseEjected", false]
 };
