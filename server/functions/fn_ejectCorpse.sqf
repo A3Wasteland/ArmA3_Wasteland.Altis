@@ -4,25 +4,21 @@
 //	@file Name: fn_ejectCorpse.sqf
 //	@file Author: AgentRev
 
-private ["_corpse", "_veh", "_firstVeh", "_pos", "_vehSize", "_targetPos"];
+private ["_corpse", "_veh", "_firstVeh", "_pos", "_targetPos"];
 _corpse = _this;
 _veh = vehicle _corpse;
 _firstVeh = _veh;
 
-#define INVALID_CORPSE (!local _corpse || alive _corpse || isNull _veh || _veh == _corpse)
+#define INVALID_CORPSE (isNull _corpse || alive _corpse || isNull _veh || _veh == _corpse)
 
 if (INVALID_CORPSE) exitWith {};
 
 waitUntil
 {
 	sleep 0.1;
-	_veh = vehicle _corpse;
 
-	// apparently, if the corpse is in a destroyed vehicle, "vehicle _corpse" returns the corpse itself, hence why the workaround below is needed; as usual, thanks BIS for breaking stuff all the time!!!!!!!!
-	if (_veh != _firstVeh && _corpse in crew _firstVeh) then
-	{
-		_veh = _firstVeh;
-	};
+	// apparently, if the corpse is stuck in a vehicle wreck, "vehicle _corpse" returns the corpse itself, hence why the workaround below is needed; as usual, thanks BIS for breaking stuff all the time!!!!!!!!
+	_veh = if (_corpse in crew _firstVeh) then { _firstVeh } else { vehicle _corpse };
 
 	_pos = getPos _veh;
 	INVALID_CORPSE || {(isTouchingGround _veh || _pos select 2 < 5) && {vectorMagnitude velocity _veh < [1,5] select surfaceIsWater _pos}}
@@ -30,12 +26,13 @@ waitUntil
 
 if (!INVALID_CORPSE) then
 {
-	_vehSize = sizeOf typeOf _veh;
-	_targetPos = _corpse call fn_getPos3D;
+	_targetPos = getPosWorld _veh;
+	_targetPos set [2, (_corpse modelToWorld [0,0,0]) select 2];
 
 	if (_veh != _corpse && damage _veh > 0.99) then
 	{
-		_targetPos = _targetPos vectorAdd ([[0, ((_vehSize / 2) + random (_vehSize / 6)) - (_corpse distance _veh), 1], -([_veh, _corpse] call BIS_fnc_dirTo)] call BIS_fnc_rotateVector2D);
+		// eject corpse away from vehicle, at a distance relative to vehicle's size and center
+		_targetPos = _targetPos vectorAdd ([[0, _veh call fn_vehSafeDistance, 1], -([_veh, _corpse] call BIS_fnc_dirTo)] call BIS_fnc_rotateVector2D);
 	};
 
 	_corpse setPos _targetPos;
