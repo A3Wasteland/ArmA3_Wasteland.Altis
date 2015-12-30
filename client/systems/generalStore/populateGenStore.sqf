@@ -162,6 +162,9 @@ _playerSideNum = switch (playerSide) do
 	};
 
 	_side = _x param [4, ""];
+
+	if !(_side isEqualType "") then { _side = "" };
+
 	if !(_side in [str playerSide, ""]) then
 	{
 		_showItem = false;
