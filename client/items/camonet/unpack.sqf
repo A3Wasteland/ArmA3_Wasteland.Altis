@@ -41,9 +41,19 @@ _hasFailed = {
 _success =  [DURATION, ANIM, _hasFailed, []] call a3w_actions_start;
 
 if (_success) then {
+	_uid = getPlayerUID player;
 	_pos = getPosATL player;
 	_netting = MF_ITEMS_CAMO_NET_TYPE createVehicle _pos;
 	_netting setPosATL _pos;
+	_netting setVariable ["allowDamage", true, true];
+	_netting setVariable ["a3w_camoNet", true, true];
+	_netting setVariable ["R3F_LOG_disabled", true, true];
+	_netting setVariable ["ownerName", name player, true];
+	_netting setVariable ["ownerUID", _uid, true];
+	_netting setVariable ["packing", false, true];
+	
+	pvar_manualObjectSave = netId _netting;
+	publicVariableServer "pvar_manualObjectSave";
 	["You successfully unpacked the Camouflage Netting", 5] call mf_notify_client;
 };
 _success

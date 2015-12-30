@@ -18,6 +18,7 @@ call compile preprocessFile "addons\far_revive\FAR_revive_funcs.sqf";
 FAR_isDragging = false;
 FAR_isDragging_EH = [];
 FAR_deathMessage = [];
+FAR_gutMessage = [];
 FAR_Debugging = false;
 
 FAR_Reset_Unit =
@@ -106,6 +107,7 @@ FAR_findKiller = "addons\far_revive\FAR_findKiller.sqf" call mf_compile;
 ////////////////////////////////////////////////
 "FAR_isDragging_EH" addPublicVariableEventHandler FAR_public_EH;
 "FAR_deathMessage" addPublicVariableEventHandler FAR_public_EH;
+"FAR_gutMessage" addPublicVariableEventHandler FAR_public_EH;
 
 ////////////////////////////////////////////////
 // Player Initialization

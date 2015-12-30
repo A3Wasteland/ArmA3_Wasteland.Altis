@@ -110,12 +110,12 @@ if (FAR_EnableDeathMessages && difficultyEnabled "deathMessages" && !isNil "_kil
 		{
 			_names = [toArray name _unit];
 
-			if (!isNull _killer && {(isPlayer _killer || FAR_Debugging) && (_killer != _unit) && (vehicle _killer != vehicle _unit)}) then
+			if (!isNull _killer && { (_killer != _unit) && (vehicle _killer != vehicle _unit)}) then
 			{
 				_names set [1, toArray name _killer];
 			};
 
-			FAR_deathMessage = [_names, netId _unit];
+			FAR_deathMessage = [_names, netId _unit, netId _killer];
 			publicVariable "FAR_deathMessage";
 			["FAR_deathMessage", FAR_deathMessage] call FAR_public_EH;
 		};

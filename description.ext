@@ -10,8 +10,8 @@ corpseManagerMode = 1;
 corpseRemovalMinTime = 30*60;
 corpseRemovalMaxTime = 30*60;
 wreckManagerMode = 1;
-wreckRemovalMinTime = 5*60;
-wreckRemovalMaxTime = 10*60;
+wreckRemovalMinTime = 15*60;
+wreckRemovalMaxTime = 15*60;
 enableDebugConsole = 1;
 respawnDialog = 0; // do not enable this, otherwise the default scoreboard will overlap with the new one
 onPauseScript = "client\clientEvents\onPause.sqf";
@@ -19,26 +19,20 @@ class Header
 {
 	gameType=Sandbox;
 	minPlayers=1;
-	maxPlayers=145; // 144 players, 1 headless client
+	maxPlayers=170; // 168 players, 2 headless clients
 };
-author="AgentRev - A3Wasteland.com"; // it would be if you could keep "A3Wasteland.com" in the name, like "YourName and A3Wasteland.com" :)
-onLoadName = "A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
-onLoadMission = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
+author="40-1 - Loud - A3Wasteland.com"; // it would be if you could keep "A3Wasteland.com" in the name, like "YourName and A3Wasteland.com" :)
+onLoadName = "40-1 A3Wasteland"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)" :)
+onLoadMission = "Created by AgentRev - A3Wasteland, edited by LouD and 40-1. Thanks to all who helped. Keep playing boys!";
 overviewText = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewPicture = "mapConfig\Loading.jpg";
 loadScreen = "mapConfig\Loading.jpg";
 
-// A3W UI color (default = sky blue)
-
-#define A3W_UICOLOR_R  0.25 // default = 0.25
-#define A3W_UICOLOR_G  0.51 // default = 0.51
-#define A3W_UICOLOR_B  0.96 // default = 0.96
-
 //Dialog includes
 
 #include "client\gui_base.hpp"
-#include "addons\R3F_ARTY_AND_LOG\desc_include.h"
+#include "addons\R3F_LOG\desc_include.h"
 #include "client\systems\ui_toolkit.hpp"
 #include "client\systems\common.hpp"
 #include "client\items\warchest\dialog.hpp"
@@ -61,6 +55,23 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
 #include "addons\proving_ground\PG_config.hpp"
 #include "addons\outlw_magrepack\config.hpp"
+#include "addons\TOParmaInfo\dialog\TOParmaInfo_dialog.hpp"
+
+#include "client\systems\hud\dialog\downloadData.hpp"
+
+#include "addons\cctv\ui.hpp"
+#include "addons\cctv\laptop_flat_menu.hpp"
+#include "addons\cctv\cctv_menu.hpp"
+
+#include "addons\BoS\dialog\BoS_mainMenu.hpp"
+#include "addons\Safe\dialog\Safe_mainMenu.hpp"
+#include "addons\Door\dialog\Door_mainMenu.hpp"
+#include "addons\vPin\dialog\vPin_mainMenu.hpp"
+
+#include "addons\UniformPainter\dialog\UniformPainter_mainMenu.hpp"
+#include "addons\VehiclePainter\dialog\VehiclePainter_mainMenu.hpp"
+#include "addons\AF_Keypad\AF_KP_defines.hpp"
+#include "addons\AF_Keypad\AF_KP_dialogs.hpp"
 
 class RscTitles
 {
@@ -85,14 +96,56 @@ class CfgNotifications
 	#include "client\CfgNotifications.hpp"
 };
 
-class CfgRemoteExec // applies only to clients
+class CfgSounds
 {
-	class Functions
+    sounds[] =
 	{
-		mode = 1; // 0 = block all, 1 = whitelist, 2 = allow all
+		beep, beep2, beep3, beep4, beep5, beep6, beep7, beep8, beep9
 	};
-	class Commands
-	{
-		mode = 1;
-	};
+
+	class beep
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.5};
+							titles[] = {};
+		};		
+	class beep2
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.6};
+							titles[] = {};
+		};
+	class beep3
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.7};
+							titles[] = {};
+		};
+	class beep4
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.8};
+							titles[] = {};
+		};
+	class beep5
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.9};
+							titles[] = {};
+		};
+	class beep6
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 1.0};
+							titles[] = {};
+		};
+	class beep7
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 1.2};
+							titles[] = {};
+		};
+	class beep8
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 1.4};
+							titles[] = {};
+		};
+	class beep9
+		{
+							sound[] = {"addons\beacondetector\sound\beep.wav", db-10, 0.1};
+							titles[] = {};
+		};
 };

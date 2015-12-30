@@ -25,7 +25,7 @@ _spawnPos = _this select 1;
 
 	_currHeli = createVehicle [_spawnType, _finalPos, [], 0, "None"];
 
-	_currHeli setPosATL [_finalPos select 0, _finalPos select 1, (_finalPos select 2) + 0.1];
+	_currHeli setPosATL [_finalPos select 0, _finalPos select 1, (_finalPos select 2) + 0.5];
 	_currHeli setDir random 360;
 	_currHeli setVelocity [0,0,0.01];
 
@@ -33,6 +33,7 @@ _spawnPos = _this select 1;
 
 	_currHeli setFuel (0.1 + random 0.2);
 	_currHeli setVehicleAmmo 0.5;
+	_currHeli setVariable ["R3F_LOG_disabled",false,true];
 	// _currHeli spawn cleanVehicleWreck;
 
 	_currHeli enableSimulationGlobal true;

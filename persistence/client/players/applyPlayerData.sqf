@@ -45,7 +45,8 @@ removeHeadgear player;
 			{
 				if (player isUniformAllowed _value) then
 				{
-					player addUniform _value;
+					//player addUniform _value;
+					player forceAddUniform _value;
 				}
 				else
 				{
@@ -53,11 +54,13 @@ removeHeadgear player;
 
 					if (player isUniformAllowed _newUniform) then
 					{
-						player addUniform _newUniform;
+						//player addUniform _newUniform;
+						player forceAddUniform _newUniform;
 					}
 					else
 					{
-						player addUniform ([player, "uniform"] call getDefaultClothing);
+						//player addUniform ([player, "uniform"] call getDefaultClothing);
+						player forceAddUniform ([player, "uniform"] call getDefaultClothing);
 					}
 				};
 			};
@@ -155,5 +158,21 @@ removeHeadgear player;
 		case "BackpackMagazines": { [backpackContainer player, _value] call processMagazineCargo };
 		case "PartialMagazines": { { player addMagazine _x } forEach _value };
 		case "WastelandItems": { { [_x select 0, _x select 1, true] call mf_inventory_add } forEach _value };
+		case "UniformTexture": 
+		{ 
+			if (_value != "") then
+			{
+				[player, [0, _value]] spawn applyPlayerTexture; // Doing this externally otherwise the texture is not broadcasted globally correctly
+				uniformContainer player setVariable ["uniformTexture", _value, true]; 
+			};
+		};
+		case "BackpackTexture": 
+		{ 
+			if (_value != "") then
+			{
+				[backpackContainer player, [0, _value]] spawn applyPlayerTexture; // Doing this externally otherwise the texture is not broadcasted globally correctly
+				backpackContainer player setVariable ["backpackTexture", _value, true];
+			};
+		};
 	};
 } forEach _data;

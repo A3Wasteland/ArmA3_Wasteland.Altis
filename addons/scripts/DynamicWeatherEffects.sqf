@@ -26,11 +26,11 @@ _debug = param [4, false, [false]];
 
 // Minimum time in minutes for the weather (fog and overcast) to change. Must be greater than or equal to 1 and less than or equal to
 // _maxWeatherChangeTimeMin. When weather changes, it is fog OR overcast that changes, not both at the same time. (Suggested value: 10).
-_minWeatherChangeTimeMin = 20;
+_minWeatherChangeTimeMin = 10;
 
 // Maximum time in minutes for the weather (fog and overcast) to change. Must be greater than or equal to _minWeatherChangeTimeMin.
 // (Suggested value: 20).
-_maxWeatherChangeTimeMin = 40;
+_maxWeatherChangeTimeMin = 30;
 
 // Minimum time in minutes that weather (fog and overcast) stays constant between weather changes. Must be less than or equal to 0 and
 // greater than or equal to _minWeatherChangeTimeMin. (Suggested value: 5).
@@ -46,7 +46,7 @@ _minimumFog = 0;
 
 // Fog intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumFog
 // (0 = no fog, 1 = pea soup). (Suggested value: 0.1).
-_maximumFog = 0.1;
+_maximumFog = 0;
 
 // New ArmA3 facilities added by Bewilderbeest
 _minimumFogDecay = 0.001;
@@ -60,15 +60,15 @@ _minimumOvercast = 0;
 
 // Overcast intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumOvercast
 // (0 = no overcast, 1 = maximum overcast). (Suggested value: 1).
-_maximumOvercast = 1;
+_maximumOvercast = 0.1;
 
 // When raining, rain intensity never falls below this value. Must be between 0 and 1 and less than or equal to _maximumRain
 // (0 = no rain, 1 = maximum rain intensity). (Suggested value: 0);
-_minimumRain = 0.01;
+_minimumRain = 0;
 
 // When raining, rain intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumRain
 // (0 = no rain, 1 = maximum rain intensity). (Suggested value: 0.8);
-_maximumRain = 0.5;
+_maximumRain = 0.05;
 
 // Wind vector strength never falls below this value. Must be greater or equal to 0 and less than or equal to _maximumWind.
 // (Suggested value: 0);
@@ -76,7 +76,7 @@ _minimumWind = 0;
 
 // Wind vector strength never exceeds this value. Must be greater or equal to 0 and greater than or equal to _minimumWind.
 // (Suggested value: 8).
-_maximumWind = 8;
+_maximumWind = 4;
 
 // Probability in percent for wind to change when weather changes. If set to 0 then wind will never change. If set to 100 then rain will
 // change every time the weather (fog or overcast) start to change. (Suggested value: 25);
@@ -89,7 +89,7 @@ _windChangeProbability = 25;
 // Probability in percent (0-100) for rain to start at every rain interval. Set this to 0 if you don't want rain at all. Set this to 100
 // if you want it to rain constantly when overcast is greater than 0.75. In short: if you think that it generally rains to often then
 // lower this value and vice versa. (Suggested value: 50).
-_rainIntervalRainProbability = 50;
+_rainIntervalRainProbability = 10;
 
 // Minimum time in minutes for rain intervals. Must be greater or equal to 0 and less than or equal to _maxRainIntervalTimeMin.
 // (Suggested value: 0).

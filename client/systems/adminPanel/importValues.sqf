@@ -22,6 +22,7 @@
 #define playerMenuPlayerList 55505
 #define playerMenuPlayerObject 55507
 #define playerMenuPlayerHealth 55508
+#define playerMenuPlayerBank 55511
 
 disableSerialization;
 
@@ -42,6 +43,7 @@ if (_uid call isAdmin) then
 	_dialogPlayer = findDisplay playerMenuDialog;
 	_skinText = _dialogPlayer displayCtrl playerMenuPlayerSkin;
 	_currentGunText = _dialogPlayer displayCtrl playerMenuPlayerGun;
+	_currentBankMoney = _dialogPlayer displayCtrl playerMenuPlayerBank;
 	_itemsText = _dialogPlayer displayCtrl playerMenuPlayerItems;
 	_posText = _dialogPlayer displayCtrl playerMenuPlayerPos;
 	_healthText = _dialogPlayer displayCtrl playerMenuPlayerHealth;
@@ -72,7 +74,8 @@ if (_uid call isAdmin) then
 	    {
 	        if (str(_x) == _data1) exitwith {
 	            _itemsText ctrlSetText format["Items: %1",weapons _x];
-	            _currentGunText ctrlSetText format["Money: %1",_x getVariable "cmoney"];
+	            _currentGunText ctrlSetText format["Money: %1",[_x getVariable ["cmoney", 0]] call fn_numbersText];
+				_currentBankMoney ctrlSetText format["Bankmoney: %1",[_x getVariable ["bmoney", 0]] call fn_numbersText];
 	            _skinText ctrlSetText format["Skin: %1",typeOf(_x)];
 	            _posText ctrlSetText format["Position: %1",position _x];
 	            _objectText ctrlSetText format["Slot: %1",_x];

@@ -77,6 +77,9 @@ if (["A3W_moneySaving"] call isConfigOn) then
 
 ["WastelandItems", "ARRAY"] call _getValue;
 
+["UniformTexture", "STRING"] call _getValue;
+["BackpackTexture", "STRING"] call _getValue;
+
 ["Hunger", "NUMBER"] call _getValue;
 ["Thirst", "NUMBER"] call _getValue;
 

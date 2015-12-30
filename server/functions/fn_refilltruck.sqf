@@ -25,15 +25,18 @@ _truckItems =
 	["itm", "FirstAidKit", RANDOM_BETWEEN(3,6)],
 	["itm", "Medikit", RANDOM_BETWEEN(1,3)],
 	["itm", "Toolkit", RANDOM_BETWEEN(0,1)],
+	["itm", "ItemGPS", RANDOM_BETWEEN(0,1)],
 	["itm", ["muzzle_snds_M", "muzzle_snds_H", "muzzle_snds_H_MG", "muzzle_snds_B", "muzzle_snds_acp"], RANDOM_BETWEEN(0,3)],
 	["itm", ["optic_Aco", "optic_ACO_grn", "optic_MRCO", "optic_Hamr", "optic_Arco"], RANDOM_BETWEEN(2,4)],
+	["itm", ["bipod_01_F_blk", "bipod_01_F_mtp", "bipod_03_F_oli" ,"bipod_02_F_tan"], RANDOM_BETWEEN(0,2)],
+	["bac", ["B_Carryall_mcamo", "B_Kitbag_mcamo"], RANDOM_BETWEEN(2,5)],
 	["wep", ["SMG_01_F", "SMG_02_F"], RANDOM_BETWEEN(1,2), RANDOM_BETWEEN(3,5)],
 	["wep", ["arifle_Mk20_GL_F", "arifle_TRG21_GL_F", "arifle_Katiba_GL_F", "arifle_MX_GL_F"], RANDOM_BETWEEN(2,5), RANDOM_BETWEEN(4,5)],
 	["mag", "1Rnd_HE_Grenade_shell", RANDOM_BETWEEN(5,10)],
-	["wep", ["srifle_GM6_LRPS_F", "srifle_LRR_LRPS_F"], RANDOM_BETWEEN(1,2), RANDOM_BETWEEN(4,6)],
+	["wep", ["srifle_GM6_LRPS_F", "srifle_LRR_LRPS_F", "srifle_DMR_04_ARCO_F"], RANDOM_BETWEEN(1,2), RANDOM_BETWEEN(4,6)],
 	["wep", ["launch_RPG32_F", "launch_Titan_short_F"], RANDOM_BETWEEN(1,3), RANDOM_BETWEEN(1,2)],
 	["mag", "HandGrenade", RANDOM_BETWEEN(0,5)],
-	["mag", ["APERSTripMine_Wire_Mag", "APERSBoundingMine_Range_Mag", "SLAMDirectionalMine_Wire_Mag", "ATMine_Range_Mag"], RANDOM_BETWEEN(2,6)]
+	["mag", ["APERSTripMine_Wire_Mag", "APERSBoundingMine_Range_Mag", "SLAMDirectionalMine_Wire_Mag", "ATMine_Range_Mag", "IEDUrbanBig_Remote_Mag"], RANDOM_BETWEEN(2,6)]
 ];
 
 [_truck, _truckItems] call processItems;

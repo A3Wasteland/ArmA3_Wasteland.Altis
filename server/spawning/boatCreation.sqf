@@ -22,7 +22,7 @@ _pos = _markerPos;
 //Car Initialization
 _boat = createVehicle [_boatType, _pos, [], 0, "None"];
 
-_boat setPosASL [_pos select 0, _pos select 1, 0];
+_boat setPosASL [_pos select 0, _pos select 1, 0.5];
 _boat setDir random 360;
 _boat setVelocity [0,0,0];
 
@@ -41,6 +41,7 @@ if (!isNil "_respawnSettings") then
 
 //Set Vehicle Attributes
 _boat setFuel (0.3 + random 0.2);
+_boat setVariable ["R3F_LOG_disabled",false,true];
 
 if (_boatType isKindOf "Boat_Armed_01_base_F") then
 {

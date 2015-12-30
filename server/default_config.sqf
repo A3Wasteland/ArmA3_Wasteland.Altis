@@ -9,8 +9,26 @@
 
 // General settings
 A3W_teamPlayersMap = 1;            // Show all friendly players on the map at all times, regardless of difficulty level (0 = no, 1 = yes)
-A3W_disableGlobalVoice = 1;        // Auto-switch channel to Direct communication whenever broadcasting voice on global, unless being admin (0 = no, 1 = yes)
+A3W_disableGlobalVoice = 1;        // Auto-switch channel to Direct communication whenever broadcasting voice on global and side channel, unless being admin (0 = no, 1 = yes)
 A3W_uavControl = "group";          // Restrict connection to UAVs based on ownership ("owner", "group", "side")
+A3W_cctvCameraSaving = 1;          // Save cctv cameras between restarts (0 = no, 1 = yes)
+
+// Timers
+APOC_coolDownTimer = 1800;         // APOC Air Drop Cool Down Timer
+BoS_coolDownTimer = 600;           // Baselocker hacking timer
+Safe_coolDownTimer = 600;          // Safe hacking timer
+A3W_teamSwitchLock = 180;          // Time in seconds before a player is locked into the team he is playing in (INDEPENDENT, BLUFOR, OPFOR)
+
+// Utility trucks
+Sell_Distance = 40;                // Maximum distance the Sell truck will show the sell options at
+Sell_Price = 2;                    // Devider for the store price (e.g. a vehicle that is $10.000 in the store will sell for $5.000 when set to 2)
+ChangeOwner_Distance = 40;         // Maximum distance the Change Ownership truck will show the change ownership options at
+ChangeOwner_Price = 2;             // Devider for the store price (e.g. a vehicle that is $10.000 in the store will change ownership for $5.000 when set to 2)
+Resupply_Distance = 40;            // Maximum distance the Resupply truck will show the resupply options at
+Resupply_Price = 4;                // Devider for the store price (e.g. a vehicle that is $10.000 in the store will resupply for $2.500 when set to 4)
+Resupply_RearmTime = 5;            // Time it takes to rearm in seconds. Is used 3 times.
+Resupply_RepairTime = 5;           // Time it takes to repair in seconds
+Resupply_RefuelTime = 5;           // Time it takes to refuel in seconds
 
 // Time settings
 A3W_startHour = 15;                // In-game hour at mission start (0 to 23) - time is saved and restored between server restarts if A3W_timeSaving = 1
@@ -19,15 +37,16 @@ A3W_timeMultiplierNight = 4.0;     // Sets the speed of time between 8 PM and 5 
 A3W_moonLight = 1;                 // Moon light during night (0 = no, 1 = yes)
 
 // Player settings
-A3W_startingMoney = 100;           // Amount of money that players start with
+A3W_startingMoney = 2000;           // Amount of money that players start with
 A3W_survivalSystem = 1;            // Food and water are required to stay alive (0 = no, 1 = yes) - 0 removes food and water items from the mission
 A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (0 = no, 1 = yes) - this also removes energy drinks from the mission
-A3W_bleedingTime = 60;             // Time in seconds for which to allow revive after a critical injury (minimum 10 seconds)
+A3W_bleedingTime = 120;             // Time in seconds for which to allow revive after a critical injury (minimum 10 seconds)
 
 // Spawn settings
 A3W_townSpawnCooldown = 5*60;      // Number of seconds to wait between each spawn on a specific town (0 = disabled)
 A3W_spawnBeaconCooldown = 5*60;    // Number of seconds to wait between each use of a specific spawn beacon (0 = disabled)
-A3W_spawnBeaconSpawnHeight = 1500; // Altitude in meters at which players will spawn when using spawn beacons (0 = ground/sea)
+A3W_spawnBeaconSpawnHeight = 2000; // Altitude in meters at which players will spawn when using spawn beacons (0 = ground/sea)
+A3W_maxSpawnBeacons = 5;           // Maxmimum number of spawn beacons (0 = disabled)
 
 // Antihack settings
 A3W_antiHackUnitCheck = 1;         // Detect players who spawn unauthorized AI units (0 = no, 1 = yes) - disable if you have custom unit scripts/mods like AI recruitment or ALiVE
@@ -42,11 +61,11 @@ A3W_vehiclePurchaseCooldown = 60;  // Number of seconds to wait before allowing 
 
 // ATM settings
 A3W_atmEnabled = 1;                // Enable ATM system (0 = no, 1 = yes)
-A3W_atmMaxBalance = 1000000;       // Maximum amount of money that can be stored in a bank account (don't go over 16777216 as numbers start losing accuracy)
+A3W_atmMaxBalance = 2500000;       // Maximum amount of money that can be stored in a bank account (don't go over 16777216 as numbers start losing accuracy)
 A3W_atmTransferFee = 5;            // Fee in percent charged to players for money transfers to other players (0 to 50)
 A3W_atmTransferAllTeams = 0;       // Allow money transfers between players of all teams/sides (0 = same team only, 1 = all teams)
-A3W_atmEditorPlacedOnly = 0;       // Only allow access via ATMs placed from the mission editor (0 = all ATMs from towns & editor allowed, 1 = ATMs from editor only) Note: Stratis has no town ATMs, only editor ones.
-A3W_atmMapIcons = 1;               // Draw small icons on the map that indicate ATM locations (0 = no, 1 = yes)
+A3W_atmEditorPlacedOnly = 1;       // Only allow access via ATMs placed from the mission editor (0 = all ATMs from towns & editor allowed, 1 = ATMs from editor only) Note: Stratis has no town ATMs, only editor ones.
+A3W_atmMapIcons = 0;               // Draw small icons on the map that indicate ATM locations (0 = no, 1 = yes)
 A3W_atmRemoveIfDisabled = 1;       // Remove all ATMs from map if A3W_atmEnabled is set to 0 (0 = no, 1 = yes)
 
 // Persistence settings
@@ -64,6 +83,7 @@ A3W_staticWeaponSaving = 1;        // Save locked static weapons and their magaz
 A3W_warchestSaving = 1;            // Save warchest objects deployed by players between server restarts (0 = no, 1 = yes)
 A3W_warchestMoneySaving = 1;       // Save warchest team money between server restarts (0 = no, 1 = yes)
 A3W_spawnBeaconSaving = 1;         // Save spawn beacons between server restarts (0 = no, 1 = yes)
+A3W_camoNetSaving = 0;             // Save camonets between server restarts (0 = no, 1 = yes)
 A3W_objectLifetime = 5*24;         // Maximum lifetime in hours for saved objects (baseparts, crates, etc. except vehicles) across server restarts (0 = no time limit)
 A3W_vehicleLifetime = 0;           // Maximum lifetime in hours for saved vehicles across server restarts, regardless of usage (0 = no time limit)
 A3W_vehicleMaxUnusedTime = 2*24;   // Maximum parking time in hours after which unused saved vehicles will be marked for deletion (0 = no time limit)
@@ -104,7 +124,7 @@ A3W_hcObjSavingID = 2;             // ID of the headless client in charge of obj
 // Server spawn settings
 A3W_serverSpawning = 1;            // Vehicle, object, and loot spawning (0 = no, 1 = yes)
 A3W_vehicleSpawning = 1;           // If serverSpawning = 1, spawn vehicles in towns (0 = no, 1 = yes)
-A3W_vehicleQuantity = 200;         // Approximate number of land vehicles to be spawned in towns
+A3W_vehicleQuantity = 400;         // Approximate number of land vehicles to be spawned in towns
 A3W_boatSpawning = 1;              // If serverSpawning = 1, spawn boats at marked areas near coasts (0 = no, 1 = yes)
 A3W_heliSpawning = 1;              // If serverSpawning = 1, spawn helicopters in some towns and airfields (0 = no, 1 = yes)
 A3W_planeSpawning = 1;             // If serverSpawning = 1, spawn planes at some airfields (0 = no, 1 = yes)
@@ -122,18 +142,62 @@ A3W_vehicleLoot = 2;               // Level of loot added to vehicles (0 = none,
 A3W_territoryCaptureTime = 3*60;   // Time in seconds needed to capture a territory
 A3W_territoryPayroll = 1;          // Periodically reward sides and indie groups based on how many territories they own (0 = no, 1 = yes)
 A3W_payrollInterval = 30*60;       // Delay in seconds between each payroll
-A3W_payrollAmount = 100;           // Amount of money rewarded per territory on each payroll
+A3W_payrollAmount = 200;           // Amount of money rewarded per territory on each payroll
 
 // Mission settings
 A3W_serverMissions = 1;            // Enable server missions (0 = no, 1 = yes)
-A3W_missionsDifficulty = 0;        // Missions difficulty (0 = normal, 1 = hard)
+A3W_missionsDifficulty = 1;        // Missions difficulty (0 = normal, 1 = hard)
 A3W_missionFarAiDrawLines = 1;     // Draw small red lines on the map from mission markers to individual units & vehicles which are further away than 75m from the objective (0 = no, 1 = yes)
 A3W_missionsQuantity = 6;          // Number of missions running at the same time (0 to 6)
 A3W_heliPatrolMissions = 1;        // Enable missions involving flying helicopters piloted by AI (0 = no, 1 = yes)
-A3W_underWaterMissions = 1;        // Enable underwater missions which require diving gear (0 = no, 1 = yes)
+A3W_underWaterMissions = 0;        // Enable underwater missions which require diving gear (0 = no, 1 = yes)
 A3W_mainMissionDelay = 10*60;      // Time in seconds between Main Missions
 A3W_mainMissionTimeout = 60*60;    // Time in seconds that a Main Mission will run for, unless completed
 A3W_sideMissionDelay = 5*60;       // Time in seconds between Side Missions
 A3W_sideMissionTimeout = 45*60;    // Time in seconds that a Side Mission will run for, unless completed
 A3W_moneyMissionDelay = 15*60;     // Time in seconds between Money Missions
 A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
+
+// Mission weightings
+MainMissions =
+[
+	// Mission filename, weight
+	["mission_ArmedDiversquad", 1],
+	["mission_Coastal_Convoy", 0.5],
+	["mission_Convoy", 1],
+	["mission_Hackers", 0.5],
+	//["mission_HostileHeliFormation", 0.5],
+	["mission_HostileJetFormation", 0.4],
+	["mission_APC", 1],
+	["mission_MBT", 1],
+	["mission_LightArmVeh", 1],
+	["mission_ArmedHeli", 1],
+	["mission_AbandonedJet", 0.5],
+	["mission_CivHeli", 1]
+];
+
+SideMissions =
+[
+	["mission_HostileHelicopter", 0.4],
+	["mission_MiniConvoy", 1],
+	["mission_SunkenSupplies", 1],
+	["mission_TownInvasion", 1],
+	//["mission_AirWreck", 1],
+	//["mission_WepCache", 1],
+	["mission_Outpost", 1],
+	["mission_Truck", 1],
+	["mission_Roadblock", 1],
+	//["mission_HostileJet", 0.5],
+	["mission_Sniper", 1],
+	["mission_Smugglers", 1],
+	["mission_drugsRunners", 1],
+	["mission_GeoCache", 1]
+];
+
+MoneyMissions =
+[
+	["mission_MoneyShipment", 1],
+	["mission_SunkenTreasure", 1],
+	["mission_militaryPatrol", 1],
+	["mission_altisPatrol", 1]
+];

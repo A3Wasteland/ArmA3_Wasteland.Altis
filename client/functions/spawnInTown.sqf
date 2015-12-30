@@ -18,7 +18,8 @@ _preload = param [1, false, [false]];
 		_rad = _x select 1;
 		_townName = _x select 2;
 
-		_playerPos = [_pos,5,_rad,1,0,0,0] call findSafePos;
+		_playerPos = [_pos,_rad,_rad + 150,1,0,0,0] call findSafePos;	// Added to make players spawn within 150 meters of town borders instead of in towns.
+//		_playerPos = [_pos,5,_rad,1,0,0,0] call findSafePos;
 		if (_preload) then { waitUntil {sleep 0.1; preloadCamera _playerPos} };
 
 		waitUntil {!isNil "bis_fnc_init" && {bis_fnc_init}};

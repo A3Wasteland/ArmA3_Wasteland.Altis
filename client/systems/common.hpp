@@ -341,9 +341,9 @@ class w_RscButton
 	text = "";
 	colorText[] = {1,1,1,.9};
 	colorDisabled[] = {0,0,0,1};
-	colorBackground[] = {A3W_UICOLOR_R * 0.8, A3W_UICOLOR_G * 0.8, A3W_UICOLOR_B * 0.8, 1}; // normal
-	colorFocused[] = {A3W_UICOLOR_R * 0.55, A3W_UICOLOR_G * 0.55, A3W_UICOLOR_B * 0.55, 1}; // pulse
-	colorBackgroundActive[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 1}; // hover
+	colorBackground[] = {0.546,0.59,0.363,0.4};//{0.2,0.41,0.78,1}; // normal
+	colorFocused[] = {0.596,0.69,0.553,0.6};//{0.14,0.25,0.49,1}; // pulse
+	colorBackgroundActive[] = {0.596,0.69,0.553,0.8};//{0.25,0.51,0.96,1}; // hover
 	colorBackgroundDisabled[] = {0.3,0.3,0.3,1};
 	colorShadow[] = {0,0,0,1};
 	colorBorder[] = {0,0,0,1};
@@ -390,7 +390,7 @@ class w_RscCombo {
 	colorText[] = {0, 0, 0, 1};
 	colorBackground[] = {1, 1, 1, 1};
 	colorSelect[] = {1, 0, 0, 1};
-	colorSelectBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.5};
+	colorSelectBackground[] = {0.596,0.69,0.553,0.4};
 	soundSelect[] = {"", 0.000000, 1};
 	soundExpand[] = {"", 0.000000, 1};
 	soundCollapse[] = {"", 0.000000, 1};
@@ -481,6 +481,64 @@ class w_RscXListBox
 	border = "\A3\ui_f\data\gui\cfg\slider\border_ca.paa";
 	font = "PuristaMedium";
 	sizeEx = 0.035;
+};
+
+class RscHTML
+{
+	idc = -1;
+	type = CT_HTML;
+	style = ST_LEFT;
+	colorText[] = {Dlg_Color_White, 1};
+    colorLink[] = {0.05, 0.2, 0.05, 1};
+    colorBold[] = {0, 1, 1, 1};
+    colorBackground[] = {0, 0, 0, 0};
+    colorLinkActive[] = {0, 0, 0.2, 1};
+    colorPicture[] = {Dlg_Color_Black, 1};
+    colorPictureLink[] = {Dlg_Color_Black, 1};
+    colorPictureSelected[] = {Dlg_Color_Black, 1};
+    colorPictureBorder[] = {Dlg_Color_Black, 1};
+	x = 0;
+	y = 0;
+	w = 1;
+	h = 1;
+	filename = "";
+	prevPage = "\ca\ui\data\arrow_left_ca.paa";
+    nextPage = "\ca\ui\data\arrow_right_ca.paa";
+
+    
+    class HeadingStyle {
+        font = "PuristaBold";
+        fontBold = "TahomaB";
+        sizeEx = Dlg_TEXTHGT;
+    };
+    
+    class H1: HeadingStyle {
+        sizeEx = Dlg_TEXTHGT * 1.5;
+    };
+    
+    class H2: HeadingStyle {
+        sizeEx = Dlg_TEXTHGT * 1.4;
+    };
+    
+    class H3: HeadingStyle {
+        sizeEx = Dlg_TEXTHGT * 1.3;
+    };
+    
+    class H4: HeadingStyle {
+        sizeEx = Dlg_TEXTHGT * 1.2;
+    };
+    
+    class H5: HeadingStyle {
+        sizeEx = Dlg_TEXTHGT * 1.1;
+    };
+    
+    class H6: HeadingStyle {
+        sizeEx = Dlg_TEXTHGT;
+    };
+    
+    class P: HeadingStyle {
+       sizeEx = Dlg_TEXTHGT;
+    };
 };
 
 class w_RscMapControl

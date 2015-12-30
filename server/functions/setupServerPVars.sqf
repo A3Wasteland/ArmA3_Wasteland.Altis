@@ -43,5 +43,6 @@ publicVariable "currentInvites";
 	["pvar_manualVehicleSave", { if (!isNil "fn_manualVehicleSave") then { PVAL call fn_manualVehicleSave } }],
 	["pvar_playerRespawn", { PVAL spawn playerRespawnServer }],
 	["pvar_waitUntilBagTaken", { PVAL spawn waitUntilBagTaken }],
-	["pvar_dropPlayerItems", { PVAL spawn dropPlayerItems }]
+	["pvar_dropPlayerItems", { PVAL spawn dropPlayerItems }],
+	["pvar_isAdminInvisible", { PVAL call fn_invis}]
 ];

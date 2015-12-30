@@ -21,7 +21,7 @@ currentStaticHelis = []; // Storage for the heli marker numbers so that we don't
 //Civilian Vehicle List - Random Spawns
 civilianVehicles =
 [
-	"C_Quadbike_01_F",
+//	"C_Quadbike_01_F",
 	"C_Hatchback_01_F",
 	"C_Hatchback_01_sport_F",
 	"C_SUV_01_F",
@@ -38,10 +38,10 @@ lightMilitaryVehicles =
 	"O_Quadbike_01_F",
 	"I_Quadbike_01_F",
 	"I_G_Quadbike_01_F",
-//	"O_Truck_02_covered_F",
-//	"I_Truck_02_covered_F",
-//	"O_Truck_02_transport_F",
-//	"I_Truck_02_transport_F",
+	"O_Truck_02_covered_F",
+	"I_Truck_02_covered_F",
+	"O_Truck_02_transport_F",
+	"I_Truck_02_transport_F",
 	"I_G_Offroad_01_armed_F"
 ];
 
@@ -181,6 +181,10 @@ vehicleWeapons =
 	"arifle_MX_SW_F",
 	"arifle_MXM_F",
 	"srifle_EBR_F",
+	"srifle_DMR_02_ACO_F",
+	"srifle_DMR_03_ACO_F",
+	"srifle_DMR_05_MRCO_F",
+	"srifle_DMR_06_camo_khs_F",
 	"LMG_Mk200_F",
 	"LMG_Zafir_F"
 ];
@@ -203,10 +207,22 @@ vehicleAddition =
 	"optic_Holosight_smg",
 	"acc_flashlight",
 	"acc_pointer_IR",
+	"bipod_03_F_blk",
 	"Medikit",
 	"Medikit",
 	"FirstAidKit",
-	"ToolKit"
+	"ToolKit",
+	"G_Bandanna_oli",
+	"G_Balaclava_oli",
+	"H_MilCap_dgtl",
+	"H_HelmetIA",
+	"H_HelmetB",
+	"V_Press_F",
+	"V_HarnessO_brn",
+	"V_TacVest_brn",
+	"MiniGrenade",
+	"IEDUrbanSmall_Remote_Mag",
+	"IEDLandSmall_Remote_Mag"
 ];
 
 vehicleAddition2 =

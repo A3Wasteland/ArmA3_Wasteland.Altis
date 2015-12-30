@@ -46,6 +46,8 @@ _success =  [DURATION, ANIM, _hasFailed, [_netting]] call a3w_actions_start;
 MUTEX_UNLOCK;
 
 if (_success) then {
+	pvar_manualObjectDelete = [netId _netting, _netting getVariable "A3W_objectID"];
+	publicVariableServer "pvar_manualObjectDelete";
 	deleteVehicle _netting;
 	[MF_ITEMS_CAMO_NET, 1] call mf_inventory_add;
 	["You successfully packed the Camouflage Netting", 5] call mf_notify_client;

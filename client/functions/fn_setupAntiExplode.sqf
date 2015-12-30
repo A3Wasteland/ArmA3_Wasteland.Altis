@@ -27,7 +27,7 @@ if (isNil "A3W_antiExplodeLocalEH") then
 		if (_local && {(isTouchingGround _veh || (getPos _veh) select 2 < 0.1) && vectorMagnitude velocity _veh < 1}) then
 		{
 			_pos = getPosWorld _veh;
-			_pos set [2, (_pos select 2) + 0.1]; // might need to be increased if it doesn't work all the time
+			_pos set [2, (_pos select 2) + 0.3]; // might need to be increased if it doesn't work all the time
 			_veh setPosWorld _pos;
 		};
 	} call mf_compile;

@@ -14,7 +14,8 @@ _vest = [_player, "vest"] call getDefaultClothing;
 _headgear = [_player, "headgear"] call getDefaultClothing;
 _goggles = [_player, "goggles"] call getDefaultClothing;
 
-if (_uniform != "") then { _player addUniform _uniform };
+//if (_uniform != "") then { _player addUniform _uniform };
+if (_uniform != "") then { _player forceAddUniform _uniform };
 if (_vest != "") then { _player addVest _vest };
 if (_headgear != "") then { _player addHeadgear _headgear };
 if (_goggles != "") then { _player addGoggles _goggles };
@@ -33,15 +34,14 @@ if (hmd _player != "") then { _player unlinkItem hmd _player };
 // Add NVG
 _player linkItem "NVGoggles";
 
-_player addBackpack "B_AssaultPack_rgr";
+_player addBackpack "B_FieldPack_khk";
 
-_player addMagazine "9Rnd_45ACP_Mag";
-_player addWeapon "hgun_ACPC2_F";
-_player addMagazine "9Rnd_45ACP_Mag";
-_player addMagazine "9Rnd_45ACP_Mag";
-_player addMagazine "9Rnd_45ACP_Mag";
+_player addMagazine "16Rnd_9x21_Mag";
+_player addWeapon "hgun_Rook40_F";
+_player addMagazine "16Rnd_9x21_Mag";
+_player addMagazine "16Rnd_9x21_Mag";
 _player addItem "FirstAidKit";
-_player selectWeapon "hgun_ACPC2_F";
+_player selectWeapon "hgun_Rook40_F";
 
 switch (true) do
 {
@@ -52,7 +52,7 @@ switch (true) do
 	};
 	case (["_engineer_", typeOf _player] call fn_findString != -1):
 	{
-		_player addItem "MineDetector";
+		//_player addItem "MineDetector";
 		_player addItem "Toolkit";
 	};
 	case (["_sniper_", typeOf _player] call fn_findString != -1):

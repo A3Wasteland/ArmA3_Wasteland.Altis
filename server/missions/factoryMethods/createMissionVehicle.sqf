@@ -21,7 +21,7 @@ _veh = createVehicle [_class, _pos, [], 0, _special];
 
 [_veh] call vehicleSetup;
 
-_veh setPosATL [_pos select 0, _pos select 1, 0.1];
+_veh setPosATL [_pos select 0, _pos select 1, 0.5];
 _veh setVelocity [0,0,0.01];
 
 if (_fuel != 1) then { _veh setFuel _fuel };

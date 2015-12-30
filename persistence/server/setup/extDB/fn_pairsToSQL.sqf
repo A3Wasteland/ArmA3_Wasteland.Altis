@@ -35,8 +35,8 @@ _addRef = false;
 	if (_x == 1) then { _addRef = true };
 } forEach _returnType;
 
-_setValues = [];
-_refValues = [];
+_setValues = "";
+_refValues = "";
 
 {
 	_key = _x select 0;
@@ -50,16 +50,13 @@ _refValues = [];
 			_val = if (typeName _val == "SCALAR") then { _val call fn_numToStr } else _stringFormat;
 		};
 
-		_setValues pushBack format ["%1=%2", _key, _val];
+		_setValues = _setValues + format ["%1%2=%3", if (_setValues != "") then { "," } else { "" }, _key, _val];
 	};
 	if (_addRef) then
 	{
-		_refValues pushBack format ["%1=VALUES(%1)", _key];
+		_refValues = _refValues + format ["%1%2=VALUES(%2)", if (_refValues != "") then { "," } else { "" }, _key];
 	};
 } forEach _pairs;
-
-_setValues = _setValues joinString ",";
-_refValues = _refValues joinString ",";
 
 _return = [];
 

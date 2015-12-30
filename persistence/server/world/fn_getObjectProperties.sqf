@@ -52,6 +52,23 @@ switch (true) do
 		_variables pushBack ["groupOnly", _obj getVariable ["groupOnly", false]];
 		_variables pushBack ["ownerName", toArray (_obj getVariable ["ownerName", "[Beacon]"])];
 	};
+	case (_obj call _isCamonet):
+	{
+		_variables pushBack ["a3w_camoNet", true];
+		_variables pushBack ["R3F_LOG_disabled", true];
+		_variables pushBack ["packing", false];
+		_variables pushBack ["ownerName", toArray (_obj getVariable ["ownerName", ""])];
+	};
+	case (_obj call _isCamera):
+	{
+		_variables pushBack ["a3w_cctv_camera", true];
+		_variables pushBack ["R3F_LOG_disabled", false];
+		_variables pushBack ["camera_name", (_obj getVariable ["camera_name", nil])];
+		_variables pushBack ["camera_owner_type", (_obj getVariable ["camera_owner_type", nil])];
+		_variables pushBack ["camera_owner_value", (_obj getVariable ["camera_owner_value", nil])];
+		_variables pushBack ["mf_item_id", (_obj getVariable ["mf_item_id", nil])];
+	};
+	
 };
 
 _owner = _obj getVariable ["ownerUID", ""];
@@ -62,6 +79,35 @@ if (!isNil "_r3fSide") then
 {
 	_variables pushBack ["R3F_Side", str _r3fSide];
 };
+
+// BASE - SAFE LOCKING Start
+switch (true) do
+{
+	case ( _obj isKindOf "Land_Device_assembled_F"):
+	{
+		{ _variables pushBack [_x select 0, _obj getVariable _x] } forEach
+		[
+			["password", ""],
+			["lights", ""],
+			["lockDown", false]
+		];
+	};
+	case ( _obj isKindOf "Box_NATO_AmmoVeh_F"):
+	{
+		{ _variables pushBack [_x select 0, _obj getVariable _x] } forEach
+		[
+			["password", ""],
+			["lockedSafe", false],
+			["A3W_inventoryLockR3F", false],
+			["R3F_LOG_disabled", false]
+		];		
+	};
+	case ( _obj isKindOf "Land_InfoStand_V2_F"):
+	{
+		_variables pushBack ["password", _obj getVariable ["password", ""]];
+	};
+};
+//BASE - SAFE LOCKING End
 
 _weapons = [];
 _magazines = [];

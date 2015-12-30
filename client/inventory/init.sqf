@@ -27,7 +27,7 @@
 mf_inventory_mutex = false;
 
 MF_INVENTORY_PATH = _this;
-MF_INVENTORY_TAKE_DISTANCE = 2;
+MF_INVENTORY_TAKE_DISTANCE = 1; // Default: 2
 
 // initialize players inventory
 mf_inventory = [];

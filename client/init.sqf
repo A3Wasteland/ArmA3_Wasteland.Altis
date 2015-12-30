@@ -25,12 +25,20 @@ groupManagmentActive = false;
 pvar_PlayerTeamKiller = objNull;
 doCancelAction = false;
 
+//GoT Variables
+firstspawn = 1;
+
+//AJ Beacondetector
+BeaconScanInProgress = false;
+
 //Initialization Variables
 playerCompiledScripts = false;
 playerSetupComplete = false;
 
 waitUntil {!isNull player};
 waitUntil {time > 0.1};
+
+//enableEnvironment false; // Temporary fix for client side FPS problems. Disables all wildlife and environment sounds
 
 removeAllWeapons player;
 player switchMove "";
@@ -136,13 +144,15 @@ A3W_scriptThreads pushBack execVM "addons\fpsFix\vehicleManager.sqf";
 A3W_scriptThreads pushBack execVM "addons\Lootspawner\LSclientScan.sqf";
 [] execVM "client\functions\drawPlayerIcons.sqf";
 [] execVM "addons\far_revive\FAR_revive_init.sqf";
-[] execVM "addons\camera\functions.sqf";
-[] execVM "addons\UAV_Control\functions.sqf";
+[] execVM "addons\camera\functions.sqf";           // Improved admin camera addon
+[] execVM "addons\UAV_Control\functions.sqf";      // Protected UAV addon
+[] execVM "addons\water_edge\functions.sqf";       // Water edge fix
+[] execVM "addons\cctv\functions.sqf";             // CCTV Camera addon
 
 call compile preprocessFileLineNumbers "client\functions\generateAtmArray.sqf";
 [] execVM "client\functions\drawPlayerMarkers.sqf";
 
-// update player's spawn beaoon
+// update player's spawn beacon
 {
 	if (_x getVariable ["ownerUID",""] == getPlayerUID player) then
 	{
@@ -151,8 +161,9 @@ call compile preprocessFileLineNumbers "client\functions\generateAtmArray.sqf";
 	};
 } forEach pvar_spawn_beacons;
 
+{ _x call A3W_fnc_setupAntiExplode } forEach allMissionObjects "LandVehicle";
+{ _x call A3W_fnc_setupAntiExplode } forEach allMissionObjects "Ship";
 { _x call A3W_fnc_setupAntiExplode } forEach allMissionObjects "Air";
-{ _x call A3W_fnc_setupAntiExplode } forEach allMissionObjects "UGV_01_base_F";
 
 {
 	{

@@ -25,11 +25,11 @@ if (_uid call isAdmin) then
 	{
 		_uid = getPlayerUID _x;
 		{if((_x select 0) == _uid) then {_punishCount = (_x select 1);};}forEach pvar_teamKillList;
-		{if((_x select 0) == _uid) then {if(_x select 1 == WEST) then {_lockedSide = "BLUFOR";};if(_x select 1 == EAST) then {_lockedSide = "OPFOR";};};}forEach pvar_teamSwitchList;
+		{if((_x select 0) == _uid) then {if(_x select 1 == WEST) then {_lockedSide = "BLUFOR";};if(_x select 1 == EAST) then {_lockedSide = "OPFOR";};if(_x select 1 == INDEPENDENT) then {_lockedSide = "INDEPENDENT";};};}forEach pvar_teamSwitchList;
 		if(side _x == west) then {_side = "BLUFOR";};
 		if(side _x == east) then {_side = "OPFOR";};
-		if(side _x == INDEPENDENT) then {_side = "Independent";};
-		_namestr = name(_x) + " [UID:" + getplayerUID(_x) + "] [Side:" + format["%1",_side] + "] [Team Lock:"+format["%1",_lockedSide]+"] [Punish Count:" + format["%1",_punishCount]+ "]";
+		if(side _x == INDEPENDENT) then {_side = "INDEPENDENT";};
+		_namestr = name(_x) + " [Punish Count:" + format["%1",_punishCount]+ "] [Side:" + format["%1",_side] + "] [Team Lock:"+format["%1",_lockedSide]+"] [UID:" + getplayerUID(_x) + "]";
 		_index = _playerListBox lbAdd _namestr;
 		_playerListBox lbSetData [_index, str(_x)];
 		_punishCount = 0;

@@ -6,7 +6,7 @@
 
 #include "functions.sqf"
 
-private ["_strToSide", "_maxLifetime", "_isWarchestEntry", "_isBeaconEntry", "_worldDir", "_methodDir", "_objCount", "_objects", "_exclObjectIDs"];
+private ["_strToSide", "_maxLifetime", "_isWarchestEntry", "_isBeaconEntry", "_isCamonetEntry", "_isCameraEntry", "_worldDir", "_methodDir", "_objCount", "_objects", "_exclObjectIDs"];
 
 _strToSide =
 {
@@ -25,6 +25,8 @@ _maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
 
 _isWarchestEntry = { [_variables, "a3w_warchest", false] call fn_getFromPairs };
 _isBeaconEntry = { [_variables, "a3w_spawnBeacon", false] call fn_getFromPairs };
+_isCamonetEntry = { [_variables, "a3w_camoNet", false] call fn_getFromPairs };
+_isCameraEntry = { [_variables, "a3w_cctv_camera", false] call fn_getFromPairs };
 
 _worldDir = "persistence\server\world";
 _methodDir = format ["%1\%2", _worldDir, call A3W_savingMethodDir];
@@ -51,6 +53,8 @@ _exclObjectIDs = [];
 		{
 			case (call _isWarchestEntry):       { _warchestSavingOn };
 			case (call _isBeaconEntry):         { _beaconSavingOn };
+			case (call _isCamonetEntry):        { _camonetSavingOn };
+			case (call _isCameraEntry):         { _cameraSavingOn };
 			case (_class call _isBox):          { _boxSavingOn };
 			case (_class call _isStaticWeapon): { _staticWeaponSavingOn };
 			default                             { _baseSavingOn };
@@ -86,12 +90,13 @@ _exclObjectIDs = [];
 		_obj setVariable ["baseSaving_hoursAlive", _hoursAlive];
 		_obj setVariable ["baseSaving_spawningTime", diag_tickTime];
 		_obj setVariable ["objectLocked", true, true]; // force lock
+		_obj setVariable ["R3F_LOG_Disabled", false, true];
 
 		if (_allowDamage > 0) then
 		{
 			_obj allowDamage true;
 			_obj setDamage _damage;
-			_obj setVariable ["allowDamage", true];
+			_obj setVariable ["allowDamage", true, true];
 		};
 
 		if (!isNil "_owner") then
@@ -107,6 +112,12 @@ _exclObjectIDs = [];
 			{
 				case "side": { _value = _value call _strToSide };
 				case "R3F_Side": { _value = _value call _strToSide };
+				case "lockDown": { _value }; // BASE LOCKER
+				case "Lights": { _value }; // BASE LOCKER
+				case "password": { _value }; // BASE LOCKER - SAFE - DOOR
+				case "lockedSafe": { _value }; // SAFE
+				case "A3W_inventoryLockR3F": { _value }; // SAFE
+				case "R3F_LOG_disabled": { _value }; // SAFE
 				case "ownerName":
 				{
 					switch (typeName _value) do
@@ -127,6 +138,22 @@ _exclObjectIDs = [];
 			_obj setVariable [_var, _value, true];
 		} forEach _variables;
 
+		// CCTV Camera
+		if (isNil "cctv_cameras" || {typeName cctv_cameras != typeName []}) then {
+			cctv_cameras = [];
+			};
+			
+			 if (_obj getVariable ["a3w_cctv_camera",false]) then {
+				cctv_cameras pushBack _obj;
+				publicVariable "cctv_cameras";
+		};
+
+		// Base locker lights
+		if (_obj getVariable ["lights",""] == "off") then
+		{
+			_obj setHit ["light_1_hit", 0.97];
+		};
+
 		clearWeaponCargoGlobal _obj;
 		clearMagazineCargoGlobal _obj;
 		clearItemCargoGlobal _obj;
@@ -141,6 +168,7 @@ _exclObjectIDs = [];
 				publicVariable "pvar_spawn_beacons";
 				true
 			};
+			case (_obj call _isCamonet): { true };
 			case (_locked < 1): { true };
 			default { false };
 		};
@@ -181,7 +209,6 @@ _exclObjectIDs = [];
 			if (!isNil "_turretMags" && _staticWeaponSavingOn && {_class call _isStaticWeapon}) then
 			{
 				_obj setVehicleAmmo 0;
-				{ _obj removeMagazineTurret [_x select 0, _x select 1] } forEach magazinesAllTurrets _obj;
 				{ _obj addMagazine _x } forEach _turretMags;
 			};
 

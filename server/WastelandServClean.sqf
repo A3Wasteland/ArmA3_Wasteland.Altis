@@ -4,7 +4,8 @@
 //	@file Name: WastelandServClean.sqf
 //	@file Author: AgentRev, Wiking, JoSchaap
 
-// runs every X minutes to cleanup items / wrecks
+// runs every X minutes to cleanup items dropped on death over the map
+// you can change the intervals below, be aware to use SECONDS :)
 
 if (!isServer) exitWith {};
 
@@ -19,7 +20,8 @@ if (!isServer) exitWith {};
 
 _objCleanup =
 {
-	_obj = _x;
+	_obj = _this select 0;
+	_isWreck = if (count _this > 1) then { _this select 1 } else { false };
 	_processedDeath = _obj getVariable ["processedDeath", 0];
 	_timeLimit = ITEM_CLEANUP_TIME;
 
@@ -48,22 +50,8 @@ while {true} do
 
 	_delQtyO = 0;
 
-	_isWreck = false;
-	_objCleanup forEach ([0,0,0] nearEntities ["All", 1e11]); // this is actually faster than [entities "All"]
-
-	_isWreck = true;
-	{ _objCleanup forEach allMissionObjects _x } forEach ["CraterLong", "#destructioneffects"];
-
-	// Delete glitched parachutes
-	{
-		if (count crew _x == 0 && isNull attachedTo _x) then
-		{
-			deleteVehicle _x;
-			_delQtyO = _delQtyO + 1;
-		};
-
-		sleep 0.01;
-	} forEach ([0,0,0] nearEntities ["ParachuteBase", 1e11]);
+	{ [_x] call _objCleanup } forEach entities "All";
+	{ { [_x, true] call _objCleanup } forEach allMissionObjects _x } forEach ["CraterLong", "#destructioneffects"];
 
 	diag_log format ["SERVER CLEANUP: Deleted %1 expired objects", _delQtyO];
 

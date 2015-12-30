@@ -8,7 +8,7 @@ private ["_uid", "_side"];
 _uid = param [0, "", [""]];
 _side = param [1, sideUnknown, [sideUnknown]];
 
-if (_uid in ["","0"] || !(_side in [BLUFOR,OPFOR])) exitWith {};
+if (_uid in ["","0"] || !(_side in [BLUFOR,OPFOR,INDEPENDENT])) exitWith {};
 
 [pvar_teamSwitchList, _uid, _side] call fn_setToPairs;
 publicVariable "pvar_teamSwitchList";

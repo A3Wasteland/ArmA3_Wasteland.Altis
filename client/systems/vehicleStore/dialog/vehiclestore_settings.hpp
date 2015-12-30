@@ -34,7 +34,7 @@ class vehshopd
 		class TopBar: IGUIBack
 		{
 			idc = -1;
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0.546,0.59,0.363,0.4};
 
 			#define VehStoreTopBar_H (0.05 * SZ_SCALE)
 
@@ -213,22 +213,19 @@ class vehshopd
 			w = 0.1173 * SZ_SCALE;
 			h = 0.040 * SZ_SCALE;
 		};
-
-		// Submarines transferred in Boats
-		/*
+		
 		class StoreButton6: w_RscButton
 		{
 			idc = vehshop_button6;
-			action = "[6] call populateVehicleStore";
-			text = "Submarines";
+			action = "closeDialog 0;[] execVM 'addons\VehiclePainter\VehiclePainter_Check.sqf'";
+			text = "Repaint Vehicle";
 			sizeEx = VehStoreButton_textSize;
 
 			x = VehStoreMainBG_X + (0.0167 * SZ_SCALE);
-			y = VehStoreMainBG_Y + (0.375 * SZ_SCALE);
+			y = VehStoreMainBG_Y + (0.325 * SZ_SCALE);
 			w = 0.1173 * SZ_SCALE;
 			h = 0.040 * SZ_SCALE;
 		};
-		*/
 	};
 };
 

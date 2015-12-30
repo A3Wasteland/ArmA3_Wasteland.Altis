@@ -29,7 +29,8 @@ _takeable = objNull;
 	_lineOfSightBroken = lineIntersects [_playerPos, _objectPos, player, _x];
 
 	switch (true) do {
-		case (_lineOfSightBroken): {};
+		//case (_lineOfSightBroken): {}; // Disabled because objects weren't visible most of the time
+		case (_x getVariable ["objectLocked", false]): {}; //IP Camera
 		case (_id call mf_inventory_is_full): {};
 		case (_x getVariable ["mf_item_id", ""] != _id): {};
 		default {_takeable = _x};

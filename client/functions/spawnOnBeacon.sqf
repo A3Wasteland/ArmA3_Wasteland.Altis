@@ -7,24 +7,33 @@
 //	@file Created: 08/12/2012 18:30
 //	@file Args:
 
-private ["_data", "_beacon", "_pos", "_owner", "_preload", "_height", "_playerPos"];
+private ["_data", "_beacon", "_pos", "_owner", "_preload", "_height", "_water", "_beaconwaterheight", "_playerPos"];
 _data = _this select 0;
 _beacon = objectFromNetId (_data select 0);
 _pos = _data select 1;
 _owner = _data select 2;
 _preload = param [1, false, [false]];
 _height = (["A3W_spawnBeaconSpawnHeight", 0] call getPublicVar) max 0;
+_water = surfaceIsWater position _beacon;
+_beaconwaterheight = [(getPosASL _beacon select 0) + 3, (getPosASL _beacon select 1) + 3 , (getPosASL _beacon select 2) + 500];
 
 _beacon setVariable ["spawnBeacon_lastUse", diag_tickTime];
 
-if (_height < 25) then
+if (_height < 25 && !_water) then
 {
 	_pos set [2, 0];
 	_playerPos = [_pos,1,25,1,0,0,0] call findSafePos;
 }
 else
 {
+	if (!_water) then
+	{
 	_playerPos = [_pos select 0, _pos select 1, _height];
+	}
+	else
+	{
+	_playerpos = _beaconwaterheight;
+	};
 };
 
 if (_preload) then { waitUntil {preloadCamera _playerPos} };

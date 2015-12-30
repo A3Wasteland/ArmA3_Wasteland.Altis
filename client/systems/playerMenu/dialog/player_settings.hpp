@@ -12,21 +12,22 @@ class playerSettings {
 
 	class controlsBackground {
 
-		class MainBG : IGUIBack {
+		class MainBG : w_RscPicture {
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0.6};
-
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
 			moving = true;
 			x = 0.0; y = 0.1;
 			w = .745; h = 0.65;
 		};
 
-		class TopBar: IGUIBack
+		class TopBar: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.546,0.59,0.363,0.4)";
 
 			x = 0;
 			y = 0.1;
@@ -87,7 +88,7 @@ class playerSettings {
 			x = 0.06; y = 0.313;
 			w = 0.3; h = 0.05;
 		};
-
+		
 		class distanceText : w_RscText {
 			idc = view_range_text;
 			text = "View range:";
@@ -158,11 +159,11 @@ class playerSettings {
 			x = 0.158; y = 0.66;
 			w = 0.225; h = 0.033 * safezoneH;
 		};
-
+		
 		class btnDistanceNear : w_RscButton {
 			idc = -1;
 			text = "Near";
-			onButtonClick = "setViewDistance 1100;";
+			onButtonClick = "setViewDistance 1100; setObjectViewDistance 1100;";
 			x = 0.02; y = 0.43;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
@@ -170,7 +171,7 @@ class playerSettings {
 		class btnDistanceMedium : w_RscButton {
 			idc = -1;
 			text = "Medium";
-			onButtonClick = "setViewDistance 2200;";
+			onButtonClick = "setViewDistance 2200; setObjectViewDistance 2200;";
 			x = 0.02; y = 0.5;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
@@ -178,16 +179,34 @@ class playerSettings {
 		class btnDistanceFar : w_RscButton {
 			idc = -1;
 			text = "Far";
-			onButtonClick = "setViewDistance 3300;";
+			onButtonClick = "setViewDistance 3300; setObjectViewDistance 3300;";
 			x = 0.02; y = 0.57;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
+		
+		/*class btnDistanceCustom : w_RscButton {
+			idc = -1;
+			text = "Custom";
+			onButtonClick = "[] execVM 'custom_view_distance.sqf'";
+			x = 0.158; y = 0.57;
+			w = 0.125; h = 0.033 * safezoneH;
+		};*/ // Disable viewdistance button for now // Not used
 
+		
+		class TOParmaInfoButton : w_RscButton {
+			idc = -1;
+			text = "40-1 Info";
+			onButtonClick = "[] execVM 'addons\TOParmaInfo\loadTOParmaInfo.sqf'";
+			x = 0.228; y = 0.254;
+			w = 0.225; h = 0.033 * safezoneH;
+		};
+				
 		class btnDistanceInsane : w_RscButton {
 			text = "Insane";
 			onButtonClick = "setViewDistance 5000;";
 			x = 0.02; y = 0.60;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
+
 	};
 };
