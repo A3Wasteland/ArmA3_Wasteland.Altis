@@ -23,12 +23,7 @@ switch (playerSide) do {
 		_teamicon = "client\icons\igui_side_opfor_ca.paa";
 		_teamcol = "#ff1111";
 	};
-	case INDEPENDENT: {
-		_teamrules = "STR_WL_YouAreInFFA";
-		_teamicon = "client\icons\igui_side_indep_ca.paa";
-		_teamcol = "#00ff00";
-	};
-	case sideEnemy: {
+	default {
 		_teamrules = "STR_WL_YouAreInFFA";
 		_teamicon = "client\icons\igui_side_indep_ca.paa";
 		_teamcol = "#00ff00";
