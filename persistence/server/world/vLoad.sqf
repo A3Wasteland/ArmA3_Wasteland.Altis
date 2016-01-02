@@ -158,13 +158,21 @@ _exclVehicleIDs = [];
 		};
 
 		_veh setVehicleAmmo 0;
-		{ _veh removeMagazineTurret [_x select 0, _x select 1] } forEach magazinesAllTurrets _veh;
 
 		if (!isNil "_turretMags3") then
 		{
 			{
-				_veh addMagazineTurret [_x select 0, _x select 1];
-				_veh setVehicleAmmo (_x select 2);
+				_mag = _x select 0;
+				_path = _x select 1;
+				_ammoCoef = _x select 2;
+
+				// gotta wait until BIS finally implement add/removeMagazineTurretAmmo...
+				if ({_x == _mag} count (_veh magazinesTurret _path) == 0) then
+				{
+					_veh addMagazineTurret [_mag, _path];
+				};
+
+				_veh setMagazineTurretAmmo [_mag, _ammoCoef * (configFile >> "CfgMagazines" >> _mag >> "count"), _path];
 			} forEach _turretMags3;
 		};
 		if (!isNil "_turretMags") then
