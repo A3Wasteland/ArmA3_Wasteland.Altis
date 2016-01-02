@@ -90,6 +90,7 @@ class CfgRemoteExec // applies only to clients
 	class Functions
 	{
 		mode = 1; // 0 = block all, 1 = whitelist, 2 = allow all
+		#include "client\CfgRemoteExec_fnc.hpp"
 	};
 	class Commands
 	{

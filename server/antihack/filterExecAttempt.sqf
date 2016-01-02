@@ -53,6 +53,8 @@ if (_packetName == "BIS_fnc_MP_packet") then
 			"BIS_fnc_effectKilledSecondaries",
 			"BIS_fnc_objectVar"/*,
 			"JTS_FNC_SENT"*/ // PM Compact by JTS
+
+			// NOTE: You also need to whitelist individual functions in client\CfgRemoteExec_fnc.hpp
 		];
 
 		if (!_whitelisted) then
