@@ -9,6 +9,8 @@ if (!isServer) exitWith {};
 private "_obj";
 _obj = _this select 0;
 
+_obj setVariable [call vChecksum, true];
+
 _obj addEventHandler ["Killed",
 {
 	_obj = _this select 0;
