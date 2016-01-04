@@ -18,7 +18,7 @@ _vehicles = call compile preprocessFileLineNumbers format ["%1\getVehicles.sqf",
 _exclVehicleIDs = [];
 
 {
-	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_owner", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
+	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_owner", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_magsAdded", "_magPathStr", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
 
 	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
 
@@ -159,17 +159,26 @@ _exclVehicleIDs = [];
 
 		_veh setVehicleAmmo 0;
 
+		// PLEASE UPVOTE http://feedback.arma3.com/view.php?id=27207
+
 		if (!isNil "_turretMags3") then
 		{
+			_magsAdded = [];
+
 			{
 				_mag = _x select 0;
 				_path = _x select 1;
 				_ammoCoef = _x select 2;
 
-				// gotta wait until BIS finally implement add/removeMagazineTurretAmmo...
-				if ({_x == _mag} count (_veh magazinesTurret _path) == 0) then
+				_magPathStr = _mag + str _path;
+
+				if ({_x == _magPathStr} count _magsAdded > 0) then
 				{
 					_veh addMagazineTurret [_mag, _path];
+				}
+				else
+				{
+					_magsAdded pushBack _magPathStr;
 				};
 
 				_veh setMagazineTurretAmmo [_mag, _ammoCoef * (configFile >> "CfgMagazines" >> _mag >> "count"), _path];

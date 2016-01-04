@@ -181,7 +181,8 @@ _exclObjectIDs = [];
 			if (!isNil "_turretMags" && _staticWeaponSavingOn && {_class call _isStaticWeapon}) then
 			{
 				_obj setVehicleAmmo 0;
-				{ _obj addMagazine _x } forEach _turretMags; // waiting on removeMagazineTurretAmmo...
+				{ _obj removeMagazineTurret [_x select 0, _x select 1] } forEach magazinesAllTurrets _obj;
+				{ _obj addMagazine _x } forEach _turretMags;
 			};
 
 			if (!isNil "_ammoCargo") then { _obj setAmmoCargo _ammoCargo };
