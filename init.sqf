@@ -6,7 +6,13 @@
 //	@file Author: [404] Deadbeat, [GoT] JoSchaap, AgentRev
 //	@file Description: The main init.
 
+#include "debugFlag.hpp"
+
+#ifdef A3W_DEBUG
+#define DEBUG true
+#else
 #define DEBUG false
+#endif
 
 enableSaving [false, false];
 
