@@ -181,7 +181,7 @@ _exclVehicleIDs = [];
 					_magsAdded pushBack _magPathStr;
 				};
 
-				_veh setMagazineTurretAmmo [_mag, _ammoCoef * (configFile >> "CfgMagazines" >> _mag >> "count"), _path];
+				_veh setMagazineTurretAmmo [_mag, _ammoCoef * getNumber (configFile >> "CfgMagazines" >> _mag >> "count"), _path];
 			} forEach _turretMags3;
 		};
 		if (!isNil "_turretMags") then
