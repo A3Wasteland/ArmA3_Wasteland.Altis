@@ -197,6 +197,8 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 			A3W_extDB_ConfigName = compileFinal str (["A3W_extDB_ConfigName", "A3W"] call getPublicVar);
 			A3W_extDB_IniName = compileFinal str (["A3W_extDB_IniName", "a3wasteland"] call getPublicVar);
 			A3W_extDB_RconName = compileFinal str (["A3W_extDB_RconName", "A3W"] call getPublicVar);
+
+			diag_log format ["[INFO] extDB2 v%1 extension loaded", _version];
 		}
 		else
 		{
