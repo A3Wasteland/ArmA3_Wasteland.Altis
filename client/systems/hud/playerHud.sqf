@@ -237,16 +237,16 @@ while {true} do
 			_activityBackgroundAlpha = 0.4;
 
 			_dispUnitInfo = uiNamespace getVariable ["RscUnitInfo", displayNull];
-			_topLeftBox = _dispUnitInfo displayCtrl 113;
+			_topLeftBox = _dispUnitInfo displayCtrl getNumber (configfile >> "RscInGameUI" >> "RscUnitInfo" >> "CA_BackgroundVehicle" >> "idc"); // idc = 1200
 
 			// If top left vehicle info box is displayed, move activity controls a bit to the right
-			if (ctrlShown _topLeftBox) then
+			if (ctrlShown _topLeftBox && {[_topLeftBox, _activityIconOrigPos] call fn_ctrlOverlapCheck || [_topLeftBox, _activityTextboxOrigPos] call fn_ctrlOverlapCheck}) then
 			{
 				_topLeftBoxPos = ctrlPosition _topLeftBox;
 
 				_hudActivityIcon ctrlSetPosition
 				[
-					(_activityIconOrigPos select 0) + (_topLeftBoxPos select 2) + (0.015 * (safezoneW min safezoneH)),
+					(_topLeftBoxPos select 0) + (_topLeftBoxPos select 2) + (_activityIconOrigPos select 0) - safezoneX,
 					_activityIconOrigPos select 1,
 					_activityIconOrigPos select 2,
 					_activityIconOrigPos select 3
@@ -254,7 +254,7 @@ while {true} do
 
 				_hudActivityTextbox ctrlSetPosition
 				[
-					(_activityTextboxOrigPos select 0) + (_topLeftBoxPos select 2) + (0.015 * (safezoneW min safezoneH)),
+					(_topLeftBoxPos select 0) + (_topLeftBoxPos select 2) + (_activityTextboxOrigPos select 0) - safezoneX,
 					_activityTextboxOrigPos select 1,
 					_activityTextboxOrigPos select 2,
 					_activityTextboxOrigPos select 3
