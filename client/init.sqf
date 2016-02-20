@@ -108,6 +108,9 @@ if (count (["config_territory_markers", []] call getPublicVar) > 0) then
 //Setup player menu scroll action.
 //[] execVM "client\clientEvents\onMouseWheel.sqf";
 
+// Load custom keys from profile
+call compile preprocessFileLineNumbers "client\clientEvents\customKeys.sqf";
+
 //Setup Key Handler
 waitUntil {!isNull findDisplay 46};
 (findDisplay 46) displayAddEventHandler ["KeyDown", onKeyPress];

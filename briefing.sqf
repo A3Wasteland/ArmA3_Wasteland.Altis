@@ -402,7 +402,7 @@ player createDiaryRecord ["infos",
 [
 "Player hotkeys",
 "
-<br/>List of player hotkeys and functions:
+<br/>List of default player hotkeys:
 <br/>
 <br/>" + NKEYNAME(41) + " (open player menu)
 <br/>" + NKEYNAME(207) + " (toggle earplugs)
