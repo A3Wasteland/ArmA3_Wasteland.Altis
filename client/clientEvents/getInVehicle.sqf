@@ -51,3 +51,5 @@ if !(playerSide in [BLUFOR,OPFOR]) then
 		};
 	} forEach crew _veh;
 };
+
+player setVariable ["lastVehicleRidden", netId _veh];
