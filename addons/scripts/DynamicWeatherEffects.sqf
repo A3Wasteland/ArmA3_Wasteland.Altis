@@ -15,11 +15,11 @@ private ["_minimumFog", "_maximumFog", "_minimumOvercast", "_maximumOvercast", "
 private ["_minimumFogDecay", "_maximumFogDecay", "_minimumFogBase", "_maximumFogBase"];
 
 if (isNil "_this") then { _this = [] };
-_initialFog = [_this, 0, -1, [0]] call BIS_fnc_param;
-_initialOvercast = [_this, 1, -1, [0]] call BIS_fnc_param;
-_initialRain = [_this, 2, -1, [0]] call BIS_fnc_param;
-_initialWind = [_this, 3, [-1,-1], [[]]] call BIS_fnc_param;
-_debug = [_this, 4, false, [false]] call BIS_fnc_param;
+_initialFog = param [0, -1, [0]];
+_initialOvercast = param [1, -1, [0]];
+_initialRain = param [2, -1, [0]];
+_initialWind = param [3, [-1,-1], [[]]];
+_debug = param [4, false, [false]];
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The following variables can be changed to tweak weather behaviour

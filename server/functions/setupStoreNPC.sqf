@@ -110,17 +110,20 @@ _building allowDamage false; // disable building damage
 if (isServer) then
 {
 	removeAllWeapons _npc;
+	_createStoreFurniture = compile preprocessFileLineNumbers "server\functions\createStoreFurniture.sqf";
 
 	waitUntil {!isNil "storeConfigDone"};
 
 	{
 		if (_x select 0 == _npcName) exitWith
 		{
-			private "_frontOffset";
+			private ["_frontOffset", "_bPos"];
 
 			//collect our arguments
 			_npcPos = _x select 1;
 			_deskDirMod = _x select 2;
+
+			if (_npcPos < 0) then { _npcPos = 1e9 }; // fix for buildingPos Arma 3 v1.55 change
 
 			if (typeName _deskDirMod == "ARRAY" && {count _deskDirMod > 0}) then
 			{
@@ -175,26 +178,7 @@ if (isServer) then
 			} forEach _storeOwnerAppearance;
 
 			_pDir = getDir _npc;
-
-			private "_bPos";
-			switch (toUpper typeName _npcPos) do
-			{
-				case "SCALAR":
-				{
-					_bPos = _building buildingPos _npcPos;
-				};
-				case "ARRAY":
-				{
-					_bPos = _npcPos;
-				};
-			};
-
 			_bPos = _building buildingPos _npcPos;
-
-			if (!isNil "_frontOffset") then
-			{
-				_bPos = _bPos vectorAdd ([[0, _frontOffset, 0], -_pDir] call BIS_fnc_rotateVector2D);
-			};
 
 			if (_bPos isEqualTo [0,0,0]) then
 			{
@@ -202,10 +186,15 @@ if (isServer) then
 			}
 			else
 			{
+				if (!isNil "_frontOffset") then
+				{
+					_bPos = _bPos vectorAdd ([[0, _frontOffset, 0], -_pDir] call BIS_fnc_rotateVector2D);
+				};
+
 				_npc setPosATL _bPos;
 			};
 
-			_desk = [_npc, _bPos, _pDir, _deskDirMod] call compile preprocessFileLineNumbers "server\functions\createStoreFurniture.sqf";
+			_desk = [_npc, _bPos, _pDir, _deskDirMod] call _createStoreFurniture;
 			_npc setVariable ["storeNPC_cashDesk", netId _desk, true];
 
 			sleep 1;
@@ -265,15 +254,33 @@ if (hasInterface) then
 
 	if (!isNull _desk) then
 	{
-		_desk spawn
+		[_desk, _npcName] spawn
 		{
-			_desk = _this;
+			_desk = _this select 0;
+			_npcName = _this select 1;
+
+			_sellBoxVar = "A3W_sellBox_" + _npcName;
+
 			_createSellBox =
 			{
 				_deskOffset = (getPosASL _desk) vectorAdd ([[-0.05,-0.6,0], -(getDir _desk)] call BIS_fnc_rotateVector2D);
 
-				_sellBox = "Box_IND_Ammo_F" createVehicleLocal ASLtoATL _deskOffset;
-				_sellBox allowDamage false;
+				missionNamespace setVariable [_sellBoxVar, objNull];
+
+				// Box created outside scheduler to prevent its destruction before allowDamage kicks in
+				[[_deskOffset, _sellBoxVar],
+				{
+					_deskOffset = _this select 0;
+					_sellBoxVar = _this select 1;
+
+					_sellBox = "Box_IND_Ammo_F" createVehicleLocal ASLtoATL _deskOffset;
+					_sellBox allowDamage false;
+
+					missionNamespace setVariable [_sellBoxVar, _sellBox];
+				}] execFSM "call.fsm";
+
+				waitUntil {_sellBox = missionNamespace getVariable _sellBoxVar; !isNull _sellBox};
+
 				_sellBox setVariable ["R3F_LOG_disabled", true];
 				_sellBox setVariable ["A3W_storeSellBox", true];
 				_sellBox setObjectTexture [0, ""]; // remove side marking

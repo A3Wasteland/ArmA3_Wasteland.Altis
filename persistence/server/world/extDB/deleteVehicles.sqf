@@ -6,7 +6,7 @@
 
 private ["_vehicles", "_values", "_hcObjSavingOn", "_id"];
 _vehicles = _this;
-_values = "";
+_values = [];
 _hcObjSavingOn = (isServer && ["A3W_hcObjSaving"] call isConfigOn);
 
 {
@@ -28,11 +28,11 @@ _hcObjSavingOn = (isServer && ["A3W_hcObjSaving"] call isConfigOn);
 
 	if (!isNil "_id") then
 	{
-		_values = _values + ((if (_values != "") then { "," } else { "" }) + str _id);
+		_values pushBack str _id;
 	};
 } forEach _vehicles;
 
-if (_values != "") then
+if (count _values > 0) then
 {
-	["deleteServerVehicles:" + _values] call extDB_Database_async;
+	["deleteServerVehicles:" + (_values joinString ",")] call extDB_Database_async;
 };

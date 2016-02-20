@@ -6,8 +6,8 @@
 
 private ["_unit", "_name"];
 
-_unit = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_name = [_this, 1, "", ["",[]]] call BIS_fnc_param;
+_unit = param [0, objNull, [objNull]];
+_name = param [1, "", ["",[]]];
 
 if (!isNull _unit) then
 {

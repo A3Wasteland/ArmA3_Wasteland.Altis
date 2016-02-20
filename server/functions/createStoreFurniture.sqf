@@ -15,7 +15,7 @@ _storeOwner = _this select 0;
 _bPos = _this select 1;
 _pDir = _this select 2;
 _pDDirMod = _this select 3;
-_base = getPos _storeOwner;
+_base = getPosATL _storeOwner;
 
 //create the bench NOTE: was going to use a plastic chair, but the bench looks nicer
 //_chair = "Land_Bench_F" createVehicle _base;
@@ -34,15 +34,14 @@ _base = getPos _storeOwner;
 _pDDirMod = _pDDirMod + 180; // desk model is inverted
 
 _bPos set [2, (_bPos select 2) + 0.05];
+_deskPos = ASLtoATL ((ATLtoASL _bPos) vectorAdd ([[0, -0.8, 0], -_pDDirMod] call BIS_fnc_rotateVector2D));
 
-//create the cashier station
+//create the cashier station.
 _desk = createVehicle ["Land_CashDesk_F", _base, [], 0, "None"];
-//_deskPos = [(_bPos select 0) + 1.2 * sin _pDir, (_bPos select 1) + 1.2 * cos _pDir, _bPos select 2];
-_deskPos = _bPos vectorAdd ([[0, -0.8, 0], -_pDDirMod] call BIS_fnc_rotateVector2D);
+_desk allowDamage false;
 _desk setPosATL _deskPos;
 _desk setDir _pDDirMod;
 _desk setVariable ["R3F_LOG_disabled", true, true];
-_desk allowDamage false;
 _desk disableCollisionWith _storeOwner;
 
 //_chair disableCollisionWith _desk;

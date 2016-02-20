@@ -13,9 +13,9 @@
 
 private ["_veh", "_texture", "_selections", "_textures"];
 
-_veh = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_texture = [_this, 1, "", ["",[]]] call BIS_fnc_param;
-_selections = [_this, 2, [], [[]]] call BIS_fnc_param;
+_veh = param [0, objNull, [objNull]];
+_texture = param [1, "", ["",[]]];
+_selections = param [2, [], [[]]];
 
 if (isNull _veh || count _texture == 0) exitWith {};
 

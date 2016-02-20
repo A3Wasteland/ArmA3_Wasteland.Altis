@@ -18,8 +18,8 @@
 */
 private["_string","_separator","_stringArray","_separatorArray","_resultArray","_localArray"];
 
-_string = [_this,0,"",[""]] call bis_fnc_param;
-_separator = [_this,1,"",[""]] call bis_fnc_param;
+_string = param [0,"",[""]];
+_separator = param [1,"",[""]];
 
 _stringArray = toarray _string;
 _separatorArray = toarray _separator;

@@ -16,23 +16,34 @@ storeSellingHandle = _this spawn
 	if (isNull _veh) exitWith
 	{
 		playSound "FD_CP_Not_Clear_F";
-		["Your previous vehicle does not exist anymore.", "Error"] call  BIS_fnc_guiMessage;
+		["Your previous vehicle was not found.", "Error"] call  BIS_fnc_guiMessage;
 	};
 
 	_objClass = typeOf _veh;
 	_objName = getText (configFile >> "CfgVehicles" >> _objClass >> "displayName");
 
-	if (_veh distance _storeNPC > VEHICLE_MAX_SELLING_DISTANCE) exitWith
+	_checkValidDistance =
 	{
-		playSound "FD_CP_Not_Clear_F";
-		[format ['"%1" is further away than %2m from the store.', _objName, VEHICLE_MAX_SELLING_DISTANCE], "Error"] call  BIS_fnc_guiMessage;
+		if (_veh distance _storeNPC > VEHICLE_MAX_SELLING_DISTANCE) then
+		{
+			playSound "FD_CP_Not_Clear_F";
+			[format ['"%1" is further away than %2m from the store.', _objName, VEHICLE_MAX_SELLING_DISTANCE], "Error"] call  BIS_fnc_guiMessage;
+			false
+		} else { true };
 	};
 
-	if !(player getVariable ["lastVehicleOwner", false]) exitWith
+	_checkValidOwnership =
 	{
-		playSound "FD_CP_Not_Clear_F";
-		[format ['You are not the owner of "%1"', _objName, VEHICLE_MAX_SELLING_DISTANCE], "Error"] call  BIS_fnc_guiMessage;
+		if (!local _veh) then
+		{
+			playSound "FD_CP_Not_Clear_F";
+			[format ['You are not the owner of "%1", try getting in the driver seat.', _objName], "Error"] call  BIS_fnc_guiMessage;
+			false
+		} else { true };
 	};
+
+	if (!call _checkValidDistance) exitWith {};
+	if (!call _checkValidOwnership) exitWith {};
 
 	_sellValue = 0;
 	_originalCargo = CARGO_STRING(_veh);
@@ -65,37 +76,38 @@ storeSellingHandle = _this spawn
 		if (_itemQty > 0 && {count _x > 2}) then
 		{
 			_itemName = _x select 2;
-			_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", [_x select 3] call fn_numbersText] } else { "" }];
+			_confirmMsg = _confirmMsg + format ["<br/>%1 x  %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", [_x select 3] call fn_numbersText] } else { "" }];
 		};
 	} forEach _allVehItems;
 
 	// Display confirmation
 	if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then
 	{
+		if (!call _checkValidDistance) exitWith {};
+		if (!call _checkValidOwnership) exitWith {};
+
 		// Check if somebody else manipulated the cargo since the start
-		if (CARGO_STRING(_veh) == _originalCargo) then
-		{
-			// Have to spawn clearing commands due to mysterious game crash...
-			_clearing = _veh spawn
-			{
-				clearBackpackCargoGlobal _this;
-				clearMagazineCargoGlobal _this;
-				clearWeaponCargoGlobal _this;
-				clearItemCargoGlobal _this;
-			};
-
-			waitUntil {scriptDone _clearing};
-
-			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
-
-			hint format ['You sold the inventory of "%1" for $%2', _objName, _sellValue];
-			playSound "FD_Finish_F";
-		}
-		else
+		if (CARGO_STRING(_veh) != _originalCargo) exitWith
 		{
 			playSound "FD_CP_Not_Clear_F";
 			[format ['The contents of "%1" have changed, please restart the selling process.', _objName], "Error"] call BIS_fnc_guiMessage;
 		};
+
+		// Have to spawn clearing commands due to mysterious game crash...
+		_clearing = _veh spawn
+		{
+			clearBackpackCargoGlobal _this;
+			clearMagazineCargoGlobal _this;
+			clearWeaponCargoGlobal _this;
+			clearItemCargoGlobal _this;
+		};
+
+		waitUntil {scriptDone _clearing};
+
+		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+
+		hint format ['You sold the inventory of "%1" for $%2', _objName, _sellValue];
+		playSound "FD_Finish_F";
 	};
 };
 

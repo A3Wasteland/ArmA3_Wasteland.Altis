@@ -33,21 +33,18 @@ _vars =
 	["Magazines", "_magazines"],
 	["Items", "_items"],
 	["Backpacks", "_backpacks"],
-	["TurretMagazines", "_turretMags"],
+	["TurretMagazines", "_turretMags"], // deprecated
 	["TurretMagazines2", "_turretMags2"],
-	["TurretMagazines3", "_turretMags3"],
+	["TurretMagazines3", "_turretMags3"], // deprecated
 	["AmmoCargo", "_ammoCargo"],
 	["FuelCargo", "_fuelCargo"],
 	["RepairCargo", "_repairCargo"]
 ];
 
-_columns = "";
+_columns = [];
+{ _columns pushBack (_x select 0) } forEach _vars;
 
-{
-	_columns = _columns + ((if (_columns != "") then { "," } else { "" }) + (_x select 0));
-} forEach _vars;
-
-_result = [format ["getServerVehicles:%1:%2:%3", call A3W_extDB_ServerID, call A3W_extDB_MapID, _columns], 2, true] call extDB_Database_async;
+_result = [format ["getServerVehicles:%1:%2:%3", call A3W_extDB_ServerID, call A3W_extDB_MapID, _columns joinString ","], 2, true] call extDB_Database_async;
 
 _vehicles = [];
 

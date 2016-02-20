@@ -18,7 +18,7 @@ _vehicles = call compile preprocessFileLineNumbers format ["%1\getVehicles.sqf",
 _exclVehicleIDs = [];
 
 {
-	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_owner", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
+	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_owner", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_magsAdded", "_magPathStr", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
 
 	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
 
@@ -157,13 +157,38 @@ _exclVehicleIDs = [];
 			} forEach _backpacks;
 		};
 
-		_veh setVehicleAmmo 0;
+		if (!isNil "_turretMags" && !isNil "_turretMags3" && {count _turretMags == 0 && count _turretMags3 == 0}) then
+		{
+			// for vehicles saved from A3 v1.56 and onwards, remove all default mags because empty ones are saved
+			{ _veh removeMagazineTurret [_x select 0, _x select 1] } forEach magazinesAllTurrets _veh;
+		}
+		else
+		{
+			// for older vehicle saves, mark all default mags as empty so it can still be resupplied to its default ammo capacity
+			_veh setVehicleAmmo 0;
+		};
 
 		if (!isNil "_turretMags3") then
 		{
+			_magsAdded = [];
+
 			{
-				_veh addMagazineTurret [_x select 0, _x select 1];
-				_veh setVehicleAmmo (_x select 2);
+				_mag = _x select 0;
+				_path = _x select 1;
+				_ammoCoef = _x select 2;
+
+				_magPathStr = toLower (_mag + str _path);
+
+				if (_magPathStr in _magsAdded) then
+				{
+					_veh addMagazineTurret [_mag, _path];
+				}
+				else
+				{
+					_magsAdded pushBack _magPathStr;
+				};
+
+				_veh setMagazineTurretAmmo [_mag, _ammoCoef * getNumber (configFile >> "CfgMagazines" >> _mag >> "count"), _path];
 			} forEach _turretMags3;
 		};
 		if (!isNil "_turretMags") then

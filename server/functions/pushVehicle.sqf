@@ -9,10 +9,10 @@ private ["_veh", "_caller", "_actionID", "_params", "_vel", "_fwdVel", "_vectorD
 _veh = _this select 0;
 _caller = _this select 1;
 _actionID = _this select 2;
-_params = [_this, 3, [], [[]]] call BIS_fnc_param;
+_params = param [3, [], [[]]];
 
-_vel = [_params, 0, 0, [0]] call BIS_fnc_param;
-_onFoot = [_params, 1, false, [false]] call BIS_fnc_param;
+_vel = _params param [0, 0, [0]];
+_onFoot = _params param [1, false, [false]];
 
 if (_vel != 0) then
 {

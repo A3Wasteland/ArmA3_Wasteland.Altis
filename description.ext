@@ -29,6 +29,14 @@ overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and 
 overviewPicture = "mapConfig\Loading.jpg";
 loadScreen = "mapConfig\Loading.jpg";
 
+#include "debugFlag.hpp"
+
+// A3W UI color (default = sky blue)
+
+#define A3W_UICOLOR_R  0.25 // default = 0.25
+#define A3W_UICOLOR_G  0.51 // default = 0.51
+#define A3W_UICOLOR_B  0.96 // default = 0.96
+
 //Dialog includes
 
 #include "client\gui_base.hpp"
@@ -77,4 +85,26 @@ class CfgFunctions
 class CfgNotifications
 {
 	#include "client\CfgNotifications.hpp"
+};
+
+class CfgRemoteExec // applies only to clients
+{
+	class Functions
+	{
+		#ifndef A3W_DEBUG
+		mode = 1; // 0 = block all, 1 = whitelist, 2 = allow all
+		#else
+		mode = 2; // debug mode, don't touch
+		#endif
+
+		#include "client\CfgRemoteExec_fnc.hpp"
+	};
+	class Commands
+	{
+		#ifndef A3W_DEBUG
+		mode = 1; // 0 = block all, 1 = whitelist, 2 = allow all
+		#else
+		mode = 2; // debug mode, don't touch
+		#endif
+	};
 };

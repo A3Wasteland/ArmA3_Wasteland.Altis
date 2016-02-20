@@ -6,8 +6,8 @@
 
 private ["_player", "_moneyObj", "_money"];
 
-_player = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_moneyObj = [_this, 1, objNull, ["",objNull]] call BIS_fnc_param;
+_player = param [0, objNull, [objNull]];
+_moneyObj = param [1, objNull, ["",objNull]];
 
 if (typeName _moneyObj == "STRING") then
 {

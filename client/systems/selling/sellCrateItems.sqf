@@ -11,14 +11,14 @@
 
 storeSellingHandle = _this spawn
 {
-	_params = [_this, 3, [], [[]]] call BIS_fnc_param;
-	_storeSellBox = [_params, 0, false, [false]] call BIS_fnc_param;
-	_forceSell = [_params, 1, false, [false]] call BIS_fnc_param;
-	_deleteObject = [_params, 2, false, [false]] call BIS_fnc_param;
+	_params = param [3, [], [[]]];
+	_storeSellBox = _params param [0, false, [false]];
+	_forceSell = _params param [1, false, [false]];
+	_deleteObject = _params param [2, false, [false]];
 
 	_crate = if (_storeSellBox) then
 	{
-		[_this, 0, objNull, [objNull]] call BIS_fnc_param
+		param [0, objNull, [objNull]]
 	}
 	else
 	{

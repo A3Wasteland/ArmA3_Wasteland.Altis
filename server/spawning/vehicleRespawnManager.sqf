@@ -155,7 +155,7 @@ while {true} do
 							} forEach playableUnits;
 
 							// Is the last owner within proximity distance
-							if (isPlayer _lastOwner && {_lastDriver distance _veh <= _proxyDistance}) then
+							if (isPlayer _lastOwner && {_lastOwner distance _veh <= _proxyDistance}) then
 							{
 								// Take proximity timer extra into account
 								_proxyExtra = _proxyTimer;

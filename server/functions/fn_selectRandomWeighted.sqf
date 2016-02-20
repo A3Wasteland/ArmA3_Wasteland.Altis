@@ -10,8 +10,8 @@
 
 private ["_array", "_weights", "_arrayCount", "_weightsTotal", "_forEachIndex"];
 
-_array = [_this,0,[],[[]]] call BIS_fnc_param;
-_weights = [_this,1,[],[[]]] call BIS_fnc_param;
+_array = param [0,[],[[]]];
+_weights = param [1,[],[[]]];
 _arrayCount = count _array;
 _weightsTotal = 0;
 
@@ -29,7 +29,7 @@ if (_arrayCount > count _weights) exitWith
 
 {
 	if (_forEachIndex >= _arrayCount) exitWith {};
-	_x = [_x,0,0,[0]] call BIS_fnc_paramIn;
+	_x = _x param [0,0,[0]];
 	_weightsTotal = _weightsTotal + _x;
 } forEach _weights;
 

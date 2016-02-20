@@ -10,8 +10,8 @@ private ["_unit", "_noLauncher", "_weapon"];
 
 if (typeName _this == "ARRAY") then
 {
-	_unit = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-	_noLauncher = [_this, 1, false, [false]] call BIS_fnc_param;
+	_unit = param [0, objNull, [objNull]];
+	_noLauncher = param [1, false, [false]];
 }
 else
 {

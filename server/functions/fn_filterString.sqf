@@ -16,8 +16,8 @@
 */
 
 private ["_text","_filter","_textArray","_filterArray"];
-_text = [_this,0,"",[""]] call bis_fnc_param;
-_filter = [_this,1,"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_",[""]] call bis_fnc_param;
+_text = param [0,"",[""]];
+_filter = param [1,"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_",[""]];
 
 _textArray = toarray _text;
 _filterArray = toarray _filter;

@@ -4,7 +4,7 @@
 //	@file Name: fn_getVehicleProperties.sqf
 //	@file Author: AgentRev
 
-private ["_veh", "_flying", "_class", "_purchasedVehicle", "_missionVehicle", "_pos", "_dir", "_vel", "_fuel", "_damage", "_hitPoints", "_variables", "_owner", "_doubleBSlash", "_textures", "_tex", "_texArr", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_hasDoorGuns", "_turrets", "_path", "_ammoCargo", "_fuelCargo", "_repairCargo", "_props"];
+private ["_veh", "_flying", "_class", "_purchasedVehicle", "_missionVehicle", "_pos", "_dir", "_vel", "_fuel", "_damage", "_hitPoints", "_hpDamage", "_variables", "_owner", "_doubleBSlash", "_textures", "_tex", "_texArr", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_hasDoorGuns", "_turrets", "_path", "_ammoCargo", "_fuelCargo", "_repairCargo", "_props"];
 
 _veh = _this select 0;
 _flying = if (count _this > 1) then { _this select 1 } else { false };
@@ -20,11 +20,11 @@ _vel = velocity _veh;
 _fuel = fuel _veh;
 _damage = damage _veh;
 _hitPoints = [];
+_hpDamage = getAllHitPointsDamage _veh;
 
 {
-	_hitPoint = configName _x;
-	_hitPoints set [count _hitPoints, [_hitPoint, _veh getHitPointDamage _hitPoint]];
-} forEach (_class call getHitPoints);
+	_hitPoints pushBack [_x, (_hpDamage select 2) select _forEachIndex];
+} forEach (_hpDamage select 0);
 
 _variables = [];
 
@@ -50,18 +50,7 @@ _textures = [];
 
 	if (_doubleBSlash) then
 	{
-		_texArr = [];
-
-		{
-			_texArr pushBack _x;
-
-			if (_x == 92) then // backslash
-			{
-				_texArr pushBack 92; // double it
-			};
-		} forEach toArray _tex;
-
-		_tex = toString _texArr;
+		_tex = (_tex splitString "\") joinString "\\";
 	};
 
 	[_textures, _tex, [_x select 0]] call fn_addToPairs;
@@ -81,9 +70,13 @@ if (_class call fn_hasInventory) then
 	_backpacks = (getBackpackCargo _veh) call cargoToPairs;
 };
 
-_turretMags = magazinesAmmo _veh;
+// _turretMags and _turretMags3 are deprecated, leave empty
+_turretMags = []; // magazinesAmmo _veh;
 _turretMags2 = [];
 _turretMags3 = [];
+
+// deprecated
+/*
 _hasDoorGuns = isClass (configFile >> "CfgVehicles" >> _class >> "Turrets" >> "RightDoorGun");
 
 _turrets = allTurrets [_veh, false];
@@ -122,7 +115,14 @@ if (_hasDoorGuns) then
 			};
 		};
 	} forEach (_veh magazinesTurret _path);
-} forEach _turrets;
+} forEach _turrets;*/
+
+{
+	if (_x select 0 != "FakeWeapon") then
+	{
+		_turretMags2 pushBack [_x select 0, _x select 1, _x select 2];
+	};
+} forEach magazinesAllTurrets _veh;
 
 _ammoCargo = getAmmoCargo _veh;
 _fuelCargo = getFuelCargo _veh;

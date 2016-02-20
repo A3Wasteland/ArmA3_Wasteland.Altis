@@ -4,7 +4,7 @@
 //	@file Name: getPlayerData.sqf
 //	@file Author: AgentRev
 
-private ["_player", "_saveLocation", "_data", "_hitPoints", "_hitPoint", "_pos", "_loadedMags", "_mag", "_ammo", "_loaded", "_type", "_wastelandItems"];
+private ["_player", "_saveLocation", "_data", "_hitPoints", "_hpDamage", "_pos", "_loadedMags", "_mag", "_ammo", "_loaded", "_type", "_wastelandItems"];
 _player = _this select 0;
 _saveLocation = if (count _this > 1) then { _this select 1 } else { true };
 
@@ -18,10 +18,11 @@ _data = if (_player == player) then {
 };
 
 _hitPoints = [];
+_hpDamage = getAllHitPointsDamage _player;
+
 {
-	_hitPoint = configName _x;
-	_hitPoints pushBack [_hitPoint, _player getHitPointDamage _hitPoint];
-} forEach (_player call getHitPoints);
+	_hitPoints pushBack [_x, (_hpDamage select 2) select _forEachIndex];
+} forEach (_hpDamage select 0);
 
 { _data pushBack _x } forEach
 [

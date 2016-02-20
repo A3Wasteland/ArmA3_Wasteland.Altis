@@ -6,7 +6,7 @@
 
 private ["_player", "_column", "_val", "_var"];
 
-_team = [_this, 0, sideUnknown, [sideUnknown,grpNull]] call BIS_fnc_param;
+_team = param [0, sideUnknown, [sideUnknown,grpNull]];
 _column = _this select 1;
 _val = 0;
 

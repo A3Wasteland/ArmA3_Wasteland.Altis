@@ -29,7 +29,7 @@ _objs = [];
 	_class = _x select 0;
 	_relPos = _x select 1;
 	_relDir = _x select 2;
-	_init = [_x, 3] call BIS_fnc_param;
+	_init = _x param [3, nil];
 
 	if (count _relPos == 2) then { _relPos set [2, 0] };
 

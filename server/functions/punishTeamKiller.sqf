@@ -5,8 +5,8 @@
 //	@file Author: AgentRev
 
 private ["_player", "_uid", "_nbTKs"];
-_player = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_uid = [_this, 1, "0", [""]] call BIS_fnc_param;
+_player = param [0, objNull, [objNull]];
+_uid = param [1, "0", [""]];
 
 if (_uid == "") exitWith {};
 
