@@ -157,9 +157,16 @@ _exclVehicleIDs = [];
 			} forEach _backpacks;
 		};
 
-		_veh setVehicleAmmo 0;
-
-		// PLEASE UPVOTE http://feedback.arma3.com/view.php?id=27207
+		if (!isNil "_turretMags" && !isNil "_turretMags3" && {count _turretMags == 0 && count _turretMags3 == 0}) then
+		{
+			// for vehicles saved from A3 v1.56 and onwards, remove all default mags because empty ones are saved
+			{ _veh removeMagazineTurret [_x select 0, _x select 1] } forEach magazinesAllTurrets _veh;
+		}
+		else
+		{
+			// for older vehicle saves, mark all default mags as empty so it can still be resupplied to its default ammo capacity
+			_veh setVehicleAmmo 0;
+		};
 
 		if (!isNil "_turretMags3") then
 		{
@@ -170,9 +177,9 @@ _exclVehicleIDs = [];
 				_path = _x select 1;
 				_ammoCoef = _x select 2;
 
-				_magPathStr = _mag + str _path;
+				_magPathStr = toLower (_mag + str _path);
 
-				if ({_x == _magPathStr} count _magsAdded > 0) then
+				if (_magPathStr in _magsAdded) then
 				{
 					_veh addMagazineTurret [_mag, _path];
 				}

@@ -70,9 +70,13 @@ if (_class call fn_hasInventory) then
 	_backpacks = (getBackpackCargo _veh) call cargoToPairs;
 };
 
-_turretMags = magazinesAmmo _veh;
+// _turretMags and _turretMags3 are deprecated, leave empty
+_turretMags = []; // magazinesAmmo _veh;
 _turretMags2 = [];
 _turretMags3 = [];
+
+// deprecated
+/*
 _hasDoorGuns = isClass (configFile >> "CfgVehicles" >> _class >> "Turrets" >> "RightDoorGun");
 
 _turrets = allTurrets [_veh, false];
@@ -111,7 +115,14 @@ if (_hasDoorGuns) then
 			};
 		};
 	} forEach (_veh magazinesTurret _path);
-} forEach _turrets;
+} forEach _turrets;*/
+
+{
+	if (_x select 0 != "FakeWeapon") then
+	{
+		_turretMags2 pushBack [_x select 0, _x select 1, _x select 2];
+	};
+} forEach magazinesAllTurrets _veh;
 
 _ammoCargo = getAmmoCargo _veh;
 _fuelCargo = getFuelCargo _veh;

@@ -33,9 +33,9 @@ _vars =
 	["Magazines", "_magazines"],
 	["Items", "_items"],
 	["Backpacks", "_backpacks"],
-	["TurretMagazines", "_turretMags"],
+	["TurretMagazines", "_turretMags"], // deprecated
 	["TurretMagazines2", "_turretMags2"],
-	["TurretMagazines3", "_turretMags3"],
+	["TurretMagazines3", "_turretMags3"], // deprecated
 	["AmmoCargo", "_ammoCargo"],
 	["FuelCargo", "_fuelCargo"],
 	["RepairCargo", "_repairCargo"]
