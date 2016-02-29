@@ -33,8 +33,8 @@ _this spawn
 		if (!isNull _bag1Cont && !isNull _bag2Cont) exitWith {};
 	} forEach (_unit nearEntities ["GroundWeaponHolder", 25]);
 
-	_bag1Cont hideObjectGlobal true;
-	_bag2Cont hideObjectGlobal true;
+	[_bag1Cont, true] call fn_hideObjectGlobal;
+	[_bag2Cont, true] call fn_hideObjectGlobal;
 };
 
 _unit action ["TakeBag", _bag1];
@@ -43,8 +43,8 @@ _unit action ["TakeBag", _bag1];
 pvar_waitUntilBagTaken = [_unit, _bag1];
 publicVariableServer "pvar_waitUntilBagTaken";
 
-_time = time;
-waitUntil {_unit getVariable ["waitUntilBagTaken", objNull] == _bag1 || time - _time > 3};
+_time = serverTime;
+waitUntil {_unit getVariable ["waitUntilBagTaken", objNull] == _bag1 || serverTime - _time > 3};
 
 if (unitBackpack _unit == _bag1 && _unit getVariable ["waitUntilBagTaken", objNull] == _bag1) then
 {
