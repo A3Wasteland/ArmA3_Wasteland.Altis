@@ -305,7 +305,7 @@ while { true } do
 	{
 		//diag_log str [profileName, getPlayerUID player, _cheatFlag select 0, _cheatFlag select 1];
 
-		[[profileName, getPlayerUID player, _cheatFlag select 0, _cheatFlag select 1, _flagChecksum], "A3W_fnc_flagHandler", false, false] call A3W_fnc_MP;
+		[profileName, getPlayerUID player, _cheatFlag select 0, _cheatFlag select 1, _flagChecksum] remoteExec ["A3W_fnc_flagHandler", 2];
 
 		waitUntil {alive player};
 

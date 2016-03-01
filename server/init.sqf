@@ -267,9 +267,10 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 			{
 				waitUntil {scriptDone _this};
 
-				["A3W_flagCheckOnJoin", "onPlayerConnected", { [_uid, _name] spawn fn_kickPlayerIfFlagged }] call BIS_fnc_addStackedEventHandler;
+				["A3W_flagCheckOnJoin", "onPlayerConnected", { [_uid, _name, _owner] spawn fn_kickPlayerIfFlagged }] call BIS_fnc_addStackedEventHandler;
 
-				{ [getPlayerUID _x, name _x] call fn_kickPlayerIfFlagged } forEach allPlayers;
+				// force check for non-JIP players
+				{ waitUntil {!isNull player}; [player] remoteExec ["A3W_fnc_checkPlayerFlag", 2] } remoteExec ["call", -2];
 			};
 		};
 	};
