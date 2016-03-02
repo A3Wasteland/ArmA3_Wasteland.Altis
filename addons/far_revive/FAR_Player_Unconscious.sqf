@@ -144,14 +144,7 @@ _unit spawn
 
 		if (!STABILIZED(_unit)) then
 		{
-			if (_unlimitedStamina) then
-			{
-				_unit setFatigue 0.4;
-			}
-			else
-			{
-				_unit setFatigue (0.4 max getFatigue _unit);
-			};
+			_unit setFatigue 1;
 		};
 
 		uiSleep 0.25;
@@ -349,7 +342,7 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 
 	if (_unit == player) then
 	{
-		if (_dmg >= 0.5 && isNil "_treatedBy") then
+		if (_dmg > 0.499 && isNil "_treatedBy") then
 		{
 			_time = (_bleedOut - diag_tickTime) call fn_formatTimer;
 
