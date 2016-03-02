@@ -73,8 +73,8 @@ else
 			terminate FAR_Player_Unconscious_thread;
 		};
 
-		closeDialog ReviveBlankGUI_IDD;
-		closeDialog ReviveGUI_IDD;
+		(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
+		(findDisplay ReviveGUI_IDD) closeDisplay 0;
 
 		FAR_Player_Unconscious_thread = [_unit, _source] spawn FAR_Player_Unconscious;
 

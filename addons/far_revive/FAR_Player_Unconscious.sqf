@@ -224,7 +224,7 @@ if (isPlayer _unit) then
 	if (_unit == player) then
 	{
 		FAR_cutTextLayer cutText ["", "BLACK IN"];
-		closeDialog ReviveBlankGUI_IDD;
+		(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
 
 		if (createDialog "ReviveGUI") then
 		{
@@ -421,5 +421,5 @@ else // Player bled out
 
 if (_unit == player) then
 {
-	closeDialog ReviveGUI_IDD;
+	(findDisplay ReviveGUI_IDD) closeDisplay 0;
 };

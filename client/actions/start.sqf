@@ -50,6 +50,6 @@ waitUntil {
 	_start +_length < time or _failed;
 };
 [player, _previousAnim] call switchMoveGlobal;
-closeDialog 10101;
+_display closeDisplay 0;
 a3w_actions_mutex = false;
 not _failed;
