@@ -71,7 +71,7 @@ if (isServer) then
 	// Broadcast server rules
 	if (loadFile (externalConfigFolder + "\serverRules.sqf") != "") then
 	{
-		[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"] remoteExec ["BIS_fnc_execVM", 0, true];
+		[[call compile preprocessFileLineNumbers (externalConfigFolder + "\serverRules.sqf")], "client\functions\defineServerRules.sqf"] remoteExec ["execVM", -2, true];
 	};
 };
 
