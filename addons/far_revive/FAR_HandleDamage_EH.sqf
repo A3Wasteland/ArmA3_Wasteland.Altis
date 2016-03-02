@@ -41,7 +41,7 @@ if (UNCONSCIOUS(_unit)) then
 				_oldDamage = _damage min 0.5;
 			};
 
-			_damage = ((_damage - _oldDamage) * FAR_DamageMultiplier) + _oldDamage;
+			_damage = ((_damage - _oldDamage) min 5) * FAR_DamageMultiplier + _oldDamage; // max damage inflicted per hit is capped (via min 5) to prevent insta-bleedout
 
 			if (_criticalHit) then
 			{
