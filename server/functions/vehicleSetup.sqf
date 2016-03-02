@@ -28,7 +28,7 @@ if (getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") < 1) then
 	_vehicle disableTIEquipment true;
 };
 
-_vehicle setUnloadInCombat [true, false]; // Prevent AI gunners from getting out of vehicle while in combat if it's in working condition
+_vehicle setUnloadInCombat [false, false]; // Try to prevent AI from getting out of vehicles while in combat (not sure if this actually works...)
 
 {
 	_vehicle setVariable ["A3W_hitPoint_" + getText (_x >> "name"), configName _x, true];
