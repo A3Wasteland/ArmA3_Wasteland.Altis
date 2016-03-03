@@ -18,7 +18,7 @@ if (isNil "_this") then { _this = [] };
 _initialFog = param [0, -1, [0]];
 _initialOvercast = param [1, -1, [0]];
 _initialRain = param [2, -1, [0]];
-_initialWind = param [3, [-1,-1], [[]]];
+_initialWind = param [3, [], [[]]];
 _debug = param [4, false, [false]];
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,8 +75,8 @@ _maximumRain = 0.5;
 _minimumWind = 0;
 
 // Wind vector strength never exceeds this value. Must be greater or equal to 0 and greater than or equal to _minimumWind.
-// (Suggested value: 8).
-_maximumWind = 8;
+// (Suggested value: 7.5).
+_maximumWind = 7.5;
 
 // Probability in percent for wind to change when weather changes. If set to 0 then wind will never change. If set to 100 then rain will
 // change every time the weather (fog or overcast) start to change. (Suggested value: 25);
@@ -241,7 +241,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 		if (typeName _targetWeatherValue == "ARRAY") then {
 			_targetWeatherValue = _targetWeatherValue select 0;
 		};
-		_timeUntilCompletion setFog [_targetWeatherValue max (_currentRain / 4), 0.001, 1000];;
+		_timeUntilCompletion setFog [_targetWeatherValue max (_currentRain / 4), 0.001, 1000];
 	};
 };
 
@@ -273,7 +273,7 @@ if (isServer) then {
 			_currentWeatherChange = "";
 		};
 
-		drn_DynamicWeatherEventArgs = [overcast, fog, drn_var_DynamicWeather_Rain, _currentWeatherChange, drn_DynamicWeather_WeatherTargetValue, _timeUntilCompletion, drn_DynamicWeather_WindX, drn_DynamicWeather_WindZ];
+		drn_DynamicWeatherEventArgs = [overcast, fog, drn_var_DynamicWeather_Rain, _currentWeatherChange, drn_DynamicWeather_WeatherTargetValue, _timeUntilCompletion, drn_DynamicWeather_WindX, drn_DynamicWeather_WindY];
 		publicVariable "drn_DynamicWeatherEventArgs";
 		drn_DynamicWeatherEventArgs spawn drn_fnc_DynamicWeather_SetWeatherLocal;
 	};
@@ -286,8 +286,8 @@ if (isServer) then {
 	drn_DynamicWeather_WeatherTargetValue = 0;
 	drn_DynamicWeather_WeatherChangeStartedTime = time;
 	drn_DynamicWeather_WeatherChangeCompletedTime = time;
-	drn_DynamicWeather_WindX = _initialWind select 0;
-	drn_DynamicWeather_WindZ = _initialWind select 1;
+	drn_DynamicWeather_WindX = _initialWind param [0, nil, [0]];
+	drn_DynamicWeather_WindY = _initialWind param [1, nil, [0]];
 
 	if (_initialFog == -1) then {
 		_initialFog = (_minimumFog + random (_maximumFog - _minimumFog));
@@ -339,27 +339,19 @@ if (isServer) then {
 	0 setFog [fog max (drn_var_DynamicWeather_Rain / 4), 0.001, 1000];
 
 
-	_maxWind = _minimumWind + random (_maximumWind - _minimumWind);
-
-	if (drn_DynamicWeather_WindX == -1) then {
-		if (random 100 < 50) then {
-			drn_DynamicWeather_WindX = -_minimumWind - random (_maxWind - _minimumWind);
-		}
-		else {
-			drn_DynamicWeather_WindX = _minimumWind + random (_maxWind - _minimumWind);
-		};
+	if (isNil "drn_DynamicWeather_WindX") then {
+		drn_DynamicWeather_WindX = (_minimumWind + random (_maximumWind - _minimumWind)) * (1 - 2 * round random 1);
+	} else {
+		drn_DynamicWeather_WindX = drn_DynamicWeather_WindX min _maximumWind max -_maximumWind;
 	};
 
-	if (drn_DynamicWeather_WindZ == -1) then {
-		if (random 100 < 50) then {
-			drn_DynamicWeather_WindZ = -_minimumWind - random (_maxWind - _minimumWind);
-		}
-		else {
-			drn_DynamicWeather_WindZ = _minimumWind + random (_maxWind - _minimumWind);
-		};
+	if (isNil "drn_DynamicWeather_WindY") then {
+		drn_DynamicWeather_WindY = (_minimumWind + random (_maximumWind - _minimumWind)) * (1 - 2 * round random 1);
+	} else {
+		drn_DynamicWeather_WindY = drn_DynamicWeather_WindY min _maximumWind max -_maximumWind;
 	};
 
-	setWind [drn_DynamicWeather_WindX, drn_DynamicWeather_WindZ, true];
+	setWind [drn_DynamicWeather_WindX, drn_DynamicWeather_WindY, true];
 
 	if (!isNil "drn_JIPWeatherSync") then
 	{
@@ -510,26 +502,13 @@ if (isServer) then {
 			};
 
 			// On average every one fourth of weather changes, change wind too
-			if (random 100 < _windChangeProbability) then {
-				private ["_maxWind"];
-
-				_maxWind = _minimumWind + random (_maximumWind - _minimumWind);
-
-				if (random 100 < 50) then {
-					drn_DynamicWeather_WindX = -_minimumWind - random (_maxWind - _minimumWind);
-				}
-				else {
-					drn_DynamicWeather_WindX = _minimumWind + random (_maxWind - _minimumWind);
-				};
-				if (random 100 < 50) then {
-					drn_DynamicWeather_WindZ = -_minimumWind - random (_maxWind - _minimumWind);
-				}
-				else {
-					drn_DynamicWeather_WindZ = _minimumWind + random (_maxWind - _minimumWind);
-				};
+			if (random 100 < _windChangeProbability) then
+			{
+				drn_DynamicWeather_WindX = (_minimumWind + random (_maximumWind - _minimumWind)) * (1 - 2 * round random 1);
+				drn_DynamicWeather_WindY = (_minimumWind + random (_maximumWind - _minimumWind)) * (1 - 2 * round random 1);
 
 				if (_debug) then {
-					["Wind changes: [" + str drn_DynamicWeather_WindX + ", " + str drn_DynamicWeather_WindZ + "]."] call drn_fnc_DynamicWeather_ShowDebugTextAllClients;
+					["Wind changes: [" + str drn_DynamicWeather_WindX + ", " + str drn_DynamicWeather_WindY + "]."] call drn_fnc_DynamicWeather_ShowDebugTextAllClients;
 				};
 			};
 

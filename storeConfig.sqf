@@ -756,8 +756,7 @@ helicoptersArray = compileFinal str
 	["PO-30 Orca (Armed, Hex)", "O_Heli_Light_02_F", 35000, "vehicle"], // Armed Ka-60
 	["WY-55 Hellcat (Armed)", "I_Heli_light_03_F", 40000, "vehicle"], // Armed AW159
 	["AH-99 Blackfoot", "B_Heli_Attack_01_F", 50000, "vehicle"], // RAH-66 with gunner
-	["Mi-48 Kajman (Hex)", "O_Heli_Attack_02_F", 60000, "vehicle"], // Mi-28 with gunner
-	["Mi-48 Kajman (Black)", "O_Heli_Attack_02_black_F", 60000, "vehicle"] // Mi-28 with gunner (black camo)
+	["Mi-48 Kajman", "O_Heli_Attack_02_F", 60000, "vehicle"] // Mi-28 with gunner
 ];
 
 planesArray = compileFinal str
@@ -818,6 +817,8 @@ _kartDir = "\A3\soft_f_kart\Kart_01\Data\";
 _mh9Dir = "\A3\air_f\Heli_Light_01\Data\";
 _mohawkDir = "\A3\air_f_beta\Heli_Transport_02\Data\";
 _taruDir = "\A3\air_f_heli\Heli_Transport_04\Data\";
+_wreckDir = "\A3\structures_f\wrecks\data\";
+_gorgonDir = "\A3\armor_f_gamma\APC_Wheeled_03\data\";
 
 colorsArray = compileFinal str
 [
@@ -950,6 +951,49 @@ colorsArray = compileFinal str
 		"O_Heli_Transport_04_fuel_F",
 		[
 			["Black (Taru)", [[2, _taruDir + "heli_transport_04_fuel_black_co.paa"]]]
+		]
+	],
+	[ // Kajman paintjobs
+		"Heli_Attack_02_base_F",
+		[
+			["Black (Kajman)", [
+				[0, "\A3\air_f_beta\Heli_Attack_02\Data\heli_attack_02_body1_black_co.paa"],
+				[1, "\A3\air_f_beta\Heli_Attack_02\Data\heli_attack_02_body2_black_co.paa"]
+			]],
+			["Rusty (Kajman)", [
+				[0, _wreckDir + "wreck_heli_attack_02_body1_co.paa"],
+				[1, _wreckDir + "wreck_heli_attack_02_body2_co.paa"]
+			]],
+			["Mossy (Kajman)", [
+				[0, _wreckDir + "uwreck_heli_attack_02_body1_co.paa"],
+				[1, _wreckDir + "uwreck_heli_attack_02_body2_co.paa"]
+			]]
+		]
+	],
+	[ // Strider NATO color
+		"MRAP_03_base_F",
+		[
+			["NATO Tan (Strider)", [
+				[0, "\A3\soft_f_beta\MRAP_03\Data\mrap_03_ext_co.paa"],
+				[1, "\A3\data_f\vehicles\turret_co.paa"]
+			]]
+		]
+	],
+	[ // Gorgon NATO color
+		"APC_Wheeled_03_base_F",
+		[
+			["NATO Tan (Gorgon)", [
+				[0, _gorgonDir + "apc_wheeled_03_ext_co.paa"],
+				[1, _gorgonDir + "apc_wheeled_03_ext2_co.paa"],
+				[2, _gorgonDir + "rcws30_co.paa"],
+				[3, _gorgonDir + "apc_wheeled_03_ext_alpha_co.paa"]
+			]]
+		]
+	],
+	[ // Hatchback wreck paintjob
+		"Hatchback_01_base_F",
+		[
+			["Rusty (Hatchback)", [[0, _wreckDir + "civilcar_extwreck_co.paa"]]]
 		]
 	]
 ];

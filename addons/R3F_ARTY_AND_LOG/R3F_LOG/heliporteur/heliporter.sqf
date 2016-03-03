@@ -33,7 +33,7 @@ else
 		{
 			if (isNull (_objet getVariable "R3F_LOG_est_transporte_par")) then
 			{
-				if (count crew _objet == 0) then
+				if ({isPlayer _x} count crew _objet == 0) then
 				{
 					// Si l'objet n'est pas en train d'être déplacé par un joueur
 					if (isNull (_objet getVariable "R3F_LOG_est_deplace_par") || (!alive (_objet getVariable "R3F_LOG_est_deplace_par"))) then

@@ -136,8 +136,8 @@ FAR_findKiller = "addons\far_revive\FAR_findKiller.sqf" call mf_compile;
 			if (!isNil "FAR_Player_Unconscious_thread" && {typeName FAR_Player_Unconscious_thread == "SCRIPT" && {!scriptDone FAR_Player_Unconscious_thread}}) then
 			{
 				terminate FAR_Player_Unconscious_thread;
-				closeDialog ReviveBlankGUI_IDD;
-				closeDialog ReviveGUI_IDD;
+				(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
+				(findDisplay ReviveGUI_IDD) closeDisplay 0;
 				FAR_cutTextLayer cutText ["", "PLAIN"];
 				//(FAR_cutTextLayer + 1) cutText ["", "PLAIN"];
 			};

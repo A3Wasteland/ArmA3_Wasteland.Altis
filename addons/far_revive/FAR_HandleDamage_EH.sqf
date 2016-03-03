@@ -41,7 +41,7 @@ if (UNCONSCIOUS(_unit)) then
 				_oldDamage = _damage min 0.5;
 			};
 
-			_damage = ((_damage - _oldDamage) * FAR_DamageMultiplier) + _oldDamage;
+			_damage = ((_damage - _oldDamage) min 5) * FAR_DamageMultiplier + _oldDamage; // max damage inflicted per hit is capped (via min 5) to prevent insta-bleedout
 
 			if (_criticalHit) then
 			{
@@ -65,7 +65,6 @@ else
 
 		_unit allowDamage false;
 		//if (vehicle _unit == _unit) then { [_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal };
-		_unit enableFatigue true;
 		_unit setFatigue 1;
 
 		if (!isNil "FAR_Player_Unconscious_thread" && {typeName FAR_Player_Unconscious_thread == "SCRIPT" && {!scriptDone FAR_Player_Unconscious_thread}}) then
@@ -73,8 +72,8 @@ else
 			terminate FAR_Player_Unconscious_thread;
 		};
 
-		closeDialog ReviveBlankGUI_IDD;
-		closeDialog ReviveGUI_IDD;
+		(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
+		(findDisplay ReviveGUI_IDD) closeDisplay 0;
 
 		FAR_Player_Unconscious_thread = [_unit, _source] spawn FAR_Player_Unconscious;
 

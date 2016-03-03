@@ -62,7 +62,7 @@ storeSellingHandle = _this spawn
 		if (_itemQty > 0 && {count _x > 2}) then
 		{
 			_itemName = _x select 2;
-			_confirmMsg = _confirmMsg + format ["<br/><t font='EtelkaMonospaceProBold'>%1</t> x %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", [_x select 3] call fn_numbersText] } else { "" }];
+			_confirmMsg = _confirmMsg + format ["<br/>%1 x  %2%3", _itemQty, _itemName, if (PRICE_DEBUGGING) then { format [" ($%1)", [_x select 3] call fn_numbersText] } else { "" }];
 		};
 	} forEach _allObjItems;
 

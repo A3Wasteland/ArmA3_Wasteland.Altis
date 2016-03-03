@@ -13,6 +13,8 @@ _group = _this select 1;
 
 while {alive _vehicle && _vehicle getVariable ["R3F_LOG_disabled", false]} do
 {
+	_vehicle setUnloadInCombat [false, false]; // STOP LEAVING THE VEHICLE, STUPID AI
+
 	if ({alive _x && group _x == _group} count crew _vehicle > 0) then
 	{
 		if (locked _vehicle < 3) then { _vehicle lock 3 };

@@ -21,6 +21,8 @@ player createDiaryRecord ["changelog",
 [
 "v1.2b",
 "
+<br/>[Added] Scoreboard scrolling via mousewheel
+<br/>[Added] New paintjobs for Kajman, Strider, Gorgon, Hatchback
 <br/>[Changed] Hostile Heli (single) crates now spawn on touchdown
 <br/>[Changed] Lowered Ifrit center of mass to reduce rollovers
 <br/>[Changed] Updated antihack database
@@ -29,12 +31,16 @@ player createDiaryRecord ["changelog",
 <br/>[Fixed] Items not dropping from vehicle wreck corpses
 <br/>[Fixed] Revive not triggering properly on fatal shot
 <br/>[Fixed] Vehicle turret ammo saving issues
+<br/>[Fixed] Too low damage resistance during revive mode
+<br/>[Fixed] UGVs not airliftable via R3F
+<br/>[Fixed] Revive broken after getting run over by vehicles
 <br/>[Fixed] Veh respawn not being delayed when owner is within 1km
 <br/>[Fixed] All armor values showing 0 in general store
 <br/>[Fixed] Supplies category in general store sometimes empty
 <br/>[Fixed] Server rules not showing anymore in map menu
 <br/>[Fixed] Territory info overlapping with vehicle HUD
 <br/>[Fixed] Vehicle contents selling money exploit
+<br/>[Fixed] Antihack kicks not always working properly
 <br/>[Fixed] Various minor bugfixes and optimizations
 "
 ]];

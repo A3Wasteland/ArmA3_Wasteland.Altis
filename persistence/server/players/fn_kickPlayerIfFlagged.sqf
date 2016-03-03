@@ -4,33 +4,16 @@
 //	@file Name: fn_kickPlayerIfFlagged.sqf
 //	@file Author: AgentRev
 
-private ["_UID", "_name", "_flag"];
+private ["_UID", "_name", "_owner", "_flag"];
 _UID = _this select 0;
 _name = _this select 1;
+_owner = _this select 2;
 
 _flag = _UID call fn_getPlayerFlag;
 
 if (!isNil "_flag" && {count _flag > 1}) then
 {
-	// Super mega awesome dodgy player kick method
-	"Logic" createUnit [[1,1,1], createGroup sideLogic,
-	("this spawn
-	{
-		if (isServer) then
-		{
-			_grp = group _this;
-			deleteVehicle _this;
-			deleteGroup _grp;
-		}
-		else
-		{
-			waitUntil {!isNull player};
-			if (getPlayerUID player == '" + _UID + "') then
-			{
-				call compile preprocessFile 'client\functions\quit.sqf';
-			};
-		};
-	}")];
+	{ call compile preprocessFile "client\functions\quit.sqf" } remoteExecCall ["call", _owner];
 
 	//_oldName = _flag select 0; // always empty for extDB
 	_hackType = _flag select 1;

@@ -12,7 +12,7 @@ _corpse = _this select 1;
 
 if (!local _player) then
 {
-	_player addEventHandler ["WeaponDisassembled", weaponDisassembledServer];
+	//_player addEventHandler ["WeaponDisassembled", weaponDisassembledServer];
 
 	// Bank money reset fix attempt
 	_bmoney = _corpse getVariable "bmoney";

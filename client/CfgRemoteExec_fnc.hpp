@@ -17,6 +17,7 @@ class BIS_fnc_objectVar {};
 class A3W_fnc_adminMenuLog { allowedTargets = 2; };
 class A3W_fnc_chatBroadcast {};
 class A3W_fnc_checkHackedVehicles { allowedTargets = 2; };
+class A3W_fnc_checkPlayerFlag { allowedTargets = 2; };
 class A3W_fnc_copilotTakeControl {};
 class A3W_fnc_flagHandler { allowedTargets = 2; };
 class A3W_fnc_logMemAnomaly { allowedTargets = 2; };
