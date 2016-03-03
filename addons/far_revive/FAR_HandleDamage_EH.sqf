@@ -65,7 +65,6 @@ else
 
 		_unit allowDamage false;
 		//if (vehicle _unit == _unit) then { [_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal };
-		_unit enableFatigue true;
 		_unit setFatigue 1;
 
 		if (!isNil "FAR_Player_Unconscious_thread" && {typeName FAR_Player_Unconscious_thread == "SCRIPT" && {!scriptDone FAR_Player_Unconscious_thread}}) then

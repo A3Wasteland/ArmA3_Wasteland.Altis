@@ -394,11 +394,6 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 
 		// Unmute ACRE
 		_unit setVariable ["ace_sys_wounds_uncon", false];
-
-		if (["A3W_unlimitedStamina"] call isConfigOn) then
-		{
-			_unit enableFatigue false;
-		};
 	}
 	else
 	{
