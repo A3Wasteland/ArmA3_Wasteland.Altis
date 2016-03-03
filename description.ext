@@ -19,7 +19,7 @@ class Header
 {
 	gameType=Sandbox;
 	minPlayers=1;
-	maxPlayers=145; // 144 players, 1 headless client
+	maxPlayers=146; // 144 players, 2 headless clients
 };
 author="AgentRev - A3Wasteland.com"; // it would be if you could keep "A3Wasteland.com" in the name, like "YourName and A3Wasteland.com" :)
 onLoadName = "A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
