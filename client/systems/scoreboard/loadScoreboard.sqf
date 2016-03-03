@@ -11,7 +11,7 @@ disableSerialization;
 
 _code =
 {
-	private ["_bluforColor", "_opforColor", "_indieColor", "_civColor", "_defColor", "_allPlayers", "_scoreOrdering", "_players", "_playerCount", "_playerShown", "_i", "_id", "_entry", "_index", "_player", "_isPlayer", "_bgColor", "_entryBG", "_entryTColor", "_textColor", "_entryRank", "_entryName", "_entryPKills", "_entryAIKills", "_entryDeaths", "_entryRevives", "_entryCaptures", "_teams", "_grp", "_side", "_teamCount", "_playerTeam", "_playerTeamShown", "_team", "_isPlayerTeam", "_isGroup", "_teamName", "_entryTerritories"];
+	private ["_bluforColor", "_opforColor", "_indieColor", "_civColor", "_defColor", "_allPlayers", "_i", "_scoreOrdering", "_players", "_playerCount", "_playerIndex", "_iStart", "_id", "_index", "_entry", "_player", "_isPlayer", "_bgColor", "_entryBG", "_entryTColor", "_textColor", "_entryRank", "_entryName", "_entryPKills", "_entryAIKills", "_entryDeaths", "_entryRevives", "_entryCaptures", "_teams", "_grp", "_side", "_teamCount", "_playerTeam", "_playerTeamIndex", "_team", "_isPlayerTeam", "_isGroup", "_teamName", "_entryTerritories"];
 
 	if (!alive player) then
 	{
@@ -40,21 +40,23 @@ _code =
 		_scoreOrdering = { ((([_x, "playerKills"] call fn_getScore) - ([_x, "teamKills"] call fn_getScore)) * 1000) + ([_x, "aiKills"] call fn_getScore) };
 		_players = [_allPlayers, [], _scoreOrdering, "DESCEND"] call BIS_fnc_sortBy;
 		_playerCount = count _players;
-		_playerShown = isNull player;
+		_playerIndex = _players find player;
+
+		_iStart = A3W_scoreboard_pScrollIndex min (_playerCount - scoreGUI_PList_Length) max 0;
+		A3W_scoreboard_pScrollIndex = _iStart;
 
 		for "_i" from 1 to scoreGUI_PList_Length do
 		{
 			_id = _i - 1;
+			_index = _id + _iStart;
 			_entry = _display displayCtrl scoreGUI_PListEntry(_id);
 
 			if (_playerCount >= _i) then
 			{
-				_index = if (_i == scoreGUI_PList_Length && !_playerShown) then { _players find player } else { _id };
+				if ((_playerIndex < _index && _i == 1) || (_playerIndex > _index && _i == scoreGUI_PList_Length)) then { _index = _playerIndex };
 				_player = if (_index != -1) then { _players select _index };
 				if (isNil "_player") then { _player = objNull };
 				_isPlayer = (_player == player);
-
-				if (_isPlayer) then { _playerShown = true };
 
 				_bgColor = if (_i % 2 == 0) then { [scoreGUI_Entry_BGColor_Default2] } else { [scoreGUI_Entry_BGColor_Default] };
 
@@ -147,22 +149,24 @@ _code =
 		_teams = [_teams, [], _scoreOrdering, "DESCEND"] call BIS_fnc_sortBy;
 		_teamCount = count _teams;
 		_playerTeam = if (playerSide in [BLUFOR,OPFOR]) then { playerSide } else { group player };
-		_playerTeamShown = isNull player;
+		_playerTeamIndex = _teams find _playerTeam;
+
+		_iStart = A3W_scoreboard_tScrollIndex min (_teamCount - scoreGUI_TList_Length) max 0;
+		A3W_scoreboard_tScrollIndex = _iStart;
 
 		for "_i" from 1 to scoreGUI_TList_Length do
 		{
 			_id = _i - 1;
+			_index = _id + _iStart;
 			_entry = _display displayCtrl scoreGUI_TListEntry(_id);
 
 			if (_teamCount >= _i) then
 			{
-				_index = if (_i == scoreGUI_TList_Length && !_playerTeamShown) then { _teams find _playerTeam } else { _id };
+				if ((_playerTeamIndex < _index && _i == 1) || (_playerTeamIndex > _index && _i == scoreGUI_TList_Length)) then { _index = _playerTeamIndex };
 				_team = if (_index != -1) then { _teams select _index };
 				if (isNil "_team") then { _team = sideUnknown };
 				_isPlayerTeam = _team isEqualTo _playerTeam;
-				_isGroup = (typeName _team == "GROUP");
-
-				if (_isPlayerTeam) then { _playerTeamShown = true };
+				_isGroup = _team isEqualType grpNull;
 
 				_bgColor = if (_i % 2 == 0) then { [scoreGUI_Entry_BGColor_Default2] } else { [scoreGUI_Entry_BGColor_Default] };
 
@@ -246,15 +250,38 @@ if (!isNull _display) then
 	};
 };
 
+A3W_scoreboard_pScrollIndex = 0;
+A3W_scoreboard_tScrollIndex = 0;
+
 call _code;
 
 _code spawn
 {
 	disableSerialization;
+	A3W_scoreboard_indexChange = false;
+
+	_scrollEH = (findDisplay 46) displayAddEventHandler ["MouseZChanged",
+	{
+		_change = [-1,1] select (_this select 1 < 0);
+		A3W_scoreboard_pScrollIndex = A3W_scoreboard_pScrollIndex + _change;
+		A3W_scoreboard_tScrollIndex = A3W_scoreboard_tScrollIndex + _change;
+		A3W_scoreboard_indexChange = true;
+	}];
+
 	_display = uiNamespace getVariable ["ScoreGUI", displayNull];
+	_time = 0;
+
 	while {!isNull _display} do
 	{
-		call _this;
-		sleep 1;
+		if (A3W_scoreboard_indexChange || diag_tickTime - _time >= 1) then
+		{
+			A3W_scoreboard_indexChange = false;
+			_time = diag_tickTime;
+			call _this;
+		};
+
+		uiSleep 0.01;
 	};
+
+	(findDisplay 46) displayRemoveEventHandler ["MouseZChanged", _scrollEH];
 };
