@@ -15,6 +15,8 @@ private ["_box", "_boxType", "_boxItems", "_item", "_qty", "_mag"];
 _box = _this select 0;
 _boxType = _this select 1;
 
+_box setVariable [call vChecksum, true];
+
 _box allowDamage false; // No more fucking busted crates
 _box setVariable ["A3W_inventoryLockR3F", true, true];
 

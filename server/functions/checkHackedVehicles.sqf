@@ -15,9 +15,7 @@ _key = _this select 1;
 _hackedVehicles = [];
 
 {
-	_check = _x getVariable [call vChecksum, false];
-
-	if ((_x isKindOf "ReammoBox_F" && {owner _x > 1}) || {!(_x isKindOf "ReammoBox_F") && {typeName _check == "BOOL"} && {!_check}}) then
+	if !((_x getVariable [call vChecksum, false]) isEqualTo true) then
 	{
 		_owner = [owner _x] call findClientPlayer;
 		_name = if (isPlayer _owner) then { name _owner } else { "" };
