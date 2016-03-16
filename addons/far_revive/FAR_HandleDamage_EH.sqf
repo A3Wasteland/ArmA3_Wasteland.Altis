@@ -43,7 +43,7 @@ if (UNCONSCIOUS(_unit)) then
 
 			_damage = ((_damage - _oldDamage) min 5) * FAR_DamageMultiplier + _oldDamage; // max damage inflicted per hit is capped (via min 5) to prevent insta-bleedout
 
-			if (_criticalHit) then
+			if (_criticalHit && _damage < 1) then // prevent setDamage 1 here otherwise the "Killed" EH gets triggered twice
 			{
 				_unit setDamage _damage;
 			};

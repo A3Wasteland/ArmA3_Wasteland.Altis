@@ -86,17 +86,17 @@ _unit spawn
 
 waitUntil {!isNil {_unit getVariable "FAR_killerSuspects"}};
 
-_unit allowDamage true;
+// Find killer
+_killer = _unit call FAR_findKiller;
+_unit setVariable ["FAR_killerPrimeSuspect", _killer];
+
 _unit setDamage 0.5;
+_unit allowDamage true;
 
 if (!isPlayer _unit) then
 {
 	{ _unit disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
 };
-
-// Find killer
-_killer = _unit call FAR_findKiller;
-_unit setVariable ["FAR_killerPrimeSuspect", _killer];
 
 // Injury message
 if (FAR_EnableDeathMessages && difficultyEnabled "deathMessages" && !isNil "_killer") then
