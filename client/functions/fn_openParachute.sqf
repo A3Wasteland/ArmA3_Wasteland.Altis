@@ -4,7 +4,7 @@
 //	@file Name: fn_openParachute.sqf
 //	@file Author: AgentRev
 
-#define PARACHUTE_PRECHECK ({player distance _x < 10 max (sizeOf typeOf _x)} count (player nearEntities ["Helicopter_Base_F", 20]) == 0)
+#define PARACHUTE_PRECHECK ({player distance _x < 10 max sizeOf typeOf _x && count crew _x > 0} count (player nearEntities ["Helicopter_Base_F", 20]) == 0)
 
 if (!alive player || vehicle player != player) exitWith {};
 
