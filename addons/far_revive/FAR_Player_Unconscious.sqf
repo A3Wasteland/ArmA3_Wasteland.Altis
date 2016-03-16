@@ -202,18 +202,17 @@ _unit spawn
 		};
 	};
 
-	waitUntil
+	while {UNCONSCIOUS(_unit)} do
 	{
-		sleep 0.1;
 		_veh = vehicle _unit;
-		_unconscious = UNCONSCIOUS(_unit);
-		((isTouchingGround _veh || (getPos _veh) select 2 < 1) && {vectorMagnitude velocity _unit < 1}) || !_unconscious
-	};
 
-	if (_unconscious && _veh != _unit) then
-	{
-		unassignVehicle _unit;
-		moveOut _unit;
+		if (_veh != _unit && {(isTouchingGround _veh || (getPos _veh) select 2 < 1) && (vectorMagnitude velocity _unit < 1)}) then
+		{
+			moveOut _unit;
+			unassignVehicle _unit;
+		};
+
+		sleep 0.25;
 	};
 };
 
