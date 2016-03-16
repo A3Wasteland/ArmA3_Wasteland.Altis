@@ -598,7 +598,7 @@ allStoreGear = compileFinal str (call headArray + call uniformArray + call vestA
 
 genObjectsArray = compileFinal str
 [
-	["Empty Ammo Crate", "Box_NATO_Ammo_F", 200, "ammocrate"],
+	["Camo Ammo Cache", "Box_FIA_Support_F", 250, "ammocrate"],
 	//["Metal Barrel", "Land_MetalBarrel_F", 25, "object"],
 	//["Toilet Box", "Land_ToiletBox_F", 25, "object"],
 	["Lamp Post (Harbour)", "Land_LampHarbour_F", 100, "object"],
