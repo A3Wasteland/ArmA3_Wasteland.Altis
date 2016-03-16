@@ -195,11 +195,11 @@ class ScoreGUI : IGUIBack
 		#define PListEntryText2_Y PListEntry_Name_Y
 
 		#define PListEntry_TColor_W (0.01 * X_SCALE)
-		#define PListEntry_PKills_W (0.04 * X_SCALE)
-		#define PListEntry_AIKills_W (0.04 * X_SCALE)
-		#define PListEntry_Deaths_W (0.04 * X_SCALE)
-		#define PListEntry_Revives_W (0.04 * X_SCALE)
-		#define PListEntry_Captures_W (0.04 * X_SCALE)
+		#define PListEntry_PKills_W (0.06 * X_SCALE)
+		#define PListEntry_AIKills_W (0.06 * X_SCALE)
+		#define PListEntry_Deaths_W (0.06 * X_SCALE)
+		#define PListEntry_Revives_W (0.06 * X_SCALE)
+		#define PListEntry_Captures_W (0.06 * X_SCALE)
 
 		#define TListEntryControls_X safezoneX
 
