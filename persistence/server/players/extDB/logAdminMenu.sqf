@@ -14,4 +14,6 @@ _actionValue = _this select 3;
 
 if (_actionValue isEqualTo "") exitWith {};
 
-[format ["addAdminLog:%1:%2:%3:%4:%5", call A3W_extDB_ServerID, toString (toArray _playerName - FILTERED_CHARS), _playerUID, _actionType, _actionValue]] call extDB_Database_async;
+if !(_actionValue isEqualType "") then { _actionValue = str _actionValue };
+
+[format ["addAdminLog:%1:%2:%3:%4:%5", call A3W_extDB_ServerID, toString (toArray _playerName - FILTERED_CHARS), _playerUID, _actionType, toString (toArray _actionValue - FILTERED_CHARS)]] call extDB_Database_async;
