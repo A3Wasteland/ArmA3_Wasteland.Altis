@@ -62,24 +62,16 @@ if (isServer) then
 
 	_npc setVariable ["storeNPC_nearestBuilding", netId _building, true];
 
-	_facesCfg = configFile >> "CfgFaces" >> "Man_A3";
 	_faces = [];
 
-	for "_i" from 0 to (count _facesCfg - 1) do
 	{
-		_faceCfg = _facesCfg select _i;
-
-		_faceTex = toArray getText (_faceCfg >> "texture");
-		_faceTex resize 1;
-		_faceTex = toString _faceTex;
-
-		if (_faceTex == "\") then
+		if (getText (_x >> "DLC") == "" && !(((getText (_x >> "texture")) select [0,1]) in ["","#"])) then
 		{
-			_faces pushBack configName _faceCfg;
+			_faces pushBack _x;
 		};
-	};
+	} forEach ("true" configClasses (configFile >> "CfgFaces" >> "Man_A3"));
 
-	_face = _faces call BIS_fnc_selectRandom;
+	_face = configName (_faces call BIS_fnc_selectRandom);
 	_npc setFace _face;
 	_npc setVariable ["storeNPC_face", _face, true];
 }
