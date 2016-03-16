@@ -309,7 +309,7 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 		};
 	};
 
-	if (ceil (_dmg * 100) < 50) then // assume healing by medic
+	if (_dmg <= 0.495) then // assume healing by medic
 	{
 		if (!STABILIZED(_unit)) then
 		{
@@ -342,9 +342,9 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 
 	if (_unit == player) then
 	{
-		if (_dmg > 0.499 && isNil "_treatedBy") then
+		if (_dmg > 0.495 && isNil "_treatedBy") then
 		{
-			_time = (_bleedOut - diag_tickTime) call fn_formatTimer;
+			_time = ((_bleedOut - diag_tickTime) max 0) call fn_formatTimer;
 
 			_progBar progressSetPosition ((_bleedOut - diag_tickTime) / FAR_BleedOut);
 			_progText ctrlSetText _time;
