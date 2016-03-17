@@ -4,7 +4,7 @@
 //	@file Name: FAR_findKiller.sqf
 //	@file Author: AgentRev
 
-private ["_target", "_targetSide", "_vehicle", "_killer", "_ammo", "_vehicleKiller", "_suspects", "_suspectCount", "_driver", "_suspect", "_mags", "_magAmmo", "_magAmmoExpl"];
+private ["_target", "_targetSide", "_vehicle", "_killer", "_ammo", "_vehicleKiller", "_suspects", "_suspectCount", "_firstCrew", "_firstCrewSide", "_driver", "_suspect", "_mags", "_magAmmo", "_magAmmoExpl"];
 
 _target = _this;
 _targetSide = side group _target;
@@ -45,6 +45,7 @@ if (isNull _killer) then
 	if (_suspectCount == 0) exitWith {}; // Crushed by empty vehicle
 
 	_firstCrew = (_suspects select 0) select 0;
+	_firstCrewSide = side group _firstCrew;
 	_driver = driver vehicle _firstCrew;
 
 	_ammo = _target getVariable ["FAR_killerAmmo", ""];
@@ -76,7 +77,7 @@ if (isNull _killer) then
 	// if roadkill but driver bailed out or turret kill but gunner bailed out, and the first crewmember is an enemy, award him the kill, otherwise nobody is blamed
 	if (isNull _killer) then
 	{
-		if (((side group _firstCrew) getFriend _targetSide < 0.6 || (!(_targetSide in [BLUFOR,OPFOR]) && side group _firstCrew == _targetSide))) then
+		if (_targetSide == sideUnknown || _firstCrewSide getFriend _targetSide < 0.6 || (!(_targetSide in [BLUFOR,OPFOR]) && _firstCrewSide == _targetSide)) then
 		{
 			_killer = _firstCrew;
 		};
