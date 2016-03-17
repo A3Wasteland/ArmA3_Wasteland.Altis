@@ -31,24 +31,11 @@ _target setVariable ["FAR_killerVehicle", _source];
 if !(_source isKindOf "CAManBase") then
 {
 	{
-		_suspect = _x;
-		_role = assignedVehicleRole _suspect;
+		_suspect = _x select 0;
+		_path = _x select 3;
 
-		if (count _role > 0) then
-		{
-			_seat = _role select 0;
-
-			if (_seat == "Driver") exitWith
-			{
-				_suspects pushBack [_suspect, _source magazinesTurret [-1]];
-			};
-
-			if (_seat == "Turret") exitWith
-			{
-				_suspects pushBack [_suspect, _source magazinesTurret (_role select 1)];
-			};
-		};
-	} forEach crew _source;
+		_suspects pushBack [_suspect, _source magazinesTurret _path];
+	} forEach fullCrew [_source, "", false];
 };
 
 _target setVariable ["FAR_killerAmmo", _ammo];

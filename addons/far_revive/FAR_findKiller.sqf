@@ -4,9 +4,10 @@
 //	@file Name: FAR_findKiller.sqf
 //	@file Author: AgentRev
 
-private ["_target", "_vehicle", "_killer", "_ammo", "_vehicleKiller", "_suspects", "_suspectCount", "_driver", "_suspect", "_mags", "_magAmmo"];
+private ["_target", "_targetSide", "_vehicle", "_killer", "_ammo", "_vehicleKiller", "_suspects", "_suspectCount", "_driver", "_suspect", "_mags", "_magAmmo", "_magAmmoExpl"];
 
 _target = _this;
+_targetSide = side group _target;
 _vehicle = _target getVariable ["FAR_killerVehicle", objNull];
 
 //systemChat format ["FAR_findKiller %1", [typeOf _target, name _target, typeOf _vehicle]];
@@ -43,33 +44,47 @@ if (isNull _killer) then
 
 	if (_suspectCount == 0) exitWith {}; // Crushed by empty vehicle
 
-	_driver = (_suspects select 0) select 0;
-
-	if (_suspectCount == 1) exitWith { _killer = _driver }; // Killed by lone driver
+	_firstCrew = (_suspects select 0) select 0;
+	_driver = driver vehicle _firstCrew;
 
 	_ammo = _target getVariable ["FAR_killerAmmo", ""];
 
-	if (_ammo == "") exitWith { _killer = _driver }; // Roadkilled by driver
-
+	if (_ammo == "") then
 	{
-		_suspect = _x select 0;
-		_mags = _x select 1;
-
+		if (!isNull _driver) then { _killer = _driver }; // Roadkill with driver still seated
+	}
+	else
+	{
 		{
-			_magAmmo = getText (configFile >> "CfgMagazines" >> _x >> "ammo");
+			_suspect = _x select 0;
+			_mags = _x select 1;
 
-			if (_magAmmo == _ammo || {getText (configFile >> "CfgAmmo" >> _magAmmo >> "explosion") == _ammo}) exitWith // check Explosions
 			{
-				_killer = _suspect; // Killed by turret gunner
-			};
-		} forEach _mags;
+				_magAmmo = getText (configFile >> "CfgMagazines" >> _x >> "ammo");
+				_magAmmoExpl = getText (configFile >> "CfgAmmo" >> _magAmmo >> "explosion"); // Explosive projectile
 
-		if (!isNull _killer) exitWith {};
-	} forEach _suspects;
+				if (_magAmmo == _ammo || _magAmmoExpl == _ammo) exitWith
+				{
+					_killer = _suspect; // Turret kill with gunner still seated
+				};
+			} forEach _mags;
+
+			if (!isNull _killer) exitWith {};
+		} forEach _suspects;
+	};
+
+	// if roadkill but driver bailed out or turret kill but gunner bailed out, and the first crewmember is an enemy, award him the kill, otherwise nobody is blamed
+	if (isNull _killer) then
+	{
+		if (((side group _firstCrew) getFriend _targetSide < 0.6 || (!(_targetSide in [BLUFOR,OPFOR]) && side group _firstCrew == _targetSide))) then
+		{
+			_killer = _firstCrew;
+		};
+	};
 };
 
-//systemChat format ["%1's killer: %2", [typeOf _target, name _target], typeOf _killer];
-//diag_log format ["%1's killer: %2", [typeOf _target, name _target], typeOf _killer];
+//systemChat format ["%1's killer: %2", [typeOf _target, name _target], [_killer, typeOf _killer, assignedVehicleRole _killer]];
+//diag_log format ["%1's killer: %2", [typeOf _target, name _target], [_killer, typeOf _killer, assignedVehicleRole _killer]];
 
 if (_killer == _target) exitWith { objNull }; // Indirect suicide
 
