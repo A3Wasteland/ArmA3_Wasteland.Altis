@@ -34,7 +34,7 @@ if !(_source isKindOf "CAManBase") then
 		_suspect = _x select 0;
 		_path = _x select 3;
 
-		_suspects pushBack [_suspect, _source magazinesTurret _path];
+		_suspects pushBack [_suspect, _source magazinesTurret _path, _path];
 	} forEach fullCrew [_source, "", false];
 };
 
