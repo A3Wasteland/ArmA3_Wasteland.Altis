@@ -68,7 +68,7 @@ if (isNull _killer) then
 				_magAmmo = getText (configFile >> "CfgMagazines" >> _x >> "ammo");
 				_magAmmoExpl = getText (configFile >> "CfgAmmo" >> _magAmmo >> "explosion"); // Explosive projectile
 
-				if (_magAmmo == _ammo || _magAmmoExpl == _ammo) then
+				if (_magAmmo == _ammo || _magAmmoExpl == _ammo) exitWith
 				{
 					_possibleKillers pushBack [_suspect, _path]; // Turret kill with gunner still seated
 				};
