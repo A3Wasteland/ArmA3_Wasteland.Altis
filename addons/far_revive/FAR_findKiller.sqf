@@ -94,7 +94,7 @@ if (isNull _killer) then
 			}
 			else
 			{
-				_killer = _possibleKillers select 0; // cannot get more precise info, so first suspect gets the kill
+				_killer = (_possibleKillers select 0) select 0; // cannot get more precise info, so first suspect gets the kill
 			};
 		};
 	};
