@@ -10,7 +10,7 @@ _unit = _this select 0;
 
 if (_unit getVariable ["playerSpawning", false]) exitWith {0};
 
-_selection = _this select 1;
+_selection = toLower (_this select 1);
 _damage = _this select 2;
 
 if (_selection != "?") then

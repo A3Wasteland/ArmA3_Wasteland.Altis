@@ -90,8 +90,11 @@ waitUntil {!isNil {_unit getVariable "FAR_killerSuspects"}};
 _killer = _unit call FAR_findKiller;
 _unit setVariable ["FAR_killerPrimeSuspect", _killer];
 
+diag_log format ["INCAPACITATED by [%1] with [%2]", _killer, _unit getVariable ["FAR_killerAmmo", ""]];
+
+_unit setVariable ["FAR_reviveModeReady", true];
 _unit setDamage 0.5;
-_unit allowDamage true;
+//_unit allowDamage true;
 
 if (!isPlayer _unit) then
 {
@@ -376,6 +379,7 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 {
 	_unit setDamage 0;
+	_unit setVariable ["FAR_reviveModeReady", false];
 	_unit setVariable ["FAR_killerPrimeSuspect", nil];
 	_unit setVariable ["FAR_killerVehicle", nil];
 	_unit setVariable ["FAR_killerAmmo", nil];

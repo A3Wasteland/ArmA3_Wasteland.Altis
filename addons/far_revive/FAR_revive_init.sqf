@@ -27,6 +27,7 @@ FAR_Reset_Unit =
 	_this setVariable ["FAR_iconBlink", nil, true];
 	_this setVariable ["FAR_draggedBy", nil, true];
 	_this setVariable ["FAR_treatedBy", nil, true];
+	_this setVariable ["FAR_reviveModeReady", false];
 	_this setCaptive false;
 
 	if (isPlayer _this) then

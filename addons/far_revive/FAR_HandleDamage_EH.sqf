@@ -22,13 +22,43 @@ _criticalHit = (_selection in ["","body","head","spine1","spine2","spine3","pelv
 _fatalHit = (_damage >= 1 && alive _unit && _criticalHit);
 
 // Find suspects
-if (((_fatalHit && !isNull _source) || (_criticalHit && UNCONSCIOUS(_unit))) && isNil {_unit getVariable "FAR_killerVehicle"}) then
+if (_fatalHit && !isNull _source && isNil {_unit getVariable "FAR_killerVehicle"}) then
 {
 	[_unit, _source, _ammo] call FAR_setKillerInfo;
 };
 
-if (UNCONSCIOUS(_unit)) then
+//diag_log format ["FAR_HandleDamage_EH %1 - alive: %2", [_unit, _selection, _damage, _source, _ammo], alive _unit];
+
+_reviveReady = _unit getVariable ["FAR_reviveModeReady", false];
+_skipRevive = false;
+
+// skip revive if headshot by another player with non-explosive ammo (regular bullets and sub-50mm APDS rounds)
+if (["A3W_headshotNoRevive"] call isConfigOn && _fatalHit &&
+   {_selection == "head" && _ammo select [0,2] == "B_" && {getNumber (configfile >> "CfgAmmo" >> _ammo >> "explosive") <= 0 && !isNil {_unit getVariable "FAR_killerVehicle"} && !_reviveReady}}) then
 {
+	_killer = _unit call FAR_findKiller;
+
+	if (!isNull _killer) then
+	{
+		_killerGroup = group _killer;
+		_killerSide = side _killerGroup;
+		_unitGroup = group _unit;
+		_unitSide = side _unitGroup;
+
+		_unit setVariable ["FAR_killerPrimeSuspect", _killer];
+
+		if (isPlayer _killer && {_killerSide != _unitSide || (!(_unitSide in [BLUFOR,OPFOR]) && _killerGroup != _unitGroup)}) then // check if enemy
+		{
+			_skipRevive = true;
+			diag_log format ["HEADSHOT by [%1] with [%2]", _killer, _ammo];
+		};
+	};
+};
+
+if (UNCONSCIOUS(_unit) && !_skipRevive) then
+{
+	if (!_reviveReady) exitWith { _damage = 0.5 }; // block additional damage while transitioning to revive mode; allowDamage false prevents proper tracking of lethal headshots
+
 	//if (_selection != "?") then
 	//{
 		_oldDamage = if (_selection == "") then { damage _unit } else { _unit getHit _selection };
@@ -48,11 +78,6 @@ if (UNCONSCIOUS(_unit)) then
 				_unit setDamage _damage;
 			};
 		};
-
-		if (_damage >= 1 && _criticalHit) then
-		{
-			diag_log format ["KILLED by [%1] with [%2]", _source, _ammo];
-		};
 	//};
 }
 else
@@ -60,12 +85,14 @@ else
 	// Allow revive if unit is dead and not in exploded vehicle
 	if (_fatalHit && alive vehicle _unit) then
 	{
-		_unit setVariable ["FAR_isUnconscious", 1, true];
 		[] spawn fn_deletePlayerData;
 
-		_unit allowDamage false;
-		//if (vehicle _unit == _unit) then { [_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal };
-		_unit setFatigue 1;
+		if (!_skipRevive) then
+		{
+			_unit setVariable ["FAR_isUnconscious", 1, true];
+			//_unit allowDamage false;
+			_unit setFatigue 1;
+		};
 
 		if (!isNil "FAR_Player_Unconscious_thread" && {typeName FAR_Player_Unconscious_thread == "SCRIPT" && {!scriptDone FAR_Player_Unconscious_thread}}) then
 		{
@@ -75,11 +102,11 @@ else
 		(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
 		(findDisplay ReviveGUI_IDD) closeDisplay 0;
 
+		if (_skipRevive) exitWith {};
+
 		FAR_Player_Unconscious_thread = [_unit, _source] spawn FAR_Player_Unconscious;
 
 		_damage = 0.5;
-
-		diag_log format ["INCAPACITATED by [%1] with [%2]", _source, _ammo];
 	};
 };
 
