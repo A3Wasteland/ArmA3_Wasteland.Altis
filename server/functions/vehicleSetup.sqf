@@ -123,7 +123,7 @@ switch (true) do
 		_vehicle removeWeaponTurret ["CarHorn", [-1]];
 		_vehicle addWeaponTurret ["SportCarHorn", [-1]];
 	};
-	case (_class isKindOf "Truck_01_base_F");
+	case (_class isKindOf "Truck_01_base_F"):
 	{
 		// Give real truck horn to HEMTT
 		_vehicle removeWeaponTurret ["TruckHorn2", [-1]];
