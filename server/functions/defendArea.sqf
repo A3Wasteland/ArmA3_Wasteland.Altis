@@ -117,4 +117,17 @@ _wp2 setWaypointType "DISMISS";
 	};
 } forEach units _grp;
 
+_grp spawn
+{
+	while {{alive _x} count units _this > 0} do
+	{
+		if (combatMode _this == "YELLOW") then
+		{
+			_this setCombatMode "RED"; // FIRE AT WILL MOTHERFUCKERS!
+		};
+
+		sleep 3;
+	};
+};
+
 true
