@@ -65,7 +65,7 @@ if (_unit == player) then
 {
 	if (createDialog "ReviveBlankGUI") then
 	{
-		//(findDisplay ReviveBlankGUI_IDD) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
+		(findDisplay ReviveBlankGUI_IDD) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
 	};
 
 	[100] call BIS_fnc_bloodEffect;
@@ -76,7 +76,7 @@ if (_unit == player) then
 _unit spawn
 {
 	_unit = _this;
-	sleep 1;
+	sleep 0.5;
 
 	if (UNCONSCIOUS(_unit) && isNil {_unit getVariable "FAR_killerSuspects"}) then
 	{
