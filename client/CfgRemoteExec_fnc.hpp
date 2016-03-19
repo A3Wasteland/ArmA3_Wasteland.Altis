@@ -47,3 +47,4 @@ class A3W_fnc_unflip {};
 // Other third-party
 class APOC_srv_startAirdrop { allowedTargets = 2; };
 class JTS_FNC_SENT {};
+class A3W_fnc_aj_s_refreshZeus {};
