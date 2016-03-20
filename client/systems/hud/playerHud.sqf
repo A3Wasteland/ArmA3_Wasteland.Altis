@@ -309,5 +309,15 @@ while {true} do
 		} forEach _mapCtrls;
 	};
 
+	// Improve aimlocking of all targetted vehicles
+	_curTarget = cursorTarget;
+	if (_curTarget isKindOf "AllVehicles") then
+	{
+		if ((group player) knowsAbout _curTarget < 4) then
+		{
+			(group player) reveal [_curTarget, 4];
+		};
+	};
+
 	uiSleep 1;
 };
