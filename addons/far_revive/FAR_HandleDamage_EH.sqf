@@ -34,7 +34,7 @@ _skipRevive = false;
 
 // skip revive if headshot by another player with non-explosive ammo (regular bullets and sub-50mm APDS rounds)
 if (["A3W_headshotNoRevive"] call isConfigOn && _fatalHit &&
-   {_selection == "head" && _ammo select [0,2] == "B_" && {getNumber (configfile >> "CfgAmmo" >> _ammo >> "explosive") <= 0 && !isNil {_unit getVariable "FAR_killerVehicle"} && !_reviveReady}}) then
+   {_selection in ["head","face_hub"] && _ammo select [0,2] == "B_" && {getNumber (configfile >> "CfgAmmo" >> _ammo >> "explosive") <= 0 && !isNil {_unit getVariable "FAR_killerVehicle"} && !_reviveReady}}) then
 {
 	_killer = _unit call FAR_findKiller;
 
