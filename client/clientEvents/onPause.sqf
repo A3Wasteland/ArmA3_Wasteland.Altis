@@ -48,6 +48,8 @@ if (!isNil "_getPublicVar" && !isNil "_isConfigOn") then
 
 		if (_abortDelay > 0) then
 		{
+			private ["_unconscious", "_timeStamp"];
+
 			_preventAbort =
 			{
 				_unconscious = player call _isUnconscious;
@@ -74,39 +76,42 @@ if (!isNil "_getPublicVar" && !isNil "_isConfigOn") then
 					};
 				};
 
-				while {!isNull findDisplay 49} do
+				waitUntil
 				{
 					if (call _preventAbort) then
 					{
 						with missionNamespace do { [false] spawn fn_savePlayerData };
 						false call _enableButtons;
 
-						private ["_unconscious", "_timeStamp", "_text"];
+						private ["_time", "_timer", "_text"];
+						_time = -1;
 
-						while {call _preventAbort} do
+						waitUntil
 						{
-							if (_unconscious) then
+							if (diag_tickTime - _time >= 1) then
 							{
-								_text = "\n\n\n\nCannot pussy out during bleeding!";
-							}
-							else
-							{
-								_time = with missionNamespace do { (_abortDelay - (diag_tickTime - _timeStamp)) call fn_formatTimer };
+								if (_unconscious) then
+								{
+									_text = "\n\n\n\nCannot pussy out during bleeding!";
+								}
+								else
+								{
+									_timer = with missionNamespace do { (_abortDelay - (diag_tickTime - _timeStamp)) call fn_formatTimer };
+									_text = format ["\nCannot pussy out during combat! (%1)", _timer];
+								};
 
-								_text = format ["\nCannot pussy out during combat! (%1)", _time];
+								cutText [_text, "PLAIN DOWN"];
+								_time = diag_tickTime;
 							};
 
-							cutText [_text, "PLAIN DOWN"];
-							sleep 1;
+							!call _preventAbort
 						};
 
 						true call _enableButtons;
 						cutText ["", "PLAIN DOWN"];
-					}
-					else
-					{
-						uiSleep 0.1;
 					};
+
+					!isNull findDisplay 49
 				};
 
 				missionNamespace setVariable ["onPauseLoopRunning", nil];
