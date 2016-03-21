@@ -111,7 +111,7 @@ class genstored
 		class ItemDescription: w_RscStructuredTextLeft
 		{
 			idc = genstore_item_desc;
-			size = 0.04 * TEXT_SCALE;
+			size = 0.039 * TEXT_SCALE;
 			colorBackground[] = {0, 0, 0, 0.3};
 
 			x = GenStoreMainBG_X + (0.1533 * SZ_SCALE);

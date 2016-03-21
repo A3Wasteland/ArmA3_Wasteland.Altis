@@ -33,6 +33,7 @@ fn_emergencyEject = "client\functions\fn_emergencyEject.sqf" call mf_compile;
 fn_encodeText = "client\functions\fn_encodeText.sqf" call mf_compile;
 fn_fitsInventory = "client\functions\fn_fitsInventory.sqf" call mf_compile;
 fn_formatTimer = "client\functions\fn_formatTimer.sqf" call mf_compile;
+fn_getItemArmor = "client\functions\fn_getItemArmor.sqf" call mf_compile;
 fn_removeAllManagedActions = "client\functions\fn_removeAllManagedActions.sqf" call mf_compile;
 fn_removeManagedAction = "client\functions\fn_removeManagedAction.sqf" call mf_compile;
 fn_forceOpenParachute = "client\functions\fn_forceOpenParachute.sqf" call mf_compile;

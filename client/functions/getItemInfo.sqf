@@ -7,6 +7,8 @@
 //	@file Created: 12/10/2013 22:45
 //	@file Args:
 
+#define CEIL_PRICE(PRICE) (ceil ((PRICE) / 5) * 5)
+
 private ["_itemText", "_itemData", "_price", "_description", "_showAmmo", "_itemEntry", "_parentCfg", "_itemType", "_weapon"];
 
 _itemText = _this select 0;
@@ -151,7 +153,7 @@ if (!isNil "_itemEntry") then
 						//_name = _itemText;
 						_description = "In case you lost your clothes";
 					};
-					case (["_GhillieSuit", _itemType] call fn_findString != -1):
+					case (["Ghillie", _itemType] call fn_findString != -1):
 					{
 						//_name = _itemText;
 						_description = "Disguise as a swamp monster";
@@ -190,7 +192,8 @@ if (!isNil "_itemEntry") then
 
 				if (_price < 0) then
 				{
-					_price = [_itemType] call getCapacity;
+					([_itemType, "Chest"] call fn_getItemArmor) params ["_ballArmor", "_explArmor"];
+					_price = CEIL_PRICE(([_itemType] call getCapacity) / 2 + _ballArmor*3 + _explArmor*2); // price formula also defined in buyItems.sqf
 				};
 			};
 			case "hat":
