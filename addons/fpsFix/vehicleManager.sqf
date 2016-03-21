@@ -69,15 +69,6 @@ A3W_vehicleManager =
 			_vehicle enableSimulation true;
 		};
 
-		// Improve aimlocking of nearby flying helicopters
-		if (_vehicle isKindOf "Air" && {!isTouchingGround _vehicle && sizeOf typeOf _vehicle > 5 && _vehicle distance positionCameraToWorld [0,0,0] < DISABLE_DISTANCE_MOBILE}) then
-		{
-			if ((group player) knowsAbout _vehicle < 1) then
-			{
-				(group player) reveal _vehicle;
-			};
-		};
-
 		if !(_vehicle getVariable ["fpsFix_eventHandlers", false]) then
 		{
 			if (_vehicle isKindOf "AllVehicles" && !_isAnimal) then
