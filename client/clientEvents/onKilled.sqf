@@ -48,7 +48,7 @@ if (_player == player) then
 
 	playerData_infoPairs = nil;
 	playerData_savePairs = nil;
-	//combatTimestamp = -1; // Reset abort timer
+	combatTimestamp = -1; // Reset abort timer
 };
 
 diag_log format ["KILLED by %1", if (isPlayer _killer) then { "player " + str [name _killer, getPlayerUID _killer] } else { _killer }];
