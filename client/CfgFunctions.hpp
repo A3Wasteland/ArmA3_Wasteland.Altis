@@ -7,5 +7,6 @@
 class ClientDir
 {
 	//class postInit {postInit = 1; file = "client\postInit.sqf";};
+	class fixUniVestBug {postInit = 1; file = "client\functions\fn_fixUniVestBug.sqf";};
 	class updateTerritoryMarkers {file = "territory\client\updateTerritoryMarkers.sqf";};
 };

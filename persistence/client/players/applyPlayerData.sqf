@@ -6,17 +6,25 @@
 
 // This is where you load player status & inventory data which will be wiped upon death, for persistent variables use c_applyPlayerInfo.sqf instead
 
-private ["_data", "_name", "_value"];
+private ["_data", "_removal", "_name", "_value"];
 
 _data = _this;
+_removal = param [1, true];
 
-removeAllWeapons player;
-removeAllAssignedItems player;
-removeUniform player;
-removeVest player;
-removeBackpack player;
-removeGoggles player;
-removeHeadgear player;
+if (_removal isEqualTo false) then
+{
+	_data = param [0, [], [[]]];
+}
+else
+{
+	removeAllWeapons player;
+	removeAllAssignedItems player;
+	removeUniform player;
+	removeVest player;
+	removeBackpack player;
+	removeGoggles player;
+	removeHeadgear player;
+};
 
 {
 	_name = _x select 0;
