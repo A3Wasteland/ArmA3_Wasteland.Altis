@@ -39,13 +39,13 @@ switch (_type) do
 		if (_oldItem != "") then
 		{
 			_oldCapacity = [_oldItem] call getCapacity;
-			_armorVals = [_oldItem, "Chest"] call fn_getItemArmor;
+			_armorVals = [_oldItem] call fn_getItemArmor;
 			_oldBallArmor = _armorVals select 0;
 			_oldExplArmor = _armorVals select 1;
 		};
 
 		_newCapacity = [_newItem] call getCapacity;
-		_armorVals = [_newItem, "Chest"] call fn_getItemArmor;
+		_armorVals = [_newItem] call fn_getItemArmor;
 		_newBallArmor = _armorVals select 0;
 		_newExplArmor = _armorVals select 1;
 	};
@@ -66,12 +66,12 @@ switch (_type) do
 
 		if (_oldItem != "") then
 		{
-			_armorVals = [_oldItem, "Head"] call fn_getItemArmor;
+			_armorVals = [_oldItem] call fn_getItemArmor;
 			_oldBallArmor = _armorVals select 0;
 			_oldExplArmor = _armorVals select 1;
 		};
 
-		_armorVals = [_newItem, "Head"] call fn_getItemArmor;
+		_armorVals = [_newItem] call fn_getItemArmor;
 		_newBallArmor = _armorVals select 0;
 		_newExplArmor = _armorVals select 1;
 	};

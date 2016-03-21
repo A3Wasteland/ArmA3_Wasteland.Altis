@@ -192,7 +192,7 @@ if (!isNil "_itemEntry") then
 
 				if (_price < 0) then
 				{
-					([_itemType, "Chest"] call fn_getItemArmor) params ["_ballArmor", "_explArmor"];
+					([_itemType] call fn_getItemArmor) params ["_ballArmor", "_explArmor"];
 					_price = CEIL_PRICE(([_itemType] call getCapacity) / 2 + _ballArmor*3 + _explArmor*2); // price formula also defined in buyItems.sqf
 				};
 			};

@@ -126,7 +126,7 @@ storePurchaseHandle = _this spawn
 
 				if (_x select 3 == "vest") then
 				{
-					([_class, "Chest"] call fn_getItemArmor) params ["_ballArmor", "_explArmor"];
+					([_class] call fn_getItemArmor) params ["_ballArmor", "_explArmor"];
 					_price = CEIL_PRICE(([_class] call getCapacity) / 2 + _ballArmor*3 + _explArmor*2); // price formula also defined in getItemInfo.sqf
 				}
 				else
