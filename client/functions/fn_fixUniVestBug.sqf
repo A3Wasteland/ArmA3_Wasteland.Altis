@@ -16,15 +16,13 @@ if (isServer) then
 	[] spawn
 	{
 		waitUntil {sleep 30; !isNil "A3W_serverSetupComplete"};
-		if !(["A3W_playerSaving"] call isConfigOn) exitWith {};
-
 		while {true} do
 		{
 			sleep 30;
 			{
-				if (alive _x && !(_x getVariable ["playerSpawning", true])) then
+				if (!local _x && alive _x && !(_x getVariable ["playerSpawning", true])) then
 				{
-					[uniform _x, vest _x] remoteExecCall ["A3W_fnc_fixUniVestBug", owner _x];
+					[uniform _x, vest _x] remoteExecCall ["A3W_fnc_fixUniVestBug", _x];
 				};
 				sleep 0.01;
 			} forEach allPlayers;
@@ -33,7 +31,7 @@ if (isServer) then
 }
 else
 {
-	if (!alive player || player getVariable ["playerSpawning", true] || count _this < 2 || !(_this isEqualTypeAll "")) exitWith {};
+	if (count _this < 2 || isNil "playerCompiledScripts" || !alive player || player getVariable ["playerSpawning", true]) exitWith {};
 
 	params ["_sUniform", "_sVest"];
 
@@ -49,6 +47,9 @@ else
 
 		if (_fixUniform) then { _arrFix pushBack "Uniform" };
 		if (_fixVest) then { _arrFix pushBack "Vest" };
+
+		if (isNil "fn_getPlayerData") then { fn_getPlayerData = "persistence\client\players\getPlayerData.sqf" call mf_compile };
+		if (isNil "fn_applyPlayerData") then { fn_applyPlayerData = "persistence\client\players\applyPlayerData.sqf" call mf_compile };
 
 		_data = [[player] call fn_getPlayerData, { [_arrFix, _x select 0] call fn_startsWith }] call BIS_fnc_conditionalSelect;
 
