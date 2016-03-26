@@ -79,4 +79,12 @@ A3W_fnc_checkPlayerFlag =
 	};
 };
 
-"pvar_deletePlayerData" addPublicVariableEventHandler { (_this select 1) spawn fn_deletePlayerSave };
+"pvar_deletePlayerData" addPublicVariableEventHandler
+{
+	_player = param [1, objNull, [objNull]];
+
+	if (isPlayer _player) then
+	{
+		(getPlayerUID _player) spawn fn_deletePlayerSave;
+	};
+};

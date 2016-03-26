@@ -85,7 +85,7 @@ else
 	// Allow revive if unit is dead and not in exploded vehicle
 	if (_fatalHit && alive vehicle _unit) then
 	{
-		[] spawn fn_deletePlayerData;
+		if (_unit == player && !isNil "fn_deletePlayerData") then { call fn_deletePlayerData };
 
 		if (!_skipRevive) then
 		{
