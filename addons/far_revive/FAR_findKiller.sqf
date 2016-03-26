@@ -47,7 +47,7 @@ if (isNull _killer) then
 
 	_firstCrew = (_suspects select 0) select 0;
 	_firstCrewGroup = group _firstCrew;
-	_firstCrewSide = side _firstCrewGroup;
+	//_firstCrewSide = side _firstCrewGroup;
 	_driver = driver _vehicle;
 	_offset = _vehicle worldToModelVisual (_target modelToWorldVisual [0,0,0]);
 
@@ -107,7 +107,7 @@ if (isNull _killer) then
 	// if roadkill but driver bailed out or turret kill but gunner bailed out, and the first crewmember is an enemy, award him the kill, otherwise nobody is blamed
 	if (isNull _killer) then
 	{
-		if (_targetSide == sideUnknown || _firstCrewSide != _targetSide || (!(_targetSide in [BLUFOR,OPFOR]) && _firstCrewGroup != _targetGroup)) then
+		if (_targetSide == sideUnknown || !([_firstCrewGroup, _targetGroup] call A3W_fnc_isFriendly)) then
 		{
 			_killer = _firstCrew;
 		};

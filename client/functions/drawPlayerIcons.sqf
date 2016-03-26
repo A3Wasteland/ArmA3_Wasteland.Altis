@@ -48,7 +48,7 @@ drawPlayerIcons_thread = [] spawn
 			{
 				_unit = _x;
 
-				if (side group _unit == playerSide && // "side group _unit" instead of "side _unit" is because "setCaptive true" when unconscious changes player side to civ (so AI stops shooting)
+				if ([_unit, player] call A3W_fnc_isFriendly &&
 				   {alive _unit &&
 				   (_unit != player || cameraOn != vehicle player) &&
 				   {!(_unit getVariable ["playerSpawning", false]) &&

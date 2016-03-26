@@ -117,7 +117,7 @@ if (["A3W_showGunStoreStatus"] call isConfigOn) then
 			{
 				if (isPlayer _x && alive _x && _x distance _npc < _radius) then
 				{
-					if ((side group _x == playerSide && playerSide in [BLUFOR,OPFOR]) || group _x == group player) then
+					if ([_x, player] call A3W_fnc_isFriendly) then
 					{
 						_friendlyCount = _friendlyCount + 1;
 					}

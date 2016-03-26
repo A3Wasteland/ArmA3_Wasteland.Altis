@@ -21,7 +21,7 @@ _players = allPlayers;
 
 if !(["A3W_atmTransferAllTeams"] call isConfigOn) then
 {
-	_players = [_players, {(side group _x == playerSide && playerSide in [BLUFOR,OPFOR]) || group _x == group player}] call BIS_fnc_conditionalSelect;
+	_players = [_players, { [_x, player] call A3W_fnc_isFriendly }] call BIS_fnc_conditionalSelect;
 };
 
 _oldPlayers = uiNamespace getVariable ["A3W_AtmGUI_players", ""];

@@ -288,7 +288,7 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_IsFriendlyMedic =
 {
-	IS_MEDIC(_this) && !UNCONSCIOUS(_this) && side _this == playerSide && {playerSide in [BLUFOR,OPFOR] || group _this == group player}
+	IS_MEDIC(_this) && !UNCONSCIOUS(_this) && [_this, player] call A3W_fnc_isFriendly
 }
 call mf_compile;
 

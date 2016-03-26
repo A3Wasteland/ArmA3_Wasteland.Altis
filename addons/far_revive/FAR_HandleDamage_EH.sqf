@@ -47,7 +47,7 @@ if (["A3W_headshotNoRevive"] call isConfigOn && _fatalHit &&
 
 		_unit setVariable ["FAR_killerPrimeSuspect", _killer];
 
-		if (isPlayer _killer && {_killerSide != _unitSide || (!(_unitSide in [BLUFOR,OPFOR]) && _killerGroup != _unitGroup)}) then // check if enemy
+		if (isPlayer _killer && !([_killer, _unit] call A3W_fnc_isFriendly)) then // check if enemy
 		{
 			_skipRevive = true;
 			diag_log format ["HEADSHOT by [%1] with [%2]", _killer, _ammo];
