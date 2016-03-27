@@ -22,6 +22,8 @@
 #define playerMenuPlayerList 55505
 #define playerMenuPlayerObject 55507
 #define playerMenuPlayerHealth 55508
+#define playerMenuPlayerUID 55510
+#define playerMenuPlayerSteam 55511
 
 disableSerialization;
 
@@ -46,45 +48,49 @@ if (_uid call isAdmin) then
 	_posText = _dialogPlayer displayCtrl playerMenuPlayerPos;
 	_healthText = _dialogPlayer displayCtrl playerMenuPlayerHealth;
 	_objectText = _dialogPlayer displayCtrl playerMenuPlayerObject;
+	_uidText = _dialogPlayer displayCtrl playerMenuPlayerUID;
+	_steamButton = _dialogPlayer displayCtrl playerMenuPlayerSteam;
 	_playerListBox = _dialogPlayer displayCtrl playerMenuPlayerList;
 
 	_inCar = ["No Passengers"];
 	_driver = "No Driver";
 	if (_type1 == 1) then {
-	    _data1 = _vehicleListBox lbData _index1;
-	    {
-	        if (str(_x) == _data1) exitwith {
-	           _weaponText ctrlSetText format["Weapons: %1",weapons _x];
-	           _speedText ctrlSetText format["Speed: %1",speed _x];
-	           if(!isnull driver _X) then
-	           {
+		_data1 = _vehicleListBox lbData _index1;
+		{
+			if (str(_x) == _data1) exitwith {
+				_weaponText ctrlSetText format["Weapons: %1",weapons _x];
+				_speedText ctrlSetText format["Speed: %1",speed _x];
+				if(!isnull driver _X) then
+				{
 					_driver = name (driver _x);
-	           };
-	           {if(_driver != name _x) then{_inCar set [_forEachIndex, name _x];};}forEach crew _x;
-	           _userText ctrlSetText format["Users: %1 %2",_driver,_inCar];
-	           _damageText ctrlSetText format["Damage: %1",damage _x];
-	        };
-	    } foreach vehicles;
+				};
+				{if(_driver != name _x) then{_inCar set [_forEachIndex, name _x];};}forEach crew _x;
+				_userText ctrlSetText format["Users: %1 %2",_driver,_inCar];
+				_damageText ctrlSetText format["Damage: %1",damage _x];
+			};
+		} foreach vehicles;
 	};
 
 	if (_type1 == 2) then {
-	    _data1 = _playerListBox lbData _index1;
-	    {
-	        if (str(_x) == _data1) exitwith {
-	            _itemsText ctrlSetText format["Items: %1",weapons _x];
-	            _currentGunText ctrlSetText format["Money: %1",_x getVariable "cmoney"];
-	            _skinText ctrlSetText format["Skin: %1",typeOf(_x)];
-	            _posText ctrlSetText format["Position: %1",position _x];
-	            _objectText ctrlSetText format["Slot: %1",_x];
+		_data1 = _playerListBox lbData _index1;
+		{
+			if (getPlayerUID _x == _data1) exitwith {
+				_itemsText ctrlSetText format["Items: %1",weapons _x];
+				_currentGunText ctrlSetText format["Money: %1 - Bank: %2", [_x getVariable ["cmoney",0]] call fn_numbersText, [_x getVariable ["bmoney",0]] call fn_numbersText];
+				_skinText ctrlSetText format["Class: %1",typeOf(_x)];
+				_posText ctrlSetText format["Position: %1",position _x];
+				_objectText ctrlSetText format["Slot: %1",_x];
+				_uidText ctrlSetText format ["UID: %1", getPlayerUID _x];
+				_steamButton ctrlSetStructuredText parseText format ["<a href='http://steamcommunity.com/profiles/%1'><img image='\A3\ui_f\data\gui\RscCommon\RscButtonMenuSteam\steam_ca.paa' size='1.1'/></a>", getPlayerUID _x];
 
-	            //Calculate Health 0 - 100
+				//Calculate Health 0 - 100
 				_decimalPlaces = 2;
 				_health = damage _x;
 				_health = round (_health * (10 ^ _decimalPlaces)) / (10 ^ _decimalPlaces);
 				_health = 100 - (_health * 100);
 
-	            _healthText ctrlSetText format["Health: %1",_health];
-	        };
-	    } foreach playableUnits;
+				_healthText ctrlSetText format["Health: %1",_health];
+			};
+		} foreach allPlayers;
 	};
 };

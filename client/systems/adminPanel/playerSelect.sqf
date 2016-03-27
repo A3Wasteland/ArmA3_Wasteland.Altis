@@ -28,13 +28,13 @@ if (_uid call isAdmin) then
 	_playerData = _playerListBox lbData _index;
 
 	{
-		if (str(_x) == _playerData) then {
+		if (getPlayerUID _x == _playerData) exitWith
+		{
 			_target = _x;
-			_check = 1;
 		};
-	} forEach playableUnits;
+	} forEach allPlayers;
 
-	if (_check == 0) exitWith{};
+	if (isNil "_target" || {isNull _target}) exitWith{};
 
 	switch (_switch) do
 	{
