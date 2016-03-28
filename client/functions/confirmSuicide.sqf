@@ -9,5 +9,5 @@ if (!alive player) exitWith {};
 if (["Are you sure you want to suicide?", "Confirm", "Yes", true] call BIS_fnc_guiMessage) then
 {
 	player allowDamage true;
-	player setDamage 1;
+	if (damage player < 1) then { player setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
 };

@@ -127,7 +127,7 @@ if (FAR_EnableDeathMessages && difficultyEnabled "deathMessages" && !isNil "_kil
 
 if (!alive vehicle _unit) exitWith
 {
-	_unit setDamage 1;
+	if (damage _unit < 1) then { _unit setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
 	FAR_cutTextLayer cutText ["", "PLAIN"];
 };
 
@@ -269,7 +269,7 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 {
 	if (!alive vehicle _unit || (getPosASL _unit) select 2 < -1.5) exitWith
 	{
-		_unit setDamage 1;
+		if (damage _unit < 1) then { _unit setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
 		FAR_cutTextLayer cutText ["", "PLAIN"];
 	};
 
@@ -406,7 +406,7 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 }
 else // Player bled out
 {
-	_unit setDamage 1;
+	if (damage _unit < 1) then { _unit setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
 
 	if (!isPlayer _unit) then
 	{

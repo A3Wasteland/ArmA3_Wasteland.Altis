@@ -36,7 +36,7 @@ if !(player getVariable ["performingDuty", false]) then
 
 			_mine = createMine [_mineType, _pos, [], 0];
 			_mine setDamage 1;
-			player setDamage 1;
+			if (damage player < 1) then { player setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
 			player setVariable ["performingDuty", nil];
 		};
 	}
