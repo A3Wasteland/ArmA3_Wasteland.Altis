@@ -74,30 +74,27 @@ drawPlayerIcons_thread = [] spawn
 							// Revive icon blinking code
 							if (_unit call A3W_fnc_isBleeding) then
 							{
-								_blink = false;
 								_timestamp = _unit getVariable ["FAR_iconBlinkTimestamp", 0];
 								_time = time;
 
-								if (isNil {_unit getVariable "FAR_iconBlink"} || (_time >= _timestamp && _time < _timestamp + 0.3)) then
+								if !(_unit getVariable ["FAR_iconBlink", false]) then
 								{
-									_blink = true;
-
-									if !(_unit getVariable ["FAR_iconBlink", false]) then
+									if (_time >= _timestamp) then
 									{
 										_unit setVariable ["FAR_iconBlink", true];
-										_unit setVariable ["FAR_iconBlinkTimestamp", _time];
+										_unit setVariable ["FAR_iconBlinkTimestamp", _time + 0.3]; // red duration
 									};
 								}
 								else
 								{
-									if (_unit getVariable ["FAR_iconBlink", false]) then
+									if (_time >= _timestamp) then
 									{
 										_unit setVariable ["FAR_iconBlink", false];
-										_unit setVariable ["FAR_iconBlinkTimestamp", _time + 1.25];
+										_unit setVariable ["FAR_iconBlinkTimestamp", _time + 1.25]; // green duration
 									};
 								};
 
-								if (_blink) then
+								if (_unit getVariable ["FAR_iconBlink", false]) then
 								{
 									_color = [1,0,0,_alpha];
 								};
