@@ -94,18 +94,17 @@ else
 			_unit setFatigue 1;
 		};
 
-		if (!isNil "FAR_Player_Unconscious_thread" && {typeName FAR_Player_Unconscious_thread == "SCRIPT" && {!scriptDone FAR_Player_Unconscious_thread}}) then
-		{
-			terminate FAR_Player_Unconscious_thread;
-		};
+		terminate (_unit getVariable ["FAR_Player_Unconscious_thread", scriptNull]);
 
-		(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
-		(findDisplay ReviveGUI_IDD) closeDisplay 0;
+		if (_unit == player) then
+		{
+			(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
+			(findDisplay ReviveGUI_IDD) closeDisplay 0;
+		};
 
 		if (_skipRevive) exitWith {};
 
-		FAR_Player_Unconscious_thread = [_unit, _source] spawn FAR_Player_Unconscious;
-
+		_unit setVariable ["FAR_Player_Unconscious_thread", [_unit, _source] spawn FAR_Player_Unconscious];
 		_damage = 0.5;
 	};
 };

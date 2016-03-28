@@ -241,6 +241,7 @@ if (isPlayer _unit) then
 _unit spawn
 {
 	_unit = _this;
+	if (_unit != player) exitWith {};
 
 	for "_i" from 1 to FAR_BleedOut step 3 do
 	{
@@ -379,14 +380,15 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 {
 	_unit setDamage 0;
-	_unit setVariable ["FAR_reviveModeReady", false];
-	_unit setVariable ["FAR_killerPrimeSuspect", nil];
-	_unit setVariable ["FAR_killerVehicle", nil];
-	_unit setVariable ["FAR_killerAmmo", nil];
-	_unit setVariable ["FAR_killerSuspects", nil];
-	_unit setVariable ["FAR_isStabilized", 0, true];
-	_unit setVariable ["FAR_iconBlink", nil, true];
-	_unit setCaptive false;
+
+	// outside scheduler
+	_resetUnit = [_unit,
+	{
+		_this call FAR_Reset_Unit;
+		_this call FAR_Reset_Killer_Info;
+	}] execFSM "call.fsm";
+
+	waitUntil {completedFSM _resetUnit};
 
 	if (isPlayer _unit) then
 	{
@@ -394,9 +396,6 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 		{
 			[] spawn fn_savePlayerData;
 		};
-
-		// Unmute ACRE
-		_unit setVariable ["ace_sys_wounds_uncon", false];
 	}
 	else
 	{
@@ -411,9 +410,7 @@ else // Player bled out
 
 	if (!isPlayer _unit) then
 	{
-		_unit setVariable ["FAR_isUnconscious", 0, true];
-		_unit setVariable ["FAR_draggedBy", nil, true];
-		_unit setVariable ["FAR_treatedBy", nil, true];
+		_unit call FAR_Reset_Unit;
 	};
 };
 

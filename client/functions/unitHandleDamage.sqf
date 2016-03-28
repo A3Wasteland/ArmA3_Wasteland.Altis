@@ -19,7 +19,7 @@ if (_selection != "?") then
 	_ammo = _this select 4;
 
 	// Reduce impact damage (from vehicle collisions and falling)
-	if (_ammo == "" && (isNull _source || _source == player)) then
+	if (_ammo == "" && (isNull _source || _source == _unit)) then
 	{
 		_oldDamage = if (_selection == "") then { damage _unit } else { _unit getHit _selection };
 
