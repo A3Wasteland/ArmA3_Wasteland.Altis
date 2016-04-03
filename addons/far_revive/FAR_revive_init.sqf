@@ -26,8 +26,13 @@ FAR_Reset_Unit =
 	_this setVariable ["FAR_isStabilized", 0, true];
 	_this setVariable ["FAR_iconBlink", nil, true];
 	_this setVariable ["FAR_draggedBy", nil, true];
+	_this setVariable ["FAR_isDragging", nil, true];
 	_this setVariable ["FAR_treatedBy", nil, true];
-	_this setVariable ["FAR_reviveModeReady", false];
+	_this setVariable ["FAR_isTreating", nil];
+	_this setVariable ["FAR_cancelAutoEject", nil, true];
+	_this setVariable ["FAR_handleStabilize", nil, true];
+	_this setVariable ["FAR_reviveModeReady", nil];
+	_this setVariable ["FAR_headshotHitTimeout", nil];
 	_this setCaptive false;
 
 	if (isPlayer _this) then
@@ -138,7 +143,7 @@ FAR_findKiller = "addons\far_revive\FAR_findKiller.sqf" call mf_compile;
 	};*/
 
 	// Event Handlers
-	player addEventHandler ["Respawn", { [] spawn FAR_Player_Init }];
+	player addEventHandler ["Respawn", FAR_Player_Init];
 	player addEventHandler
 	[
 		"Killed",
@@ -160,6 +165,19 @@ FAR_findKiller = "addons\far_revive\FAR_findKiller.sqf" call mf_compile;
 ////////////////////////////////////////////////
 if (!FAR_Debugging) exitWith {};
 
+FAR_Init_AI_Debug =
+{
+	_this addEventHandler ["HandleDamage", unitHandleDamage];
+	_this addEventHandler ["Killed", { terminate ((_this select 0) getVariable ["FAR_Player_Unconscious_thread", scriptNull]) }];
+	_this setVariable ["FAR_isUnconscious", 0, true];
+	_this setVariable ["FAR_isStabilized", 0, true];
+	_this setVariable ["FAR_draggedBy", objNull, true];
+	_this setVariable ["playerSpawning", false, true];
+	[_this] call fn_remotePlayerSetup;
+	_this setVariable ["FAR_aiDebugSetup", true];
+}
+call mf_compile;
+
 [] spawn
 {
 	while {true} do
@@ -167,10 +185,7 @@ if (!FAR_Debugging) exitWith {};
 		{
 			if (alive _x && local _x && !isPlayer _x && isNil {_x getVariable "FAR_aiDebugSetup"}) then
 			{
-				_x call FAR_Reset_Unit;
-				_x addEventHandler ["HandleDamage", unitHandleDamage];
-				_x setVariable ["playerSpawning", false, true];
-				_x setVariable ["FAR_aiDebugSetup", true];
+				_x call FAR_Init_AI_Debug
 			};
 		} forEach units group player;
 		uiSleep 5;

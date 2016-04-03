@@ -24,3 +24,5 @@ if (!local _player) then
 
 _this call respawnEventServer;
 _player setVariable ["A3W_respawnEH", _player addEventHandler ["Respawn", respawnEventServer]];
+
+_this remoteExec ["fn_remotePlayerSetup", -(owner _player)];

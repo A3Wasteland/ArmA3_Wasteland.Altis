@@ -4,6 +4,7 @@
 //	@file Name: getInVehicle.sqf
 //	@file Author: AgentRev
 
+scopeName "getInVehicle";
 private "_veh";
 _veh = _this select 0;
 
@@ -31,6 +32,19 @@ if (isNil {_veh getVariable "A3W_engineEH"}) then
 	_veh setVariable ["A3W_engineEH", _veh addEventHandler ["Engine", vehicleEngineEvent]];
 };
 
+// Eject Independents of vehicle if it is already used by another group
+if !(playerSide in [BLUFOR,OPFOR]) then
+{
+	{
+		if (isPlayer _x && alive _x && group _x != group player) exitWith 
+		{
+			moveOut player;
+			["You can't enter vehicles being used by enemy groups.", 5] call mf_notify_client;
+			breakOut "getInVehicle";
+		};
+	} forEach crew _veh;
+};
+
 if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_serviceBeaconActions"}) then
 {
 	_veh setVariable ["A3W_serviceBeaconActions",
@@ -40,16 +54,7 @@ if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_ser
 	]];
 };
 
-// Eject Independents of vehicle if it is already used by another group
-if !(playerSide in [BLUFOR,OPFOR]) then
-{
-	{
-		if (isPlayer _x && alive _x && group _x != group player) exitWith 
-		{
-			moveOut player;
-			["You can't enter vehicles being used by enemy groups.", 5] call mf_notify_client;
-		};
-	} forEach crew _veh;
-};
-
 player setVariable ["lastVehicleRidden", netId _veh];
+
+// FAR injured unit vehicle loading
+[_veh] call FAR_Drag_Load_Vehicle;

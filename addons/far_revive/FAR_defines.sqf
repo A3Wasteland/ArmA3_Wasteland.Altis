@@ -35,7 +35,12 @@
 #define STABILIZED(UNIT) (UNIT getVariable ["FAR_isStabilized", 0] == 1)
 #define DRAGGED_BY(UNIT) (UNIT getVariable ["FAR_draggedBy", objNull])
 #define DRAGGED(UNIT) (!isNull DRAGGED_BY(UNIT))
-#define IS_MEDIC(UNIT) ((FAR_ReviveMode > 0 || {getNumber (configfile >> "CfgVehicles" >> typeOf UNIT >> "attendant") > 0}) && (FAR_ReviveMode != 2 || {"Medikit" in items UNIT}))
+#define TREATED_BY(UNIT) (UNIT getVariable ["FAR_treatedBy", objNull])
+#define BEING_TREATED(UNIT) (!isNull TREATED_BY(UNIT))
+#define TREATING(UNIT) (UNIT getVariable ["FAR_isTreating", objNull])
+#define IS_TREATING(UNIT) (!isNull TREATED_BY(UNIT))
+#define IS_MEDICAL_VEHICLE(VEH) (round getNumber (configfile >> "CfgVehicles" >> typeOf VEH >> "attendant") > 0)
+#define IS_MEDIC(UNIT) ((FAR_ReviveMode > 0 || {IS_MEDICAL_VEHICLE(UNIT)}) && (FAR_ReviveMode != 2 || {"Medikit" in items UNIT}))
 
 // For HandleRevive and HandleStabilize
 #define CAN_PERFORM (alive player && !UNCONSCIOUS(player) && UNCONSCIOUS(_target))

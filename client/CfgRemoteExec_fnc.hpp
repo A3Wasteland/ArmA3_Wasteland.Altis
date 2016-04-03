@@ -20,6 +20,7 @@ class A3W_fnc_checkHackedVehicles { allowedTargets = 2; };
 class A3W_fnc_checkPlayerFlag { allowedTargets = 2; };
 class A3W_fnc_copilotTakeControl {};
 class A3W_fnc_flagHandler { allowedTargets = 2; };
+class A3W_fnc_getInFast {};
 class A3W_fnc_logMemAnomaly { allowedTargets = 2; };
 class A3W_fnc_pushVehicle {};
 class A3W_fnc_titleTextMessage {};
