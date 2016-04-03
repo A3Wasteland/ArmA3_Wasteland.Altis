@@ -290,11 +290,11 @@ FAR_Check_Suicide =
 }
 call mf_compile;
 
-
+#define ABDOMEN_ASL(UNIT) (AGLtoASL (UNIT modelToWorldVisual (UNIT selectionPosition "spine1")))
 #define FAR_Target_INVALID(TARGET) (!alive TARGET || (!isPlayer TARGET && !FAR_Debugging) || TARGET distance player > FAR_Max_Distance || !UNCONSCIOUS(TARGET) || BEING_TREATED(TARGET) || DRAGGED(TARGET) || \
-!(lineIntersectsObjs [AGLtoASL (player modelToWorldVisual (player selectionPosition "spine1")), AGLtoASL (TARGET modelToWorldVisual (TARGET selectionPosition "spine1")), TARGET, player, false, 4] isEqualTo []))
+(TARGET != cursorTarget && {!(lineIntersectsObjs [ABDOMEN_ASL(player), ABDOMEN_ASL(TARGET), TARGET, player, false, 4] isEqualTo [])}))
 
-// lineIntersectsObjs is to check whether or not there is a wall between an imaginary line that goes from the medic's abdomen to the target's abdomen.
+// lineIntersectsObjs is to check whether or not there is a wall between an imaginary line that goes from the medic's abdomen to the target's abdomen, if the target is not being aimed at directly
 
 ////////////////////////////////////////////////
 // Find target for actions
