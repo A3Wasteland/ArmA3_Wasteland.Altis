@@ -38,7 +38,7 @@ switch (toLower _action) do
 
 	case "action_slay":
 	{
-		(call FAR_FindTarget) setDamage 1;
+		call FAR_Slay_Target;
 	};
 
 	case "action_load":

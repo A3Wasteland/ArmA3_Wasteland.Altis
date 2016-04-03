@@ -230,6 +230,18 @@ FAR_Eject_Injured =
 }
 call mf_compile;
 
+FAR_Slay_Target =
+{
+	private "_target";
+	_target = call FAR_FindTarget;
+
+	if ([_target] call FAR_Check_Slay) then
+	{
+		_target setDamage 1;
+	};
+}
+call mf_compile;
+
 ////////////////////////////////////////////////
 // Event handler for public variables
 ////////////////////////////////////////////////
@@ -349,9 +361,9 @@ call mf_compile;
 FAR_Check_Slay =
 {
 	private "_target";
-	_target = call FAR_FindTarget;
+	_target = if (_this isEqualType []) then { param [0,objNull,[objNull]] } else { call FAR_FindTarget }; // if not array then it's an addAction condition check
 
-	!([_this, player] call A3W_fnc_isFriendly) && FAR_Check_Dragging
+	!([_target, player] call A3W_fnc_isFriendly) && FAR_Check_Dragging
 }
 call mf_compile;
 
