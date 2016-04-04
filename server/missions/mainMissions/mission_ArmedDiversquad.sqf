@@ -42,6 +42,16 @@ _setupObjects =
 	_vehicle setPosASL _missionPos;
 	_vehicle lockDriver true;
 
+	[_vehicle, [
+		["itm", "U_B_Wetsuit", 2],
+		["itm", "U_O_Wetsuit", 2],
+		["itm", "U_I_Wetsuit", 2],
+		["itm", "V_RebreatherB", 2],
+		["itm", "G_Diving", 2],
+		["wep", "arifle_SDAR_F", 2],
+		["mag", "20Rnd_556x45_UW_mag", 8]
+	]] call processItems;
+
 	_aiGroup = createGroup CIVILIAN;
 	[_aiGroup, _missionPos] call createLargeDivers;
 
