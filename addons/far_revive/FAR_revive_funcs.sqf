@@ -132,13 +132,19 @@ FAR_Drag =
 	player playMoveNow "AcinPknlMstpSrasWrflDnon";
 
 	_target attachTo [player, [0, 1.1, 0.092]];
-	_target setDir 180;
 	_target setVariable ["FAR_draggedBy", player, true];
 	player setVariable ["FAR_isDragging", _target];
 
 	// Rotation fix
-	FAR_isDragging_EH = _target;
-	publicVariable "FAR_isDragging_EH";
+	if (local _target) then
+	{
+		["FAR_isDragging_EH", _target] call FAR_public_EH;
+	}
+	else
+	{
+		FAR_isDragging_EH = _target;
+		publicVariable "FAR_isDragging_EH";
+	};
 
 	// Add release action and save its id so it can be removed
 	_actions =
@@ -255,7 +261,20 @@ FAR_public_EH =
 	// FAR_isDragging
 	if (_EH == "FAR_isDragging_EH") then
 	{
-		_value setDir 180;
+		if (local _value) then
+		{
+			_value setDir 180;
+			_value spawn // fix for hovering on release
+			{
+				_unit = _this;
+				waitUntil {sleep 0.1; !alive _unit || vehicle _unit != _unit || isNull attachedTo _unit};
+
+				if (alive _unit && vehicle _unit == _unit && isNull attachedTo _unit) then
+				{
+					_unit setVelocity velocity _unit;
+				};
+			};
+		};
 	};
 
 	// FAR_deathMessage
