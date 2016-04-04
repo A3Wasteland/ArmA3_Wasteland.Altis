@@ -58,7 +58,16 @@ player addEventHandler ["WeaponAssembled",
 {
 	_player = _this select 0;
 	_obj = _this select 1;
-	if (_obj isKindOf "UAV_01_base_F") then { _obj setVariable ["ownerUID", getPlayerUID _player, true] };
+
+	if (round getNumber (configFile >> "CfgVehicles" >> typeOf _obj >> "isUav") > 0) then
+	{ 
+		_obj setVariable ["ownerUID", getPlayerUID _player, true];
+
+		if ({_obj isKindOf _x} count ["Static_Designator_02_base_F","Static_Designator_02_base_F"] > 0) then
+		{
+			_obj setAutonomous false; // disable autonomous mode by default on static designators so they stay on target after releasing controls
+		};
+	};
 }];
 
 player addEventHandler ["InventoryOpened",
