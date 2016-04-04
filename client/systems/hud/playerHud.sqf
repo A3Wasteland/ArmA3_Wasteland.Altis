@@ -178,18 +178,21 @@ while {true} do
 	{
 		if (player != vehicle player) then
 		{
-			_vehicle = assignedVehicle player;
+			_vehicle = vehicle player;
 
 			{
-				_icon = switch (true) do
+				if (alive _x) then
 				{
-					case (driver _vehicle == _x): { "client\icons\driver.paa" };
-					case (gunner _vehicle == _x): { "client\icons\gunner.paa" };
-					default                       { "client\icons\cargo.paa" };
-				};
+					_icon = switch (true) do
+					{
+						case (driver _vehicle == _x): { "client\icons\driver.paa" };
+						case (gunner _vehicle == _x): { "client\icons\gunner.paa" };
+						default                       { "client\icons\cargo.paa" };
+					};
 
-				_tempString = format ["%1 %2 <img image='%3'/><br/>", _tempString, name _x, _icon];
-				_yOffset = _yOffset + 0.04;
+					_tempString = format ["%1 %2 <img image='%3'/><br/>", _tempString, name _x, _icon];
+					_yOffset = _yOffset + 0.04;
+				};
 			} forEach crew _vehicle;
 		};
 	};
