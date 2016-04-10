@@ -49,8 +49,8 @@ if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_ser
 {
 	_veh setVariable ["A3W_serviceBeaconActions",
 	[
-		_veh addAction ["Beacons on", { (_this select 0) animate ["BeaconsServicesStart", 1] }, [], 1.5, false, true, "", "driver _target == player && _target animationPhase 'BeaconsServicesStart' < 1"],
-		_veh addAction ["Beacons off", { (_this select 0) animate ["BeaconsServicesStart", 0] }, [], 1.5, false, true, "", "driver _target == player && _target animationPhase 'BeaconsServicesStart' >= 1"]
+		_veh addAction [localize "STR_A3_CfgVehicles_beacons_on", { (_this select 0) animate ["BeaconsServicesStart", 1] }, [], 1.5, false, true, "", "driver _target == player && _target animationPhase 'BeaconsServicesStart' < 1"],
+		_veh addAction [localize "STR_A3_CfgVehicles_beacons_off", { (_this select 0) animate ["BeaconsServicesStart", 0] }, [], 1.5, false, true, "", "driver _target == player && _target animationPhase 'BeaconsServicesStart' >= 1"]
 	]];
 };
 
