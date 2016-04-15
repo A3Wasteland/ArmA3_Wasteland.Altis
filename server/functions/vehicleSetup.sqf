@@ -8,8 +8,8 @@
 
 if (!isServer) exitWith {};
 
-private ["_vehicle", "_class", "_getInOut", "_centerOfMass", "_weapons"];
-_vehicle = _this select 0;
+params [["_vehicle",objNull,[objNull]], ["_brandNew",true,[false]]]; // _brandNew: true for newly spawned/purchased vehicle (default), false for vehicles restored from save
+private ["_class", "_getInOut", "_centerOfMass", "_weapons"];
 _class = typeOf _vehicle;
 
 _vehicle setVariable [call vChecksum, true];
@@ -102,9 +102,13 @@ switch (true) do
 	{
 		// Add flares to those poor helis
 		_vehicle addWeaponTurret ["CMFlareLauncher", [-1]];
-		_vehicle addMagazineTurret ["60Rnd_CMFlare_Chaff_Magazine", [-1]];
+
+		if (_brandNew) then
+		{
+			_vehicle addMagazineTurret ["60Rnd_CMFlare_Chaff_Magazine", [-1]];
+		};
 	};
-	case (_class isKindOf "Plane_Fighter_03_base_F"):
+	case (_class isKindOf "Plane_Fighter_03_base_F" && _brandNew):
 	{
 		_vehicle addMagazine "300Rnd_20mm_shells";
 	};
@@ -141,13 +145,16 @@ switch (true) do
 };
 
 // Double minigun ammo to compensate for Bohemia's incompetence (http://feedback.arma3.com/view.php?id=21613)
+if (_brandNew) then
 {
-	_path = _x;
-
 	{
-		if ((toLower getText (configFile >> "CfgMagazines" >> _x >> "ammo")) find "_minigun_" != -1) then
+		_path = _x;
+
 		{
-			_vehicle addMagazineTurret [_x, _path];
-		};
-	} forEach (_vehicle magazinesTurret _path);
-} forEach ([[-1]] + allTurrets [_vehicle, false]);
+			if ((toLower getText (configFile >> "CfgMagazines" >> _x >> "ammo")) find "_minigun_" != -1) then
+			{
+				_vehicle addMagazineTurret [_x, _path];
+			};
+		} forEach (_vehicle magazinesTurret _path);
+	} forEach ([[-1]] + allTurrets _vehicle);
+};

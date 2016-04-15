@@ -18,7 +18,7 @@ _vehicles = call compile preprocessFileLineNumbers format ["%1\getVehicles.sqf",
 _exclVehicleIDs = [];
 
 {
-	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_damage", "_fuel", "_hitPoints", "_owner", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_magsAdded", "_magPathStr", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_hoursUnused", "_valid"];
+	private ["_veh", "_vehicleID", "_class", "_pos", "_dir", "_vel", "_flying", "_hoursAlive", "_hoursUnused", "_damage", "_fuel", "_hitPoints", "_owner", "_variables", "_textures", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_turretMags2", "_turretMags3", "_ammoCargo", "_fuelCargo", "_repairCargo", "_valid", "_turretWeapons", "_path", "_magsAdded", "_magPathStr"];
 
 	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
 
@@ -85,7 +85,7 @@ _exclVehicleIDs = [];
 			};
 		};
 
-		[_veh] call vehicleSetup;
+		[_veh, false] call vehicleSetup;
 
 		if (!isNil "_vehicleID") then
 		{
@@ -157,7 +157,7 @@ _exclVehicleIDs = [];
 			} forEach _backpacks;
 		};
 
-		if (!isNil "_turretMags" && !isNil "_turretMags3" && {count _turretMags == 0 && count _turretMags3 == 0}) then
+		if (!isNil "_turretMags" && !isNil "_turretMags3" && {_turretMags isEqualTo [] && _turretMags3 isEqualTo []}) then
 		{
 			// for vehicles saved from A3 v1.56 and onwards, remove all default mags because empty ones are saved
 			{ _veh removeMagazineTurret [_x select 0, _x select 1] } forEach magazinesAllTurrets _veh;
@@ -167,6 +167,9 @@ _exclVehicleIDs = [];
 			// for older vehicle saves, mark all default mags as empty so it can still be resupplied to its default ammo capacity
 			_veh setVehicleAmmo 0;
 		};
+
+		// Remove all turret weapons to ensure they are reloaded properly
+		_turretWeapons = _veh call fn_removeTurretWeapons;
 
 		if (!isNil "_turretMags3") then
 		{
@@ -200,11 +203,14 @@ _exclVehicleIDs = [];
 			{ _veh addMagazineTurret _x } forEach _turretMags2;
 		};
 
+		// Re-add all turret weapons to ensure they are reloaded properly
+		{ _veh addWeaponTurret _x } forEach _turretWeapons;
+
 		if (!isNil "_ammoCargo") then { _veh setAmmoCargo _ammoCargo };
 		if (!isNil "_fuelCargo") then { _veh setFuelCargo _fuelCargo };
 		if (!isNil "_repairCargo") then { _veh setRepairCargo _repairCargo };
 
-		reload _veh;
+		//reload _veh;
 		_veh hideObjectGlobal false;
 	};
 

@@ -104,6 +104,7 @@ fn_numbersText = [_serverFunc, "fn_numbersText.sqf"] call mf_compile;
 fn_numToStr = [_serverFunc, "fn_numToStr.sqf"] call mf_compile;
 fn_remotePlayerSetup = [_clientFunc, "fn_remotePlayerSetup.sqf"] call mf_compile;
 fn_removeFromPairs = [_serverFunc, "fn_removeFromPairs.sqf"] call mf_compile;
+fn_removeTurretWeapons = [_serverFunc, "fn_removeTurretWeapons.sqf"] call mf_compile;
 fn_setToPairs = [_serverFunc, "fn_setToPairs.sqf"] call mf_compile;
 fn_sortAlphabetically = [_serverFunc, "fn_sortAlphabetically.sqf"] call mf_compile;
 fn_splitString = [_serverFunc, "fn_splitString.sqf"] call mf_compile;

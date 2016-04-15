@@ -73,7 +73,7 @@ _exclObjectIDs = [];
 			_obj setVectorDirAndUp _dir;
 		};
 
-		[_obj] call vehicleSetup;
+		[_obj, false] call vehicleSetup;
 		[_obj] call basePartSetup;
 
 		if (!isNil "_objectID") then
