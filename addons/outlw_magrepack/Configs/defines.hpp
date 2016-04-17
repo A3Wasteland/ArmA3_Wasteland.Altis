@@ -171,6 +171,9 @@ class outlw_MR_RscListBox
 	colorSelectBackground[] = {0.95,0.95,0.95,1};
 	colorSelectBackground2[] = {1,1,1,0.5};
 	colorBackground[] = {0,0,0,0};
+	colorPicture[] = {1,1,1,1};
+	colorPictureSelected[] = {1,1,1,1};
+	colorPictureDisabled[] = {1,1,1,1};
 	soundSelect[] =
 	{
 		"\A3\ui_f\data\sound\RscListbox\soundSelect",
