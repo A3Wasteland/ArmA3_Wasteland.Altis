@@ -133,7 +133,7 @@ player addEventHandler ["InventoryClosed",
 		_lastVeh = _currVeh;
 
 		// Prevent usage of commander camera
-		if (cameraView == "GROUP") then
+		if (cameraView == "GROUP" && cameraOn in [player, vehicle player]) then
 		{
 			cameraOn switchCamera "EXTERNAL";
 		};
