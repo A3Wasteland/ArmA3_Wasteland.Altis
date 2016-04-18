@@ -25,6 +25,14 @@ _objCleanup =
 
 	if (_isWreck) then
 	{
+		if (_obj isKindOf "UAV_01_base_F" && {fuel _obj > 0 || !isNull ((uavControl _obj) select 0)}) exitWith
+		{
+			if (_processedDeath > 0) then
+			{
+				_obj setVariable ["processedDeath", nil];
+			};
+		};
+
 		_timeLimit = DEBRIS_CLEANUP_TIME;
 
 		if (_processedDeath == 0) then
@@ -52,7 +60,7 @@ while {true} do
 	_objCleanup forEach ([0,0,0] nearEntities ["All", 1e11]); // this is actually faster than [entities "All"]
 
 	_isWreck = true;
-	{ _objCleanup forEach allMissionObjects _x } forEach ["CraterLong", "#destructioneffects"];
+	{ _objCleanup forEach allMissionObjects _x } forEach ["CraterLong", "#destructioneffects", "UAV_01_base_F"];
 
 	// Delete glitched parachutes
 	{
