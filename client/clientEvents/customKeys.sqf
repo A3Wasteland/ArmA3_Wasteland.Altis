@@ -6,7 +6,7 @@
 
 // Load custom keys from profile
 
-private ["_varName", "_defKeys", "_customKeys", "_isValid"];
+private ["_varName", "_defKeys", "_customKeys", "_isValid", "_voiceKeys"];
 
 {
 	_varName = _x select 0;
@@ -25,3 +25,19 @@ forEach
 	["A3W_customKeys_playerNames", [199,219,220]], // 199 = Home, 219 = LWin, 220 = RWin
 	["A3W_customKeys_earPlugs", [207]] // 207 = End
 ];
+
+_voiceKeys = [];
+{ _voiceKeys append actionKeys _x } forEach
+[
+	"NextChannel",
+	"PrevChannel",
+	"PushToTalk",
+	"PushToTalkAll",
+	"PushToTalkCommand",
+	"PushToTalkDirect",
+	"PushToTalkGroup",
+	"PushToTalkSide",
+	"PushToTalkVehicle"
+];
+
+A3W_allVoiceChatKeys = compileFinal str _voiceKeys;
