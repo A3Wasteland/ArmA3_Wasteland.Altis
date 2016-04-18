@@ -28,7 +28,7 @@ if (isUavConnected _vehicle) then
 _ammo = _target getVariable ["FAR_killerAmmo", ""];
 
 // Chain-reaction tracking
-if (_ammo == "") then
+if (_ammo in ["","FuelExplosion"]) then
 {
 	_vehicleKiller = _vehicle getVariable ["FAR_killerVehicle", objNull];
 

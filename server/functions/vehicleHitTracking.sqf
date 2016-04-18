@@ -4,7 +4,7 @@
 //	@file Name: vehicleHitTracking.sqf
 //	@file Author: AgentRev
 
-private ["_vehicle", "_selection", "_damage", "_source", "_ammo", "_class", "_hitPoint"];
+private ["_vehicle", "_selection", "_damage", "_source", "_ammo", "_class", "_hitPoint", "_killerVehicle"];
 
 _vehicle = _this select 0;
 _selection = _this select 1;
@@ -50,18 +50,39 @@ if (!_dead && !_aboutToExplode) then
 	};
 };
 
-if ((_dead || (_aboutToExplode && isNull (_vehicle getVariable ["FAR_killerVehicle", objNull]))) && !(_source in [_vehicle, effectiveCommander _vehicle])) then
+_killerVehicle = _vehicle getVariable ["FAR_killerVehicle", objNull];
+
+if (_dead || (_aboutToExplode && isNull _killerVehicle)) then
 {
-	if (_ammo == "" && !isNull _source) then // Killed by explosion
+	if (_dead && _source in crew _vehicle) then // Vehicle crash
 	{
-		_vehicle setVariable ["FAR_killerVehicle", _source getVariable ["FAR_killerVehicle", objNull], true];
-		_vehicle setVariable ["FAR_killerAmmo", _source getVariable ["FAR_killerAmmo", ""], true];
-		//diag_log format ["vehicleHitTracking2: %1 - %2", typeOf _vehicle, typeOf _source, typeOf (_vehicle getVariable ["FAR_killerVehicle", objNull])];
+		if (isNull _killerVehicle) then
+		{
+			_uavOwner = (uavControl _vehicle) select 0;
+			if (isPlayer _uavOwner) then { _source = _uavOwner };
+
+			[_vehicle, _source, _ammo] call FAR_setKillerInfo;
+			_vehicle setVariable ["FAR_killerVehicle", _vehicle call FAR_findKiller, true];
+		};
 	}
-	else // Killed by direct hit
+	else
 	{
-		[_vehicle, _source, _ammo] call FAR_setKillerInfo;
-		_vehicle setVariable ["FAR_killerVehicle", _vehicle call FAR_findKiller, true];
-		//diag_log format ["vehicleHitTracking: %1 - %2", typeOf _vehicle, typeOf (_vehicle getVariable ["FAR_killerVehicle", objNull])];
+		if (_source != _vehicle) then
+		{
+			if (_ammo in ["","FuelExplosion"] && !isNull _source) then // Killed by explosion
+			{
+				_vehicle setVariable ["FAR_killerVehicle", _source getVariable ["FAR_killerVehicle", objNull], true];
+				_vehicle setVariable ["FAR_killerAmmo", _source getVariable ["FAR_killerAmmo", ""], true];
+				//diag_log format ["vehicleHitTracking2: %1 - %2", typeOf _vehicle, typeOf _source, typeOf (_vehicle getVariable ["FAR_killerVehicle", objNull])];
+			}
+			else // Killed by direct hit
+			{
+				[_vehicle, _source, _ammo] call FAR_setKillerInfo;
+				_vehicle setVariable ["FAR_killerVehicle", _vehicle call FAR_findKiller, true];
+				//diag_log format ["vehicleHitTracking: %1 - %2", typeOf _vehicle, typeOf (_vehicle getVariable ["FAR_killerVehicle", objNull])];
+			};
+		};
 	};
+
+	//diag_log format ["vehicleHitTracking3: %1, %2, %3", typeOf _vehicle, typeOf _source, _ammo];
 };
