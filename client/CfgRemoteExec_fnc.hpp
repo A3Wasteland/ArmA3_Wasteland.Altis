@@ -23,6 +23,7 @@ class A3W_fnc_flagHandler { allowedTargets = 2; };
 class A3W_fnc_getInFast {};
 class A3W_fnc_logMemAnomaly { allowedTargets = 2; };
 class A3W_fnc_pushVehicle {};
+class A3W_fnc_setName {};
 class A3W_fnc_titleTextMessage {};
 class A3W_fnc_towingHelper {};
 class FAR_fnc_headshotHitPartEH {};

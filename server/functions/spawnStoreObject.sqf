@@ -140,7 +140,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 					_veh = _this select 0;
 					_side = _this select 1;
 
-					waitUntil {!isNull driver _veh};
+					waitUntil {count crew _veh > 0};
 
 					//assign AI to player's side to allow terminal connection
 					(crew _veh) joinSilent createGroup _side;
