@@ -40,6 +40,8 @@ _vehText ctrlSetText "";
 	};
 } forEach (call allVehStoreVehicles);
 
+if (getArray (configfile >> "CfgVehicles" >> _itemData >> "hiddenSelections") isEqualTo []) exitWith {}; // unpaintable
+
 _colorsArray  = [];
 
 _cfgColors = call colorsArray;
