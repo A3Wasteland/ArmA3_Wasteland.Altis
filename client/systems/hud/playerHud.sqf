@@ -88,6 +88,7 @@ _displayTerritoryActivity =
 _survivalSystem = ["A3W_survivalSystem"] call isConfigOn;
 _unlimitedStamina = ["A3W_unlimitedStamina"] call isConfigOn;
 _atmEnabled = ["A3W_atmEnabled"] call isConfigOn;
+_disableUavFeed = ["A3W_disableUavFeed"] call isConfigOn;
 
 private ["_mapCtrls", "_mapCtrl"];
 _ui = displayNull;
@@ -322,6 +323,11 @@ while {true} do
 			};
 		};
 	} forEach [cursorTarget, cursorObject];
+
+	if (_disableUavFeed && shownUavFeed) then
+	{
+		showUavFeed false;
+	};
 
 	uiSleep 1;
 };

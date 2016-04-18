@@ -131,4 +131,13 @@ if (!_handled && _key in (actionKeys "PushToTalk" + actionKeys "PushToTalkAll"))
 	[true] call fn_voiceChatControl;
 };
 
+// UAV feed
+if (!_handled && _key in (actionKeys "UavView" + actionKeys "UavViewToggle")) then
+{
+	if (["A3W_disableUavFeed"] call isConfigOn) then
+	{
+		_handled = true;
+	};
+};
+
 _handled
