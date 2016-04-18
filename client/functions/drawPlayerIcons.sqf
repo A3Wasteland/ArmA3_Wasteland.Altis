@@ -13,6 +13,7 @@ if (!hasInterface) exitWith {};
 #define ICON_sizeScale 0.75
 
 #define UNIT_POS(UNIT) (UNIT modelToWorldVisual [0, 0, 1.25]) // Torso height
+#define UAV_UNIT_POS(UNIT) (((vehicle UNIT) modelToWorldVisual [0, 0, 0]) vectorAdd [0, 0, 0.5])
 
 if (isNil "showPlayerNames") then { showPlayerNames = false };
 
@@ -23,8 +24,8 @@ if (!isNil "drawPlayerIcons_draw3D") then { removeMissionEventHandler ["Draw3D",
 drawPlayerIcons_draw3D = addMissionEventHandler ["Draw3D",
 {
 	{
-		_x params ["_drawArr", "_unit"];
-		if (alive _unit) then { _drawArr set [2, UNIT_POS(_unit)] };
+		_x params ["_drawArr", "_unit", "_isUavUnit"];
+		if (alive _unit) then { _drawArr set [2, if (_isUavUnit) then { UAV_UNIT_POS(_unit) } else { UNIT_POS(_unit) }] };
 		drawIcon3D _drawArr;
 	} forEach drawPlayerIcons_array;
 }];
@@ -44,7 +45,7 @@ drawPlayerIcons_thread = [] spawn
 		default      { call currMissionDir + "client\icons\igui_side_indep_ca.paa" };
 	};
 
-	private "_dist";
+	private ["_dist", "_simulation"];
 
 	// Execute every frame
 	waitUntil
@@ -62,7 +63,7 @@ drawPlayerIcons_thread = [] spawn
 				   (_unit != player || cameraOn != vehicle player) &&
 				   {!(_unit getVariable ["playerSpawning", false]) &&
 				   (vehicle _unit != getConnectedUAV player || cameraOn != vehicle _unit) && // do not show UAV AI icons when controlling UAV
-				   {getText (configFile >> "CfgVehicles" >> typeOf _unit >> "simulation") != "headlessclient"}}}}) then 
+				   {_simulation = getText (configFile >> "CfgVehicles" >> typeOf _unit >> "simulation"); _simulation != "headlessclient"}}}}) then 
 				{
 					//_dist = _unit distance positionCameraToWorld [0,0,0];
 					_pos = UNIT_POS(_unit);
@@ -70,6 +71,9 @@ drawPlayerIcons_thread = [] spawn
 					// only draw players inside range and screen
 					if !(worldToScreen _pos isEqualTo []) then
 					{
+						_isUavUnit = (_simulation == "UAVPilot");
+						if (_isUavUnit && {_unit != (crew vehicle _unit) select 0}) exitWith {}; // only one AI per UAV
+
 						_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
 						_color = [1,1,1,_alpha];
 						_icon = _teamIcon;
@@ -121,13 +125,17 @@ drawPlayerIcons_thread = [] spawn
 							_size = (1 - ((_dist / ICON_limitDistance) * 0.7)) * _uiScale;
 						};
 
-						_text = if (showPlayerNames) then {
-							if (isPlayer _unit) then { name _unit } else { "[AI]" }
-						} else {
-							""
-						};
+						_text = if (showPlayerNames) then
+						{
+							if (isPlayer _unit) then { name _unit }
+							else
+							{
+								_uavOwner = (uavControl vehicle _unit) select 0;
+								format ["[AI%1]", if (isPlayer _uavOwner) then { " - " + name _uavOwner } else { "" }]
+							};
+						} else { "" };
 
-						_newArray pushBack [[_icon, _color, _pos, _size, _size, 0, _text], _unit]; //, 1, 0.03, "PuristaMedium"];
+						_newArray pushBack [[_icon, _color, _pos, _size, _size, 0, _text], _unit, (_isUavUnit && !isPlayer _unit)]; //, 1, 0.03, "PuristaMedium"];
 					};
 				};
 			} forEach (if (playerSide in [BLUFOR,OPFOR]) then { allUnits } else { units player });
