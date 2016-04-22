@@ -17,7 +17,7 @@ if (isNil "showPlayerNames") then { showPlayerNames = false };
 
 A3W_mapDraw_arrIcons = [];
 A3W_mapDraw_arrLines = [];
-A3W_mapDraw_iconPos = [{getPosASLVisual _this}, {DEFAULT_ICON_POS(_this)}] select difficultyEnabled "map";
+A3W_mapDraw_iconPos = [{getPosASLVisual _this}, {DEFAULT_ICON_POS(_this)}] select difficultyOption "mapContent";
 A3W_mapDraw_iconPosUAV = {getPosASL _this}; // icon always show regardless of difficulty, so we must mimic the default icon's position
 A3W_mapDraw_eventCode =
 {
@@ -84,7 +84,7 @@ A3W_mapDraw_thread = [] spawn
 
 		if (_showPlayers) then
 		{
-			_mapIconsEnabled = difficultyEnabled "map";
+			_mapIconsEnabled = difficultyOption "mapContent";
 
 			_allUAVs = allUnitsUAV;
 			_allDeadMen = allDeadMen;
