@@ -111,7 +111,7 @@ if (!isPlayer _unit) then
 };
 
 // Injury message
-if (FAR_EnableDeathMessages && difficultyOption "deathMessages" && !isNil "_killer") then
+if (FAR_EnableDeathMessages && difficultyOption "deathMessages" > 0 && !isNil "_killer") then
 {
 	[_unit, _killer] spawn
 	{
