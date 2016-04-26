@@ -4,9 +4,9 @@
 //	@file Name: fn_updateSpawnTimestamp.sqf
 //	@file Author: AgentRev
 
-params [["_player",objNull,[objNull]], ["_location",0,["",objNull]]];
+params [["_player",objNull,[objNull]], ["_location","",["",objNull]]];
 
-if (!isPlayer _player || _location isEqualTo 0) exitWith {};
+if (!isPlayer _player || _location in ["",objNull]) exitWith {};
 
 _pvar = "A3W_spawnTimestamps_" + getPlayerUID _player;
 _spawnTimestamps = missionNamespace getVariable [_pvar, []];
