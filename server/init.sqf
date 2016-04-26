@@ -137,7 +137,7 @@ if (isServer) then
 		"A3W_headshotNoRevive"
 	];
 
-	["A3W_join", "onPlayerConnected", { [_id, _uid, _name] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
+	["A3W_join", "onPlayerConnected", { [_id, _uid, _name, _owner, _jip] spawn fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
 	["A3W_quit", "onPlayerDisconnected", { diag_log format ["onPlayerDisconnected - %1", [_name, _uid]] }] call BIS_fnc_addStackedEventHandler;
 };
 
