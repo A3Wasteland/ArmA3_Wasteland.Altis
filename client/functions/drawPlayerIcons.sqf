@@ -14,7 +14,7 @@ if (!hasInterface) exitWith {};
 
 #define MINE_ICON_MAX_DISTANCE 200 // 200 is Arma 3 default for mine detector
 
-#define UNIT_POS(UNIT) (UNIT modelToWorldVisual [0, 0, 1.25]) // Torso height
+#define UNIT_POS(UNIT) (UNIT modelToWorldVisual (UNIT selectionPosition "spine3")) //[0, 0, 1.25]) // Torso height
 #define UAV_UNIT_POS(UNIT) (((vehicle UNIT) modelToWorldVisual [0, 0, 0]) vectorAdd [0, 0, 0.5])
 #define CENTER_POS(OBJ) (OBJ modelToWorldVisual [0,0,0])
 
@@ -104,11 +104,12 @@ drawPlayerIcons_thread = [] spawn
 						_color = [1,1,1,_alpha];
 						_icon = _teamIcon;
 						_size = 0;
+						_shadow = [0,2] select showPlayerNames;
 
 						if (_unit call A3W_fnc_isUnconscious) then
 						{
 							_icon = _reviveIcon;
-							_size = (2 - ((_dist / ICON_limitDistance) * 0.8)) * _uiScale;
+							_size = (2 - ((_dist / ICON_limitDistance) * 0.8)) * _uiScale * ([0.8, 1] select showPlayerNames);
 
 							// Revive icon blinking code
 							if (_unit call A3W_fnc_isBleeding) then
@@ -148,7 +149,7 @@ drawPlayerIcons_thread = [] spawn
 						}
 						else
 						{
-							_size = (1 - ((_dist / ICON_limitDistance) * 0.7)) * _uiScale;
+							_size = (1 - ((_dist / ICON_limitDistance) * 0.7)) * _uiScale * ([0.7, 1] select showPlayerNames);
 						};
 
 						_text = if (showPlayerNames) then
@@ -161,7 +162,7 @@ drawPlayerIcons_thread = [] spawn
 							};
 						} else { "" };
 
-						_newArray pushBack [[_icon, _color, _pos, _size, _size, 0, _text], _unit, _posCode]; //, 1, 0.03, "PuristaMedium"];
+						_newArray pushBack [[_icon, _color, _pos, _size, _size, 0, _text, _shadow], _unit, _posCode]; //, 0.03, "PuristaMedium"];
 					};
 				};
 			} forEach (if (playerSide in [BLUFOR,OPFOR]) then { allUnits } else { units player });
