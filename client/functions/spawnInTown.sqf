@@ -28,6 +28,7 @@ _preload = param [1, false, [false]];
 } forEach (call cityList);
 
 player setVariable [_marker + "_lastSpawn", diag_tickTime];
+[player, _marker] remoteExecCall ["A3W_fnc_updateSpawnTimestamp", 2];
 
 respawnDialogActive = false;
 closeDialog 0;

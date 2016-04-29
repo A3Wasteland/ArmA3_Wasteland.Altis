@@ -4,9 +4,13 @@
 //	@file Name: fn_onPlayerConnected.sqf
 //	@file Author: AgentRev
 
-private ["_id", "_uid", "_name"];
-_id = _this select 0;
-_uid = _this select 1;
-_name = _this select 2;
+params ["_id", "_uid", "_name", "_owner", "_jip"];
 
 diag_log format ["Player connected: %1 (%2)", _name, _uid];
+
+_spawnTimestamps = missionNamespace getVariable ["A3W_spawnTimestamps_" + _uid, []];
+
+if !(_spawnTimestamps isEqualTo []) then
+{
+	[_spawnTimestamps, diag_tickTime] remoteExec ["A3W_fnc_setSpawnTimestamps", _owner]; // do not whitelist
+};
