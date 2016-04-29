@@ -97,7 +97,6 @@ drawPlayerIcons_thread = [] spawn
 					// only draw players inside range and screen
 					if !(worldToScreen _pos isEqualTo []) then
 					{
-						_isUavUnit = (_simulation == "UAVPilot");
 						if (_isUavUnit && {_unit != (crew vehicle _unit) select 0}) exitWith {}; // only one AI per UAV
 
 						_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
