@@ -41,6 +41,7 @@ R3F_LOG_CFG_objets_remorquables =
 
 R3F_LOG_CFG_objets_remorquables_excl =
 [
+	"B_APC_Tracked_01_CRV_F",
 	"B_Truck_01_ammo_F",
 	"I_Truck_02_ammo_F",
 	"O_Truck_02_ammo_F",

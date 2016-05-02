@@ -52,12 +52,13 @@ class Mission
 		forecastWeather=0;
 		forecastWind=0;
 		forecastWaves=0;
+		rainForced=1;
 		year=2035;
 		month=6;
 		hour=6;
 		minute=0;
-		startFogDecay=0.001;
-		forecastFogDecay=0.001;
+		startFogDecay=0;
+		forecastFogDecay=0;
 	};
 	class Entities
 	{
