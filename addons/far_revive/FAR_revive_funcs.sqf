@@ -86,6 +86,7 @@ FAR_HandleTreating =
 				if (_revive) then
 				{
 					_target setVariable ["FAR_isUnconscious", 0, true];
+					[player, "reviveCount", 1] call fn_addScore;
 				}
 				else
 				{
