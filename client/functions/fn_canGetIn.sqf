@@ -19,7 +19,7 @@ private _found = false;
 	if (!alive _vUnit && (!_passengerOnly || _role != "driver")) then
 	{
 		if ((_role != "driver" || !lockedDriver _vehicle) &&
-		    (_cargo == -1 || !(_vehicle lockedCargo _cargo)) &&
+		    (_cargo == -1 || {!(_vehicle lockedCargo _cargo)}) &&
 		    (_path isEqualTo [] || !(_vehicle lockedTurret _path))) then
 		{
 			_found = true;
