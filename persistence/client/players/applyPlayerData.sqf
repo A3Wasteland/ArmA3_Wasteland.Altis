@@ -156,7 +156,7 @@ else
 			} forEach _value;
 		};
 		case "CurrentWeapon": { player selectWeapon _value };
-		case "Stance": { [player, [player, _value] call getFullMove] call switchMoveGlobal };
+		case "Stance": { [player, [player, _value] call getFullMove] call switchMoveGlobal; uiSleep 1 }; // 1 sec sleep to ensure full stance transition before moving player to fimal location
 		case "UniformWeapons": { { (uniformContainer player) addWeaponCargoGlobal _x } forEach _value };
 		case "UniformItems": { { (uniformContainer player) addItemCargoGlobal _x } forEach _value };
 		case "UniformMagazines": { [uniformContainer player, _value] call processMagazineCargo };
