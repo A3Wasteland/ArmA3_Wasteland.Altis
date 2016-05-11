@@ -15,6 +15,8 @@ private ["_minWeatherChangeTimeMin", "_maxWeatherChangeTimeMin", "_minTimeBetwee
 private ["_minimumFog", "_maximumFog", "_minimumOvercast", "_maximumOvercast", "_minimumRain", "_maximumRain", "_minimumWind", "_maximumWind", "_minRainIntervalTimeMin", "_maxRainIntervalTimeMin", "_forceRainToStopAfterOneRainInterval", "_maxWind"];
 private ["_minimumFogDecay", "_maximumFogDecay", "_minimumFogBase", "_maximumFogBase"];
 
+#define SLEEP_REALTIME(SECS) if (hasInterface) then { sleep SECS } else { uiSleep SECS }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The following variables can be changed to tweak weather behaviour
 
@@ -225,7 +227,7 @@ if (isServer) then {
 	drn_fnc_DynamicWeather_SetWeatherAllClients = {
 		private ["_timeUntilCompletion", "_currentWeatherChange"];
 
-		_timeUntilCompletion = drn_DynamicWeather_WeatherChangeCompletedTime - drn_DynamicWeather_WeatherChangeStartedTime;
+		_timeUntilCompletion = (drn_DynamicWeather_WeatherChangeCompletedTime - drn_DynamicWeather_WeatherChangeStartedTime) * timeMultiplier;
 		if (_timeUntilCompletion > 0) then {
 			_currentWeatherChange = drn_DynamicWeather_CurrentWeatherChange;
 		}
@@ -430,7 +432,7 @@ if (isServer) then {
 
 			call drn_fnc_DynamicWeather_SetWeatherAllClients;
 
-			sleep _weatherChangeTimeSek;
+			SLEEP_REALTIME(_weatherChangeTimeSek);
 		};
 	};
 
@@ -503,7 +505,7 @@ if (isServer) then {
 					sleep 1;
 				}
 				else {
-					sleep 20;
+					SLEEP_REALTIME(20);
 				};
 			};
 		};
@@ -551,15 +553,15 @@ drn_DynamicWeather_FogThread = [_rainIntervalRainProbability, _debug] spawn
 
 		if (rain != _rain) then
 		{
-			3 setRain _rain;
+			5 setRain _rain;
 		};
 
 		_tempFog = fog max (_rain / 4);
 		if (_tempFog > fog + 0.001 || _tempFog < fog - 0.001) then
 		{
-			3 setFog [_tempFog, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
+			(5 * timeMultiplier) setFog [_tempFog, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
 		};
 
-		sleep 10;
+		SLEEP_REALTIME(10);
 	};
 };

@@ -25,9 +25,10 @@ private _seats = [];
 	{
 		switch (true) do
 		{
-			case (_cargo != -1):       { _seats pushBackUnique ["cargo"] };
-			case (_role == "turret"):  { _seats pushBack ["turret", _path] };
-			default                    { _seats pushBack [toLower _role] };
+			case (_role == "driver"):    { if (!lockedDriver _vehicle) then { _seats pushBack ["driver"] } };
+			case (_cargo != -1):         { if !(_vehicle lockedCargo _cargo) then { _seats pushBackUnique ["cargo"] } };
+			case !(_path isEqualTo []):  { if !(_vehicle lockedTurret _path) then { _seats pushBack ["turret", _path] } };
+			default                      { _seats pushBack [toLower _role] };
 		};
 	};
 } forEach fullCrew [_vehicle, "", true];
