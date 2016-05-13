@@ -164,7 +164,7 @@ if (["A3W_remoteBombStoreRadius", 0] call getPublicVar > 0) then
 					if (_x getVariable ["storeNPC_setupComplete", false] && {_bomb distance _x < _minDist}) exitWith
 					{
 						deleteVehicle _bomb;
-						player addMagazine _mag;
+						[player, _mag] call fn_forceAddItem;
 						playSound "FD_CP_Not_Clear_F";
 						titleText [format ["You are not allowed to place explosives within %1m of a store.\nThe explosive has been re-added to your inventory.", _minDist], "PLAIN DOWN", 0.5];
 					};
