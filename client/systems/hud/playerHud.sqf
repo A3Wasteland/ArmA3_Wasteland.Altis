@@ -125,6 +125,7 @@ while {true} do
 		{
 			// Gone up. Green flash
 			_healthTextColor = "#17FF17";
+			if (!isNil "BIS_HitCC" && {ppEffectEnabled BIS_HitCC}) then { BIS_HitCC ppEffectEnable false }; // fix for permanent red borders due to fire damage
 		};
 	};
 
