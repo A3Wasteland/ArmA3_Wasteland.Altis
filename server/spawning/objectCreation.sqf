@@ -6,24 +6,24 @@
 
 if (!isServer) exitWith {};
 
-private ["_objPos", "_objList", "_objClass", "_obj", "_adjustZ", "_pos"];
+private ["_objPos", "_objList", "_objClass", "_obj", "_allowDamage", "_adjustZ", "_pos"];
 _objPos = _this select 0;
 _objList = _this select 1;
 
 _objClass = _objList call BIS_fnc_selectRandom;
 _obj = createVehicle [_objClass, _objPos, [], 50, "None"];
 
+_allowDamage = false;
+
 switch (true) do
 {
 	case (_objClass == "Land_BarrelWater_F"):
 	{
 		_obj setVariable ["water", 50, true];
-		_obj allowDamage false;
 	};
 	case (_objClass == "Land_Sacks_goods_F"):
 	{
 		_obj setVariable ["food", 40, true];
-		_obj allowDamage false;
 	};
 	case (_objClass isKindOf "ReammoBox_F"):
 	{
@@ -41,14 +41,15 @@ switch (true) do
 		_obj addItemCargoGlobal ["ItemGPS", 5];
 		_obj addItemCargoGlobal ["Medikit", 4];
 		_obj addItemCargoGlobal ["ToolKit", 2];
-
-		_obj allowDamage false;
 	};
 	default
 	{
-		_obj setVariable ["allowDamage", true];
+		_allowDamage = true;
 	};
 };
+
+_obj allowDamage _allowDamage;
+_obj setVariable ["allowDamage", _allowDamage, true];
 
 // fix for sunken/rissen objects :)
 _adjustZ = switch (true) do
