@@ -88,13 +88,13 @@ if (_player == player && (playerSide == side group _killer) && (player != _kille
 	// Handle teamkills
 	if (playerSide in [BLUFOR,OPFOR]) then
 	{
-		if (_killer isKindOf "CAManBase") then
+		if (_killer isKindOf "Man" && isPlayer _killer) then
 		{
-			pvar_PlayerTeamKiller = _killer;
+			pvar_PlayerTeamKiller = [_killer, getPlayerUID _killer, name _killer];
 		}
 		else
 		{
-			pvar_PlayerTeamKiller = objNull;
+			pvar_PlayerTeamKiller = [];
 		};
 	}
 	else // Compensate negative score for indie-indie kills

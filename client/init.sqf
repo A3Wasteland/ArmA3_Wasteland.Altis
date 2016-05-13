@@ -22,7 +22,7 @@ showPlayerIcons = true;
 mutexScriptInProgress = false;
 respawnDialogActive = false;
 groupManagmentActive = false;
-pvar_PlayerTeamKiller = objNull;
+pvar_PlayerTeamKiller = [];
 doCancelAction = false;
 
 //Initialization Variables
