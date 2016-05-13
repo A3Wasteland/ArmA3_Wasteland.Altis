@@ -117,6 +117,11 @@ waitUntil {!isNull findDisplay 46};
 (findDisplay 46) displayAddEventHandler ["KeyDown", onKeyPress];
 (findDisplay 46) displayAddEventHandler ["KeyUp", onKeyRelease];
 
+_mouseButtonToKey = "params ['_disp','_btn']; ([_disp, _btn + 65536 + ([0,128] select (_btn isEqualTo 1))] + (_this select [4,999])) call "; // actionKeys mouse bitflag + RMB fix
+
+(findDisplay 46) displayAddEventHandler ["MouseButtonDown", _mouseButtonToKey + "onKeyPress"];
+(findDisplay 46) displayAddEventHandler ["MouseButtonUp", _mouseButtonToKey + "onKeyRelease"];
+
 call compile preprocessFileLineNumbers "client\functions\setupClientPVars.sqf";
 
 //client Executes
