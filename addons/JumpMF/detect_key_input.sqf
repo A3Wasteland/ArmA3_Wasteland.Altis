@@ -38,6 +38,11 @@ if (_pressedKey in actionKeys "GetOver") then
 
 				[player, "AovrPercMrunSrasWrflDf"] call switchMoveGlobal;
 
+				if (currentWeapon player == "") then
+				{
+					player playMoveNow "AovrPercMrunSrasWrflDf";
+				};
+
 				horde_jumpmf_var_vel2 = _prevVel select 2;
 
 				["A3W_horde_jumpmf_vel", "onEachFrame",

@@ -175,7 +175,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 			[_object] call vehicleSetup;
 			_object allowDamage _isDamageable;
-			_object setVariable ["allowDamage", _isDamageable];
+			_object setVariable ["allowDamage", _isDamageable, true];
 
 			clearBackpackCargoGlobal _object;
 

@@ -27,7 +27,7 @@ private _seats = [];
 		{
 			case (_role == "driver"):    { if (!lockedDriver _vehicle) then { _seats pushBack ["driver"] } };
 			case (_cargo != -1):         { if !(_vehicle lockedCargo _cargo) then { _seats pushBackUnique ["cargo"] } };
-			case !(_path isEqualTo []):  { if !(_vehicle lockedTurret _path) then { _seats pushBack ["turret", _path] } };
+			case !(_path isEqualTo []):  { if !(_vehicle lockedTurret _path) then { _seats pushBack [toLower _role, _path] } };
 			default                      { _seats pushBack [toLower _role] };
 		};
 	};
