@@ -21,16 +21,19 @@ if (isServer) then
 	// Corpse deletion on disconnect if player alive and player saving on + inventory save
 	addMissionEventHandler ["HandleDisconnect",
 	{
-		_unit = _this select 0;
-		_id = _this select 1;
-		_uid = _this select 2;
-		_name = _this select 3;
+		params ["_unit", "_id", "_uid", "_name"];
+
+		if (isNil "A3W_serverSetupComplete") exitWith
+		{
+			deleteVehicle _unit;
+			false
+		};
 
 		diag_log format ["HandleDisconnect - %1 - alive: %2 - local: %3", [_name, _uid], alive _unit, local _unit];
 
 		if (alive _unit) then
 		{
-			if (!(_unit call A3W_fnc_isUnconscious) && {!isNil "isConfigOn" && {["A3W_playerSaving"] call isConfigOn}}) then
+			if (!(_unit call A3W_fnc_isUnconscious) && ["A3W_playerSaving"] call isConfigOn) then
 			{
 				if (!(_unit getVariable ["playerSpawning", true]) && getText (configFile >> "CfgVehicles" >> typeOf _unit >> "simulation") != "headlessclient") then
 				{
@@ -42,7 +45,7 @@ if (isServer) then
 		}
 		else
 		{
-			if (vehicle _unit != _unit && !isNil "fn_ejectCorpse") then
+			if (vehicle _unit != _unit) then
 			{
 				_unit spawn fn_ejectCorpse;
 			};
@@ -137,8 +140,8 @@ if (isServer) then
 		"A3W_headshotNoRevive"
 	];
 
-	addMissionEventHandler ["PlayerConnected", fn_onPlayerConnected];
-	addMissionEventHandler ["PlayerDisconnected", fn_onPlayerDisconnected];
+	["A3W_join", "onPlayerConnected", { [_id, _uid, _name, _owner, _jip] call fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
+	["A3W_quit", "onPlayerDisconnected", { [_id, _uid, _name, _owner, _jip] call fn_onPlayerDisconnected }] call BIS_fnc_addStackedEventHandler;
 };
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
@@ -269,7 +272,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 			{
 				waitUntil {scriptDone _this};
 
-				addMissionEventHandler ["PlayerConnected", { (_this select [1,3]) spawn fn_kickPlayerIfFlagged }];
+				["A3W_flagCheckOnJoin", "onPlayerConnected", { [_uid, _name, _owner] spawn fn_kickPlayerIfFlagged }] call BIS_fnc_addStackedEventHandler;
 
 				// force check for non-JIP players
 				{ waitUntil {!isNull player}; [player] remoteExec ["A3W_fnc_checkPlayerFlag", 2] } remoteExec ["call", -2];
