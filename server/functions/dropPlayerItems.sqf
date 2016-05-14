@@ -4,13 +4,11 @@
 //	@file Name: dropPlayerItems.sqf
 //	@file Author: AgentRev
 
-private ["_corpse", "_money", "_items", "_veh", "_targetPos"];
-_corpse = param [0, objNull, [objNull]];
-_money = param [1, 0, [0]];
-_items = param [2, [], [[]]];
+params [["_corpse",objNull,[objNull]], ["_money",0,[0]], ["_items",[],[[]]]];
 
-if (isNull _corpse || alive _corpse || (_money < 1 && count _items == 0)) exitWith {};
+if (isNull _corpse) exitWith {};
 
+private "_veh";
 waitUntil
 {
 	sleep 0.1;
@@ -24,13 +22,18 @@ waitUntil
 
 if (isNull _corpse) exitWith {};
 
-_targetPos = getPosWorld _veh;
+private _targetPos = getPosWorld _veh;
 _targetPos set [2, (getPosATL _corpse) select 2];
 
 if (_veh != _corpse && damage _veh > 0.99) then
 {
 	// if corpse is stuck in vehicle wreck, spawn items away from vehicle, at a distance relative to vehicle's size and center
 	_targetPos = _targetPos vectorAdd ([[0, _veh call fn_vehSafeDistance, 1], -([_veh, _corpse] call BIS_fnc_dirTo)] call BIS_fnc_rotateVector2D);
+};
+
+if (_money <= 0) then
+{
+	_money = _corpse getVariable ["cmoney", 0];
 };
 
 if (_money > 0) then
@@ -41,10 +44,13 @@ if (_money > 0) then
 	_m setVariable ["owner", "world", true];
 };
 
+if (_items isEqualTo []) then
 {
-	_id = _x select 0;
-	_qty = _x select 1;
-	_type = _x select 2;
+	_items = _corpse getVariable ["mf_inventory_list", []];
+};
+
+{
+	_x params [["_id","",[""]], ["_qty",0,[0]], ["_type","",[""]]];
 
 	for "_i" from 1 to _qty do
 	{
