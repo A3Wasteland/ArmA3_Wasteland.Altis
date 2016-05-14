@@ -140,8 +140,12 @@ if (isServer) then
 		"A3W_headshotNoRevive"
 	];
 
-	["A3W_join", "onPlayerConnected", { [_id, _uid, _name, _owner, _jip] call fn_onPlayerConnected }] call BIS_fnc_addStackedEventHandler;
-	["A3W_quit", "onPlayerDisconnected", { [_id, _uid, _name, _owner, _jip] call fn_onPlayerDisconnected }] call BIS_fnc_addStackedEventHandler;
+	// Must be called before below mission events will work
+	["A3_v158_bug", "onPlayerConnected", {}] call BIS_fnc_addStackedEventHandler;
+	["A3_v158_bug", "onPlayerDisconnected", {}] call BIS_fnc_addStackedEventHandler;
+
+	addMissionEventHandler ["PlayerConnected", fn_onPlayerConnected];
+	addMissionEventHandler ["PlayerDisconnected", fn_onPlayerDisconnected];
 };
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
@@ -272,7 +276,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 			{
 				waitUntil {scriptDone _this};
 
-				["A3W_flagCheckOnJoin", "onPlayerConnected", { [_uid, _name, _owner] spawn fn_kickPlayerIfFlagged }] call BIS_fnc_addStackedEventHandler;
+				addMissionEventHandler ["PlayerConnected", { (_this select [1,3]) spawn fn_kickPlayerIfFlagged }];
 
 				// force check for non-JIP players
 				{ waitUntil {!isNull player}; [player] remoteExec ["A3W_fnc_checkPlayerFlag", 2] } remoteExec ["call", -2];
