@@ -26,6 +26,22 @@ if (_this select 1 == "Put") then
 
 	if (!mineActive _bomb) exitWith {};
 
+	// usage of dummy object is needed to guaranted pos & dir syncing and use setVariable, thanks to BIS for not fixing this in 10 damn years!!!!
+	_dummy = createVehicle [STICKY_CHARGE_DUMMY_OBJ, [-1e6,-1e6,1e6], [], 0, ""];
+	_dummy setVariable ["A3W_stickyCharges_isDummy", true, true];
+	_dummy setObjectTextureGlobal [0,""];
+	_dummy allowDamage false;
+	_dummy setPosWorld getPosWorld _bomb;
+	_dummy setVectorDirAndUp [vectorDirVisual _bomb, vectorUpVisual _bomb];
+	_bomb attachTo [_dummy, [0,0,0]];
+
+	_dummy setVariable ["A3W_stickyCharges_ownerUnit", _unit];
+
+	if (isPlayer _unit) then
+	{
+		_dummy setVariable ["A3W_stickyCharges_ownerUID", getPlayerUID _unit, true];
+	};
+
 	_firstTarget = _unit getVariable ["A3W_stickyCharges_target", objNull];
 	_eyePos = _unit getVariable ["A3W_stickyCharges_eyePos", []];
 	_lookPos = _unit getVariable ["A3W_stickyCharges_lookPos", []];
@@ -50,20 +66,19 @@ if (_this select 1 == "Put") then
 	_vecUp = _normal;
 
 	// Only attach to vehicles or indestructible structures, otherwise just setPosWorld to surface
-	if (!isClass _targetCfg || !simulationEnabled _target || _target isKindOf "TimeBombCore" || 
-	    (!(_target isKindOf "AllVehicles") && _target getVariable ["allowDamage", true] &&
-		 {(toLower getText (_targetCfg >> "destrType")) in ["destructbuilding","destructtent","destructtree","destructwall"] ||
-		  !(("getText (_x >> 'simulation') == 'ruin'" configClasses (_targetCfg >> "DestructionEffects")) isEqualTo [])})) then
+	if (getObjectType _target == 8 && simulationEnabled _target && !(_target isKindOf "TimeBombCore") &&
+		(_target isKindOf "AllVehicles" || !(_target getVariable ["allowDamage", true]) ||
+		 {!((toLower getText (_targetCfg >> "destrType")) in ["destructbuilding","destructtent","destructtree","destructwall"]) &&
+		  ("getText (_x >> 'simulation') == 'ruin'" configClasses (_targetCfg >> "DestructionEffects")) isEqualTo []})) then
 	{
-		_bomb setPosWorld _posASL;
-		//systemChat format ["%1 placed on [%2]", _ammo, _target];
+		_dummy attachTo [_target, _target worldToModelVisual ASLtoAGL _posASL];
+		_vecUp = _target worldToModelVisual ASLtoAGL ((AGLtoASL (_target modelToWorldVisual [0,0,0])) vectorAdd _normal);
+		//systemChat format ["%1 attached to [%2]", _ammo, _target];
 	}
 	else
 	{
-
-		_bomb attachTo [_target, _target worldToModelVisual ASLtoAGL _posASL];
-		_vecUp = _target worldToModelVisual ASLtoAGL ((AGLtoASL (_target modelToWorldVisual [0,0,0])) vectorAdd _normal);
-		//systemChat format ["%1 attached to [%2]", _ammo, _target];
+		_dummy setPosWorld _posASL;
+		//systemChat format ["%1 placed on [%2]", _ammo, _target];
 	};
 
 	_vecDir = [0,0,1];
@@ -73,6 +88,6 @@ if (_this select 1 == "Put") then
 		_vecDir = (vectorNormalized (_lookPos vectorDiff _eyePos)) vectorMultiply (_vecUp select 2);
 	};
 
-	_bomb setVectorDirAndUp [_vecDir, _vecUp];
-	_bomb setVectorUp _vecUp; // vectorUp must be set again for the bomb to be oriented correctly when attached
+	_dummy setVectorDirAndUp [_vecDir,_vecUp];
+	_dummy setVectorUp _vecUp; // vectorUp must be set again for the bomb to be oriented correctly when attached
 };

@@ -8,4 +8,5 @@
 #define STICKY_CHARGE_ALLOWED_TYPES ["DemoCharge_Remote_Mag", "SatchelCharge_Remote_Mag"] // allowed magazine classnames
 #define STICKY_CHARGE_ICON_COLOR [0, 1, 0, 1] // RGBA
 
+#define STICKY_CHARGE_DUMMY_OBJ "Sign_Sphere10cm_F" // usage of dummy object is needed to guaranted pos & dir syncing and use setVariable
 #define LINE_INTERSECT_BOMB(POS1,POS2,IGNORE) lineIntersectsSurfaces [POS1, POS2, player, IGNORE, true, 1, "FIRE", "VIEW"]
