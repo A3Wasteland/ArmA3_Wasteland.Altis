@@ -37,11 +37,7 @@ if (_pressedKey in actionKeys "GetOver") then
 				_load = loadAbs player;
 
 				[player, "AovrPercMrunSrasWrflDf"] call switchMoveGlobal;
-
-				if (currentWeapon player == "") then
-				{
-					player playMoveNow "AovrPercMrunSrasWrflDf";
-				};
+				player playMoveNow "AovrPercMrunSrasWrflDf";
 
 				horde_jumpmf_var_vel2 = _prevVel select 2;
 
