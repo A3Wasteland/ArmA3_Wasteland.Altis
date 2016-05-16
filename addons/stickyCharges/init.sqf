@@ -48,7 +48,6 @@ A3W_fnc_stickyCharges_drawSurfaceIcon = STICKY_CHARGE_COMPILE preprocessFileLine
 A3W_fnc_stickyCharges_firedEvent = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\firedEvent.sqf");
 A3W_fnc_stickyCharges_keyDown = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\keyDown.sqf");
 A3W_fnc_stickyCharges_mouseButtonDown = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\mouseButtonDown.sqf");
-A3W_fnc_stickyCharges_killedCleanup = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\killedCleanup.sqf");
 
 if (!isNil "A3W_stickyCharges_drawSurfaceIcon_eventID") then { removeMissionEventHandler ["Draw3D", A3W_stickyCharges_drawSurfaceIcon_eventID] };
 A3W_stickyCharges_drawSurfaceIcon_eventID = addMissionEventHandler ["Draw3D", A3W_fnc_stickyCharges_drawSurfaceIcon];
