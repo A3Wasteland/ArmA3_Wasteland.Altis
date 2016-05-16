@@ -35,6 +35,7 @@ if (_this select 1 == "Put") then
 	_dummy setVectorDirAndUp [vectorDirVisual _bomb, vectorUpVisual _bomb];
 	_bomb attachTo [_dummy, [0,0,0]];
 
+	_dummy setVariable ["A3W_stickyCharges_linkedBomb", _bomb, true];
 	_dummy setVariable ["A3W_stickyCharges_ownerUnit", _unit];
 
 	if (isPlayer _unit) then
@@ -64,30 +65,44 @@ if (_this select 1 == "Put") then
 
 	_targetCfg = configFile >> "CfgVehicles" >> typeOf _target;
 	_vecUp = _normal;
+	_rootObj = _bomb;
+
+	_allowDamage = _target getVariable ["allowDamage", true]; // "allowedDamage" command doesn't exist yet...
+	if !(_allowDamage isEqualType true) then { _allowDamage = true };
 
 	// Only attach to vehicles or indestructible structures, otherwise just setPosWorld to surface
 	if (getObjectType _target == 8 && simulationEnabled _target && !(_target isKindOf "TimeBombCore") &&
-		(_target isKindOf "AllVehicles" || !(_target getVariable ["allowDamage", true]) ||
-		 {!((toLower getText (_targetCfg >> "destrType")) in ["destructbuilding","destructtent","destructtree","destructwall"]) &&
-		  ("getText (_x >> 'simulation') == 'ruin'" configClasses (_targetCfg >> "DestructionEffects")) isEqualTo []})) then
+	    {_target isKindOf "AllVehicles" || !_allowDamage ||
+	     {!((toLower getText (_targetCfg >> "destrType")) in ["destructbuilding","destructtent","destructtree","destructwall"]) &&
+	      ("getText (_x >> 'simulation') == 'ruin'" configClasses (_targetCfg >> "DestructionEffects")) isEqualTo []}}) then
 	{
-		_dummy attachTo [_target, _target worldToModelVisual ASLtoAGL _posASL];
+		_bomb attachTo [_target, _target worldToModelVisual ASLtoAGL _posASL];
+		_dummy attachTo [_bomb, [0,0,0]];
 		_vecUp = _target worldToModelVisual ASLtoAGL ((AGLtoASL (_target modelToWorldVisual [0,0,0])) vectorAdd _normal);
 		//systemChat format ["%1 attached to [%2]", _ammo, _target];
 	}
 	else
 	{
 		_dummy setPosWorld _posASL;
+		_rootObj = _dummy;
 		//systemChat format ["%1 placed on [%2]", _ammo, _target];
 	};
 
 	_vecDir = [0,0,1];
 
-	if (_vecUp select [0,2] isEqualTo [0,0]) then
+	if (abs (_vecUp select 0) < 0.01 && abs (_vecUp select 1) < 0.01) then
 	{
-		_vecDir = (vectorNormalized (_lookPos vectorDiff _eyePos)) vectorMultiply (_vecUp select 2);
+		_vecDir = (_lookPos vectorDiff _eyePos) vectorMultiply (_vecUp select 2);
 	};
 
-	_dummy setVectorDirAndUp [_vecDir,_vecUp];
-	_dummy setVectorUp _vecUp; // vectorUp must be set again for the bomb to be oriented correctly when attached
+	_rootObj setVectorDirAndUp [_vecDir,_vecUp];
+	_rootObj setVectorUp _vecUp; // vectorUp must be set again for the bomb to be oriented correctly when attached
+
+	if (_rootObj == _bomb) then
+	{
+		_dummy setVariable ["A3W_stickyCharges_vecDirUp", [_vecDir,_vecUp], true];
+
+		pvar_A3W_stickyCharges_vecDirUp = [_bomb, _vecDir, _vecUp];
+		publicVariable "pvar_A3W_stickyCharges_vecDirUp";
+	};
 };

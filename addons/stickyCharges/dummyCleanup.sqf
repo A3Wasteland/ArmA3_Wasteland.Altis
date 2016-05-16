@@ -12,13 +12,13 @@ while {true} do
 	SLEEP_REALTIME(5*60);
 
 	{
-		if (_x getVariable ["A3W_stickyCharges_isDummy", false]) then
+		_linkedBomb = _x getVariable ["A3W_stickyCharges_linkedBomb",0];
+
+		if (_linkedBomb isEqualType objNull && {!mineActive _linkedBomb}) then
 		{
-			if (attachedObjects _x isEqualTo []) then
-			{
-				deleteVehicle _x;
-			};
+			deleteVehicle _x;
 		};
+
 		sleep 0.01;
 	} forEach allMissionObjects STICKY_CHARGE_DUMMY_OBJ;
 };
