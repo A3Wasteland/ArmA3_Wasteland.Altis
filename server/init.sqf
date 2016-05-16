@@ -147,12 +147,14 @@ if (isServer) then
 		"A3W_headshotNoRevive"
 	];
 
-	// Must be called before below mission events will work
-	["A3_v158_bug", "onPlayerConnected", {}] call BIS_fnc_addStackedEventHandler;
-	["A3_v158_bug", "onPlayerDisconnected", {}] call BIS_fnc_addStackedEventHandler;
-
 	addMissionEventHandler ["PlayerConnected", fn_onPlayerConnected];
 	addMissionEventHandler ["PlayerDisconnected", fn_onPlayerDisconnected];
+
+	// Temp fix for https://forums.bistudio.com/topic/190773-mission-event-handlers-playerconnected-and-playerdisconnected-do-not-work/
+	["A3W_missionEH_fix", "onPlayerConnected", {}] call BIS_fnc_addStackedEventHandler;
+	["A3W_missionEH_fix", "onPlayerDisconnected", {}] call BIS_fnc_addStackedEventHandler;
+	["A3W_missionEH_fix", "onPlayerConnected"] call BIS_fnc_removeStackedEventHandler;
+	["A3W_missionEH_fix", "onPlayerDisconnected"] call BIS_fnc_removeStackedEventHandler;
 };
 
 _playerSavingOn = ["A3W_playerSaving"] call isConfigOn;
