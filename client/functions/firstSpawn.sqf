@@ -169,11 +169,6 @@ if (["A3W_remoteBombStoreRadius", 0] call getPublicVar > 0) then
 						titleText [format ["You are not allowed to place explosives within %1m of a store.\nThe explosive has been re-added to your inventory.", _minDist], "PLAIN DOWN", 0.5];
 					};
 				} forEach entities "CAManBase";
-
-				if (mineActive _bomb) then
-				{
-					_bomb setVariable ["ownerUID", getPlayerUID player, true];
-				};
 			};
 		};
 	}];
