@@ -6,7 +6,7 @@
 
 #include "defines.sqf"
 
-// A player's bomb timers and detonators are cleared on disconnect, so we can delete all its "PipeBombBase" explosives since they are now useless
+// A player's bomb timers and detonators are cleared on disconnect, so we can delete all "RemoteTrigger" explosives since they are now useless
 
 params ["", "_uid"];
 if (_uid isEqualTo "") exitWith {};
@@ -18,7 +18,7 @@ _uid spawn
 	{
 		_linkedBomb = _x getVariable ["A3W_stickyCharges_linkedBomb",0];
 
-		if (_linkedBomb isEqualType objNull && {_linkedBomb isKindOf "PipeBombBase"}) then
+		if (_linkedBomb isEqualType objNull && {getText (configFile >> "CfgAmmo" >> typeOf _linkedBomb >> "mineTrigger") == "RemoteTrigger"}) then
 		{
 			if (mineActive _linkedBomb) then
 			{

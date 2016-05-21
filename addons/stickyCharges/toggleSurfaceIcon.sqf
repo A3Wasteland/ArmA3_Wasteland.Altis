@@ -10,12 +10,22 @@ private _success = (_this || !(player getVariable ["A3W_stickyCharges_isStaticIc
 
 if (_success) then
 {
-	missionNamespace setVariable ["A3W_stickyCharges_showSurfaceIcon", _this];
-
-	if (_this) then
+	with missionNamespace do
 	{
-		missionNamespace setVariable ["A3W_stickyCharges_showSurfaceIcon_tickTime", diag_tickTime];
-		player setVariable ["A3W_stickyCharges_isStaticIcon", false];
+		if (!isNil "A3W_stickyCharges_drawSurfaceIcon_ID") then { removeMissionEventHandler ["Draw3D", A3W_stickyCharges_drawSurfaceIcon_ID] };
+
+		if (_this) then
+		{
+			player setVariable ["A3W_stickyCharges_isStaticIcon", false];
+			A3W_stickyCharges_showSurfaceIcon_tickTime = diag_tickTime;
+			A3W_stickyCharges_drawSurfaceIcon_ID = addMissionEventHandler ["Draw3D", A3W_fnc_stickyCharges_drawSurfaceIcon];
+		}
+		else
+		{
+			A3W_stickyCharges_drawSurfaceIcon_ID = nil;
+		};
+
+		A3W_stickyCharges_showSurfaceIcon = _this;
 	};
 };
 

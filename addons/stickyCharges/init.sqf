@@ -4,25 +4,30 @@
 //	@file Name: init.sqf
 //	@file Author: AgentRev
 
-// Sticky Charges addon v1.03 by AgentRev
+/*
+	Sticky Charges addon v1.04 by AgentRev
 
-// This addon can freely be integrated in any mission/mod outside of A3Wasteland, without the need to ask for permission, as long as LICENSE.txt is included in the addon folder.
+	This addon can freely be integrated in any mission/mod outside of A3Wasteland, without the need to ask for permission, as long as LICENSE.txt remains in the addon folder.
 
-// WARNING: This script uses inGameUISetEventHandler, which may cause conflicts with other scripts relying on that command, see bottom of file for more info
+	WARNING: This script uses inGameUISetEventHandler, which may cause conflicts with other scripts relying on that command, see bottom of file for more info
 
-// If needed, BattleEye whitelist:
-//	- createvehicle.txt: !="Sign_Sphere10cm_F"
-//	- publicvariable.txt: !="pvar_A3W_stickyCharges_vecDirUp"
-//	- setvariable.txt: !"^A3W_stickyCharges_"
+	If needed, BattleEye whitelist:
+	 - createvehicle.txt: !="Sign_Sphere10cm_F"
+	 - publicvariable.txt: !="pvar_A3W_stickyCharges_vecDirUp"
+	 - setvariable.txt: !"^A3W_stickyCharges_"
+
+	and blacklist:
+	 - publicvariable.txt: 5 "^A3W_stickyCharges_"
+*/
 
 #include "defines.sqf" // adjust settings in there as needed!
 
-#define STICKY_CHARGE_ADDON_ROOT "addons\stickyCharges" // mission folder path where this script is placed
-#define STICKY_CHARGE_COMPILE compileFinal // compile or compileFinal
+#define STICKY_CHARGE_ADDON_PATH "addons\stickyCharges" // mission folder path where this script is placed
+#define STICKY_CHARGE_COMPILE(FILENAME) compileFinal preprocessFileLineNumbers (STICKY_CHARGE_ADDON_PATH + "\" + FILENAME)
 
 if (isServer) then
 {
-	A3W_fnc_stickyCharges_disconnectCleanup = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\disconnectCleanup.sqf");
+	A3W_fnc_stickyCharges_disconnectCleanup = STICKY_CHARGE_COMPILE("disconnectCleanup.sqf");
 
 	if (!isNil "A3W_stickyCharges_disconnectCleanup_ID") then { removeMissionEventHandler ["PlayerDisconnected", A3W_stickyCharges_disconnectCleanup_ID] };
 	A3W_stickyCharges_disconnectCleanup_ID = addMissionEventHandler ["PlayerDisconnected", A3W_fnc_stickyCharges_disconnectCleanup];
@@ -32,31 +37,40 @@ if (isServer) then
 	["A3W_stickyCharges_oPD_fix", "onPlayerDisconnected"] call BIS_fnc_removeStackedEventHandler;
 
 	if (!isNil "A3W_stickyCharges_dummyCleanup") then { terminate A3W_stickyCharges_dummyCleanup };
-	A3W_stickyCharges_dummyCleanup = execVM (STICKY_CHARGE_ADDON_ROOT + "\dummyCleanup.sqf");
+	A3W_stickyCharges_dummyCleanup = execVM (STICKY_CHARGE_ADDON_PATH + "\dummyCleanup.sqf");
 };
 
-"pvar_A3W_stickyCharges_vecDirUp" addPublicVariableEventHandler compile preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\pvarVecDirUp.sqf");
+"pvar_A3W_stickyCharges_vecDirUp" addPublicVariableEventHandler STICKY_CHARGE_COMPILE("pvarVecDirUp.sqf");
 
 if (!isNil "A3W_stickyCharges_initVecDirUp") then { terminate A3W_stickyCharges_initVecDirUp };
-A3W_stickyCharges_initVecDirUp = execVM (STICKY_CHARGE_ADDON_ROOT + "\initVecDirUp.sqf");
+A3W_stickyCharges_initVecDirUp = execVM (STICKY_CHARGE_ADDON_PATH + "\initVecDirUp.sqf");
 
 if (!hasInterface) exitWith {};
 
-A3W_stickyCharges_surfaceIcon = getText (configfile >> "CfgInGameUI" >> "Cursor" >> "explosive");
-
-A3W_fnc_stickyCharges_magNameAllowed = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\magNameAllowed.sqf");
-A3W_fnc_stickyCharges_toggleSurfaceIcon = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\toggleSurfaceIcon.sqf");
-A3W_fnc_stickyCharges_actionIntersect = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\actionIntersect.sqf");
-A3W_fnc_stickyCharges_actionEvent = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\actionEvent.sqf");
-A3W_fnc_stickyCharges_actionSelect = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\actionSelect.sqf");
-A3W_fnc_stickyCharges_targetAllowed = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\targetAllowed.sqf");
-A3W_fnc_stickyCharges_drawSurfaceIcon = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\drawSurfaceIcon.sqf");
-A3W_fnc_stickyCharges_firedEvent = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\firedEvent.sqf");
-A3W_fnc_stickyCharges_keyDown = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\keyDown.sqf");
-A3W_fnc_stickyCharges_mouseButtonDown = STICKY_CHARGE_COMPILE preprocessFileLineNumbers (STICKY_CHARGE_ADDON_ROOT + "\mouseButtonDown.sqf");
-
 if (!isNil "A3W_stickyCharges_drawSurfaceIcon_ID") then { removeMissionEventHandler ["Draw3D", A3W_stickyCharges_drawSurfaceIcon_ID] };
-A3W_stickyCharges_drawSurfaceIcon_ID = addMissionEventHandler ["Draw3D", A3W_fnc_stickyCharges_drawSurfaceIcon];
+
+A3W_stickyCharges_surfaceIcon = getText (configFile >> "CfgInGameUI" >> "Cursor" >> "explosive");
+A3W_stickyCharges_allowedMagNames = [];
+
+{
+	_magName = getText (configFile >> "CfgMagazines" >> _x >> "displayName");
+
+	if (_magName != "") then
+	{
+		A3W_stickyCharges_allowedMagNames pushBackUnique _magName;
+	};
+} forEach STICKY_CHARGE_ALLOWED_TYPES;
+
+A3W_fnc_stickyCharges_magNameAllowed = STICKY_CHARGE_COMPILE("magNameAllowed.sqf");
+A3W_fnc_stickyCharges_toggleSurfaceIcon = STICKY_CHARGE_COMPILE("toggleSurfaceIcon.sqf");
+A3W_fnc_stickyCharges_actionIntersect = STICKY_CHARGE_COMPILE("actionIntersect.sqf");
+A3W_fnc_stickyCharges_actionEvent = STICKY_CHARGE_COMPILE("actionEvent.sqf");
+A3W_fnc_stickyCharges_actionSelect = STICKY_CHARGE_COMPILE("actionSelect.sqf");
+A3W_fnc_stickyCharges_targetAllowed = STICKY_CHARGE_COMPILE("targetAllowed.sqf");
+A3W_fnc_stickyCharges_drawSurfaceIcon = STICKY_CHARGE_COMPILE("drawSurfaceIcon.sqf");
+A3W_fnc_stickyCharges_firedEvent = STICKY_CHARGE_COMPILE("firedEvent.sqf");
+A3W_fnc_stickyCharges_keyDown = STICKY_CHARGE_COMPILE("keyDown.sqf");
+A3W_fnc_stickyCharges_mouseButtonDown = STICKY_CHARGE_COMPILE("mouseButtonDown.sqf");
 
 with uiNamespace do
 {
