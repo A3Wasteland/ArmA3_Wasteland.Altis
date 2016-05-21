@@ -359,10 +359,10 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_Check_Stabilize =
 {
-	private "_target";
-	_target = call FAR_FindTarget;
+	private _target = call FAR_FindTarget;
 
-	(!IS_MEDIC(player) || !([player, _target] call A3W_fnc_isFriendly)) && FAR_Check_Dragging && {!STABILIZED(_target) && ({_x in ["FirstAidKit","Medikit"]} count items player > 0)}
+	// do not show Stabilize if Revive is shown, unless target is enemy
+	(!IS_MEDIC(player) || !([player, _target] call A3W_fnc_isFriendly)) && FAR_Check_Dragging && {!STABILIZED(_target) && !(["FirstAidKit","Medikit"] arrayIntersect items player isEqualTo [])}
 }
 call mf_compile;
 
@@ -371,7 +371,10 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_Check_Revive =
 {
-	IS_MEDIC(player) && FAR_Check_Dragging
+	private _target = call FAR_FindTarget;
+
+	// do not show Revive if target is enemy
+	IS_MEDIC(player) && [player, _target] call A3W_fnc_isFriendly && FAR_Check_Dragging
 }
 call mf_compile;
 
@@ -380,8 +383,7 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_Check_Slay =
 {
-	private "_target";
-	_target = if (_this isEqualType []) then { param [0,objNull,[objNull]] } else { call FAR_FindTarget }; // if not array then it's an addAction condition check
+	private _target = if (_this isEqualType []) then { param [0,objNull,[objNull]] } else { call FAR_FindTarget }; // if not array then it's an addAction condition check
 
 	!([_target, player] call A3W_fnc_isFriendly) && FAR_Check_Dragging
 }
