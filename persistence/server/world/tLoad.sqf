@@ -30,5 +30,8 @@ if (["A3W_weatherSaving"] call isConfigOn) then
 	if (!isNil "drn_DynamicWeather_RainThread") then { terminate drn_DynamicWeather_RainThread };
 	if (!isNil "drn_DynamicWeather_FogThread") then { terminate drn_DynamicWeather_FogThread };
 
+	drn_JIPWeatherSynced = nil;
+	publicVariable "drn_JIPWeatherSynced";
+
 	drn_DynamicWeather_MainThread = (_time select [1,4]) execVM "addons\scripts\DynamicWeatherEffects.sqf";
 };

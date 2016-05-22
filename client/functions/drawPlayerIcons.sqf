@@ -69,6 +69,8 @@ drawPlayerIcons_thread = [] spawn
 		};
 	} forEach _mineColor;
 
+	_noBuiltInThermal = ["A3W_disableBuiltInThermal"] call isConfigOn;
+
 	private ["_dist", "_simulation"];
 
 	// Execute every frame
@@ -176,6 +178,45 @@ drawPlayerIcons_thread = [] spawn
 						_newArray pushBack [[_mineIcon, _mineColor, CENTER_POS(_x), 1, 1, 0, "", 2, 0, "PuristaMedium", "", true], _x, _posCode];
 					};
 				} forEach detectedMines playerSide;
+			};
+
+			if (_noBuiltInThermal) then
+			{
+				_thermalActive = currentVisionMode player isEqualTo 2;
+
+				if (_thermalActive || !isNil "A3W_builtInThermalOffline") then
+				{
+					_weapon = currentWeapon player;
+					_ownWeapon = true;
+
+					{
+						_x params ["_unit", "","","", "_ffv"];
+
+						if (_unit == player) exitWith
+						{
+							_ownWeapon = _ffv;
+						};
+					} forEach fullCrew [objectParent player, "", false];
+
+					if (_thermalActive && {cameraOn == vehicle player && _weapon in weapons player && _ownWeapon &&
+						({_x == "TI"} count getArray (configFile >> "CfgWeapons" >> _weapon >> "visionMode") > 0 ||
+						 {!("{_x == 'TI'} count getArray (_x >> 'visionMode') > 0" configClasses (configFile >> "CfgWeapons" >> _weapon >> "OpticsModes") isEqualTo [])})}) then
+					{
+						if (isNil "A3W_builtInThermalOffline") then
+						{
+							"A3W_thermalOffline" cutText ["THERMAL IMAGING OFFLINE", "BLACK", 0.001, false];
+							A3W_builtInThermalOffline = true;
+						};
+					}
+					else
+					{
+						if (!isNil "A3W_builtInThermalOffline") then
+						{
+							"A3W_thermalOffline" cutText ["", "PLAIN", 0.001, false];
+							A3W_builtInThermalOffline = nil;
+						};
+					};
+				};
 			};
 		};
 

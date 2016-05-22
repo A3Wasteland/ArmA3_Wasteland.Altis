@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+
+  Do not bother submitting translations to the A3W GitHub repo, the strings below are only a tiny fraction of all messages used in the mission.
+
+█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+-->
 <Project name="Wasteland">
 	<Package name="General">
 		<Key ID="STR_WL_Gen_TeamWEST">

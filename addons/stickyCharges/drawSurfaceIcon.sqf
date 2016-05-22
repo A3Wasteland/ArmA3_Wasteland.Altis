@@ -6,15 +6,12 @@
 
 #include "defines.sqf"
 
+// if commanding menu open, or inventory open, or action menu activated more than 10 seconds ago, it means the action menu is closed
+#define CHECK_TOGGLE_OFF (commandingMenu != "" || !isNull (uiNamespace getVariable ["RscDisplayInventory", displayNull]) || diag_tickTime - (missionNamespace getVariable ["A3W_stickyCharges_showSurfaceIcon_tickTime", 0]) > 10)
+
 if (missionNamespace getVariable ["A3W_stickyCharges_showSurfaceIcon", false]) then
 {
-	// commanding menu open, or action menu activated more than 10 seconds ago, means the action menu is closed
-	_exit = if (commandingMenu != "" || diag_tickTime - (missionNamespace getVariable ["A3W_stickyCharges_showSurfaceIcon_tickTime", 0]) > 10) then
-	{
-		false call A3W_fnc_stickyCharges_toggleSurfaceIcon
-	}
-	else { false };
-
+	_exit = if (CHECK_TOGGLE_OFF) then { false call A3W_fnc_stickyCharges_toggleSurfaceIcon } else { false };
 	if (_exit) exitWith {};
 
 	_staticIcon = player getVariable ["A3W_stickyCharges_isStaticIcon", false];
@@ -27,7 +24,7 @@ if (missionNamespace getVariable ["A3W_stickyCharges_showSurfaceIcon", false]) t
 
 	if (!(_surfacePos isEqualTo []) && (!_staticIcon || _target isEqualTo _firstTarget) && {_target call A3W_fnc_stickyCharges_targetAllowed})then
 	{
-		_size = 2 / ((AGLtoASL positionCameraToWorld [0,0,0]) vectorDistance _surfacePos);
+		_size = 2 / (((AGLtoASL positionCameraToWorld [0,0,0]) vectorDistance _surfacePos) max 0.25);
 		_iconPos = ASLtoAGL _surfacePos;
 
 		drawIcon3D [A3W_stickyCharges_surfaceIcon, STICKY_CHARGE_ICON_COLOR, _iconPos, _size, _size, 180, "", 2];
