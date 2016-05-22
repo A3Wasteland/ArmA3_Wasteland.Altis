@@ -4,7 +4,7 @@
 //	@file Name: fn_onPlayerConnected.sqf
 //	@file Author: AgentRev
 
-params ["_id", "_uid", "_name", "_owner", "_jip"];
+params ["_id", "_uid", "_name", "_jip", "_owner"];
 
 diag_log format ["Player connected: %1 (%2)", _name, _uid];
 if (_uid isEqualTo "") exitWith {};
