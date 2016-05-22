@@ -41,7 +41,7 @@ _success = [DURATION, ANIMATION, _checks, [_vehicle]] call a3w_actions_start;
 if (_success) then {
 	// the fuel qty is handled by mf_remote_refuel.
 	// will execute locally if _currVehicle is local
-	[[netId _vehicle], "mf_remote_refuel", _vehicle] call A3W_fnc_MP;
+	[netId _vehicle] remoteExec ["mf_remote_refuel", _vehicle];
 	[MF_ITEMS_JERRYCAN_FULL, 1] call mf_inventory_remove;
 	[MF_ITEMS_JERRYCAN_EMPTY, 1] call mf_inventory_add;
 	["Refueling complete!", 5] call mf_notify_client;
