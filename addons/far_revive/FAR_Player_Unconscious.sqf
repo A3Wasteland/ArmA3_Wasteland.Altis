@@ -97,7 +97,7 @@ waitUntil {!isNil {_unit getVariable "FAR_killerSuspects"}};
 // Find killer
 _killer = _unit call FAR_findKiller;
 _unit setVariable ["FAR_killerPrimeSuspect", _killer];
-[_unit, _killer] remoteExecCall ["A3W_fnc_registerKillScore", 2];
+//[_unit, _killer] remoteExecCall ["A3W_fnc_registerKillScore", 2]; // needs to be uncommented in CfgRemoteExec_fnc.hpp too
 
 diag_log format ["INCAPACITATED by [%1] with [%2]", _killer, _unit getVariable ["FAR_killerAmmo", ""]];
 
