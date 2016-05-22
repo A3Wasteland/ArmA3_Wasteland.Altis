@@ -8,7 +8,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_unit", "_killer", "_presumedKiller", "_scoreColumn", "_scoreValue", "_backpack"];
+private ["_unit", "_killer", "_backpack"];
 
 _unit = _this select 0;
 _unit setVariable ["processedDeath", diag_tickTime];
@@ -19,34 +19,7 @@ if (isPlayer _unit && {["A3W_playerSaving"] call isConfigOn}) then
 	(getPlayerUID _unit) call fn_deletePlayerSave;
 };
 
-_killer = if (count _this > 1) then { _this select 1 } else { objNull };
-_presumedKiller = if (count _this > 2) then { _this select 2 } else { objNull };
-
-if !(_killer isKindOf "Man") then { _killer = effectiveCommander _killer };
-
-// Score handling
-if (isPlayer _killer) then
-{
-	_enemyKill = !([_killer, _unit] call A3W_fnc_isFriendly);
-
-	if (isPlayer _unit) then
-	{
-		_scoreColumn = ["teamKills","playerKills"] select _enemyKill;
-		_scoreValue = 1;
-	}
-	else
-	{
-		_scoreColumn = "aiKills";
-		_scoreValue = [0,1] select _enemyKill;
-	};
-
-	[_killer, _scoreColumn, _scoreValue] call fn_addScore;
-
-	if (isPlayer _presumedKiller && _presumedKiller != _unit) then
-	{
-		[_presumedKiller, "playerKills", 0] call fn_addScore; // sync Steam score
-	};
-};
+_killer = _this call A3W_fnc_registerKillScore;
 
 if (isPlayer _unit) then
 {

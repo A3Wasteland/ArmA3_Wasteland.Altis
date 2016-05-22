@@ -286,7 +286,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 			{
 				waitUntil {scriptDone _this};
 
-				addMissionEventHandler ["PlayerConnected", { (_this select [1,3]) spawn fn_kickPlayerIfFlagged }];
+				addMissionEventHandler ["PlayerConnected", { _this spawn fn_kickPlayerIfFlagged }];
 
 				// force check for non-JIP players
 				{ waitUntil {!isNull player}; [player] remoteExec ["A3W_fnc_checkPlayerFlag", 2] } remoteExec ["call", -2];
