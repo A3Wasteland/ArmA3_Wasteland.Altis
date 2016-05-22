@@ -23,23 +23,24 @@ class VehicleManagement {
 
 	class controlsBackground {
 
-		class MainBackground: IGUIBack
+		class MainBackground: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0.6};
-
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
 			x = 0.295 * safezoneW + safezoneX;
 			y = 0.228 * safezoneH + safezoneY;
 			w = 0.35 * safezoneW;
 			h = 0.543 * safezoneH;
 		};
 
-		class TopBar: IGUIBack
+		class TopBar: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.45,0.005,0,1)";
 
 			x = 0.295 * safezoneW + safezoneX;
 			y = 0.228 * safezoneH + safezoneY;

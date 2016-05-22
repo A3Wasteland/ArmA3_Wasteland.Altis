@@ -10,8 +10,8 @@ corpseManagerMode = 1;
 corpseRemovalMinTime = 30*60;
 corpseRemovalMaxTime = 30*60;
 wreckManagerMode = 1;
-wreckRemovalMinTime = 5*60;
-wreckRemovalMaxTime = 10*60;
+wreckRemovalMinTime = 2*60;
+wreckRemovalMaxTime = 5*60;
 enableDebugConsole = 1;
 respawnDialog = 0; // do not enable this, otherwise the default scoreboard will overlap with the new one
 onPauseScript = "client\clientEvents\onPause.sqf";
@@ -21,8 +21,8 @@ class Header
 	minPlayers=1;
 	maxPlayers=146; // 144 players, 2 headless clients
 };
-author="AgentRev - A3Wasteland.com"; // it would be if you could keep "A3Wasteland.com" in the name, like "YourName and A3Wasteland.com" :)
-onLoadName = "A3Wasteland Altis"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
+author="biabock | A3Wasteland.com"; // it would be if you could keep "A3Wasteland.com" in the name, like "YourName and A3Wasteland.com" :)
+onLoadName = "Traitors Team"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
 onLoadMission = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewText = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
@@ -33,14 +33,14 @@ loadScreen = "mapConfig\Loading.jpg";
 
 // A3W UI color (default = sky blue)
 
-#define A3W_UICOLOR_R  0.25 // default = 0.25
-#define A3W_UICOLOR_G  0.51 // default = 0.51
-#define A3W_UICOLOR_B  0.96 // default = 0.96
+#define A3W_UICOLOR_R  255 // default = 0.25
+#define A3W_UICOLOR_G  0 // default = 0.51
+#define A3W_UICOLOR_B  0 // default = 0.96
 
 //Dialog includes
 
 #include "client\gui_base.hpp"
-#include "addons\R3F_ARTY_AND_LOG\desc_include.h"
+#include "addons\R3F_LOG\desc_include.h"
 #include "client\systems\ui_toolkit.hpp"
 #include "client\systems\common.hpp"
 #include "client\items\warchest\dialog.hpp"
@@ -64,6 +64,9 @@ loadScreen = "mapConfig\Loading.jpg";
 #include "addons\proving_ground\PG_config.hpp"
 #include "addons\outlw_magrepack\config.hpp"
 
+#include "addons\UniformPainter\dialog\UniformPainter_mainMenu.hpp"
+#include "addons\VehiclePainter\dialog\VehiclePainter_mainMenu.hpp"
+
 class RscTitles
 {
 	#include "addons\proving_ground\PG_rsctitles.hpp"
@@ -73,8 +76,10 @@ class RscTitles
 	#include "client\systems\scoreboard\score_gui.hpp"
 };
 
+#include "CHVD\dialog.hpp"
 class CfgFunctions
 {
+	#include "CHVD\CfgFunctions.hpp"
 	class A3W
 	{
 		#include "client\CfgFunctions.hpp"
@@ -92,7 +97,7 @@ class CfgRemoteExec // applies only to clients
 	class Functions
 	{
 		#ifndef A3W_DEBUG
-		mode = 1; // 0 = block all, 1 = whitelist, 2 = allow all
+		mode = 2; // 0 = block all, 1 = whitelist, 2 = allow all
 		#else
 		mode = 2; // debug mode, don't touch
 		#endif
@@ -102,7 +107,7 @@ class CfgRemoteExec // applies only to clients
 	class Commands
 	{
 		#ifndef A3W_DEBUG
-		mode = 1; // 0 = block all, 1 = whitelist, 2 = allow all
+		mode = 2; // 0 = block all, 1 = whitelist, 2 = allow all
 		#else
 		mode = 2; // debug mode, don't touch
 		#endif

@@ -130,11 +130,14 @@ while {true} do
 
 	// Make sure we keep a record of the health value from this iteration
 	_lastHealthReading = _health;
+	_serverFPS = round diag_fps;
 
 	// Icons in bottom right
 
 	_strArray = [];
 
+	_strArray pushBack format ["%1 <img size='0.9' image='client\icons\players.paa'/>", count playableUnits];
+	
 	if (_atmEnabled) then {
 		_strArray pushBack format ["%1 <img size='0.7' image='client\icons\suatmm_icon.paa'/>", [player getVariable ["bmoney", 0]] call fn_numbersText];
 	};
@@ -152,6 +155,10 @@ while {true} do
 
 	_strArray pushBack format ["<t color='%1'>%2</t> <img size='0.7' image='client\icons\health.paa'/>", _healthTextColor, _health];
 
+	_strArray pushBack format ["<t color='#ffffff'>%1 FPS</t>", _serverFPS];
+	
+	_strArray pushBack format ["<t color='#FFFFFF'>arma.traitors.com.br"];
+	
 	_str = "";
 
 	{ _str = format ["%1%2<br/>", _str, _x] } forEach _strArray;
@@ -170,13 +177,12 @@ while {true} do
 	_tempString = "";
 	_yOffset = _yOffsetVitals + 0.04;
 
-	if (isStreamFriendlyUIEnabled) then
-	{
-		_tempString = format ["<t color='#CCCCCCCC'>A3Wasteland %1<br/>a3wasteland.com</t>", getText (configFile >> "CfgWorlds" >> worldName >> "description")];
-		_yOffset = _yOffset + 0.08;
-	}
-	else
-	{
+	//if (isStreamFriendlyUIEnabled) then
+	//{
+	//	_tempString = format ["<t color='#FFFFFF'>arma.traitors.com.br | TT Wasteland Altis</t>"];
+	//	_yOffset = _yOffset + 0.08;
+	//}
+	//{
 		if (player != vehicle player) then
 		{
 			_vehicle = vehicle player;
@@ -196,7 +202,7 @@ while {true} do
 				};
 			} forEach crew _vehicle;
 		};
-	};
+	//};
 
 	_hudVehiclePos = ctrlPosition _hudVehicle;
 	_hudVehiclePos set [1, safeZoneY + safeZoneH - _yOffset]; // x

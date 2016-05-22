@@ -52,6 +52,9 @@ if (hasInterface) then
 	_npc addAction ["<img image='client\icons\money.paa'/> Sell crate", "client\systems\selling\sellCrateItems.sqf", [false, false, true], 0.99, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_CRATE_CONDITION];
 	_npc addAction ["<img image='client\icons\money.paa'/> Sell contents", "client\systems\selling\sellCrateItems.sqf", [], 0.98, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_CONTENTS_CONDITION];
 	_npc addAction ["<img image='client\icons\money.paa'/> Sell last vehicle contents", "client\systems\selling\sellVehicleItems.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
+	_npc addAction ["<img image='client\icons\r3f_unlock.paa'/> Buy License", "client\systems\selling\licenseVehicle.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
+	_npc addAction ["<img image='client\icons\money.paa'/> Sell Vehicle", "client\systems\selling\sellVehicle.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
+	_npc addAction ["<img image='client\icons\repair.paa'/> Rearm Vehicle", "client\systems\selling\serviceVehicle.sqf", [], 0.97, false, true, "", STORE_ACTION_CONDITION + " && " + SELL_VEH_CONTENTS_CONDITION];
 };
 
 if (isServer) then
@@ -147,7 +150,7 @@ if (isServer) then
 						if (_classname != "") then
 						{
 							diag_log format ["Applying %1 as weapon for %2", _classname, _npcName];
-							_npc addWeapon _classname;
+							//_npc addWeapon _classname;
 						};
 					};
 					case "uniform":
@@ -155,7 +158,7 @@ if (isServer) then
 						if (_classname != "") then
 						{
 							diag_log format ["Applying %1 as uniform for %2", _classname, _npcName];
-							_npc addUniform _classname;
+							//_npc addUniform _classname;
 						};
 					};
 					case "switchMove":
@@ -163,7 +166,7 @@ if (isServer) then
 						if (_classname != "") then
 						{
 							diag_log format ["Applying %1 as switchMove for %2", _classname, _npcName];
-							_npc switchMove _classname;
+							//_npc switchMove _classname;
 						};
 					};
 				};

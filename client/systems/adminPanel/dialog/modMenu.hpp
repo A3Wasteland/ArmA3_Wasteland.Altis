@@ -12,23 +12,24 @@ class ModMenu
 
 	class controlsBackground {
 
-		class DebugMenu_background: IGUIBack
+		class DebugMenu_background:w_RscPicture
 		{
 			idc=-1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0.6};
-
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
 			x=0.28;
 			y=0.10;
 			w=0.3505;
 			h=0.70;
 		};
 
-		class TopBar: IGUIBack
+		class TopBar: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.45,0.005,0,1)";
 
 			x=0.28;
 			y=0.10;

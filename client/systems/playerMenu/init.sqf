@@ -19,8 +19,8 @@ _mvalue = _Dialog displayCtrl money_value;
 _rogue = _Dialog displayCtrl rogue_text;
 _uptime = _Dialog displayCtrl uptime_text;
 _groupButton = _Dialog displayCtrl groupButton;
-_foodtext ctrlSettext format["%1 / 100", round(hungerLevel)];
-_watertext ctrlSetText format["%1 / 100", round(thirstLevel)];
+_foodtext ctrlSetText format["Suporte: arma.traitors.com.br"];
+_watertext ctrlSettext format["Traitors Team - Wasteland Altis"];
 _moneytext ctrlSetText format["%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
 
 {

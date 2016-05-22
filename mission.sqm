@@ -2775,7 +2775,7 @@ class Mission
 						name="GenStore1";
 					};
 					id=183;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -2805,7 +2805,7 @@ class Mission
 						name="GenStore2";
 					};
 					id=185;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -2835,7 +2835,7 @@ class Mission
 						name="GenStore3";
 					};
 					id=187;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -2865,7 +2865,7 @@ class Mission
 						name="GenStore4";
 					};
 					id=189;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -2895,7 +2895,7 @@ class Mission
 						name="GenStore5";
 					};
 					id=191;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -2925,7 +2925,7 @@ class Mission
 						name="GunStore1";
 					};
 					id=193;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -2955,7 +2955,7 @@ class Mission
 						name="GunStore2";
 					};
 					id=195;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -2985,7 +2985,7 @@ class Mission
 						name="GunStore3";
 					};
 					id=197;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -3015,7 +3015,7 @@ class Mission
 						name="GunStore4";
 					};
 					id=199;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -3045,7 +3045,7 @@ class Mission
 						name="VehStore1";
 					};
 					id=201;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -3075,7 +3075,7 @@ class Mission
 						name="VehStore2";
 					};
 					id=203;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -3105,7 +3105,7 @@ class Mission
 						name="VehStore3";
 					};
 					id=205;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -3135,7 +3135,7 @@ class Mission
 						name="VehStore4";
 					};
 					id=207;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
@@ -3165,7 +3165,7 @@ class Mission
 						name="VehStore5";
 					};
 					id=209;
-					type="C_man_1_1_F";
+					type="C_Soldier_VR_F";
 				};
 			};
 			class Attributes
