@@ -12,20 +12,33 @@ if (!hasInterface) exitWith {};
 #define ICON_limitDistance 2000
 #define ICON_sizeScale 0.75
 
-#define UNIT_POS(UNIT) (UNIT modelToWorldVisual [0, 0, 1.25]) // Torso height
+#define MINE_ICON_MAX_DISTANCE 200 // 200 is Arma 3 default for mine detector
+
+#define UNIT_POS(UNIT) (UNIT modelToWorldVisual (UNIT selectionPosition "spine3")) //[0, 0, 1.25]) // Torso height
 #define UAV_UNIT_POS(UNIT) (((vehicle UNIT) modelToWorldVisual [0, 0, 0]) vectorAdd [0, 0, 0.5])
+#define CENTER_POS(OBJ) (OBJ modelToWorldVisual [0,0,0])
 
 if (isNil "showPlayerNames") then { showPlayerNames = false };
 
 hudPlayerIcon_uiScale = (0.55 / (getResolution select 5)) * ICON_sizeScale; // 0.55 = Interface size "Small"
 drawPlayerIcons_array = [];
 
+drawPlayerIcons_posCode =
+{
+	switch (_this) do
+	{
+		case 1: {{ UNIT_POS(_this) }};
+		case 2: {{ UAV_UNIT_POS(_this) }};
+		default {{ CENTER_POS(_this) }};
+	};
+} call mf_compile;
+
 if (!isNil "drawPlayerIcons_draw3D") then { removeMissionEventHandler ["Draw3D", drawPlayerIcons_draw3D] };
 drawPlayerIcons_draw3D = addMissionEventHandler ["Draw3D",
 {
 	{
-		_x params ["_drawArr", "_unit", "_isUavUnit"];
-		if (alive _unit) then { _drawArr set [2, if (_isUavUnit) then { UAV_UNIT_POS(_unit) } else { UNIT_POS(_unit) }] };
+		_x params ["_drawArr", "_obj", "_posCode"];
+		if (alive _obj) then { _drawArr set [2, _obj call _posCode] };
 		drawIcon3D _drawArr;
 	} forEach drawPlayerIcons_array;
 }];
@@ -45,6 +58,19 @@ drawPlayerIcons_thread = [] spawn
 		default      { call currMissionDir + "client\icons\igui_side_indep_ca.paa" };
 	};
 
+	_detectedMinesDisabled = (difficultyOption "detectedMines" == 0);
+	_mineIcon = getText (configfile >> "CfgInGameUI" >> "Cursor" >> "explosive");
+	_mineColor = getArray (configfile >> "CfgInGameUI" >> "Cursor" >> "explosiveColor");
+
+	{
+		if (_x isEqualType "") then
+		{
+			_mineColor set [_forEachIndex, call compile _x]; // explosiveColor contains an array of strings which contain profile color code...
+		};
+	} forEach _mineColor;
+
+	_noBuiltInThermal = ["A3W_disableBuiltInThermal"] call isConfigOn;
+
 	private ["_dist", "_simulation"];
 
 	// Execute every frame
@@ -52,7 +78,7 @@ drawPlayerIcons_thread = [] spawn
 	{
 		_newArray = [];
 
-		if (!visibleMap && isNull findDisplay 49 && showPlayerIcons) then
+		if (!visibleMap && isNull findDisplay 49) then
 		{
 			{
 				_unit = _x;
@@ -65,24 +91,26 @@ drawPlayerIcons_thread = [] spawn
 				   (vehicle _unit != getConnectedUAV player || cameraOn != vehicle _unit) && // do not show UAV AI icons when controlling UAV
 				   {_simulation = getText (configFile >> "CfgVehicles" >> typeOf _unit >> "simulation"); _simulation != "headlessclient"}}}}) then 
 				{
+					_isUavUnit = (_simulation == "UAVPilot");
 					//_dist = _unit distance positionCameraToWorld [0,0,0];
-					_pos = UNIT_POS(_unit);
+					_posCode = ([1,2] select _isUavUnit) call drawPlayerIcons_posCode;
+					_pos = _unit call _posCode;
 
 					// only draw players inside range and screen
 					if !(worldToScreen _pos isEqualTo []) then
 					{
-						_isUavUnit = (_simulation == "UAVPilot");
 						if (_isUavUnit && {_unit != (crew vehicle _unit) select 0}) exitWith {}; // only one AI per UAV
 
 						_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
 						_color = [1,1,1,_alpha];
 						_icon = _teamIcon;
 						_size = 0;
+						_shadow = [0,2] select showPlayerNames;
 
 						if (_unit call A3W_fnc_isUnconscious) then
 						{
 							_icon = _reviveIcon;
-							_size = (2 - ((_dist / ICON_limitDistance) * 0.8)) * _uiScale;
+							_size = (2 - ((_dist / ICON_limitDistance) * 0.8)) * _uiScale * ([0.8, 1] select showPlayerNames);
 
 							// Revive icon blinking code
 							if (_unit call A3W_fnc_isBleeding) then
@@ -122,7 +150,7 @@ drawPlayerIcons_thread = [] spawn
 						}
 						else
 						{
-							_size = (1 - ((_dist / ICON_limitDistance) * 0.7)) * _uiScale;
+							_size = (1 - ((_dist / ICON_limitDistance) * 0.7)) * _uiScale * ([0.7, 1] select showPlayerNames);
 						};
 
 						_text = if (showPlayerNames) then
@@ -135,10 +163,61 @@ drawPlayerIcons_thread = [] spawn
 							};
 						} else { "" };
 
-						_newArray pushBack [[_icon, _color, _pos, _size, _size, 0, _text], _unit, (_isUavUnit && !isPlayer _unit)]; //, 1, 0.03, "PuristaMedium"];
+						_newArray pushBack [[_icon, _color, _pos, _size, _size, 0, _text, _shadow], _unit, _posCode]; //, 0.03, "PuristaMedium"];
 					};
 				};
 			} forEach (if (playerSide in [BLUFOR,OPFOR]) then { allUnits } else { units player });
+
+			if (_detectedMinesDisabled && "MineDetector" in items player) then
+			{
+				_posCode = 0 call drawPlayerIcons_posCode;
+
+				{
+					if (mineActive _x && _x distance player <= MINE_ICON_MAX_DISTANCE) then
+					{
+						_newArray pushBack [[_mineIcon, _mineColor, CENTER_POS(_x), 1, 1, 0, "", 2, 0, "PuristaMedium", "", true], _x, _posCode];
+					};
+				} forEach detectedMines playerSide;
+			};
+
+			if (_noBuiltInThermal) then
+			{
+				_thermalActive = currentVisionMode player isEqualTo 2;
+
+				if (_thermalActive || !isNil "A3W_builtInThermalOffline") then
+				{
+					_weapon = currentWeapon player;
+					_ownWeapon = true;
+
+					{
+						_x params ["_unit", "","","", "_ffv"];
+
+						if (_unit == player) exitWith
+						{
+							_ownWeapon = _ffv;
+						};
+					} forEach fullCrew [objectParent player, "", false];
+
+					if (_thermalActive && {cameraOn == vehicle player && _weapon in weapons player && _ownWeapon &&
+						({_x == "TI"} count getArray (configFile >> "CfgWeapons" >> _weapon >> "visionMode") > 0 ||
+						 {!("{_x == 'TI'} count getArray (_x >> 'visionMode') > 0" configClasses (configFile >> "CfgWeapons" >> _weapon >> "OpticsModes") isEqualTo [])})}) then
+					{
+						if (isNil "A3W_builtInThermalOffline") then
+						{
+							"A3W_thermalOffline" cutText ["THERMAL IMAGING OFFLINE", "BLACK", 0.001, false];
+							A3W_builtInThermalOffline = true;
+						};
+					}
+					else
+					{
+						if (!isNil "A3W_builtInThermalOffline") then
+						{
+							"A3W_thermalOffline" cutText ["", "PLAIN", 0.001, false];
+							A3W_builtInThermalOffline = nil;
+						};
+					};
+				};
+			};
 		};
 
 		drawPlayerIcons_array = _newArray;

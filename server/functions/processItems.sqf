@@ -31,7 +31,8 @@ _items = _this select 1;
 				{
 					for "_i" from 1 to _quantity do
 					{
-						_randomClass = _class call BIS_fnc_selectRandom;
+						_randomClass = _class;
+						while {_randomClass isEqualType []} do { _randomClass = selectRandom _randomClass }; // supports infinitely-nested arrays, so you can select one weapon type and then a camo for that type
 						_vehicle addWeaponCargoGlobal [_randomClass, 1];
 
 						if (_magsQty > 0) then
@@ -58,7 +59,8 @@ _items = _this select 1;
 				{
 					for "_i" from 1 to _quantity do
 					{
-						_randomClass = _class call BIS_fnc_selectRandom;
+						_randomClass = _class;
+						while {_randomClass isEqualType []} do { _randomClass = selectRandom _randomClass };
 						_vehicle addMagazineCargoGlobal [_randomClass, 1];
 					};
 				}
@@ -73,7 +75,8 @@ _items = _this select 1;
 				{
 					for "_i" from 1 to _quantity do
 					{
-						_randomClass = _class call BIS_fnc_selectRandom;
+						_randomClass = _class;
+						while {_randomClass isEqualType []} do { _randomClass = selectRandom _randomClass };
 						_vehicle addItemCargoGlobal [_randomClass, 1];
 					};
 				}

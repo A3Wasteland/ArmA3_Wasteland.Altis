@@ -21,6 +21,7 @@ disableSerialization;
 private["_switch","_data","_vehicle_type","_pos","_bomb"];
 _switch = _this select 0;
 _data = GET_SELECTED_DATA(item_list);
+if (_data == "") exitWith {};
 _use = {_this call mf_inventory_use; REFRESH_DISPLAY;};
 _drop = {_this call mf_inventory_drop; REFRESH_DISPLAY;};
 switch (_switch) do {

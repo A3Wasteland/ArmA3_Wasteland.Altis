@@ -4,14 +4,12 @@
 //	@file Name: fn_onPlayerDisconnected.sqf
 //	@file Author: AgentRev
 
-private ["_id", "_uid", "_name", "_resend"];
-_id = _this select 0;
-_uid = _this select 1;
-_name = _this select 2;
+params ["_id", "_uid", "_name", "_owner", "_jip"];
 
 diag_log format ["Player disconnected: %1 (%2)", _name, _uid];
+if (_uid isEqualTo "") exitWith {};
 
-_resend = false;
+private _resend = false;
 
 // Clear player from group invites
 {

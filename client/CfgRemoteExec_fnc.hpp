@@ -21,11 +21,13 @@ class A3W_fnc_checkPlayerFlag { allowedTargets = 2; };
 class A3W_fnc_copilotTakeControl {};
 class A3W_fnc_flagHandler { allowedTargets = 2; };
 class A3W_fnc_getInFast {};
+class A3W_fnc_initPlayerServer { allowedTargets = 2; };
 class A3W_fnc_logMemAnomaly { allowedTargets = 2; };
 class A3W_fnc_pushVehicle {};
 class A3W_fnc_setName {};
 class A3W_fnc_titleTextMessage {};
 class A3W_fnc_towingHelper {};
+class A3W_fnc_updateSpawnTimestamp { allowedTargets = 2; };
 class FAR_fnc_headshotHitPartEH {};
 
 // A3W third-party

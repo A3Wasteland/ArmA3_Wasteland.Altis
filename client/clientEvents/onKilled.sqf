@@ -65,18 +65,15 @@ _player spawn
 	_money = _player getVariable ["cmoney", 0];
 	_player setVariable ["cmoney", 0, true];
 
-	_items = [];
-	{
-		_id = _x select 0;
-		_qty = _x select 1;
-		_type = (_id call mf_inventory_get) select 4;
-
-		_items pushBack [_id, _qty, _type];
-		[_id, _qty] call mf_inventory_remove;
-	} forEach call mf_inventory_all;
+	_items = if (_player == player) then { true call mf_inventory_list } else { [] };
 
 	pvar_dropPlayerItems = [_player, _money, _items];
 	publicVariableServer "pvar_dropPlayerItems";
+
+	if (_player == player) then
+	{
+		{ _x call mf_inventory_remove } forEach _items;
+	};
 };
 
 _player spawn fn_removeAllManagedActions;
@@ -88,13 +85,13 @@ if (_player == player && (playerSide == side group _killer) && (player != _kille
 	// Handle teamkills
 	if (playerSide in [BLUFOR,OPFOR]) then
 	{
-		if (_killer isKindOf "CAManBase") then
+		if (_killer isKindOf "Man" && isPlayer _killer) then
 		{
-			pvar_PlayerTeamKiller = _killer;
+			pvar_PlayerTeamKiller = [_killer, getPlayerUID _killer, name _killer];
 		}
 		else
 		{
-			pvar_PlayerTeamKiller = objNull;
+			pvar_PlayerTeamKiller = [];
 		};
 	}
 	else // Compensate negative score for indie-indie kills

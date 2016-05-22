@@ -4,12 +4,9 @@
 //	@file Name: fn_kickPlayerIfFlagged.sqf
 //	@file Author: AgentRev
 
-private ["_UID", "_name", "_owner", "_flag"];
-_UID = _this select 0;
-_name = _this select 1;
-_owner = _this select 2;
+params ["_UID", "_name", "_owner"];
 
-_flag = _UID call fn_getPlayerFlag;
+private _flag = _UID call fn_getPlayerFlag;
 
 if (!isNil "_flag" && {count _flag > 1}) then
 {
