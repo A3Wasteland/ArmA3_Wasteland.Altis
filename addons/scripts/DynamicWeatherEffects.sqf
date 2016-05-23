@@ -159,6 +159,8 @@ drn_fnc_fogOdds =
 drn_fnc_DynamicWeather_SetWeatherLocal = {
 	params ["_currentOvercast", "_currentFog", "_currentRain", "_currentWeatherChange", "_targetWeatherValue", "_timeUntilCompletion", "_currentWindX", "_currentWindY"];
 
+	_currentRain = drn_var_DynamicWeather_Rain;
+
 	if (_currentFog isEqualType []) then {
 		_currentFog = _currentFog select 0;
 	};
@@ -173,7 +175,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 	// Set current weather values
 	if (_currentWeatherChange != "OVERCAST") then { 0 setOvercast _currentOvercast };
 	0 setFog [_currentFog, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
-	drn_var_DynamicWeather_Rain = _currentRain;
+	//drn_var_DynamicWeather_Rain = _currentRain;
 	setWind [_currentWindX, _currentWindY, true];
 
 	if (isNil "drn_JIPWeatherSynced") then
@@ -551,7 +553,7 @@ drn_DynamicWeather_FogThread = [_rainIntervalRainProbability, _debug] spawn
 			{
 				10 setRain _rain;
 
-				if (fog < round (_rain / 3)) then
+				if (fog < _rain / 3) then
 				{
 					10 setFog [_rain / 3, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
 				};
@@ -561,6 +563,7 @@ drn_DynamicWeather_FogThread = [_rainIntervalRainProbability, _debug] spawn
 				if (rain > 0) then
 				{
 					10 setRain 0;
+					drn_var_DynamicWeather_Rain = 0;
 					drn_DynamicWeatherEventArgs call drn_fnc_DynamicWeather_SetWeatherLocal;
 				};
 			};
