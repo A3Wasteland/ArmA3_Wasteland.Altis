@@ -4,21 +4,25 @@
 //	@file Name: fn_addScore.sqf
 //	@file Author: AgentRev
 
-private ["_player", "_column", "_score", "_var", "_val", "_grp", "_side"];
+params [["_player",objNull,[objNull,""]], ["_column","",[""]], ["_score",0,[0]], ["_group",grpNull,grpNull]];
 
-_player = _this select 0;
-_column = _this select 1;
-_score = _this select 2;
+if (_column isEqualTo "") exitWith {};
+
+private ["_isUnit", "_uid", "_var", "_val", "_side"];
 
 if (!isServer) exitWith
 {
-	pvar_updatePlayerScore = [_player, _column, _score];
+	pvar_updatePlayerScore = _this;
 	publicVariableServer "pvar_updatePlayerScore";
 };
 
-if (isPlayer _player) then
+_isUnit = _player isEqualType objNull;
+
+if ((_isUnit && {isPlayer _player}) || {!_isUnit && !(_player in ["","0"])}) then
 {
-	_var = format ["A3W_playerScore_%1_%2", _column, getPlayerUID _player];
+	_uid = if (_isUnit) then { getPlayerUID _player } else { _player };
+
+	_var = format ["A3W_playerScore_%1_%2", _column, _uid];
 	_val = missionNamespace getVariable [_var, 0];
 
 	missionNamespace setVariable [_var, _val + _score];
@@ -27,8 +31,8 @@ if (isPlayer _player) then
 	// add kills and deaths to team score
 	if (_column == "playerKills" || _column == "deathCount") then
 	{
-		_grp = group _player;
-		_side = side _grp;
+		if (_isUnit) then { _group = group _player };
+		_side = side _group;
 
 		if (_side in [BLUFOR,OPFOR]) then
 		{
@@ -40,19 +44,25 @@ if (isPlayer _player) then
 		}
 		else
 		{
-			_var = format ["A3W_teamScore_%1", _column];
-			_val = _grp getVariable [_var, 0];
+			if (!isNull _group) then
+			{
+				_var = format ["A3W_teamScore_%1", _column];
+				_val = _group getVariable [_var, 0];
 
-			_grp setVariable [_var, _val + _score, true];
+				_group setVariable [_var, _val + _score, true];
+			};
 		};
 	};
 
 	// sync Steam scoreboard
-	_player addScore ((([_player, "playerKills", false] call fn_getScore) - ([_player, "teamKills", false] call fn_getScore)) - score _player);
+	if (_isUnit) then
+	{
+		_player addScore ((([_player, "playerKills", false] call fn_getScore) - ([_player, "teamKills", false] call fn_getScore)) - score _player);
+	};
 
-	if (!isNil "_column" && !isNil "_score" && !isNil "fn_updateStats") then
+	if (_score != 0 && !isNil "fn_updateStats") then
 	{
 		// Log Scores to DB
-		[getPlayerUID _player, _column, _score] call fn_updateStats;
+		[_uid, _column, _score] call fn_updateStats;
 	};
 };
