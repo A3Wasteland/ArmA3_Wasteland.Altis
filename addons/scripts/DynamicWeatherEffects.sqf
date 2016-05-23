@@ -166,10 +166,10 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 	};
 
 	/*if (typeName _currentFog == "ARRAY") then {
-		_currentFog set [0, (_currentFog select 0) max (_currentRain / 3)];
+		_currentFog set [0, (_currentFog select 0) max (_currentRain / 4)];
 	}
 	else {*/
-		_currentFog = _currentFog max (_currentRain / 3);
+		_currentFog = _currentFog max (_currentRain / 4);
 	//};
 
 	// Set current weather values
@@ -188,14 +188,14 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 	// Set forecast
 	if (_currentWeatherChange == "OVERCAST") then {
 		_timeUntilCompletion setOvercast (_targetWeatherValue call drn_fnc_overcastOdds);
-		//5 setFog [_currentRain / 3, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably // Quick hack to ensure fog goes away regularly
+		//5 setFog [_currentRain / 4, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably // Quick hack to ensure fog goes away regularly
 	};
 	if (_currentWeatherChange == "FOG") then {
 		if (typeName _targetWeatherValue == "ARRAY") then {
 			_targetWeatherValue = _targetWeatherValue select 0;
 		};
 		(3600 * timeMultiplier * abs (overcast - _currentOvercast)) setOvercast _currentOvercast;
-		_timeUntilCompletion setFog [_targetWeatherValue max (_currentRain / 3), 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
+		_timeUntilCompletion setFog [_targetWeatherValue max (_currentRain / 4), 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
 	};
 };
 
@@ -256,7 +256,7 @@ if (isServer) then {
 		_initialFog = _minimumFog max _initialFog min _maximumFog;
 	};
 
-	//0 setFog [_initialFog max (rain / 3), 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
+	//0 setFog [_initialFog max (rain / 4), 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
 
 	if (_initialOvercast == -1) then {
 		_initialOvercast = _minimumOvercast + random (_maximumOvercast - _minimumOvercast);
@@ -285,7 +285,7 @@ if (isServer) then {
 
 	drn_var_DynamicWeather_Rain = _initialRain;
 	0 setRain _initialRain;
-	0 setFog [_initialFog max (_initialRain / 3), 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
+	0 setFog [_initialFog max (_initialRain / 4), 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
 
 
 	if (isNil "drn_DynamicWeather_WindX") then {
@@ -527,7 +527,7 @@ drn_DynamicWeather_FogThread = [_rainIntervalRainProbability, _debug] spawn
 	};
 
 	//0 setRain _rain;
-	//0 setFog [fog max (_rain / 3), 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
+	//0 setFog [fog max (_rain / 4), 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
 	sleep 0.1;
 
 	while {true} do {
@@ -547,15 +547,15 @@ drn_DynamicWeather_FogThread = [_rainIntervalRainProbability, _debug] spawn
 
 		_rain = drn_var_DynamicWeather_Rain;
 
-		if (round (rain * 100) != round (_rain * 100) || round (fog * 100) < round ((rain / 3) * 100)) then
+		if (round (rain * 100) != round (_rain * 100) || round (fog * 100) < round ((rain / 4) * 100)) then
 		{
 			if (overcast >= 0.75) then
 			{
 				10 setRain _rain;
 
-				if (fog < _rain / 3) then
+				if (fog < _rain / 4) then
 				{
-					10 setFog [_rain / 3, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
+					10 setFog [_rain / 4, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
 				};
 			}
 			else
@@ -569,7 +569,7 @@ drn_DynamicWeather_FogThread = [_rainIntervalRainProbability, _debug] spawn
 			};
 		};
 
-		/*_tempFog = fog max (_rain / 3);
+		/*_tempFog = fog max (_rain / 4);
 		if (_tempFog > fog + 0.001 || _tempFog < fog - 0.001) then
 		{
 			(10 * timeMultiplier) setFog [_tempFog, 0.0, 0]; // do not change fog decay/base otherwise the fog level will vary unpredictably
