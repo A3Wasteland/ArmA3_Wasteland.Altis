@@ -9,7 +9,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-private ["_objet_pointe", "_resetConditions"];
+private ["_objet_pointe", "_resetConditions", "_hasNoProhibitedCargo"];
 
 _resetConditions =
 {
@@ -24,6 +24,17 @@ _resetConditions =
 	R3F_LOG_action_selectionner_objet_charge_valide = false;
 	R3F_LOG_action_heliporter_valide = false;
 	R3F_LOG_action_heliport_larguer_valide = false;
+};
+
+_hasNoProhibitedCargo =
+{
+	private _ammoCargo = getAmmoCargo _this;
+	private _repairCargo = getRepairCargo _this;
+
+	if (isNil "_ammoCargo" || {!finite _ammoCargo}) then { _ammoCargo = 0 };
+	if (isNil "_repairCargo" || {!finite _repairCargo}) then { _repairCargo = 0 };
+
+	(_ammoCargo <= 0 && _repairCargo <= 0)
 };
 
 while {true} do
@@ -65,7 +76,7 @@ while {true} do
 				{isNull (_objet_pointe getVariable "R3F_LOG_est_transporte_par")} &&
 				{!alive (_objet_pointe getVariable "R3F_LOG_est_deplace_par")} &&
 				{!(_objet_pointe getVariable "R3F_LOG_disabled")} &&
-				{{_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_remorquables_excl == 0};
+				{_objet_pointe call _hasNoProhibitedCargo};
 
 			// Condition action detacher
 			R3F_LOG_action_detacher_valide =
@@ -139,12 +150,12 @@ while {true} do
 				alive R3F_LOG_joueur_deplace_objet &&
 				{!(R3F_LOG_joueur_deplace_objet getVariable "R3F_LOG_disabled")} &&
 				{{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0} &&
-				{{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_remorquables_excl == 0} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_remorque")} &&
 				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
 				{!(_objet_pointe getVariable "R3F_LOG_disabled")} &&
-				{{_objet_pointe isKindOf (_x select 0)} count R3F_LOG_CFG_objets_transportables == 0};
+				{{_objet_pointe isKindOf (_x select 0)} count R3F_LOG_CFG_objets_transportables == 0} &&
+				{R3F_LOG_joueur_deplace_objet call _hasNoProhibitedCargo && _objet_pointe call _hasNoProhibitedCargo};
 
 			// Condition action remorquer_selection
 			R3F_LOG_action_remorquer_selection_valide =
@@ -154,11 +165,11 @@ while {true} do
 				{R3F_LOG_objet_selectionne != _objet_pointe} &&
 				{!(R3F_LOG_objet_selectionne getVariable "R3F_LOG_disabled")} &&
 				{{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0} &&
-				{{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_remorquables_excl == 0} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_remorque")} &&
 				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
-				{!(_objet_pointe getVariable "R3F_LOG_disabled")};
+				{!(_objet_pointe getVariable "R3F_LOG_disabled")} &&
+				{_objet_pointe call _hasNoProhibitedCargo};
 		};
 
 		// Si l'objet est un véhicule transporteur
@@ -213,11 +224,12 @@ while {true} do
 		// Condition action heliporter
 		R3F_LOG_action_heliporter_valide =
 			driver R3F_LOG_objet_addAction == player &&
-			{{_x != R3F_LOG_objet_addAction && {!(_x getVariable "R3F_LOG_disabled")}} count nearestObjects [R3F_LOG_objet_addAction, R3F_LOG_CFG_objets_heliportables, 15] > 0} &&
+			{{_x != R3F_LOG_objet_addAction && {!(_x getVariable "R3F_LOG_disabled")}} count ((nearestObjects [R3F_LOG_objet_addAction, R3F_LOG_CFG_objets_heliportables, 15]) select {_x call _hasNoProhibitedCargo}) > 0} &&
 			{isNull (R3F_LOG_objet_addAction getVariable "R3F_LOG_heliporte")} &&
 			{vectorMagnitude velocity R3F_LOG_objet_addAction < 6} &&
 			{(getPos R3F_LOG_objet_addAction) select 2 > 1} &&
-			{!(R3F_LOG_objet_addAction getVariable "R3F_LOG_disabled")};
+			{!(R3F_LOG_objet_addAction getVariable "R3F_LOG_disabled")} &&
+			{R3F_LOG_objet_addAction call _hasNoProhibitedCargo};
 
 		// Condition action heliport_larguer
 		R3F_LOG_action_heliport_larguer_valide =
