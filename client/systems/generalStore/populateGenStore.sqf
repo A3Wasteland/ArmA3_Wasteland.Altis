@@ -99,14 +99,14 @@ _playerSideNum = switch (playerSide) do
 
 	_parentCfg = switch (true) do
 	{
-		case ("HIDDEN" in (_x select [3,999])):                        { nil };
 		case (isClass (configFile >> "CfgVehicles" >> _weaponClass)):  { configFile >> "CfgVehicles" };
 		case (isClass (configFile >> "CfgWeapons" >> _weaponClass)):   { configFile >> "CfgWeapons" };
 		case (isClass (configFile >> "CfgMagazines" >> _weaponClass)): { configFile >> "CfgMagazines" };
 		case (isClass (configFile >> "CfgGlasses" >> _weaponClass)):   { configFile >> "CfgGlasses" };
+		default { nil };
 	};
 
-	_showItem = true;
+	_showItem = !("HIDDEN" in (_x select [3,999]));
 
 	// Side-based filtering
 	if (!isNil "_parentCfg") then
@@ -160,10 +160,6 @@ _playerSideNum = switch (playerSide) do
 				};
 			};
 		};
-	}
-	else
-	{
-		_showItem = false;
 	};
 
 	_side = _x param [4, ""];
