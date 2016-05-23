@@ -53,8 +53,7 @@ while {true} do
 		};
 
 		// Si l'objet est un objet remorquable
-		if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0 &&
-		    {_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_remorquables_excl == 0) then
+		if ({_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0) then
 		{
 			// Condition action selectionner_objet_remorque
 			R3F_LOG_action_selectionner_objet_remorque_valide =
@@ -65,7 +64,8 @@ while {true} do
 					{getText (configFile >> "CfgVehicles" >> typeOf driver _objet_pointe >> "simulation") == "UAVPilot"}}} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_est_transporte_par")} &&
 				{!alive (_objet_pointe getVariable "R3F_LOG_est_deplace_par")} &&
-				{!(_objet_pointe getVariable "R3F_LOG_disabled")};
+				{!(_objet_pointe getVariable "R3F_LOG_disabled")} &&
+				{{_objet_pointe isKindOf _x} count R3F_LOG_CFG_objets_remorquables_excl == 0};
 
 			// Condition action detacher
 			R3F_LOG_action_detacher_valide =
