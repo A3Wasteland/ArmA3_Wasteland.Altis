@@ -32,9 +32,9 @@ else
 	};
 
 	_heliporteur = _this select 0;
-	_objet = (nearestObjects [_heliporteur, R3F_LOG_CFG_objets_heliportables, 20]) select {_x call _hasNoProhibitedCargo};
+	_objet = (nearestObjects [_heliporteur, R3F_LOG_CFG_objets_heliportables, 20]) select {_obj = _x; _x call _hasNoProhibitedCargo && (_heliporteur getVariable ["R3F_LOG_heliporteurH",false] || {{_obj isKindOf _x} count R3F_LOG_CFG_objets_heliportablesH == 0})};
 	// Parce que l'héliporteur peut être un objet héliportable
-	_objet = _objet - [_heliporteur];
+	_objet = (_objet select {!(_x getVariable "R3F_LOG_disabled")}) - [_heliporteur];
 
 	if (count _objet > 0) then
 	{
@@ -90,7 +90,7 @@ else
 							[
 								0 - _objectCenterX,
 								0 - _objectCenterY,
-								((_objectPos select 2) - (_heliPos select 2) + 2) min _minZ
+								/*((_objectPos select 2) - (_heliPos select 2) + 2) min*/ _minZ
 							]];
 
 							player globalChat format [STR_R3F_LOG_action_heliporter_fait, getText (configFile >> "CfgVehicles" >> (typeOf _objet) >> "displayName")];

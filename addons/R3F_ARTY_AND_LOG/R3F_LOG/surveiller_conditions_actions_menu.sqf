@@ -43,7 +43,7 @@ while {true} do
 
 	_objet_pointe = cursorTarget;
 
-	if (vehicle player == player && {!isNull _objet_pointe} && {player distance _objet_pointe < 14} && {!local _objet_pointe || {[":-", netId _objet_pointe] call fn_findString == -1}}) then
+	if (vehicle player == player && !isNull _objet_pointe && {player distance _objet_pointe < 14 && getObjectType _objet_pointe == 8}) then
 	{
 		R3F_LOG_objet_addAction = _objet_pointe;
 
@@ -149,7 +149,8 @@ while {true} do
 				alive _objet_pointe &&
 				alive R3F_LOG_joueur_deplace_objet &&
 				{!(R3F_LOG_joueur_deplace_objet getVariable "R3F_LOG_disabled")} &&
-				{{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0} &&
+				{{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0 &&
+					(_objet_pointe getVariable ["R3F_LOG_heliporteurH",false] || {{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_heliportablesH == 0})} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_remorque")} &&
 				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
@@ -164,7 +165,8 @@ while {true} do
 				!isNull R3F_LOG_objet_selectionne &&
 				{R3F_LOG_objet_selectionne != _objet_pointe} &&
 				{!(R3F_LOG_objet_selectionne getVariable "R3F_LOG_disabled")} &&
-				{{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0} &&
+				{{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0 &&
+					(_objet_pointe getVariable ["R3F_LOG_heliporteurH",false] || {{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_heliportablesH == 0})} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_remorque")} &&
 				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
@@ -224,7 +226,7 @@ while {true} do
 		// Condition action heliporter
 		R3F_LOG_action_heliporter_valide =
 			driver R3F_LOG_objet_addAction == player &&
-			{{_x != R3F_LOG_objet_addAction && {!(_x getVariable "R3F_LOG_disabled")}} count ((nearestObjects [R3F_LOG_objet_addAction, R3F_LOG_CFG_objets_heliportables, 15]) select {_x call _hasNoProhibitedCargo}) > 0} &&
+			{{_x != R3F_LOG_objet_addAction && !(_x getVariable "R3F_LOG_disabled")} count ((nearestObjects [R3F_LOG_objet_addAction, R3F_LOG_CFG_objets_heliportables, 15]) select {_obj = _x; _x call _hasNoProhibitedCargo && (R3F_LOG_objet_addAction getVariable ["R3F_LOG_heliporteurH",false] || {{_obj isKindOf _x} count R3F_LOG_CFG_objets_heliportablesH == 0})}) > 0} &&
 			{isNull (R3F_LOG_objet_addAction getVariable "R3F_LOG_heliporte")} &&
 			{vectorMagnitude velocity R3F_LOG_objet_addAction < 6} &&
 			{(getPos R3F_LOG_objet_addAction) select 2 > 1} &&
