@@ -150,7 +150,7 @@ while {true} do
 				alive R3F_LOG_joueur_deplace_objet &&
 				{!(R3F_LOG_joueur_deplace_objet getVariable "R3F_LOG_disabled")} &&
 				{{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0 &&
-					(_objet_pointe getVariable ["R3F_LOG_heliporteurH",false] || {{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_heliportablesH == 0})} &&
+					(_objet_pointe getVariable ["R3F_LOG_remorqueurH",false] || {{R3F_LOG_joueur_deplace_objet isKindOf _x} count R3F_LOG_CFG_objets_remorquablesH == 0})} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_remorque")} &&
 				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
@@ -166,7 +166,7 @@ while {true} do
 				{R3F_LOG_objet_selectionne != _objet_pointe} &&
 				{!(R3F_LOG_objet_selectionne getVariable "R3F_LOG_disabled")} &&
 				{{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_remorquables > 0 &&
-					(_objet_pointe getVariable ["R3F_LOG_heliporteurH",false] || {{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_heliportablesH == 0})} &&
+					(_objet_pointe getVariable ["R3F_LOG_remorqueurH",false] || {{R3F_LOG_objet_selectionne isKindOf _x} count R3F_LOG_CFG_objets_remorquablesH == 0})} &&
 				{isNull (_objet_pointe getVariable "R3F_LOG_remorque")} &&
 				{vectorMagnitude velocity _objet_pointe < 6} &&
 				{(getPos _objet_pointe) select 2 < 2} &&
