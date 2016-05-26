@@ -36,6 +36,8 @@ if (isServer) then
 			if (_unit call A3W_fnc_isUnconscious) then
 			{
 				[_unit] spawn dropPlayerItems;
+				[_uid, "deathCount", 1] call fn_addScore;
+				[_unit, objNull, objNull, true] call A3W_fnc_registerKillScore;
 			}
 			else
 			{

@@ -150,7 +150,7 @@ _onCaptureFinished =
 
 	_otherTeams = _otherTeams - [_captureTeam];
 
-	_captureColor = [_captureTeam, true] call getTeamMarkerColor;
+	_captureColor = [_captureTeam, true] call A3W_fnc_getTeamMarkerColor;
 
 	if (typeName _oldTeam == "GROUP" && {!isNull _oldTeam}) then
 	{
@@ -474,7 +474,7 @@ _handleCapPointTick = {
 
 				if (_newCapPointTimer >= _capturePeriod && !(_newDominantTeam isEqualTo _currentTerritoryOwner)) then
 				{
-					_newMarkerColor = [_newDominantTeam] call getTeamMarkerColor;
+					_newMarkerColor = [_newDominantTeam] call A3W_fnc_getTeamMarkerColor;
 
 					// If the timer is above what we consider a successful capture and its not already theirs...
 					_currentTerritoryName setMarkerColor _newMarkerColor;

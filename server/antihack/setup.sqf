@@ -60,14 +60,14 @@ if (isNil "A3W_network_compileFuncs") then
 	_rscList = ["RscDisplayAVTerminal", "RscDisplayCommonHint", "RscDisplayCommonMessage", "RscDisplayCommonMessagePause", "RscDisplayConfigureAction", "RscDisplayConfigureControllers", "RscDisplayControlSchemes", "RscDisplayCustomizeController", "RscDisplayDebriefing", "RscDisplayDiary", "RscDisplayFieldManual", "RscDisplayGameOptions", "RscDisplayGetReady", "RscDisplayInsertMarker", "RscDisplayInterrupt", "RscDisplayInventory", "RscDisplayJoystickSchemes", "RscDisplayLoading", "RscDisplayLoadMission", "RscDisplayMainMap", "RscDisplayMicSensitivityOptions", "RscDisplayOptions", "RscDisplayOptionsAudio", "RscDisplayOptionsLayout", "RscDisplayOptionsVideo", "RscDisplayStart", "RscDisplayVehicleMsgBox", "RscDisplayVoiceChat"];
 	_rscParams = [];
 
-	{
+	/*{
 		_rscCfg = configFile >> _x;
 
 		if (isClass _rscCfg) then
 		{
 			_rscParams pushBack [_x, toArray getText (_rscCfg >> "onLoad"), toArray getText (_rscCfg >> "onUnload")];
 		};
-	} forEach _rscList;
+	} forEach _rscList;*/
 
 	_payload = 0;
 
@@ -90,7 +90,8 @@ if (isNil "A3W_network_compileFuncs") then
 		diag_log "ANTI-HACK: In-game hosting, using internal payload"; // to avoid script not found messagebox
 	};
 
-	[_assignCompileKey, _assignChecksum, _assignPacketKey, str _rscParams, _payload] call compile preprocessFileLineNumbers "server\antihack\createUnit.sqf";
+	//[_assignCompileKey, _assignChecksum, _assignPacketKey, str _rscParams, _payload] call compile preprocessFileLineNumbers "server\antihack\createUnit.sqf";
+	[[_assignCompileKey, _assignChecksum, _assignPacketKey, _rscParams, _payload], { call compile preprocessFileLineNumbers "server\antihack\compileFuncs.sqf" }] remoteExecCall ["call", 0, call A3W_fnc_generateKey];
 	waitUntil {!isNil {missionNamespace getVariable _compileKey}};
 
 	diag_log "ANTI-HACK: Started.";

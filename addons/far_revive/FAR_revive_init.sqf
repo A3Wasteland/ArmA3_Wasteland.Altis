@@ -49,7 +49,7 @@ call mf_compile;
 
 FAR_Reset_Killer_Info =
 {
-	_this setVariable ["A3W_killScoreRegistered", nil, !isServer]; // only do this on respawn or revive, but not on death
+	_this setVariable ["FAR_killerPrimeSuspectData", nil, !isServer]; // only do this on respawn or revive, but not on death
 	_this setVariable ["FAR_killerPrimeSuspect", nil];
 	_this setVariable ["FAR_killerVehicle", nil];
 	_this setVariable ["FAR_killerAmmo", nil];
@@ -59,6 +59,7 @@ call mf_compile;
 
 FAR_Player_Init =
 {
+	player call FAR_Reset_Killer_Info;
 	player call FAR_Reset_Unit;
 	call FAR_Player_Actions;
 }

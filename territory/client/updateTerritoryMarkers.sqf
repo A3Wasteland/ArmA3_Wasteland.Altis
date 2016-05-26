@@ -21,6 +21,11 @@ if (isNull player) exitWith
 
 params [["_territories",[],[[]]], ["_ownerCheck",false,[false]], ["_team",sideUnknown,[sideUnknown,grpNull]], ["_isOwner",false,[false]]];
 
+if (_team isEqualType grpNull && {(side _team) in [BLUFOR,OPFOR]}) then
+{
+	_team = side _team;
+};
+
 {
 	if (_ownerCheck) then
 	{
@@ -28,12 +33,12 @@ params [["_territories",[],[[]]], ["_ownerCheck",false,[false]], ["_team",sideUn
 
 		if (_team in [playerSide, group player]) then
 		{
-			_marker setMarkerColorLocal ([_team, true] call getTeamMarkerColor);
+			_marker setMarkerColorLocal ([_team, true] call A3W_fnc_getTeamMarkerColor);
 			_marker setMarkerBrushLocal MARKER_BRUSH_OWNER;
 		}
 		else
 		{
-			_marker setMarkerColorLocal ([_team, false] call getTeamMarkerColor);
+			_marker setMarkerColorLocal ([_team, false] call A3W_fnc_getTeamMarkerColor);
 			_marker setMarkerBrushLocal MARKER_BRUSH_OTHER;
 		};
 	}
@@ -43,12 +48,12 @@ params [["_territories",[],[[]]], ["_ownerCheck",false,[false]], ["_team",sideUn
 
 		if (_isOwner) then
 		{
-			_marker setMarkerColorLocal ([_team, true] call getTeamMarkerColor);
+			_marker setMarkerColorLocal ([_team, true] call A3W_fnc_getTeamMarkerColor);
 			_marker setMarkerBrushLocal MARKER_BRUSH_OWNER;
 		}
 		else
 		{
-			_marker setMarkerColorLocal ([_team, false] call getTeamMarkerColor);
+			_marker setMarkerColorLocal ([_team, false] call A3W_fnc_getTeamMarkerColor);
 			_marker setMarkerBrushLocal MARKER_BRUSH_OTHER;
 		};
 	};
