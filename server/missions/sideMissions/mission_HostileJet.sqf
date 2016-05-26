@@ -70,7 +70,7 @@ _setupObjects =
 	_aiGroup setBehaviour "COMBAT";
 	_aiGroup setFormation "STAG COLUMN";
 	
-	_speedMode = if (missionDifficultyHard) then { "NORMAL" } else { "LIMITED" };
+	_speedMode = if (missionDifficultyHard) then { "LIMITED" } else { "LIMITED" };
 	
 	// behaviour on waypoints
 	{

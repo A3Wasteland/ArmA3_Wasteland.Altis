@@ -31,6 +31,7 @@ _setupObjects =
 	_missionPos = getPosATL _camonet;
 
 	_table = createVehicle ["Land_WoodenTable_small_F", _missionPos, [], 0, "CAN COLLIDE"];
+	_table enableSimulation false;
 	_table setPosATL [_missionPos select 0, _missionPos select 1, _missionPos select 2];
 	
 	_laptop = createVehicle ["Land_Laptop_unfolded_F", _missionPos, [], 0, "CAN COLLIDE"];

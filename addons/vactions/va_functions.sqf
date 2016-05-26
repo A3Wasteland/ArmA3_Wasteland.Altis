@@ -507,7 +507,8 @@ va_outside_target = {
   if (!isPlayer _player) exitWith {};
   
 
- /*  def(_target);
+/*
+def(_target);
   if (surfaceIsWater (position _player)) then {
    //line intersect does not work well when vehicle is in water
     _target = cursorTarget;
@@ -521,19 +522,14 @@ va_outside_target = {
 	if (!isARRAY(_objects) || {count _objects == 0}) exitWith {};
 	_target = _objects select 0;
   };
-*/
-
-  def(_target);
-    _target = cursorObject;
-
-  if (isNil "_target") exitWith {};
-  if (_player distance _target > 5) exitWith {};
-  if (({_target isKindOf _x } count ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank"]) == 0) exitWith {};
-  
-  _target
+	*/
+	def(_target);
+	  _target = cursorObject;
+	  if (isNil "_target") exitWith {};
+	  if (_player distance _target > 5) exitWith {};
+	  if (({_target isKindOf _x } count ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank"]) == 0) exitWith {};
+	  _target
 };
-
-
 
 va_check_outside_actions = {
   //player groupChat format["va_check_outside_actions"];

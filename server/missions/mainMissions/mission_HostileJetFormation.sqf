@@ -85,7 +85,7 @@ _setupObjects =
 	_aiGroup setBehaviour "COMBAT";
 	_aiGroup setFormation "LINE";
 
-	_speedMode = if (missionDifficultyHard) then { "NORMAL" } else { "LIMITED" };
+	_speedMode = if (missionDifficultyHard) then { "LIMITED" } else { "LIMITED" };
 
 	_aiGroup setSpeedMode _speedMode;
 
