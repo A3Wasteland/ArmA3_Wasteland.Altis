@@ -91,6 +91,7 @@ fn_canGetIn = [_clientFunc, "fn_canGetIn.sqf"] call mf_compile;
 fn_enableSimulationGlobal = [_serverFunc, "fn_enableSimulationGlobal.sqf"] call mf_compile;
 fn_enableSimulationServer = [_serverFunc, "fn_enableSimulationServer.sqf"] call mf_compile;
 fn_filterString = [_serverFunc, "fn_filterString.sqf"] call mf_compile;
+fn_findInPairs = [_serverFunc, "fn_findInPairs.sqf"] call mf_compile;
 fn_findString = [_serverFunc, "fn_findString.sqf"] call mf_compile;
 fn_forceAddItem = [_clientFunc, "fn_forceAddItem.sqf"] call mf_compile;
 fn_getFromPairs = [_serverFunc, "fn_getFromPairs.sqf"] call mf_compile;
