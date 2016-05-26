@@ -168,5 +168,21 @@ else
 		case "BackpackMagazines": { [backpackContainer player, _value] call processMagazineCargo };
 		case "PartialMagazines": { { player addMagazine _x } forEach _value };
 		case "WastelandItems": { { [_x select 0, _x select 1, true] call mf_inventory_add } forEach _value };
+		case "UniformTexture": 
+		{ 
+			if (_value != "") then
+			{
+				[player, [0, _value]] spawn applyPlayerTexture; // Doing this externally otherwise the texture is not broadcasted globally correctly
+				uniformContainer player setVariable ["uniformTexture", _value, true]; 
+			};
+		};
+		case "BackpackTexture": 
+		{ 
+			if (_value != "") then
+			{
+				[backpackContainer player, [0, _value]] spawn applyPlayerTexture; // Doing this externally otherwise the texture is not broadcasted globally correctly
+				backpackContainer player setVariable ["backpackTexture", _value, true];
+			};
+		};
 	};
 } forEach _data;

@@ -12,6 +12,7 @@ A3W_teamPlayersMap = 1;            // Show all friendly players on the map at al
 A3W_disableGlobalVoice = 1;        // Auto-switch channel to Direct communication whenever broadcasting voice on global, unless being admin (0 = no, 1 = yes)
 A3W_uavControl = "group";          // Restrict connection to UAVs based on ownership ("owner", "group", "side")
 A3W_disableUavFeed = 1;            // Force disable UAV PIP feed to prevent thermal camera abuse (0 = no, 1 = yes)
+A3W_disableBuiltInThermal = 0;     // Display a black screen if the player tries to use thermal vision built-in a handheld weapon like Titan launcher or laser designator (0 = no, 1 = yes)
 
 // Time settings
 A3W_startHour = 6;                // In-game hour at mission start (0 to 23) - time is saved and restored between server restarts if A3W_timeSaving = 1
@@ -140,3 +141,47 @@ A3W_sideMissionDelay = 5*60;       // Time in seconds between Side Missions
 A3W_sideMissionTimeout = 45*60;    // Time in seconds that a Side Mission will run for, unless completed
 A3W_moneyMissionDelay = 15*60;     // Time in seconds between Money Missions
 A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
+
+// Mission weightings
+MainMissions =
+[
+	// Mission filename, weight
+	["mission_ArmedDiversquad", 1],
+	["mission_Coastal_Convoy", 0.5],
+	["mission_Convoy", 1],
+	["mission_Hackers", 0.5],
+	["mission_HostileHeliFormation", 0.5],
+	["mission_HostileJetFormation", 0.5],
+	["mission_APC", 1],
+	["mission_MBT", 1],
+	["mission_LightArmVeh", 1],
+	["mission_ArmedHeli", 1],
+	["mission_AbandonedJet", 0.5],
+	["mission_CivHeli", 1]
+];
+
+SideMissions =
+[
+	["mission_HostileHelicopter", 0.5],
+	["mission_MiniConvoy", 1],
+	["mission_SunkenSupplies", 1],
+	["mission_TownInvasion", 1],
+	//["mission_AirWreck", 1],
+	//["mission_WepCache", 1],
+	["mission_Outpost", 1],
+	["mission_Truck", 1],
+	["mission_Roadblock", 1],
+	["mission_HostileJet", 0.5],
+	["mission_Sniper", 1],
+	["mission_Smugglers", 1],
+	["mission_drugsRunners", 1],
+	["mission_GeoCache", 1]
+];
+
+MoneyMissions =
+[
+	["mission_MoneyShipment", 1],
+	["mission_SunkenTreasure", 0.8],
+	["mission_militaryPatrol", 1],
+	["mission_altisPatrol", 1]
+];

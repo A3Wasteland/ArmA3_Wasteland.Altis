@@ -4,29 +4,50 @@
 //	@file Name: FAR_lastResort.sqf
 //	@file Author: AgentRev
 
-private ["_hasCharge", "_hasSatchel", "_mineType", "_pos", "_mine"];
+private ["_hasCharge", "_hasSatchel", "_hasCharge2", "_hasSatchel2", "_mineType", "_pos", "_mine"];
 
-_hasCharge = "DemoCharge_Remote_Mag" in magazines player;
-_hasSatchel = "SatchelCharge_Remote_Mag" in magazines player;
+_hasCharge = "IEDUrbanSmall_Remote_Mag" in magazines player;
+_hasSatchel = "IEDUrbanBig_Remote_Mag" in magazines player;
+_hasCharge2 = "IEDLandSmall_Remote_Mag" in magazines player;
+_hasSatchel2 = "IEDLandBig_Remote_Mag" in magazines player;
+
+_shout = 
+	[ // ["filename", volume, bomb timer]
+		["lastresort", 0.7, 1.75],
+		["yililili", 0.5, 1.9]
+	] call BIS_fnc_selectRandom;
 
 if !(player getVariable ["performingDuty", false]) then
 {
-	if (_hasCharge || _hasSatchel) then
+	if (_hasCharge || _hasSatchel || _hasCharge2 || _hasSatchel2) then
 	{
 		if (["Perform your duty?", "", "Yes", "No"] call BIS_fnc_guiMessage) then
 		{
 			player setVariable ["performingDuty", true];
-			playSound3D [call currMissionDir + "client\sounds\lastresort.wss", vehicle player, false, getPosASL player, 0.7, 1, 1000];
+			playSound3D [call currMissionDir + "client\sounds\" + (_shout select 0) + ".wss", vehicle player, false, getPosASL player, (_shout select 1), 1, 1000];
 
-			if (_hasSatchel) then
+			switch (true) do
 			{
-				_mineType = "SatchelCharge_F";
-				player removeMagazine "SatchelCharge_Remote_Mag";
-			}
-			else
-			{
-				_mineType = "DemoCharge_F";
-				player removeMagazine "DemoCharge_Remote_Mag";
+				case (_hasCharge):
+				{
+					_mineType = "IEDUrbanSmall_F";
+					player removeMagazine "IEDUrbanSmall_Remote_Mag";
+				};
+				case (_hasSatchel):
+				{
+					_mineType = "IEDUrbanBig_F";
+					player removeMagazine "IEDUrbanBig_Remote_Mag";
+				};
+				case (_hasCharge2):
+				{
+					_mineType = "IEDLandSmall_F";
+					player removeMagazine "IEDLandSmall_Remote_Mag";
+				};
+				case (_hasSatchel2):
+				{
+					_mineType = "IEDLandBig_F";
+					player removeMagazine "IEDLandBig_Remote_Mag";
+				};
 			};
 
 			sleep 1.75;
@@ -36,7 +57,7 @@ if !(player getVariable ["performingDuty", false]) then
 
 			_mine = createMine [_mineType, _pos, [], 0];
 			_mine setDamage 1;
-			if (damage player < 1) then { player setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
+			player setDamage 1;
 			player setVariable ["performingDuty", nil];
 		};
 	}

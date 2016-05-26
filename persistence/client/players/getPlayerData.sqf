@@ -112,4 +112,49 @@ if (_player == player) then
 	_data pushBack ["WastelandItems", _wastelandItems];
 };
 
+// Uniform and backpack texture saving
+_uniformTexture = uniformContainer _player getVariable ["uniformTexture", ""];
+
+if (call A3W_savingMethod == "extDB") then
+{
+	_uniformTexture = (_uniformTexture splitString "\") joinString "\\";
+/*	_texArr = [];
+
+	{
+		_texArr pushBack _x;
+
+		if (_x == 92) then // backslash
+		{
+			_texArr pushBack 92; // double it
+		};
+	} forEach toArray _uniformTexture;
+
+	_uniformTexture = toString _texArr;*/
+};
+
+_backpackTexture = backpackContainer _player getVariable ["backpackTexture", ""];
+
+if (call A3W_savingMethod == "extDB") then
+{
+	_backpackTexture = (_backpackTexture splitString "\") joinString "\\";
+/*	_btexArr = [];
+
+	{
+		_btexArr pushBack _x;
+
+		if (_x == 92) then // backslash
+		{
+			_btexArr pushBack 92; // double it
+		};
+	} forEach toArray _backpackTexture;
+
+	_backpackTexture = toString _btexArr;*/
+};
+
+{ _data pushBack _x } forEach
+[
+	["UniformTexture", _uniformTexture],
+	["BackpackTexture", _backpackTexture]
+];
+
 _data

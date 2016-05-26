@@ -340,8 +340,6 @@ player createDiaryRecord ["credits",
 "
 <br/><font size='16' color='#BBBBBB'>TT Wasteland Alits:</font>
 <br/>	* biabock (Traitors Team)
-<br/>	Map:
-<br/>	*P
 <br/>
 <br/><font size='16' color='#BBBBBB'>Developed by A3Wasteland.com:</font>
 <br/>	* AgentRev (TeamPlayerGaming)
