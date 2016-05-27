@@ -37,7 +37,9 @@ if (isServer) then
 			{
 				[_unit] spawn dropPlayerItems;
 				[_uid, "deathCount", 1] call fn_addScore;
-				[_unit, objNull, objNull, true] call A3W_fnc_registerKillScore;
+				_unit setVariable ["A3W_handleDisconnect_name", _name];
+				_unit setVariable ["A3W_deathCause_local", ["bleedout",1e11]];
+				[_unit, objNull, objNull, true] call A3W_fnc_registerKillScore; // killer retrieved via FAR_killerPrimeSuspectData
 			}
 			else
 			{

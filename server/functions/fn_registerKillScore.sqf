@@ -14,7 +14,7 @@ if !(_unit getVariable ["A3W_killScoreRegistered", false]) then
 {
 	_unit setVariable ["A3W_killScoreRegistered", true];
 
-	private _isPlayerUnit = (isPlayer _unit || _isPlayerBypass);
+	private _isPlayer = (isPlayer _unit || _isPlayerBypass);
 	private "_killerGroup";
 
 	// killer has died, let's check if he has respawned
@@ -35,10 +35,14 @@ if !(_unit getVariable ["A3W_killScoreRegistered", false]) then
 	if (isNil "_killerGroup") then { _killerGroup = group _killer };
 	private _friendlyFire = [_killerGroup, _unit] call A3W_fnc_isFriendly;
 
-	if (_isPlayerUnit) then
+	if (_isPlayer) then
 	{
 		[0, _unit, _killer, _friendlyFire] call A3W_fnc_deathMessage;
-		[_unit, "deathCount", 1] call fn_addScore;
+
+		if (isPlayer _unit) then // false if alive on disconnect, death score added in HandleDisconnect
+		{
+			[_unit, "deathCount", 1] call fn_addScore;
+		};
 	};
 
 	if (isPlayer _killer) then
@@ -47,7 +51,7 @@ if !(_unit getVariable ["A3W_killScoreRegistered", false]) then
 
 		private ["_scoreColumn", "_scoreValue"];
 
-		if (_isPlayerUnit) then
+		if (_isPlayer) then
 		{
 			_scoreColumn = ["playerKills","teamKills"] select _friendlyFire;
 			_scoreValue = 1;
