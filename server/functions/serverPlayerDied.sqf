@@ -8,10 +8,12 @@
 
 if (!isServer) exitWith {};
 
-private ["_unit", "_killer", "_backpack"];
+params [["_unit",objNull,[objNull]], "", "", ["_deathCause",[],[[]]]]; // _unit, _killer, _presumedKiller, _deathCause
 
-_unit = _this select 0;
+if (alive _unit) exitWith {};
+
 _unit setVariable ["processedDeath", diag_tickTime];
+_unit setVariable ["A3W_deathCause_local", _deathCause];
 
 // Remove player save on death
 if (isPlayer _unit && {["A3W_playerSaving"] call isConfigOn}) then
@@ -19,14 +21,8 @@ if (isPlayer _unit && {["A3W_playerSaving"] call isConfigOn}) then
 	(getPlayerUID _unit) call fn_deletePlayerSave;
 };
 
-_killer = _this call A3W_fnc_registerKillScore;
-
-if (isPlayer _unit) then
-{
-	[_unit, "deathCount", 1] call fn_addScore;
-};
-
-_backpack = unitBackpack _unit;
+private _killer = (_this select [0,3]) call A3W_fnc_registerKillScore;
+private _backpack = unitBackpack _unit;
 
 if (!isNull _backpack) then
 {

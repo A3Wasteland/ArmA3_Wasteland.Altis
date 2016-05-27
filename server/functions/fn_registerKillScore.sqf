@@ -14,6 +14,7 @@ if !(_unit getVariable ["A3W_killScoreRegistered", false]) then
 {
 	_unit setVariable ["A3W_killScoreRegistered", true];
 
+	private _isPlayerUnit = (isPlayer _unit || _isPlayerBypass);
 	private "_killerGroup";
 
 	// killer has died, let's check if he has respawned
@@ -31,24 +32,30 @@ if !(_unit getVariable ["A3W_killScoreRegistered", false]) then
 		_unit setVariable ["FAR_killerPrimeSuspectData", nil, true];
 	};
 
+	if (isNil "_killerGroup") then { _killerGroup = group _killer };
+	private _friendlyFire = [_killerGroup, _unit] call A3W_fnc_isFriendly;
+
+	if (_isPlayerUnit) then
+	{
+		[0, _unit, _killer, _friendlyFire] call A3W_fnc_deathMessage;
+		[_unit, "deathCount", 1] call fn_addScore;
+	};
+
 	if (isPlayer _killer) then
 	{
-		private ["_enemyKill", "_scoreColumn", "_scoreValue"];
-
-		if (isNil "_killerGroup") then { _killerGroup = group _killer };
 		if (isNull _killerGroup) exitWith {}; // we have no idea on which team the killer was when the kill occured, abort!
 
-		_enemyKill = !([_killerGroup, _unit] call A3W_fnc_isFriendly);
+		private ["_scoreColumn", "_scoreValue"];
 
-		if (isPlayer _unit || _isPlayerBypass) then
+		if (_isPlayerUnit) then
 		{
-			_scoreColumn = ["teamKills","playerKills"] select _enemyKill;
+			_scoreColumn = ["playerKills","teamKills"] select _friendlyFire;
 			_scoreValue = 1;
 		}
 		else
 		{
 			_scoreColumn = "aiKills";
-			_scoreValue = [0,1] select _enemyKill;
+			_scoreValue = [1,0] select _friendlyFire;
 		};
 
 		[_killer, _scoreColumn, _scoreValue] call fn_addScore;

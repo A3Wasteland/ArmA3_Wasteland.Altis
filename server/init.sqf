@@ -147,6 +147,7 @@ if (isServer) then
 		"A3W_hcObjSaving",
 		"A3W_hcObjSavingID",
 		"A3W_disableBuiltInThermal",
+		"A3W_customDeathMessages",
 		"A3W_headshotNoRevive"
 	];
 

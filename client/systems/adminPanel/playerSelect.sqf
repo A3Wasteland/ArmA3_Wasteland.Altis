@@ -74,7 +74,12 @@ if (_uid call isAdmin) then
 		};
 		case 2: //Slay
 		{
-			if (damage _target < 1) then { _target setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
+			if (damage _target < 1) then // if check required to prevent "Killed" EH from getting triggered twice
+			{
+				_target setVariable ["A3W_deathCause_remote", ["forcekill",serverTime], true];
+				_target setDamage 1;
+			};
+
 			["PlayerMgmt_Slay", format ["%1 (%2)", name _target, getPlayerUID _target]] call notifyAdminMenu;
 		};
 		case 3: //Unlock Team Switcher

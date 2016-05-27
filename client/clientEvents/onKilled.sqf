@@ -6,15 +6,28 @@
 //	@file Author: [404] Deadbeat, MercyfulFate, AgentRev
 //	@file Created: 20/11/2012 05:19
 
-_player = _this select 0;
-_presumedKiller = effectiveCommander (_this select 1);
+params ["_player", "_presumedKiller"];
+
+_presumedKiller = effectiveCommander _presumedKiller;
 _killer = _player getVariable "FAR_killerPrimeSuspect";
 
 if (isNil "_killer" && !isNil "FAR_findKiller") then { _killer = _player call FAR_findKiller };
 if (isNil "_killer" || {isNull _killer}) then { _killer = _presumedKiller };
-if (_killer == _player) then { _killer = objNull };
 
-[_player, _killer, _presumedKiller] spawn
+_deathCause = _player getVariable ["A3W_deathCause_local", []];
+
+if (_killer == _player) then
+{
+	if (_deathCause isEqualTo []) then
+	{
+		_deathCause = [["suicide","drown"] select (getOxygenRemaining _player <= 0 && (getPos _player) select 2 < 0), serverTime];
+		_player setVariable ["A3W_deathCause_local", _deathCause];
+	};
+
+	_killer = objNull;
+};
+
+[_player, _killer, _presumedKiller, _deathCause] spawn
 {
 	if (isServer) then
 	{
