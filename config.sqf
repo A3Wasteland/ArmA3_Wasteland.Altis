@@ -24,7 +24,7 @@ config_refuel_amounts = compileFinal str
 	["Air", 1]
 ];
 
-// NOTE: Player saving and money settings moved to external config (A3Wasteland_settings\main_config.sqf), default values are set in server\default_config.sqf
+// NOTE: Player saving and money settings moved to external config (a3wasteland_settings\main_config.sqf), default values are set in server\default_config.sqf
 
 // Is player saving enabled?
 // config_player_saving_enabled = compileFinal "0";
