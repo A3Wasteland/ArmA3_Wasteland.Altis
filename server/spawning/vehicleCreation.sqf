@@ -83,6 +83,6 @@ if (_vehicleType isKindOf "Offroad_01_armed_base_F") then
 	reload _vehicle;
 };
 
-if (_type > 1) then { _vehicle setVehicleAmmo (random 1.0) };
+//if (_type > 1) then { _vehicle setVehicleAmmo (random 1.0) };
 
 [_vehicle] call randomWeapons;

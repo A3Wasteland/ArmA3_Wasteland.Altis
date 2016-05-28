@@ -80,7 +80,7 @@ class ReviveGUI : IGUIBack
 	class RevSuicideBtn : w_RscButton
 	{
 		idc = RevSuicideBtn_IDC;
-		text = "Suicide";
+		text = "Give up";
 		sizeEx = 0.04 * TEXT_SCALE;
 		action = "execVM 'client\functions\confirmSuicide.sqf'";
 

@@ -70,6 +70,7 @@ mf_init =
 _clientFunc = "client\functions";
 _serverFunc = "server\functions";
 
+A3W_fnc_deathMessage = [_serverFunc, "fn_deathMessage.sqf"] call mf_compile;
 A3W_fnc_getInFast = [_clientFunc, "fn_getInFast.sqf"] call mf_compile;
 A3W_fnc_isBleeding = [_serverFunc, "fn_isBleeding.sqf"] call mf_compile;
 A3W_fnc_isFriendly = [_clientFunc, "fn_isFriendly.sqf"] call mf_compile;
@@ -91,6 +92,7 @@ fn_canGetIn = [_clientFunc, "fn_canGetIn.sqf"] call mf_compile;
 fn_enableSimulationGlobal = [_serverFunc, "fn_enableSimulationGlobal.sqf"] call mf_compile;
 fn_enableSimulationServer = [_serverFunc, "fn_enableSimulationServer.sqf"] call mf_compile;
 fn_filterString = [_serverFunc, "fn_filterString.sqf"] call mf_compile;
+fn_findInPairs = [_serverFunc, "fn_findInPairs.sqf"] call mf_compile;
 fn_findString = [_serverFunc, "fn_findString.sqf"] call mf_compile;
 fn_forceAddItem = [_clientFunc, "fn_forceAddItem.sqf"] call mf_compile;
 fn_getFromPairs = [_serverFunc, "fn_getFromPairs.sqf"] call mf_compile;

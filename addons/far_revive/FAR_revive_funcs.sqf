@@ -244,6 +244,7 @@ FAR_Slay_Target =
 
 	if ([_target] call FAR_Check_Slay) then
 	{
+		_target setVariable ["A3W_deathCause_remote", ["slay",serverTime], true];
 		_target setDamage 1;
 	};
 }
@@ -256,8 +257,7 @@ FAR_public_EH =
 {
 	if(count _this < 2) exitWith {};
 
-	_EH  = _this select 0;
-	_value = _this select 1;
+	params ["_EH", "_value"];
 
 	// FAR_isDragging
 	if (_EH == "FAR_isDragging_EH") then
@@ -281,10 +281,10 @@ FAR_public_EH =
 	// FAR_deathMessage
 	if (_EH == "FAR_deathMessage") then
 	{
-		_names = _value select 0;
-		_unitName = _names select 0;
-		_killerName = _names param [1, nil];
-		_unit = objectFromNetId (_value select 1);
+		_value params ["_names", ["_unitID",""], ["_killerID",""]];
+		_names params ["_unitName", ["_killerName",nil]];
+		
+		_unit = objectFromNetId _unitID;
 
 		if (alive _unit) then
 		{
@@ -294,7 +294,8 @@ FAR_public_EH =
 			}
 			else
 			{
-				systemChat format ["%1 was injured by %2", toString _unitName, toString _killerName];
+				_killer = objectFromNetId _killerID;
+				systemChat format ["%1 injured %2%3", toString _killerName, toString _unitName, [""," (friendly fire)"] select ([_killer, _unit] call A3W_fnc_isFriendly)];
 			};
 		};
 	};

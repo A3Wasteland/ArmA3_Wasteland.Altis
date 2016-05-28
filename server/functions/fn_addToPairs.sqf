@@ -5,85 +5,62 @@
 //	@file Author: AgentRev
 
 // This function is a 10x faster replacement for BIS_fnc_addToPairs,
-// with no key type restriction (can be anything except array and nil/null),
+// with no key type restriction (can be anything except nil/null),
 // and no length restriction on sub-arrays ([key, value, ...])
 
-scopeName "fn_addToPairs";
-private ["_arr", "_key", "_val", "_added", "_keyType", "_valType", "_x0", "_x1", "_x1Type"];
+params ["_arr", "_key", "_val"];
 
-_arr = _this select 0;
-_key = _this select 1;
-_val = _this select 2;
+private _index = [_arr, _key] call fn_findInPairs;
 
-_added = false;
-_keyType = typeName _key;
-
-if (_keyType != "ARRAY") then
+if (_index isEqualTo -1) then
 {
-	_valType = typeName _val;
+	_arr pushBack [_key, _val];
+}
+else
+{
+	private _pair = _arr select _index;
+	private _target = _pair select 1;
 
+	if (isNil "_target") then
 	{
-		if (typeName _x == "ARRAY") then
+		_pair set [1, _val];
+	}
+	else
+	{
+		if (_target isEqualType []) then
 		{
-			_x0 = _x select 0;
-
-			if (!isNil "_x0" && {typeName _x0 == _keyType && {_x0 == _key}}) then
+			if (_val isEqualType []) then
 			{
-				_x1 = if (count _x > 1) then { _x select 1 } else { nil };
+				_target append _val;
+			}
+			else
+			{
+				_target pushBack _val;
+			};
+		}
+		else
+		{
+			if ([_target,_val] isEqualTypeAll 0) then
+			{
+				_target = _target + _val;
+			}
+			else
+			{
+				_target = [_target];
 
-				if (!isNil "_x1") then
+				if (_val isEqualType []) then
 				{
-					_x1Type = typeName _x1;
-
-					if (_x1Type == "ARRAY") then
-					{
-						if (_valType == _x1Type) then
-						{
-							{ _x1 pushBack _x } forEach _val;
-						}
-						else
-						{
-							_x1 pushBack _val;
-						};
-					}
-					else
-					{
-						if (_valType == "SCALAR" && _x1Type == _valType) then
-						{
-							_x1 = _x1 + _val;
-						}
-						else
-						{
-							if (_valType == "ARRAY") then
-							{
-								_x1 = [_x1];
-								{ _x1 pushBack _x } forEach _val;
-							}
-							else
-							{
-								_x1 = [_x1, _val];
-							};
-						};
-
-						_x set [1, _x1];
-					};
+					_target append _val;
 				}
 				else
 				{
-					_x set [1, _val];
+					_target pushBack _val;
 				};
-
-				_added = true;
-				breakTo "fn_addToPairs";
 			};
-		};
-	} forEach _arr;
 
-	if (!_added) then
-	{
-		_arr pushBack [_key, _val];
-		_added = true;
+			_pair set [1, _target];
+		};
 	};
 };
 
-_added
+true

@@ -85,7 +85,7 @@ _windChangeProbability = 25;
 // Probability in percent (0-100) for rain to start at every rain interval. Set this to 0 if you don't want rain at all. Set this to 100
 // if you want it to rain constantly when overcast is greater than 0.75. In short: if you think that it generally rains to often then
 // lower this value and vice versa. (Suggested value: 50).
-_rainIntervalRainProbability = 50;
+_rainIntervalRainProbability = 0;
 
 // Minimum time in minutes for rain intervals. Must be greater or equal to 0 and less than or equal to _maxRainIntervalTimeMin.
 // (Suggested value: 0).
@@ -104,6 +104,8 @@ _forceRainToStopAfterOneRainInterval = false;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Don't touch anything beneath this line
 
+drn_DynamicWeather_minFog = _minimumFog;
+drn_DynamicWeather_maxFog = _maximumFog;
 drn_DynamicWeather_DebugTextEventArgs = []; // Empty
 
 "drn_DynamicWeather_DebugTextEventArgs" addPublicVariableEventHandler {
@@ -169,7 +171,7 @@ drn_fnc_DynamicWeather_SetWeatherLocal = {
 		_currentFog set [0, (_currentFog select 0) max (_currentRain / 4)];
 	}
 	else {*/
-		_currentFog = _currentFog max (_currentRain / 4);
+		_currentFog = (drn_DynamicWeather_minFog max _currentFog min drn_DynamicWeather_maxFog) max (_currentRain / 4);
 	//};
 
 	// Set current weather values

@@ -10,6 +10,8 @@ _corpse = _this select 1;
 
 _unit setVariable ["playerSpawning", true];
 _unit setVariable ["A3W_killScoreRegistered", nil];
+_unit setVariable ["A3W_deathCause_local", nil, true];
+_unit setVariable ["A3W_deathCause_remote", nil, true];
 
 _eventID = _corpse getVariable "A3W_respawnEH";
 if (!isNil "_eventID") then { _corpse removeEventHandler ["Respawn", _eventID] };

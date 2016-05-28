@@ -113,7 +113,7 @@ if (!isPlayer _unit) then
 };
 
 // Injury message
-if (FAR_EnableDeathMessages && difficultyOption "deathMessages" > 0 && !isNil "_killer") then
+if (FAR_EnableDeathMessages && (round difficultyOption "deathMessages" > 0 || ["A3W_customDeathMessages"] call isConfigOn) && !isNil "_killer") then
 {
 	[_unit, _killer] spawn
 	{
@@ -131,7 +131,7 @@ if (FAR_EnableDeathMessages && difficultyOption "deathMessages" > 0 && !isNil "_
 
 			if (!alive _unit) exitWith {};
 
-			FAR_deathMessage = [_names, netId _unit];
+			FAR_deathMessage = [_names, netId _unit, netId _killer];
 			publicVariable "FAR_deathMessage";
 			["FAR_deathMessage", FAR_deathMessage] call FAR_public_EH;
 		};
@@ -296,7 +296,12 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 {
 	if (!alive vehicle _unit || (getPosASL _unit) select 2 < -1.5) exitWith
 	{
-		if (damage _unit < 1) then { _unit setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
+		if (damage _unit < 1) then // if check required to prevent "Killed" EH from getting triggered twice
+		{
+			_unit setVariable ["A3W_deathCause_local", ["drown",1e11]];
+			_unit setDamage 1;
+		};
+
 		if (_unit == player) then { FAR_cutTextLayer cutText ["", "PLAIN"] };
 	};
 
@@ -440,7 +445,11 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 }
 else // Player bled out
 {
-	if (damage _unit < 1) then { _unit setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
+	if (damage _unit < 1) then // if check required to prevent "Killed" EH from getting triggered twice
+	{
+		_unit setVariable ["A3W_deathCause_local", ["bleedout",1e11]];
+		_unit setDamage 1;
+	};
 
 	if (!isPlayer _unit) then
 	{

@@ -26,6 +26,7 @@ A3W_survivalSystem = 0;            // Food and water are required to stay alive 
 A3W_unlimitedStamina = 1;          // Allow unlimited sprinting, jumping, etc. (0 = no, 1 = yes) - this also removes energy drinks from the mission
 A3W_bleedingTime = 180;             // Time in seconds for which to allow revive after a critical injury (minimum 10 seconds)
 A3W_headshotNoRevive = 0;          // Instant death on fatal headshot by enemy player with non-explosive ammo (0 = no, 1 = yes)
+A3W_customDeathMessages = 1;       // If difficulty option deathMessages=0, display custom messages related to causes of death, as defined in fn_deathMessage.sqf (0 = no, 1 = yes)
 
 // Spawn settings
 A3W_townSpawnCooldown = 1*60;      // Number of seconds to wait between each spawn on a specific town (0 = disabled)
@@ -84,7 +85,7 @@ A3W_extDB_GhostingTimer = 5*60;    // Number of seconds a player has to wait whe
 A3W_extDB_GhostingAdmins = 0;      // Apply ghosting restriction to server admins (0 = no, 1 = yes)
 A3W_extDB_SaveUnlockedObjects = 0; // Save and restore unlocked baseparts that were locked at least once during their lifetime (0 = no, 1 = yes)
 A3W_extDB_ConfigName = "A3W";      // Name of the connection config from extdb-conf.ini to be used (the one within [brackets])
-A3W_extDB_IniName = "a3wasteland"; // Name of the INI file in extDB\sql_custom to be used
+A3W_extDB_IniName = "a3wasteland"; // Name of the INI file in extDB\sql_custom_v2 to be used
 A3W_extDB_Misc = 0;                // Enable extDB Misc Protocol (0 = no, 1 = yes) - no associated features implemented in vanilla A3W
 A3W_extDB_Steam = 0;               // Enable extDB Steam Protocol (0 = no, 1 = yes) - no associated features implemented in vanilla A3W
 A3W_extDB_Rcon = 0;                // Enable extDB Rcon Protocol (0 = no, 1 = yes) - no associated features implemented in vanilla A3W
