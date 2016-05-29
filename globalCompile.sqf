@@ -123,6 +123,7 @@ getMoveWeapon = [_clientFunc, "getMoveWeapon.sqf"] call mf_compile;
 fn_getPlayerData = "persistence\client\players\getPlayerData.sqf" call mf_compile;
 getPublicVar = [_serverFunc, "getPublicVar.sqf"] call mf_compile;
 getTeamMarkerColor = "territory\client\getTeamMarkerColor.sqf" call mf_compile;
+A3W_fnc_getTeamMarkerColor = getTeamMarkerColor;
 isConfigOn = [_serverFunc, "isConfigOn.sqf"] call mf_compile;
 processMagazineCargo = [_serverFunc, "processMagazineCargo.sqf"] call mf_compile;
 relativePos = [_serverFunc, "relativePos.sqf"] call mf_compile;
