@@ -92,6 +92,8 @@ if (hasInterface || isServer) then
 	[] execVM "addons\outlw_magRepack\MagRepack_init.sqf";
 	[] execVM "addons\lsd_nvg\init.sqf";
 	[] execVM "addons\vactions\functions.sqf"; //Vehicle Actions
+	[] execVM "addons\scripts\HvT.sqf";                       // High Value Target
+	//[] execVM "addons\scripts\HvD.sqf";                       // High Value Drugrunner
 	[] execVM "addons\Grenades\ToxicGas.sqf"; // Toxic Gas Grenades
 	[] execVM "addons\EtV\init.sqf"; // Explosives to Vehicles
 	[] execVM "addons\laptop\init.sqf"; //Hacker Mission

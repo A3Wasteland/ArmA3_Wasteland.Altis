@@ -7,7 +7,7 @@ enableItemsDropping = 0;
 forceRotorLibSimulation = 0; // if you set this to 1, you deny freedom of choice to the players, which is the very principle this mission is built upon
 weaponPool = 0;
 corpseManagerMode = 1;
-corpseRemovalMinTime = 30*60;
+corpseRemovalMinTime = 10*60;
 corpseRemovalMaxTime = 30*60;
 wreckManagerMode = 1;
 wreckRemovalMinTime = 2*60;
@@ -19,7 +19,7 @@ class Header
 {
 	gameType=Sandbox;
 	minPlayers=1;
-	maxPlayers=146; // 144 players, 2 headless clients
+	maxPlayers=170; // 144 players, 2 headless clients
 };
 author="A3Wasteland.com"; // it would be if you could keep "A3Wasteland.com" in the name, like "YourName and A3Wasteland.com" :)
 onLoadName = "Traitors Team"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)

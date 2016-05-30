@@ -145,9 +145,9 @@ staticGunsArray = compileFinal str
 	["Mk32 GMG 20mm High tripod (NATO)", "B_GMG_01_high_F", 6000],
 	["Mk32 GMG 20mm High tripod (CSAT)", "O_GMG_01_high_F", 6000],
 	["Mk32 GMG 20mm High tripod (AAF)", "I_GMG_01_high_F", 6000],
-	["Mk6 Mortar (NATO)", "B_Mortar_01_F", 50000],
-	["Mk6 Mortar (CSAT)", "O_Mortar_01_F", 50000],
-	["Mk6 Mortar (AAF)", "I_Mortar_01_F", 50000]
+	["Mk6 Mortar (NATO)", "B_Mortar_01_F", 75000],
+	["Mk6 Mortar (CSAT)", "O_Mortar_01_F", 75000],
+	["Mk6 Mortar (AAF)", "I_Mortar_01_F", 75000]
 ];
 
 throwputArray = compileFinal str
@@ -162,13 +162,16 @@ throwputArray = compileFinal str
 	["AT Mine", "ATMine_Range_Mag", 400],
 	["Explosive Charge", "DemoCharge_Remote_Mag", 450],
 	["Explosive Satchel", "SatchelCharge_Remote_Mag", 500],
-	["Toxic Gas Grenade", "SmokeShellYellow", 500],
+	["Toxic Gas Grenade", "SmokeShellYellow", 1000],
 	["Smoke Grenade (White)", "SmokeShell", 50],
 	["Smoke Grenade (Purple)", "SmokeShellPurple", 50],
 	["Smoke Grenade (Blue)", "SmokeShellBlue", 50],
 	["Smoke Grenade (Green)", "SmokeShellGreen", 50],
 	["Smoke Grenade (Orange)", "SmokeShellOrange", 50],
-	["Smoke Grenade (Red)", "SmokeShellRed", 50]
+	["Smoke Grenade (Red)", "SmokeShellRed", 50],
+	["Small IED (Dug-in) - Allahu Akbar", "IEDLandSmall_Remote_Mag", 1000],
+	["Large IED (Urban) - Allahu Akbar", "IEDUrbanBig_Remote_Mag", 1500],
+	["Large IED (Dug-in) - Allahu Akbar", "IEDLandBig_Remote_Mag", 1500]
 ];
 
 //Gun Store Ammo List
@@ -428,15 +431,15 @@ uniformArray = compileFinal str
 	["Light Ghillie (NATO)", "U_B_GhillieSuit", 200, "uni"],
 	["Light Ghillie (CSAT)", "U_O_GhillieSuit", 200, "uni"],
 	["Light Ghillie (AAF)", "U_I_GhillieSuit", 200, "uni"],
-	["Full Ghillie (Arid) [DLC]", "U_B_FullGhillie_ard", 2000, "uni"],
-	["Full Ghillie (Arid) [DLC]", "U_O_FullGhillie_ard", 2000, "uni"],
-	["Full Ghillie (Arid) [DLC]", "U_I_FullGhillie_ard", 2000, "uni"],
-	["Full Ghillie (Lush) [DLC]", "U_B_FullGhillie_lsh", 2000, "uni"],
-	["Full Ghillie (Lush) [DLC]", "U_O_FullGhillie_lsh", 2000, "uni"],
-	["Full Ghillie (Lush) [DLC]", "U_I_FullGhillie_lsh", 2000, "uni"],
-	["Full Ghillie (Semi-Arid) [DLC]", "U_B_FullGhillie_sard", 2000, "uni"],
-	["Full Ghillie (Semi-Arid) [DLC]", "U_O_FullGhillie_sard", 2000, "uni"],
-	["Full Ghillie (Semi-Arid) [DLC]", "U_I_FullGhillie_sard", 2000, "uni"],
+	["Full Ghillie (Arid) [DLC]", "U_B_FullGhillie_ard", 1000, "uni"],
+	["Full Ghillie (Arid) [DLC]", "U_O_FullGhillie_ard", 1000, "uni"],
+	["Full Ghillie (Arid) [DLC]", "U_I_FullGhillie_ard", 1000, "uni"],
+	["Full Ghillie (Lush) [DLC]", "U_B_FullGhillie_lsh", 1000, "uni"],
+	["Full Ghillie (Lush) [DLC]", "U_O_FullGhillie_lsh", 1000, "uni"],
+	["Full Ghillie (Lush) [DLC]", "U_I_FullGhillie_lsh", 1000, "uni"],
+	["Full Ghillie (Semi-Arid) [DLC]", "U_B_FullGhillie_sard", 1000, "uni"],
+	["Full Ghillie (Semi-Arid) [DLC]", "U_O_FullGhillie_sard", 1000, "uni"],
+	["Full Ghillie (Semi-Arid) [DLC]", "U_I_FullGhillie_sard", 1000, "uni"],
 	["Wetsuit (NATO)", "U_B_Wetsuit", 200, "uni"],
 	["Wetsuit (CSAT)", "U_O_Wetsuit", 200, "uni"],
 	["Wetsuit (AAF)", "U_I_Wetsuit", 200, "uni"],
@@ -586,9 +589,9 @@ genItemArray = compileFinal str
 	["UAV Terminal (NATO)", "B_UavTerminal", 1000, "gps"],
 	["UAV Terminal (CSAT)", "O_UavTerminal", 1000, "gps"],
 	["UAV Terminal (AAF)", "I_UavTerminal", 1000, "gps"],
-	["Quadrotor UAV (NATO)", "B_UAV_01_backpack_F", 3000, "backpack"],
-	["Quadrotor UAV (CSAT)", "O_UAV_01_backpack_F", 3000, "backpack"],
-	["Quadrotor UAV (AAF)", "I_UAV_01_backpack_F", 3000, "backpack"],
+	["Quadrotor UAV (NATO)", "B_UAV_01_backpack_F", 5000, "backpack"],
+	["Quadrotor UAV (CSAT)", "O_UAV_01_backpack_F", 5000, "backpack"],
+	["Quadrotor UAV (AAF)", "I_UAV_01_backpack_F", 5000, "backpack"],
 	["Remote Designator Bag (NATO) [DLC]", "B_Static_Designator_01_weapon_F", 1000, "backpack"],
 	["Remote Designator Bag (CSAT) [DLC]", "O_Static_Designator_02_weapon_F", 1000, "backpack"],
 	["GPS", "ItemGPS", 100, "gps"],
@@ -695,7 +698,7 @@ landArray = compileFinal str
 	["HEMTT Fuel", "B_Truck_01_fuel_F", 9000, "vehicle"],
 	["HEMTT Medical", "B_Truck_01_medical_F", 10000, "vehicle"],
 	["HEMTT Repair", "B_Truck_01_Repair_F", 12500, "vehicle"],
-	["HEMTT Ammo", "B_Truck_01_ammo_F", 27500, "vehicle"],
+	["HEMTT Ammo", "B_Truck_01_ammo_F", 37000, "vehicle"],
 
 	["Tempest Device", "O_Truck_03_device_F", 4000, "vehicle"],
 	["Tempest Transport", "O_Truck_03_transport_F", 6000, "vehicle"],
@@ -703,21 +706,21 @@ landArray = compileFinal str
 	["Tempest Fuel", "O_Truck_03_fuel_F", 9000, "vehicle"],
 	["Tempest Medical", "O_Truck_03_medical_F", 10000, "vehicle"],
 	["Tempest Repair", "O_Truck_03_repair_F", 12500, "vehicle"],
-	["Tempest Ammo", "O_Truck_03_ammo_F", 27500, "vehicle"],
+	["Tempest Ammo", "O_Truck_03_ammo_F", 40000, "vehicle"],
 
 	["Zamak Transport", "I_Truck_02_transport_F", 4000, "vehicle"],
 	["Zamak Covered", "I_Truck_02_covered_F", 5000, "vehicle"],
 	["Zamak Fuel", "I_Truck_02_fuel_F", 7500, "vehicle"],
 	["Zamak Medical", "I_Truck_02_medical_F", 9000, "vehicle"],
 	["Zamak Repair", "I_Truck_02_box_F", 10000, "vehicle"],
-	["Zamak Ammo", "I_Truck_02_ammo_F", 25000, "vehicle"],
+	["Zamak Ammo", "I_Truck_02_ammo_F", 35000, "vehicle"],
 
 	["UGV Stomper (NATO)", "B_UGV_01_F", 2500, "vehicle"],
-	["UGV Stomper RCWS (NATO)", "B_UGV_01_rcws_F", 15000, "vehicle"],
+	["UGV Stomper RCWS (NATO)", "B_UGV_01_rcws_F", 35000, "vehicle"],
 	["UGV Stomper (AAF)", "I_UGV_01_F", 2500, "vehicle"],
-	["UGV Stomper RCWS (AAF)", "I_UGV_01_rcws_F", 15000, "vehicle"],
+	["UGV Stomper RCWS (AAF)", "I_UGV_01_rcws_F", 35000, "vehicle"],
 	["UGV Saif (CSAT)", "O_UGV_01_F", 2500, "vehicle"],
-	["UGV Saif RCWS (CSAT)", "O_UGV_01_rcws_F", 15000, "vehicle"]
+	["UGV Saif RCWS (CSAT)", "O_UGV_01_rcws_F", 35000, "vehicle"]
 ];
 
 armoredArray = compileFinal str
@@ -744,8 +747,8 @@ tanksArray = compileFinal str
 	["BTR-K Kamysh", "O_APC_Tracked_02_cannon_F", 70000, "vehicle"],
 	["IFV-6a Cheetah AA", "B_APC_Tracked_01_AA_F", 90000, "vehicle"],
 	["ZSU-39 Tigris AA", "O_APC_Tracked_02_AA_F", 90000, "vehicle"],
-	["M2A1 Slammer", "B_MBT_01_cannon_F", 100000, "vehicle"],
-	["M2A4 Slammer HMG", "B_MBT_01_TUSK_F", 110000, "vehicle"], // Commander gun variant
+	["M2A1 Slammer", "B_MBT_01_cannon_F", 110000, "vehicle"],
+	["M2A4 Slammer HMG", "B_MBT_01_TUSK_F", 120000, "vehicle"], // Commander gun variant
 	["T-100 Varsuk", "O_MBT_02_cannon_F", 115000, "vehicle"],
 	["MBT-52 Kuma", "I_MBT_03_cannon_F", 125000, "vehicle"]
 ];
@@ -773,11 +776,11 @@ helicoptersArray = compileFinal str
 	["UH-80 Ghost Hawk", "B_Heli_Transport_01_F", 25000, "vehicle"], // UH-60 Stealth with 2 side miniguns
 	["CH-67 Huron (Armed) [DLC]", "B_Heli_Transport_03_F", 30000, "vehicle"], // CH-47 with 2 side miniguns
 	["AH-9 Pawnee", "B_Heli_Light_01_armed_F", 50000, "vehicle"], // Armed AH-6
-	["PO-30 Orca (Armed, Black)", "O_Heli_Light_02_v2_F", 50000, "vehicle"], // Armed Ka-60 with orca paintjob
-	["PO-30 Orca (Armed, Hex)", "O_Heli_Light_02_F", 75000, "vehicle"], // Armed Ka-60
-	["WY-55 Hellcat (Armed)", "I_Heli_light_03_F", 40000, "vehicle"], // Armed AW159
-	["AH-99 Blackfoot", "B_Heli_Attack_01_F", 480000, "vehicle"], // RAH-66 with gunner
-	["Mi-48 Kajman", "O_Heli_Attack_02_F", 450000, "vehicle"] // Mi-28 with gunner
+	["PO-30 Orca (Armed, Black)", "O_Heli_Light_02_v2_F", 60000, "vehicle"], // Armed Ka-60 with orca paintjob
+	["PO-30 Orca (Armed, Hex)", "O_Heli_Light_02_F", 100000, "vehicle"], // Armed Ka-60
+	["WY-55 Hellcat (Armed)", "I_Heli_light_03_F", 60000, "vehicle"], // Armed AW159
+	["AH-99 Blackfoot", "B_Heli_Attack_01_F", 45	0000, "vehicle"], // RAH-66 with gunner
+	["Mi-48 Kajman", "O_Heli_Attack_02_F", 400000, "vehicle"] // Mi-28 with gunner
 ];
 
 planesArray = compileFinal str
