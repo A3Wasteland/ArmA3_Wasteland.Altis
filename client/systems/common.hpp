@@ -735,6 +735,13 @@ class w_RscMapControl
 		coefMin = 0.85;
 		coefMax = 1;
 	};
+	class LineMarker {
+		textureComboBoxColor = "#(argb,8,8,3)color(1,1,1,1)";
+		lineWidthThin = 0.008;
+		lineWidthThick = 0.014;
+		lineDistanceMin = 3e-005;
+		lineLengthMin = 5;
+	};
 	class Transmitter {
 		color[] = {1, 1, 1, 1};
 		icon = "\A3\ui_f\data\map\mapcontrol\transmitter_CA.paa";
