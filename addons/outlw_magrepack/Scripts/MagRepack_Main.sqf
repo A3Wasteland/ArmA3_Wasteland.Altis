@@ -231,13 +231,15 @@ outlw_MR_filter =
 		_ammoType = outlw_MR_currentFilter;
 	};
 
+	_ammoType = (_ammoType call outlw_MR_parentAmmo) call outlw_MR_ammoPrefix;
+
 	_returnTypes = [];
 	_returnCounts = [];
 	_returnCaps = [];
 
 	for "_n" from 0 to ((count _magTypes) - 1) do
 	{
-		if ((getText (configFile >> "cfgMagazines" >> _magTypes select _n >> "ammo")) == _ammoType) then
+		if (((getText (configFile >> "cfgMagazines" >> _magTypes select _n >> "ammo")) call outlw_MR_parentAmmo) call outlw_MR_ammoPrefix == _ammoType) then
 		{
 			_returnTypes set [count _returnTypes, _magTypes select _n];
 			_returnCounts set [count _returnCounts, _magAmmoCounts select _n];
@@ -441,10 +443,10 @@ outlw_MR_block =
 	{
 		case (outlw_MR_sourceType != ""): {((uiNamespace getVariable "outlw_MR_Dialog_Main") displayCtrl 2215) ctrlSetToolTip "Source is already defined!";};
 		case (outlw_MR_dragCount == 0): {((uiNamespace getVariable "outlw_MR_Dialog_Main") displayCtrl 2215) ctrlSetToolTip "Source cannot be empty!";};
-		case (outlw_MR_dragCap < 100 && (outlw_MR_targetType != "" && outlw_MR_targetCap >= 100)):
+		/*case (outlw_MR_dragCap < 100 && (outlw_MR_targetType != "" && outlw_MR_targetCap >= 100)):
 		{
 			((uiNamespace getVariable "outlw_MR_Dialog_Main") displayCtrl 2215) ctrlSetToolTip "The Target requires a belt, not individual bullets!";
-		};
+		};*/
 		default {_doBlockSource = false;};
 	};
 
@@ -471,10 +473,10 @@ outlw_MR_block =
 	{
 		case (outlw_MR_targetType != ""): {((uiNamespace getVariable "outlw_MR_Dialog_Main") displayCtrl 2216) ctrlSetToolTip "Target is already defined!";};
 		case (outlw_MR_dragCount == outlw_MR_dragCap && outlw_MR_dragCap != 1): {((uiNamespace getVariable "outlw_MR_Dialog_Main") displayCtrl 2216) ctrlSetToolTip "Target magazine cannot be full!";};
-		case (outlw_MR_dragCap >= 100 && (outlw_MR_sourceType != "" && outlw_MR_sourceCap < 100)):
+		/*case (outlw_MR_dragCap >= 100 && (outlw_MR_sourceType != "" && outlw_MR_sourceCap < 100)):
 		{
 			((uiNamespace getVariable "outlw_MR_Dialog_Main") displayCtrl 2216) ctrlSetToolTip "This magazine requires belts, not individual bullets!";
-		};
+		};*/
 		default {_doBlockTarget = false;};
 	};
 

@@ -296,20 +296,13 @@ outlw_MR_uniqueMags =
 
 outlw_MR_isBeltMagazine =
 {
-	private ["_magType", "_cap", "_nameSound", "_returnBool"];
+	private ["_magType", "_cap", "_nameSound"];
 
 	_magType = _this select 0;
 	_cap = getNumber(configFile >> "CfgMagazines" >> _magType >> "count");
 	_nameSound = getText(configFile >> "CfgMagazines" >> _magType >> "nameSound");
 
-	_returnBool = false;
-
-	if (_nameSound == "mGun" || {(_nameSound != "magazine" && _cap >= 100)}) then
-	{
-		_returnBool = true;
-	};
-
-	_returnBool;
+	(_nameSound == "mGun" || _cap >= 100)
 };
 
 outlw_MR_isConvertable =
@@ -435,7 +428,25 @@ outlw_MR_openAbout =
 	((uiNamespace getVariable "outlw_MR_Dialog_About") displayCtrl 2400) ctrlSetStructuredText parseText "M<t size='0.8'>MKAY</t>";
 };
 
+outlw_MR_ammoPrefix =
+{
+	params [["_ammo","",[""]]];
+	private _ammoPrefix = ((_ammo splitString "_") select [0,2]) joinString "_";
+	[_ammoPrefix, _ammo] select (_ammoPrefix  isEqualTo "");
+};
 
+outlw_MR_parentAmmo =
+{
+	params [["_ammo","",[""]]];
 
+	private _bulletBase = configFile >> "CfgAmmo" >> "BulletBase";
+	private _ammoCfg = configFile >> "CfgAmmo" >> _ammo;
+	private "_parentCfg";
 
+	while {_parentCfg = inheritsFrom _ammoCfg; isClass _parentCfg && _parentCfg != _bulletBase} do
+	{
+		_ammoCfg = _parentCfg;
+	};
 
+	[_ammo, configName _ammoCfg] select (isClass _ammoCfg)
+};
