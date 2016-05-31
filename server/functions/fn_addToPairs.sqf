@@ -14,7 +14,7 @@ private _index = [_arr, _key] call fn_findInPairs;
 
 if (_index isEqualTo -1) then
 {
-	_arr pushBack [_key, _val];
+	_index = _arr pushBack [_key, _val];
 }
 else
 {
@@ -63,4 +63,4 @@ else
 	};
 };
 
-true
+_index

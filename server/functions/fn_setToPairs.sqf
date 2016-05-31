@@ -14,11 +14,11 @@ private _index = [_arr, _key] call fn_findInPairs;
 
 if (_index isEqualTo -1) then
 {
-	_arr pushBack [_key, _val];
+	_index = _arr pushBack [_key, _val];
 }
 else
 {
 	(_arr select _index) set [1, _val];
 };
 
-true
+_index
