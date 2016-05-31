@@ -16,26 +16,47 @@ params
 	["_cause", "", [""]] // cause of death string, ignored if mode = 0
 ];
 
+scopeName "fn_deathMessage";
+
 if (_mode isEqualTo 0) then
 {
-	if (!isServer) exitWith {};
-
 	private _victimName = _victim getVariable ["A3W_handleDisconnect_name", ""];
-
-	if (_victimName isEqualTo "" && !alive _victim && !isPlayer _victim) exitWith {}; // "Error: No unit"
-
-	(_victim getVariable ["A3W_deathCause_local", []]) params [["_cLocalString","",[""]], ["_cLocalTime",nil,[0]]];
-	(_victim getVariable ["A3W_deathCause_remote", []]) params [["_cRemoteString","",[""]], ["_cRemoteTime",2e11,[0]]];
-
-	// death cause tagged by remote sources have an expiry time of 10 secs (serverTime)
-	_cause = [_cLocalString, _cRemoteString] select (isNil "_cLocalTime" || {_cRemoteTime < _cLocalTime && _cRemoteTime > _cLocalTime - 10});
 
 	if (_victimName isEqualTo "") then
 	{
+		if (!alive _victim && !isPlayer _victim) exitWith // "Error: No unit"
+		{
+			breakOut "fn_deathMessage";
+		};
+
 		_victimName = name _victim;
 	};
 
-	private _killerName = if (!alive _killer && !isPlayer _killer) then { "" } else { name _killer };
+	_causeLocal = _victim getVariable ["A3W_deathCause_local", []];
+	_causeRemote = _victim getVariable ["A3W_deathCause_remote", []];
+
+	_causeLocal params [["_cLocalString","",[""]], ["_cLocalTime",nil,[0]]]; // _cLocalTime nil = force use local cause
+	_causeRemote params [["_cRemoteString","",[""]], ["_cRemoteTime",2e11,[0]]];
+
+	// death cause tagged by remote sources have an expiry time of 10 secs (serverTime)
+	private _causeParams = [_causeLocal, _causeRemote] select (!isNil "_cLocalTime" && {_cRemoteTime < _cLocalTime && _cRemoteTime > _cLocalTime - 10});
+
+	if ((_causeParams param [0,""]) isEqualTo "") then
+	{
+		if !("" in [_cLocalString, _cRemoteString]) then
+		{
+			_causeParams = [_causeLocal, _causeRemote] select (_cLocalString isEqualTo ""); // fallback
+		};
+	};
+
+	_cause = _causeParams param [0,""];
+
+	if (_cause == "slay") then
+	{
+		_killer = _causeParams param [2,objNull,[objNull]]; // no friendly fire handling needed here
+	};
+
+	private _killerName = if (alive _killer || isPlayer _killer) then { name _killer } else { "" };
 	_aiKiller = (!isNull _killer && !isPlayer _killer && isNil {_killer getVariable "cmoney"});
 
 	[1, _victimName, _killerName, _friendlyFire, _aiKiller, _cause] remoteExecCall ["A3W_fnc_deathMessage"];

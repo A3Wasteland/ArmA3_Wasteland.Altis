@@ -53,7 +53,7 @@ if (!(_selections arrayIntersect ["head","face_hub"] isEqualTo []) && _direct) t
 					// DING DING DING
 					if (isPlayer _primeSuspect && _primeSuspect isKindOf "Man") then
 					{
-						_target setVariable ["A3W_deathCause_remote", ["headshot",serverTime], true];
+						_target setVariable ["A3W_deathCause_local", ["headshot"]];
 						_target setHitPointDamage ["HitHead", 1];
 						diag_log format ["HEADSHOT by [%1] with [%2]", _primeSuspect, _ammo];
 					};

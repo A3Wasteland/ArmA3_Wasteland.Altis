@@ -37,11 +37,13 @@ if !(_unit getVariable ["A3W_killScoreRegistered", false]) then
 
 	if (_isPlayer) then
 	{
-		[0, _unit, _killer, _friendlyFire] call A3W_fnc_deathMessage;
-
 		if (isPlayer _unit) then // false if alive on disconnect, death score added in HandleDisconnect
 		{
 			[_unit, "deathCount", 1] call fn_addScore;
+		}
+		else
+		{
+			[0, _unit, _killer, _friendlyFire] call A3W_fnc_deathMessage; // disconnected while injured, broadcast bleedout message
 		};
 	};
 

@@ -84,7 +84,7 @@ _unit spawn
 		_unit setVariable ["FAR_killerSuspects", []];
 	};
 
-	sleep 0.5;
+	//sleep 0.5;
 
 	if (UNCONSCIOUS(_unit) && alive _unit) then
 	{
@@ -115,27 +115,30 @@ if (!isPlayer _unit) then
 // Injury message
 if (FAR_EnableDeathMessages && (round difficultyOption "deathMessages" > 0 || ["A3W_customDeathMessages"] call isConfigOn) && !isNil "_killer") then
 {
-	[_unit, _killer] spawn
+	[[_unit, _killer],
 	{
-		_unit = _this select 0;
-		_killer = _this select 1;
+		params ["_victim", "_killer"];
 
-		if (isPlayer _unit || FAR_Debugging) then
+		if (isPlayer _victim || FAR_Debugging) then
 		{
-			_names = [toArray name _unit];
+			_msgArr = [_victim, toArray name _victim];
 
-			if (!isNull _killer && {(isPlayer _killer || FAR_Debugging) && (_killer != _unit) && (vehicle _killer != vehicle _unit)}) then
+			if (!isNull _killer && {(isPlayer _killer || FAR_Debugging) && _killer != _victim}) then
 			{
-				_names set [1, toArray name _killer];
+				_msgArr append [toArray name _killer, [_killer, _victim] call A3W_fnc_isFriendly];
 			};
 
-			if (!alive _unit) exitWith {};
+			[_victim, _msgArr] spawn
+			{
+				params ["_victim", "_msgArr"];
 
-			FAR_deathMessage = [_names, netId _unit, netId _killer];
-			publicVariable "FAR_deathMessage";
-			["FAR_deathMessage", FAR_deathMessage] call FAR_public_EH;
+				waitUntil {!UNCONSCIOUS(_victim) || !alive _victim || _victim getVariable ["FAR_headshotHitTimeout", false]};
+				if (!alive _victim) exitWith {};
+
+				["FAR_deathMessage", _msgArr] remoteExecCall ["FAR_fnc_public_EH"];
+			};
 		};
-	};
+	}] execFSM "call.fsm";
 };
 
 if (!alive vehicle _unit) exitWith
@@ -298,8 +301,9 @@ while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 	{
 		if (damage _unit < 1) then // if check required to prevent "Killed" EH from getting triggered twice
 		{
-			_unit setVariable ["A3W_deathCause_local", ["drown",1e11]];
+			_unit setVariable ["A3W_deathCause_local", ["drown"]];
 			_unit setDamage 1;
+			_unit setOxygenRemaining 0;
 		};
 
 		if (_unit == player) then { FAR_cutTextLayer cutText ["", "PLAIN"] };
@@ -447,7 +451,7 @@ else // Player bled out
 {
 	if (damage _unit < 1) then // if check required to prevent "Killed" EH from getting triggered twice
 	{
-		_unit setVariable ["A3W_deathCause_local", ["bleedout",1e11]];
+		_unit setVariable ["A3W_deathCause_local", ["bleedout"]];
 		_unit setDamage 1;
 	};
 

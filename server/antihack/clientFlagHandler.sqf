@@ -23,7 +23,7 @@ if (typeName _this == "ARRAY" && {count _this > 1}) then
 
 		if (damage player < 1) then // if check required to prevent "Killed" EH from getting triggered twice
 		{
-			player setVariable ["A3W_deathCause_local", ["forcekill",1e11]];
+			player setVariable ["A3W_deathCause_local", ["forcekill"]];
 			player setDamage 1;
 		};
 

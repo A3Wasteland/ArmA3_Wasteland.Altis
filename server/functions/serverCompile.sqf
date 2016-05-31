@@ -80,6 +80,7 @@ weaponDisassembledServer = [_path, "weaponDisassembledServer.sqf"] call mf_compi
 
 //Player Management
 server_playerDied = [_path, "serverPlayerDied.sqf"] call mf_compile;
+A3W_fnc_serverPlayerDied = server_playerDied;
 
 //Spawning Compiles
 _path = "server\spawning";

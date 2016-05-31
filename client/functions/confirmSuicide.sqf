@@ -12,7 +12,7 @@ if (["Are you sure you want to give up?", "Confirm", "Yes", true] call BIS_fnc_g
 
 	if (damage player < 1) then // if check required to prevent "Killed" EH from getting triggered twice
 	{
-		player setVariable ["A3W_deathCause_local", ["bleedout",1e11]];
+		player setVariable ["A3W_deathCause_local", ["bleedout"]];
 		player setDamage 1;
 	};
 };
