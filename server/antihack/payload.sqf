@@ -8,7 +8,7 @@
 
 // This file can be moved to "A3Wasteland_settings\antihack" in order to be loaded externally from the server, which removes the need for it to be in the mission PBO
 
-if (!hasInterface) exitWith {};
+if (isServer || !hasInterface) exitWith {};
 
 private ["_flagChecksum", "_rscParams", "_cheatFlag", "_cfgPatches", "_escCheck", "_patchClass", "_patchName", "_ctrlCfg", "_memAnomaly", "_minRecoil", "_currentRecoil", "_loopCount"];
 _flagChecksum = _this select 0;
@@ -126,7 +126,7 @@ if (isNil "_cheatFlag") then
 				forEach
 				[
 					(toLower ctrlText (_display displayCtrl 1001) != toLower localize "STR_A3_RscDisplayInsertMarker_Title"),
-					{if (buttonAction (_display displayCtrl _x) != "") exitWith {true}; false} forEach [1,2]
+					{if !(buttonAction (_display displayCtrl _x) in ["","call A3W_fnc_markerLogInsert"]) exitWith {true}; false} forEach [1,2]
 				];
 			};
 
