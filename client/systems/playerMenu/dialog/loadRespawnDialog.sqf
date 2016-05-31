@@ -29,6 +29,7 @@ _randomButton = _display displayCtrl respawn_Random_Button;
 //_beaconsButton = _display displayCtrl respawn_LoadBeacons_Button;
 _spawnButton = _display displayCtrl respawn_Spawn_Button;
 _spawnButton ctrlEnable false;
+ctrlSetFocus _randomButton;
 
 _spawnButton ctrlSetText "Loading...";
 
