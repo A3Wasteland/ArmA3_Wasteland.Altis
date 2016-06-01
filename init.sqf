@@ -91,6 +91,13 @@ if (hasInterface || isServer) then
 	[] execVM "addons\JumpMF\init.sqf";
 	[] execVM "addons\outlw_magRepack\MagRepack_init.sqf";
 	[] execVM "addons\lsd_nvg\init.sqf";
+	[] execVM "addons\vactions\functions.sqf"; //Vehicle Actions
+	[] execVM "addons\scripts\HvT.sqf";                       // High Value Target
+	//[] execVM "addons\scripts\HvD.sqf";                       // High Value Drugrunner
+	[] execVM "addons\Grenades\ToxicGas.sqf"; // Toxic Gas Grenades
+	[] execVM "addons\EtV\init.sqf"; // Explosives to Vehicles
+	[] execVM "addons\laptop\init.sqf"; //Hacker Mission
+	[] execVM "addons\APOC_Airdrop_Assistance\init.sqf"; //Airdrop Assistance
 	[] execVM "addons\stickyCharges\init.sqf";
 	if (isNil "drn_DynamicWeather_MainThread") then { drn_DynamicWeather_MainThread = [] execVM "addons\scripts\DynamicWeatherEffects.sqf" };
 };

@@ -35,5 +35,21 @@
 	["Town_27", 150, "Kalochori"],
 	["Town_28", 175, "Feres"],
 	["Town_29", 175, "Molos"],
-	["Town_30", 175, "Rodopoli"]
+	["Town_30", 175, "Rodopoli"],
+	["Town_31", 350, "Agios Konstantinos"],
+	["Town_32", 150, "Galati"],
+	["Town_33", 120, "Orino"],
+	["Town_34", 120, "Ifestiona"],
+	["Town_35", 250, "Gravia"],
+	["Town_36", 170, "Anthrakia"],
+	["Town_37", 180, "Stavros"],
+	["Town_38", 150, "Kalithea"],
+	["Town_39", 170, "Alikampos"],
+	["Town_40", 170, "Katalaki"],
+	["Town_41", 240, "Therisa"],
+	["Town_42", 200, "Athanos"],
+	["Town_43", 390, "Neri"],
+	["Town_44", 110, "Koroni"],
+	["Town_45", 70, "Topolia"],
+	["Town_46", 130, "Ioannina"]
 ]

@@ -28,13 +28,13 @@ if (_uid call isAdmin) then
 	_playerData = _playerListBox lbData _index;
 
 	{
-		if (getPlayerUID _x == _playerData) exitWith
-		{
+		if (str(_x) == _playerData) then {
 			_target = _x;
+			_check = 1;
 		};
-	} forEach allPlayers;
+	} forEach playableUnits;
 
-	if (isNil "_target" || {isNull _target}) exitWith{};
+	if (_check == 0) exitWith{};
 
 	switch (_switch) do
 	{
@@ -48,7 +48,6 @@ if (_uid call isAdmin) then
 					if (!([player] call camera_enabled)) then
 					{
 						[] call camera_toggle;
-						["PlayerMgmt_Spectate", format ["%1 (%2)", name _target, getPlayerUID _target]] call notifyAdminMenu;
 					};
 
 					[player, _target] call camera_attach_to_target;
@@ -70,7 +69,6 @@ if (_uid call isAdmin) then
 			_warnText = ctrlText _warnMessage;
 			_playerName = name player;
 			[format ["Message from Admin: %1", _warnText], "A3W_fnc_titleTextMessage", _target, false] call A3W_fnc_MP;
-			["PlayerMgmt_Warn", format ["%1 (%2) - %3", name _target, getPlayerUID _target, _warnText]] call notifyAdminMenu;
 		};
 		case 2: //Slay
 		{
@@ -86,13 +84,11 @@ if (_uid call isAdmin) then
 		{
 			pvar_teamSwitchUnlock = getPlayerUID _target;
 			publicVariableServer "pvar_teamSwitchUnlock";
-			["PlayerMgmt_UnlockTeamSwitch", format ["%1 (%2)", name _target, getPlayerUID _target]] call notifyAdminMenu;
 		};
 		case 4: //Unlock Team Killer
 		{
 			pvar_teamKillUnlock = getPlayerUID _target;
 			publicVariableServer "pvar_teamKillUnlock";
-			["PlayerMgmt_UnlockTeamKill", format ["%1 (%2)", name _target, getPlayerUID _target]] call notifyAdminMenu;
 		};
 		case 5: //Remove All Money
 		{
@@ -103,7 +99,6 @@ if (_uid call isAdmin) then
 					_x setVariable["cmoney",0,true];
 				};
 			}forEach playableUnits;
-			["PlayerMgmt_RemoveMoney", format ["%1 (%2)", name _target, getPlayerUID _target]] call notifyAdminMenu;
 		};
 		case 6: //Remove All Weapons
 		{

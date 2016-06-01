@@ -128,6 +128,16 @@ _exclVehicleIDs = [];
 
 		{ _veh setVariable [_x select 0, _x select 1, true] } forEach _variables;
 
+		// If vehicle is was locked before restart then restore lockstate and make it untowable/unliftable LouD
+		if (_veh getVariable "R3F_LOG_disabled") then
+		{
+			_veh lock 2;
+		} 
+		else 
+		{
+			_veh lock 1;
+		};
+
 		clearWeaponCargoGlobal _veh;
 		clearMagazineCargoGlobal _veh;
 		clearItemCargoGlobal _veh;
