@@ -150,6 +150,8 @@ A3W_scriptThreads pushBack execVM "addons\Lootspawner\LSclientScan.sqf";
 call compile preprocessFileLineNumbers "client\functions\generateAtmArray.sqf";
 [] execVM "client\functions\drawPlayerMarkers.sqf";
 
+inGameUISetEventHandler ["Action", "_this call A3W_fnc_inGameUIActionEvent"];
+
 { [_x] call fn_remotePlayerSetup } forEach allPlayers;
 
 // update player's spawn beaoon

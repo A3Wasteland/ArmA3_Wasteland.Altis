@@ -96,7 +96,11 @@ if (!isNil "_eventID") then { player removeEventHandler ["Fired", _eventID] };
 _eventID = player addEventHandler ["Fired", A3W_fnc_stickyCharges_firedEvent];
 player setVariable ["A3W_stickyCharges_firedEvent_ID", _eventID];
 
-inGameUISetEventHandler ["Action", "_this call A3W_fnc_stickyCharges_actionEvent"];
+if (isNil "A3W_scriptThreads") then // if not A3W
+{
+	inGameUISetEventHandler ["Action", "_this call A3W_fnc_stickyCharges_actionEvent"]; // for A3W, this is set in client\init.sqf
+};
+
 inGameUISetEventHandler ["PrevAction", "_this call A3W_fnc_stickyCharges_actionSelect"];
 inGameUISetEventHandler ["NextAction", "_this call A3W_fnc_stickyCharges_actionSelect"];
 

@@ -18,6 +18,7 @@ onKeyRelease = "client\clientEvents\onKeyRelease.sqf" call mf_compile;
 
 // Functions
 A3W_fnc_copilotTakeControl = "client\functions\copilotTakeControl.sqf" call mf_compile;
+A3W_fnc_inGameUIActionEvent = "client\functions\fn_inGameUIActionEvent.sqf" call mf_compile;
 A3W_fnc_titleTextMessage = "client\functions\titleTextMessage.sqf" call mf_compile;
 addWeaponInventory = "client\functions\addWeaponInventory.sqf" call mf_compile;
 canForceSaveVehicle = "client\functions\canForceSaveVehicle.sqf" call mf_compile;

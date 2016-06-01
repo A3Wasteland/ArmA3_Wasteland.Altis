@@ -193,6 +193,10 @@ if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 	}];
 };
 
+// Reset fast anim speed set in fn_inGameUIActionEvent.sqf
+player addEventHandler ["GetInMan", { player setAnimSpeedCoef 1 }];
+player addEventHandler ["GetOutMan", { player setAnimSpeedCoef 1 }];
+
 _uid = getPlayerUID player;
 
 if (playerSide in [BLUFOR,OPFOR] && {{_x select 0 == _uid} count pvar_teamSwitchList == 0}) then

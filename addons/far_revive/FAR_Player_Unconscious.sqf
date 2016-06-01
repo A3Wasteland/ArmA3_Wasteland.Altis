@@ -197,7 +197,7 @@ _unit spawn
 					if (_pilot == _unit) then
 					{
 						_unit action ["UnlockVehicleControl", _veh];
-						[[_copilot, netId _veh], "A3W_fnc_copilotTakeControl", _copilot] call A3W_fnc_MP;
+						[_copilot, netId _veh] remoteExecCall ["A3W_fnc_copilotTakeControl", _copilot];
 					};
 
 					// Give control back to pilot if appropriate

@@ -8,7 +8,7 @@ private ["_unit", "_veh"];
 _unit = _this select 0;
 _veh = _this select 1;
 
-if (typeName _veh == "STRING") then
+if (_veh isEqualType "") then
 {
 	_veh = objectFromNetId _veh;
 };
@@ -16,7 +16,7 @@ if (typeName _veh == "STRING") then
 _unit action ["TakeVehicleControl", _veh];
 _unit action ["EngineOn", _veh];
 
-if (_unit == player) then
-{
-	titleText ["You have been given control of the aircraft", "PLAIN DOWN", 0.5];
-};
+if (_veh turretUnit [0] != player) exitWith {};
+if (round getNumber ((([_veh, configNull] call BIS_fnc_getTurrets) param [1,configNull]) >> "isCopilot") < 1) exitWith {};
+
+titleText ["You have been given control of the aircraft", "PLAIN DOWN", 0.5];
