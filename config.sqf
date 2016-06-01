@@ -15,16 +15,16 @@ cityList = compileFinal preprocessFileLineNumbers "mapConfig\towns.sqf";
 config_items_jerrycans_max = compileFinal "1";
 config_items_syphon_hose_max = compileFinal "1";
 
-config_refuel_amount_default = compileFinal "0.25";
+config_refuel_amount_default = compileFinal "1";
 config_refuel_amounts = compileFinal str
 [
 	["Kart_01_Base_F", 1],
-	["Quadbike_01_base_F", 0.5],
-	["Tank", 0.1],
-	["Air", 0.1]
+	["Quadbike_01_base_F", 1],
+	["Tank", 1],
+	["Air", 1]
 ];
 
-// NOTE: Player saving and money settings moved to external config (A3Wasteland_settings\main_config.sqf), default values are set in server\default_config.sqf
+// NOTE: Player saving and money settings moved to external config (a3wasteland_settings\main_config.sqf), default values are set in server\default_config.sqf
 
 // Is player saving enabled?
 // config_player_saving_enabled = compileFinal "0";

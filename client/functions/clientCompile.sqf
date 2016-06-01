@@ -56,6 +56,8 @@ unitHandleDamage = "client\functions\unitHandleDamage.sqf" call mf_compile;
 updateTerritoryMarkers = "territory\client\updateTerritoryMarkers.sqf" call mf_compile;
 vehicleSideCfg = "client\functions\vehicleSideCfg.sqf" call mf_compile;
 weaponDisassembledEvent = "client\functions\weaponDisassembledEvent.sqf" call mf_compile;
+applyPlayerTexture = "client\functions\applyPlayerTexture.sqf" call mf_compile; // Added for persistent uniform textures
+fn_rewardLoyalty = "client\functions\fn_rewardLoyalty.sqf" call mf_compile;
 
 // Player details and actions
 loadPlayerMenu = "client\systems\playerMenu\init.sqf" call mf_compile;

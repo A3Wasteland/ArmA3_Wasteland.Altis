@@ -6,7 +6,7 @@
 //	@file Author: AgentRev, Tonic, AWA (OpenDayZ.net)
 //	@file Created: 01/06/2013 21:31
 
-// This file can be moved to "A3Wasteland_settings\antihack" in order to be loaded externally from the server, which removes the need for it to be in the mission PBO
+// This file can be moved to "a3wasteland_settings\antihack" in order to be loaded externally from the server, which removes the need for it to be in the mission PBO
 
 if (isServer || !hasInterface) exitWith {};
 

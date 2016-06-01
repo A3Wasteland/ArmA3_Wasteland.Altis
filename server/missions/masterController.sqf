@@ -11,7 +11,7 @@ _ctrlTypes =
 	"sideMission"
 ];
 
-_ctrlQuantity = (["A3W_missionsQuantity", 6] call getPublicVar) max 0 min 6;
+_ctrlQuantity = (["A3W_missionsQuantity", 8] call getPublicVar) max 0 min 8;
 // WARNING: Pushing the value higher than 6 is not recommended unless you add more mission types (especially money missions) and convoy routes.
 // Currently, all missions on the map must be of a different types, so if you have 3 money missions controllers, one of them is going to stay
 // idle, because there are only 2 money missions to choose from. Same with convoy paths, if you have 3 active convoys and a 4th one is started,

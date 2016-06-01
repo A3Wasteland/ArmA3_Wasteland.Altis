@@ -51,9 +51,9 @@ while {true} do
 	[
 		parseText format
 		[
-			"<t color='%1' shadow='2' size='1.75'>%2 Objective%3</t><br/>" +
-			"<t color='%1'>------------------------------</t><br/>" +
-			"<t color='%4' size='1.0'>Starting in %5 minutes</t>",
+			"<t align='center' color='%1' shadow='2' size='1.75'>%2 Objective%3</t><br/>" +
+			"<t align='center' color='%1'>------------------------------</t><br/>" +
+			"<t align='center' color='%4' size='1.0'>Starting in %5 minutes</t>",
 			MISSION_CTRL_COLOR_DEFINE,
 			MISSION_CTRL_TYPE_NAME,
 			_controllerSuffix,

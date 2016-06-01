@@ -45,14 +45,14 @@ class playerSettings {
 
 		class waterIcon : w_RscPicture {
 			idc = -1;
-			text = "client\icons\water.paa";
+			text = "client\icons\tt.paa";
 			x = 0.022; y = 0.2;
 			w = 0.04 / (4/3); h = 0.04;
 		};
 
 		class foodIcon : w_RscPicture {
 			idc = -1;
-			text = "client\icons\food.paa";
+			text = "client\icons\support.paa";
 			x = 0.022; y = 0.26;
 			w = 0.04 / (4/3); h = 0.04;
 		};
@@ -178,15 +178,30 @@ class playerSettings {
 		class btnDistanceFar : w_RscButton {
 			idc = -1;
 			text = "Far";
-			onButtonClick = "setViewDistance 3300;";
+			onButtonClick = "setViewDistance 3500;";
 			x = 0.02; y = 0.57;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
 
-		class btnDistanceInsane : w_RscButton {
+		/*class btnDistanceInsane : w_RscButton {
 			text = "Insane";
-			onButtonClick = "setViewDistance 5000;";
+			onButtonClick = "setViewDistance 4000;";
 			x = 0.02; y = 0.60;
+			w = 0.125; h = 0.033 * safezoneH;
+		};*/
+		class btnDistanceCustom : w_RscButton {
+			idc = -1;
+			text = "Custom";
+			onButtonClick = "call CHVD_fnc_openDialog";
+			x = 0.158; y = 0.50;
+			w = 0.125; h = 0.033 * safezoneH;
+		};
+			
+		class btnDistanceEffects : w_RscButton {
+			idc = -1;
+			text = "Effects";
+			onButtonClick = "[] execVM 'addons\disableEnvironment\disableEnvironment.sqf'";
+			x = 0.158; y = 0.57;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
 	};

@@ -12,7 +12,7 @@
 #define playerMenuPlayerHealth 55508
 #define playerMenuWarnMessage 55509
 #define playerMenuPlayerUID 55510
-#define playerMenuPlayerSteam 55511
+#define playerMenuPlayerBank 55511
 
 class PlayersMenu
 {
@@ -22,28 +22,29 @@ class PlayersMenu
 
 	class controlsBackground {
 
-		class MainBackground: IGUIBack
+		class MainBackground: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {0,0,0,0.6};
-
-			x = 0.1875 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.15 * SZ_SCALE_ABS + safezoneY;
-			w = 0.60 * (4/3) * SZ_SCALE_ABS;
-			h = 0.661111 * SZ_SCALE_ABS;
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0,0,0,0.6)";
+			x = 0.1875 * safezoneW + safezoneX;
+			y = 0.15 * safezoneH + safezoneY;
+			w = 0.60 * safezoneW;
+			h = 0.661111 * safezoneH;
 		};
 
-		class TopBar: IGUIBack
+		class TopBar: w_RscPicture
 		{
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
-			colorBackground[] = {A3W_UICOLOR_R, A3W_UICOLOR_G, A3W_UICOLOR_B, 0.8};
+			colorBackground[] = {0,0,0,0};
+			text = "#(argb,8,8,3)color(0.45,0.005,0,1)";
 
-			x = 0.1875 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.15 * SZ_SCALE_ABS + safezoneY;
-			w = 0.60 * (4/3) * SZ_SCALE_ABS;
-			h = 0.05 * SZ_SCALE_ABS;
+			x = 0.1875 * safezoneW + safezoneX;
+			y = 0.15 * safezoneH + safezoneY;
+			w = 0.60 * safezoneW;
+			h = 0.05 * safezoneH;
 		};
 
 		class DialogTitleText: w_RscText
@@ -53,44 +54,21 @@ class PlayersMenu
 
 			font = "PuristaMedium";
 			sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			x = 0.20 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.155 * SZ_SCALE_ABS + safezoneY;
-			w = 0.0844792 * (4/3) * SZ_SCALE_ABS;
-			h = 0.0448148 * SZ_SCALE_ABS;
+			x = 0.20 * safezoneW + safezoneX;
+			y = 0.155 * safezoneH + safezoneY;
+			w = 0.0844792 * safezoneW;
+			h = 0.0448148 * safezoneH;
 		};
 
-		class PlayerUIDText: w_RscEdit
+		class PlayerUIDText: w_RscText
 		{
 			idc = playerMenuPlayerUID;
-			style = ST_LEFT + ST_FRAME;
 			text = "UID:";
 			sizeEx = 0.030;
-			x = 0.52 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.2225 * SZ_SCALE_ABS + safezoneY;
-			w = 0.235 * (4/3) * SZ_SCALE_ABS;
-			h = 0.025 * SZ_SCALE_ABS;
-			colorSelection[] = {0.2,0.4,0.6,1};
-			colorDisabled[] = {1,1,1,0.3};
-			canModify = 0;
-		};
-
-
-		class PlayerSteamButton: w_RscStructuredText
-		{
-			idc = playerMenuPlayerSteam;
-			size = 0.032;
-			text = "<img image='\A3\ui_f\data\gui\RscCommon\RscButtonMenuSteam\steam_ca.paa' size='1.1'/>"; // set in importValues.sqf
-			colorBackground[] = {0,0,0,1};
-			x = 0.76 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.2225 * SZ_SCALE_ABS + safezoneY;
-			w = 0.025 * SZ_SCALE_ABS;
-			h = 0.025 * SZ_SCALE_ABS;
-
-			class Attributes
-			{
-				align = "center";
-				valign = "bottom";
-			};
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.215 * safezoneH + safezoneY;
+			w = 0.25 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class PlayerObjectText: w_RscText
@@ -98,21 +76,21 @@ class PlayersMenu
 			idc = playerMenuPlayerObject;
 			text = "Slot:";
 			sizeEx = 0.030;
-			x = 0.52 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.235 * SZ_SCALE_ABS + safezoneY;
-			w = 0.25 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.235 * safezoneH + safezoneY;
+			w = 0.25 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class PlayerSkinText: w_RscText
 		{
 			idc = playerMenuPlayerSkin;
-			text = "Class:";
+			text = "Skin:";
 			sizeEx = 0.030;
-			x = 0.52 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.255 * SZ_SCALE_ABS + safezoneY;
-			w = 0.21 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.255 * safezoneH + safezoneY;
+			w = 0.25 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class PlayerGunText: w_RscText
@@ -120,21 +98,32 @@ class PlayersMenu
 			idc = playerMenuPlayerGun;
 			text = "Money:";
 			sizeEx = 0.030;
-			x = 0.52 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.275 * SZ_SCALE_ABS + safezoneY;
-			w = 0.25 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.275 * safezoneH + safezoneY;
+			w = 0.25 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
+		class PlayerBankText: w_RscText
+		{
+			idc = playerMenuPlayerBank;
+			text = "Money:";
+			sizeEx = 0.030;
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.295 * safezoneH + safezoneY;
+			w = 0.25 * safezoneW;
+			h = 0.04 * safezoneH;
+		};
+		
 		class PlayerItemsText: w_RscText
 		{
 			idc = playerMenuPlayerItems;
 			text = "Items:";
 			sizeEx = 0.030;
-			x = 0.52 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.295 * SZ_SCALE_ABS + safezoneY;
-			w = 0.40 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.315 * safezoneH + safezoneY;
+			w = 0.40 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class PlayerHealthText: w_RscText
@@ -142,10 +131,10 @@ class PlayersMenu
 			idc = playerMenuPlayerHealth;
 			text = "Health:";
 			sizeEx = 0.030;
-			x = 0.52 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.315 * SZ_SCALE_ABS + safezoneY;
-			w = 0.25 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.335 * safezoneH + safezoneY;
+			w = 0.25 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class PlayerPosistionText: w_RscText
@@ -153,10 +142,10 @@ class PlayersMenu
 			idc = playerMenuPlayerPos;
 			text = "Position:";
 			sizeEx = 0.030;
-			x = 0.52 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.335 * SZ_SCALE_ABS + safezoneY;
-			w = 0.25 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.52 * safezoneW + safezoneX;
+			y = 0.355 * safezoneH + safezoneY;
+			w = 0.25 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 	};
 
@@ -165,22 +154,21 @@ class PlayersMenu
 		class PlayerEditBox:w_RscEdit
 		{
 			idc=playerMenuWarnMessage;
-			x = 0.60 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.745 * SZ_SCALE_ABS + safezoneY;
-			w = 0.175 * (4/3) * SZ_SCALE_ABS;
-			h = 0.045 * SZ_SCALE_ABS;
+			x = 0.60 * safezoneW + safezoneX;
+			y = 0.745 * safezoneH + safezoneY;
+			w = 0.175 * safezoneW;
+			h = 0.045 * safezoneH;
 			colorDisabled[] = {1,1,1,0.3};
-			sizeEx = 0.032;
 		};
 
 		class PlayerListBox: w_RscList
 		{
 			idc = playerMenuPlayerList;
 			onLBSelChanged="[2,_this select 1] execVM ""client\systems\adminPanel\importvalues.sqf"";";
-			x = 0.2 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.225 * SZ_SCALE_ABS + safezoneY;
-			w = 0.315 * (4/3) * SZ_SCALE_ABS;
-			h = 0.45 * SZ_SCALE_ABS;
+			x = 0.2 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.315 * safezoneW;
+			h = 0.45 * safezoneH;
 		};
 
 		class SpectateButton: w_RscButton
@@ -188,10 +176,10 @@ class PlayersMenu
 			idc = playerMenuSpectateButton;
 			text = "Spectate";
 			onButtonClick = "[0] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.2 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.70 * SZ_SCALE_ABS + safezoneY;
-			w = 0.05 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.2 * safezoneW + safezoneX;
+			y = 0.70 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class SlayButton: w_RscButton
@@ -199,10 +187,10 @@ class PlayersMenu
 			idc = -1;
 			text = "Slay";
 			onButtonClick = "[2] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.2 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.748 * SZ_SCALE_ABS + safezoneY;
-			w = 0.05 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.2 * safezoneW + safezoneX;
+			y = 0.748 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class UnlockTeamSwitchButton: w_RscButton
@@ -210,10 +198,10 @@ class PlayersMenu
 			idc = -1;
 			text = "Unlock Team Switch";
 			onButtonClick = "[3] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.255 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.70 * SZ_SCALE_ABS + safezoneY;
-			w = 0.11 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.255 * safezoneW + safezoneX;
+			y = 0.70 * safezoneH + safezoneY;
+			w = 0.11 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class UnlockTeamKillerButton: w_RscButton
@@ -221,10 +209,10 @@ class PlayersMenu
 			idc = -1;
 			text = "Unlock Team Kill";
 			onButtonClick = "[4] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.255 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.748 * SZ_SCALE_ABS + safezoneY;
-			w = 0.11 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.255 * safezoneW + safezoneX;
+			y = 0.748 * safezoneH + safezoneY;
+			w = 0.11 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		class RemoveAllMoneyButton: w_RscButton
@@ -232,10 +220,10 @@ class PlayersMenu
 			idc = -1;
 			text = "Remove Money";
 			onButtonClick = "[5] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.3705 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.70 * SZ_SCALE_ABS + safezoneY;
-			w = 0.105 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.3705 * safezoneW + safezoneX;
+			y = 0.70 * safezoneH + safezoneY;
+			w = 0.105 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		/*class RemoveAllWeaponsButton: w_RscButton
@@ -243,10 +231,10 @@ class PlayersMenu
 			idc = -1;
 			text = "Remove Weapons";
 			onButtonClick = "[6] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.3705 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.748 * SZ_SCALE_ABS + safezoneY;
-			w = 0.105 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.3705 * safezoneW + safezoneX;
+			y = 0.748 * safezoneH + safezoneY;
+			w = 0.105 * safezoneW;
+			h = 0.04 * safezoneH;
 		};*/
 
 		/*class CheckPlayerGearButton: w_RscButton
@@ -254,10 +242,10 @@ class PlayersMenu
 			idc = -1;
 			text = "Gear";
 			onButtonClick = "[7] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.482 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.748 * SZ_SCALE_ABS + safezoneY;
-			w = 0.05 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.482 * safezoneW + safezoneX;
+			y = 0.748 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.04 * safezoneH;
 		};*/
 
 		class WarnButton: w_RscButton
@@ -265,10 +253,10 @@ class PlayersMenu
 			idc = -1;
 			text = "Warn";
 			onButtonClick = "[1] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.600 * (4/3) * SZ_SCALE_ABS + safezoneX;
-			y = 0.70 * SZ_SCALE_ABS + safezoneY;
-			w = 0.05 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			x = 0.600 * safezoneW + safezoneX;
+			y = 0.70 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.04 * safezoneH;
 		};
 
 		/*class DonationButton: w_RscButton
@@ -276,10 +264,10 @@ class PlayersMenu
 			idc = -1;
 			text = "Donation";
 			onButtonClick = "[8] execVM 'client\systems\adminPanel\playerSelect.sqf'";
-			x = 0.655 * (4/3) * SZ_SCALE_ABS + safezoneX;
+			x = 0.655 * safezoneW + safezoneX;
 			y = 0.70  * safezoneH + safezoneY;
-			w = 0.05 * (4/3) * SZ_SCALE_ABS;
-			h = 0.04 * SZ_SCALE_ABS;
+			w = 0.05 * safezoneW;
+			h = 0.04 * safezoneH;
 		};*/
 	};
 };

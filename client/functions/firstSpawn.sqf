@@ -8,7 +8,15 @@
 
 client_firstSpawn = true;
 
-[] execVM "client\functions\welcomeMessage.sqf";
+[] execVM "addons\scripts\infoPage.sqf";
+//[] execVM "client\functions\welcomeMessage.sqf";
+
+// GoT addition - if this is the first spawn start the loyalty-timer
+if(format["%1",firstspawn] == format["%1","1"]) then 
+{
+	[] spawn fn_rewardLoyalty;
+	firstspawn = 0;
+};
 
 player addEventHandler ["Take",
 {
@@ -18,7 +26,14 @@ player addEventHandler ["Take",
 	{
 		_vehicle setVariable ["itemTakenFromVehicle", true, true];
 	};
-}];
+
+	// Persistent player textures addition
+	([uniformContainer player getVariable "uniformTexture"])
+	params ["_texCustom"];
+	if (isNil "_texCustom") exitWith {};
+	player setObjectTextureGlobal [0, _texCustom];
+	false
+}];	
 
 player addEventHandler ["Put",
 {
