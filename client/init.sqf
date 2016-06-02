@@ -57,7 +57,7 @@ if (playerSide == INDEPENDENT) then
 //Setup player events.
 if (!isNil "client_initEH") then { player removeEventHandler ["Respawn", client_initEH] };
 player addEventHandler ["Respawn", { _this spawn onRespawn }];
-player addEventHandler ["Killed", { _this spawn onKilled }];
+player addEventHandler ["Killed", onKilled];
 
 call compile preprocessFileLineNumbers "addons\far_revive\FAR_revive_init.sqf";
 
