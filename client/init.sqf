@@ -48,6 +48,12 @@ if !(playerSide in [BLUFOR,OPFOR,INDEPENDENT]) exitWith
 	endMission "LOSER";
 };
 
+// Block side chat for indies
+if (playerSide == INDEPENDENT) then
+{
+	1 enableChannel false;
+};
+
 //Setup player events.
 if (!isNil "client_initEH") then { player removeEventHandler ["Respawn", client_initEH] };
 player addEventHandler ["Respawn", { _this spawn onRespawn }];

@@ -1,7 +1,7 @@
 respawn="BASE";
 respawnDelay=15;
 disabledAI=1;
-disableChannels[] = {2}; // {0} to disable global, {2} for command channel
+disableChannels[] = {{0,false,true}, {2,true,true}}; // 0 = global, 1 = side, 2 = command // new syntax: {{channel<number>, disableText<bool>, disableVoice<bool>}, ...};
 joinUnassigned = 0;
 enableItemsDropping = 0;
 forceRotorLibSimulation = 0; // if you set this to 1, you deny freedom of choice to the players, which is the very principle this mission is built upon
