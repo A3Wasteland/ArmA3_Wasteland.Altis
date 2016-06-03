@@ -28,6 +28,7 @@ overviewText = "Wasteland is a harsh survival sandbox where two teams and indepe
 overviewTextLocked = "Wasteland is a harsh survival sandbox where two teams and independent players fight for survival.";
 overviewPicture = "mapConfig\Loading.jpg";
 loadScreen = "mapConfig\Loading.jpg";
+briefing = 0; // if 0, skip Continue button
 
 #include "debugFlag.hpp"
 
