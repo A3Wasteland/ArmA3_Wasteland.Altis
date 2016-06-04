@@ -10,6 +10,12 @@ if (!hasInterface) exitWith {};
 {
 	waitUntil {!isNull player};
 	[player, didJIP, hasInterface] remoteExecCall ["A3W_fnc_initPlayerServer", 2];
+
+	// Disable side chat for indies
+	if (playerSide == INDEPENDENT) then
+	{
+		1 enableChannel false;
+	};
 };
 
 // skip Continue button if briefing = 0 in description.ext, courtesy of Killzone Kid
@@ -30,3 +36,10 @@ if (!hasInterface) exitWith {};
 		getClientStateNumber > 9
 	};
 };
+
+// Temp fix for broken disableChannels, see https://feedback.bistudio.com/T117205
+// true = enabled, false = disabled // [text, voice]
+
+0 enableChannel [true, false]; // global
+//1 enableChannel [true, false]; // side
+2 enableChannel false; // command
