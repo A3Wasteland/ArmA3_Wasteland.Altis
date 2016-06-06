@@ -7,6 +7,8 @@
 private "_veh";
 _veh = _this select 0;
 
+player setAnimSpeedCoef 1;
+
 _veh removeEventHandler ["Engine", _veh getVariable ["A3W_engineEH", -1]];
 _veh setVariable ["A3W_engineEH", nil];
 

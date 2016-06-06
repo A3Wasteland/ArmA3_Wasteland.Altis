@@ -8,6 +8,8 @@ scopeName "getInVehicle";
 private "_veh";
 _veh = _this select 0;
 
+player setAnimSpeedCoef 1;
+
 if (isNil {_veh getVariable "A3W_hitPointSelections"}) then
 {
 	{
