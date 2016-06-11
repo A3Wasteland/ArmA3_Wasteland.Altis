@@ -1,37 +1,43 @@
 // ******************************************************************************************
-// * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
+// * This project is licensed under the GNU Affero GPL v3. Copyright © 2016 A3Wasteland.com *
 // ******************************************************************************************
-//	@file Version: 1.0
-//	@file Name: ConvoyMission_1.sqf
-//	@file Author: [GoT] JoSchaap, [404] Del1te, AgentRev
-//	@file Created: 13/02/2014 22:52
+//	@file Name: LandConvoy_1.sqf
+//	@file Author: AgentRev
+
+// for Tanoa
 
 // starting positions for this route
 _starts =
 [
-	[11877.198, 22464.334],
-	[11921.394, 22530.055],
-	[11956.172, 22594.484]
+	markerPos "LandConvoy_1_1",
+	markerPos "LandConvoy_1_2",
+	markerPos "LandConvoy_1_3"
 ];
 
 // starting directions in which the vehicles are spawned on this route
 _startDirs =
 [
-	210,
-	210,
-	210
+	markerDir "LandConvoy_1_1",
+	markerDir "LandConvoy_1_2",
+	markerDir "LandConvoy_1_3"
 ];
 
 // the route
 _waypoints =
 [
-	[11869.673, 22208.621],
-	[11125.767, 20896.094],
-	[12994.632, 19462.133],
-	[12748.146, 18834.535],
-	[11160.020, 17270.051],
-	[9703.3369, 16182.543],
-	[8348.6055, 15781.597],
-	[6614.5122, 15335.907],
-	[4709.3672, 13381.538]
+	[11753.6, 2205.20],
+	[11022.9, 3874.63],
+	[11028.1, 4994.69],
+	[11476.3, 6228.67],
+	[12756.8, 7204.79],
+	[13985.9, 8128.20],
+	[14369.2, 8857.41],
+	[14554.2, 10434.1],
+	[14295.5, 11457.8],
+	[13785.6, 11802.2]
 ];
+
+// to easily create waypoints, go in the editor, create player and preview scenario, place double-click markers in desired order on the map, and run this code:
+// copyToClipboard str (allMapMarkers apply {markerPos _x select [0,2]})
+
+// and there you go, positions in clipboard
