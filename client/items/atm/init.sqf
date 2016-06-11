@@ -20,11 +20,7 @@ mf_items_atm_transfer = [_path, "transfer.sqf"] call mf_compile;
 
 mf_items_atm_nearest =
 {
-	private ["_eyePos", "_objs", "_target"];
-	_eyePos = eyePos player;
-	_objs = lineIntersectsObjs [_eyePos, _eyePos vectorAdd ((eyeDirection player) vectorMultiply 5), objNull, objNull, true, 2];
-	if (count _objs == 0) exitWith { objNull };
-	_target = _objs select 0;
+	private _target = cursorObject;
 	if ((str _target) find ": atm_" == -1 && {{_target isKindOf _x} count ["Land_Atm_01_F","Land_Atm_02_F"] == 0}) exitWith { objNull };
 	if (!(_target getVariable ["A3W_atmEditorPlaced", false]) && ["A3W_atmEditorPlacedOnly"] call isConfigOn) exitWith { objNull };
 	_target

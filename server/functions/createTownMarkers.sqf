@@ -10,10 +10,20 @@
 private ["_pos", "_marker"];
 
 {
-	_pos = markerPos (_x select 0);
-	_marker = createMarker [format ["TownCircle%1", _forEachIndex + 1], _pos];
-	_marker setMarkerShape "ELLIPSE";
-	_marker setMarkerSize [_x select 1, _x select 1];
+	_x params ["_marker", "_size"];
+	_pos = markerPos _marker;
+
+	if (markerType _marker == "Empty") then
+	{
+		_marker = createMarker [format ["TownCircle%1", _forEachIndex + 1], _pos];
+	};
+
+	if (markerShape _marker != "ELLIPSE") then
+	{
+		_marker setMarkerShape "ELLIPSE";
+		_marker setMarkerSize [_x select 1, _x select 1];
+	};
+
 	_marker setMarkerColor "ColorBlue";
 	_marker setMarkerBrush "SolidBorder";
 	_marker setMarkerAlpha 0.3;

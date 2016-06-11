@@ -27,7 +27,7 @@ if (_unit == player && (_showWindow || _menuOpen)) then
 				_handled = true;
 			};
 
-			_nearbyMissions = allMapMarkers select {markerType _x == "Empty" && {[["Mission_","ForestMission_"], _x] call fn_startsWith && {player distance markerPos _x < _minDist}}};
+			_nearbyMissions = allMapMarkers select {markerType _x == "Empty" && {[["Mission_","ForestMission_","LandConvoy_"], _x] call fn_startsWith && {player distance markerPos _x < _minDist}}};
 
 			if !(_nearbyMissions isEqualTo []) exitWith
 			{

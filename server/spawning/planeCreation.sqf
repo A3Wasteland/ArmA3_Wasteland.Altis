@@ -22,12 +22,14 @@ if (_noBuzzard && {_planeType isKindOf "Plane_Fighter_03_base_F"}) exitWith {};
 _pos = _markerPos;
 
 //Plane Initialization
-_plane = createVehicle [_planeType, _pos, [], 0, "None"];
+_plane = createVehicle [_planeType, _pos vectorAdd [0,0,0.5], [], 0, "CAN_COLLIDE"];
+
+_plane setPosATL [_pos select 0, _pos select 1, ((getPosATL _plane) select 2) - ((getPos _plane) select 2) + 0.1];
+_plane setVelocity [0,0,0.01];
+_plane setDamage 0;
 
 [_plane] call vehicleSetup;
 
-_plane setPosATL [_pos select 0, _pos select 1, ((getPosATL _plane) select 2) + 0.1];
-_plane setVelocity [0,0,0.01];
 _plane setFuel (0.4 + random 0.2);
 
 _plane setDir _markerDir;

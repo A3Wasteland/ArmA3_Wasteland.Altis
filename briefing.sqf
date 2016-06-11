@@ -19,6 +19,14 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.3",
+"
+Changelog coming soon
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.2b",
 "
 <br/>[Added] Scoreboard scrolling via mousewheel

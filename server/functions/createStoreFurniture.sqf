@@ -37,7 +37,7 @@ _bPos set [2, (_bPos select 2) + 0.05];
 _deskPos = ASLtoATL ((ATLtoASL _bPos) vectorAdd ([[0, -0.8, 0], -_pDDirMod] call BIS_fnc_rotateVector2D));
 
 //create the cashier station.
-_desk = createVehicle ["Land_CashDesk_F", _base, [], 0, "None"];
+_desk = createVehicle ["Land_CashDesk_F", _deskPos, [], 0, ""];
 _desk allowDamage false;
 _desk setPosATL _deskPos;
 _desk setDir _pDDirMod;

@@ -98,7 +98,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 		};
 	};
 
-	if (!isNil "_itemEntry" && {{_x == _marker} count allMapMarkers > 0}) then
+	if (!isNil "_itemEntry" && markerShape _marker != "") then
 	{
 		_itemPrice = _itemEntry select 2;
 
