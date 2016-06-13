@@ -4,20 +4,20 @@
 //	@file Name: fn_forceOpenParachute.sqf
 //	@file Author: AgentRev
 
-if (!alive player) exitWith {};
-if (vehicle player != player) exitWith {};
+if (!alive player || vehicle player != player) exitWith {};
 
-openParachuteTimestamp = diag_tickTime;
+A3W_openParachuteTimestamp = diag_tickTime;
 
-private ["_wait", "_pos", "_para"];
-_wait = false;
-_pos = getPosATL player;
+private _wait = false;
+private _pos = getPosATL player;
+private "_para";
 
+// Under 10m, use non-steerable parachute
 if (_pos select 2 < 10) then
 {
 	_para = createVehicle ["NonSteerable_Parachute_F", _pos, [], 0, "FLY"];
 	_para setPosATL _pos;
-	_para setDir 0;
+	_para setDir 0; // non-steerable parachutes always orient toward North due to engine bug
 }
 else
 {
@@ -32,24 +32,14 @@ _para setVelocity [0,0,0];
 
 [_para, _wait, diag_tickTime] spawn
 {
-	_para = _this select 0;
-	_wait = _this select 1;
-	_startTime = _this select 2;
+	params ["_para", "_wait", "_startTime"];
 
 	if (vehicle player == _para && animationState player != "para_pilot") then
 	{
 		[player, "para_pilot"] call switchMoveGlobal;
 	};
 
-	if (_wait) then
-	{
-		sleep (4.25 - (diag_tickTime - _startTime)); // parachute deployment time
-	}
-	else
-	{
-		sleep (0.5 - (diag_tickTime - _startTime));
-	};
-
+	sleep (([0.5, 4.25] select _wait) - (diag_tickTime - _startTime)); // 4.25 = parachute deployment time
 	waitUntil {isTouchingGround _para || !alive _para};
 
 	if (!isNull _para) then
