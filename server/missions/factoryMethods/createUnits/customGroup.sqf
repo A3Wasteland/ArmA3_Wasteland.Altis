@@ -60,7 +60,7 @@ for "_i" from 1 to _nbUnits do
 			_unit addBackpack "B_Kitbag_mcamo";
 			_unit addWeapon "arifle_TRG20_F";
 			_unit addMagazine "Titan_AT";
-			_unit addWeapon "launch_Titan_short_F";
+			_unit addWeapon "launch_I_Titan_short_F";
 			_unit addMagazine "Titan_AT";
 			_unit addMagazine "Titan_AT";
 		};

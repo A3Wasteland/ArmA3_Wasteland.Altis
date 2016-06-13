@@ -38,8 +38,8 @@ switch (_boxType) do
 		[
 			// Item type, Item class(es), # of items, # of magazines per weapon
 			["wep", ["Laserdesignator", "Laserdesignator_02", "Laserdesignator_03"], 1, 1],
-			["wep", ["launch_RPG32_F", "launch_NLAW_F", "launch_Titan_short_F"], RANDOM_BETWEEN(2,5), RANDOM_BETWEEN(1,2)],
-			["wep", "launch_Titan_F", RANDOM_BETWEEN(1,2), RANDOM_BETWEEN(1,2)],
+			["wep", ["launch_RPG32_F", "launch_NLAW_F", "launch_I_Titan_short_F"], RANDOM_BETWEEN(2,5), RANDOM_BETWEEN(1,2)],
+			["wep", "launch_I_Titan_F", RANDOM_BETWEEN(1,2), RANDOM_BETWEEN(1,2)],
 			["mag", ["APERSTripMine_Wire_Mag", "APERSBoundingMine_Range_Mag", "APERSMine_Range_Mag", "ClaymoreDirectionalMine_Remote_Mag"], RANDOM_BETWEEN(2,5)],
 			["mag", ["SLAMDirectionalMine_Wire_Mag", "ATMine_Range_Mag", "DemoCharge_Remote_Mag", "SatchelCharge_Remote_Mag"], RANDOM_BETWEEN(2,5)],
 			["mag", "HandGrenade", RANDOM_BETWEEN(5,10)],
