@@ -60,33 +60,28 @@ switch (true) do
 // Parachute
 if (!_handled && _key in actionKeys "GetOver") then
 {
-	if (alive player) then
-	{
-		_veh = vehicle player;
+	if (!alive player) exitWith {};
 
-		if (_veh == player) then
+	_veh = vehicle player;
+
+	if (_veh == player) exitWith
+	{
+		// allow opening parachute only above 2.5m
+		if ((getPos player) select 2 > 2.5) then
 		{
-			if ((getPos player) select 2 > 2.5) then
-			{
-				true call fn_openParachute;
-				_handled = true;
-			};
-		}
-		else
+			true call A3W_fnc_openParachute;
+			_handled = true;
+		};
+	};
+
+	// 1 sec cooldown after parachute is deployed so you don't start falling again if you double-tap the key
+	if (_veh isKindOf "ParachuteBase" && (isNil "A3W_openParachuteTimestamp" || {diag_tickTime - A3W_openParachuteTimestamp >= 1})) then
+	{
+		moveOut player;
+		_veh spawn
 		{
-			if (_veh isKindOf "ParachuteBase") then
-			{
-				// 1s cooldown after parachute is deployed so you don't start falling again if you double-tap the key
-				if (isNil "openParachuteTimestamp" || {diag_tickTime - openParachuteTimestamp >= 1}) then
-				{
-					moveOut player;
-					_veh spawn
-					{
-						sleep 1;
-						deleteVehicle _this;
-					};
-				};
-			};
+			sleep 1;
+			deleteVehicle _this;
 		};
 	};
 };

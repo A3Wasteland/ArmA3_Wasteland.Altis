@@ -15,7 +15,7 @@ _text = param [3, ""];
 _titleColor = param [4, "", [""]];
 
 [
-	parseText format
+	format
 	[
 		"<t color='%5' shadow='2' size='1.75'>%1</t><br/>" +
 		"<t color='%5'>--------------------------------</t><br/>" +
