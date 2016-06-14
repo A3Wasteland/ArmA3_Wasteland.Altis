@@ -58,9 +58,11 @@ if (typeName _texture == "STRING") then
 			case (_veh isKindOf "Heli_Transport_04_base_F"):      { [0,1,2,3] };
 			case (_veh isKindOf "Heli_Attack_02_base_F"):         { [0,1] };
 
+			case (_veh isKindOf "VTOL_Base_F"):                   { [0,1,2,3] };
 			case (_veh isKindOf "Plane_Base_F"):                  { [0,1] };
 
 			case (_veh isKindOf "UGV_01_rcws_base_F"):            { [0,2] };
+			case (_veh isKindOf "UAV_03_base_F"):                 { [0,1] };
 
 			default                                               { [0] };
 		};

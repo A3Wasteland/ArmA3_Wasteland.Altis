@@ -86,7 +86,7 @@ storePurchaseHandle = _this spawn
 		};
 
 		// If UAV or UGV, fill vehicle with UAV AI, give UAV terminal to our player, and connect it to the vehicle
-		if ({_vehicle isKindOf _x} count (call uavArray) > 0) then
+		if (round getNumber (configFile >> "CfgVehicles" >> typeOf _vehicle >> "isUav") > 0) then
 		{
 			switch (playerSide) do
 			{
