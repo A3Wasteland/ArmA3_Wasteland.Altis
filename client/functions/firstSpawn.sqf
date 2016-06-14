@@ -74,7 +74,7 @@ player addEventHandler ["WeaponAssembled",
 		};
 
 		{
-			[_x, ["AI","",""]] remoteExec ["A3W_fnc_setName"]; 
+			[_x, ["UAV","",""]] remoteExec ["A3W_fnc_setName", 0, _x]; 
 		} forEach crew _obj;
 	};
 }];
