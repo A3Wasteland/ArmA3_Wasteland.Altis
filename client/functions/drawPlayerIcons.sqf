@@ -58,7 +58,7 @@ drawPlayerIcons_thread = [] spawn
 		default      { call currMissionDir + "client\icons\igui_side_indep_ca.paa" };
 	};
 
-	_isIndie = !(playerSide in [BLUFOR,OPFOR]);
+	_bluforOpfor = playerSide in [BLUFOR,OPFOR];
 
 	_detectedMinesDisabled = (difficultyOption "detectedMines" == 0);
 	_mineIcon = getText (configfile >> "CfgInGameUI" >> "Cursor" >> "explosive");
@@ -73,7 +73,7 @@ drawPlayerIcons_thread = [] spawn
 
 	_noBuiltInThermal = ["A3W_disableBuiltInThermal"] call isConfigOn;
 
-	private ["_dist", "_simulation"];
+	private ["_dist"];
 
 	// Execute every frame
 	waitUntil
@@ -95,9 +95,6 @@ drawPlayerIcons_thread = [] spawn
 					_simulation = getText (configFile >> "CfgVehicles" >> typeOf _unit >> "simulation");
 					_isUavUnit = (_simulation == "UAVPilot");
 
-					if (_simulation == "headlessclient" || (_isIndie && {group _unit != group player && _isUavUnit &&
-					    {!(((vehicle _unit) getVariable ["ownerUID","0"]) in ((units player) apply {getPlayerUID _x}))}})) exitWith {};
-
 					//_dist = _unit distance positionCameraToWorld [0,0,0];
 					_posCode = ([1,2] select _isUavUnit) call drawPlayerIcons_posCode;
 					_pos = _unit call _posCode;
@@ -105,7 +102,10 @@ drawPlayerIcons_thread = [] spawn
 					// only draw players inside range and screen
 					if !(worldToScreen _pos isEqualTo []) then
 					{
-						if (_isUavUnit && {_unit != (crew vehicle _unit) select 0}) exitWith {}; // only one AI per UAV
+						if (_simulation == "headlessclient" || (_isUavUnit && {_unit != (crew vehicle _unit) select 0})) exitWith {}; // exclude headless clients, and allow only one AI per UAV
+
+						if !(_bluforOpfor || {group _unit == group player || // exclude enemy indie groups
+						     (_isUavUnit && {((objectParent _unit) getVariable ["ownerUID","0"]) in ((units player) apply {getPlayerUID _x})})}) exitWith {}; // but allow friendly indie UAVs
 
 						_alpha = (ICON_limitDistance - _dist) / (ICON_limitDistance - ICON_fadeDistance);
 						_color = [1,1,1,_alpha];
