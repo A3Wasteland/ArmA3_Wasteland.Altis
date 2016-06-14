@@ -165,12 +165,3 @@ inGameUISetEventHandler ["Action", "_this call A3W_fnc_inGameUIActionEvent"];
 
 { _x call A3W_fnc_setupAntiExplode } forEach allMissionObjects "Air";
 { _x call A3W_fnc_setupAntiExplode } forEach allMissionObjects "UGV_01_base_F";
-
-{
-	{
-		if (!isPlayer _x) then
-		{
-			_x setName ["AI","",""];
-		};
-	} forEach crew _x;
-} forEach allUnitsUAV;

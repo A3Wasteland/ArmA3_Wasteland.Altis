@@ -27,7 +27,7 @@ class A3W_fnc_logMemAnomaly { allowedTargets = 2; };
 class A3W_fnc_pushVehicle {};
 //class A3W_fnc_registerKillScore { allowedTargets = 2; }; // only needed for injury kill points, not currently enabled due to point farming concerns
 class A3W_fnc_serverPlayerDied { allowedTargets = 2; };
-class A3W_fnc_setName {};
+class A3W_fnc_setName { jip = 1; };
 class A3W_fnc_titleTextMessage {};
 class A3W_fnc_towingHelper {};
 class A3W_fnc_updateSpawnTimestamp { allowedTargets = 2; };

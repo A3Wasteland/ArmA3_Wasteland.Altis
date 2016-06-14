@@ -52,6 +52,19 @@ _exclVehicleIDs = [];
 			_veh setVectorDirAndUp _dir;
 		};
 
+		private _uavSide = sideUnknown;
+
+		{
+			_x params ["_var", "_val"];
+
+			switch (_var) do
+			{
+				case "uavSide": { _uavSide = _val call _strToSide };
+			};
+
+			_veh setVariable [_var, _val, true];
+		} forEach _variables;
+
 		// UAV AI
 		if (_isUAV) then
 		{
@@ -68,12 +81,20 @@ _exclVehicleIDs = [];
 				_veh flyInHeight (((_veh call fn_getPos3D) select 2) max 500);
 			};
 
-			[_veh, _flying] spawn
+			[_veh, _flying, _uavSide] spawn
 			{
-				_uav = _this select 0;
-				_flying = _this select 1;
+				params ["_uav", "_flying", "_uavSide"];
+				private "_grp";
 
-				waitUntil {!isNull driver _uav};
+				waitUntil {_grp = group _uav; !isNull _grp};
+
+				if (_uavSide != sideUnknown && side _uav != _uavSide) then
+				{
+					_grp = createGroup _uavSide;
+					(crew _uav) joinSilent _grp;
+				};
+
+				_grp setCombatMode "BLUE"; // hold fire
 
 				if (_flying) then
 				{
@@ -82,10 +103,8 @@ _exclVehicleIDs = [];
 				};
 
 				{
-					[[_x, ["AI","",""]], "A3W_fnc_setName", true] call A3W_fnc_MP;
+					[_x, ["UAV","",""]] remoteExec ["A3W_fnc_setName", 0, _x];
 				} forEach crew _uav;
-
-				(group _uav) setCombatMode "BLUE"; // hold fire
 			};
 		};
 
@@ -129,30 +148,6 @@ _exclVehicleIDs = [];
 		{
 			_veh setVariable ["ownerUID", _owner, true];
 		};
-
-		{
-			_x params ["_var", "_val"];
-
-			switch (_var) do
-			{
-				case "uavSide":
-				{
-					if (_isUAV) then
-					{
-						private _uavSide = _val call _strToSide;
-
-						if (side _veh != _uavSide && _uavSide in [BLUFOR,OPFOR,INDEPENDENT]) then
-						{
-							_grp = createGroup _uavSide;
-							(crew _veh) joinSilent _grp;
-							_grp setCombatMode "BLUE"; // hold fire
-						};
-					};
-				};
-			};
-
-			_veh setVariable [_var, _val, true];
-		} forEach _variables;
 
 		clearWeaponCargoGlobal _veh;
 		clearMagazineCargoGlobal _veh;
