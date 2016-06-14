@@ -624,7 +624,7 @@ while {true} do
 
 	sleep BASE_SLEEP_INTERVAL;
 	_realLoopTime = diag_tickTime - _initTime;
-	if (DEBUG) then
+	if (!isNil "A3W_DEBUG") then
 	{
 		diag_log format["TERRITORY SYSTEM: _realLoopTime was %1", _realLoopTime];
 	};
