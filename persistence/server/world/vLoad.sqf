@@ -4,6 +4,8 @@
 //	@file Name: vLoad.sqf
 //	@file Author: AgentRev, JoSchaap, Austerror
 
+#include "functions.sqf"
+
 private ["_maxLifetime", "_maxUnusedTime", "_worldDir", "_methodDir", "_vehCount", "_vehicles", "_exclVehicleIDs"];
 
 _maxLifetime = ["A3W_vehicleLifetime", 0] call getPublicVar;
@@ -82,6 +84,8 @@ _exclVehicleIDs = [];
 				{
 					[[_x, ["AI","",""]], "A3W_fnc_setName", true] call A3W_fnc_MP;
 				} forEach crew _uav;
+
+				(group _uav) setCombatMode "BLUE"; // hold fire
 			};
 		};
 
@@ -126,7 +130,29 @@ _exclVehicleIDs = [];
 			_veh setVariable ["ownerUID", _owner, true];
 		};
 
-		{ _veh setVariable [_x select 0, _x select 1, true] } forEach _variables;
+		{
+			_x params ["_var", "_val"];
+
+			switch (_var) do
+			{
+				case "uavSide":
+				{
+					if (_isUAV) then
+					{
+						private _uavSide = _val call _strToSide;
+
+						if (side _veh != _uavSide && _uavSide in [BLUFOR,OPFOR,INDEPENDENT]) then
+						{
+							_grp = createGroup _uavSide;
+							(crew _veh) joinSilent _grp;
+							_grp setCombatMode "BLUE"; // hold fire
+						};
+					};
+				};
+			};
+
+			_veh setVariable [_var, _val, true];
+		} forEach _variables;
 
 		clearWeaponCargoGlobal _veh;
 		clearMagazineCargoGlobal _veh;

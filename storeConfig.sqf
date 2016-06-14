@@ -809,8 +809,7 @@ allVehStoreVehicles = compileFinal str (call landArray + call armoredArray + cal
 
 uavArray = compileFinal str
 [
-	"UAV_02_base_F",
-	"UGV_01_base_F"
+	// Deprecated
 ];
 
 noColorVehicles = compileFinal str

@@ -48,7 +48,7 @@ if (_unit == player && (_showWindow || _menuOpen)) then
 		{
 			private _veh = vehicle player;
 
-			if ({_veh isKindOf _x} count ["Heli_Attack_01_base_F","Heli_Attack_02_base_F"] > 0 && isNull gunner _veh) then
+			if ({_veh isKindOf _x} count ["Heli_Attack_01_base_F","Heli_Attack_02_base_F","VTOL_02_base_F"] > 0 && isNull gunner _veh) then
 			{
 				_bob = createAgent ["B_UAV_AI", [0,0,0], [], 0, ""];
 				_bob setName ["","",""];

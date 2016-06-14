@@ -126,13 +126,12 @@ else
 		// Show scope on sniper rifle pictures
 		if ([["_SOS_F", "_LRPS_F"], _weaponClass] call fn_findString != -1) then
 		{
-			private ["_picArr", "_picLen"];
 			_picArr = toArray _picture;
-			_picLen = count _picArr;
+			_picLen = count _picture;
 
-			if (toString [_picArr select (_picLen - 8)] == "X") then
+			if (_picture find "\icon_" == -1 && _picture select [_picLen - 9, 2] == "_X") then
 			{
-				_picArr set [(_picLen - 8), (toArray "T") select 0];
+				_picArr set [_picLen - 8, (toArray "T") select 0];
 				_picture = toString _picArr;
 			};
 		};

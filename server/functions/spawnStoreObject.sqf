@@ -143,7 +143,9 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 					waitUntil {count crew _veh > 0};
 
 					//assign AI to player's side to allow terminal connection
-					(crew _veh) joinSilent createGroup _side;
+					_grp = createGroup _side;
+					(crew _veh) joinSilent _grp;
+					_grp setCombatMode "BLUE";
 
 					{
 						[[_x, ["AI","",""]], "A3W_fnc_setName", true] call A3W_fnc_MP;
@@ -229,7 +231,14 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 			if (_object isKindOf "AllVehicles") then
 			{
-				_object setOwner owner _player; // tentative workaround for exploding vehicles
+				if (isNull group _object) then
+				{
+					_object setOwner owner _player; // tentative workaround for exploding vehicles
+				}
+				else
+				{
+					(group _object) setGroupOwner owner _player;
+				};
 			};
 		};
 	};
