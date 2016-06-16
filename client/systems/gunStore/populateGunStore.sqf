@@ -140,5 +140,7 @@ else
 		{
 			_gunlist lbSetPicture [_gunlistIndex, _picture];
 		};
+
+		[_x, _parentCfg, _gunlist, _gunlistIndex] call fn_checkStoreItemDLC;
 	};
 } forEach _itemsArray;
