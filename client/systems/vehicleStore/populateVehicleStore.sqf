@@ -57,6 +57,8 @@ _playerSideNum = switch (playerSide) do
 			_vehlistIndex = _vehlist lbAdd format ["%1", [_vehName, getText (_vehCfg >> "displayName")] select (_vehName == "")];
 			_vehlist lbSetPicture [_vehlistIndex, _vehPicture];
 			_vehlist lbSetData [_vehlistIndex, _vehClass];
+
+			[_x, configFile >> "CfgVehicles", _vehlist, _vehlistIndex] call fn_checkStoreItemDLC;
 		};
 	};
 } forEach _vehArray;

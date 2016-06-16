@@ -166,7 +166,7 @@ _playerSideNum = switch (playerSide) do
 
 	if !(_side isEqualType "") then { _side = "" };
 
-	if !(_side in [str playerSide, ""]) then
+	if (!(_side in [str playerSide, ""]) && _side in ["WEST","EAST","GUER","CIV"]) then
 	{
 		_showItem = false;
 	};
@@ -197,6 +197,8 @@ _playerSideNum = switch (playerSide) do
 			{
 				_itemlist lbSetPicture [_listIndex, _picture];
 			};
+
+			[_x, _parentCfg, _itemlist, _listIndex] call fn_checkStoreItemDLC;
 		};
 
 		_itemlist lbSetData [_listIndex, _weaponClass];
