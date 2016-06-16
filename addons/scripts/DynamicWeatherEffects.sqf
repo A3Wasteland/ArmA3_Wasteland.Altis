@@ -41,8 +41,8 @@ _maxTimeBetweenWeatherChangesMin = 10;
 _minimumFog = 0;
 
 // Fog intensity never exceeds this value. Must be between 0 and 1 and greater than or equal to _minimumFog
-// (0 = no fog, 1 = pea soup). (Suggested value: 0.3).
-_maximumFog = 0.3;
+// (0 = no fog, 1 = pea soup). (Suggested value: 0.2).
+_maximumFog = 0.2;
 
 // New ArmA3 facilities added by Bewilderbeest - not currently taken into account due to engine syncing bugs and weird behavior
 _minimumFogDecay = 0.0;

@@ -330,5 +330,27 @@ while {true} do
 		showUavFeed false;
 	};
 
+	if (isNil "A3W_missingMarkersNotice" && visibleMap) then
+	{
+		_cbMarkerColors = findDisplay 12 displayCtrl 1090;
+
+		if (!isNull _cbMarkerColors && !ctrlEnabled _cbMarkerColors) then
+		{
+			[parseText (
+			[
+				"It appears you are affected by the missing markers bug from the apex and dev branches. In order to solve the problem temporarily, try the following:<br/>",
+				" 1. Go back to main menu",
+				" 2. Open the editor on Tanoa",
+				" 3. Press ""Play Scenario"" in the bottom right",
+				" 4. Once loaded, leave the editor and join back the server<br/>",
+				"If that doesn't work, try again. If it still doesn't work, restart your game and keep trying again.<br/>",
+				"Bohemia are investigating the bug."
+			]
+			joinString "<br/>"),"Notice"] spawn BIS_fnc_guiMessage;
+
+			A3W_missingMarkersNotice = true;
+		};
+	};
+
 	uiSleep 1;
 };

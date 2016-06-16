@@ -148,20 +148,24 @@ if (!isNil "_itemEntry") then
 			{
 				switch (true) do
 				{
-					case (["Default Uniform", _itemText] call fn_findString != -1):
+					case (["Default Uniform", _itemText] call fn_startsWith):
 					{
 						//_name = _itemText;
 						_description = "In case you lost your clothes";
 					};
-					case (["Ghillie", _itemType] call fn_findString != -1):
+					case ([["Ghillie","_T_Sniper"], _itemType] call fn_findString != -1):
 					{
 						//_name = _itemText;
 						_description = "Disguise as a swamp monster";
 					};
-					case (["_Wetsuit", _itemType] call fn_findString != -1):
+					case ([["_Wetsuit","_survival_uniform"], _itemType] call fn_findString != -1):
 					{
 						//_name = _itemText;
 						_description = "Allows faster swimming<br/>Required to fire SDAR underwater";
+					};
+					case ([["_CTRG_Soldier","_Soldier_Viper"], _itemType] call fn_findString != -1):
+					{
+						_description = "Thermally insulated pajamas";
 					};
 					default
 					{
