@@ -51,7 +51,7 @@ _playerSideNum = switch (playerSide) do
 	{
 		_vehCfg = configFile >> "CfgVehicles" >> _vehClass;
 
-		if (!(_vehClass isKindOf "UAV_02_base_F") || {getNumber (_vehCfg >> "side") == _playerSideNum}) then
+		if ({_vehClass isKindOf _x} count ["UGV_01_base_F","UAV_02_base_F"] == 0 || {getNumber (_vehCfg >> "side") == _playerSideNum}) then
 		{
 			_vehPicture = getText (configFile >> "CfgVehicles" >> _vehClass >> "picture");
 			_vehlistIndex = _vehlist lbAdd format ["%1", [_vehName, getText (_vehCfg >> "displayName")] select (_vehName == "")];
