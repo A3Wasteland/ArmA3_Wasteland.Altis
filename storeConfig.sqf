@@ -363,7 +363,7 @@ accessoriesArray = compileFinal str
 	["MRCO", "optic_MRCO", 100, "item"],
 	["ERCO", "optic_ERCO_blk_F", 100, "item"],
 	["ERCO (Khaki)", "optic_ERCO_khk_F", 100, "item"],
-	["ERCO (Sand)", "optic_ERCO_khk_F", 100, "item"],
+	["ERCO (Sand)", "optic_ERCO_snd_F", 100, "item"],
 	["ARCO", "optic_Arco", 125, "item"],
 	["ARCO (Black)", "optic_Arco_blk_F", 125, "item"],
 	["ARCO (G Hex)", "optic_Arco_ghex_F", 125, "item"],
