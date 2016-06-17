@@ -81,6 +81,19 @@ reverse _cfgColors;
 {
 	_tex = _x select 1;
 	_colorlistIndex = _colorlist lbAdd (_x select 0);
-	_colorlist lbSetPicture [_colorlistIndex, if (typeName _tex == "ARRAY") then { _tex select 0 select 1 } else { _tex }];
+
+	_colorlist lbSetPicture [_colorlistIndex, if (_tex isEqualType []) then
+	{
+		if (count _tex == 1 && _tex isEqualTypeAll "") then
+		{
+			private _srcTextures = getArray (configFile >> "CfgVehicles" >> _vehClass >> "TextureSources" >> (_tex select 0) >> "textures");
+			if (_srcTextures isEqualTo []) exitWith { "" };
+
+			_srcTextures select 0
+		}
+		else { _tex select 0 select 1 }
+	}
+	else { _tex }];
+
 	_colorlist lbSetData [_colorlistIndex, str _tex];
 } forEach _colorsArray;

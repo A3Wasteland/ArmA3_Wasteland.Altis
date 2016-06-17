@@ -62,8 +62,8 @@ rifleArray = compileFinal str
 
 	// Marksman Rifles
 	["MXM Rifle", "arifle_MXM_F", 300],
-	["MXM Rifle (Black)", "arifle_MXM_Black_F", 325],
-	["DMR Rifle", "srifle_DMR_01_F", 375],
+	["MXM Rifle (Black)", "arifle_MXM_Black_F", 300],
+	["Rahim DMR Rifle", "srifle_DMR_01_F", 375],
 	["Mk18 ABR Rifle", "srifle_EBR_F", 450],
 
 	// DLC
@@ -861,7 +861,6 @@ _texDir = "client\images\vehicleTextures\";
 _kartDir = "\A3\soft_f_kart\Kart_01\Data\";
 _mh9Dir = "\A3\air_f\Heli_Light_01\Data\";
 _mohawkDir = "\A3\air_f_beta\Heli_Transport_02\Data\";
-_taruDir = "\A3\air_f_heli\Heli_Transport_04\Data\";
 _wreckDir = "\A3\structures_f\wrecks\data\";
 _gorgonDir = "\A3\armor_f_gamma\APC_Wheeled_03\data\";
 
@@ -928,13 +927,13 @@ colorsArray = compileFinal str
 	[ // Kart colors
 		"Kart_01_Base_F",
 		[
-			["Black (Kart)", [[0, _kartDir + "kart_01_base_black_co.paa"]]],
-			["White (Kart)", [[0, _kartDir + "kart_01_base_white_co.paa"]]],
-			["Blue (Kart)", [[0, _kartDir + "kart_01_base_blue_co.paa"]]],
-			["Green (Kart)", [[0, _kartDir + "kart_01_base_green_co.paa"]]],
-			["Yellow (Kart)", [[0, _kartDir + "kart_01_base_yellow_co.paa"]]],
-			["Orange (Kart)", [[0, _kartDir + "kart_01_base_orange_co.paa"]]],
-			["Red (Kart)", [[0, _kartDir + "kart_01_base_red_co.paa"]]]
+			["Black (Kart)", ["Black"]], // ["Black (Kart)", [configName (configFile >> "CfgVehicles" >> "C_Kart_01_F" >> "TextureSources" >> "Black")]],
+			["White (Kart)", ["White"]],
+			["Blue (Kart)", ["Blue"]],
+			["Green (Kart)", ["Green"]],
+			["Yellow (Kart)", ["Yellow"]],
+			["Orange (Kart)", ["Orange"]],
+			["Red (Kart)", [[0, _kartDir + "kart_01_base_red_co.paa"]]] // no red TextureSource :(
 		]
 	],
 	[ // MH-9 colors
@@ -975,36 +974,16 @@ colorsArray = compileFinal str
 			]]
 		]
 	],
-	[ // Taru base colors
+	[ // Taru paintjob
 		"Heli_Transport_04_base_F",
 		[
-			["Black (Taru)", [
-				[0, _taruDir + "heli_transport_04_base_01_black_co.paa"],
-				[1, _taruDir + "heli_transport_04_base_02_black_co.paa"],
-				[2, _taruDir + "heli_transport_04_pod_ext01_black_co.paa"],
-				[3, _taruDir + "heli_transport_04_pod_ext02_black_co.paa"]
-			]]
-		]
-	],
-	[ // Taru bench colors
-		"O_Heli_Transport_04_bench_F",
-		[
-			["Black (Taru)", [[2, _taruDir + "heli_transport_04_bench_black_co.paa"]]]
-		]
-	],
-	[ // Taru fuel colors
-		"O_Heli_Transport_04_fuel_F",
-		[
-			["Black (Taru)", [[2, _taruDir + "heli_transport_04_fuel_black_co.paa"]]]
+			["Black (Taru)", ["Black"]]
 		]
 	],
 	[ // Kajman paintjobs
 		"Heli_Attack_02_base_F",
 		[
-			["Black (Kajman)", [
-				[0, "\A3\air_f_beta\Heli_Attack_02\Data\heli_attack_02_body1_black_co.paa"],
-				[1, "\A3\air_f_beta\Heli_Attack_02\Data\heli_attack_02_body2_black_co.paa"]
-			]],
+			["Black (Kajman)", ["Black"]],
 			["Rusty (Kajman)", [
 				[0, _wreckDir + "wreck_heli_attack_02_body1_co.paa"],
 				[1, _wreckDir + "wreck_heli_attack_02_body2_co.paa"]
@@ -1018,19 +997,13 @@ colorsArray = compileFinal str
 	[ // Ghost Hawk camo 
 		"Heli_Transport_01_base_F",
 		[
-			["Olive (Ghost Hawk)", [
-				[0, "\A3\air_f_beta\Heli_Transport_01\Data\heli_transport_01_ext01_blufor_co.paa"],
-				[1, "\A3\air_f_beta\Heli_Transport_01\Data\heli_transport_01_ext02_blufor_co.paa"]
-			]]
+			["Green (Ghost Hawk)", ["Green"]]
 		]
 	],
 	[ // Strider NATO color
 		"MRAP_03_base_F",
 		[
-			["NATO Tan (Strider)", [
-				[0, "\A3\soft_f_beta\MRAP_03\Data\mrap_03_ext_co.paa"],
-				[1, "\A3\data_f\vehicles\turret_co.paa"]
-			]]
+			["NATO Tan (Strider)", ["Blufor"]]
 		]
 	],
 	[ // Gorgon NATO color
