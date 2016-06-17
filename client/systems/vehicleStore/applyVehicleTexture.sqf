@@ -23,8 +23,21 @@ _veh setVariable ["BIS_enableRandomization", false, true];
 
 _textures = _veh getVariable ["A3W_objectTextures", []];
 
+scopeName "applyVehicleTexture";
+
+// if _texture == ["string"], extract data from TextureSources config
+if (_texture isEqualType [] && {count _texture == 1 && _texture isEqualTypeAll ""}) then
+{
+	private _srcTextures = getArray (configFile >> "CfgVehicles" >> typeOf _veh >> "TextureSources" >> (_texture select 0) >> "textures");
+
+	if (_srcTextures isEqualTo []) exitWith { breakOut "applyVehicleTexture" };
+
+	_texture = [];
+	{ _texture pushBack [_forEachIndex, _x]	} forEach _srcTextures;
+};
+
 // Apply texture to all appropriate parts
-if (typeName _texture == "STRING") then
+if (_texture isEqualType "") then
 {
 	if (count _selections == 0) then
 	{
