@@ -37,9 +37,15 @@ if (!hasInterface) exitWith {};
 	};
 };
 
-// Temp fix for broken disableChannels, see https://feedback.bistudio.com/T117205
-// true = enabled, false = disabled // [text, voice]
+// Workaround for broken disableChannels, see https://feedback.bistudio.com/T117205
+{
+	_x params [["_chan",-1,[0]], ["_noText","false",[""]], ["_noVoice","false",[""]]];
 
-0 enableChannel [true, false]; // global
-//1 enableChannel [true, false]; // side
-2 enableChannel false; // command
+	_noText = [false,true] select ((["false","true"] find toLower _noText) max 0);
+	_noVoice = [false,true] select ((["false","true"] find toLower _noVoice) max 0);
+
+	_chan enableChannel [!_noText, !_noVoice];
+
+} forEach getArray (missionConfigFile >> "disableChannels");
+
+2 enableChannel false; // force disable command channel
