@@ -6,20 +6,7 @@
 
 #include "functions.sqf"
 
-private ["_strToSide", "_maxLifetime", "_isWarchestEntry", "_isBeaconEntry", "_worldDir", "_methodDir", "_objCount", "_objects", "_exclObjectIDs"];
-
-_strToSide =
-{
-	switch (toUpper _this) do
-	{
-		case "WEST":  { BLUFOR };
-		case "EAST":  { OPFOR };
-		case "GUER":  { INDEPENDENT };
-		case "CIV":   { CIVILIAN };
-		case "LOGIC": { sideLogic };
-		default       { sideUnknown };
-	};
-};
+private ["_maxLifetime", "_isWarchestEntry", "_isBeaconEntry", "_worldDir", "_methodDir", "_objCount", "_objects", "_exclObjectIDs"];
 
 _maxLifetime = ["A3W_objectLifetime", 0] call getPublicVar;
 

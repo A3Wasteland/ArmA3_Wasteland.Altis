@@ -4,7 +4,9 @@
 //	@file Name: functions.sqf
 //	@file Author: AgentRev
 
-private ["_baseSavingOn", "_boxSavingOn", "_staticWeaponSavingOn", "_warchestSavingOn", "_warchestMoneySavingOn", "_beaconSavingOn", "_timeSavingOn", "_weatherSavingOn", "_savingMethod", "_isBox", "_isStaticWeapon", "_isWarchest", "_isBeacon"];
+#define STICKY_CHARGE_DUMMY_OBJ "Sign_Sphere10cm_F"
+
+private ["_baseSavingOn", "_boxSavingOn", "_staticWeaponSavingOn", "_warchestSavingOn", "_warchestMoneySavingOn", "_beaconSavingOn", "_timeSavingOn", "_weatherSavingOn", "_savingMethod", "_isBox", "_isStaticWeapon", "_isWarchest", "_isBeacon", "_isSaveable", "_strToSide", "_hcProfileVarName", "_hcSaveProfileVar"];
 
 _baseSavingOn = ["A3W_baseSaving"] call isConfigOn;
 _boxSavingOn = ["A3W_boxSaving"] call isConfigOn;
@@ -23,6 +25,19 @@ _isWarchest = { _this getVariable ["a3w_warchest", false] && {(_this getVariable
 _isBeacon = { _this getVariable ["a3w_spawnBeacon", false] };
 
 _isSaveable = { (toLower _this) in A3W_saveableObjects };
+
+_strToSide =
+{
+	switch (toUpper _this) do
+	{
+		case "WEST":  { BLUFOR };
+		case "EAST":  { OPFOR };
+		case "GUER":  { INDEPENDENT };
+		case "CIV":   { CIVILIAN };
+		case "LOGIC": { sideLogic };
+		default       { sideUnknown };
+	};
+};
 
 _hcProfileVarName =
 {
