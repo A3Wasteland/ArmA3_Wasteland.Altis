@@ -30,5 +30,10 @@ _item = _id call mf_inventory_get;
 
 MUTEX_LOCK_OR_FAIL;
 _remove = call (_item select USE);
-if _remove then {[_id, 1] call mf_inventory_remove};
+
+if (_id != "repairkit" || {round getNumber (configFile >> "CfgVehicles" >> typeOf player >> "engineer") < 1 || !("ToolKit" in items player)}) then
+{
+	if _remove then {[_id, 1] call mf_inventory_remove};
+};
+
 MUTEX_UNLOCK;
