@@ -6,8 +6,7 @@
 
 // For use in mission.sqm
 
-private "_atm";
-_atm = _this select 0;
+params ["_atm"];
 
 if (isNull _atm) exitWith {};
 
@@ -17,6 +16,7 @@ if (local _atm) then
 };
 
 _atm setVariable ["A3W_atmEditorPlaced", true];
+_atm setVariable ["R3F_LOG_disabled", true];
 
 if (isNil "A3W_atmArray") then
 {
