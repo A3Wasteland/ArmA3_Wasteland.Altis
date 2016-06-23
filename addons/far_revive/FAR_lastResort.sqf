@@ -33,7 +33,15 @@ if !(player getVariable ["performingDuty", false]) then
 
 			_mine = createMine [_mineType, ASLtoAGL ((getPosASL player) vectorAdd [0, 0, 0.5]), [], 0];
 			player addOwnedMine _mine;
-			player action ["TouchOff", player];
+
+			if (alive player) then
+			{
+				player action ["TouchOff", player];
+			}
+			else
+			{
+				_mine setDamage 1;
+			};
 
 			{ player addOwnedMine _x } forEach _oldMines;
 
