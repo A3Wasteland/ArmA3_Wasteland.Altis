@@ -4,7 +4,7 @@
 //	@file Name: fn_remotePlayerSetup.sqf
 //	@file Author: AgentRev
 
-if (!hasInterface || isNil "playerSetupComplete" || {!playerSetupComplete}) exitWith {};
+if (!hasInterface || isNil "A3W_clientSetupComplete") exitWith {};
 
 params ["_player", ["_corpse",objNull]];
 
