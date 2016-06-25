@@ -139,6 +139,8 @@ if (["A3W_survivalSystem"] call isConfigOn) then
 	[] execVM "client\functions\createVehicleStoreMarkers.sqf";
 };
 
+A3W_clientSetupComplete = compileFinal "true";
+
 [] spawn playerSpawn;
 
 A3W_scriptThreads pushBack execVM "addons\fpsFix\vehicleManager.sqf";
