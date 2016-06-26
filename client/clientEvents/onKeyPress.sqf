@@ -53,6 +53,11 @@ switch (true) do
 			["You've taken out your earplugs.", 5] call mf_notify_client;
 		};
 	};
+	// Z Key
+	case (_key in A3W_customKeys_AJZeus):
+	{
+		execVM "addons\aj\zeus\refreshzeus.sqf";
+	};
 };
 
 // ********** Action keys **********

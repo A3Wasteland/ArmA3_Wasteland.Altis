@@ -83,6 +83,10 @@ class CfgFunctions
 		#include "client\CfgFunctions.hpp"
 		#include "server\CfgFunctions.hpp"
 	};
+	class armajunkies
+	{
+		#include "addons\aj\aj_FunctionsDefinition.hpp"
+	};
 };
 
 class CfgNotifications
