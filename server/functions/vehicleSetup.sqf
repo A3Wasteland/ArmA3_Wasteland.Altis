@@ -63,7 +63,7 @@ _vehicle addEventHandler ["GetOut", _getInOut];
 _vehicle addEventHandler ["Killed",
 {
 	_veh = _this select 0;
-	_veh setVariable ["processedDeath", diag_tickTime];
+	_veh call A3W_fnc_setItemCleanup;
 
 	if (!isNil "fn_manualVehicleDelete") then
 	{
@@ -74,8 +74,18 @@ _vehicle addEventHandler ["Killed",
 
 if ({_class isKindOf _x} count ["Air","UGV_01_base_F"] > 0) then
 {
-	[netId _vehicle, "A3W_fnc_setupAntiExplode", true] call A3W_fnc_MP;
+	_vehicle remoteExec ["A3W_fnc_setupAntiExplode", 0, _vehicle];
 };
+
+private _ammoCargo = getAmmoCargo _vehicle;
+if (isNil "_ammoCargo" || {!finite _ammoCargo}) then { _ammoCargo = 0 };
+
+if (_ammoCargo > 0) then
+{
+	[_vehicle] remoteExecCall ["A3W_fnc_setupResupplyTruck", 0, _vehicle];
+};
+
+[_vehicle, _brandNew] call A3W_fnc_setVehicleLoadout;
 
 // Vehicle customization
 switch (true) do
@@ -98,9 +108,9 @@ switch (true) do
 	{
 		_vehicle animate ["HideServices", 0];
 	};
-	case ({_class isKindOf _x} count ["B_Heli_Light_01_F", "B_Heli_Light_01_armed_F", "O_Heli_Light_02_unarmed_F"] > 0):
+	case ({_class isKindOf _x} count ["B_Heli_Light_01_F", "B_Heli_Light_01_armed_F"] > 0):
 	{
-		// Add flares to those poor helis
+		// Add flares to poor MH-9's
 		_vehicle addWeaponTurret ["CMFlareLauncher", [-1]];
 
 		if (_brandNew) then
@@ -108,9 +118,12 @@ switch (true) do
 			_vehicle addMagazineTurret ["60Rnd_CMFlare_Chaff_Magazine", [-1]];
 		};
 	};
-	case (_class isKindOf "Plane_Fighter_03_base_F" && _brandNew):
+	case (_class isKindOf "Plane_Fighter_03_base_F"):
 	{
-		_vehicle addMagazine "300Rnd_20mm_shells";
+		if (_brandNew) then
+		{
+			_vehicle addMagazineTurret ["300Rnd_20mm_shells", [-1]];
+		};
 	};
 };
 

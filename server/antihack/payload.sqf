@@ -223,6 +223,28 @@ if (isNil "_cheatFlag") then
 		[getPlayerUID player, _flagChecksum] call A3W_fnc_clientFlagHandler;
 	};
 
+	// Fix mag duping glitch
+	0 spawn
+	{
+		waitUntil {!isNil "A3W_clientSetupComplete"};
+		waitUntil
+		{
+			_cfg = configfile >> "CfgWeapons" >> currentWeapon player;
+
+			if (getNumber (_cfg >> "type") == 8^4 && {(vehicle player) currentWeaponTurret ((assignedVehicleRole player) param [1,[-1]]) == "" && ["camera_get_weapon_info", false] call getPublicVar}) then
+			{
+				_target = configName _cfg;
+				_mag = currentMagazine player;
+				player removeWeapon _target;
+				[player, _mag] call fn_forceAddItem;
+				player addWeapon _target;
+				player selectWeapon _target;
+			};
+
+			false
+		};
+	};
+
 	// Decode _rscParams
 	{
 		_x set [1, toString (_x select 1)];

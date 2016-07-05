@@ -34,6 +34,7 @@ if (_item select QTY <= 0) exitWith {
 };
 
 private ["_pos", "_obj"];
+_obj = objNull;
 
 if (alive player) then
 {
@@ -55,5 +56,11 @@ else
 	_obj setDir random 360;
 	_obj setVariable ["mf_item_id", _id, true];
 	[_id, 1] call mf_inventory_remove;
-	_obj
 };
+
+if (!isNull _obj) then
+{
+	[_obj] remoteExec ["A3W_fnc_setItemCleanup", 2];
+};
+
+_obj

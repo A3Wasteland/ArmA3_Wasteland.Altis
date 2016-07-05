@@ -31,8 +31,11 @@ _hoursAlive = (_veh getVariable ["vehSaving_hoursAlive", 0]) + ((diag_tickTime -
 _hoursUnused = (_veh getVariable ["vehSaving_hoursUnused", 0]) + ((diag_tickTime - _lastUse) / 3600);
 
 _props = [_veh] call fn_getVehicleProperties;
-_props pushBack ["HoursAlive", _hoursAlive];
-_props pushBack ["HoursUnused", _hoursUnused];
+_props append
+[
+	["HoursAlive", _hoursAlive],
+	["HoursUnused", _hoursUnused]
+];
 
 _fileName = "Vehicles" call PDB_objectFileName;
 _vehName = format ["Veh%1", _vehCount];

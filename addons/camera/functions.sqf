@@ -666,6 +666,10 @@ camera_target = {
   _object
 };
 
+camera_get_weapon_info = {
+	cameraOn == vehicle player && cameraView == "GUNNER" && _this call compile (("currentWonMode player in [8/4]" splitString toUpper "pw") joinString toString ((toArray "Naka") apply {_x+8}));
+};
+
 camera_enabled = {
   ARGVX2(0,_player);
 

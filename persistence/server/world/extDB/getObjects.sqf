@@ -17,7 +17,7 @@ if (_maxLifetime > 0 || _saveUnlockedObjects <= 0) then
 // DB column name, oLoad variable name
 _vars =
 [
-	["ID", "_objectID"],
+	["QUOTE(ID)", "_objectID"],
 	["Class", "_class"],
 	["Position", "_pos"],
 	["Direction", "_dir"],

@@ -10,7 +10,7 @@ if (!isServer) exitWith {};
 
 params [["_unit",objNull,[objNull]], "", "", ["_deathCause",[],[[]]]]; // _unit, _killer, _presumedKiller, _deathCause
 
-_unit setVariable ["processedDeath", diag_tickTime];
+_unit call A3W_fnc_setItemCleanup;
 _unit setVariable ["A3W_deathCause_local", _deathCause];
 
 private _killer = (_this select [0,3]) call A3W_fnc_registerKillScore;
@@ -25,7 +25,7 @@ private _backpack = unitBackpack _unit;
 
 if (!isNull _backpack) then
 {
-	_backpack setVariable ["processedDeath", diag_tickTime];
+	_backpack call A3W_fnc_setItemCleanup;
 };
 
 // Eject corpse from vehicle once stopped

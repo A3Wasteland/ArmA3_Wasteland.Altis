@@ -26,7 +26,7 @@ if (!hasInterface) exitWith {};
 
 	if !(playerSide in [BLUFOR,OPFOR]) then
 	{
-		1 enableChannel false; // force disable side channel for indies
+		1 enableChannel [true, false]; // force disable side voice for indies
 	};
 };
 

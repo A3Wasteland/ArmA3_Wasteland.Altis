@@ -18,7 +18,7 @@ _uid spawn
 	{
 		_linkedBomb = _x getVariable ["A3W_stickyCharges_linkedBomb",0];
 
-		if (_linkedBomb isEqualType objNull && {getText (configFile >> "CfgAmmo" >> typeOf _linkedBomb >> "mineTrigger") == "RemoteTrigger"}) then
+		if (_linkedBomb isEqualType objNull && {isNull _linkedBomb || {getText (configFile >> "CfgAmmo" >> typeOf _linkedBomb >> "mineTrigger") == "RemoteTrigger"}}) then
 		{
 			if (mineActive _linkedBomb) then
 			{

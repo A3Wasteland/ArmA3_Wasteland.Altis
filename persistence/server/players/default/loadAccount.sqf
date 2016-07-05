@@ -4,8 +4,8 @@
 //	@file Name: loadAccount.sqf
 //	@file Author: AgentRev
 
-private ["_UID", "_data", "_saveValid", "_getValue"];
-_UID = _this;
+params ["_UID", "_player"];
+private ["_data", "_saveValid", "_getValue"];
 
 if !((_UID call PDB_playerFileName) call PDB_exists) exitWith { [] }; // iniDB_exists
 
@@ -31,6 +31,13 @@ _getValue =
 
 ["Donator", "NUMBER", "PlayerInfo"] call _getValue;
 ["BankMoney", "NUMBER", "PlayerInfo"] call _getValue;
+["Bounty", "NUMBER", "PlayerInfo"] call _getValue;
+["BountyKills", "ARRAY", "PlayerInfo"] call _getValue;
+
+if (["A3W_privateStorage"] call isConfigOn) then
+{
+	["PrivateStorage", "ARRAY", "PlayerInfo"] call _getValue;
+};
 
 ["Damage", "NUMBER"] call _getValue;
 ["HitPoints", "ARRAY"] call _getValue;

@@ -28,6 +28,7 @@ _cash = createVehicle ["Land_Money_F", [player, [0,1,0]] call relativePos, [], 0
 _cash setVariable ["cmoney", _money, true];
 _cash setVariable ["owner", "world", true];
 player setVariable ["cmoney", (player getVariable "cmoney") - _money, true];
+[_cash] remoteExec ["A3W_fnc_setItemCleanup", 2];
 
 if (["A3W_playerSaving"] call isConfigOn) then
 {

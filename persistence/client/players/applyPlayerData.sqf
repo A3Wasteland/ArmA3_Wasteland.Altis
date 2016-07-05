@@ -27,8 +27,7 @@ else
 };
 
 {
-	_name = _x select 0;
-	_value = _x select 1;
+	_x params ["_name", "_value"];
 
 	switch (_name) do
 	{

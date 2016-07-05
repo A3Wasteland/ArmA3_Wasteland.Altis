@@ -29,7 +29,15 @@ if (isServer) then
 			false
 		};
 
-		diag_log format ["HandleDisconnect - %1 - alive: %2 - local: %3", [_name, _uid], alive _unit, local _unit];
+		diag_log format ["HandleDisconnect - %1 - alive: %2 - local: %3 - isPlayer: %4 - group: %5", [_name, _uid], alive _unit, local _unit, isPlayer _unit, group _unit];
+
+		_veh = objectParent _unit;
+
+		// force unlock vehicle if not owned by player OR if somebody else is still inside
+		if (alive _veh && (_veh getVariable ["ownerUID","0"] != _uid || {{alive _x} count (crew _veh - [_unit]) > 0})) then
+		{
+			[_veh, 1] call A3W_fnc_setLockState; // Unlock
+		};
 
 		if (alive _unit) then
 		{
@@ -56,7 +64,7 @@ if (isServer) then
 		}
 		else
 		{
-			if (vehicle _unit != _unit) then
+			if (!isNull _veh) then
 			{
 				_unit spawn fn_ejectCorpse;
 			};
@@ -128,8 +136,8 @@ if (isServer) then
 		"A3W_antiHackMinRecoil",
 		"A3W_spawnBeaconCooldown",
 		"A3W_spawnBeaconSpawnHeight",
-		"A3W_purchasedVehicleSaving",
-		"A3W_missionVehicleSaving",
+		"A3W_vehicleSaving",
+		"A3W_staticWeaponSaving",
 		"A3W_missionFarAiDrawLines",
 		"A3W_atmEnabled",
 		"A3W_atmMaxBalance",
@@ -146,8 +154,15 @@ if (isServer) then
 		"A3W_hcPrefix",
 		"A3W_hcObjCaching",
 		"A3W_hcObjCachingID",
+		"A3W_hcObjCleanup",
+		"A3W_hcObjCleanupID",
 		"A3W_hcObjSaving",
 		"A3W_hcObjSavingID",
+		"A3W_privateStorage",
+		"A3W_privateParking",
+		"A3W_privateParkingLimit",
+		"A3W_privateParkingCost",
+		"A3W_vehicleLocking",
 		"A3W_disableBuiltInThermal",
 		"A3W_customDeathMessages",
 		"A3W_headshotNoRevive"
@@ -172,12 +187,10 @@ _warchestMoneySavingOn = ["A3W_warchestMoneySaving"] call isConfigOn;
 _beaconSavingOn = ["A3W_spawnBeaconSaving"] call isConfigOn;
 _timeSavingOn = ["A3W_timeSaving"] call isConfigOn;
 _weatherSavingOn = ["A3W_weatherSaving"] call isConfigOn;
-
-_purchasedVehicleSavingOn = ["A3W_purchasedVehicleSaving"] call isConfigOn;
-_missionVehicleSavingOn = ["A3W_missionVehicleSaving"] call isConfigOn;
+_mineSavingOn = ["A3W_mineSaving"] call isConfigOn;
 
 _objectSavingOn = (_baseSavingOn || _boxSavingOn || _staticWeaponSavingOn || _warchestSavingOn || _warchestMoneySavingOn || _beaconSavingOn);
-_vehicleSavingOn = (_purchasedVehicleSavingOn || _missionVehicleSavingOn);
+_vehicleSavingOn = ["A3W_vehicleSaving"] call isConfigOn;
 _hcObjSavingOn = ["A3W_hcObjSaving"] call isConfigOn;
 
 if (_hcObjSavingOn) then
@@ -202,7 +215,7 @@ _setupPlayerDB = scriptNull;
 #define MIN_EXTDB_VERSION 49
 
 // Do we need any persistence?
-if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _weatherSavingOn) then
+if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _mineSavingOn || _timeSavingOn || _weatherSavingOn) then
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -299,26 +312,22 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 		};
 	};
 
-	[_playerSavingOn, _objectSavingOn, _vehicleSavingOn, _timeSavingOn, _weatherSavingOn, _hcObjSavingOn] spawn
+	[_playerSavingOn, _objectSavingOn, _vehicleSavingOn, _mineSavingOn, _timeSavingOn, _weatherSavingOn, _hcObjSavingOn] spawn
 	{
-		_playerSavingOn = _this select 0;
-		_objectSavingOn = _this select 1;
-		_vehicleSavingOn = _this select 2;
-		_timeSavingOn = _this select 3;
-		_weatherSavingOn = _this select 4;
-		_hcObjSavingOn = _this select 5;
+		params ["_playerSavingOn", "_objectSavingOn", "_vehicleSavingOn", "_mineSavingOn", "_timeSavingOn", "_weatherSavingOn", "_hcObjSavingOn"];
 
-		_oSave = (_objectSavingOn || _vehicleSavingOn || _timeSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"});
+		_oSave = (_objectSavingOn || _vehicleSavingOn || _mineSavingOn || _timeSavingOn || {_playerSavingOn && call A3W_savingMethod == "profile"});
 
 		if (_oSave) then
 		{
-			[_objectSavingOn, _vehicleSavingOn] call compile preprocessFileLineNumbers "persistence\server\world\precompile.sqf";
+			call compile preprocessFileLineNumbers "persistence\server\world\precompile.sqf";
 		};
 
 		if (isServer) then
 		{
 			A3W_objectIDs = [];
 			A3W_vehicleIDs = [];
+			A3W_mineIDs = [];
 
 			if (_objectSavingOn) then
 			{
@@ -328,6 +337,11 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 			if (_vehicleSavingOn) then
 			{
 				call compile preprocessFileLineNumbers "persistence\server\world\vLoad.sqf";
+			};
+
+			if (_mineSavingOn) then
+			{
+				call compile preprocessFileLineNumbers "persistence\server\world\mLoad.sqf";
 			};
 		};
 
@@ -358,15 +372,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 					[
 						"A3W_objectIDs",
 						"A3W_vehicleIDs",
-						/*"A3W_baseSaving",
-						"A3W_boxSaving",
-						"A3W_staticWeaponSaving",
-						"A3W_warchestSaving",
-						"A3W_warchestMoneySaving",
-						"A3W_spawnBeaconSaving",
-						"A3W_timeSaving",
-						"A3W_weatherSaving",
-						"A3W_serverSavingInterval",*/
+						"A3W_mineIDs",
 						"A3W_hcObjSaving_serverKey",
 						"A3W_hcObjSaving_serverReady"
 					];
@@ -375,12 +381,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 
 					A3W_hcObjSaving_unit = _hcUnit;
 
-					/*if (_firstRun) then
-					{
-						A3W_objectIDs = [];
-						A3W_vehicleIDs = [];*/
-						_firstRun = false;
-					//};
+					_firstRun = false;
 
 					waitUntil {sleep 5; isNull _hcUnit}; // in case HC crashes, resend vars on reconnect
 				};
@@ -394,11 +395,12 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _timeSavingOn || _
 					if (_isHC) then
 					{
 						"A3W_hcObjSaving_setTickTime" addPublicVariableEventHandler { _val = _this select 1; (_val select 0) setVariable [_val select 1, diag_tickTime] };
-						"A3W_hcObjSaving_trackObjID" addPublicVariableEventHandler { _val = _this select 1; if !(_val in A3W_objectIDs) then { A3W_objectIDs pushBack _val } };
-						"A3W_hcObjSaving_trackVehID" addPublicVariableEventHandler { _val = _this select 1; if !(_val in A3W_vehicleIDs) then { A3W_vehicleIDs pushBack _val } };
+						"A3W_hcObjSaving_trackObjID" addPublicVariableEventHandler { A3W_objectIDs pushBackUnique (_this select 1) };
+						"A3W_hcObjSaving_trackVehID" addPublicVariableEventHandler { A3W_vehicleIDs pushBackUnique (_this select 1) };
+						"A3W_hcObjSaving_trackMineID" addPublicVariableEventHandler { A3W_mineIDs pushBackUnique (_this select 1) };
 					};
 
-					execVM "persistence\server\world\oSave.sqf";
+					[_objectSavingOn] execVM "persistence\server\world\oSave.sqf";
 					//waitUntil {!isNil "A3W_oSaveReady"};
 				};
 			};
@@ -540,5 +542,8 @@ if (["A3W_serverMissions"] call isConfigOn) then
 	[] execVM "server\missions\masterController.sqf";
 };
 
-// Start clean-up loop
-[] execVM "server\WastelandServClean.sqf";
+if !(["A3W_hcObjCleanup"] call isConfigOn) then
+{
+	// Start clean-up loop
+	execVM "server\WastelandServClean.sqf";
+};

@@ -4,7 +4,7 @@
 //	@file Name: init.sqf
 //	@file Author: Torndeco, AgentRev
 
-#define MIN_DB_VERSION 2.04
+#define MIN_DB_VERSION 2.05
 
 private ["_lock", "_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
 _lock = (["A3W_extDB_Lock", 1] call getPublicVar != 0);

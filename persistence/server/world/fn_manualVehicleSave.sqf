@@ -11,6 +11,11 @@ _veh = _this;
 
 if (typeName _veh == "STRING") then { _veh = objectFromNetId _veh };
 
+if !(_veh getVariable ["A3W_purchasedVehicle", false] || _veh getVariable ["A3W_missionVehicle", false]) then
+{
+	_veh setVariable ["A3W_purchasedVehicle", true, true];
+};
+
 if (diag_tickTime - (_veh getVariable ["vehSaving_lastSave", 0]) > MANUAL_VEH_SAVE_COOLDOWN) then
 {
 	[_veh, "vehSaving_lastUse"] call fn_setTickTime;

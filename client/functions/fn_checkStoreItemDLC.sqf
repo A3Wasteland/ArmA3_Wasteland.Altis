@@ -19,5 +19,8 @@ if (_mods isEqualTo []) exitWith {};
 private _itemMod = _mods select 0;
 if (_itemMod isEqualTo "") exitWith {};
 
-_listbox lbSetPictureRight [_lbIndex, (modParams [_itemMod, ["logo"]]) param [0,""]];
-_listbox lbSetTooltip [_lbIndex, (modParams [_itemMod, ["name"]]) param [0,""]];
+private _cfgMod = configFile >> "CfgMods" >> _itemMod;
+if (!isClass (_cfgMod >> "Assets")) exitWith {}; // no DLC-only items
+
+_listbox lbSetPictureRight [_lbIndex, getText (_cfgMod >> "logo")];
+_listbox lbSetTooltip [_lbIndex, getText (_cfgMod >> "name")];

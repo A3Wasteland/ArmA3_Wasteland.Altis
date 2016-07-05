@@ -24,7 +24,7 @@ _code =
 		_opforColor = ["Map", "OPFOR"] call BIS_fnc_displayColorGet;
 		_indieColor = ["Map", "Independent"] call BIS_fnc_displayColorGet;
 		_civColor = ["Map", "Civilian"] call BIS_fnc_displayColorGet;
-		_defColor = ["Map", "Unknown"] call BIS_fnc_displayColorGet;
+		_defColor = [0,0,0,1]; //["Map", "Unknown"] call BIS_fnc_displayColorGet;
 
 		_allPlayers = allPlayers;
 

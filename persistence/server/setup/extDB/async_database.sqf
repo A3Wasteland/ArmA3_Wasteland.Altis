@@ -17,11 +17,13 @@ private["_queryStmt","_queryResult","_key","_mode","_return","_loop"];
 
 _tickTime = diag_tickTime;
 
-_queryStmt = param [0,"",[""]];
+_queryStmt = param [0,"",["",[]]];
 _mode = param [1,1,[0]];
 _multiarr = param [2,false,[false]];
 
-_key = "extDB2" callExtension format["%1:%2:%3",_mode, (call A3W_extDB_databaseID), _queryStmt];
+if (_queryStmt isEqualType []) then { _queryStmt = _queryStmt joinString ":" };
+
+_key = "extDB2" callExtension ([_mode, call A3W_extDB_databaseID, _queryStmt] joinString ":");
 
 if(_mode == 1) exitWith {true};
 

@@ -45,6 +45,7 @@ player addEventHandler ["Put",
 					_m setVariable ["cmoney", player getVariable "cmoney", true];
 					_m setVariable ["owner", "world", true];
 					player setVariable ["cmoney", 0, true];
+					[_m] remoteExec ["A3W_fnc_setItemCleanup", 2];
 				};
 			};
 
@@ -56,16 +57,31 @@ player addEventHandler ["Put",
 player addEventHandler ["WeaponDisassembled", { _this spawn weaponDisassembledEvent }];
 player addEventHandler ["WeaponAssembled",
 {
-	_player = _this select 0;
-	_obj = _this select 1;
+	params ["_player", "_obj"];
 
 	if (round getNumber (configFile >> "CfgVehicles" >> typeOf _obj >> "isUav") > 0) then
 	{
-		_obj setVariable ["ownerUID", getPlayerUID _player, true];
+		// ownerUID handled thru save funcs
 
-		if (!alive getConnectedUAV player) then
+		_playerSide = side group _player;
+
+		if (side _obj != _playerSide) then
 		{
-			player connectTerminalToUAV _obj;
+			(crew _obj) joinSilent createGroup _playerSide;
+		};
+
+		if (_obj isKindOf "StaticWeapon") then
+		{
+			[_obj, _player] call fn_forceSaveObject;
+		}
+		else
+		{
+			[_obj, _player] call A3W_fnc_takeOwnership;
+		};
+
+		if (!alive getConnectedUAV _player) then
+		{
+			_player connectTerminalToUAV _obj;
 		};
 
 		if ({_obj isKindOf _x} count ["Static_Designator_01_base_F","Static_Designator_02_base_F"] > 0) then

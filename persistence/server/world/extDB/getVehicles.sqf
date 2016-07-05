@@ -14,32 +14,7 @@ if (_maxLifetime > 0 || _maxUnusedTime > 0) then
 	[format ["deleteExpiredServerVehicles:%1:%2:%3:%4", call A3W_extDB_ServerID, call A3W_extDB_MapID, _maxLifetime, _maxUnusedTime], 2, true] call extDB_Database_async;
 };
 
-// DB column name, vLoad variable name
-_vars =
-[
-	["ID", "_vehicleID"],
-	["Class", "_class"],
-	["Position", "_pos"],
-	["Direction", "_dir"],
-	["Velocity", "_vel"],
-	["Flying", "_flying"],
-	["Damage", "_damage"],
-	["Fuel", "_fuel"],
-	["HitPoints", "_hitPoints"],
-	["OwnerUID", "_owner"],
-	["Variables", "_variables"],
-	["Textures", "_textures"],
-	["Weapons", "_weapons"],
-	["Magazines", "_magazines"],
-	["Items", "_items"],
-	["Backpacks", "_backpacks"],
-	["TurretMagazines", "_turretMags"], // deprecated
-	["TurretMagazines2", "_turretMags2"],
-	["TurretMagazines3", "_turretMags3"], // deprecated
-	["AmmoCargo", "_ammoCargo"],
-	["FuelCargo", "_fuelCargo"],
-	["RepairCargo", "_repairCargo"]
-];
+_vars = call fn_getVehicleVars;
 
 _columns = [];
 { _columns pushBack (_x select 0) } forEach _vars;

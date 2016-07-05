@@ -9,11 +9,14 @@ class ClientDir
 	class preInit {preInit = 1; file = "client\preInit.sqf";};
 	//class postInit {postInit = 1; file = "client\postInit.sqf";};
 
+	class antiExplodeLocalEH {file = "client\functions\fn_antiExplodeLocalEH.sqf";};
 	class fixUniVestBug {postInit = 1; file = "client\functions\fn_fixUniVestBug.sqf";};
 	class getTeamMarkerColor {file = "territory\client\getTeamMarkerColor.sqf";};
+	class setName {file = "client\functions\fn_setName.sqf";};
 	class setSpawnTimestamps {file = "client\functions\fn_setSpawnTimestamps.sqf";};
+	class setupAntiExplode {file = "client\functions\fn_setupAntiExplode.sqf";};
+	class setVarPlayer {file = "client\functions\fn_setVarPlayer.sqf";};
 	class updateTerritoryMarkers {file = "territory\client\updateTerritoryMarkers.sqf";};
-
 	class markerLogEntry {file = "client\functions\fn_markerLogEntry.sqf";};
 	class markerLogEvent {file = "client\functions\fn_markerLogEvent.sqf";};
 	class markerLogInsert {file = "client\functions\fn_markerLogInsert.sqf";};
