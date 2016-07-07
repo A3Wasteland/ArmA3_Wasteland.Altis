@@ -62,14 +62,17 @@ ps_create_boxes = {
 
 
     _pos = _garage modelToWorld [0,0,0];
-    if (_garage isKindOf "Land_Shed_06_F") then {
+    /*if (_garage isKindOf "Land_Shed_06_F") then {
       _pos set [2,0];
-    };
+    };*/
 
     _model = ps_box_models call BIS_fnc_selectRandom;
 
-    _box = createVehicle [_model, _pos, [], 0, ""];
-    _box setPos _pos;
+    _box = createVehicle [_model, _pos, [], 1, ""];
+    _pos = getPosWorld _box;
+    _pos set [2, (_pos select 2) - (getPos _box select 2)];;
+    _box setPosWorld _pos;
+    //_box setPos _pos;
     _box setVectorDirAndUp [vectorDir _garage, vectorUp _garage];
     _box allowDamage false;
     //_box enableSimulation false;

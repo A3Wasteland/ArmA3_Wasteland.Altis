@@ -456,7 +456,7 @@ va_outside_add_actions = {
   va_outside_actions = va_outside_actions + [_action_id];
 
   //Add vehicle unlock action
-  _action_id = player addaction [format["<img image='addons\vactions\icons\key.paa'/> Unlock %1", _display_name], {_this call va_unlock_action;}, [_player, _vehicle],0,false,false,"",
+  _action_id = player addaction [format["<img image='addons\vactions\icons\key.paa'/> Unlock %1", _display_name], {_this call va_unlock_action;}, [_player, _vehicle],999,false,false,"",
   format["([objectFromNetId %1, objectFromNetId %2] call va_unlock_action_available)", str(netId _player), str(netId _vehicle)]];
   va_outside_actions = va_outside_actions + [_action_id];
 };
