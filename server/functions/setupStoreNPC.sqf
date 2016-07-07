@@ -131,12 +131,12 @@ if (isServer) then
 				}
 				else
 				{
-					_deskDirMod = _deskDirMod select 0;
-
 					if (count _deskDirMod > 1) then
 					{
 						_frontOffset = _deskDirMod select 1;
 					};
+
+					_deskDirMod = _deskDirMod select 0;
 				};
 			};
 

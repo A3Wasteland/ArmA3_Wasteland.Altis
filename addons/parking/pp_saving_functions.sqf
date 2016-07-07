@@ -58,7 +58,7 @@ if (isServer) then {
 
     v_restoreVehicle =
     {
-      params ["_data_pair", ["_ignore_expiration",false,[false]], ["_create_array",[],[[]]], ["_dirAngle",nil,[0]]];
+      params ["_data_pair", ["_ignore_expiration",false,[false]], ["_create_array",[],[[]]]];
 
       _data_pair params ["_vehicleID", "_vehData"];
       private _pos = _create_array select 1;
@@ -178,13 +178,13 @@ if (isServer) then {
     //def(_class);
     _class = [_vehicle_data, "Class"] call fn_getFromPairs;
 
-    private ["_pos", "_dir"];
+    private ["_pos", "_dirAngle"];
     private _nearbySpawns = allMapMarkers select {_x select [0,7] == "Parking" && {_x select [count _x - 6, 6] == "_spawn" && _player distance markerPos _x < 100}};
 
     if !(_nearbySpawns isEqualTo []) then
     {
       _pos = markerPos (_nearbySpawns select 0);
-      _dir = markerDir (_nearbySpawns select 0);
+      _dirAngle = markerDir (_nearbySpawns select 0);
     };
 
     def(_create_array);
