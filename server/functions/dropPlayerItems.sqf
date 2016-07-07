@@ -42,6 +42,7 @@ if (_money > 0) then
 	_m setDir random 360;
 	_m setVariable ["cmoney", _money, true];
 	_m setVariable ["owner", "world", true];
+	_m call A3W_fnc_setItemCleanup;
 };
 
 if (_items isEqualTo []) then
@@ -57,6 +58,6 @@ if (_items isEqualTo []) then
 		_obj = createVehicle [_type, _targetPos, [], 1, "CAN_COLLIDE"];
 		_obj setDir random 360;
 		_obj setVariable ["mf_item_id", _id, true];
-		_obj setVariable ["processedDeath", diag_tickTime];
+		_obj call A3W_fnc_setItemCleanup;
 	};
 } forEach _items;

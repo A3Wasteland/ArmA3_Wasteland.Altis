@@ -115,6 +115,8 @@ _playerSideNum = switch (playerSide) do
 		{
 			case "CfgVehicles":
 			{
+				if ({_weaponClass isKindOf _x} count ["B_Static_Designator_01_weapon_F","O_Static_Designator_02_weapon_F"] > 0) exitWith {}; // allow everyone to buy all static designators
+
 				{
 					_sideCfg = call _x;
 

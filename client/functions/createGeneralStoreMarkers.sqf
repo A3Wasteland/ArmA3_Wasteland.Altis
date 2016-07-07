@@ -21,6 +21,6 @@
 		_markerName setMarkerTypeLocal "mil_dot";
 		_markerName setMarkerColorLocal "ColorBlue";
 		_markerName setMarkerSizeLocal [1,1];
-		_markerName setMarkerTextLocal "General Store";
+		_markerName setMarkerTextLocal "GS";
 	};
 } forEach entities "CAManBase";

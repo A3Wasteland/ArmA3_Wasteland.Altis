@@ -6,14 +6,14 @@
 
 // For use in mission.sqm
 
-params [["_object",objNull,[objNull]], ["_r3fDisabled",true,[true]], ["_straightenUp",false,[true]], ["_customCode",nil,[{}]]];
+params [["_object",objNull,[objNull]], ["_disableR3F",true,[false]], ["_straightenUp",false,[false]], ["_customCode",nil,[{}]]];
+
+if (_disableR3F) then
+{
+	_object setVariable ["R3F_LOG_disabled", true];
+};
 
 if (!local _object) exitWith {};
-
-if (_r3fDisabled) then
-{
-	_object setVariable ["R3F_LOG_disabled", true, true];
-};
 
 if (_straightenUp) then
 {

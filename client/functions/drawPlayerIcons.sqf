@@ -186,7 +186,7 @@ drawPlayerIcons_thread = [] spawn
 				} forEach detectedMines playerSide;
 			};
 
-			if (_noBuiltInThermal) then
+			if (_noBuiltInThermal || (currentWeapon player) select [0,15] == "Laserdesignator") then
 			{
 				_thermalActive = currentVisionMode player isEqualTo 2;
 

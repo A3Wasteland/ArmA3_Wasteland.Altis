@@ -102,6 +102,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 	if (!isNil "_itemEntry" && markerShape _marker != "") then
 	{
 		_itemPrice = _itemEntry select 2;
+		_skipSave = "SKIPSAVE" in (_itemEntry select [3,999]);
 
 		/*if (_class isKindOf "Box_NATO_Ammo_F") then
 		{
@@ -179,6 +180,11 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				_object setVelocity [0,0,0.01];
 				// _object spawn cleanVehicleWreck;
 				_object setVariable ["A3W_purchasedVehicle", true, true];
+
+				if (["A3W_vehicleLocking"] call isConfigOn) then
+				{
+					[_object, 2] call A3W_fnc_setLockState; // Lock
+				};
 			};
 
 			_object setDir (if (_object isKindOf "Plane") then { markerDir _marker } else { random 360 });
@@ -234,9 +240,16 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				};
 			};
 
-			if (_object getVariable ["A3W_purchasedVehicle", false] && !isNil "fn_manualVehicleSave") then
+			if (_skipSave) then
 			{
-				_object call fn_manualVehicleSave;
+				_object setVariable ["A3W_skipAutoSave", true, true];
+			}
+			else
+			{
+				if (_object getVariable ["A3W_purchasedVehicle", false] && !isNil "fn_manualVehicleSave") then
+				{
+					_object call fn_manualVehicleSave;
+				};
 			};
 
 			if (_object isKindOf "AllVehicles") then

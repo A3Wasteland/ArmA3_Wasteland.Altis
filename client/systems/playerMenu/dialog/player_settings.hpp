@@ -88,13 +88,13 @@ class playerSettings {
 			w = 0.3; h = 0.05;
 		};
 
-		class distanceText : w_RscText {
+		/*class distanceText : w_RscText {
 			idc = view_range_text;
 			text = "View range:";
 			sizeEx = 0.025;
 			x = 0.03; y = 0.40;
 			w = 0.3; h = 0.02;
-		};
+		};*/
 
 		class uptimeText : w_RscText {
 			idc = uptime_text;
@@ -159,7 +159,7 @@ class playerSettings {
 			w = 0.225; h = 0.033 * safezoneH;
 		};
 
-		class btnDistanceNear : w_RscButton {
+		/*class btnDistanceNear : w_RscButton {
 			idc = -1;
 			text = "Near";
 			onButtonClick = "setViewDistance 1100;";
@@ -187,6 +187,14 @@ class playerSettings {
 			text = "Insane";
 			onButtonClick = "setViewDistance 5000;";
 			x = 0.02; y = 0.60;
+			w = 0.125; h = 0.033 * safezoneH;
+		};*/
+
+		class btnDistanceCHVD : w_RscButton {
+			idc = -1;
+			text = "Viewdist.";
+			onButtonClick = "call CHVD_fnc_openDialog";
+			x = 0.02; y = 0.57;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
 	};

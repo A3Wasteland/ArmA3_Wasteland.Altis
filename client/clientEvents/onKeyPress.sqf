@@ -135,4 +135,14 @@ if (!_handled && _key in (actionKeys "UavView" + actionKeys "UavViewToggle")) th
 	};
 };
 
+// Override prone reload freeze (ffs BIS)
+if (!_handled && _key in (actionKeys "MoveDown" + actionKeys "MoveUp")) then
+{
+	if ((toLower animationState player) find "reloadprone" != -1) then
+	{
+		[player, format ["AmovPknlMstpSrasW%1Dnon", [player, true] call getMoveWeapon]] call switchMoveGlobal;
+		reload player;
+	};
+};
+
 _handled

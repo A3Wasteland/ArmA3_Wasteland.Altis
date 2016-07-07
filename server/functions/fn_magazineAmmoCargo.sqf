@@ -4,16 +4,15 @@
 //	@file Name: fn_magazineAmmoCargo.sqf
 //	@file Author: AgentRev
 
-private ["_container", "_mags", "_mag", "_ammo", "_added", "_ammoArr"];
-_container = _this;
+params ["_container"];
 
-if (isNull _container) exitWith {[]};
+if (isNull _container) exitWith { [] };
 
-_mags = [];
+private _mags = [];
+private ["_added", "_ammoArr"];
 
 {
-	_mag = _x select 0;
-	_ammo = _x select 1;
+	_x params ["_mag", "_ammo"];
 
 	if (_ammo == getNumber (configFile >> "CfgMagazines" >> _mag >> "count")) then
 	{
@@ -28,7 +27,7 @@ _mags = [];
 		{
 			if (_x select 0 == _mag) exitWith
 			{
-				_ammoArr = if (count _x > 2) then { _x select 2 } else { [] };
+				_ammoArr = _x param [2,[]];
 				_ammoArr pushBack _ammo;
 				_x set [2, _ammoArr];
 
@@ -43,11 +42,4 @@ _mags = [];
 	};
 } forEach magazinesAmmoCargo _container;
 
-{
-	if (isNil {_x select 1}) then
-	{
-		_x set [1, 0];
-	};
-} forEach _mags;
-
-_mags
+_mags // [[class, fullCount(, [partialAmmo, ...])], ...]

@@ -156,6 +156,7 @@ R3F_LOG_CFG_transporteurs =
 	["Truck_F", 75],
 	["Wheeled_APC_F", 30],
 	["Tank_F", 30],
+	["Scooter_Transport_01_base_F", 5],
 	["Rubber_duck_base_F", 10],
 	["Boat_Civil_01_base_F", 10],
 	["Boat_Transport_02_base_F", 15],
