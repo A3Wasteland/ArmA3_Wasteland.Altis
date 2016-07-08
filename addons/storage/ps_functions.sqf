@@ -17,12 +17,11 @@ ps_marker_create = {
 
   private["_marker"];
   _marker = createMarker [_name,_location];
-
-  _marker setMarkerShapeLocal _shape;
-  _marker setMarkerTypeLocal _type;
-  _marker setMarkerColorLocal _color;
-  _marker setMarkerSizeLocal _size;
-  //_marker setMarkerTextLocal _text;
+  _marker setMarkerShape _shape;
+  _marker setMarkerType _type;
+  _marker setMarkerColor _color;
+  _marker setMarkerSize _size;
+  //_marker setMarkerText _text;
   (_marker)
 };
 
