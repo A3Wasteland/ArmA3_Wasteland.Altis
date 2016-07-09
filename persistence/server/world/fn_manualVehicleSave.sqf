@@ -6,10 +6,9 @@
 
 #define MANUAL_VEH_SAVE_COOLDOWN 5
 
-private "_veh";
-_veh = _this;
+params ["_veh", ["_wait",false,[false]]];
 
-if (typeName _veh == "STRING") then { _veh = objectFromNetId _veh };
+if (_veh isEqualType "") then { _veh = objectFromNetId _veh };
 
 if !(_veh getVariable ["A3W_purchasedVehicle", false] || _veh getVariable ["A3W_missionVehicle", false]) then
 {
@@ -22,7 +21,7 @@ if (diag_tickTime - (_veh getVariable ["vehSaving_lastSave", 0]) > MANUAL_VEH_SA
 
 	if (_veh call fn_isVehicleSaveable && call A3W_savingMethod == "extDB") then
 	{
-		[_veh] spawn
+		private _saveThread = [_veh] spawn
 		{
 			_vehID = _this call fn_saveVehicle;
 
@@ -31,6 +30,11 @@ if (diag_tickTime - (_veh getVariable ["vehSaving_lastSave", 0]) > MANUAL_VEH_SA
 				A3W_hcObjSaving_trackVehID = _vehID;
 				(owner A3W_hcObjSaving_unit) publicVariableClient "A3W_hcObjSaving_trackVehID";
 			};
+		};
+
+		if (_wait && canSuspend) then
+		{
+			waitUntil {scriptDone _saveThread};
 		};
 	};
 

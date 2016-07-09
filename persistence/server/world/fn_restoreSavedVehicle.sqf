@@ -125,6 +125,13 @@ if (!isNil "_textures") then
 
 	{
 		_texture = _x select 0;
+
+		// fix for double backslashes in parking data
+		if (_texture find "\\" != -1) then
+		{
+			_texture = (["","\"] select (_texture select [0,1] == "\")) + (_texture splitString "\" joinString "\");
+		};
+
 		{
 			_veh setObjectTextureGlobal [_x, _texture];
 			[_objTextures, _x, _texture] call fn_setToPairs;

@@ -20,6 +20,10 @@ _result = ([_query, 2] call extDB_Database_async) param [0,false];
 if (!_result) then
 {
 	_data = [["PlayerSaveValid", false]/*, ["BankMoney", _bank]*/];
+
+	// prevent constraint fail on first save
+	private _sqlValues = [[["Name", name _player]], [0,1], false] call extDB_pairsToSQL;
+	[["insertOrUpdatePlayerInfo", _UID, _sqlValues select 0, _sqlValues select 1]] call extDB_Database_async;
 }
 else
 {
