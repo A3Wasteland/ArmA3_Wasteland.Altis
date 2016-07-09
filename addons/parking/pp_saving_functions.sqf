@@ -52,7 +52,7 @@ if (isServer) then {
       _vehicle setVariable ["A3W_parkedProperties", nil];
       if (isNil "_vehID") exitWith {nil};
 
-      _parked_vehicles pushBack [_vehID, _vehProps];
+      [_parked_vehicles, _vehID, _vehProps] call fn_setToPairs;
       true
     };
 

@@ -23,7 +23,10 @@ _hitPoints = [];
 _hpDamage = getAllHitPointsDamage _veh;
 
 {
-	_hitPoints pushBack [_x, (_hpDamage select 2) select _forEachIndex];
+	if (_x != "") then
+	{
+		_hitPoints pushBack [_x, (_hpDamage select 2) select _forEachIndex];
+	};
 } forEach (_hpDamage select 0);
 
 _variables = [];
@@ -67,6 +70,8 @@ private _locked = 1 max locked _veh; // default vanilla state is always 1, so we
 _doubleBSlash = (call A3W_savingMethod == "extDB");
 
 _textures = [];
+
+private _addTexture =
 {
 	_tex = _x select 1;
 
@@ -76,7 +81,17 @@ _textures = [];
 	};
 
 	[_textures, _tex, [_x select 0]] call fn_addToPairs;
-} forEach (_veh getVariable ["A3W_objectTextures", []]);
+};
+
+// vehicle has at least 2 random textures, save everything
+if (count getArray (configFile >> "CfgVehicles" >> _class >> "textureList") >= 4) then
+{
+	{ _x = [_forEachIndex, _x]; call _addTexture } forEach getObjectTextures _veh;
+}
+else // only save custom ones
+{
+	_addTexture forEach (_veh getVariable ["A3W_objectTextures", []]);
+};
 
 _weapons = [];
 _magazines = [];
