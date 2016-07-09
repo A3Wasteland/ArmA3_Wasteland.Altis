@@ -135,6 +135,17 @@ if (["A3W_survivalSystem"] call isConfigOn) then
 [] spawn
 {
 	[] execVM "client\functions\createGunStoreMarkers.sqf";
+
+	if (["A3W_privateParking"] call isConfigOn) then
+	{
+		waitUntil {!isNil "parking_functions_defined"};
+	};
+
+	if (["A3W_privateStorage"] call isConfigOn) then
+	{
+		waitUntil {!isNil "storage_functions_defined"};
+	};
+
 	[] execVM "client\functions\createGeneralStoreMarkers.sqf";
 	[] execVM "client\functions\createVehicleStoreMarkers.sqf";
 	[] execVM "client\functions\createLegendMarkers.sqf";
