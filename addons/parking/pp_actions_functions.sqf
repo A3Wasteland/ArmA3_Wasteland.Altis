@@ -6,6 +6,7 @@ diag_log format["Loading parking functions ..."];
 #define strM(x) ([x,","] call format_integer)
 
 pp_marker_create = {
+  if (!hasInterface) exitWith {""};
   ARGVX3(0,_name,"");
   ARGVX3(1,_location,[]);
   ARGVX3(2,_this,[]);
@@ -17,11 +18,11 @@ pp_marker_create = {
   ARGVX3(4,_text,"");
 
   private["_marker"];
-  _marker = createMarker [_name,_location];
-  _marker setMarkerShape _shape;
-  _marker setMarkerType _type;
-  _marker setMarkerColor _color;
-  _marker setMarkerSize _size;
+  _marker = createMarkerLocal [_name,_location];
+  _marker setMarkerShapeLocal _shape;
+  _marker setMarkerTypeLocal _type;
+  _marker setMarkerColorLocal _color;
+  _marker setMarkerSizeLocal _size;
   //_marker setMarkerText _text;
   (_marker)
 };
@@ -32,16 +33,24 @@ pp_get_all_cities = {
   (pp_get_all_cities)
 };
 
-pp_markers_list = OR(pp_markers_list,[]);
-pp_terminals_list = OR(pp_terminals_list,[]);
+pp_setup_terminal = {
+  params ["_terminal"];
+  if (_terminal getVariable ["A3W_parkingTerminalSetupDone",false]) exitWith {};
+  _terminal allowDamage false;
+  _terminal setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the table
 
-{
-  deleteVehicle _x;
-} forEach pp_terminals_list;
+  if (isServer) then
+  {
+    def(_laptop);
+    _laptop = createVehicle ["Land_Laptop_unfolded_F", getPosATL _terminal, [], 0, ""];
+    
+    _laptop attachTo [_terminal, [0,-0.1,0.55]];
+    _laptop setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the laptop
+  };
 
-{
-  deleteMarker _x;
-} forEach pp_markers_list;
+  _terminal setVariable ["A3W_parkingTerminalSetupDone", true];
+  _terminal spawn { _this enableSimulation false };
+};
 
 pp_create_terminal = {
  //Land_Laptop_unfolded_F
@@ -57,26 +66,9 @@ pp_create_terminal = {
   _terminal setPos _pos;
   _terminal setVectorDirAndUp [([vectorDir _garage,90] call BIS_fnc_rotateVector2D), vectorUp _garage];
   _terminal attachTo [_garage, [0,0,0]];
-  _terminal allowDamage false;
-  _terminal enableSimulation false;
   _terminal setVariable ["is_parking", true, true];
-  _terminal setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the table
-  //_terminal attachTo [_terminal, [0,0,0]];
-  //detach _terminal;
-
-  //_terminal attachTo [_garage, _garage worldToModelVisual (_terminal modelToWorldVisual [0,0,0])];
-
-  def(_laptop);
-  _laptop = createVehicle ["Land_Laptop_unfolded_F", _pos, [], 0, ""];
-  _laptop setPos getPos _terminal;
-  _laptop attachTo [_terminal, [0,-0.1,0.55]];
-  _laptop setVariable ["is_parking", true, true];
-  _laptop setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the laptop
-
-
-  pp_terminals_list pushBack _terminal;
-  pp_terminals_list pushBack _laptop;
-
+  _terminal call pp_setup_terminal;
+ 
   (_pos)
 };
 
@@ -111,11 +103,6 @@ pp_create_terminals = {
 
     diag_log format["Creating parking terminal at %1 (Grid %2)", _marker, mapGridPosition _pos];
 
-    if (pp_markers_enabled) then {
-      _marker = [_name, _pos, pp_markers_properties] call pp_marker_create;
-      pp_markers_list pushBack _marker;
-    };
-
   } foreach (allMapMarkers select {_x select [0,7] == "Parking" && _x find "_" == -1}) //(call pp_get_all_cities);
 };
 
@@ -132,7 +119,7 @@ pp_get_near_vehicles = {
   def(_ownerUID);
   def(_vehicle);
 
-  {if (true) then {
+  { call {
     _vehicle = _x;
     if (not(isOBJECT(_vehicle) && {alive _vehicle})) exitWith {};
 
@@ -384,52 +371,47 @@ pp_check_actions = {
    [_player] call pp_remove_actions;
 };
 
-//this is a hack so that markers sync for JIP (Join in Progress) players
-pp_sync_markers = {
-  {
-    _x setMarkerColor markerColor _x ;
-  } forEach allMapMarkers;
-};
 
-
-pp_client_loop_stop = false;
 pp_client_loop = {
-  if (not(isClient)) exitWith {};
-  private ["_pp_client_loop_i"];
-  _pp_client_loop_i = 0;
+  if (!hasInterface) exitWith {};
 
-  while {_pp_client_loop_i < 5000 && not(pp_client_loop_stop)} do {
+  while {true} do {
     call pp_check_actions;
     sleep 0.5;
-    _pp_client_loop_i = _pp_client_loop_i + 1;
-  };
-  [] spawn pp_client_loop;
-};
-
-
-pp_setup_terminals = {
-  if (isServer) then { //FIXME: Need to change this to not(isClient)
-    diag_log format["Setting up parking terminals ... "];
-    [] call pp_create_terminals;
-    pp_setup_terminals_complete = true;
-    publicVariable "pp_setup_terminals_complete";
-    diag_log format["Setting up parking terminals complete"];
-
-    ["pp_sync_markers", "onPlayerConnected", { [] spawn pp_sync_markers}] call BIS_fnc_addStackedEventHandler;
-  };
-
-  if (isClient) then {
-    diag_log format["Waiting for parking terminals setup to complete ..."];
-    waitUntil {not(isNil "pp_setup_terminals_complete")};
-    diag_log format["Waiting for parking terminals setup to complete ... done"];
   };
 };
 
-[] call pp_setup_terminals;
+
+if (isServer) then
+{
+  diag_log "Setting up parking terminals ... ";
+  [] call pp_create_terminals;
+  pp_setup_terminals_complete = true;
+  publicVariable "pp_setup_terminals_complete";
+}
+else
+{
+  diag_log "Waiting for parking terminals setup to complete ...";
+  waitUntil {!isNil "pp_setup_terminals_complete"};
+};
+
+if (hasInterface) then
+{
+  waitUntil {!isNil "A3W_clientSetupComplete"};
+};
+
+{
+  _x call pp_setup_terminal;
+
+  if (pp_markers_enabled) then
+  {
+    [format ["parking_terminal_%1", _forEachIndex + 1], getPosASL _x, pp_markers_properties] call pp_marker_create;
+  };
+} forEach ((allMissionObjects "Land_CampingTable_small_F") select {_x getVariable ["is_parking",false]});
+
+diag_log "Parking terminals setup complete";
+
 [] spawn pp_client_loop;
 
 parking_functions_defined = true;
-diag_log format["Loading parking functions complete"];
-
-
-
+diag_log "Loading parking functions complete";

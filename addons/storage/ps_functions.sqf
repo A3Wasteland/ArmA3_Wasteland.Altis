@@ -5,6 +5,7 @@ diag_log format["Loading storage functions ..."];
 #include "futura.h"
 
 ps_marker_create = {
+  if (!hasInterface) exitWith {""};
   ARGVX3(0,_name,"");
   ARGVX3(1,_location,[]);
   ARGVX3(2,_this,[]);
@@ -16,12 +17,12 @@ ps_marker_create = {
   ARGVX3(4,_text,"");
 
   private["_marker"];
-  _marker = createMarker [_name,_location];
-  _marker setMarkerShape _shape;
-  _marker setMarkerType _type;
-  _marker setMarkerColor _color;
-  _marker setMarkerSize _size;
-  //_marker setMarkerText _text;
+  _marker = createMarkerLocal [_name,_location];
+  _marker setMarkerShapeLocal _shape;
+  _marker setMarkerTypeLocal _type;
+  _marker setMarkerColorLocal _color;
+  _marker setMarkerSizeLocal _size;
+  //_marker setMarkerTextLocal _text;
   (_marker)
 };
 
@@ -31,6 +32,15 @@ ps_get_all_cities = {
   (ps_get_all_cities)
 };
 
+
+ps_setup_box = {
+  params ["_box"];
+  if (_box getVariable ["A3W_storageBoxSetupDone",false]) exitWith {};
+  _box allowDamage false;
+  //_box enableSimulation false;
+  _box setVariable ["R3F_LOG_disabled", true];
+  _box setVariable ["A3W_storageBoxSetupDone", true];
+};
 
 ps_create_boxes = {
   def(_town);
@@ -45,7 +55,7 @@ ps_create_boxes = {
   init(_i,0);
 
 
-  {if (true) then {
+  { call {
     _town = _x;
     _town_name =  text(_town);
     _town_pos = position _town;
@@ -73,14 +83,8 @@ ps_create_boxes = {
     _box setPosWorld _pos;
     //_box setPos _pos;
     _box setVectorDirAndUp [vectorDir _garage, vectorUp _garage];
-    _box allowDamage false;
-    //_box enableSimulation false;
     _box setVariable ["is_storage", true, true];
-    _box setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the boxes
-
-    if (ps_markers_enabled) then {
-      _marker = [_name, _pos, ps_markers_properties] call ps_marker_create;
-    };
+    _box call ps_setup_box;
 
     diag_log format["Creating Storage at: %1 (%2)", _town_name, _pos];
   }} foreach (call ps_get_all_cities);
@@ -271,49 +275,47 @@ ps_check_actions = {
    [_player] call ps_remove_actions;
 };
 
-//this is a hack so that markers sync for JIP (Join in Progress) players
-ps_sync_markers = {
-  {
-    _x setMarkerColor markerColor _x ;
-  } forEach allMapMarkers;
-};
 
-
-ps_client_loop_stop = false;
 ps_client_loop = {
-  if (not(isClient)) exitWith {};
-	private ["_ps_client_loop_i"];
-	_ps_client_loop_i = 0;
+  if (!hasInterface) exitWith {};
 
-	while {_ps_client_loop_i < 5000 && not(ps_client_loop_stop)} do {
-		call ps_check_actions;
-		sleep 0.5;
-		_ps_client_loop_i = _ps_client_loop_i + 1;
-	};
-	[] spawn ps_client_loop;
-};
-
-
-ps_setup_boxes = {
-  if (isServer) then {
-    diag_log format["Setting up storage boxes ... "];
-    [] call ps_create_boxes;
-    ps_setup_boxes_complete = true;
-    publicVariable "ps_setup_boxes_complete";
-    diag_log format["Setting up storage boxes complete"];
-
-    ["ps_sync_markers", "onPlayerConnected", { [] spawn ps_sync_markers}] call BIS_fnc_addStackedEventHandler;
-  };
-
-  if (isClient) then {
-    diag_log format["Waiting for storage boxes setup to complete ..."];
-    waitUntil {not(isNil "ps_setup_boxes_complete")};
-    diag_log format["Waiting for storage boxes setup to complete ... done"];
+  while {true} do {
+    call ps_check_actions;
+    sleep 0.5;
   };
 };
 
-[] call ps_setup_boxes;
+
+if (isServer) then
+{
+  diag_log "Setting up storage boxes ... ";
+  [] call ps_create_boxes;
+  ps_setup_boxes_complete = true;
+  publicVariable "ps_setup_boxes_complete";
+}
+else
+{
+  diag_log "Waiting for storage boxes setup to complete ...";
+  waitUntil {!isNil "ps_setup_boxes_complete"};
+};
+
+if (hasInterface) then
+{
+  waitUntil {!isNil "A3W_clientSetupComplete"};
+};
+
+{
+  _x call ps_setup_box;
+
+  if (ps_markers_enabled) then
+  {
+    [format ["storage_box_%1", _forEachIndex + 1], getPosASL _x, ps_markers_properties] call ps_marker_create;
+  };
+} forEach ((allMissionObjects "All") select {_x getVariable ["is_storage",false]});
+
+diag_log "Storage boxes setup complete";
+
 [] spawn ps_client_loop;
 
 storage_functions_defined = true;
-diag_log format["Loading storage functions complete"];
+diag_log "Loading storage functions complete";
