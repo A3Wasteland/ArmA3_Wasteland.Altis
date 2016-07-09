@@ -397,7 +397,7 @@ else
 
 if (hasInterface) then
 {
-  waitUntil {!isNil "A3W_clientSetupComplete"};
+  waitUntil {!isNil "A3W_serverSetupComplete" && time > 0};
 };
 
 {
