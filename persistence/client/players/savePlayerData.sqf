@@ -24,10 +24,8 @@ savePlayerHandle = [_this,
 		_info =
 		[
 			["Name", profileName],
-			["LastSide", str playerSide],
-			//["BankMoney", player getVariable ["bmoney", 0]], // NOTE: Bank money saving has been moved server-side
-			["Bounty", player getVariable ["bounty", 0]],
-			["BountyKills", player getVariable ["bountyKills", []]]
+			["LastSide", str playerSide]//,
+			//["BankMoney", player getVariable ["bmoney", 0]] // NOTE: Bank money saving has been moved server-side
 		];
 
 		if (["A3W_privateStorage"] call isConfigOn) then

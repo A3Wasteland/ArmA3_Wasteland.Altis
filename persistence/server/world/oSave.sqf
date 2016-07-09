@@ -4,7 +4,7 @@
 //	@file Name: oSave.sqf
 //	@file Author: AgentRev, [GoT] JoSchaap
 
-params ["_objectSaving"];
+params ["_objectSavingOn", "_vehicleSavingOn", "_mineSavingOn"];
 
 #include "oSaveSetup.sqf"
 
@@ -46,7 +46,7 @@ while {true} do
 	_currObjectIDs append A3W_objectIDs;
 	_newObjectIDs = [];
 
-	if (_objectSaving) then
+	if (_objectSavingOn) then
 	{
 		{
 			_obj = _x;
@@ -91,7 +91,7 @@ while {true} do
 	uiSleep _savingInterval;
 
 	// Vehicle saving
-	if (_vehicleSaving) then
+	if (_vehicleSavingOn) then
 	{
 		_vehCount = 0;
 		_currVehicleIDs = [];
@@ -129,7 +129,7 @@ while {true} do
 	uiSleep _savingInterval;
 
 	// Mine saving
-	if (_mineSaving) then
+	if (_mineSavingOn) then
 	{
 		_mineCount = 0;
 		_currMineIDs = [];

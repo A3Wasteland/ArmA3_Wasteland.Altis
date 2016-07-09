@@ -55,6 +55,13 @@ if (_isUav && side _veh in [BLUFOR,OPFOR,INDEPENDENT]) then
 };
 
 _owner = _veh getVariable ["ownerUID", ""];
+private _ownerName = _veh getVariable ["ownerName", ""];
+
+if (_ownerName != "") then
+{
+	_variables pushBack ["ownerName", toArray _ownerName];
+};
+
 private _locked = 1 max locked _veh; // default vanilla state is always 1, so we ignore 0's
 
 _doubleBSlash = (call A3W_savingMethod == "extDB");

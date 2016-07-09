@@ -36,9 +36,13 @@ ps_get_all_cities = {
 ps_setup_box = {
   params ["_box"];
   if (_box getVariable ["A3W_storageBoxSetupDone",false]) exitWith {};
-  _box allowDamage false;
-  //_box enableSimulation false;
+  private _garage = param [1, nearestBuilding _box];
+
+  if (local _box) then { _box allowDamage false };
+  if (local _garage) then { _garage allowDamage false };
   _box setVariable ["R3F_LOG_disabled", true];
+  _garage setVariable ["R3F_LOG_disabled", true];
+
   _box setVariable ["A3W_storageBoxSetupDone", true];
 };
 
@@ -70,21 +74,21 @@ ps_create_boxes = {
     _i = _i + 1;
 
 
-    _pos = _garage modelToWorld [0,0,0];
+    _pos = AGLtoASL (_garage modelToWorld [0,0,0]);
     /*if (_garage isKindOf "Land_Shed_06_F") then {
       _pos set [2,0];
     };*/
 
     _model = ps_box_models call BIS_fnc_selectRandom;
 
-    _box = createVehicle [_model, _pos, [], 1, ""];
-    _pos = getPosWorld _box;
-    _pos set [2, (_pos select 2) - (getPos _box select 2)];;
-    _box setPosWorld _pos;
+    _box = createVehicle [_model, ASLtoATL _pos, [], 1, ""];
+    _pos = getPosASL _box;
+    _pos set [2, (_pos select 2) - (getPos _box select 2)];
+    _box setPosASL _pos;
     //_box setPos _pos;
     _box setVectorDirAndUp [vectorDir _garage, vectorUp _garage];
     _box setVariable ["is_storage", true, true];
-    _box call ps_setup_box;
+    [_box, _garage] call ps_setup_box;
 
     diag_log format["Creating Storage at: %1 (%2)", _town_name, _pos];
   }} foreach (call ps_get_all_cities);

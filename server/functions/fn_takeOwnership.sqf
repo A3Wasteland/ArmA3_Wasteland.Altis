@@ -17,8 +17,9 @@ if (!isServer) exitWith
 	_this remoteExecCall ["A3W_fnc_takeOwnership", 2];
 };
 
-_veh setVariable ["ownerUID", _UID, true];
-//[_veh, 1] call A3W_fnc_setLockState; // Unlock
+_veh setVariable ["ownerUID", getPlayerUID _player, true];
+_veh setVariable ["ownerName", name _player, true];
+[_veh, 1] call A3W_fnc_setLockState; // Unlock
 
 if (_veh getVariable ["A3W_skipAutoSave", false]) then
 {
