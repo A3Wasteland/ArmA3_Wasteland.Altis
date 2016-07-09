@@ -41,6 +41,10 @@ private _uavSide = if (isNil "_playerSide") then { sideUnknown } else { _playerS
 
 	switch (_var) do
 	{
+		case "ownerName":
+		{
+			if (_val isEqualType []) then { _val = toString _val };
+		};
 		case "uavSide":
 		{
 			if (_uavSide isEqualTo sideUnknown) then { _uavSide = STR_TO_SIDE(_val) };

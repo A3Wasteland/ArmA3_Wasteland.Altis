@@ -151,6 +151,7 @@ if (isServer) then
 		"A3W_townSpawnCooldown",
 		"A3W_survivalSystem",
 		"A3W_extDB_GhostingAdmins",
+		"A3W_extDB_SaveUnlockedObjects",
 		"A3W_hcPrefix",
 		"A3W_hcObjCaching",
 		"A3W_hcObjCachingID",
@@ -400,7 +401,7 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _mineSavingOn || _
 						"A3W_hcObjSaving_trackMineID" addPublicVariableEventHandler { A3W_mineIDs pushBackUnique (_this select 1) };
 					};
 
-					[_objectSavingOn] execVM "persistence\server\world\oSave.sqf";
+					[_objectSavingOn, _vehicleSavingOn, _mineSavingOn] execVM "persistence\server\world\oSave.sqf";
 					//waitUntil {!isNil "A3W_oSaveReady"};
 				};
 			};

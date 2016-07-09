@@ -37,7 +37,6 @@ if (_static) then
 {
 	_veh setVariable ["A3W_lockpickDisabled", true];
 	_veh setVariable ["R3F_LOG_disabled", true];
-	_veh enableSimulation false;
 };
 
 _veh setVariable ["A3W_resupplyTruck", true];

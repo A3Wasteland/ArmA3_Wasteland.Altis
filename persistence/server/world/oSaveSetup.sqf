@@ -22,8 +22,6 @@ A3W_saveableObjects = [];
 	} forEach _x;
 } forEach [objectList, essentialsList, call genObjectsArray];
 
-_vehicleSaving = ["A3W_vehicleSaving"] call isConfigOn;
-_mineSaving = ["A3W_mineSaving"] call isConfigOn;
 _savingInterval = (["A3W_serverSavingInterval", 60] call getPublicVar) / 3;
 
 _worldDir = "persistence\server\world";
@@ -33,7 +31,7 @@ fn_hasInventory = [_worldDir, "fn_hasInventory.sqf"] call mf_compile;
 fn_saveWarchestMoney = [_methodDir, "saveWarchestMoney.sqf"] call mf_compile;
 fn_saveTime = [_methodDir, "saveTime.sqf"] call mf_compile;
 
-if (_objectSaving) then
+if (_objectSavingOn) then
 {
 	fn_isObjectSaveable = [_worldDir, "fn_isObjectSaveable.sqf"] call mf_compile;
 	fn_getObjectProperties = [_worldDir, "fn_getObjectProperties.sqf"] call mf_compile;
@@ -43,7 +41,7 @@ if (_objectSaving) then
 	fn_postObjectSave = [_methodDir, "postObjectSave.sqf"] call mf_compile;
 };
 
-if (_vehicleSaving) then
+if (_vehicleSavingOn) then
 {
 	fn_isVehicleSaveable = [_worldDir, "fn_isVehicleSaveable.sqf"] call mf_compile;
 	fn_getVehicleProperties = [_worldDir, "fn_getVehicleProperties.sqf"] call mf_compile;
@@ -54,7 +52,7 @@ if (_vehicleSaving) then
 	fn_postVehicleSave = [_methodDir, "postVehicleSave.sqf"] call mf_compile;
 };
 
-if (_mineSaving) then
+if (_mineSavingOn) then
 {
 	fn_isMineSaveable = [_worldDir, "fn_isMineSaveable.sqf"] call mf_compile;
 	fn_getMineProperties = [_worldDir, "fn_getMineProperties.sqf"] call mf_compile;
@@ -92,17 +90,17 @@ if (_savingMethod == "iniDB") then
 	_mineFileName = "Mines" call PDB_objectFileName;
 
 	// If file doesn't exist, create Info section at the top
-	if !(_objFileName call PDB_exists) then
+	if (_objectSavingOn && !(_objFileName call PDB_exists)) then
 	{
 		[_objFileName, "Info", "ObjCount", 0] call PDB_write;
 	};
 
-	if (_vehicleSaving && !(_vehFileName call PDB_exists)) then
+	if (_vehicleSavingOn && !(_vehFileName call PDB_exists)) then
 	{
 		[_vehFileName, "Info", "VehCount", 0] call PDB_write;
 	};
 
-	if (_mineSaving && !(_mineFileName call PDB_exists)) then
+	if (_mineSavingOn && !(_mineFileName call PDB_exists)) then
 	{
 		[_mineFileName, "Info", "MineCount", 0] call PDB_write;
 	};

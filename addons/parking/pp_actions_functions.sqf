@@ -36,20 +36,38 @@ pp_get_all_cities = {
 pp_setup_terminal = {
   params ["_terminal"];
   if (_terminal getVariable ["A3W_parkingTerminalSetupDone",false]) exitWith {};
-  _terminal allowDamage false;
-  _terminal setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the table
+  private _garage = param [1, nearestBuilding _terminal];
+
+  if (local _terminal) then { _terminal allowDamage false };
+  if (local _garage) then { _garage allowDamage false };
+  _terminal setVariable ["R3F_LOG_disabled", true]; //don't allow players to move the table
+  _garage setVariable ["R3F_LOG_disabled", true];
 
   if (isServer) then
   {
+    if (getObjectType _garage == 8) then // manually-placed garage, can attachTo
+    {
+      _terminal attachTo [_garage, _garage worldToModel (_terminal modelToWorld [0,0,0])];
+    }
+    else // garage native to map, cannot attachTo so we use invisible dummy
+    {
+      _dummy = createVehicle ["Sign_Sphere25cm_F", getPosATL _terminal, [], 0, ""];
+      _dummy hideObjectGlobal true;
+      _dummy allowDamage false;
+      _dummy setPosWorld (getPosWorld _terminal vectorAdd [0,0,-0.1]); // vectorAdd to compensate for elevated shed floor
+      _dummy setVectorDirAndUp [vectorDir _terminal, vectorUp _terminal];
+      _dummy setVariable ["R3F_LOG_disabled", true, true];
+      _terminal attachTo [_dummy, [0,0,0]];
+    };
+
     def(_laptop);
     _laptop = createVehicle ["Land_Laptop_unfolded_F", getPosATL _terminal, [], 0, ""];
-    
+	_laptop allowDamage false;
     _laptop attachTo [_terminal, [0,-0.1,0.55]];
     _laptop setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the laptop
   };
 
   _terminal setVariable ["A3W_parkingTerminalSetupDone", true];
-  _terminal spawn { _this enableSimulation false };
 };
 
 pp_create_terminal = {
@@ -59,16 +77,17 @@ pp_create_terminal = {
   def(_pos);
   def(_terminal);
 
-  _pos = _garage modelToWorld [-5,0.45,-1.485];
+  _pos = AGLtoASL (_garage modelToWorld [0,0,0]);
   _garage allowDamage false;
 
-  _terminal = createVehicle ["Land_CampingTable_small_F", _pos, [], 0, ""];
-  _terminal setPos _pos;
-  _terminal setVectorDirAndUp [([vectorDir _garage,90] call BIS_fnc_rotateVector2D), vectorUp _garage];
-  _terminal attachTo [_garage, [0,0,0]];
+  _terminal = createVehicle ["Land_CampingTable_small_F", ASLtoATL _pos, [], 0, ""];
+  _pos set [2, (_pos select 2) - (getPos _terminal select 2)];
+  _terminal setPosASL _pos;
+  _terminal setVectorDirAndUp [vectorDir _garage, vectorUp _garage];
+  //_terminal attachTo [_garage, [0,0,0]];
   _terminal setVariable ["is_parking", true, true];
-  _terminal call pp_setup_terminal;
- 
+  [_terminal, _garage] call pp_setup_terminal;
+
   (_pos)
 };
 
@@ -110,7 +129,7 @@ pp_get_near_vehicles = {
   ARGVX4(0,_player,objNull,[]);
 
   def(_vehicles);
-  _vehicles = (nearestObjects [getPos _player, ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank"], 50]);
+  _vehicles = (nearestObjects [getPos _player, ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank"], 50]) select {!(_x getVariable ["A3W_lockpickDisabled",false])};
 
   init(_filtered,[]);
   def(_uid);
@@ -317,7 +336,7 @@ pp_is_object_parking = {
 
 pp_is_player_near = {
   private["_objects"];
-  _objects = nearestObjects [player, ["Land_Laptop_unfolded_F", "Land_CampingTable_small_F"], 2];
+  _objects = nearestObjects [player, ["Land_CampingTable_small_F"], 2];
   if (isNil "_objects") exitWith {false};
 
   private["_found"];

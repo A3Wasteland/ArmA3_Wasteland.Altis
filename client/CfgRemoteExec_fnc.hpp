@@ -32,6 +32,7 @@ class A3W_fnc_serverPlayerDied { allowedTargets = 2; };
 class A3W_fnc_setItemCleanup { allowedTargets = 2; };
 class A3W_fnc_setLockState {};
 class A3W_fnc_setName { jip = 1; };
+class A3W_fnc_takeOwnership { allowedTargets = 2; };
 class A3W_fnc_titleTextMessage {};
 class A3W_fnc_towingHelper {};
 class A3W_fnc_updateSpawnTimestamp { allowedTargets = 2; };

@@ -32,7 +32,13 @@ A3W_fnc_checkPlayerFlag =
 
 		if (!isNull _player && alive _player && !(_player call A3W_fnc_isUnconscious)) then
 		{
-			_info pushBack ["BankMoney", _player getVariable ["bmoney", 0]];
+			_info append
+			[
+				["BankMoney", _player getVariable ["bmoney", 0]],
+				["Bounty", _player getVariable ["bounty", 0]],
+				["BountyKills", _player getVariable ["bountyKills", 0]]
+			];
+
 			[_UID, _info, _data] call fn_saveAccount;
 		};
 
@@ -61,9 +67,12 @@ A3W_fnc_checkPlayerFlag =
 			(owner _player) publicVariableClient _pvarName;
 
 			{
-				if (_x select 0 == "BankMoney") exitWith
+				_x params ["_var", "_val"];
+				switch (_var) do
 				{
-					_player setVariable ["bmoney", _x select 1, true];
+					case "BankMoney":    { _player setVariable ["bmoney", _val, true] };
+					case "Bounty":       { _player setVariable ["bounty", _val, true] };
+					case "BountyKills":  { _player setVariable ["bountyKills", _val, true] };
 				};
 			} forEach _data;
 
