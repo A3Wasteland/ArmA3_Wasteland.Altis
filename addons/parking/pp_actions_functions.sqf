@@ -47,7 +47,7 @@ pp_setup_terminal = {
   {
     if (getObjectType _garage == 8) then // manually-placed garage, can attachTo
     {
-      _terminal attachTo [_garage, _garage worldToModel (_terminal modelToWorld [0,0,0])];
+      _terminal attachTo [_garage, _garage worldToModel (_terminal modelToWorld [0,0,-0.1])];
     }
     else // garage native to map, cannot attachTo so we use invisible dummy
     {

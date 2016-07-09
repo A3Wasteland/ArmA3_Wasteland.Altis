@@ -64,7 +64,7 @@ _failedExec =
 _successExec =
 {
 	// Mission completed
-	[_veh, 1] call A3W_fnc_setLockState; // Unlock
+	[_vehicle, 1] call A3W_fnc_setLockState; // Unlock
 
 	_successHintMessage = "The truck has been captured, well done.";
 };
