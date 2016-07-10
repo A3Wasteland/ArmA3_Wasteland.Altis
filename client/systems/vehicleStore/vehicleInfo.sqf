@@ -79,21 +79,30 @@ reverse _cfgColors;
 } forEach _cfgColors;
 
 {
-	_tex = _x select 1;
-	_colorlistIndex = _colorlist lbAdd (_x select 0);
+	_x params ["_texName", "_texData"];
+	private _tex = _texData;
 
-	_colorlist lbSetPicture [_colorlistIndex, if (_tex isEqualType []) then
+	if (_tex isEqualType []) then
 	{
 		if (count _tex == 1 && _tex isEqualTypeAll "") then
 		{
 			private _srcTextures = getArray (configFile >> "CfgVehicles" >> _vehClass >> "TextureSources" >> (_tex select 0) >> "textures");
-			if (_srcTextures isEqualTo []) exitWith { "" };
 
-			_srcTextures select 0
+			if !(_srcTextures isEqualTo []) then
+			{
+				_tex = _srcTextures select 0;
+			};
 		}
-		else { _tex select 0 select 1 }
-	}
-	else { _tex }];
+		else
+		{
+			_tex = _tex select 0 select 1;
+		};
+	};
 
-	_colorlist lbSetData [_colorlistIndex, str _tex];
+	if (!isNil "_tex" && {_tex isEqualType "" && {_tex != ""}}) then
+	{
+		_colorlistIndex = _colorlist lbAdd _texName;
+		_colorlist lbSetPicture [_colorlistIndex, _tex];
+		_colorlist lbSetData [_colorlistIndex, str _texData];
+	};
 } forEach _colorsArray;
