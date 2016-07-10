@@ -178,7 +178,7 @@ if (isNil "_mags" && isNil "_weapons" && isNil "_customCode") exitWith {};
 
 private "_oldWeapons";
 
-if (_redoWeapons || !isNil "_weapons") then
+if (isServer && (_redoWeapons || !isNil "_weapons")) then
 {
 	_oldWeapons = _veh call fn_removeTurretWeapons;
 };
@@ -189,9 +189,9 @@ if (_brandNew && !isNil "_mags") then
 	{ _veh addMagazineTurret _x } forEach _mags;
 };
 
-if (!isNil "_oldWeapons") then
+if (isServer && !isNil "_oldWeapons") then
 {
-	{ _veh addWeaponTurret _x } forEach (if (_redoWeapons || isNil "_weapons") then [{_oldWeapons},{_weapons}]);
+	[_veh, if (_redoWeapons || isNil "_weapons") then [{_oldWeapons},{_weapons}]] call fn_addTurretWeapons;
 };
 
 if ((_brandNew || _resupply) && !isNil "_customCode") then
