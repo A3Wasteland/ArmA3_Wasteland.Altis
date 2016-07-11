@@ -18,7 +18,7 @@ _spawnPos = _this select 1;
 //if (_isWreck == 0) then
 //{
 	//diag_log "Spawning heli...";
-	_spawnType = staticHeliList call BIS_fnc_selectRandom;
+	_spawnType = staticHeliList call fn_selectRandomNested;
 	_finalPos = _spawnPos findEmptyPosition [0, 50, _spawnType];
 
 	if (count _finalPos == 0) then { _finalPos = _spawnPos };

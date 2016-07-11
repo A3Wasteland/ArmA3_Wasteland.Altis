@@ -9,12 +9,13 @@
 
 if (!isServer) exitWith {};
 
-private ["_markerPos", "_boatType", "_respawnSettings", "_pos", "_boat"];
+params ["_markerPos", ["_boatType","",[""]], ["_respawnSettings",nil,[[]]]];
+private ["_pos", "_boat"];
 
-_markerPos = _this select 0;
-_boatType = if (count _this > 1) then { _this select 1 } else { waterVehicles call BIS_fnc_selectRandom };
-
-_respawnSettings = if (count _this > 2) then { _this select 2 } else { nil };
+if (_boatType == "") then
+{
+	_boatType = waterVehicles call fn_selectRandomNested;
+};
 
 //_pos = [_markerPos, 1, 15, 5, 2, 60 * (pi / 180), 0, [], [[], _markerPos]] call BIS_fnc_findSafePos;
 _pos = _markerPos;

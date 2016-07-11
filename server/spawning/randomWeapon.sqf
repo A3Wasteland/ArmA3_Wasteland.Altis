@@ -26,14 +26,14 @@ if (_nightTime) then
 if (random 1 < 0.45) then { _car addWeaponCargoGlobal ["Binocular", 1]};
 
 //Get Random Gun From randomWeapons Array.
-_weapon = vehicleWeapons call BIS_fnc_selectRandom;
+_weapon = vehicleWeapons call fn_selectRandomNested;
 _mag = ((getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select 0) call getBallMagazine;
 
-_additionOne = _additionArray call BIS_fnc_selectRandom;
+_additionOne = _additionArray call fn_selectRandomNested;
 _additionArray = _additionArray - [_additionOne];
-_additionTwo = _additionArray call BIS_fnc_selectRandom;
+_additionTwo = _additionArray call fn_selectRandomNested;
 //_additionArray = _additionArray - [_additionTwo];
-_additionThree = vehicleAddition2 call BIS_fnc_selectRandom;
+_additionThree = vehicleAddition2 call fn_selectRandomNested;
 
 _buildingLootOn = (["A3W_buildingLootWeapons"] call isConfigOn && (isNil "A3W_buildingLoot" || {["A3W_buildingLoot"] call isConfigOn}));
 
@@ -76,7 +76,7 @@ switch (["A3W_vehicleLoot", 1] call getPublicVar) do
 		_car addMagazineCargoGlobal [_mag, 2 + floor random 3];
 
 		// 2nd weapon
-		_weapon = vehicleWeapons call BIS_fnc_selectRandom;
+		_weapon = vehicleWeapons call fn_selectRandomNested;
 		_mag = ((getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select 0) call getBallMagazine;
 		_car addWeaponCargoGlobal [_weapon, 1];
 		_car addMagazineCargoGlobal [_mag, 2 + floor random 3];

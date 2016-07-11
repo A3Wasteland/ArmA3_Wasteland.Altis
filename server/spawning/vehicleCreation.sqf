@@ -9,37 +9,10 @@
 
 if (!isServer) exitWith {};
 
-private ["_markerPos", "_pos", "_type", "_num", "_vehicleType", "_respawnSettings", "_vehicle", "_hitPoint"];
+params ["_markerPos", ["_vehicleType","",[""]], ["_respawnSettings",nil,[[]]]];
+private ["_pos", "_vehicle", "_hitPoint"];
 
-_markerPos = _this select 0;
-_type = 0;  //test due to undefined variable errors..
-
-if (count _this > 1) then
-{
-	_vehicleType = _this select 1;
-
-	switch (true) do
-	{
-		case ({_vehicleType == _x} count civilianVehicles > 0):       { _type = 0 };
-		case ({_vehicleType == _x} count lightMilitaryVehicles > 0):  { _type = 1 };
-		case ({_vehicleType == _x} count mediumMilitaryVehicles > 0): { _type = 2 };
-	};
-}
-else
-{
-	_num = random 100;
-
-	switch (true) do
-	{
-		case (_num < 15): { _vehicleType = mediumMilitaryVehicles call BIS_fnc_selectRandom; _type = 2 };
-		case (_num < 50): { _vehicleType = lightMilitaryVehicles call BIS_fnc_selectRandom; _type = 1 };
-		default           { _vehicleType = civilianVehicles call BIS_fnc_selectRandom; _type = 0 };
-	};
-};
-
-_respawnSettings = if (count _this > 2) then { _this select 2 } else { nil };
-
-//_pos = [_markerPos, 2, 25, ( if (_type == 1) then { 2 } else { 5 } ), 0, 60 * (pi / 180), 0, [], [_markerPos]] call BIS_fnc_findSafePos;
+//_pos = [_markerPos, 2, 25, 5, 0, 60 * (pi / 180), 0, [], [_markerPos]] call BIS_fnc_findSafePos;
 // diabled as a test. might break other features
 _pos = _markerPos;
 
@@ -54,12 +27,11 @@ _vehicle setDamage (random 0.5); // setDamage must always be called before vehic
 
 // Reset wheel damage
 {
-	_hitPoint = configName _x;
-	if (["Wheel", _hitPoint] call fn_findString != -1) then
+	if (toLower _x find "wheel" != -1) then
 	{
-		_vehicle setHitPointDamage [_hitPoint, 0];
+		_vehicle setHitPointDamage [_x, 0];
 	};
-} forEach (_vehicleType call getHitPoints);
+} forEach (getAllHitPointsDamage _vehicle param [0,[]]);
 
 [_vehicle] call vehicleSetup;
 
