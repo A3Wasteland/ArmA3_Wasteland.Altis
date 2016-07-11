@@ -9,13 +9,10 @@
 
 if (!isServer) exitWith {};
 
-private ["_markerPos", "_markerDir", "_noBuzzard", "_pos", "_planeType", "_plane"];
+params ["_markerPos", "_markerDir", "_noBuzzard"];
+private ["_pos", "_planeType", "_plane"];
 
-_markerPos = _this select 0;
-_markerDir = _this select 1;
-_noBuzzard = _this select 2;
-
-_planeType = staticPlaneList call BIS_fnc_selectRandom;
+_planeType = staticPlaneList call fn_selectRandomNested;
 
 if (_noBuzzard && {_planeType isKindOf "Plane_Fighter_03_base_F"}) exitWith {};
 
