@@ -77,6 +77,9 @@ if (_texture isEqualType "") then
 			case (_veh isKindOf "UGV_01_rcws_base_F"):            { [0,2] };
 			case (_veh isKindOf "UAV_03_base_F"):                 { [0,1] };
 
+			case (_veh isKindOf "LSV_01_base_F"):                 { [0,2] };
+			case (_veh isKindOf "LSV_02_base_F"):                 { [0,2] };
+
 			default                                               { [0] };
 		};
 	};

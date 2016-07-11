@@ -4,35 +4,46 @@
 //	@file Name: FAR_lastResort.sqf
 //	@file Author: AgentRev
 
-private ["_hasCharge", "_hasSatchel", "_mineType", "_mine"];
-
-_hasCharge = "DemoCharge_Remote_Mag" in magazines player;
-_hasSatchel = "SatchelCharge_Remote_Mag" in magazines player;
-
 if !(player getVariable ["performingDuty", false]) then
 {
-	if (_hasCharge || _hasSatchel) then
+	// biggest to smallest
+	_availableBombs = (magazines player) arrayIntersect ["SatchelCharge_Remote_Mag", "IEDUrbanBig_Remote_Mag", "IEDLandBig_Remote_Mag", "DemoCharge_Remote_Mag", "IEDUrbanSmall_Remote_Mag", "IEDLandSmall_Remote_Mag"];
+
+	if !(_availableBombs isEqualTo []) then
 	{
+		_magType = _availableBombs select 0;
+		_mineType = ((_magType splitString "_") select 0) + "_F";
+
+		if (!isClass (configFile >> "CfgVehicles" >> _mineType)) exitWith
+		{
+			titleText [format ["ERROR: invalid class '%1'", _mineType], "PLAIN", 0.5];
+		};
+
 		if (["Perform your duty?", "", "Yes", "No"] call BIS_fnc_guiMessage) then
 		{
 			player setVariable ["performingDuty", true];
-			playSound3D [call currMissionDir + "client\sounds\lastresort.wss", vehicle player, false, getPosASL player, 0.7, 1, 1000];
 
-			if (_hasSatchel) then
+			player removeMagazine _magType;
+			playSound3D [call currMissionDir + "client\sounds\lastresort.ogg", player, false, getPosASL player, 1, 1, 500];
+
+			sleep 1.5;
+
+			_oldMines = getAllOwnedMines player;
+			removeAllOwnedMines player;
+
+			_mine = createMine [_mineType, ASLtoAGL ((getPosASL player) vectorAdd [0, 0, 0.5]), [], 0];
+			player addOwnedMine _mine;
+
+			if (alive player) then
 			{
-				_mineType = "SatchelCharge_F";
-				player removeMagazine "SatchelCharge_Remote_Mag";
+				player action ["TouchOff", player];
 			}
 			else
 			{
-				_mineType = "DemoCharge_F";
-				player removeMagazine "DemoCharge_Remote_Mag";
+				_mine setDamage 1;
 			};
 
-			sleep 1.75;
-
-			_mine = createMine [_mineType, ASLtoAGL ((getPosASL player) vectorAdd [0, 0, 0.5]), [], 0];
-			_mine setDamage 1;
+			{ player addOwnedMine _x } forEach _oldMines;
 
 			if (damage player < 1) then // if check required to prevent "Killed" EH from getting triggered twice
 			{
