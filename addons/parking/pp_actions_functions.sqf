@@ -62,7 +62,7 @@ pp_setup_terminal = {
 
     def(_laptop);
     _laptop = createVehicle ["Land_Laptop_unfolded_F", getPosATL _terminal, [], 0, ""];
-	_laptop allowDamage false;
+    _laptop allowDamage false;
     _laptop attachTo [_terminal, [0,-0.1,0.55]];
     _laptop setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the laptop
   };
@@ -416,7 +416,7 @@ else
 
 if (hasInterface) then
 {
-  waitUntil {!isNil "A3W_serverSetupComplete" && time > 0};
+  waitUntil {!isNil "A3W_serverSetupComplete" && !isNil "A3W_clientSetupComplete"};
 };
 
 {
