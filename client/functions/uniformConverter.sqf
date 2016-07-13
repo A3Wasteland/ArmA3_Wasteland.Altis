@@ -12,7 +12,7 @@
 // if the current incompatible uniform is present in an array, all the uniforms from that same array are checked left-right to find the first compatible match
 // arrays at the top take precedence over bottom ones
 
-private ["_uniform", "_side", "_uniforms", "_uniArray"];
+private ["_uniform", "_side", "_uniforms", "_uniArray", "_uniX"];
 
 _unit = _this select 0;
 _uniform = _this select 1;
@@ -31,9 +31,9 @@ if !(_unit isUniformAllowed _uniform) then
 		["U_B_FullGhillie_ard", "U_O_FullGhillie_ard", "U_I_FullGhillie_ard"],
 		["U_B_FullGhillie_lsh", "U_O_FullGhillie_lsh", "U_I_FullGhillie_lsh"],
 		["U_B_FullGhillie_sard", "U_O_FullGhillie_sard", "U_I_FullGhillie_sard"],
-		["U_B_T_FullGhillie_tna_F", "U_O_T_FullGhillie_tna_F", "U_I_FullGhillie_lsh"], // jungle full ghillie converts to lush full ghillie for indies
+		["U_B_T_FullGhillie_tna_F", "U_O_T_FullGhillie_tna_F"/*, "U_I_FullGhillie_lsh"*/], // (inactive) jungle full ghillie converts to lush full ghillie for indies
 
-		["U_B_CTRG_Soldier_F", "U_B_CTRG_Soldier_3_F", "U_O_V_Soldier_Viper_F", "U_O_V_Soldier_Viper_hex_F", "U_I_GhillieSuit"], // thermal suit converts to light ghillie for indies
+		["U_B_CTRG_Soldier_F", "U_B_CTRG_Soldier_3_F", "U_O_V_Soldier_Viper_F", "U_O_V_Soldier_Viper_hex_F"/*, "U_I_GhillieSuit"*/], // (inactive) thermal suit converts to light ghillie for indies
 
 		["U_B_Wetsuit", "U_B_survival_uniform", "U_O_Wetsuit", "U_I_Wetsuit"],
 
@@ -57,9 +57,13 @@ if !(_unit isUniformAllowed _uniform) then
 		if ({_uniform == _x} count _uniArray > 0) exitWith
 		{
 			{
-				if (_unit isUniformAllowed _x) exitWith
+				_uniX = _x;
+
+				if (_unit isUniformAllowed _uniX || // indie exception for NATO jungle ghillie & thermal suit due to BIS not giving a damn
+				    (side group _unit == INDEPENDENT && {{_uniX == _x} count ["U_B_CTRG_Soldier_F","U_B_T_FullGhillie_tna_F"] > 0})) exitWith
 				{
-					_uniform = _x;
+					_uniform = _uniX;
+					systemChat format ["_uniform: %1", _uniX];
 				};
 			} forEach _uniArray;
 		};
