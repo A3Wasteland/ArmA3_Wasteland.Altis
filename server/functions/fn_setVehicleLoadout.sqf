@@ -123,7 +123,6 @@ private ["_mags", "_weapons", "_customCode"];
 		_mags =
 		[
 			["240Rnd_CMFlare_Chaff_Magazine", [-1]],
-			["120Rnd_CMFlare_Chaff_Magazine", [0]],
 			["1000Rnd_20mm_shells", [0]],
 			["12Rnd_PG_missiles", [0]],
 			["4Rnd_AAA_missiles", [0]]
@@ -131,7 +130,6 @@ private ["_mags", "_weapons", "_customCode"];
 		_weapons =
 		[
 			["CMFlareLauncher", [-1]],
-			["CMFlareLauncher", [0]],
 			["gatling_20mm", [0]],
 			["missiles_DAGR", [0]],
 			["missiles_ASRAAM", [0]]
@@ -143,7 +141,6 @@ private ["_mags", "_weapons", "_customCode"];
 		_mags =
 		[
 			["192Rnd_CMFlare_Chaff_Magazine", [-1]],
-			["96Rnd_CMFlare_Chaff_Magazine", [0]],
 			["250Rnd_30mm_HE_shells", [0]],
 			["250Rnd_30mm_APDS_shells", [0]],
 			["6Rnd_LG_scalpel", [0]],
@@ -152,7 +149,6 @@ private ["_mags", "_weapons", "_customCode"];
 		_weapons =
 		[
 			["CMFlareLauncher", [-1]],
-			["CMFlareLauncher", [0]],
 			["gatling_30mm", [0]],
 			["missiles_SCALPEL", [0]],
 			["rockets_Skyfire", [0]]
