@@ -13,8 +13,6 @@ if (!mineActive _mine) exitWith {nil};
 
 _mineID = _dummy getVariable "A3W_mineID";
 
-systemChat format ["_mineID = %1", _dummy getVariable ["A3W_mineID", "nil"]];
-
 if (isNil "_mineID") then
 {
 	_mineID = ([format ["newServerMine:%1:%2", call A3W_extDB_ServerID, call A3W_extDB_MapID], 2] call extDB_Database_async) select 0;
