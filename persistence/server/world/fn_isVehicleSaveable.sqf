@@ -10,4 +10,4 @@ _veh = _this;
 ["A3W_vehicleSaving"] call isConfigOn &&
 alive _veh && {_veh isKindOf "AllVehicles" && !(_veh isKindOf "Man" || _veh isKindOf "StaticWeapon") &&
 ((isTouchingGround _veh || (getPos _veh) select 2 <= 1) || call A3W_savingMethodDir != "default") && 
-{_veh getVariable ["A3W_purchasedVehicle", false] || (_veh getVariable ["A3W_missionVehicle", false] && !(_veh getVariable ["R3F_LOG_disabled", false]))}}
+{_veh getVariable ["A3W_purchasedVehicle", false] || _veh getVariable ["A3W_missionVehicle", false]}}
