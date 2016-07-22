@@ -28,7 +28,8 @@ X_Server = false;
 X_Client = false;
 X_JIP = false;
 
-CHVD_allowTerrain = false;
+CHVD_allowNoGrass = false;
+CHVD_allowTerrain = false; // terrain option has been disabled out from the menu due to terrible code, this variable has currently no effect
 CHVD_maxView = 3000; // Set maximum view distance (default: 12000)
 CHVD_maxObj = 3000; // Set maximimum object view distance (default: 12000)
 
