@@ -38,12 +38,12 @@ while { true } do
 
 					if (getText (configFile >> "CfgVehicles" >> typeOf _clientPlayer >> "simulation") == "headlessclient") exitWith {};
 
-					if (isNil "_cheatFlag") then
+					/*if (isNil "_cheatFlag") then
 					{
 						_cheatFlag = [];
 					};
 
-					_cheatFlag pushBack ["hacked unit", typeOf _unit, _clientPlayer];
+					_cheatFlag pushBack ["hacked unit", typeOf _unit, _clientPlayer];*/
 
 					for [{_i = 0}, {_i < 10 && vehicle _unit != _unit}, {_i = _i + 1}] do
 					{
