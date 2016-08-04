@@ -17,7 +17,7 @@ if (_perm == "side") then
 
 while {true} do
 {
-	waitUntil {sleep 0.1; _uav = getConnectedUAV player; !isNull _uav};
+	waitUntil {_uav = getConnectedUAV player; !isNull _uav};
 
 	// ignore remote designators and autoturrets unless indie
 	if (!(_uav isKindOf "StaticWeapon") || !(playerSide in [BLUFOR,OPFOR])) then
@@ -39,6 +39,7 @@ while {true} do
 
 		if (_perm == "group" && {_ownerUID in ((units player) apply {getPlayerUID _x})}) exitWith {};
 
+		_uav = objNull;
 		player connectTerminalToUAV objNull;
 		playSound "FD_CP_Not_Clear_F";
 		["You are not allowed to connect to this unmanned vehicle.", 5] call mf_notify_client;
@@ -54,5 +55,5 @@ while {true} do
 		};*/
 	};
 
-	waitUntil {sleep 0.1; _uav != getConnectedUAV player};
+	waitUntil {_uav != getConnectedUAV player};
 };
