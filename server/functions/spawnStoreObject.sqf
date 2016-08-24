@@ -137,33 +137,19 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 			if (_isUAV) then
 			{
-				//assign AI to the vehicle so it can actually be used
 				createVehicleCrew _object;
 
+				//assign AI to the vehicle so it can actually be used
 				[_object, _playerSide, _playerGroup] spawn
 				{
 					params ["_uav", "_playerSide", "_playerGroup"];
-					private "_grp";
 
-					waitUntil {_grp = group _uav; !isNull _grp};
-
-					//assign AI to player's side to allow terminal connection
-					if (side _uav != _playerSide) then
-					{
-						_grp = createGroup _playerSide;
-						(crew _uav) joinSilent _grp;
-					};
-
-					_grp setCombatMode "BLUE"; // hold fire
+					_grp = [_uav, _playerSide] call fn_createCrewUAV;
 
 					if (isNull (_uav getVariable ["ownerGroupUAV", grpNull])) then
 					{
 						_uav setVariable ["ownerGroupUAV", _playerGroup, true]; // not currently used
 					};
-
-					{
-						[_x, ["UAV","",""]] remoteExec ["A3W_fnc_setName", 0, _x];
-					} forEach crew _uav;
 				};
 			};
 

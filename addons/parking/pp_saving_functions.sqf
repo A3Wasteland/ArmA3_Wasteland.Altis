@@ -258,6 +258,10 @@ if (isClient) then {
 
     player action ["VTOLVectoring", _vehicle]; // vertical takeoff mode
 
+    if (!alive getConnectedUAV player) then {
+      player connectTerminalToUAV _vehicle; // attempt uav connect
+    };
+
     [_marker] spawn {
       ARGVX3(0,_marker,"");
       sleep 60;

@@ -89,6 +89,7 @@ fn_addTurretWeapons = [_serverFunc, "fn_addTurretWeapons.sqf"] call mf_compile;
 fn_allPlayers = [_serverFunc, "allPlayers.sqf"] call mf_compile;
 fn_boundingBoxReal = [_serverFunc, "fn_boundingBoxReal.sqf"] call mf_compile;
 fn_canGetIn = [_clientFunc, "fn_canGetIn.sqf"] call mf_compile;
+fn_createCrewUAV = [_serverFunc, "fn_createCrewUAV.sqf"] call mf_compile;
 fn_enableSimulationGlobal = [_serverFunc, "fn_enableSimulationGlobal.sqf"] call mf_compile;
 fn_enableSimulationServer = [_serverFunc, "fn_enableSimulationServer.sqf"] call mf_compile;
 fn_filterString = [_serverFunc, "fn_filterString.sqf"] call mf_compile;
