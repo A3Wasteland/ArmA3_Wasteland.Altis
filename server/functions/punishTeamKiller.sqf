@@ -14,12 +14,7 @@ publicVariable "pvar_teamKillList";
 
 if (getPlayerUID _player != _UID) then
 {
-	{
-		if (getPlayerUID _x == _UID) exitWith
-		{
-			_player = _x;
-		};
-	} forEach allPlayers;
+	_player = (allPlayers select {getPlayerUID _x isEqualTo _UID}) param [0, _player];
 };
 
 if (getPlayerUID _player != _UID) exitWith {};

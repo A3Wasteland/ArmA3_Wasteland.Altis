@@ -97,7 +97,8 @@ waitUntil {!isNil {_unit getVariable "FAR_killerSuspects"}};
 // Find killer
 _killer = _unit call FAR_findKiller;
 _unit setVariable ["FAR_killerPrimeSuspect", _killer];
-_unit setVariable ["FAR_killerPrimeSuspectData", [getPlayerUID effectiveCommander _killer, group effectiveCommander _killer], true];
+_perpetrator = effectiveCommander _killer;
+_unit setVariable ["FAR_killerPrimeSuspectData", [getPlayerUID _perpetrator, group _perpetrator, side group _perpetrator, name _perpetrator], true];
 //[_unit, _killer] remoteExecCall ["A3W_fnc_registerKillScore", 2];
 
 diag_log format ["INCAPACITATED by [%1] with [%2]", _killer, _unit getVariable ["FAR_killerAmmo", ""]];

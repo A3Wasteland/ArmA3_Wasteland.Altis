@@ -10,9 +10,18 @@ params ["_player", "_presumedKiller"];
 
 _presumedKiller = effectiveCommander _presumedKiller;
 _killer = _player getVariable "FAR_killerPrimeSuspect";
+_killerData = _player getVariable "FAR_killerPrimeSuspectData";
 
-if (isNil "_killer" && !isNil "FAR_findKiller") then { _killer = _player call FAR_findKiller };
-if (isNil "_killer" || {isNull _killer}) then { _killer = _presumedKiller };
+if (isNil "_killer" && !isNil "FAR_findKiller") then { _killer = _player call FAR_findKiller; _killerData = [] };
+if (isNil "_killer" || {isNull _killer}) then
+{
+	if (isNil "_killer") then
+	{
+		_killerData = [];
+	};
+
+	_killer = _presumedKiller;
+};
 
 _killer = effectiveCommander _killer;
 _deathCause = _player getVariable ["A3W_deathCause_local", []];
@@ -85,27 +94,26 @@ _player spawn
 _player spawn fn_removeAllManagedActions;
 removeAllActions _player;
 
-// Same-side kills
-if (_player == player && (playerSide == side group _killer) && (player != _killer) && (vehicle player != vehicle _killer)) then
+// Handle teamkills
+if (_player == player && playerSide in [BLUFOR,OPFOR] && player != _killer && vehicle player != vehicle _killer) then
 {
-	// Handle teamkills
-	if (playerSide in [BLUFOR,OPFOR]) then
+	_killerData params
+	[
+		["_killerUID", getPlayerUID _killer, [""]],
+		"", // group
+		["_killerSide", side group _killer, [sideUnknown]],
+		["_killerName", name _killer, [""]]
+	];
+
+	if (playerSide == _killerSide) then
 	{
-		if (_killer isKindOf "Man" && isPlayer _killer) then
+		if (_killerUID in ["","0"]) then
 		{
-			pvar_PlayerTeamKiller = [_killer, getPlayerUID _killer, name _killer];
+			pvar_PlayerTeamKiller = []; // not a valid player
 		}
 		else
 		{
-			pvar_PlayerTeamKiller = [];
-		};
-	}
-	else // Compensate negative score for indie-indie kills
-	{
-		if (isPlayer _killer) then
-		{
-			pvar_removeNegativeScore = _killer;
-			publicVariableServer "pvar_removeNegativeScore";
+			pvar_PlayerTeamKiller = [_killer, _killerUID, _killerName];
 		};
 	};
 };
