@@ -4,7 +4,7 @@
 //	@file Name: fn_inGameUIActionEvent.sqf
 //	@file Author: AgentRev
 
-params ["", "_unit", "", "_action", "","", "_showWindow", "","", "_menuOpen"];
+params ["_target", "_unit", "", "_action", "","", "_showWindow", "","", "_menuOpen"];
 private _handled = false;
 
 if (_unit == player && (_showWindow || _menuOpen)) then
@@ -37,7 +37,7 @@ if (_unit == player && (_showWindow || _menuOpen)) then
 			};
 		};
 
-		case (_action == "DisAssemble"):
+		case (_action == "DisAssemble" && {{_target isKindOf _x} count ["StaticMGWeapon","StaticGrenadeLauncher","StaticMortar"] > 0}):
 		{
 			playSound "FD_CP_Not_Clear_F";
 			[format ['You are not allowed to disassemble weapons.\nUse the "%1" option instead.', ["STR_R3F_LOG_action_deplacer_objet", "Move"] call getPublicVar], 5] call mf_notify_client;
