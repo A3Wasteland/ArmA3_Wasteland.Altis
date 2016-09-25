@@ -225,6 +225,7 @@ throwputArray = compileFinal str
 //Text name, classname, buy cost
 ammoArray = compileFinal str
 [
+	["9mm 10Rnd Mag", "10Rnd_9x21_Mag", 5],
 	["9mm 16Rnd Mag", "16Rnd_9x21_Mag", 10],
 	["9mm 30Rnd Mag", "30Rnd_9x21_Mag", 15],
 	["9mm 30Rnd SMG Mag", "30Rnd_9x21_Mag_SMG_02", 15],
