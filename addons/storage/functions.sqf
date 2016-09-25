@@ -10,7 +10,7 @@ else
 
 if !(["A3W_privateStorage"] call isConfigOn) exitWith
 {
-  storage_functions_defined = true;
+  storage_functions_defined = false;
 };
 
 
