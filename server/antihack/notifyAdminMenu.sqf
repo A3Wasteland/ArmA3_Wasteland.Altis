@@ -8,7 +8,7 @@
 
 // This function was created with the purpose of letting players know when an admin is abusing his powers
 
-if !([getPlayerUID player, 3] call isAdmin) exitWith {};
+if !((getPlayerUID player) call isAdmin) exitWith {};
 
 private ["_action", "_value", "_cfg", "_displayStr", "_message"];
 
