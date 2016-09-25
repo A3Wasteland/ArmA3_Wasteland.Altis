@@ -110,7 +110,7 @@ _unit setVariable ["FAR_reviveModeReady", true];
 
 if (!isPlayer _unit) then
 {
-	{ _unit disableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
+	{ _unit disableAI _x } forEach ["FSM","TARGET","AUTOTARGET"];
 };
 
 // Injury message
