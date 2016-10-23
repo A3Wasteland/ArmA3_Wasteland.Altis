@@ -76,6 +76,18 @@
 		<Key ID="STR_WL_ShopDescriptions_RepairKit">
 			<English>With this kit, you won't need an engineer!</English>
 		</Key>
+ +		<Key ID="STR_WL_ShopDescriptions_Marijuana">
+ +			<English>Get Relaxed!</English>
+ +		</Key>
+ +		<Key ID="STR_WL_ShopDescriptions_LSD">
+ +			<English>WOAH! WHAT WAS THAT!</English>
+ +		</Key>
+ +		<Key ID="STR_WL_ShopDescriptions_Cocaine">
+ +			<English>Get your twitch on!</English>
+ +		</Key>
+ +		<Key ID="STR_WL_ShopDescriptions_Heroin">
+ +			<English>At this Stage, you may want to go to rehab.</English>
+ +		</Key>
 		<Key ID="STR_WL_ShopDescriptions_MedKit">
 			<English>With this kit, you won't need a medic!</English>
 		</Key>
