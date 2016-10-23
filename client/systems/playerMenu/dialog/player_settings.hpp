@@ -66,7 +66,7 @@ class playerSettings {
 
 		class waterText : w_RscText {
 			idc = water_text;
-			text = "";
+			text = "mapconfig\logo.paa";
 			sizeEx = 0.03;
 			x = 0.06; y = 0.193;
 			w = 0.3; h = 0.05;
