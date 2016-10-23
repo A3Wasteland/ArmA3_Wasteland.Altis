@@ -7,13 +7,13 @@
 
 if (!isServer) exitwith {};
 
-#include "sideMissionDefines.sqf"
+#include "moneyMissionDefines.sqf"
 
-private ["_nbUnits", "_box1", "_box2", "_townName", "_missionPos", "_buildingRadius", "_putOnRoof", "_fillEvenly", "_tent1", "_chair1", "_chair2", "_cFire1", "_randomBox", "_randomBox2"];
+private ["_nbUnits", "_box1", "_box2", "_townName", "_missionPos", "_cashamount", "_buildingRadius", "_putOnRoof", "_fillEvenly", "_tent1", "_chair1", "_chair2", "_randomBox", "_randomBox2"];
 
 _setupVars =
 {
-	_missionType = "Town Invasion";
+	_missionType = "City Invasion money";
 	_nbUnits = if (missionDifficultyHard) then { AI_GROUP_LARGE } else { AI_GROUP_MEDIUM };
 
 	// settings for this mission
@@ -21,6 +21,7 @@ _setupVars =
 	_missionPos = markerPos (_locArray select 0);
 	_buildingRadius = _locArray select 1;
 	_townName = _locArray select 2;
+	_cashamount = round(random 25000);
 
 	//randomize amount of units
 	_nbUnits = _nbUnits + round(random (_nbUnits*0.5));
@@ -32,7 +33,6 @@ _setupVars =
 	if (random 1 < 0.75) then { _fillEvenly = true } else { _fillEvenly = false };
 };
 
-
 _setupObjects =
 {
 	// spawn some crates in the middle of town (Town marker position)
@@ -40,10 +40,12 @@ _setupObjects =
 	_randomBox2 = selectRandom ["mission_USSpecial","mission_HVSniper","mission_DLCRifles","mission_HVLaunchers"];
 	_box1 = createVehicle ["Box_NATO_Wps_F", _missionPos, [], 2, "None"];
 	_box1 setDir random 360;
+	_box1 setVariable ["cmoney", _cashamount, true];
 	[_box1, _randomBox] call fn_refillbox;
 
 	_box2 = createVehicle ["Box_East_WpsSpecial_F", _missionPos, [], 2, "None"];
 	_box2 setDir random 360;
+	_box2 setVariable ["cmoney", _cashamount, true];
 	[_box2, _randomBox2] call fn_refillbox;
 
 	// create some atmosphere around the crates 8)
@@ -53,9 +55,6 @@ _setupObjects =
 	_chair1 setDir random 90;
 	_chair2 = createVehicle ["Land_CampingChair_V2_F", _missionPos, [], 2, "None"];
 	_chair2 setDir random 180;
-	_cFire1	= createVehicle ["Campfire_burning_F", _missionPos, [], 2, "None"];
-
-	 townInvasionDrugPos = getPos _cFire1;
 
 	{ _x setVariable ["R3F_LOG_disabled", true, true] } forEach [_box1, _box2];
 
@@ -66,7 +65,7 @@ _setupObjects =
 	// move them into buildings
 	[_aiGroup, _missionPos, _buildingRadius, _fillEvenly, _putOnRoof] call moveIntoBuildings;
 
-	_missionHintText = format ["Hostiles have taken over <br/><t size='1.25' color='%1'>%2</t><br/><br/>There seem to be <t color='%1'>%3 enemies</t> hiding inside or on top of buildings. Get rid of them all and take their supplies!<br/>Watch out for those windows!", sideMissionColor, _townName, _nbUnits];
+	_missionHintText = format ["Bandits have taken over and looted <br/><t size='1.25' color='%1'>%2</t><br/><br/>There seem to be <t color='%1'>%3 enemies</t> hiding inside or on top of buildings. Eliminate them and take their loot!<br/>Watch out for those windows!", moneyMissionColor, _townName, _nbUnits];
 };
 
 _waitUntilMarkerPos = nil;
@@ -94,7 +93,7 @@ _drop_item = {
 _failedExec =
 {
 	// Mission failed
-	{ deleteVehicle _x } forEach [_box1, _box2, _tent1, _chair1, _chair2, _cFire1];
+	{ deleteVehicle _x } forEach [_box1, _box2, _tent1, _chair1, _chair2];
 };
 
 _successExec =
@@ -102,22 +101,15 @@ _successExec =
 	// Mission completed
 	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1, _box2];
 
-	for "_i" from 8 to 16 do {
-	  private["_item"];
-	  _item = [
-	          ["lsd", "Land_WaterPurificationTablets_F"],
-	          ["marijuana", "Land_VitaminBottle_F"],
-	          ["cocaine","Land_PowderedMilk_F"],
-	          ["heroin", "Land_PainKillers_F"],
-	          ["water","Land_BottlePlastic_V2_F"],
-	          ["cannedfood", "Land_BakedBeans_F"]
-			  
-	        ] call BIS_fnc_selectRandom;
-	  [_item, townInvasionDrugPos] call _drop_item;
+	for "_i" from 4 to 8 do 
+	{
+		private["_item"];
+		_item = selectRandom [["lsd", "Land_WaterPurificationTablets_F"],["marijuana", "Land_VitaminBottle_F"],["cocaine","Land_PowderedMilk_F"],["heroin", "Land_PainKillers_F"],["water","Land_BottlePlastic_V2_F"],["cannedfood", "Land_BakedBeans_F"]];
+		[_item, _lastPos] call _drop_item;
 	};
 
-	_successHintMessage = format ["Nice work!<br/><br/><t color='%1'>%2</t><br/>is a safe place again!<br/>Their belongings and drugs are now yours to take!", sideMissionColor, _townName];
-	{ deleteVehicle _x } forEach [_tent1, _chair1, _chair2, _cFire1];
+	_successHintMessage = format ["Nice work!<br/><br/><t color='%1'>%2</t><br/>is a safe place again.<br/>Their belongings and loot are now yours to take.", moneyMissionColor, _townName];
+	{ deleteVehicle _x } forEach [_tent1, _chair1, _chair2];
 };
 
-_this call sideMissionProcessor;
+_this call moneyMissionProcessor;

@@ -1,7 +1,7 @@
 // ******************************************************************************************
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
-//	@file Name: customGroup2.sqf
+//	@file Name: customGroup4.sqf
 //	@file Author: AgentRev, JoSchaap
 
 if (!isServer) exitWith {};
@@ -106,6 +106,10 @@ for "_i" from 1 to _nbUnits do
 
 	_unit addRating 1e11;
 	_unit spawn refillPrimaryAmmo;
-	_unit call setMissionSkillConvoy;
+	_unit call setMissionSkill;
 	_unit addEventHandler ["Killed", server_playerDied];
 };
+
+[_pos] call addDefensiveMines;
+
+[_group, _pos] call defendArea;

@@ -6,7 +6,7 @@
 
 if (!isServer) exitWith {};
 
-private ["_controllerNum", "_tempController", "_controllerSuffix", "_missionsFolder", "_missionDelay", "_availableMissions", "_missionsList", "_nextMission"];
+private ["_controllerNum", "_tempController", "_controllerSuffix", "_missionsFolder", "_missionDelay", "_availableMissions", "_missionsList", "_nextMission", "_readyMissions"];
 
 _controllerNum = param [0, 1, [0]];
 _tempController = param [1, false, [false]];
@@ -33,6 +33,12 @@ while {true} do
 		_availableMissions = [MISSION_CTRL_PVAR_LIST, { !(_x select 2) }] call BIS_fnc_conditionalSelect;
 		// _availableMissions = MISSION_CTRL_PVAR_LIST; // If you want to allow multiple missions of the same type running along, uncomment this line and comment the one above
 
+		//Enforce limit of total water missions
+		_readyMissions = missionNamespace getVariable ["A3W_ready_missions",[]];
+		if(["A3W_waterMissionLimit", 100] call getPublicVar <= {_x in missionType_water} count _readyMissions) then{
+			_availableMissions = _availableMissions select {!(_x select 0 in missionType_water)};
+		};
+
 		if (count _availableMissions > 0) then
 		{
 			_missionsList = _availableMissions call generateMissionWeights;
@@ -44,12 +50,17 @@ while {true} do
 		};
 	};
 
+	//Add to list of missions ready to be spawned
+	_readyMissions = missionNamespace getVariable ["A3W_ready_missions",[]];
+	_readyMissions pushBack _nextMission;
+	missionNamespace setVariable ["A3W_ready_missions", _readyMissions];
+
 	[MISSION_CTRL_PVAR_LIST, _nextMission, true] call setMissionState;
 
 	diag_log format ["WASTELAND SERVER - %1 Mission%2 waiting to run: %3", MISSION_CTRL_TYPE_NAME, _controllerSuffix, _nextMission];
 
 	[
-		format
+		parseText format
 		[
 			"<t color='%1' shadow='2' size='1.75'>%2 Objective%3</t><br/>" +
 			"<t color='%1'>------------------------------</t><br/>" +
@@ -68,6 +79,10 @@ while {true} do
 	private ["_setupVars", "_setupObjects", "_waitUntilMarkerPos", "_waitUntilExec", "_waitUntilCondition", "_waitUntilSuccessCondition", "_ignoreAiDeaths", "_failedExec", "_successExec"];
 
 	[_controllerSuffix] call compile preprocessFileLineNumbers format ["server\missions\%1\%2.sqf", MISSION_CTRL_FOLDER, _nextMission];
+
+	//Remove from list of missions ready to be spawned
+	_readyMissions = missionNamespace getVariable ["A3W_ready_missions",[]];
+	missionNamespace setVariable ["A3W_ready_missions", _readyMissions - [_nextMission]];
 
 	[MISSION_CTRL_PVAR_LIST, _nextMission, false] call setMissionState;
 

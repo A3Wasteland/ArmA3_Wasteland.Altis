@@ -28,7 +28,7 @@ _setupObjects =
 	_aiGroup = createGroup CIVILIAN;
 	[_aiGroup, _missionPos, _nbUnits, 5] call createCustomGroup;
 
-	_missionHintText = format ["An armed <t color='%1'>outpost</t> containing weapon crates has been spotted near the marker, go capture it!", sideMissionColor]
+	_missionHintText = format ["An armed <t color='%1'>outpost</t> containing weapon crates has been spotted near the marker. Go capture it!", sideMissionColor]
 };
 
 _waitUntilMarkerPos = nil;
@@ -47,7 +47,7 @@ _successExec =
 	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach _objects;
 	[_locationsArray, _missionLocation, _objects] call setLocationObjects;
 
-	_successHintMessage = "The outpost has been captured, good work.";
+	_successHintMessage = "The outpost has been captured. Good work.";
 };
 
 _this call sideMissionProcessor;
