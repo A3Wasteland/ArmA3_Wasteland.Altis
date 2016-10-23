@@ -62,12 +62,12 @@ switch (true) do
 {
 	case (_vehClass isKindOf "Man"):
 	{
-		_time = 30;
+		_time = 15;
 		_money = 500;
 	};
 	default // Everything else
 	{
-		_time = 30;
+		_time = 15;
 		_money = 500;
 	};
 };
