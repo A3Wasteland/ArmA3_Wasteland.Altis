@@ -60,7 +60,7 @@ _setupObjects =
 	_aiGroup setBehaviour "COMBAT";	
 	
 	_vehicleName = "Laptop";
-	_missionHintText = format ["<t color='%2'>Hackers</t> are using a laptop to hack your bank accounts. Hacking the laptop successfully will steal 1.5 percent from each on-line players bank account! HURRY TO DEFEND YOUR BANK ACCOUNT OR HACK OTHERS BANK ACCOUNTS!<br/>", _vehicleName, moneyMissionColor];
+	_missionHintText = format ["<t color='%2'>Hackers</t> estão usando um laptop para ROUBAR suas contas bancárias. Hackear o laptop com sucesso vai roubar o dinheiro de cada conta bancária de JOGADORES on-line!", _vehicleName, _moneyText, moneyMissionColor];
 };
 
 _waitUntilMarkerPos = nil;
@@ -88,6 +88,7 @@ _successExec =
 	publicVariable "RemoveLaptopHandler";
 	{ deleteVehicle _x } forEach [_camonet, _laptop, _table];
 	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_obj1, _obj2, _obj3, _obj4];
+	{ _x setVariable ["allowDamage", true, true] } forEach [_obj1, _obj2, _obj3, _obj4];
 
 	_successHintMessage = format ["The laptop is hacked. Go and kill the hacker to get your money back!"];
 };

@@ -8,7 +8,7 @@
 if (!isServer) exitwith {};
 #include "mainMissionDefines.sqf";
 
-private ["_box1", "_box2", "_boxPos", "_vehicleClass", "_vehicle"];
+private ["_box1", "_box2", "_boxPos", "_vehicleClass", "_vehicle", "_randomBox", "_randomBox2"];
 
 _setupVars =
 {
@@ -19,14 +19,15 @@ _setupVars =
 _setupObjects =
 {
 	_missionPos = markerPos _missionLocation;
-
+	_randomBox = selectRandom ["mission_USLaunchers","mission_HVLaunchers"];
+	_randomBox2 = selectRandom ["mission_USSpecial","airdrop_Snipers1","airdrop_LMGs"];
 	_box1 = createVehicle ["Box_IND_WpsSpecial_F", _missionPos, [], 5, "None"];
 	_box1 setDir random 360;
-	[_box1, "mission_Main_A3snipers"] call fn_refillbox;
+	[_box1, _randomBox] call fn_refillbox;
 
 	_box2 = createVehicle ["Box_NATO_WpsSpecial_F", _missionPos, [], 5, "None"];
 	_box2 setDir random 360;
-	[_box2, "mission_USSpecial2"] call fn_refillbox;
+	[_box2, _randomBox2] call fn_refillbox;
 
 	{
 		_boxPos = getPosASL _x;
@@ -58,7 +59,7 @@ _setupObjects =
 	[_vehicle, _aiGroup] spawn checkMissionVehicleLock;
 
 	_missionPicture = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "picture");
-	_missionHintText = "An armed expedition is trying to recover sunken ammo crates.<br/>If you want to capture them, you will need diving gear and an underwater weapon.";
+	_missionHintText = "Uma expedição armada está tentando recuperar caixas de munição afundadas. Você vai precisar de equipamento de mergulho para esta missão.";
 };
 
 _waitUntilMarkerPos = nil;
@@ -79,7 +80,7 @@ _successExec =
 	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1, _box2];
 	_vehicle lockDriver false;
 
-	_successHintMessage = "The sunken crates have been captured, well done.";
+	_successHintMessage = "Caixas recuperadas.";
 };
 
 _this call mainMissionProcessor;

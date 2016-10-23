@@ -9,7 +9,7 @@
 if (!isServer) exitwith {};
 #include "sideMissionDefines.sqf"
 
-private ["_nbUnits", "_wreckPos", "_wreck", "_box1", "_box2"];
+private ["_nbUnits", "_wreckPos", "_wreck", "_box1", "_box2", "_randomBox", "_randomBox2"];
 
 _setupVars =
 {
@@ -26,13 +26,15 @@ _setupObjects =
 	// Class, Position, Fuel, Ammo, Damage, Special
 	_wreck = ["O_Heli_Light_02_unarmed_F", _wreckPos, 0, 0, 1] call createMissionVehicle;
 
+	_randomBox = selectRandom ["mission_USLaunchers","mission_HVLaunchers"];
+	_randomBox2 = selectRandom ["mission_USSpecial","mission_DLCLMGs","mission_ApexRifles"];
 	_box1 = createVehicle ["Box_NATO_WpsSpecial_F", _missionPos, [], 5, "None"];
 	_box1 setDir random 360;
-	[_box1, "mission_USSpecial"] call fn_refillbox;
+	[_box1, _randomBox] call fn_refillbox;
 
 	_box2 = createVehicle ["Box_East_WpsSpecial_F", _missionPos, [], 5, "None"];
 	_box2 setDir random 360;
-	[_box2, "mission_USLaunchers"] call fn_refillbox;
+	[_box2, _randomBox2] call fn_refillbox;
 
 	{ _x setVariable ["R3F_LOG_disabled", true, true] } forEach [_box1, _box2];
 
@@ -40,7 +42,7 @@ _setupObjects =
 	[_aiGroup, _missionPos, _nbUnits] call createCustomGroup;
 
 	_missionPicture = getText (configFile >> "CfgVehicles" >> typeOf _wreck >> "picture");
-	_missionHintText = "A helicopter has come down under enemy fire!";
+	_missionHintText = "Um helicóptero transportando duas caixas de ARMAS foi derrubado sob fogo inimigo! Recupere as caixas de armas.";
 };
 
 _waitUntilMarkerPos = nil;
@@ -59,7 +61,7 @@ _successExec =
 	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1, _box2];
 	deleteVehicle _wreck;
 
-	_successHintMessage = "The airwreck supplies have been collected, well done.";
+	_successHintMessage = "Armas recuperadas. Muito bem!";
 };
 
 _this call sideMissionProcessor;

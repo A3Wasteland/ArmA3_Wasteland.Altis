@@ -113,7 +113,7 @@ _setupObjects =
 	_missionPicture = getText (configFile >> "CfgVehicles" >> _veh2 >> "picture");
 	_vehicleName = getText (configFile >> "CfgVehicles" >> _veh2 >> "displayName");
 
-	_missionHintText = format ["A <t color='%2'>%1</t> transporting 2 weapon crates is being escorted by armed vehicles. Stop them!", _vehicleName, mainMissionColor];
+	_missionHintText = format ["Um <t color='%2'>%1</t> está transportando 2 caixas de armas e está sendo escoltado por veículos armados. Pare-os!", _vehicleName, mainMissionColor];
 
 	_numWaypoints = count waypoints _aiGroup;
 };
@@ -129,16 +129,17 @@ _failedExec = nil;
 _successExec =
 {
 	// Mission completed
-
+	_randomBox = selectRandom ["mission_USLaunchers","mission_HVLaunchers"];
+	_randomBox2 = selectRandom ["mission_USSpecial","mission_DLCLMGs","mission_DLCRifles",""];
 	_box1 = createVehicle ["Box_NATO_Wps_F", _lastPos, [], 2, "None"];
 	_box1 setDir random 360;
-	[_box1, "mission_USSpecial"] call fn_refillbox;
+	[_box1, _randomBox] call fn_refillbox;
 
 	_box2 = createVehicle ["Box_East_WpsSpecial_F", _lastPos, [], 2, "None"];
 	_box2 setDir random 360;
-	[_box2, "mission_USLaunchers"] call fn_refillbox;
+	[_box2, _randomBox2] call fn_refillbox;
 
-	_successHintMessage = "The convoy has been stopped, the weapon crates and vehicles are now yours to take.";
+	_successHintMessage = "O comboio foi parado.";
 };
 
 _this call mainMissionProcessor;

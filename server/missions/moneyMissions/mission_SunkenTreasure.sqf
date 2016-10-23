@@ -14,7 +14,7 @@ private ["_cashObjects", "_cash", "_cashPos", "_box1", "_boxPos", "_vehicleClass
 
 _setupVars =
 {
-	_missionType = "Sunken Treasure";
+	_missionType = "Tesouro Submerso";
 	_locationsArray = SunkenMissionMarkers;
 };
 
@@ -54,7 +54,7 @@ _setupObjects =
 	[_vehicle, _aiGroup] spawn checkMissionVehicleLock;
 
 	_missionPicture = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "picture");
-	_missionHintText = format ["A treasure containing <t color='%1'>$25,000</t> and weapons is being recovered.<br/>If you want to capture it, you will need diving gear and an underwater weapon.", moneyMissionColor];
+	_missionHintText = format ["A treasure containing <t color='%1'>$150,000</t> and weapons is being recovered.<br/>You will need diving gear and an underwater weapon to complete the mission.", moneyMissionColor];
 };
 
 _waitUntilMarkerPos = nil;
@@ -78,11 +78,11 @@ _successExec =
 
 	// Give the rewards
 	{
-		_x setVariable ["cmoney", 2500, true];
+		_x setVariable ["cmoney", 25000, true];
 		_x setVariable ["owner", "world", true];
 	} forEach _cashObjects;
 
-	_successHintMessage = "The treasure has been captured, well done.";
+	_successHintMessage = "The treasure has been captured. Well done.";
 };
 
 _this call moneyMissionProcessor;
