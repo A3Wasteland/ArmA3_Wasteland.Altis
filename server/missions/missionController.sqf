@@ -49,7 +49,7 @@ while {true} do
 	diag_log format ["WASTELAND SERVER - %1 Mission%2 waiting to run: %3", MISSION_CTRL_TYPE_NAME, _controllerSuffix, _nextMission];
 
 	[
-		parseText format
+		format
 		[
 			"<t color='%1' shadow='2' size='1.75'>%2 Objective%3</t><br/>" +
 			"<t color='%1'>------------------------------</t><br/>" +

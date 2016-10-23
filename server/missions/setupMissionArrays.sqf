@@ -9,90 +9,45 @@ if (!isServer) exitWith {};
 MainMissions =
 [
 	// Mission filename, weight
-	
-	["mission_AbandonedJet", 0.6],
-	["mission_ArmedDiversquad", 0.5],
-	["mission_Coastal_Convoy", 0.1],
+	["mission_ArmedDiversquad", 1],
+	["mission_Coastal_Convoy", 1],
 	["mission_Convoy", 1],
-	//["mission_HostileHeliFormation", 0.1],
-	["mission_APC", 0.8],
-	["mission_LightArmVeh", 0.5],
-	["mission_ArmedHeli", 0.8],
-	["mission_CivHeli", 0.5],
-	["mission_drugsRunners", 0.8],
-	["mission_Smugglers", 0.8]
+	["mission_HostileHeliFormation", 0.5],
+	["mission_APC", 1],
+	["mission_MBT", 1],
+	["mission_LightArmVeh", 1],
+	["mission_ArmedHeli", 1],
+	["mission_CivHeli", 1]
 ];
 
 SideMissions =
 [
-	//["mission_HostileHelicopter", 0.1],
-	//["mission_MiniConvoy", 1],
-	["mission_SunkenSupplies", 0.5],
-	["mission_TownInvasion", 1.5],
-	["mission_AirWreck", 1.5],
-	["mission_WepCache", 1.5],
-	//["mission_Outpost", 1.8],
-	["mission_Truck", 0.5],
-	["mission_GeoCache", 0.8],
-	["mission_Sniper", 1],
-	["mission_SmugglerPlane", 1],
-	["mission_Roadblock", 1.2]
+	["mission_HostileHelicopter", 0.5],
+	["mission_MiniConvoy", 1],
+	["mission_SunkenSupplies", 1],
+	["mission_TownInvasion", 2],
+	["mission_Outpost", 3],
+	["mission_Truck", 1]
 ];
 
 MoneyMissions =
 [
-	["mission_MoneyShipment", 1.3],
-	["mission_SunkenTreasure", 0.5],
-	//["mission_drugsRunners", 0.8],
-	//["mission_Roadblock", 1.2],
-	["mission_Hackers", 0.7]
-];
-
-hostileairMissions = //7th Missions 
-[
-	//["mission_Gunship", 1],
-	["mission_HostileHelicopter", 1],
-	["mission_HostileHeliFormation", 1],
-	["mission_HostileJet", 1.3],
-	["mission_HostileVTOL", 1]
-	
-];
-
-extraMissions =
-[
-	["mission_Outpost", 1.2],
-	["mission_MBT", 1],
-	["mission_Convoy", 1],
-	["mission_ConvoyCSATSF", 0.9],
-	["mission_ConvoyNATOSF", 0.8],
-	//["mission_HackLaptop", 1.5],
-	["mission_MiniConvoy", 0.8]
-	
-];
-
-PatrolMissions =
-[
-	["mission_militaryPatrol", 1],
-	//["mission_artyPatrol", 1],
-	["mission_TanoaPatrol", 1]
-	
-	
+	["mission_MoneyShipment", 1],
+	["mission_SunkenTreasure", 1]
 ];
 
 MissionSpawnMarkers = (allMapMarkers select {["Mission_", _x] call fn_startsWith}) apply {[_x, false]};
 ForestMissionMarkers = (allMapMarkers select {["ForestMission_", _x] call fn_startsWith}) apply {[_x, false]};
 SunkenMissionMarkers = (allMapMarkers select {["SunkenMission_", _x] call fn_startsWith}) apply {[_x, false]};
-RoadblockMissionMarkers = (allMapMarkers select {["Roadblock_", _x] call fn_startsWith}) apply {[_x, false]};
-SniperMissionMarkers = (allMapMarkers select {["Sniper_", _x] call fn_startsWith}) apply {[_x, false]};
 
-/*if !(ForestMissionMarkers isEqualTo []) then
+if !(ForestMissionMarkers isEqualTo []) then
 {
 	SideMissions append
 	[
 		["mission_AirWreck", 3],
 		["mission_WepCache", 3]
 	];
-};*/
+};
 
 LandConvoyPaths = (call compile preprocessFileLineNumbers "mapConfig\convoys\landConvoysList.sqf") apply {[_x, false]};
 CoastalConvoyPaths = (call compile preprocessFileLineNumbers "mapConfig\convoys\coastalConvoysList.sqf") apply {[_x, false]};
@@ -104,6 +59,3 @@ MoneyMissions = [MoneyMissions, [["A3W_underWaterMissions", ["mission_SunkenTrea
 { _x set [2, false] } forEach MainMissions;
 { _x set [2, false] } forEach SideMissions;
 { _x set [2, false] } forEach MoneyMissions;
-{ _x set [2, false] } forEach hostileairMissions; //7th Mission
-{ _x set [2, false] } forEach extraMissions; //7th Mission
-{ _x set [2, false] } forEach PatrolMissions; //7th Mission
