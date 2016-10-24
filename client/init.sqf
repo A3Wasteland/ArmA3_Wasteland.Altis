@@ -125,6 +125,7 @@ _mouseButtonToKey = "params ['_disp','_btn']; ([_disp, _btn + 65536 + ([0,128] s
 call compile preprocessFileLineNumbers "client\functions\setupClientPVars.sqf";
 
 //client Executes
+A3W_scriptThreads pushBack execVM "client\systems\hud\playerHud.sqf";
 
 if (["A3W_survivalSystem"] call isConfigOn) then
 {
