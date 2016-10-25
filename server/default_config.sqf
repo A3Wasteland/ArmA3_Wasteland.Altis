@@ -46,7 +46,7 @@ A3W_vehiclePurchaseCooldown = 60;  // Number of seconds to wait before allowing 
 
 // ATM settings
 A3W_atmEnabled = 1;                // Enable ATM system (0 = no, 1 = yes)
-A3W_atmMaxBalance = 1000000;       // Maximum amount of money that can be stored in a bank account (don't go over 16777216 as numbers start losing accuracy)
+A3W_atmMaxBalance = 10000000;       // Maximum amount of money that can be stored in a bank account (don't go over 16777216 as numbers start losing accuracy)
 A3W_atmTransferFee = 5;            // Fee in percent charged to players for money transfers to other players (0 to 50)
 A3W_atmTransferAllTeams = 0;       // Allow money transfers between players of all teams/sides (0 = same team only, 1 = all teams)
 A3W_atmEditorPlacedOnly = 0;       // Only allow access via ATMs placed from the mission editor (0 = all ATMs from towns & editor allowed, 1 = ATMs from editor only) Note: Stratis has no town ATMs, only editor ones.

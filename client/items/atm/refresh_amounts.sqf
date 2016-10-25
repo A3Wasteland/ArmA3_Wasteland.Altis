@@ -22,7 +22,7 @@ _totalText = _dialog displayCtrl AtmTotalText_IDC;
 
 _bmoney = player getVariable ["bmoney", 0];
 _balanceText = format ["$%1", [player getVariable ["bmoney", 0]] call fn_numbersText];
-if (_bmoney >= ["A3W_atmMaxBalance", 1000000] call getPublicVar) then { _balanceText = format ["<t color='#FFA080'>%1</t>", _balanceText] };
+if (_bmoney >= ["A3W_atmMaxBalance", 10000000] call getPublicVar) then { _balanceText = format ["<t color='#FFA080'>%1</t>", _balanceText] };
 
 _balance ctrlSetStructuredText parseText _balanceText;
 
