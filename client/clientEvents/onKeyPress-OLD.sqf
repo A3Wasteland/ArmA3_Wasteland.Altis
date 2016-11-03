@@ -53,57 +53,53 @@ switch (true) do
 			["You've taken out your earplugs.", 5] call mf_notify_client;
 		};
 	};
-	
-	// Holster - unholster weapon (H key)
-	case (_key == 35):
+
+	// Holster /Unholster Weapon - H Key
+	case (_key in A3W_customKeys_holster):
 	{
-		if (vehicle player == player && currentWeapon player != "") then
+		
+		if (currentweapon player != "" && (stance player != 'CROUCH' || currentWeapon player != handgunWeapon player)) then	
 		{
-			curWep_h = currentWeapon player;
 			player action ["SwitchWeapon", player, player, 100];
+			["You holstered your weapon!", 5] call mf_notify_client;
 		}
 		else
 		{
-			if (curWep_h in [primaryWeapon player,secondaryWeapon player,handgunWeapon player]) then
-			{
-				player selectWeapon curWep_h;
-			};
+			player action ["SwitchWeapon", player, player, 0];
+			["You Unholster your weapon!", 5] call mf_notify_client;
 		};
 	};
+
 };
+
 
 // ********** Action keys **********
 
 // Parachute
 if (!_handled && _key in actionKeys "GetOver") then
 {
-	if (alive player) then
-	{
-		_veh = vehicle player;
+	if (!alive player) exitWith {};
 
-		if (_veh == player) then
+	_veh = vehicle player;
+
+	if (_veh == player) exitWith
+	{
+		// allow opening parachute only above 2.5m
+		if ((getPos player) select 2 > 2.5) then
 		{
-			if ((getPos player) select 2 > 2.5) then
-			{
-				true call fn_openParachute;
-				_handled = true;
-			};
-		}
-		else
+			true call A3W_fnc_openParachute;
+			_handled = true;
+		};
+	};
+
+	// 1 sec cooldown after parachute is deployed so you don't start falling again if you double-tap the key
+	if (_veh isKindOf "ParachuteBase" && (isNil "A3W_openParachuteTimestamp" || {diag_tickTime - A3W_openParachuteTimestamp >= 1})) then
+	{
+		moveOut player;
+		_veh spawn
 		{
-			if (_veh isKindOf "ParachuteBase") then
-			{
-				// 1s cooldown after parachute is deployed so you don't start falling again if you double-tap the key
-				if (isNil "openParachuteTimestamp" || {diag_tickTime - openParachuteTimestamp >= 1}) then
-				{
-					moveOut player;
-					_veh spawn
-					{
-						sleep 1;
-						deleteVehicle _this;
-					};
-				};
-			};
+			sleep 1;
+			deleteVehicle _this;
 		};
 	};
 };
@@ -143,9 +139,28 @@ if (!_handled && _key in actionKeys "NetworkStats") then
 };
 
 // Push-to-talk
-if (!_handled && _key in (actionKeys "PushToTalk" + actionKeys "PushToTalkAll")) then
+if (!_handled && _key in call A3W_allVoiceChatKeys) then
 {
 	[true] call fn_voiceChatControl;
+};
+
+// UAV feed
+if (!_handled && _key in (actionKeys "UavView" + actionKeys "UavViewToggle")) then
+{
+	if (["A3W_disableUavFeed"] call isConfigOn) then
+	{
+		_handled = true;
+	};
+};
+
+// Override prone reload freeze (ffs BIS)
+if (!_handled && _key in (actionKeys "MoveDown" + actionKeys "MoveUp")) then
+{
+	if ((toLower animationState player) find "reloadprone" != -1) then
+	{
+		[player, format ["AmovPknlMstpSrasW%1Dnon", [player, true] call getMoveWeapon]] call switchMoveGlobal;
+		reload player;
+	};
 };
 
 _handled
