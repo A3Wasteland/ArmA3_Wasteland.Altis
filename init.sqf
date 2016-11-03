@@ -106,8 +106,8 @@ if (hasInterface || isServer) then
 	[] execVM "addons\APOC_Airdrop_Assistance\init.sqf";  // AIRDROP
 	[] execVM "addons\scripts\intro.sqf";                 //INTRO
 	[] execVM "addons\laptop\init.sqf";                   // Addon for hack laptop mission
-	[] execVM "addons\HvT\HvT.sqf"; // High Value Target
-    [] execVM "addons\HvT\HvD.sqf"; 
+	[] execVM "addons\HvT\HvT.sqf";                       // High Value Target
+    [] execVM "addons\scripts\HvD.sqf";                   // High Value Drugrunner
 	
 // Remove line drawings from map
 (createTrigger ["EmptyDetector", [0,0,0], false]) setTriggerStatements
