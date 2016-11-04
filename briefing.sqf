@@ -19,6 +19,23 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.0",
+"
+<br/>CRIADO O SERVER TRAITORS TEAM!!
+<br/>
+<br/>AGRADECIMENTOS ESPECIAIS:
+<br/>
+<br/>	* [TT]Cariolano 
+<br/>	* [TT]Master_Clay 
+<br/>	* [TT]Mata_Cotoco
+<br/>	* [TT]Biabock
+<br/>	* [TT]GoodLuck
+<br/>	* [TT]zEveery
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.3b",
 "
 <br/>[Added] Private parking
@@ -400,6 +417,14 @@ player createDiaryRecord ["credits",
 [
 "Credits",
 "
+<br/><font size='16' color='#BBBBBB'>Criação do Servidor Traitors</font>
+<br/>	* [TT]Cariolano 
+<br/>	* [TT]Master_Clay 
+<br/>	* [TT]Mata_Cotoco
+<br/>	* [TT]Biabock
+<br/>	* [TT]GoodLuck
+<br/>	* [TT]zEveery
+<br/>
 <br/><font size='16' color='#BBBBBB'>Developed by A3Wasteland.com:</font>
 <br/>	* AgentRev (TeamPlayerGaming)
 <br/>	* JoSchaap (GoT/Tweakers.net)
@@ -408,11 +433,6 @@ player createDiaryRecord ["credits",
 <br/>	* Bewilderbeest (KoS/KillonSight)
 <br/>	* Torndeco
 <br/>	* Del1te (404Games)
-<br/>
-<br/><font size='16' color='#BBBBBB'>Original Arma 2 Wasteland missions by:</font>
-<br/>	* Tonic
-<br/>	* Sa-Matra
-<br/>	* MarKeR
 <br/>
 <br/><font size='16' color='#BBBBBB'>Improved and ported to Arma 3 by 404Games:</font>
 <br/>	* Deadbeat

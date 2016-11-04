@@ -76,11 +76,11 @@ fn_deletePlayerData =
 			{
 				if (_preload) then
 				{
-					9999 cutText ["Preloading previous location...", "BLACK", 0.01];
+					9999 cutText ["Bem vindo ao servidor Traitors, estamos preparando seus arquivos", "BLACK", 0.01];
 					waitUntil {sleep 0.1; preloadCamera _pos};
 				};
 
-				9999 cutText ["Loading previous location...", "BLACK", 0.01];
+				9999 cutText ["Tudo pronto, divirta-se!", "BLACK", 0.01];
 			}
 			else
 			{
