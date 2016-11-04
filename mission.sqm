@@ -92,14 +92,14 @@ class AddonsMetaData
 randomSeed=3783014;
 class ScenarioData
 {
-	author="Traitors Team - ts3.traitors.com.br";
+	author="AgentRev";
 };
 class Mission
 {
 	class Intel
 	{
-		briefingName="Traitors Team A3Wasteland Altis v1.3b"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
-		overviewText="TS:ts3.traitors.com.br WEBSITE: www.traitors.com.br";
+		briefingName="A3Wasteland Altis v1.3b"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
+		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3Wasteland.com for more details";
 		resistanceWest=0;
 		timeOfChanges=3e+038;
 		startWeather=0;
