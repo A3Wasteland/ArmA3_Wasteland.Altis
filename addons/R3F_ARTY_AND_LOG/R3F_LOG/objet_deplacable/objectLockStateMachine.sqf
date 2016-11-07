@@ -10,7 +10,7 @@ if(R3F_LOG_mutex_local_verrou) exitWith {
 	player globalChat STR_R3F_LOG_mutex_action_en_cours;
 };
 
-private["_locking", "_object", "_lockState", "_lockDuration", "_stringEscapePercent", "_iteration", "_unlockDuration", "_totalDuration", "_poiDist", "_poiMarkers", "_checks", "_success"];
+private["_locking", "_object", "_lockState", "_lockDuration", "_stringEscapePercent", "_iteration", "_unlockDuration", "_totalDuration", "_poiDist", "_poiMarkers", "_checks", "_success", "_nearbyStorage"];
 
 _object = _this select 0;
 _lockState = _this select 3;
@@ -29,12 +29,20 @@ switch (_lockState) do
 
 		// Points of interest
 		_poiDist = ["A3W_poiObjLockDistance", 100] call getPublicVar;
-		_poiMarkers = allMapMarkers select {markerType _x == "Empty" && {[["GenStore","GunStore","VehStore","Mission_","ForestMission_","LandConvoy_"], _x] call fn_startsWith}};
+		_poiMarkers = allMapMarkers select {markerType _x == "Empty" && {[["GenStore","GunStore","VehStore","Mission_","ForestMission_","LandConvoy_","Parking"], _x] call fn_startsWith}};
+		_nearbyStorage = nearestObjects [player, ["Land_PaperBox_open_full_F", "Land_Pallet_MilBoxes_F", "Land_PaperBox_open_empty_F", "Land_PaperBox_closed_F"], _poiDist] select {_x getVariable ["is_storage", false]};
 
 		if ({(getPosASL player) vectorDistance (ATLtoASL getMarkerPos _x) < _poiDist} count _poiMarkers > 0) exitWith
 		{
 			playSound "FD_CP_Not_Clear_F";
 			[format ["You are not allowed to lock objects within %1m of stores and mission spawns", _poiDist], 5] call mf_notify_client;
+			R3F_LOG_mutex_local_verrou = false;
+		};
+
+		if !(_nearbyStorage isEqualTo []) exitWith
+		{
+			playSound "FD_CP_Not_Clear_F";
+			[format ["You are not allowed to lock objects within %1m of a storage location", _poiDist], 5] call mf_notify_client;
 			R3F_LOG_mutex_local_verrou = false;
 		};
 
