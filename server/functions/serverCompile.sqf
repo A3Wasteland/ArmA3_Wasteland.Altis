@@ -35,15 +35,26 @@ removeDisabledMissions = [_path, "removeDisabledMissions.sqf"] call mf_compile;
 setLocationObjects = [_path, "setLocationObjects.sqf"] call mf_compile;
 setLocationState = [_path, "setLocationState.sqf"] call mf_compile;
 setMissionState = [_path, "setMissionState.sqf"] call mf_compile;
+// Non Vanilla missions
+createsniperGroup = [_path, "createUnits\sniperGroup.sqf"] call mf_compile; 
+createsmugglerGroup = [_path, "createUnits\smugglerGroup.sqf"] call mf_compile;
+createCustomGroup3 = [_path, "createUnits\customGroup3.sqf"] call mf_compile;
+createRandomPilot = [_path, "createUnits\createRandomPilot.sqf"] call mf_compile;
+createWaitCondition = [_path, "createWaitCondition.sqf"] call mf_compile;
+createGroup1= [_path, "createUnits\Group1.sqf"] call mf_compile;
+createGroup2= [_path, "createUnits\Group2.sqf"] call mf_compile;
+createGroup3= [_path, "createUnits\Group3.sqf"] call mf_compile;
+createGroup4= [_path, "createUnits\Group4.sqf"] call mf_compile;
+createGroup5= [_path, "createUnits\Group5.sqf"] call mf_compile;
+createGroup6= [_path, "createUnits\Group6.sqf"] call mf_compile;
+createGroup7= [_path, "createUnits\Group7.sqf"] call mf_compile;
+createGroup8= [_path, "createUnits\Group8.sqf"] call mf_compile;
+createGroup9= [_path, "createUnits\Group9.sqf"] call mf_compile;
+createGroup10= [_path, "createUnits\Group10.sqf"] call mf_compile;
 
 //Function Compiles
 _path = "server\functions";
 A3W_fnc_checkHackedVehicles = [_path, "checkHackedVehicles.sqf"] call mf_compile;
-A3W_fnc_deleteEmptyGroup = [_path, "fn_deleteEmptyGroup.sqf"] call mf_compile;
-A3W_fnc_registerKillScore = [_path, "fn_registerKillScore.sqf"] call mf_compile;
-A3W_fnc_requestTickTime = [_path, "fn_requestTickTime.sqf"] call mf_compile;
-A3W_fnc_setItemCleanup = [_path, "fn_setItemCleanup.sqf"] call mf_compile;
-A3W_fnc_updateSpawnTimestamp = [_path, "fn_updateSpawnTimestamp.sqf"] call mf_compile;
 addMilCap = [_path, "addMilCap.sqf"] call mf_compile;
 basePartSetup = [_path, "basePartSetup.sqf"] call mf_compile;
 cleanVehicleWreck = [_path, "cleanVehicleWreck.sqf"] call mf_compile;
@@ -58,8 +69,10 @@ fn_refillBox = [_path, "fn_refillbox.sqf"] call mf_compile;
 fn_refillTruck = [_path, "fn_refilltruck.sqf"] call mf_compile;
 fn_replaceMagazines = [_path, "fn_replaceMagazines.sqf"] call mf_compile;
 fn_replaceWeapons = [_path, "fn_replaceWeapons.sqf"] call mf_compile;
+fn_selectRandomWeighted = [_path, "fn_selectRandomWeighted.sqf"] call mf_compile;
 fn_updatePlayerScore = [_path, "fn_updatePlayerScore.sqf"] call mf_compile;
 hintBroadcast = [_path, "hintBroadcast.sqf"] call mf_compile;
+fn_invis = [_path, "invis.sqf"] call mf_compile;
 parachuteLiftedVehicle = [_path, "parachuteLiftedVehicle.sqf"] call mf_compile;
 playerRespawnServer = [_path, "playerRespawnServer.sqf"] call mf_compile;
 processGroupInvite = [_path, "processGroupInvite.sqf"] call mf_compile;
@@ -82,7 +95,6 @@ weaponDisassembledServer = [_path, "weaponDisassembledServer.sqf"] call mf_compi
 
 //Player Management
 server_playerDied = [_path, "serverPlayerDied.sqf"] call mf_compile;
-A3W_fnc_serverPlayerDied = server_playerDied;
 
 //Spawning Compiles
 _path = "server\spawning";
