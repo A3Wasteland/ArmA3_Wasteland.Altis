@@ -6,6 +6,7 @@
 AirdropMenu = 
 [
 	["Airdrop",true],
+			["Veículos", [2], "#USER:VehicleMenu", -5, [["expression", ""]], "1", "1"],
 			["Suplimentos", [3], "#USER:SupplyMenu", -5, [["expression", ""]], "1", "1"],
 			["Cancelar AirDrop", [4], "", -3, [["expression", ""]], "1", "1"]
 ];
