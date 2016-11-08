@@ -149,5 +149,7 @@ A3W_moneyMissionDelay = 1*60;     // Time in seconds between Money Missions
 A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
 A3W_hostileairMissionDelay = 1*60;    	// Time in seconds between hostile air Missions //7th Missions
 A3W_hostileairMissionTimeout = 30*60;  	// Time in seconds that a hostile air will run for, unless completed //7th Missions
+A3W_extraMissionDelay = 1*60;     	// Time in seconds between Extra Missions
 A3W_extraMissionTimeout = 45*60;   	// Time in seconds that a Extra Mission will run for, unless completed //7th Missions
+A3W_patrolMissionDelay = 1*60;    	// Time in seconds between Patrol Missions
 A3W_patrolMissionTimeout = 60*60;  	// Time in seconds that a Patrol Mission will run for, unless completed //7th Missions
