@@ -7,47 +7,25 @@
 if (!isServer) exitwith {};
 #include "sideMissionDefines.sqf";
 
-private ["_positions", "_boxes1", "_currBox1", "_box1", "_obj", "_tent"];
+private ["_positions", "_box1", "_box2", "_missionPos", "_randomBox", "_randomBox2"];
 
 _setupVars =
 {
-	_missionType = "Sniper Overwatch";
-	_locationsArray = MissionSpawnMarkers;
+	_missionType = "Sniper Nest";
+	_locationsArray = SniperMissionMarkers;
 };
 
-
-	
 _setupObjects =
 {
 	_missionPos = markerPos _missionLocation;
-		//delete existing base parts and vehicles at location
-	_baseToDelete = nearestObjects [_missionPos, ["All"], 25];
-	{ deleteVehicle _x } forEach _baseToDelete; 
-	
-	
-			_randomBox = ["mission_TOP_Gear1","mission_TOP_Sniper","mission_USLaunchers","mission_USSpecial","mission_Main_A3snipers"] call BIS_fnc_selectRandom;
-	_box1 = createVehicle ["Box_NATO_AmmoOrd_F", _missionPos, [], 5, "None"];
-	_box1 setDir random 360;
-	[_box1, _randomBox] call fn_refillbox;
-	
-	{ _x setVariable ["R3F_LOG_disabled", true, true] } forEach [_box1];
-	
-	_tent = createVehicle ["CamoNet_INDP_big_F", _missionPos, [], 3, "None"];
-	_tent allowDamage false;
-	_tent setDir random 360;
-	_tent setVariable ["R3F_LOG_disabled", false];
-	
-	_missionPos = getPosASL _tent;
-	_obj = createVehicle ["I_GMG_01_high_F", _missionPos,[], 10,"None"]; 
-	_obj setPosASL [_missionPos select 0, (_missionPos select 1) + 2, _missionPos select 2];
 	
 	_aiGroup = createGroup CIVILIAN;
-	[_aiGroup,_missionPos] spawn createcustomGroup3;
+	[_aiGroup,_missionPos] call createsniperGroup;
 
 	_aiGroup setCombatMode "RED";
 	_aiGroup setBehaviour "COMBAT";
 	
-	_missionHintText = format ["A small group of Snipers are setting up overwatch. Head to the marked area and Take them out! Be careful they are fully armed and dangerous!", sideMissionColor];
+	_missionHintText = format ["Snipers estão protegendo caixas de ARMAS com vários itens não encontrados para venda. Tente recupera-las! CUIDADO!!! Eles estão totalmente armados e perigosos!", sideMissionColor];
 };
 
 _waitUntilMarkerPos = nil;
@@ -57,16 +35,24 @@ _waitUntilCondition = nil;
 _failedExec =
 {
 	// Mission failed
-	{ deleteVehicle _x } forEach [_box1, _tent, _obj];
-	
 };
 
 _successExec =
 {
 	// Mission completed
+	_randomBox = selectRandom ["mission_USLaunchers","mission_HVLaunchers"];
+	_randomBox2 = selectRandom ["mission_HVSniper","mission_Main_A3snipers","mission_snipers"];
+	_box1 = createVehicle ["Box_East_WpsSpecial_F", _missionPos, [], 2, "None"];
+	_box1 setDir random 360;
+	[_box1, _randomBox] call fn_refillbox;
 	
-	_successHintMessage = format ["The snipers are dead! Well Done!"];
-	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1];
+	_box2 = createVehicle ["Box_IND_WpsSpecial_F", _missionPos, [], 2, "None"];
+	_box2 setDir random 360;
+	[_box2, _randomBox2] call fn_refillbox;
+
+	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1, _box2];
+	
+	_successHintMessage = format ["Os snipers estão mortos. Bom trabalho."];
 };
 
 _this call sideMissionProcessor;

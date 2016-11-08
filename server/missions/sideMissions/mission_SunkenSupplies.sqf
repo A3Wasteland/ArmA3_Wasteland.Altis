@@ -7,7 +7,7 @@
 if (!isServer) exitwith {};
 #include "sideMissionDefines.sqf"
 
-private ["_box1", "_box2", "_boxPos"];
+private ["_box1", "_box2", "_boxPos", "_randomBox", "_randomBox2"];
 
 _setupVars =
 {
@@ -18,12 +18,13 @@ _setupVars =
 _setupObjects =
 {
 	_missionPos = markerPos _missionLocation;
-
+	_randomBox = ["mission_USLaunchers","Launchers_Tier_2"] call BIS_fnc_selectRandom;
+	_randomBox2 = ["mission_USSpecial","mission_AssRifles"] call BIS_fnc_selectRandom;
 	_box1 = createVehicle ["Box_NATO_Wps_F", _missionPos, [], 5, "None"];
-	[_box1, "mission_USSpecial"] call fn_refillbox;
+	[_box1, _randomBox] call fn_refillbox;
 
 	_box2 = createVehicle ["Box_East_Wps_F", _missionPos, [], 5, "None"];
-	[_box2, "mission_USLaunchers"] call fn_refillbox;
+	[_box2, _randomBox2] call fn_refillbox;
 
 	{
 		_boxPos = getPosASL _x;
@@ -36,7 +37,7 @@ _setupObjects =
 	_aiGroup = createGroup CIVILIAN;
 	[_aiGroup, _missionPos] call createSmallDivers;
 
-	_missionHintText = "Sunken supplies have been spotted in the ocean near the marker, and are heavily guarded. Diving gear and an underwater weapon are recommended.";
+	_missionHintText = "Suprimentos de um naufrágio foram vistos no oceano perto do marcador e são fortemente vigiados. Recupere-os!.";
 };
 
 _waitUntilMarkerPos = nil;
@@ -54,7 +55,7 @@ _successExec =
 	// Mission completed
 	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1, _box2];
 
-	_successHintMessage = "The sunken supplies have been collected, well done.";
+	_successHintMessage = "Suprimentos naufragados foram recuperados. Parabéns!";
 };
 
 _this call sideMissionProcessor;

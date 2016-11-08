@@ -12,7 +12,7 @@
 	["Land_BagBunker_Small_F", [-5.16577, 6.29346, 0.0585103], 180.219],
 	["Land_BagFence_Long_F", [-0.163574, 1.57666, -0.0357904], 1.34008],
 	["Land_BagBunker_Small_F", [4.52393, 6.37305, 0.0791397], 179.5],
-	["Box_IND_WpsSpecial_F", [-1.04126, 0.24707, 0], 286.415, { [_this, ["mission_USSpecial", "mission_Main_A3snipers"] call BIS_fnc_selectRandom] call fn_refillbox }],
+	["Box_IND_WpsSpecial_F", [-1.04126, 0.24707, 0], 286.415, { [_this, ["mission_USSpecial", "mission_DLCLMGs"] call BIS_fnc_selectRandom] call fn_refillbox }],
 	["Land_CncWall4_F", [-6.46558, 2.6377, 0.0582647], 90.8417],
 	["Land_LampShabby_F", [0, 0, -0.00534153], 0.243539],
 	["Land_LampShabby_F", [-0.117188, -0.513672, -0.0352049], 186.35],
