@@ -6,9 +6,8 @@
 AirdropMenu = 
 [
 	["Airdrop",true],
-			["Vehicles/車両", [2], "#USER:VehicleMenu", -5, [["expression", ""]], "1", "1"],
-			["Supplies/物資", [3], "#USER:SupplyMenu", -5, [["expression", ""]], "1", "1"],
-			["Cancel Airdrop", [4], "", -3, [["expression", ""]], "1", "1"]
+			["Suplimentos", [3], "#USER:SupplyMenu", -5, [["expression", ""]], "1", "1"],
+			["Cancelar AirDrop", [4], "", -3, [["expression", ""]], "1", "1"]
 ];
 //////////////////////////////////////////////////////
 //Setting up the Vehicle Menu ///////////////////////

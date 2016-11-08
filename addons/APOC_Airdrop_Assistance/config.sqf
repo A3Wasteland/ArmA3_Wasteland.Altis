@@ -9,6 +9,7 @@ APOC_AA_VehOptions =
 ["Quadbike (Civilian)", "C_Quadbike_01_F", 			2500, 	 "vehicle"],
 ["Offroad HMG", 		"B_G_Offroad_01_armed_F",	10000, 	 "vehicle"],
 ["MH-9 Hummingbird",	"B_Heli_Light_01_F", 		20000,	 "vehicle"],
+["AH-9 Pawnee",         "B_Heli_Light_01_armed_F", 100000,   "vehicle"],
 ["Strider HMG", 		"I_MRAP_03_hmg_F", 			30000, 	 "vehicle"],
 ["MSE-3 Marid", 		"O_APC_Wheeled_02_rcws_F", 	150000,  "vehicle"],
 ["A-143 Buzzard AA", 	"I_Plane_Fighter_03_AA_F", 	200000,  "vehicle"],
@@ -24,7 +25,7 @@ APOC_AA_SupOptions =
 ["DLC Rifles", 			"airdrop_DLC_Rifles", 			35000, "supply"],
 ["DLC LMGs", 			"airdrop_DLC_LMGs", 			35000, "supply"],
 
-//"Menu Text",			"Crate Type", 			"Cost", "drop type"
+"Menu Text",			"Crate Type", 			"Cost", "drop type"
 ["Food",				"Land_Sacks_goods_F",	5000, 	"picnic"],
 ["Water",				"Land_BarrelWater_F",	5000, 	"picnic"]
 ];
