@@ -138,7 +138,7 @@ A3W_payrollAmount = 5000;           // Amount of money rewarded per territory on
 A3W_serverMissions = 1;            // Enable server missions (0 = no, 1 = yes)
 A3W_missionsDifficulty = 1;        // Missions difficulty (0 = normal, 1 = hard)
 A3W_missionFarAiDrawLines = 1;     // Draw small red lines on the map from mission markers to individual units & vehicles which are further away than 75m from the objective (0 = no, 1 = yes)
-A3W_missionsQuantity = 7;          // Number of missions running at the same time (0 to 6)
+A3W_missionsQuantity = 6;          // Number of missions running at the same time (0 to 6)
 A3W_heliPatrolMissions = 1;        // Enable missions involving flying helicopters piloted by AI (0 = no, 1 = yes)
 A3W_underWaterMissions = 1;        // Enable underwater missions which require diving gear (0 = no, 1 = yes)
 A3W_mainMissionDelay = 1*60;      // Time in seconds between Main Missions
@@ -147,9 +147,9 @@ A3W_sideMissionDelay = 1*60;       // Time in seconds between Side Missions
 A3W_sideMissionTimeout = 45*60;    // Time in seconds that a Side Mission will run for, unless completed
 A3W_moneyMissionDelay = 1*60;     // Time in seconds between Money Missions
 A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
-A3W_hostileairMissionDelay = 1*60;    	// Time in seconds between hostile air Missions //7th Missions
-A3W_hostileairMissionTimeout = 30*60;  	// Time in seconds that a hostile air will run for, unless completed //7th Missions
+A3W_hostileairMissionDelay = 1*60;    	// Time in seconds between hostile air Missions
+A3W_hostileairMissionTimeout = 30*60;  	// Time in seconds that a hostile air will run for, unless completed 
 A3W_extraMissionDelay = 1*60;     	// Time in seconds between Extra Missions
-A3W_extraMissionTimeout = 45*60;   	// Time in seconds that a Extra Mission will run for, unless completed //7th Missions
+A3W_extraMissionTimeout = 45*60;   	// Time in seconds that a Extra Mission will run for, unless completed 
 A3W_patrolMissionDelay = 1*60;    	// Time in seconds between Patrol Missions
-A3W_patrolMissionTimeout = 60*60;  	// Time in seconds that a Patrol Mission will run for, unless completed //7th Missions
+A3W_patrolMissionTimeout = 60*60;  	// Time in seconds that a Patrol Mission will run for, unless completed
