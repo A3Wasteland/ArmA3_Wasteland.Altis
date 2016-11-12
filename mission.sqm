@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=271;
+		nextID=274;
 	};
 	class Camera
 	{
-		pos[]={13705.25,256.80698,12368.058};
-		dir[]={-0.8554759,-0.44131035,-0.27129063};
-		up[]={-0.42084146,0.89726228,-0.13345756};
-		aside[]={-0.30231619,5.7718717e-007,0.95330614};
+		pos[]={14734.622,1587.6342,11559.899};
+		dir[]={-0.2042764,-0.4489046,-0.8700313};
+		up[]={-0.10265292,0.89348334,-0.43720347};
+		aside[]={-0.97361934,-1.6835111e-007,0.22859655};
 	};
 };
 binarizationWanted=0;
@@ -3353,7 +3353,7 @@ class Mission
 						angles[]={0,3.997313,0};
 					};
 					side="Civilian";
-					flags=7;
+					flags=3;
 					class Attributes
 					{
 						init="[this] spawn A3W_fnc_setupStoreNPC";
@@ -3361,12 +3361,14 @@ class Mission
 					};
 					id=188;
 					type="C_man_1_1_F";
+					atlOffset=3.9942303;
 				};
 			};
 			class Attributes
 			{
 			};
 			id=187;
+			atlOffset=3.9942303;
 		};
 		class Item44
 		{
@@ -3659,7 +3661,7 @@ class Mission
 						angles[]={0,1.4165761,0};
 					};
 					side="Civilian";
-					flags=7;
+					flags=3;
 					class Attributes
 					{
 						init="[this] spawn A3W_fnc_setupStoreNPC";
@@ -3667,12 +3669,14 @@ class Mission
 					};
 					id=210;
 					type="C_man_1_1_F";
+					atlOffset=0.34787369;
 				};
 			};
 			class Attributes
 			{
 			};
 			id=209;
+			atlOffset=0.34787369;
 		};
 		class Item54
 		{
@@ -3690,7 +3694,7 @@ class Mission
 						angles[]={0,3.79673,0};
 					};
 					side="Civilian";
-					flags=7;
+					flags=3;
 					class Attributes
 					{
 						init="[this] spawn A3W_fnc_setupStoreNPC";
@@ -3698,12 +3702,14 @@ class Mission
 					};
 					id=212;
 					type="C_man_1_1_F";
+					atlOffset=0.41099739;
 				};
 			};
 			class Attributes
 			{
 			};
 			id=211;
+			atlOffset=0.41099739;
 		};
 		class Item55
 		{
@@ -7721,7 +7727,7 @@ class Mission
 			};
 			id=574;
 			type="Box_NATO_Wps_F";
-			atlOffset=1.0312157;
+			atlOffset=1.0322151;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -9689,12 +9695,13 @@ class Mission
 		class Item381
 		{
 			dataType="Marker";
-			position[]={12144,-185.97,27650};
+			position[]={12144,1.7180358e+015,27650};
 			name="TS";
-			text=" TS: 167.114.46.210:8835";
+			text=" TS: ts3.traitors.com.br";
 			type="mil_warning";
 			colorName="ColorRed";
 			id=636;
+			atlOffset=1.7180358e+015;
 		};
 		class Item382
 		{
