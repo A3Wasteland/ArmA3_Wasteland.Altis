@@ -117,7 +117,6 @@ _successExec =
 	
 	_randomBox = selectRandom ["Launchers_Tier_2", "mission_HVLaunchers", "mission_USLaunchers"];
 	_randomBox2 = selectRandom ["mission_HVSniper", "airdrop_Snipers", "mission_AssRifles"];
-	//_randomBox3 = selectRandom ["mission_Uniform","mission_Main_A3snipers","mission_DLCRifles"];
 	_box1 = createVehicle ["Box_NATO_Wps_F", _lastPos, [], 5, "None"];
 	_box1 setDir random 360;
 	[_box1, _randomBox] call fn_refillbox;
@@ -125,12 +124,6 @@ _successExec =
 	_box2 = createVehicle ["Box_East_Wps_F", _lastPos, [], 5, "None"];
 	_box2 setDir random 360;
 	[_box2, _randomBox2] call fn_refillbox;
-
-	/*_box3 = createVehicle ["Box_IND_WpsSpecial_F", _lastPos, [], 5, "None"];
-	_box3 setDir random 360;
-	[_box3, _randomBox3] call fn_refillbox;*/
-
-	{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1, _box2, _box3];	
 
 	_successHintMessage = "Transporte abatido!";
 };
