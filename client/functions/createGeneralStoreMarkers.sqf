@@ -18,9 +18,11 @@
 		deleteMarkerLocal _markerName;
 		_marker = createMarkerLocal [_markerName, _npcPos];
 		_markerName setMarkerShapeLocal "ICON";
-		_markerName setMarkerTypeLocal "mil_dot";
+		
+		//_markerName setMarkerTypeLocal "mil_dot";
+		_markerName setMarkerTypeLocal "loc_Tourism";
 		_markerName setMarkerColorLocal "ColorBlue";
-		_markerName setMarkerSizeLocal [1,1];
-		_markerName setMarkerTextLocal "GS";
+		_markerName setMarkerSizeLocal [1.5,1.5];
+		_markerName setMarkerTextLocal "";
 	};
 } forEach entities "CAManBase";
