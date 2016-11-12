@@ -22,7 +22,7 @@ _setupVars =
 		"I_Heli_light_03_F"
 	] call BIS_fnc_selectRandom;
 
-	_missionType = "Armed Helicopter";
+	_missionType = "Helicoptero Armado";
 	_locationsArray = MissionSpawnMarkers;
 
 	_nbUnits = if (missionDifficultyHard) then { AI_GROUP_LARGE } else { AI_GROUP_MEDIUM };
