@@ -47,7 +47,7 @@ _setupObjects =
 		_aiGroup addVehicle _vehicle;
 		
 		
-		_soldier = [_aiGroup, _position] call createCSATSFDriver;
+		_soldier = [_aiGroup, _position] call createNATOSFDriver;
 		_soldier moveInDriver _vehicle;
 
 		_soldier = [_aiGroup, _position] call createCSATSFGunner;
