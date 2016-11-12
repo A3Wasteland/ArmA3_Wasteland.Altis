@@ -88,7 +88,7 @@ _setupObjects =
 
 	_missionPicture = getText (configFile >> "CfgVehicles" >> _veh1 >> "picture");
 	_vehicleName = getText (configFile >> "CfgVehicles" >> _veh1 >> "displayName");
-	_missionHintText = format ["a <t color='%2'>%1</t> is patrolling the island. Intercept the pilot and recover his high value cargo! But be careful, he will target vehicles!.", _vehicleName, sideMissionColor];
+	_missionHintText = format ["a <t color='%2'>%1</t> is patrolling the island. Intercept the pilot and recover his high value cargo! But be careful, he will target vehicles!.", _vehicleName, _missionHintText = format ["Um <t color='%2'>%1</t> está patrulhando Altis. Derrubá-lo e matar o piloto para recuperar o dinheiro e as armas!", _vehicleName, hostileairMissionColor];Color];
 	//_missionHintText = format ["Corre negada... um <t color='%2'>%1</t> está patrulhando a ilha. Abatê-lo para recuperar dinheiro e as armas!", _vehicleName, hostileairMissionColor];
 
 	_numWaypoints = count waypoints _aiGroup;
