@@ -25,7 +25,7 @@ APOC_AA_SupOptions =
 ["DLC Rifles", 			"airdrop_DLC_Rifles", 			35000, "supply"],
 ["DLC LMGs", 			"airdrop_DLC_LMGs", 			35000, "supply"],
 
-\\"Menu Text",			"Crate Type", 			"Cost", "drop type"
+//"Menu Text",			"Crate Type", 			"Cost", "drop type"
 ["Food",				"Land_Sacks_goods_F",	5000, 	"picnic"],
 ["Water",				"Land_BarrelWater_F",	5000, 	"picnic"]
 ];
