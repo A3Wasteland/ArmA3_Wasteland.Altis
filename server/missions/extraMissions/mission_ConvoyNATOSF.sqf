@@ -46,7 +46,7 @@ _setupObjects =
 		_vehicle setDir _direction;
 		_aiGroup addVehicle _vehicle;
 
-		_soldier = [_aiGroup, _position] call createNATOSFDriver;
+		_soldier = [_aiGroup, _position] call createRandomSoldier;
 		_soldier moveInDriver _vehicle;
 
 		_soldier = [_aiGroup, _position] call createNATOSFGunner;
