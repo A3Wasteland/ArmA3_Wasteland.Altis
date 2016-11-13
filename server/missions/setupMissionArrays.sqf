@@ -73,7 +73,6 @@ extraMissions =
 PatrolMissions =
 [
 	["mission_militaryPatrol", 1.3],
-	["mission_artyPatrol", 1],
 	["mission_TanoaPatrol", 1]
 	
 	
