@@ -132,7 +132,7 @@ if (isServer) then
 		"A3W_teamPlayersMap",
 		"A3W_remoteBombStoreRadius",
 		"A3W_vehiclePurchaseCooldown",
-		//"A3W_disableGlobalVoice",
+		"A3W_disableGlobalVoice",
 		"A3W_antiHackMinRecoil",
 		"A3W_spawnBeaconCooldown",
 		"A3W_spawnBeaconSpawnHeight",
@@ -166,16 +166,7 @@ if (isServer) then
 		"A3W_vehicleLocking",
 		"A3W_disableBuiltInThermal",
 		"A3W_customDeathMessages",
-		"A3W_headshotNoRevive",
-		"A3W_maxSpawnBeacons",
-		"A3W_bountyMax",
-		"A3W_bountyMinStart",
-		"A3W_bountyRewardPerc",
-		"A3W_bountyLifetime",
-		"A3W_maxMoney",
-		"A3W_healthTime",
-		"A3W_hungerTime",
-		"A3W_thirstTime"
+		"A3W_headshotNoRevive"
 	];
 
 	addMissionEventHandler ["PlayerConnected", fn_onPlayerConnected];
@@ -472,14 +463,11 @@ if (_timeSavingOn || _weatherSavingOn) then
 	execVM "persistence\server\world\tLoad.sqf";
 };
 
-// Simple loot spawn
-execVM "addons\simple_lootspawner\lootInit.sqf";
-
-/*if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then
+if ((isNil "A3W_buildingLoot" && {["A3W_buildingLootWeapons"] call isConfigOn || {["A3W_buildingLootSupplies"] call isConfigOn}}) || {["A3W_buildingLoot"] call isConfigOn}) then
 {
 	diag_log "[INFO] A3W loot spawning is ENABLED";
 	execVM "addons\Lootspawner\Lootspawner.sqf";
-};*/
+};
 
 [] execVM "server\functions\serverTimeSync.sqf";
 
