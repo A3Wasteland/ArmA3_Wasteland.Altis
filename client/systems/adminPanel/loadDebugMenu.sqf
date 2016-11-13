@@ -25,12 +25,7 @@ if (_uid call isAdmin) then
 					"Access ATM Dialog",
 					"Access Respawn Dialog",
 					"Access Proving Grounds",
-					"Show Server FPS",
-					"Lock Objects around you",
-					"Unlock Objects around you",
-					"Delete Unlocked Objects around you",
-					"Relock Objects around you",
-					"TRAITORS TEAM"
+					"Show Server FPS"
 	];
 
 	{
