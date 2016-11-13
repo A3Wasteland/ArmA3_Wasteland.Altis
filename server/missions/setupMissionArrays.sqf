@@ -48,7 +48,7 @@ MoneyMissions =
 	//["mission_Hackers", 0.7]
 ];
 
-hostileairMissions = //7th Missions 
+hostileairMissions = 
 [
 	//["mission_Gunship", 1],
 	["mission_HostileHelicopter", 1],
@@ -72,8 +72,7 @@ extraMissions =
 
 PatrolMissions =
 [
-	["mission_militaryPatrol", 1.3],
-	["mission_TanoaPatrol", 1]
+		["mission_TanoaPatrol", 1]
 	
 	
 ];
@@ -103,6 +102,6 @@ MoneyMissions = [MoneyMissions, [["A3W_underWaterMissions", ["mission_SunkenTrea
 { _x set [2, false] } forEach MainMissions;
 { _x set [2, false] } forEach SideMissions;
 { _x set [2, false] } forEach MoneyMissions;
-{ _x set [2, false] } forEach hostileairMissions; //7th Mission
-{ _x set [2, false] } forEach extraMissions; //7th Mission
-{ _x set [2, false] } forEach PatrolMissions; //7th Mission
+{ _x set [2, false] } forEach hostileairMissions;
+{ _x set [2, false] } forEach extraMissions; //
+{ _x set [2, false] } forEach PatrolMissions; //
