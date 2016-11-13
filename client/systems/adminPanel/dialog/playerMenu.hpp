@@ -225,6 +225,7 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 
+		class RemoveAllWeaponsButton: w_RscButton
 		{
 			idc = -1;
 			text = "Romover Armas";
@@ -235,6 +236,7 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		}; //
 
+		class CheckPlayerGearButton: w_RscButton 
 		{
 			idc = -1;
 			text = "Iventario";
@@ -256,10 +258,15 @@ class PlayersMenu
 			h = 0.04 * safezoneH;
 		};
 
-		{
+		class DonationButton: w_RscButton 
 			idc = -1;
+			text = "Doação 10k";
 			onButtonClick = "[8] execVM 'client\systems\adminPanel\playerSelect.sqf'";
+			x = 0.655 * safezoneW + safezoneX;
 			y = 0.70  * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.04 * safezoneH;
+		}; //
 	};
 };
 
