@@ -8,8 +8,8 @@
 
 if (!hasInterface) exitWith {};
 
-#define ICON_fadeDistance 1250
-#define ICON_limitDistance 2000
+#define ICON_fadeDistance 12500
+#define ICON_limitDistance 20000
 #define ICON_sizeScale 0.75
 
 #define MINE_ICON_MAX_DISTANCE 200 // 200 is Arma 3 default for mine detector
@@ -71,7 +71,8 @@ drawPlayerIcons_thread = [] spawn
 		};
 	} forEach _mineColor;
 
-	
+	_noBuiltInThermal = ["A3W_disableBuiltInThermal"] call isConfigOn;
+
 	private ["_dist"];
 
 	// Execute every frame
@@ -185,6 +186,45 @@ drawPlayerIcons_thread = [] spawn
 				} forEach detectedMines playerSide;
 			};
 
+			if (_noBuiltInThermal) then
+			{
+				_thermalActive = currentVisionMode player isEqualTo 2;
+
+				if (_thermalActive || !isNil "A3W_builtInThermalOffline") then
+				{
+					_weapon = currentWeapon player;
+					_ownWeapon = true;
+
+					{
+						_x params ["_unit", "","","", "_ffv"];
+
+						if (_unit == player) exitWith
+						{
+							_ownWeapon = _ffv;
+						};
+					} forEach fullCrew [objectParent player, "", false];
+
+					if (_thermalActive && {cameraOn == vehicle player && _weapon in weapons player && _ownWeapon &&
+						({_x == "TI"} count getArray (configFile >> "CfgWeapons" >> _weapon >> "visionMode") > 0 ||
+						 {!("{_x == 'TI'} count getArray (_x >> 'visionMode') > 0" configClasses (configFile >> "CfgWeapons" >> _weapon >> "OpticsModes") isEqualTo [])})}) then
+					{
+						if (isNil "A3W_builtInThermalOffline") then
+						{
+							"A3W_thermalOffline" cutText ["THERMAL IMAGING OFFLINE", "BLACK", 0.001, false];
+							A3W_builtInThermalOffline = true;
+						};
+					}
+					else
+					{
+						if (!isNil "A3W_builtInThermalOffline") then
+						{
+							"A3W_thermalOffline" cutText ["", "PLAIN", 0.001, false];
+							A3W_builtInThermalOffline = nil;
+						};
+					};
+				};
+			};
+		};
 
 		drawPlayerIcons_array = _newArray;
 		false
