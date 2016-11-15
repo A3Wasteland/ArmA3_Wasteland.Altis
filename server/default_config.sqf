@@ -56,7 +56,7 @@ A3W_moneySaving = 1;               // If playerSaving = 1, save player money amo
 A3W_playerStatsGlobal = 1;         // If playerSaving = 1 and savingMethod = "extDB", players' stats on the scoreboard will be their all-time global values from all servers of your database (0 = no, 1 = yes)
 A3W_timeSaving = 1;                // Save and restore in-game clock time between server restarts (0 = no, 1 = yes)
 A3W_weatherSaving = 1;             // Save and restore weather settings between server restarts (0 = no, 1 = yes)
-A3W_combatAbortDelay = 60;         // If playerSaving = 1, delay in seconds for which to disable abort and respawn buttons after firing or being shot (0 = none)
+A3W_combatAbortDelay = 30;         // If playerSaving = 1, delay in seconds for which to disable abort and respawn buttons after firing or being shot (0 = none)
 A3W_vehicleSaving = 1;             // Save purchased and captured vehicles between server restarts (0 = no, 1 = yes)
 A3W_baseSaving = 1;                // Save locked base parts between server restarts (0 = no, 1 = yes)
 A3W_boxSaving = 1;                 // Save locked weapon crates and their contents between server restarts (0 = no, 1 = yes)
@@ -72,7 +72,7 @@ A3W_mineSaving = 1;                // Save placed mines between server restarts 
 A3W_mineLifetime = 2*24;           // Maximum lifetime in hours for saved mines across server restarts (0 = no time limit)
 A3W_privateStorage = 1;            // Enable persistent private storage locations across the map (0 = no, 1 = yes)
 A3W_privateParking = 1;            // If vehicleSaving = 1 and savingMethod = "extDB" or "sock", enable persistent private parking locations across the map (0 = no, 1 = yes)
-A3W_privateParkingLimit = 5;       // Maximum amount of vehicles allowed in private parking (0 = no limit)
+A3W_privateParkingLimit = 2;       // Maximum amount of vehicles allowed in private parking (0 = no limit)
 A3W_privateParkingCost = 3000;     // Cost to retrieve an individual vehicle from private parking
 A3W_vehicleLocking = 1;            // Enable vehicle locking and lockpicking (0 = no, 1 = yes)
 
@@ -141,15 +141,15 @@ A3W_missionFarAiDrawLines = 1;     // Draw small red lines on the map from missi
 A3W_missionsQuantity = 6;          // Number of missions running at the same time (0 to 6)
 A3W_heliPatrolMissions = 1;        // Enable missions involving flying helicopters piloted by AI (0 = no, 1 = yes)
 A3W_underWaterMissions = 1;        // Enable underwater missions which require diving gear (0 = no, 1 = yes)
-A3W_mainMissionDelay = 1*60;      // Time in seconds between Main Missions
+A3W_mainMissionDelay = 10*60;      // Time in seconds between Main Missions
 A3W_mainMissionTimeout = 60*60;    // Time in seconds that a Main Mission will run for, unless completed
-A3W_sideMissionDelay = 1*60;       // Time in seconds between Side Missions
+A3W_sideMissionDelay = 5*60;       // Time in seconds between Side Missions
 A3W_sideMissionTimeout = 45*60;    // Time in seconds that a Side Mission will run for, unless completed
-A3W_moneyMissionDelay = 1*60;     // Time in seconds between Money Missions
+A3W_moneyMissionDelay = 40*60;     // Time in seconds between Money Missions
 A3W_moneyMissionTimeout = 60*60;   // Time in seconds that a Money Mission will run for, unless completed
-A3W_hostileairMissionDelay = 1*60;    	// Time in seconds between hostile air Missions
+A3W_hostileairMissionDelay = 35*60;    	// Time in seconds between hostile air Missions
 A3W_hostileairMissionTimeout = 30*60;  	// Time in seconds that a hostile air will run for, unless completed 
-A3W_extraMissionDelay = 1*60;     	// Time in seconds between Extra Missions
+A3W_extraMissionDelay = 10*60;     	// Time in seconds between Extra Missions
 A3W_extraMissionTimeout = 45*60;   	// Time in seconds that a Extra Mission will run for, unless completed 
-A3W_patrolMissionDelay = 1*60;    	// Time in seconds between Patrol Missions
+A3W_patrolMissionDelay = 5*60;    	// Time in seconds between Patrol Missions
 A3W_patrolMissionTimeout = 60*60;  	// Time in seconds that a Patrol Mission will run for, unless completed
