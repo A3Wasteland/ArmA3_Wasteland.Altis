@@ -7,5 +7,6 @@
 [
 	"LandConvoy_1",
 	"LandConvoy_2",
-	"LandConvoy_3"
+	"LandConvoy_3",
+	"LandConvoy_4"
 ]

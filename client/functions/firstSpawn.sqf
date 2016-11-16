@@ -9,6 +9,7 @@
 client_firstSpawn = true;
 
 [] execVM "client\functions\welcomeMessage.sqf";
+[] execVM "addons\scripts\infoPage.sqf";
 
 player addEventHandler ["Take",
 {

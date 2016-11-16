@@ -51,8 +51,8 @@ if (_packetName == "BIS_fnc_MP_packet") then
 			"BIS_fnc_effectKilledAirDestruction",
 			"BIS_fnc_effectKilledAirDestructionStage2",
 			"BIS_fnc_effectKilledSecondaries",
-			"BIS_fnc_objectVar"/*,
-			"JTS_FNC_SENT"*/ // PM Compact by JTS
+			"BIS_fnc_objectVar",
+			"JTS_FNC_SENT" // PM Compact by JTS
 
 			// NOTE: You also need to whitelist individual functions in client\CfgRemoteExec_fnc.hpp
 		];
@@ -68,7 +68,8 @@ if (_packetName == "BIS_fnc_MP_packet") then
 			forEach
 			[
 				"A3W_fnc_",
-				"mf_remote_"
+				"mf_remote_",
+				"APOC_srv_"
 			];
 		};
 	};

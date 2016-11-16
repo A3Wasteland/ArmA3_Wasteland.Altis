@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
-
-  Do not bother submitting translations to the A3W GitHub repo, the strings below are only a tiny fraction of all messages used in the mission.
-
-█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
--->
 <Project name="Wasteland">
 	<Package name="General">
 		<Key ID="STR_WL_Gen_TeamWEST">
@@ -29,27 +22,27 @@
 	</Package>
 	<Package name="TeamLock">
 		<Key ID="STR_WL_Punish_Teamkiller">
-			<English>You have been punished for teamkilling twice during this server session. Your inventory has been wiped, and you are now locked to the Independent side.</English>
+			<English>Você foi punido por teamkilling duas vezes durante esta sessão servidor. Seu inventário foi apagado, e agora você está bloqueado para o lado Independent.</English>
 		</Key>
 		<Key ID="STR_WL_Loading_Teamkiller">
-			<English>You are restricted to the Independent side, due to having done 2 or more teamkills during this server session.</English>
+			<English>Você está restrito para o lado independente, devido a ter feito 2 ou mais teamkills durante esta sessão servidor.</English>
 		</Key>
 		<Key ID="STR_WL_Loading_Teamswitched">
-			<English>You have played as %1 for too long and cannot switch to the other team. You can still play as Independent. (or if online, ask an admin to unlock you)</English>
+			<English>Você tem jogado como %1 por muito tempo e não pode mudar para o outro time. Você ainda pode jogar como Independente. (Ou se on-line, peça a um administrador para desbloqueá-lo)</English>
 		</Key>
 	</Package>
 	<Package name="WelcomeMessage">
 		<Key ID="STR_WL_WelcomeToWasteland">
-			<English>&lt;t color='#FF8000' size='2.5' &gt;A3Wasteland Altis v1.3b &lt;/t&gt;</English>
+			<English>&lt;t color='#FF8000' size='2.5' &gt;Traitors Team Altis Server &lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_YouAreInTeam">
-			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* Attacking or stealing from other %4 players is &lt;t color="#FF1111"&gt;FORBIDDEN&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;br/&gt;* You will be locked to your team after 3 minutes.&lt;/t&gt;</English>
+			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* Você está na equipe &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;&lt;br/&gt;* Attacking or stealing from other %4 players is &lt;t color="#FF1111"&gt;FORBIDDEN&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;GLOBAL VOICE DESABILITADO&lt;/t&gt;&lt;br/&gt;* Você pode verificar as regras do servidor no menu do mapa.&lt;br/&gt;* Servidor em contrução, bugs e erros poderam acontecer.&lt;br/&gt;* Obrigado pela compreensão.&lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_YouAreInFFA">
-			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* You are in &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;/t&gt; team.&lt;br/&gt;* You are &lt;t color="#00aa00"&gt;FREE TO ATTACK ANYONE&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;NO VOICE IN GLOBAL&lt;/t&gt;&lt;br/&gt;* You can find the Server Rules in the map menu.&lt;br/&gt;* Server restarts are done at the admin's discretion.&lt;/t&gt;</English>
+			<English>&lt;t color='#FFFFFF' size='1.5' &gt;* Você está na equipe &lt;img size="1.5" image="%1"/&gt; &lt;t color="%2"&gt;%3&lt;&lt;br/&gt;* You are &lt;t color="#00aa00"&gt;FREE TO ATTACK ANYONE&lt;/t&gt;&lt;br/&gt;* &lt;t color="#FF1111"&gt;GLOBAL VOICE DESABILITADO&lt;/t&gt;&lt;br/&gt;* Você pode verificar as regras do servidor no menu do mapa.&lt;br/&gt;* Servidor em contrução, pedimos a compreensão de todos vocês.&lt;/t&gt;</English>
 		</Key>
 		<Key ID="STR_WL_MapMoreInfo">
-			<English>&lt;t color='#FFFFFF' size='1.5' &gt;Report bugs and suggestions at http://forums.a3wasteland.com/ &lt;br/&gt;Server restarts are done at the admin's discretion.&lt;br/&gt;Press the Windows or Home key to toggle player names&lt;br/&gt;Press the End key to toggle earplugs&lt;br/&gt;For more info please see the map&lt;br/&gt;</English>
+			<English>&lt;t color='#FFFFFF' size='1.5' &gt;Teamspeak:ts3.traitors.com.br &lt;br/&gt;Respeite todas as regras tion.&lt;br/&gt;Pressione o botão do windows ou home para ver o nome dos players&lt;br/&gt;Pressione o botão END para inserir os earplugs&lt;br/&gt;Para mais informações consultes os membros no nosso TS&lt;br/&gt;</English>
 			<!-- &lt;br/&gt;&lt;/t&gt;&lt;t size='1.3'&gt;[Update X]&lt;/t&gt;&lt;br/&gt; -->
 		</Key>
 	</Package>
@@ -97,6 +90,18 @@
 		<Key ID="STR_WL_ShopDescriptions_Warchest">
 			<English>A safe to store your team's money.</English>
 		</Key>
+		<Key ID="STR_WL_ShopDescriptions_LSD">
+            <English>A synthetic crystalline compound, lysergic acid diethylamide, that is a potent hallucinogenic drug.</English>
+        </Key>
+        <Key ID="STR_WL_ShopDescriptions_Marijuana">
+            <English>Often consumed for its psychoactive and physiological effects, which can include heightened mood or euphoria, relaxation, and an increase in appetite.</English>
+        </Key>
+        <Key ID="STR_WL_ShopDescriptions_Cocaine">
+            <English>An addictive drug derived from coca or prepared synthetically, used as an illegal stimulant and sometimes medicinally as a local anesthetic.</English>
+        </Key>
+        <Key ID="STR_WL_ShopDescriptions_Heroin">
+            <English>A highly addictive analgesic drug derived from morphine, often used illicitly as a narcotic producing euphoria.</English>
+        </Key>
 	</Package>
 	<Package name="Dialogs">
 		<Key ID="STR_WL_dialog_TeamkillText">

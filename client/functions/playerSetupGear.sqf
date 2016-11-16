@@ -4,8 +4,11 @@
 //	@file Name: playerSetupGear.sqf
 //	@file Author: [GoT] JoSchaap, AgentRev
 
-private ["_player", "_uniform", "_vest", "_headgear", "_goggles"];
+private ["_player", "_uniform", "_vest", "_headgear", "_goggles", "_donatorLevel"];
 _player = _this;
+
+_donatorEnabled = ["A3W_donatorEnabled"] call isConfigOn;
+_donatorLevel = player getVariable ["donatorLevel", 0];
 
 // Clothing is now defined in "client\functions\getDefaultClothing.sqf"
 
@@ -33,33 +36,12 @@ if (hmd _player != "") then { _player unlinkItem hmd _player };
 // Add NVG
 _player linkItem "NVGoggles";
 
-_player addBackpack "B_AssaultPack_rgr";
+// Loadouts here
+_this call classes;
 
-_player addMagazine "9Rnd_45ACP_Mag";
-_player addWeapon "hgun_ACPC2_F";
-_player addMagazine "9Rnd_45ACP_Mag";
-_player addMagazine "9Rnd_45ACP_Mag";
-_player addMagazine "9Rnd_45ACP_Mag";
-_player addItem "FirstAidKit";
-_player selectWeapon "hgun_ACPC2_F";
-
-switch (true) do
-{
-	case (["_medic_", typeOf _player] call fn_findString != -1):
-	{
-		_player removeItem "FirstAidKit";
-		_player addItem "Medikit";
+if (_donatorEnabled && _donatorLevel > 0) then
+	{ _this call supporters;
 	};
-	case (["_engineer_", typeOf _player] call fn_findString != -1):
-	{
-		_player addItem "MineDetector";
-		_player addItem "Toolkit";
-	};
-	case (["_sniper_", typeOf _player] call fn_findString != -1):
-	{
-		_player addWeapon "Rangefinder";
-	};
-};
 
 if (_player == player) then
 {

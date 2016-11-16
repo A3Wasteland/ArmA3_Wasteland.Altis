@@ -7,11 +7,11 @@
 if (!isServer) exitwith {};
 #include "sideMissionDefines.sqf"
 
-private ["_vehicleClass", "_vehicle", "_createVehicle", "_vehicles", "_leader", "_speedMode", "_waypoint", "_vehicleName", "_numWaypoints", "_box1", "_box2"];
+private ["_vehicleClass", "_vehicle", "_createVehicle", "_vehicles", "_leader", "_speedMode", "_waypoint", "_vehicleName", "_numWaypoints", "_box1", "_box2", "_randomBox", "_randomBox2"];
 
 _setupVars =
 {
-	_missionType = "Hostile Helicopter";
+	_missionType = "Helicóptero hostil";
 	_locationsArray = nil; // locations are generated on the fly from towns
 };
 
@@ -114,7 +114,7 @@ _setupObjects =
 	_missionPicture = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "picture");
 	_vehicleName = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "displayName");
 
-	_missionHintText = format ["An armed <t color='%2'>%1</t> is patrolling the island. Intercept it and recover its cargo!", _vehicleName, sideMissionColor];
+	_missionHintText = format ["Um <t color='%2'>%1</t> está patrulhando Altis. Interceptá-lo e recuperar a sua carga!", _vehicleName, sideMissionColor];
 
 	_numWaypoints = count waypoints _aiGroup;
 };
@@ -143,16 +143,20 @@ _successExec =
 			(isTouchingGround _veh || _pos select 2 < 5) && {vectorMagnitude velocity _veh < [1,5] select surfaceIsWater _pos}
 		};
 
+		_randomBox = selectRandom ["mission_USLaunchers","mission_HVLaunchers"];
+		_randomBox2 = selectRandom ["mission_USSpecial","mission_DLCRifles","mission_DLCLMGs"];
 		_box1 = createVehicle ["Box_NATO_Wps_F", (getPosATL _veh) vectorAdd ([[_veh call fn_vehSafeDistance, 0, 0], random 360] call BIS_fnc_rotateVector2D), [], 5, "None"];
 		_box1 setDir random 360;
-		[_box1, "mission_USSpecial"] call fn_refillbox;
+		[_box1, _randomBox] call fn_refillbox;
 
 		_box2 = createVehicle ["Box_East_Wps_F", (getPosATL _veh) vectorAdd ([[_veh call fn_vehSafeDistance, 0, 0], random 360] call BIS_fnc_rotateVector2D), [], 5, "None"];
 		_box2 setDir random 360;
-		[_box2, "mission_USLaunchers"] call fn_refillbox;
+		[_box2, _randomBox2] call fn_refillbox;
+
+		{ _x setVariable ["R3F_LOG_disabled", false, true] } forEach [_box1, _box2];
 	};
 
-	_successHintMessage = "The sky is clear again, the enemy patrol was taken out! Ammo crates have fallen near the wreck.";
+	_successHintMessage = "O céu está limpo novamente. Helicóptero hostil foi derrubado!";
 };
 
 _this call sideMissionProcessor;

@@ -18,9 +18,11 @@
 		deleteMarkerLocal _markerName;
 		_marker = createMarkerLocal [_markerName, _npcPos];
 		_markerName setMarkerShapeLocal "ICON";
-		_markerName setMarkerTypeLocal "mil_dot";
+		
+		//_markerName setMarkerTypeLocal "mil_dot";
+		_markerName setMarkerTypeLocal "c_car";
 		_markerName setMarkerColorLocal "ColorOrange";
 		_markerName setMarkerSizeLocal [1,1];
-		_markerName setMarkerTextLocal "VS";
+		_markerName setMarkerTextLocal "";
 	};
 } forEach entities "CAManBase";
