@@ -32,7 +32,7 @@ private _checks =
 		case (vehicle player != player): { _text = FORMAT2(ERR_FAILED, ERR_IN_VEHICLE) };
 		case (!alive _vehicle): { _text = FORMAT2(ERR_FAILED, ERR_DESTROYED) };
 		case (locked _vehicle < 2): { _text = FORMAT2(ERR_FAILED, ERR_UNLOCKED) };
-		case ({alive _x} count crew _vehicle > 0): { _text = FORMAT2(ERR_FAILED, ERR_CREW) };
+		case ({alive _x && getText (configFile >> "CfgVehicles" >> typeOf _x >> "simulation") != "UAVPilot"} count crew _vehicle > 0): { _text = FORMAT2(ERR_FAILED, ERR_CREW) };
 		//case (!isNull (_vehicle getVariable ["R3F_LOG_est_deplace_par", objNull])): { _text = FORMAT2(ERR_FAILED, ERR_MOVED) };
 		//case (!isNull (_vehicle getVariable ["R3F_LOG_est_transporte_par", objNull])): { _text = FORMAT2(ERR_FAILED, ERR_TOWED) };
 		case (player distance _vehicle > (sizeOf typeOf _vehicle / 3) max 3): { _text = FORMAT2(ERR_FAILED, ERR_DISTANCE) };
