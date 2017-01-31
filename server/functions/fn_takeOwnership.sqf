@@ -26,7 +26,7 @@ if (_veh getVariable ["A3W_skipAutoSave", false]) then
 	_veh setVariable ["A3W_skipAutoSave", nil, true];
 };
 
-{_veh, side _player] spawn
+[_veh, side _player] spawn
 {
 	params ["_veh", "_side"];
 
