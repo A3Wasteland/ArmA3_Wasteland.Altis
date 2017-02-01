@@ -17,6 +17,7 @@
 #define ERR_OWNED "The vehicle is already yours."
 #define ERR_LOCKED "The vehicle is locked."
 #define ERR_CREW "Somebody is inside the vehicle."
+#define ERR_CONNECTED "Somebody is connected to the UAV."
 #define ERR_DESTROYED "The vehicle is destroyed."
 #define ERR_CANCELLED "Lockpicking cancelled!"
 
@@ -35,6 +36,7 @@ private _checks =
 		case (_vehicle getVariable ["ownerUID","0"] isEqualTo getPlayerUID player && {!unitIsUAV _vehicle || side _vehicle == side group player}): { _text = FORMAT2(ERR_FAILED, ERR_OWNED) };
 		case (locked _vehicle > 1): { _text = FORMAT2(ERR_FAILED, ERR_LOCKED) };
 		case ({alive _x && getText (configFile >> "CfgVehicles" >> typeOf _x >> "simulation") != "UAVPilot"} count crew _vehicle > 0): { _text = FORMAT2(ERR_FAILED, ERR_CREW) };
+		case (!isNull ((uavControl _vehicle) select 0)): { _text = FORMAT2(ERR_FAILED, ERR_CONNECTED) };
 		//case (!isNull (_vehicle getVariable ["R3F_LOG_est_deplace_par", objNull])): { _text = FORMAT2(ERR_FAILED, ERR_MOVED) };
 		//case (!isNull (_vehicle getVariable ["R3F_LOG_est_transporte_par", objNull])): { _text = FORMAT2(ERR_FAILED, ERR_TOWED) };
 		case (player distance _vehicle > (sizeOf typeOf _vehicle / 3) max 3): { _text = FORMAT2(ERR_FAILED, ERR_DISTANCE) };
