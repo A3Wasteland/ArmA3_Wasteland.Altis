@@ -13,7 +13,7 @@ A3W_saveableObjects = [];
 	_idx = _forEachIndex;
 
 	{
-		_obj = if (typeName _x == "ARRAY") then { _x select 1 } else { _x }; // get class if store config array
+		_obj = if (_x isEqualType []) then { _x select 1 } else { _x }; // get class if store config array
 
 		if (!(_obj isKindOf "ReammoBox_F") && {!(_obj call _isSaveable)}) then
 		{
@@ -105,5 +105,8 @@ if (_savingMethod == "iniDB") then
 		[_mineFileName, "Info", "MineCount", 0] call PDB_write;
 	};
 };
+
+fn_oSaveOnce = [_worldDir, "oSaveOnce.sqf"] call mf_compile; // do not call fn_oSaveOnce outside oSave.sqf or fn_saveAllObjects
+fn_saveAllObjects = [_methodDir, "saveAllObjects.sqf"] call mf_compile;
 
 A3W_oSaveReady = compileFinal "true";
