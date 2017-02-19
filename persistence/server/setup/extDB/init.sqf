@@ -17,20 +17,20 @@ _lock = (["A3W_extDB_Lock", 1] call getPublicVar != 0);
 
 	if (isNil {uiNamespace getVariable "A3W_extDB_databaseID"}) then
 	{
-		_result = call compile ("extDB3" callExtension format ["9:ADD_DATABASE:%1", call A3W_extDB_ConfigName]);
+		_result = parseSimpleArray ("extDB3" callExtension format ["9:ADD_DATABASE:%1", call A3W_extDB_ConfigName]);
 		if (_result select 0 == 0) exitWith { diag_log format ["[extDB3] ███ Database error! %1", _result]; false };
 	};
 
 	A3W_extDB_databaseID = compileFinal str floor random 999997;
 	A3W_extDB_miscID = compileFinal str (call A3W_extDB_databaseID + 1);
 
-	_result = call compile ("extDB3" callExtension format ["9:ADD_DATABASE_PROTOCOL:%1:SQL_CUSTOM:%2:%3", call A3W_extDB_ConfigName, call A3W_extDB_databaseID, call A3W_extDB_IniName]);
+	_result = parseSimpleArray ("extDB3" callExtension format ["9:ADD_DATABASE_PROTOCOL:%1:SQL_CUSTOM:%2:%3", call A3W_extDB_ConfigName, call A3W_extDB_databaseID, call A3W_extDB_IniName]);
 	if (_result select 0 == 0) exitWith { diag_log format ["[extDB3] ███ SQL_CUSTOM Protocol error! %1", _result]; false };
 	diag_log "[extDB3] Initialized SQL_CUSTOM protocol";
 
 	if (["A3W_extDB_Misc"] call isConfigOn) then
 	{
-		_result = call compile ("extDB3" callExtension format ["9:ADD_PROTOCOL:MISC:%1", call A3W_extDB_miscID]);
+		_result = parseSimpleArray ("extDB3" callExtension format ["9:ADD_PROTOCOL:MISC:%1", call A3W_extDB_miscID]);
 		if (_result select 0 == 0) exitWith { diag_log format ["[extDB3] ███ MISC Protocol error! %1", _result]; false };
 		diag_log "[extDB3] Initialized MISC protocol";
 	};

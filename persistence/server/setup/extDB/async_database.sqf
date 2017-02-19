@@ -27,7 +27,7 @@ _key = "extDB3" callExtension ([_mode, call A3W_extDB_databaseID, _queryStmt] jo
 
 if(_mode == 1) exitWith {true};
 
-_key = call compile format["%1",_key];
+_key = parseSimpleArray _key;
 _key = _key select 1;
 
 sleep 0.01;
@@ -59,7 +59,7 @@ while{_loop} do
 };
 
 
-_queryResult = call compile _queryResult;
+_queryResult = parseSimpleArray _queryResult;
 
 // Not needed, its SQF Code incase extDB ever returns error message i.e Database Died
 if ((_queryResult select 0) isEqualTo 0) exitWith {diag_log format ["[extDB3] ███ Protocol Error: %1, Unique ID: %2", _queryResult, _key]; []};
