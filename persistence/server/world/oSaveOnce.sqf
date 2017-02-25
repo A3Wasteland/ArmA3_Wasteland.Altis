@@ -12,9 +12,10 @@ uiSleep _savingInterval;
 
 private _objCount = 0;
 private _currObjectIDs = [];
-private _currObjectIDs append A3W_objectIDs;
 private _newObjectIDs = [];
 private "_oldIDs";
+
+_currObjectIDs append A3W_objectIDs;
 
 if (_objectSavingOn) then
 {
@@ -67,9 +68,10 @@ if (_vehicleSavingOn) then
 {
 	private _vehCount = 0;
 	private _currVehicleIDs = [];
-	private _currVehicleIDs append A3W_vehicleIDs;
 	private _newVehicleIDs = [];
 	private ["_veh", "_vehID"];
+
+	_currVehicleIDs append A3W_vehicleIDs;
 
 	{
 		_veh = _x;
@@ -106,9 +108,10 @@ if (_mineSavingOn) then
 {
 	private _mineCount = 0;
 	private _currMineIDs = [];
-	private _currMineIDs append A3W_mineIDs;
 	private _newMineIDs = [];
 	private ["_dummy", "_mineID"];
+
+	_currMineIDs append A3W_mineIDs;
 
 	{
 		if (_x getVariable ["A3W_stickyCharges_isDummy", false]) then
