@@ -4,7 +4,7 @@
 //	@file Name: fn_untrackSavedVehicle.sqf
 //	@file Author: AgentRev
 
-if (!isNil "A3W_hcObjSaving_unit" && {!isNull A3W_hcObjSaving_unit && !local A3W_hcObjSaving_unit}) exitWith
+if (!isNil "A3W_hcObjSaving_unit" && {!isNull A3W_hcObjSaving_unit && !local A3W_hcObjSaving_unit}) then
 {
 	_this remoteExecCall ["fn_untrackSavedVehicle", A3W_hcObjSaving_unit];
 };
