@@ -30,6 +30,8 @@ if (_side != sideUnknown && side _uav != _side) then
 };
 
 _grp setCombatMode "BLUE"; // hold fire to prevent auto-teamkill shenanigans
+(crew _uav) doWatch objNull; // stop aiming turret at player
+_uav addRating 1e11;
 
 _uav spawn
 {

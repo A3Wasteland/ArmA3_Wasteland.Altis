@@ -109,7 +109,19 @@ storePurchaseHandle = _this spawn
 				};
 			};
 
-			player connectTerminalToUav _vehicle;
+			_vehicle spawn
+			{
+				params ["_uav"];
+				private "_crewActive";
+				_time = time;
+
+				waitUntil {time - _time > 30 || {_crewActive = alive _uav && !(crew _uav isEqualTo []); _crewActive}};
+
+				if (_crewActive) then
+				{
+					player connectTerminalToUav _uav;
+				};
+			};
 		};
 
 		_vehicle
