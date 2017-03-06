@@ -23,7 +23,6 @@ publicVariable "currentInvites";
 
 { (_x select 0) addPublicVariableEventHandler (_x select 1) } forEach
 [
-	["PlayerCDeath", { PVAL call server_playerDied }],
 	["pvar_removeNegativeScore", { PVAL call removeNegativeScore }],
 	["pvar_convertTerritoryOwner", { PVAL call convertTerritoryOwner }],
 	["pvar_enableSimulationGlobal", { PVAL call fn_enableSimulationGlobal }],
