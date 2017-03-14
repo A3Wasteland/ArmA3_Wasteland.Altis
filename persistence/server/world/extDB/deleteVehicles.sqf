@@ -28,7 +28,7 @@ _hcObjSavingOn = (isServer && ["A3W_hcObjSaving"] call isConfigOn);
 
 	if (!isNil "_id") then
 	{
-		_values pushBack str _id;
+		_values pushBack _id;
 	};
 } forEach _vehicles;
 
