@@ -17,7 +17,7 @@ if (_maxLifetime > 0 || _saveUnlockedObjects <= 0) then
 // DB column name, oLoad variable name
 _vars =
 [
-	["QUOTE(ID)", "_objectID"],
+	["", "_objectID"], // CONCAT('"',ID,'"') in a3wasteland.ini
 	["Class", "_class"],
 	["Position", "_pos"],
 	["Direction", "_dir"],
