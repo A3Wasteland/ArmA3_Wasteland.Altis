@@ -161,6 +161,8 @@ iniDB_write = {
 	_key = _this select 2;
 	_data = _this select 3;
 
+	if (_data isEqualType 0) then { _data = _data call fn_numToStr };
+
 	_data = format ['"%1"', _data];
 	[_file, _sec, _key, _data] call iniDB_writeRaw
 }
