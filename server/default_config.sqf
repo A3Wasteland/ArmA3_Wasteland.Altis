@@ -98,8 +98,8 @@ A3W_extDB_playerSaveCrossMap = 0;  // Player saves are shared across maps in sam
 A3W_extDB_GhostingTimer = 5*60;    // Number of seconds a player has to wait when switching between servers running the same map (0 = disabled)
 A3W_extDB_GhostingAdmins = 0;      // Apply ghosting restriction to server admins (0 = no, 1 = yes)
 A3W_extDB_SaveUnlockedObjects = 1; // Save and restore unlocked baseparts that were purchased or locked at least once during their lifetime (0 = no, 1 = yes)
-A3W_extDB_ConfigName = "A3W";      // Name of the connection config from extdb-conf.ini to be used (the one within [brackets])
-A3W_extDB_IniName = "a3wasteland.ini"; // Name of the INI file in extDB\sql_custom_v2 to be used
+A3W_extDB_ConfigName = "A3W";      // Name of the connection config from @extDB3\extdb3-conf.ini to be used (the one within [brackets])
+A3W_extDB_IniName = "a3wasteland.ini"; // Name of the INI file in @extDB3\sql_custom to be used
 A3W_extDB_Misc = 0;                // Enable extDB Misc Protocol (0 = no, 1 = yes) - no associated features implemented in vanilla A3W
 
 // Headless client settings
