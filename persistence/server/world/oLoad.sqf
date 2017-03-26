@@ -97,6 +97,7 @@ _exclObjectIDs = [];
 			switch (_var) do
 			{
 				case "side": { _value = _value call _strToSide };
+				case "cmoney": { if (_value isEqualType "") then { _value = parseNumber _value } };
 				case "R3F_Side": { _value = _value call _strToSide };
 				case "ownerName":
 				{
