@@ -465,4 +465,5 @@ else // Player bled out
 if (_unit == player) then
 {
 	(findDisplay ReviveGUI_IDD) closeDisplay 0;
+	uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
 };
