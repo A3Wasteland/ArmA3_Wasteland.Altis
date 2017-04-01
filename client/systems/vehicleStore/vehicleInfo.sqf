@@ -67,6 +67,8 @@ reverse _cfgColors;
 					{
 						[_existingTex, _x select 0, _x select 1] call fn_setToPairs;
 					} forEach _tex;
+
+					_added = true;
 				};
 			};
 
@@ -95,6 +97,7 @@ reverse _cfgColors;
 		}
 		else
 		{
+			_tex sort true;
 			_tex = _tex select 0 select 1;
 		};
 	};
