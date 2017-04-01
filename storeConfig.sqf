@@ -1200,6 +1200,21 @@ colorsArray = compileFinal str
 			["Rusty (Hatchback)", [[0, _wreckDir + "civilcar_extwreck_co.paa"]]]
 		]
 	],
+	[ // GOD EMPEROR
+		"B_MBT_01_cannon_F",
+		[
+			["Trump (Slammer)", [
+				[0, _texDir + "slammer_trump_0.paa"],
+				[1, _texDir + "slammer_trump_1.paa"]
+			]]
+		]
+	],
+	[
+		"B_MBT_01_TUSK_F",
+		[
+			["Trump (Slammer)", [[2, _texDir + "slammer_trump_2.paa"]]]
+		]
+	],
 	[ // RHIB paintjob
 		"Boat_Transport_02_base_F",
 		[
