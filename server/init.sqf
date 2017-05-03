@@ -213,7 +213,7 @@ if (_hcObjSavingOn) then
 
 _setupPlayerDB = scriptNull;
 
-#define MIN_EXTDB_VERSION 49
+#define MIN_EXTDB_VERSION 1.0124
 
 // Do we need any persistence?
 if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _mineSavingOn || _timeSavingOn || _weatherSavingOn) then
@@ -221,12 +221,12 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _mineSavingOn || _
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	_savingMethod = ["A3W_savingMethod", "profile"] call getPublicVar;
-	if (_savingMethod == "extDB2") then { _savingMethod = "extDB" };
+	if ((_savingMethod == "extDB2") || (_savingMethod == "extDB3"))  then { _savingMethod = "extDB" };
 
 	// extDB
 	if (_savingMethod == "extDB") then
 	{
-		_version = "extDB2" callExtension "9:VERSION";
+		_version = "extDB3" callExtension "9:VERSION";
 
 		if (parseNumber _version >= MIN_EXTDB_VERSION) then
 		{
@@ -234,20 +234,19 @@ if (_playerSavingOn || _objectSavingOn || _vehicleSavingOn || _mineSavingOn || _
 			A3W_savingMethodDir = compileFinal "'extDB'";
 			A3W_extDB_ConfigName = compileFinal str (["A3W_extDB_ConfigName", "A3W"] call getPublicVar);
 			A3W_extDB_IniName = compileFinal str (["A3W_extDB_IniName", "a3wasteland"] call getPublicVar);
-			A3W_extDB_RconName = compileFinal str (["A3W_extDB_RconName", "A3W"] call getPublicVar);
 
-			diag_log format ["[INFO] extDB2 v%1 extension loaded", _version];
+			diag_log format ["[INFO] extDB3 v%1 extension loaded", _version];
 		}
 		else
 		{
 			if (_version != "") then
 			{
-				diag_log format "[INFO] ███ extDB2 startup cancelled!";
-				diag_log format ["[INFO] ███ A3W requires extDB2 v%1 or later: v%2 detected", MIN_EXTDB_VERSION, _result];
+				diag_log format "[INFO] ███ extDB3 startup cancelled!";
+				diag_log format ["[INFO] ███ A3W requires extDB3 v%1 or later: v%2 detected", MIN_EXTDB_VERSION, _result];
 			}
 			else
 			{
-				diag_log "[INFO] ███ extDB2 NOT FOUND! Make sure extDB2.dll (Windows) or extDB2.so (Linux) and extdb-conf.ini are in the same directory as arma3server, and that you are using the -filePatching parameter";
+				diag_log "[INFO] ███ extDB3 NOT FOUND! Make sure extDB3.dll / extDB3_x64.dll (Windows) or extDB3.so (Linux) and extdb-conf.ini are in the same directory as arma3server, and that you are using the -filePatching parameter";
 			};
 
 			_savingMethod = "profile"; // fallback

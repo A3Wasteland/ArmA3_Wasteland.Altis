@@ -7,7 +7,7 @@
 // DB column name, vLoad variable name
 
 [
-	["QUOTE(ID)", "_vehicleID"],
+	["", "_vehicleID"], // CONCAT('"',ID,'"') in a3wasteland.ini
 	["Class", "_class"],
 	["Position", "_pos"],
 	["Direction", "_dir"],

@@ -21,11 +21,11 @@ _queryStmt = param [0,"",[""]];
 _mode = param [1,1,[0]];
 _multiarr = param [2,false,[false]];
 
-_key = "extDB2" callExtension format["%1:%2:%3",_mode, (call A3W_extDB_miscID), _queryStmt];
+_key = "extDB3" callExtension format["%1:%2:%3",_mode, (call A3W_extDB_miscID), _queryStmt];
 
 if(_mode == 1) exitWith {true};
 
-_key = call compile format["%1",_key];
+_key = parseSimpleArray _key;
 _key = _key select 1;
 
 sleep 0.01;
@@ -34,12 +34,12 @@ _queryResult = "";
 _loop = true;
 while{_loop} do
 {
-	_queryResult = "extDB2" callExtension format["4:%1", _key];
+	_queryResult = "extDB3" callExtension format["4:%1", _key];
 	if (_queryResult == "[5]") then {
-		// extDB2 returned that result is Multi-Part Message
+		// extDB3 returned that result is Multi-Part Message
 		_queryResult = "";
 		while{true} do {
-			_pipe = "extDB2" callExtension format["5:%1", _key];
+			_pipe = "extDB3" callExtension format["5:%1", _key];
 			if(_pipe == "") exitWith {_loop = false};
 			_queryResult = _queryResult + _pipe;
 		};
@@ -48,7 +48,7 @@ while{_loop} do
 	{
 		if (_queryResult == "[3]") then
 		{
-			diag_log format ["[extDB2] Sleep [4]: %1", diag_tickTime]; // Helps highlight if someone SQL Queries are running slow
+			diag_log format ["[extDB3] Sleep [4]: %1", diag_tickTime]; // Helps highlight if someone SQL Queries are running slow
 			sleep 0.1;
 		} else {
 			_loop = false;
@@ -57,10 +57,10 @@ while{_loop} do
 };
 
 
-_queryResult = call compile _queryResult;
+_queryResult = parseSimpleArray _queryResult;
 
 // Not needed, its SQF Code incase extDB ever returns error message i.e Database Died
-if ((_queryResult select 0) isEqualTo 0) exitWith {diag_log format ["[extDB2] ███ Protocol Error: %1", _queryResult]; []};
+if ((_queryResult select 0) isEqualTo 0) exitWith {diag_log format ["[extDB3] ███ Protocol Error: %1", _queryResult]; []};
 _return = (_queryResult select 1);
 
 if(!_multiarr) then {
