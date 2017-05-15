@@ -43,6 +43,13 @@ switch (true) do
 	};
 };
 
+private _variant = _veh getVariable ["A3W_vehicleVariant", ""];
+
+if (_variant != "") then
+{
+	_variables pushBack ["A3W_vehicleVariant", _variant];
+};
+
 private _resupplyTruck = _veh getVariable ["A3W_resupplyTruck", false];
 
 if (_resupplyTruck) then
@@ -67,30 +74,38 @@ if (_ownerName != "") then
 
 private _locked = 1 max locked _veh; // default vanilla state is always 1, so we ignore 0's
 
-_doubleBSlash = (call A3W_savingMethod == "extDB");
-
 _textures = [];
+private _texturesVar = _veh getVariable ["A3W_objectTextures", []];
 
-private _addTexture =
+if (_texturesVar isEqualTypeAll "") then // TextureSource
 {
-	_tex = _x select 1;
+	_textures = _texturesVar;
+}
+else // texture paths
+{
+	_doubleBSlash = (call A3W_savingMethod == "extDB");
 
-	if (_doubleBSlash) then
+	private _addTexture =
 	{
-		_tex = (_tex splitString "\") joinString "\\";
+		_tex = _x select 1;
+
+		if (_doubleBSlash) then
+		{
+			_tex = (_tex splitString "\") joinString "\\";
+		};
+
+		[_textures, _tex, [_x select 0]] call fn_addToPairs;
 	};
 
-	[_textures, _tex, [_x select 0]] call fn_addToPairs;
-};
-
-// vehicle has at least 2 random textures, save everything
-if (count getArray (configFile >> "CfgVehicles" >> _class >> "textureList") >= 4) then
-{
-	{ _x = [_forEachIndex, _x]; call _addTexture } forEach getObjectTextures _veh;
-}
-else // only save custom ones
-{
-	_addTexture forEach (_veh getVariable ["A3W_objectTextures", []]);
+	// vehicle has at least 2 random textures, save everything
+	if (count getArray (configFile >> "CfgVehicles" >> _class >> "textureList") >= 4) then
+	{
+		{ _x = [_forEachIndex, _x]; call _addTexture } forEach getObjectTextures _veh;
+	}
+	else // only save custom ones
+	{
+		_addTexture forEach _texturesVar;
+	};
 };
 
 _weapons = [];
@@ -107,10 +122,10 @@ if (_class call fn_hasInventory) then
 	_backpacks = (getBackpackCargo _veh) call cargoToPairs;
 };
 
-// _turretMags and _turretMags3 are deprecated, leave empty
+// _turretMags is deprecated, leave empty
 _turretMags = []; // magazinesAmmo _veh;
-_turretMags2 = [];
-_turretMags3 = [];
+_turretMags2 = (magazinesAllTurrets _veh) select {_x select 0 != "FakeWeapon" && (_x select 0) select [0,5] != "Pylon"} apply {_x select [0,3]};
+_turretMags3 = _veh call fn_getPylonsAmmo;
 
 // deprecated
 /*
@@ -153,13 +168,6 @@ if (_hasDoorGuns) then
 		};
 	} forEach (_veh magazinesTurret _path);
 } forEach _turrets;*/
-
-{
-	if (_x select 0 != "FakeWeapon") then
-	{
-		_turretMags2 pushBack [_x select 0, _x select 1, _x select 2];
-	};
-} forEach magazinesAllTurrets _veh;
 
 _ammoCargo = getAmmoCargo _veh;
 _fuelCargo = getFuelCargo _veh;

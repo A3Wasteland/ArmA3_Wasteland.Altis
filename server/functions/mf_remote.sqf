@@ -39,4 +39,10 @@ mf_remote_repair = {
 	if (_vehicle isKindOf "Boat_Armed_01_base_F" && count (_vehicle magazinesTurret [0]) == 0) then { _vehicle setHitPointDamage ["HitTurret", 1] }; // disable front GMG on speedboats
 	_vehicle setVariable ["FAR_killerVehicle", nil, true];
 	_vehicle setVariable ["FAR_killerAmmo", nil, true];
+
+	// reset ejection seat crap
+	if (_vehicle isKindOf "Plane") then
+	{
+		{ _vehicle animate [_x, 0, true] } forEach ["canopy_hide", "ejection_seat_motion", "ejection_seat_hide"];
+	};
 } call mf_compile;

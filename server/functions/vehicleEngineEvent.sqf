@@ -4,16 +4,15 @@
 //	@file Name: vehicleEngineEvent.sqf
 //	@file Author: AgentRev
 
-_veh = _this select 0;
-_running = _this select 1;
+params ["_veh", "_running"];
 
 if (local _veh && _running) then
 {
-	_driver = (crew _veh) select 0;
-	if (isNil "_driver") then { _driver = objNull };
-	_dmg = _veh getHitPointDamage "HitEngine";
+	_driver = _veh call fn_findPilot;
+	_engine1 = _veh getHitPointDamage "HitEngine";
+	_engine2 = _veh getHitPointDamage "HitEngine2";
 
-	if (_driver call A3W_fnc_isUnconscious || (!isNil "_dmg" && {_dmg >= 0.9})) then
+	if (_driver call A3W_fnc_isUnconscious || (!isNil "_engine1" && {_engine1 > 0.9 && (isNil "_engine2" || {_engine2 > 0.9})})) then
 	{
 		_veh engineOn false;
 	};

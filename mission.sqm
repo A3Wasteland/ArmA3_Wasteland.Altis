@@ -8,7 +8,7 @@ class EditorData
 	toggles=6;
 	class ItemIDProvider
 	{
-		nextID=434;
+		nextID=440;
 	};
 	class MarkerIDProvider
 	{
@@ -39,13 +39,14 @@ addons[]=
 	"A3_Structures_F_Civ_Camping",
 	"A3_Structures_F_EPC_Civ_Accessories",
 	"A3_Structures_F_System",
-	"A3_Structures_F_EPA_Mil_Scrapyard"
+	"A3_Structures_F_EPA_Mil_Scrapyard",
+	"A3_Soft_F_Gamma_Truck_02"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=7;
+		items=8;
 		class Item0
 		{
 			className="A3_Characters_F";
@@ -95,6 +96,13 @@ class AddonsMetaData
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
+		class Item7
+		{
+			className="A3_Soft_F_Gamma";
+			name="Arma 3 - Unarmored Land Vehicles";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
 	};
 };
 randomSeed=3783014;
@@ -106,7 +114,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="A3Wasteland Altis v1.3b"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
+		briefingName="A3Wasteland Altis v1.3c"; // it would be great if you could keep "A3" in the name, like "ABC A3Wasteland" instead of "ABC Wasteland" :)
 		overviewText="Wasteland survival sandbox by Team Wasteland - visit A3Wasteland.com for more details";
 		resistanceWest=0;
 		timeOfChanges=3e+038;
@@ -5611,7 +5619,7 @@ class Mission
 			name="VanillaLayer";
 			class Entities
 			{
-				items=17;
+				items=22;
 				class Item0
 				{
 					dataType="Marker";
@@ -5783,6 +5791,102 @@ class Mission
 					id=433;
 					type="Land_PaperBox_open_full_F";
 					atlOffset=0.18700027;
+				};
+				class Item17
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={26735.42,22.946331,24600.127};
+						angles[]={0.0066682254,2.2192802,0.0053265258};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						init="[this, true] call A3W_fnc_setupResupplyTruck";
+						name="ResupplyTruck1";
+						textures="Orange";
+					};
+					id=435;
+					type="C_Truck_02_box_F";
+				};
+				class Item18
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={22988.088,6.8295641,18863.455};
+						angles[]={0,3.61339,6.2431998};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						init="[this, true] call A3W_fnc_setupResupplyTruck";
+						name="ResupplyTruck2";
+						textures="Orange";
+					};
+					id=436;
+					type="C_Truck_02_box_F";
+				};
+				class Item19
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={20832.541,31.142574,7237.2524};
+						angles[]={0.029321531,3.9986713,0.012007865};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						init="[this, true] call A3W_fnc_setupResupplyTruck";
+						name="ResupplyTruck3";
+						textures="Orange";
+					};
+					id=437;
+					type="C_Truck_02_box_F";
+					atlOffset=-1.9073486e-006;
+				};
+				class Item20
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={14458.497,21.146324,16297.984};
+						angles[]={6.2778621,2.3834217,6.2818413};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						init="[this, true] call A3W_fnc_setupResupplyTruck";
+						name="ResupplyTruck4";
+						textures="Orange";
+					};
+					id=438;
+					type="C_Truck_02_box_F";
+				};
+				class Item21
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={3994.2415,9.4000397,15067.367};
+						angles[]={6.2046804,4.8601661,0.11416198};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						init="[this, true] call A3W_fnc_setupResupplyTruck";
+						name="ResupplyTruck5";
+						textures="Orange";
+					};
+					id=439;
+					type="C_Truck_02_box_F";
 				};
 			};
 			id=415;

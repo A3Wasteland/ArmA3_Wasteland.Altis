@@ -4,25 +4,15 @@
 //	@file Name: vehicleDammagedEvent.sqf
 //	@file Author: AgentRev
 
-_veh = _this select 0;
+params ["_veh"];
 
 if (local _veh) then
 {
-	// If vehicle is plane, show orange color for hull damage icon if engine is broken, because there's no engine icon
-	if (_veh isKindOf "Plane") then
+	_engine1 = _veh getHitPointDamage "HitEngine";
+	_engine2 = _veh getHitPointDamage "HitEngine2";
+
+	if (!isNil "_engine1" && {_engine1 > 0.9 && (isNil "_engine2" || {_engine2 > 0.9})}) then
 	{
-		_dmg = _veh getHitPointDamage "HitEngine";
-
-		if (!isNil "_dmg" && {_dmg >= 0.9}) then
-		{
-			_veh engineOn false;
-
-			_dmg = _veh getHitPointDamage "HitHull";
-
-			if (!isNil "_dmg" && {_dmg < 0.5}) then
-			{
-				_veh setHitPointDamage ["HitHull", 0.5];
-			};
-		};
+		_veh engineOn false;
 	};
 };

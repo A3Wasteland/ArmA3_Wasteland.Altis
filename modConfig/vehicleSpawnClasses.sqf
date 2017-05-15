@@ -65,8 +65,7 @@ staticHeliList =
 //Object List - Random Planes.
 staticPlaneList =
 [
-	//["B_Plane_CAS_01_F", "O_Plane_CAS_02_F"],
-	"I_Plane_Fighter_03_CAS_F"
+	"I_Plane_Fighter_03_dynamicLoadout_F"
 ];
 
 A3W_planeSpawnOdds = 0.25; // 0.0 to 1.0

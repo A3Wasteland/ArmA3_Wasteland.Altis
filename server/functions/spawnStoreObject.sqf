@@ -10,16 +10,18 @@
 if (!isServer) exitWith {};
 
 scopeName "spawnStoreObject";
-private ["_player", "_class", "_marker", "_key", "_isGenStore", "_isGunStore", "_isVehStore", "_timeoutKey", "_objectID", "_playerSide", "_objectsArray", "_itemEntry", "_itemPrice", "_safePos", "_object"];
+private ["_isGenStore", "_isGunStore", "_isVehStore", "_timeoutKey", "_objectID", "_playerSide", "_objectsArray", "_results", "_itemEntry", "_itemPrice", "_safePos", "_object"];
 
-_player = param [0, objNull, [objNull]];
-_class = param [1, "", [""]];
-_marker = param [2, "", [""]];
-_key = param [3, "", [""]];
+params [["_player",objNull,[objNull]], ["_itemEntrySent",[],[[]]], ["_npcName","",[""]], ["_key","",[""]]];
 
-_isGenStore = ["GenStore", _marker] call fn_startsWith;
-_isGunStore = ["GunStore", _marker] call fn_startsWith;
-_isVehStore = ["VehStore", _marker] call fn_startsWith;
+_itemEntrySent params [["_class","",[""]]];
+
+_isGenStore = ["GenStore", _npcName] call fn_startsWith;
+_isGunStore = ["GunStore", _npcName] call fn_startsWith;
+_isVehStore = ["VehStore", _npcName] call fn_startsWith;
+
+private _storeNPC = missionNamespace getVariable [_npcName, objNull];
+private _marker = _npcName;
 
 if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore}) then
 {
@@ -30,7 +32,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 	if (_isGenStore || _isGunStore) then
 	{
-		_marker = _marker + "_objSpawn";
+		_npcName = _npcName + "_objSpawn";
 
 		switch (true) do
 		{
@@ -40,12 +42,12 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 		if (!isNil "_objectsArray") then
 		{
+			_results = _objectsArray select {_x select [1,999] isEqualTo _itemEntrySent};
+
+			if (count _results > 0) then
 			{
-				if (_class == _x select 1) exitWith
-				{
-					_itemEntry = _x;
-				};
-			} forEach (call _objectsArray);
+				_itemEntry = _results select 0;
+			};
 		};
 	};
 
@@ -53,50 +55,51 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 	{
 		// LAND VEHICLES
 		{
+			_results = (call _x) select {_x select [1,999] isEqualTo _itemEntrySent};
+
+			if (count _results > 0) then
 			{
-				if (_class == _x select 1) exitWith
-				{
-					_itemEntry = _x;
-					_marker = _marker + "_landSpawn";
-				};
-			} forEach (call _x);
+				_itemEntry = _results select 0;
+				_marker = _marker + "_landSpawn";
+			};
 		} forEach [landArray, armoredArray, tanksArray];
 
 		// SEA VEHICLES
 		if (isNil "_itemEntry") then
 		{
+			_results = (call boatsArray) select {_x select [1,999] isEqualTo _itemEntrySent};
+
+			if (count _results > 0) then
 			{
-				if (_class == _x select 1) exitWith
-				{
-					_itemEntry = _x;
-					_marker = _marker + "_seaSpawn";
-				};
-			} forEach (call boatsArray);
+				_itemEntry = _results select 0;
+				_marker = _marker + "_seaSpawn";
+			};
 		};
 
 		// HELICOPTERS
 		if (isNil "_itemEntry") then
 		{
+			_results = (call helicoptersArray) select {_x select [1,999] isEqualTo _itemEntrySent};
+
+			if (count _results > 0) then
 			{
-				if (_class == _x select 1) exitWith
-				{
-					_itemEntry = _x;
-					_marker = _marker + "_heliSpawn";
-				};
-			} forEach (call helicoptersArray);
+				_itemEntry = _results select 0;
+				_marker = _marker + "_heliSpawn";
+			};
 		};
 
 		// AIRPLANES
 		if (isNil "_itemEntry") then
 		{
+			_results = (call planesArray) select {_x select [1,999] isEqualTo _itemEntrySent};
+
+			if (count _results > 0) then
 			{
-				if (_class == _x select 1) exitWith
-				{
-					_itemEntry = _x;
-					_marker = _marker + "_planeSpawn";
-				};
-			} forEach (call planesArray);
+				_itemEntry = _results select 0;
+				_marker = _marker + "_planeSpawn";
+			};
 		};
+
 	};
 
 	if (!isNil "_itemEntry" && markerShape _marker != "") then
@@ -115,12 +118,23 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 		if (_player getVariable ["cmoney", 0] >= _itemPrice) then
 		{
-			_safePos = (markerPos _marker) findEmptyPosition [0, 50, _class];
-			if (count _safePos == 0) then { _safePos = markerPos _marker };
+			private _markerPos = markerPos _marker;
+
+			// non-boat spawn over water (e.g. aircraft carrier)
+			if (!isNull _storeNPC && surfaceIsWater getPosASL _storeNPC && _marker find "_seaSpawn" == -1) then
+			{
+				_markerPos set [2, (ATLtoASL getPosASL _storeNPC) select 2];
+				_safePos = ASLtoATL _markerPos;
+			}
+			else // normal spawn
+			{
+				_safePos = _markerPos findEmptyPosition [0, 50, _class];
+				if (count _safePos == 0) then { _safePos = _markerPos };
+			};
 
 			if (_player getVariable [_timeoutKey, true]) then { breakOut "spawnStoreObject" }; // Timeout
 
-			_object = createVehicle [_class, _safePos, [], 0, "None"];
+			_object = createVehicle [_class, _safePos, [], 0, ""];
 
 			if (_player getVariable [_timeoutKey, true]) then // Timeout
 			{
@@ -132,6 +146,13 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			_object setVariable ["A3W_purchasedStoreObject", true];
 			_object setVariable ["ownerUID", getPlayerUID _player, true];
 			_object setVariable ["ownerName", name _player, true];
+
+			private _variant = (_itemEntry select {_x isEqualType "" && {_x select [0,8] == "variant_"}}) param [0,""];
+
+			if (_variant != "") then
+			{
+				_object setVariable ["A3W_vehicleVariant", _variant select [8], true];
+			};
 
 			private _isUAV = (round getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0);
 
@@ -185,50 +206,6 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			_object setVariable ["allowDamage", _isDamageable, true];
 
 			clearBackpackCargoGlobal _object;
-
-			// don't need this anymore at all
-			/*switch (true) do
-			{
-				case ({_object isKindOf _x} count ["Box_NATO_AmmoVeh_F", "Box_East_AmmoVeh_F", "Box_IND_AmmoVeh_F"] > 0):
-				{
-					_object setAmmoCargo 5;
-				};
-
-				case (_object isKindOf "O_Heli_Transport_04_ammo_F"):
-				{
-					_object setAmmoCargo 10;
-				};
-
-				case ({_object isKindOf _x} count ["B_Truck_01_ammo_F", "O_Truck_02_Ammo_F", "O_Truck_03_ammo_F", "I_Truck_02_ammo_F"] > 0):
-				{
-					_object setAmmoCargo 25;
-				};
-
-				case ({_object isKindOf _x} count ["C_Van_01_fuel_F", "I_G_Van_01_fuel_F", "O_Heli_Transport_04_fuel_F"] > 0):
-				{
-					_object setFuelCargo 10;
-				};
-
-				case ({_object isKindOf _x} count ["B_Truck_01_fuel_F", "O_Truck_02_fuel_F", "O_Truck_03_fuel_F", "I_Truck_02_fuel_F"] > 0):
-				{
-					_object setFuelCargo 25;
-				};
-
-				case (_object isKindOf "Offroad_01_repair_base_F"):
-				{
-					_object setRepairCargo 5;
-				};
-
-				case (_object isKindOf "O_Heli_Transport_04_repair_F"):
-				{
-					_object setRepairCargo 10;
-				};
-
-				case ({_object isKindOf _x} count ["B_Truck_01_Repair_F", "O_Truck_02_box_F", "O_Truck_03_repair_F", "I_Truck_02_box_F"] > 0):
-				{
-					_object setRepairCargo 25;
-				};
-			};*/
 
 			if (_skipSave) then
 			{

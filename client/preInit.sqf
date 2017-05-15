@@ -8,13 +8,8 @@ if (!hasInterface) exitWith {};
 
 // Workaround for broken disableChannels, see https://feedback.bistudio.com/T117205
 {
-	_x params [["_chan",-1,[0]], ["_noText","false",[""]], ["_noVoice","false",[""]]];
-
-	_noText = [false,true] select ((["false","true"] find toLower _noText) max 0);
-	_noVoice = [false,true] select ((["false","true"] find toLower _noVoice) max 0);
-
-	_chan enableChannel [!_noText, !_noVoice];
-
+	_x params [["_chan",-1,[0]], ["_noText","true",[""]], ["_noVoice","true",[""]]];
+	_chan enableChannel [(_noText != "true"), (_noVoice != "true")];
 } forEach getArray (missionConfigFile >> "disableChannels");
 
 2 enableChannel false; // force disable useless command channel for everyone

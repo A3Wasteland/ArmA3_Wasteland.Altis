@@ -89,6 +89,12 @@ player addEventHandler ["WeaponAssembled",
 			_obj setAutonomous false; // disable autonomous mode by default on static designators so they stay on target after releasing controls
 		};
 
+		
+		if (isNil {_obj getVariable "A3W_handleDamageEH"}) then
+		{
+			_obj setVariable ["A3W_handleDamageEH", _obj addEventHandler ["HandleDamage", vehicleHandleDamage]];
+		};
+
 		{
 			[_x, ["UAV","",""]] remoteExec ["A3W_fnc_setName", 0, _x]; 
 		} forEach crew _obj;
@@ -127,27 +133,8 @@ player addEventHandler ["InventoryClosed",
 
 [] spawn
 {
-	_lastVeh = vehicle player;
-
 	waitUntil
 	{
-		_currVeh = vehicle player;
-
-		// Manual GetIn/GetOut check because BIS is too lazy to implement GetInMan/GetOutMan
-		if (_lastVeh != _currVeh) then
-		{
-			if (_currVeh != player) then
-			{
-				[_currVeh] call getInVehicle;
-			}
-			else
-			{
-				[_lastVeh] call getOutVehicle;
-			};
-		};
-
-		_lastVeh = _currVeh;
-
 		// Prevent usage of commander camera
 		if (cameraView == "GROUP" && cameraOn in [player, vehicle player]) then
 		{
@@ -209,9 +196,8 @@ if (["A3W_combatAbortDelay", 0] call getPublicVar > 0) then
 	}];
 };
 
-// Reset fast anim speed set in fn_inGameUIActionEvent.sqf
-player addEventHandler ["GetInMan", { player setAnimSpeedCoef 1 }];
-player addEventHandler ["GetOutMan", { player setAnimSpeedCoef 1 }];
+player addEventHandler ["GetInMan", { [_this select 2] call getInVehicle }];
+player addEventHandler ["GetOutMan", { [_this select 2] call getOutVehicle }];
 
 _uid = getPlayerUID player;
 

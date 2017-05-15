@@ -5,10 +5,9 @@
 //	@file Author: AgentRev
 
 scopeName "getInVehicle";
-private "_veh";
-_veh = _this select 0;
+params ["_veh"];
 
-player setAnimSpeedCoef 1;
+player setAnimSpeedCoef 1; // Reset fast anim speed set in fn_inGameUIActionEvent.sqf
 
 if (isNil {_veh getVariable "A3W_hitPointSelections"}) then
 {
@@ -29,11 +28,6 @@ if (isNil {_veh getVariable "A3W_dammagedEH"}) then
 	_veh setVariable ["A3W_dammagedEH", _veh addEventHandler ["Dammaged", vehicleDammagedEvent]];
 };
 
-if (isNil {_veh getVariable "A3W_engineEH"}) then
-{
-	_veh setVariable ["A3W_engineEH", _veh addEventHandler ["Engine", vehicleEngineEvent]];
-};
-
 // Eject Independents of vehicle if it is already used by another group
 if !(playerSide in [BLUFOR,OPFOR]) then
 {
@@ -47,6 +41,11 @@ if !(playerSide in [BLUFOR,OPFOR]) then
 	} forEach crew _veh;
 };
 
+if (isNil {_veh getVariable "A3W_engineEH"}) then
+{
+	_veh setVariable ["A3W_engineEH", _veh addEventHandler ["Engine", vehicleEngineEvent]];
+};
+
 if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_serviceBeaconActions"}) then
 {
 	_veh setVariable ["A3W_serviceBeaconActions",
@@ -56,7 +55,43 @@ if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_ser
 	]];
 };
 
-player setVariable ["lastVehicleRidden", netId _veh];
+_oldVeh = objectFromNetId (player getVariable ["lastVehicleRidden", ""]);
+
+// reset retarded ejection seat crap
+if (_veh isKindOf "Ejection_Seat_Base_F" && _oldVeh isKindOf "Plane") then
+{
+	_oldFuel = fuel _oldVeh;
+
+	[_veh, _oldVeh, _oldFuel] spawn 
+	{
+		params ["_seat", "_plane", "_oldFuel"];
+
+		_time = time;
+		_locked = false;
+
+		waitUntil {_locked = (locked _plane == 2); _locked || time - _time > 30}; // "locked _plane == 2" based on "_plane lock 2;" defined in BIS_fnc_PlaneEjection
+
+		if (!alive _plane || !local _plane || !_locked) exitWith {};
+
+		{ _plane animate [_x, 0, true] } forEach ["canopy_hide", "ejection_seat_motion", "ejection_seat_hide"];
+		_plane setFuel _oldFuel;
+		[_plane, 1] call A3W_fnc_setLockState; // Unlock
+
+		_time = time;
+		_out = false;
+
+		waitUntil {_out = (vehicle player != _seat); _out || time - _time > 30};
+
+		if (!local _seat || !_out) exitWith {};
+
+		deleteVehicle _seat;
+	};
+};
+
+if ({_veh isKindOf _x} count ["ParachuteBase","Ejection_Seat_Base_F"] == 0) then
+{
+	player setVariable ["lastVehicleRidden", netId _veh];
+};
 
 // FAR injured unit vehicle loading
 [_veh] call FAR_Drag_Load_Vehicle;

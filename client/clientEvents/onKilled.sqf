@@ -30,7 +30,7 @@ if (_killer == _player) then
 {
 	if (_deathCause isEqualTo []) then
 	{
-		_deathCause = [["suicide","drown"] select (getOxygenRemaining _player <= 0 && (getPos _player) select 2 < 0), serverTime];
+		_deathCause = [["suicide","drown"] select (getOxygenRemaining _player <= 0 && (_player modelToWorld [0,0,0]) select 2 < 0), serverTime];
 		_player setVariable ["A3W_deathCause_local", _deathCause];
 	};
 

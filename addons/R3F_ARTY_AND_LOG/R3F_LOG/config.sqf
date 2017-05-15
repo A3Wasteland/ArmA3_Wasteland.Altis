@@ -59,6 +59,9 @@ R3F_LOG_CFG_objets_remorquablesH =
 	"Heli_Transport_03_base_F",
 	"Heli_Transport_04_base_F",
 	"VTOL_base_F",
+	"UAV_05_Base_F",
+	"Plane_Fighter_01_Base_F",
+	"Plane_Fighter_02_Base_F",
 	"Plane_CAS_01_base_F",
 	"Plane_CAS_02_base_F"
 ];

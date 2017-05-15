@@ -35,6 +35,6 @@ if (CHVD_allowTerrain && getTerrainGrid != CHVD_targetTerrain) then
 	setTerrainGrid CHVD_targetTerrain;
 };
 
-if (canSuspend) then { sleep 0.1 };
+if (canSuspend) then { uiSleep 0.1 };
 
 false

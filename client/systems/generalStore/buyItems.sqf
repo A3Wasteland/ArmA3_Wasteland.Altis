@@ -288,7 +288,7 @@ storePurchaseHandle = _this spawn
 				};
 
 				_requestKey = call A3W_fnc_generateKey;
-				call requestStoreObject;
+				_x call requestStoreObject;
 			};
 		} forEach (call genObjectsArray);
 	};

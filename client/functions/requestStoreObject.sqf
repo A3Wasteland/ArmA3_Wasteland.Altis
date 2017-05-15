@@ -13,7 +13,7 @@
 
 player setVariable [_requestKey + "_timeout", false, true];
 
-pvar_spawnStoreObject = [player, _class, currentOwnerName, _requestKey];
+pvar_spawnStoreObject = [player, _this select [1,999], currentOwnerName, _requestKey];
 publicVariableServer "pvar_spawnStoreObject";
 
 private ["_requestTimeout", "_object"];

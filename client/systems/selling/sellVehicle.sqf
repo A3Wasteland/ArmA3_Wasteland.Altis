@@ -34,8 +34,11 @@ storeSellingHandle = _this spawn
 		[format [' The "%1" is further away than %2m from the store.', _objname, VEHICLE_MAX_SELLING_DISTANCE], "Error"] call  BIS_fnc_guiMessage;
 	};
 
+	private _variant = _vehicle getVariable ["A3W_vehicleVariant", ""];
+	if (_variant != "") then { _variant = "variant_" + _variant };
+
 	{
-		if (_type == _x select 1) then
+		if (_type == _x select 1 && (_variant == "" || {_variant in _x})) exitWith
 		{
 			_price = (ceil (((_x select 2) / CHOPSHOP_PRICE_RELATIONSHIP) / 5)) * 5;
 		};

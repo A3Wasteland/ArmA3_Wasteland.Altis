@@ -13,7 +13,7 @@ if (_unit == player && (_showWindow || _menuOpen)) then
 	{
 		case (_handled): {};
 
-		case (_action == "UseMagazine"): // placed explosive
+		case (_action == "UseMagazine" || _action == "UseContainerMagazine"): // placed explosive
 		{
 			_minDist = ["A3W_remoteBombStoreRadius", 100] call getPublicVar;
 			if (_minDist <= 0) exitWith {};
@@ -35,14 +35,33 @@ if (_unit == player && (_showWindow || _menuOpen)) then
 				[format ["You are not allowed to place explosives within %1m of a mission spawn.", _minDist], 5] call mf_notify_client;
 				_handled = true;
 			};
+
+			_nearbyParking = allMapMarkers select {markerType _x == "Empty" && {["Parking", _x] call fn_startsWith && {player distance markerPos _x < _minDist}}};
+
+			if !(_nearbyParking isEqualTo []) exitWith
+			{
+				playSound "FD_CP_Not_Clear_F";
+				[format ["You are not allowed to place explosives within %1m of a parking location.", _minDist], 5] call mf_notify_client;
+				_handled = true;
+			};
+
+			_nearbyStorage = nearestObjects [player, ["Land_PaperBox_open_full_F", "Land_Pallet_MilBoxes_F", "Land_PaperBox_open_empty_F", "Land_PaperBox_closed_F"], _minDist] select {_x getVariable ["is_storage", false]};
+
+			if !(_nearbyStorage isEqualTo []) exitWith
+			{
+				playSound "FD_CP_Not_Clear_F";
+				[format ["You are not allowed to place explosives within %1m of a storage location.", _minDist], 5] call mf_notify_client;
+				_handled = true;
+			};
 		};
 
-		case (_action == "DisAssemble" && {{_target isKindOf _x} count ["StaticMGWeapon","StaticGrenadeLauncher","StaticMortar"] > 0}):
+		// now done via enableWeaponDisassembly in vehicleSetup.sqf
+		/*case (_action == "DisAssemble" && {{_target isKindOf _x} count ["StaticMGWeapon","StaticGrenadeLauncher","StaticMortar"] > 0}):
 		{
 			playSound "FD_CP_Not_Clear_F";
 			[format ['You are not allowed to disassemble weapons.\nUse the "%1" option instead.', ["STR_R3F_LOG_action_deplacer_objet", "Move"] call getPublicVar], 5] call mf_notify_client;
 			_handled = true;
-		};
+		};*/
 
 		case (_action == "ManualFire"): // use UAV AI to re-align attack heli turret with pilot crosshair when manual fire is enabled with no gunner (thx KK xoxoxo)
 		{

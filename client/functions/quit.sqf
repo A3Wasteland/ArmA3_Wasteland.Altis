@@ -10,5 +10,4 @@ _dummyVar = "A3W_fnc_antihackLog_" + str floor random 1e6;
 missionNamespace setVariable [_dummyVar, getPlayerUID player];
 publicVariableServer _dummyVar;
 
-// hard CTD if BE kick fails
-player setVelocity [0,0,1e38];
+endMission "LOSER";

@@ -25,8 +25,8 @@
 	["Items", "_items"],
 	["Backpacks", "_backpacks"],
 	["TurretMagazines", "_turretMags"], // deprecated
-	["TurretMagazines2", "_turretMags2"],
-	["TurretMagazines3", "_turretMags3"], // deprecated
+	["TurretMagazines2", "_turretMags2"], // regular mags
+	["TurretMagazines3", "_turretMags3"], // pylons
 	["AmmoCargo", "_ammoCargo"],
 	["FuelCargo", "_fuelCargo"],
 	["RepairCargo", "_repairCargo"]

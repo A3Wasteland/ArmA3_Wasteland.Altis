@@ -24,8 +24,8 @@
 	[["Items", "ARRAY"], "_items"],
 	[["Backpacks", "ARRAY"], "_backpacks"],
 	[["TurretMagazines", "ARRAY"], "_turretMags"], // deprecated
-	[["TurretMagazines2", "ARRAY"], "_turretMags2"],
-	[["TurretMagazines3", "ARRAY"], "_turretMags3"], // deprecated
+	[["TurretMagazines2", "ARRAY"], "_turretMags2"], // regular mags
+	[["TurretMagazines3", "ARRAY"], "_turretMags3"], // pylons
 	[["AmmoCargo", "NUMBER"], "_ammoCargo"],
 	[["FuelCargo", "NUMBER"], "_fuelCargo"],
 	[["RepairCargo", "NUMBER"], "_repairCargo"]

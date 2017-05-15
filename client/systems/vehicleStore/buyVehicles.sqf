@@ -44,6 +44,8 @@ storePurchaseHandle = _this spawn
 	_itemText = _itemlist lbText _itemIndex;
 	_itemData = _itemlist lbData _itemIndex;
 
+	_itemData = call compile _itemData; // [name, class, price, type, variant, ...]
+
 	_colorlist = _dialog displayCtrl vehshop_color_list;
 	_colorIndex = lbCurSel vehshop_color_list;
 	_colorText = _colorlist lbText _colorIndex;
@@ -126,29 +128,27 @@ storePurchaseHandle = _this spawn
 
 		_vehicle
 	};
+
+	if (_itemData isEqualType []) then
 	{
-		if (_itemData == _x select 1) exitWith
+		_itemData params ["", "_class", "_price"];
+
+		// Ensure the player has enough money
+		if (_price > _playerMoney) exitWith
 		{
-			_class = _x select 1;
-			_price = _x select 2;
-
-			// Ensure the player has enough money
-			if (_price > _playerMoney) exitWith
-			{
-				[_itemText] call _showInsufficientFundsError;
-			};
-
-			_requestKey = call A3W_fnc_generateKey;
-			call requestStoreObject;
-
-			_vehicle = objectFromNetId (missionNamespace getVariable _requestKey);
-
-			if (!isNil "_vehicle" && {!isNull _vehicle}) then
-			{
-				[_vehicle, _colorText, if (!isNil "_colorData") then { _colorData } else { "" }] call _applyVehProperties;
-			};
+			[_itemText] call _showInsufficientFundsError;
 		};
-	} forEach (call allVehStoreVehicles);
+
+		_requestKey = call A3W_fnc_generateKey;
+		_itemData call requestStoreObject;
+
+		_vehicle = objectFromNetId (missionNamespace getVariable _requestKey);
+
+		if (!isNil "_vehicle" && {!isNull _vehicle}) then
+		{
+			[_vehicle, _colorText, if (!isNil "_colorData") then { _colorData } else { "" }] call _applyVehProperties;
+		};
+	};
 
 	if (!isNil "_price" && {_price > -1}) then
 	{

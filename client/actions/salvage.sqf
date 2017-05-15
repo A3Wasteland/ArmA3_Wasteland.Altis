@@ -110,9 +110,12 @@ switch (true) do
 	};
 };
 
+private _variant = _vehicle getVariable ["A3W_vehicleVariant", ""];
+if (_variant != "") then { _variant = "variant_" + _variant };
+
 // Final money reward is decided from vehicle store price
 {
-	if (_x select 1 == _vehClass) exitWith
+	if (_x select 1 == _vehClass && (_variant == "" || {_variant in _x})) exitWith
 	{
 		_money = GET_ONE_TENTH_PRICE(_x select 2);
 	};
