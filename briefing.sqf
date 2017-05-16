@@ -19,6 +19,22 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.3c",
+"
+<br/>[Added] Jets DLC
+<br/>[Added] Aircraft carrier on Stratis
+<br/>[Added] Resupply trucks on Altis and Stratis
+<br/>[Changed] Aircraft prices
+<br/>[Changed] Blocked explosives near parking and storage
+<br/>[Changed] Migrated saving system from extDB2 to extDB3
+<br/>[Fixed] Fast revive exploits
+<br/>[Fixed] Could perform your duty after being revived
+<br/>[Fixed] Other minor changes and fixes
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.3b",
 "
 <br/>[Added] Private parking
