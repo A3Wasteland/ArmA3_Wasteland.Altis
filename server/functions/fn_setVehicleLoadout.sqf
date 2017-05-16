@@ -36,8 +36,6 @@ if (!isNil "_pylons" && isNil "_weapons") then
 		_path = _x;
 		_weapons append ((getArray (_turretConfigs select _forEachIndex >> "weapons")) apply {[_x, _path]});
 	} forEach ([[-1]] + allTurrets _veh);
-
-	systemChat str _weapons;
 };
 
 private "_oldWeapons";

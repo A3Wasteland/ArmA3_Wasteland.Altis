@@ -13,7 +13,15 @@ private _isUAV = (round getNumber (configFile >> "CfgVehicles" >> _class >> "isU
 private ([["_flying"],[]] select isNil "_flying");
 _flying = (!isNil "_flying" && {_flying > 0});
 
-_veh = createVehicle [_class, _pos, [], if (isNil "_safeDistance") then { 0 } else { _safeDistance }, ["","FLY"] select (_isUAV && _flying)];
+private _special = ["","FLY"] select (_isUAV && _flying);
+private _tempPos = +_pos;
+
+if (isNil "_safeDistance" && _special == "") then
+{
+	_tempPos set [2, 9000000 + random 999999];
+};
+
+_veh = createVehicle [_class, _tempPos, [], if (isNil "_safeDistance") then { 0 } else { _safeDistance }, _special];
 _veh allowDamage false;
 _veh hideObjectGlobal true;
 
@@ -21,6 +29,12 @@ private _velMag = vectorMagnitude velocity _veh;
 
 if (isNil "_safeDistance") then
 {
+	if (!isNil "_dir") then
+	{
+		_veh setVelocity [0,0,0];
+		_veh setVectorDirAndUp _dir;
+	};
+
 	_veh setPosWorld ATLtoASL _pos;
 };
 

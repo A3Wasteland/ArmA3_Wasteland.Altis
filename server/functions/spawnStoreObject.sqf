@@ -119,13 +119,15 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 		if (_player getVariable ["cmoney", 0] >= _itemPrice) then
 		{
 			private _markerPos = markerPos _marker;
+			private _seaSpawn = (_marker find "_seaSpawn" != -1);
 			private _waterNonBoat = false;
+			private _canFloat = (round getNumber (configFile >> "CfgVehicles" >> _class >> "canFloat") > 0);
 
 			// non-boat spawn over water (e.g. aircraft carrier)
-			if (!isNull _storeNPC && surfaceIsWater getPosASL _storeNPC && _marker find "_seaSpawn" == -1) then
+			if (!isNull _storeNPC && surfaceIsWater getPosASL _storeNPC && !_seaSpawn) then
 			{
 				_markerPos set [2, (getPosASL _storeNPC) select 2];
-				_safePos = ASLtoATL _markerPos;
+				_safePos = [ASLtoATL _markerPos, _markerPos] select _canFloat;
 				_waterNonBoat = true;
 			}
 			else // normal spawn
@@ -188,7 +190,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 			if (_object isKindOf "AllVehicles" && !(_object isKindOf "StaticWeapon")) then
 			{
-				if (!_waterNonBoat) then
+				if (!_waterNonBoat && !_seaSpawn) then
 				{
 					_object setPosATL [_safePos select 0, _safePos select 1, 0.05];
 				};
