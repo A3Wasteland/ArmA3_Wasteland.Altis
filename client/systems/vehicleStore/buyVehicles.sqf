@@ -131,7 +131,8 @@ storePurchaseHandle = _this spawn
 
 	if (_itemData isEqualType []) then
 	{
-		_itemData params ["", "_class", "_price"];
+		_class = _itemData param [1];
+		_price = _itemData param [2];
 
 		// Ensure the player has enough money
 		if (_price > _playerMoney) exitWith
