@@ -4,6 +4,7 @@
 #include "FAR_defines.sqf"
 
 #define FAR_Max_Distance 2.5
+#define FAR_Revive_Duration 10 //seconds
 
 ////////////////////////////////////////////////
 // Player Actions
@@ -75,13 +76,27 @@ FAR_HandleTreating =
 			_target setVariable ["FAR_treatedBy", player, true];
 			player setVariable ["FAR_isTreating", _target];
 
-			_medicMove = format ["AinvPknlMstpSlayW%1Dnon_medic", [player, true] call getMoveWeapon];
-			player playMove _medicMove;
+			//_medicMove = format ["AinvPknlMstpSlayW%1Dnon_medic", [player, true] call getMoveWeapon];
+			//player playMove _medicMove;
 
-			waitUntil {sleep 0.1; animationState player == _medicMove || !CAN_PERFORM};
-			waitUntil {sleep 0.1; animationState player != _medicMove || !CAN_PERFORM};
+			_checks =
+			{
+				params ["_progress", "_target", "_isRevive"];
+				private _failed = true;
+				private _text = "Action failed!";
 
-			if (CAN_PERFORM) then
+				if (CAN_PERFORM) then
+				{
+					_failed = false;
+					_text = format [["Stabilizing %1%2 complete","Reviving %1%2 complete"] select _isRevive, floor (_progress * 100), "%"];
+				};
+
+				[_failed, _text];
+			};
+
+			_success = [FAR_Revive_Duration, "", _checks, [_target, _revive]] call a3w_actions_start;
+
+			if (_success && CAN_PERFORM) then
 			{
 				if (_revive) then
 				{
