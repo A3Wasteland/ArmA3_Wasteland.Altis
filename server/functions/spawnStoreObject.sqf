@@ -42,11 +42,12 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 		if (!isNil "_objectsArray") then
 		{
-			_results = _objectsArray select {_x select [1,999] isEqualTo _itemEntrySent};
+			_results = (call _objectsArray) select {_x select [1,999] isEqualTo _itemEntrySent};
 
 			if (count _results > 0) then
 			{
 				_itemEntry = _results select 0;
+				_marker = _marker + "_objSpawn";
 			};
 		};
 	};
@@ -99,7 +100,6 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				_marker = _marker + "_planeSpawn";
 			};
 		};
-
 	};
 
 	if (!isNil "_itemEntry" && markerShape _marker != "") then
