@@ -15,22 +15,24 @@
 
 switch (true) do
 {
-	// AH-9 Pawnee (Gun-Only)
-	case (_class isKindOf "B_Heli_Light_01_dynamicLoadout_F" && _variant == "pawneeGun"):
+	// AH-9 Pawnee
+	case (_class isKindOf "B_Heli_Light_01_dynamicLoadout_F"):
 	{
-		_pylons = ["",""];
+		switch (_variant) do
+		{
+			case "pawneeGun": { _pylons = ["",""] };
+			default           { _pylons = ["PylonRack_12Rnd_missiles","PylonRack_12Rnd_missiles"] };
+		};
 	};
 
-	// PO-30 Orca (DAR)
-	case (_class isKindOf "O_Heli_Light_02_dynamicLoadout_F" && _variant == "orcaDAR"):
+	// PO-30 Orca
+	case (_class isKindOf "O_Heli_Light_02_dynamicLoadout_F"):
 	{
-		_pylons = ["PylonWeapon_2000Rnd_65x39_belt","PylonRack_12Rnd_missiles"];
-	};
-
-	// PO-30 Orca (DAGR)
-	case (_class isKindOf "O_Heli_Light_02_dynamicLoadout_F" && _variant == "orcaDAGR"):
-	{
-		_pylons = ["PylonWeapon_2000Rnd_65x39_belt","PylonRack_12Rnd_PG_missiles"];
+		switch (_variant) do
+		{
+			case "orcaDAGR": { _pylons = ["PylonWeapon_2000Rnd_65x39_belt","PylonRack_12Rnd_PG_missiles"] };
+			default          { _pylons = ["PylonWeapon_2000Rnd_65x39_belt","PylonRack_12Rnd_missiles"] };
+		};
 	};
 
 	// AH-99 Blackfoot
@@ -51,20 +53,14 @@ switch (true) do
 		_pylons = ["PylonRack_1Rnd_Missile_AGM_01_F","PylonRack_19Rnd_Rocket_Skyfire","PylonRack_19Rnd_Rocket_Skyfire","PylonRack_1Rnd_Missile_AGM_01_F"];
 	};
 
-	// A-143 Buzzard AA
-	case (_class isKindOf "Plane_Fighter_03_dynamicLoadout_base_F" && _variant == "buzzardAA"):
+	// A-143 Buzzard
+	case (_class isKindOf "Plane_Fighter_03_dynamicLoadout_base_F"):
 	{
-		_pylons = ["PylonRack_1Rnd_Missile_AA_04_F","PylonRack_1Rnd_GAA_missiles","PylonRack_1Rnd_GAA_missiles","PylonWeapon_300Rnd_20mm_shells","PylonRack_1Rnd_GAA_missiles","PylonRack_1Rnd_GAA_missiles","PylonRack_1Rnd_Missile_AA_04_F"];
-		_customCode =
+		switch (_variant) do
 		{
-			_veh setAmmoOnPylon [4, 500]; // 20mm gun
+			case "buzzardAA": { _pylons = ["PylonRack_1Rnd_Missile_AA_04_F","PylonRack_1Rnd_GAA_missiles","PylonRack_1Rnd_GAA_missiles","PylonWeapon_300Rnd_20mm_shells","PylonRack_1Rnd_GAA_missiles","PylonRack_1Rnd_GAA_missiles","PylonRack_1Rnd_Missile_AA_04_F"] };
+			default           { _pylons = ["PylonRack_1Rnd_LG_scalpel","PylonRack_1Rnd_Missile_AA_04_F","PylonMissile_1Rnd_Bomb_04_F","PylonWeapon_300Rnd_20mm_shells","PylonMissile_1Rnd_Bomb_04_F","PylonRack_1Rnd_Missile_AA_04_F","PylonRack_1Rnd_LG_scalpel"] };
 		};
-	};
-
-	// A-143 Buzzard CAS
-	case (_class isKindOf "Plane_Fighter_03_dynamicLoadout_base_F" && _variant == "buzzardCAS"):
-	{
-		_pylons = ["PylonRack_1Rnd_LG_scalpel","PylonRack_1Rnd_Missile_AA_04_F","PylonMissile_1Rnd_Bomb_04_F","PylonWeapon_300Rnd_20mm_shells","PylonMissile_1Rnd_Bomb_04_F","PylonRack_1Rnd_Missile_AA_04_F","PylonRack_1Rnd_LG_scalpel"];
 		_customCode =
 		{
 			_veh setAmmoOnPylon [4, 500]; // 20mm gun
@@ -156,22 +152,22 @@ switch (true) do
 		_pylons = ["PylonRack_1Rnd_Missile_AA_03_F","PylonRack_1Rnd_Missile_AA_03_F","PylonRack_1Rnd_Missile_AGM_01_F","PylonMissile_1Rnd_Bomb_03_F","PylonRack_20Rnd_Rocket_03_HE_F","PylonRack_20Rnd_Rocket_03_AP_F","PylonMissile_1Rnd_Bomb_03_F","PylonRack_1Rnd_Missile_AGM_01_F","PylonRack_1Rnd_Missile_AA_03_F","PylonRack_1Rnd_Missile_AA_03_F"];
 	};
 
-	// Greyhawk/Ababil Missile UAVs
-	case (_class isKindOf "UAV_02_dynamicLoadout_base_F" && _variant == "greyhawkMissile"):
+	// Greyhawk/Ababil UAVs
+	case (_class isKindOf "UAV_02_dynamicLoadout_base_F"):
 	{
-		_pylons = ["PylonRack_3Rnd_LG_scalpel","PylonRack_3Rnd_LG_scalpel"];
-		_customCode =
+		switch (_variant) do
 		{
-			_veh setAmmoOnPylon [1, 2]; // right wing
-			_veh setAmmoOnPylon [2, 2]; // left wing
+			case "greyhawkBomber": { _pylons = ["PylonMissile_1Rnd_Bomb_04_F","PylonMissile_1Rnd_Bomb_04_F"] };
+			default
+			{
+				_pylons = ["PylonRack_3Rnd_LG_scalpel","PylonRack_3Rnd_LG_scalpel"];
+				_customCode =
+				{
+					_veh setAmmoOnPylon [1, 2]; // right wing
+					_veh setAmmoOnPylon [2, 2]; // left wing
+				};
+			};
 		};
-	};
-
-	// Greyhawk/Ababil Bomber UAVs
-	case (_class isKindOf "UAV_02_dynamicLoadout_base_F" && _variant == "greyhawkBomber"):
-	{
-		_pylons = ["PylonMissile_1Rnd_Bomb_04_F","PylonMissile_1Rnd_Bomb_04_F"];
-
 	};
 
 	// KH-3A Fenghuang UAV
@@ -183,16 +179,14 @@ switch (true) do
 		};
 	};*/
 
-	// UCAV Sentinel Missile
-	case (_class isKindOf "B_UAV_05_F" && _variant == "sentinelMissile"):
+	// UCAV Sentinel
+	case (_class isKindOf "B_UAV_05_F"):
 	{
-		_pylons = ["PylonMissile_Missile_AGM_02_x2","PylonMissile_Missile_AGM_02_x2"];
-	};
-
-	// UCAV Sentinel Bomber
-	case (_class isKindOf "B_UAV_05_F" && _variant == "sentinelBomber"):
-	{
-		_pylons = ["PylonMissile_Bomb_GBU12_x1","PylonMissile_Bomb_GBU12_x1"];
+		switch (_variant) do
+		{
+			case "sentinelBomber": { _pylons = ["PylonMissile_Bomb_GBU12_x1","PylonMissile_Bomb_GBU12_x1"] };
+			default                { _pylons = ["PylonMissile_Missile_AGM_02_x2","PylonMissile_Missile_AGM_02_x2"] };
+		};
 	};
 
 	// MQ-12 Falcon UAV (non-dynamicLoadout)

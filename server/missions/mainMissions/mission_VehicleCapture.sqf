@@ -9,7 +9,7 @@
 if (!isServer) exitwith {};
 #include "mainMissionDefines.sqf";
 
-private ["_vehicle", "_vehicleName", "_vehDeterminer"];
+private ["_vehicle", "_vehicleName", "_vehDeterminer", "_variant"];
 
 // setupVars must be defined in the top mission file
 
@@ -19,6 +19,12 @@ _setupObjects =
 
 	// Class, Position, Fuel, Ammo, Damage, Special
 	_vehicle = [_vehicleClass, _missionPos] call createMissionVehicle;
+
+	if (_vehicleClass isEqualType []) then
+	{
+		_variant = _vehicleClass param [1,"",[""]];
+		_vehicleClass = _vehicleClass select 0;
+	};
 
 	/*switch (true) do
 	{

@@ -26,15 +26,15 @@ _setupObjects =
 	_vehChoices =
 	[
 		["B_Boat_Armed_01_minigun_F", "B_Heli_Transport_01_F"],
-		["O_Boat_Armed_01_hmg_F", "O_Heli_Light_02_F"],
-		["I_Boat_Armed_01_minigun_F", "I_Heli_light_03_F"]
+		["O_Boat_Armed_01_hmg_F", ["O_Heli_Light_02_dynamicLoadout_F", "orcaDAGR"]],
+		["I_Boat_Armed_01_minigun_F", "I_Heli_light_03_dynamicLoadout_F"]
 	];
 
 	if (missionDifficultyHard) then
 	{
-		(_vehChoices select 0) set [1, "B_Heli_Attack_01_F"];
-		(_vehChoices select 1) set [1, "O_Heli_Attack_02_F"];
-		(_vehChoices select 2) set [1, "O_Heli_Attack_02_black_F"];
+		(_vehChoices select 0) set [1, "B_Heli_Attack_01_dynamicLoadout_F"];
+		(_vehChoices select 1) set [1, "O_Heli_Attack_02_dynamicLoadout_F"];
+		(_vehChoices select 2) set [1, "O_Heli_Attack_02_dynamicLoadout_F"];
 	};
 
 	_convoyVeh = _vehChoices call BIS_fnc_selectRandom;
@@ -45,14 +45,26 @@ _setupObjects =
 
 	_createVehicle =
 	{
-		private ["_type", "_position", "_direction", "_special", "_vehicle", "_soldier"];
+		private ["_type", "_position", "_direction", "_variant", "_special", "_vehicle", "_soldier"];
 
 		_type = _this select 0;
 		_position = _this select 1;
 		_direction = _this select 2;
+		_variant = _type param [1,"",[""]];
+
+		if (_type isEqualType []) then
+		{
+			_type = _type select 0;
+		};
 
 		_vehicle = createVehicle [_type, _position, [], 0, "FLY"];
 		_vehicle setVariable ["R3F_LOG_disabled", true, true];
+
+		if (_variant != "") then
+		{
+			_vehicle setVariable ["A3W_vehicleVariant", _variant, true];
+		};
+
 		[_vehicle] call vehicleSetup;
 
 		_vehicle setDir _direction;
@@ -145,9 +157,9 @@ _setupObjects =
 
 	_missionPos = getPosATL leader _aiGroup;
 
-	_missionPicture = getText (configFile >> "CfgVehicles" >> _veh1 >> "picture");
-	_vehicleName = getText (configFile >> "CfgVehicles" >> _veh1 >> "displayName");
-	_vehicleName2 = getText (configFile >> "CfgVehicles" >> _veh2 >> "displayName");
+	_missionPicture = getText (configFile >> "CfgVehicles" >> (_veh1 param [0,""]) >> "picture");
+	_vehicleName = getText (configFile >> "CfgVehicles" >> (_veh1 param [0,""]) >> "displayName");
+	_vehicleName2 = getText (configFile >> "CfgVehicles" >> (_veh2 param [0,""]) >> "displayName");
 
 	_missionHintText = format ["Two <t color='%3'>%1</t> are patrolling the coasts, escorted by a <t color='%3'>%2</t>.<br/>Intercept them and recover their cargo!", _vehicleName, _vehicleName2, mainMissionColor];
 

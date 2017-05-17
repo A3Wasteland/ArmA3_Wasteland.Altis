@@ -8,7 +8,7 @@
 
 if (!isServer) exitwith {};
 
-private ["_class", "_pos", "_fuel", "_ammo", "_damage", "_special", "_veh"];
+private ["_class", "_pos", "_fuel", "_ammo", "_damage", "_special", "_variant", "_veh"];
 
 _class = _this select 0;
 _pos = _this select 1;
@@ -17,7 +17,19 @@ _ammo = param [3, 1, [0]];
 _damage = param [4, 0, [0]];
 _special = param [5, "None", [""]];
 
+_variant = _class param [1,"",[""]];
+
+if (_class isEqualType []) then
+{
+	_class = _class select 0;
+};
+
 _veh = createVehicle [_class, _pos, [], 0, _special];
+
+if (_variant != "") then
+{
+	_veh setVariable ["A3W_vehicleVariant", _variant, true];
+};
 
 [_veh] call vehicleSetup;
 

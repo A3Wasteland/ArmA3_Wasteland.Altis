@@ -21,16 +21,16 @@ _setupObjects =
 
 	_heliChoices =
 	[
-		["B_Heli_Transport_01_F", "B_Heli_Light_01_armed_F"],
-		["B_Heli_Transport_01_camo_F", "O_Heli_Light_02_F"],
-		["B_Heli_Transport_01_F", "I_Heli_light_03_F"]
+		["B_Heli_Transport_01_F", ["B_Heli_Light_01_dynamicLoadout_F", "pawneeNormal"]],
+		["B_Heli_Transport_01_camo_F", ["O_Heli_Light_02_dynamicLoadout_F", "orcaDAGR"]],
+		["B_Heli_Transport_01_F", "I_Heli_light_03_dynamicLoadout_F"]
 	];
 
 	if (missionDifficultyHard) then
 	{
-		(_heliChoices select 0) set [0, "B_Heli_Attack_01_F"];
-		(_heliChoices select 1) set [0, "O_Heli_Attack_02_F"];
-		(_heliChoices select 2) set [0, "O_Heli_Attack_02_black_F"];
+		(_heliChoices select 0) set [0, "B_Heli_Attack_01_dynamicLoadout_F"];
+		(_heliChoices select 1) set [0, "O_Heli_Attack_02_dynamicLoadout_F"];
+		(_heliChoices select 2) set [0, "O_Heli_Attack_02_dynamicLoadout_F"];
 	};
 
 	_convoyVeh = _heliChoices call BIS_fnc_selectRandom;
@@ -41,14 +41,26 @@ _setupObjects =
 
 	_createVehicle =
 	{
-		private ["_type", "_position", "_direction", "_vehicle", "_soldier"];
+		private ["_type", "_position", "_direction", "_variant", "_vehicle", "_soldier"];
 
 		_type = _this select 0;
 		_position = _this select 1;
 		_direction = _this select 2;
+		_variant = _type param [1,"",[""]];
+
+		if (_type isEqualType []) then
+		{
+			_type = _type select 0;
+		};
 
 		_vehicle = createVehicle [_type, _position, [], 0, "FLY"];
 		_vehicle setVariable ["R3F_LOG_disabled", true, true];
+
+		if (_variant != "") then
+		{
+			_vehicle setVariable ["A3W_vehicleVariant", _variant, true];
+		};
+
 		[_vehicle] call vehicleSetup;
 
 		_vehicle setDir _direction;
@@ -127,9 +139,9 @@ _setupObjects =
 
 	_missionPos = getPosATL leader _aiGroup;
 
-	_missionPicture = getText (configFile >> "CfgVehicles" >> _veh1 >> "picture");
-	_vehicleName = getText (configFile >> "CfgVehicles" >> _veh1 >> "displayName");
-	_vehicleName2 = getText (configFile >> "CfgVehicles" >> _veh2 >> "displayName");
+	_missionPicture = getText (configFile >> "CfgVehicles" >> (_veh1 param [0,""]) >> "picture");
+	_vehicleName = getText (configFile >> "CfgVehicles" >> (_veh1 param [0,""]) >> "displayName");
+	_vehicleName2 = getText (configFile >> "CfgVehicles" >> (_veh2 param [0,""]) >> "displayName");
 
 	_missionHintText = format ["A formation of armed helicopters containing a <t color='%3'>%1</t> and two <t color='%3'>%2</t> are patrolling the island. Destroy them and recover their cargo!", _vehicleName, _vehicleName2, mainMissionColor];
 

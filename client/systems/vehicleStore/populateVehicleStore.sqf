@@ -47,7 +47,7 @@ _playerSideNum = switch (playerSide) do
 {
 	_x params ["_vehName", "_vehClass"];
 
-	if (!_noBuzzard || {!(_vehClass isKindOf "Plane_Fighter_03_base_F")}) then
+	if ((!_noBuzzard || {!(_vehClass isKindOf "Plane_Fighter_03_base_F")}) && !("HIDDEN" in (_x select [3,999]))) then
 	{
 		_vehCfg = configFile >> "CfgVehicles" >> _vehClass;
 
