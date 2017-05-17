@@ -165,6 +165,7 @@ else
 				//case (_class == "Land_Scaffolding_F"):         { 3 };
 				case (_class == "Land_Canal_WallSmall_10m_F"): { 2 };
 				case (_class == "Land_Canal_Wall_Stairs_F"):   { 2 };
+				case (_class == "Land_PierLadder_F"):          { 2 };
 				default { 0 };
 			};
 
