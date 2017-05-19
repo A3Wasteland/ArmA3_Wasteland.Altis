@@ -24,6 +24,7 @@ player createDiaryRecord ["changelog",
 <br/>[Added] Jets DLC
 <br/>[Added] Aircraft carrier on Stratis
 <br/>[Added] Resupply trucks on Altis and Stratis
+<br/>[Added] Driver assist
 <br/>[Changed] Aircraft prices
 <br/>[Changed] Blocked explosives near parking and storage
 <br/>[Changed] Migrated saving system from extDB2 to extDB3
