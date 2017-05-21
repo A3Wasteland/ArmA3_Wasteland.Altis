@@ -9,7 +9,7 @@
 //@file Argument: the amount of hunger to replenish
 
 #define ERR_CANCELLED "Eating Cancelled";
-#define ANIMATION "AinvPknlMstpSnonWnonDnon_healed_1"
+#define ANIMATION "Acts_CivilHiding_2"
 private ["_checks", "_success","_text"];
 _checks = {
 	private ["_progress","_failed", "_text", "_food"];

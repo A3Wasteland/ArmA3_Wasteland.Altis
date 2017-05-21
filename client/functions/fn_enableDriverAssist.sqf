@@ -11,24 +11,21 @@ private _veh = objectParent player;
 if (!alive _veh || alive driver _veh || effectiveCommander _veh != player) exitWith {};
 
 private _class = format ["%1_UAV_AI", ["B","O","I"] select (([BLUFOR,OPFOR,INDEPENDENT] find playerSide) max 0)];
-private _ai = createAgent [_class, [0,0,0], [], 0, ""];
+private _ai = createAgent [_class, getPosATL _veh, [], 0, ""];
 
+_ai allowDamage false;
 [_ai, ["Autodrive","",""]] remoteExec ["A3W_fnc_setName", 0, _ai];
 _ai moveInDriver _veh;
 _ai setVariable ["A3W_driverAssistOwner", player, true];
-_ai allowDamage false;
 
-_veh spawn
+[_veh, _ai] spawn
 {
-	_time = time;
-	waitUntil {local _this || time - _time > 3};
+	params ["_veh", "_ai"];
 
-	if (local _this) then
-	{
-		_this lockDriver true;
-	}
-	else
-	{
-		["lockDriver", _this] remoteExecCall ["A3W_fnc_towingHelper", _this];
-	};
+	_time = time;
+	waitUntil {local _veh || time - _time > 3};
+
+	if (driver _veh != _ai) exitWith {};
+
+	["lockDriver", _veh] call A3W_fnc_towingHelper;
 };

@@ -34,12 +34,11 @@ _base = getPosATL _storeOwner;
 _pDDirMod = _pDDirMod + 180; // desk model is inverted
 
 _bPos set [2, (_bPos select 2) + 0.05];
-_deskPos = ASLtoATL ((ATLtoASL _bPos) vectorAdd ([[0, -0.8, 0], -_pDDirMod] call BIS_fnc_rotateVector2D));
+_deskPos = (AGLtoASL _bPos) vectorAdd ([[0, -0.8, 0], -_pDDirMod] call BIS_fnc_rotateVector2D);
 
 //create the cashier station.
-_desk = createVehicle ["Land_CashDesk_F", _deskPos, [], 0, ""];
+_desk = createSimpleObject ["Land_CashDesk_F", _deskPos];
 _desk allowDamage false;
-_desk setPosATL _deskPos;
 _desk setDir _pDDirMod;
 _desk setVariable ["R3F_LOG_disabled", true, true];
 _desk disableCollisionWith _storeOwner;

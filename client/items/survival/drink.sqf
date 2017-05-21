@@ -9,7 +9,7 @@
 //@file Argument: The amount of thirst to replenish
 
 #define ERR_CANCELLED "Drinking Cancelled";
-#define ANIMATION "AinvPknlMstpSnonWnonDnon_healed_1"
+#define ANIMATION "Acts_CivilHiding_2"
 private ["_checks", "_hasFailed"];
 _hasFailed = {
 	private ["_progress","_failed", "_text"];

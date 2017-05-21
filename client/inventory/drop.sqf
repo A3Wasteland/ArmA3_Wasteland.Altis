@@ -39,7 +39,8 @@ _obj = objNull;
 if (alive player) then
 {
 	MUTEX_LOCK_OR_FAIL;
-	player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+	//player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+	player playActionNow "PutDown";
 	sleep 0.5;
 
 	_obj = createVehicle [_type, [player, [0,1,0]] call relativePos, [], 0, "CAN_COLLIDE"];

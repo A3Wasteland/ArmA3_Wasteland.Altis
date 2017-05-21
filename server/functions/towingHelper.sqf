@@ -4,17 +4,17 @@
 //	@file Name: towingHelper.sqf
 //	@file Author: AgentRev
 
-private ["_type", "_veh", "_pos"];
+params [["_type","",[""]], ["_veh",objNull,["",objNull]]];
 
-_type = param [0, "", [""]];
-_veh = param [1, objNull, ["",objNull]];
+if (!local _veh) exitWith
+{
+	_this remoteExecCall ["A3W_fnc_towingHelper", _veh];
+};
 
-if (typeName _veh == "STRING") then
+if (_veh isEqualType "") then
 {
 	_veh = objectFromNetId _veh;
 };
-
-if (!local _veh) exitWith {};
 
 switch (_type) do
 {
@@ -29,7 +29,7 @@ switch (_type) do
 		_veh lockDriver false;
 		_veh enableCopilot true;
 
-		_pos = getPosATL _veh;
+		private _pos = getPosATL _veh;
 
 		if (_pos select 2 < 0) then
 		{
@@ -40,6 +40,10 @@ switch (_type) do
 	case "lockDriver":
 	{
 		_veh lockDriver true;
+	};
+	case "unlockDriver":
+	{
+		_veh lockDriver false;
 	};
 	case "disableDriving":
 	{

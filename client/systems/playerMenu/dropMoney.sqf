@@ -21,7 +21,8 @@ _money = parsenumber(GET_SELECTED_DATA(money_value));
 if((player getVariable "cmoney" < _money) OR (player getVariable "cmoney" < 0)) exitwith {hint format["You don't have $%1 to drop", [_money] call fn_numbersText];};
 
 mutexScriptInProgress = true;
-player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+//player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+player playActionNow "PutDown";
 sleep 0.5;
 
 _cash = createVehicle ["Land_Money_F", [player, [0,1,0]] call relativePos, [], 0, "CAN_COLLIDE"];

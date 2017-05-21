@@ -33,7 +33,8 @@ _id = _this select 3;
 _obj = _id call mf_inventory_takeable;
 if not(isNull _obj) then {
 	MUTEX_LOCK_OR_FAIL;
-	player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+	//player playMove ([player, "AmovMstpDnon_AinvMstpDnon", "putdown"] call getFullMove);
+	player playActionNow "PutDown";
 	sleep 0.5;
 
 	if (!isNull _obj) then
