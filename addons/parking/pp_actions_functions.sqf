@@ -38,8 +38,8 @@ pp_setup_terminal = {
   if (_terminal getVariable ["A3W_parkingTerminalSetupDone",false]) exitWith {};
   private _garage = param [1, nearestBuilding _terminal];
 
-  if (local _terminal) then { _terminal allowDamage false };
-  if (local _garage) then { _garage allowDamage false };
+  _terminal allowDamage false;
+  _garage allowDamage false;
   _terminal setVariable ["R3F_LOG_disabled", true]; //don't allow players to move the table
   _garage setVariable ["R3F_LOG_disabled", true];
 
@@ -61,7 +61,7 @@ pp_setup_terminal = {
     };
 
     def(_laptop);
-    _laptop = createVehicle ["Land_Laptop_unfolded_F", getPosATL _terminal, [], 0, ""];
+    _laptop = createSimpleObject ["Land_Laptop_unfolded_F", getPosASL _terminal]; //createVehicle ["Land_Laptop_unfolded_F", getPosASL _terminal, [], 0, ""];
     _laptop allowDamage false;
     _laptop attachTo [_terminal, [0,-0.1,0.55]];
     _laptop setVariable ["R3F_LOG_disabled", true, true]; //don't allow players to move the laptop
@@ -77,10 +77,16 @@ pp_create_terminal = {
   def(_pos);
   def(_terminal);
 
-  _pos = AGLtoASL (_garage modelToWorld [0,0,0]);
+  private _offset = switch (true) do {
+    case (_garage isKindOf "Land_Carrier_01_base_F"): { [-28.663,108.289,23.9749] };
+    default                                           { [0,0,0] };
+  };
+
+  _pos = AGLtoASL (_garage modelToWorld _offset);
   _garage allowDamage false;
 
   _terminal = createVehicle ["Land_CampingTable_small_F", ASLtoATL _pos, [], 0, ""];
+  _terminal setPosASL _pos;
   _pos set [2, (_pos select 2) - (getPos _terminal select 2)];
   _terminal setPosASL _pos;
   _terminal setVectorDirAndUp [vectorDir _garage, vectorUp _garage];
@@ -110,7 +116,7 @@ pp_create_terminals = {
     _marker_pos = markerPos _marker;
     //if (isARRAY(pp_cities_whitelist) && {count(pp_cities_whitelist) > 0 && {not(_town_name in pp_cities_whitelist)}}) exitWith {};
 
-    _garage = (nearestObjects [_marker_pos, ["Land_i_Shed_Ind_F"], 50]) select 0;
+    _garage = (nearestObjects [_marker_pos, ["Land_i_Shed_Ind_F", "Land_Carrier_01_base_F"], 50]) select 0;
     if (!isOBJECT(_garage)) exitWith {
       diag_log format["No garage near %1", _marker];
     };

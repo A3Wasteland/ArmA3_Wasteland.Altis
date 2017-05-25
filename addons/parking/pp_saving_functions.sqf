@@ -185,6 +185,17 @@ if (isServer) then {
     {
       _pos = markerPos (_nearbySpawns select 0);
       _dirAngle = markerDir (_nearbySpawns select 0);
+
+      if (surfaceIsWater _pos) then
+      {
+        _pos set [2, (getPosASL _player) select 2];
+
+        if (round getNumber (configFile >> "CfgVehicles" >> _class >> "canFloat") > 0) then {
+          _pos = ASLtoAGL _pos;
+        } else {
+          _pos = ASLtoATL _pos;
+        };
+      };
     };
 
     def(_create_array);
