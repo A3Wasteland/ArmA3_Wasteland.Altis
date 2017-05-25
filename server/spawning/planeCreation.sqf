@@ -50,8 +50,8 @@ switch (true) do
 	{
 		_plane setAmmoOnPylon [1, 0]; // scalpel
 		_plane setAmmoOnPylon [2, 0]; // AA
-		_plane setAmmoOnPylon [3, round random 2]; // bomb (50% chance)
-		_plane setAmmoOnPylon [5, round random 2]; // bomb (50% chance)
+		_plane setAmmoOnPylon [3, floor random 2]; // bomb (50% chance)
+		_plane setAmmoOnPylon [5, floor random 2]; // bomb (50% chance)
 		_plane setAmmoOnPylon [6, 0]; // AA
 		_plane setAmmoOnPylon [7, 0]; // scalpel
 	};
