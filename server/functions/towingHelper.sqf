@@ -6,14 +6,14 @@
 
 params [["_type","",[""]], ["_veh",objNull,["",objNull]]];
 
-if (!local _veh) exitWith
-{
-	_this remoteExecCall ["A3W_fnc_towingHelper", _veh];
-};
-
 if (_veh isEqualType "") then
 {
 	_veh = objectFromNetId _veh;
+};
+
+if (!local _veh) exitWith
+{
+	_this remoteExecCall ["A3W_fnc_towingHelper", _veh];
 };
 
 switch (_type) do
