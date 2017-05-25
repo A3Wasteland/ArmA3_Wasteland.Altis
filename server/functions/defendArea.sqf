@@ -64,14 +64,14 @@ private ["_wp1", "_wp2"];
 _wp1 = _grp addWaypoint [_pos, 0];
 _wp1 setWaypointType "SAD"; // Seek And Destroy
 [_grp, 1] setWaypointBehaviour "SAFE";
-[_grp, 1] setWaypointCombatMode "GREEN";
+[_grp, 1] setWaypointCombatMode "RED";
 [_grp, 1] setWaypointCompletionRadius 75;
 [_grp, 1] setWaypointStatements ["true", "(group this) setCurrentWaypoint [group this, 2]"];
 
 _wp2 = _grp addWaypoint [_pos, 0];
 _wp2 setWaypointType "DISMISS";
 [_grp, 2] setWaypointBehaviour "SAFE";
-[_grp, 2] setWaypointCombatMode "GREEN";
+[_grp, 2] setWaypointCombatMode "RED";
 [_grp, 2] setWaypointCompletionRadius 75;
 [_grp, 2] setWaypointStatements ["true", "(group this) setCurrentWaypoint [group this, 1]"];
 
@@ -115,13 +115,15 @@ _wp2 setWaypointType "DISMISS";
 			};
 		};
 	};
+
+	_x disableAI "COVER";
 } forEach units _grp;
 
 _grp spawn
 {
 	while {{alive _x} count units _this > 0} do
 	{
-		if (combatMode _this == "YELLOW") then
+		if (combatMode _this != "RED") then
 		{
 			_this setCombatMode "RED"; // FIRE AT WILL MOTHERFUCKERS!
 		};

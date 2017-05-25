@@ -136,7 +136,7 @@ _setupObjects =
 	_leader = effectiveCommander (_vehicles select 0);
 	_aiGroup selectLeader _leader;
 
-	_aiGroup setCombatMode "GREEN"; // units will defend themselves
+	_aiGroup setCombatMode "YELLOW"; // units will defend themselves
 	_aiGroup setBehaviour "SAFE"; // units feel safe until they spot an enemy or get into contact
 	_aiGroup setFormation "STAG COLUMN";
 
@@ -149,7 +149,7 @@ _setupObjects =
 		_waypoint = _aiGroup addWaypoint [_x, 0];
 		_waypoint setWaypointType "MOVE";
 		_waypoint setWaypointCompletionRadius 50;
-		_waypoint setWaypointCombatMode "GREEN";
+		_waypoint setWaypointCombatMode "YELLOW";
 		_waypoint setWaypointBehaviour "SAFE";
 		_waypoint setWaypointFormation "STAG COLUMN";
 		_waypoint setWaypointSpeed _speedMode;

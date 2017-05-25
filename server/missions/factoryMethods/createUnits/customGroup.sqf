@@ -59,10 +59,10 @@ for "_i" from 1 to _nbUnits do
 			_unit addUniform "U_B_CombatUniform_mcam_tshirt";
 			_unit addBackpack "B_Kitbag_mcamo";
 			_unit addWeapon "arifle_TRG20_F";
-			_unit addMagazine "Titan_AT";
-			_unit addWeapon "launch_Titan_short_F";
-			_unit addMagazine "Titan_AT";
-			_unit addMagazine "Titan_AT";
+			_unit addMagazine "NLAW_F";
+			_unit addWeapon "launch_NLAW_F";
+			_unit addMagazine "NLAW_F";
+			_unit addMagazine "NLAW_F";
 		};
 		// Rifleman
 		default
