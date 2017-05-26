@@ -187,47 +187,26 @@ if (isServer) then
 
 			if (_bPos isEqualTo [0,0,0]) then
 			{
-				_bPos = getPosATL _npc;
+				_bPos = getPosASL _npc;
 			}
 			else
 			{
+				_bPos = AGLtoASL _bPos;
+
 				if (!isNil "_frontOffset") then
 				{
-					_bPos = ASLtoAGL ((AGLtoASL _bPos) vectorAdd ([[0, _frontOffset, 0], -_pDir] call BIS_fnc_rotateVector2D));
+					_bPos = _bPos vectorAdd ([[0, _frontOffset, 0], -_pDir] call BIS_fnc_rotateVector2D);
 				};
 
-				_npc setPosASL AGLtoASL _bPos;
+				_npc setPosASL _bPos;
 			};
 
-			_desk = [_npc, _bPos, _pDir, _deskDirMod] call _createStoreFurniture;
-			_npc setVariable ["storeNPC_cashDesk", netId _desk, true];
-
-			_bbNPC = boundingBoxReal _npc;
-			_bbDesk = boundingBoxReal _desk;
-			_bcNPC = boundingCenter _npc;
-			_bcDesk = boundingCenter _desk;
-
-			_npcHeightRel = (_desk worldToModel ASLtoAGL getPosASL _npc) select 2;
-
-			_npc setPosASL AGLtoASL (_desk modelToWorld
-			[
-				0,
-
-				((_bcNPC select 1) - (_bcDesk select 1)) +
-				((_bbNPC select 1 select 1) - (_bcNPC select 1)) -
-				((_bbDesk select 1 select 1) - (_bcDesk select 1)) + 0.1,
-
-				_npcHeightRel
-			]);
-
-			_npc setDir _deskDirMod;
 			sleep 1;
+			_npc setDir _deskDirMod;
 			_npc enableSimulation false;
 
-			private _finalDeskPos = getPosASL _desk;
-			_finalDeskPos set [2, (_finalDeskPos select 2) + ((getPosASL _npc select 2) - (_finalDeskPos select 2))];
-			_desk setPosASL _finalDeskPos;
-			//_desk enableSimulationGlobal false;
+			_desk = [_npc, getPosASL _npc, _pDir, _deskDirMod] call _createStoreFurniture;
+			_npc setVariable ["storeNPC_cashDesk", netId _desk, true];
 		};
 	} forEach (call storeOwnerConfig);
 };
