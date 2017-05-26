@@ -44,8 +44,8 @@ for "_i" from 1 to _nbUnits do
 
 	switch (true) do
 	{
-		// Grenadier every 3 units
-		case (_i % 3 == 0):
+		// Grenadier every 3 units, starting from #2
+		case ((_i + 4) % 3 == 0):
 		{
 			_unit addUniform "U_B_CombatUniform_mcam_vest";
 			_unit addMagazine "1Rnd_HE_Grenade_shell";
@@ -53,8 +53,8 @@ for "_i" from 1 to _nbUnits do
 			_unit addMagazine "1Rnd_HE_Grenade_shell";
 			_unit addMagazine "1Rnd_HE_Grenade_shell";
 		};
-		// RPG every 7 units, starting from second one
-		case ((_i + 5) % 7 == 0):
+		// PCML every 6 units, starting from #6
+		case (_i % 6 == 0):
 		{
 			_unit addUniform "U_B_CombatUniform_mcam_tshirt";
 			_unit addBackpack "B_Kitbag_mcamo";
@@ -63,6 +63,17 @@ for "_i" from 1 to _nbUnits do
 			_unit addWeapon "launch_NLAW_F";
 			_unit addMagazine "NLAW_F";
 			_unit addMagazine "NLAW_F";
+		};
+		// RPG-42 every 6 units, starting from #3
+		case ((_i + 3) % 6 == 0):
+		{
+			_unit addUniform "U_B_CombatUniform_mcam_tshirt";
+			_unit addBackpack "B_Kitbag_mcamo";
+			_unit addWeapon "arifle_TRG20_F";
+			_unit addMagazine "RPG32_F";
+			_unit addWeapon "launch_RPG32_F";
+			_unit addMagazine "RPG32_F";
+			_unit addMagazine "RPG32_F";
 		};
 		// Rifleman
 		default
