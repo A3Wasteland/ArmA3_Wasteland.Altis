@@ -78,6 +78,14 @@ if (isServer) then {
 
       private _lockState = [1,2] select (["A3W_vehicleLocking"] call isConfigOn);
 
+      // delete wrecks near spawn
+      {
+        if (!alive _x) then
+        {
+          deleteVehicle _x;
+        };
+      } forEach nearestObjects [_markerPos, ["LandVehicle","Air","Ship"], 25];
+
       call fn_restoreSavedVehicle;
 
       _veh call fn_manualVehicleSave;
@@ -178,24 +186,28 @@ if (isServer) then {
     //def(_class);
     _class = [_vehicle_data, "Class"] call fn_getFromPairs;
 
-    private ["_pos", "_dirAngle"];
+    private ["_marker", "_markerPos", "_dirAngle", "_pos", "_posAGL"];
     private _nearbySpawns = allMapMarkers select {_x select [0,7] == "Parking" && {_x select [count _x - 6, 6] == "_spawn" && _player distance markerPos _x < 100}};
 
     if !(_nearbySpawns isEqualTo []) then
     {
-      _pos = markerPos (_nearbySpawns select 0);
-      _dirAngle = markerDir (_nearbySpawns select 0);
+      _marker = _nearbySpawns select 0;
+      _markerPos = markerPos _marker;
+      _dirAngle = markerDir _marker;
 
-      if (surfaceIsWater _pos) then
+      if (surfaceIsWater _markerPos) then
       {
-        _pos set [2, (getPosASL _player) select 2];
-
-        if (round getNumber (configFile >> "CfgVehicles" >> _class >> "canFloat") > 0) then {
-          _pos = ASLtoAGL _pos;
-        } else {
-          _pos = ASLtoATL _pos;
-        };
+        _markerPos set [2, (getPosASL _player) select 2];
+        _posAGL = ASLtoAGL _markerPos;
+        _pos = if (round getNumber (configFile >> "CfgVehicles" >> _class >> "canFloat") > 0) then { _posAGL } else { ASLtoATL _markerPos };
+      }
+      else
+      {
+        _pos = _markerPos;
+        _posAGL = _pos;
       };
+
+      _pos set [2, (_pos select 2) + 0.1];
     };
 
     def(_create_array);
@@ -268,6 +280,7 @@ if (isClient) then {
     //_marker setMarkerTextLocal _name;
 
     player action ["VTOLVectoring", _vehicle]; // vertical takeoff mode
+    player action ["VectoringUp", _vehicle];
 
     if (!alive getConnectedUAV player) then {
       player connectTerminalToUAV _vehicle; // attempt uav connect

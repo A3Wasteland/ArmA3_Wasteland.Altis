@@ -124,19 +124,30 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			private _npcPos = getPosASL _storeNPC;
 			private _canFloat = (round getNumber (configFile >> "CfgVehicles" >> _class >> "canFloat") > 0);
 			private _waterNonBoat = false;
+			private "_spawnPosAGL";
 
 			// non-boat spawn over water (e.g. aircraft carrier)
 			if (!isNull _storeNPC && surfaceIsWater _npcPos && !_seaSpawn) then
 			{
 				_markerPos set [2, _npcPos select 2];
-				_safePos = if (_canFloat) then { ASLtoAGL _markerPos } else { ASLtoATL _markerPos };
+				_spawnPosAGL = ASLtoAGL _markerPos;
+				_safePos = if (_canFloat) then { _spawnPosAGL } else { ASLtoATL _markerPos };
 				_waterNonBoat = true;
 			}
 			else // normal spawn
 			{
 				_safePos = _markerPos findEmptyPosition [0, 50, _class];
 				if (count _safePos == 0) then { _safePos = _markerPos };
+				_spawnPosAGL = _safePos;
 			};
+
+			// delete wrecks near spawn
+			{
+				if (!alive _x) then
+				{
+					deleteVehicle _x;
+				};
+			} forEach nearestObjects [_spawnPosAGL, ["LandVehicle","Air","Ship"], 25];
 
 			if (_player getVariable [_timeoutKey, true]) then { breakOut "spawnStoreObject" }; // Timeout
 
