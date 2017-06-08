@@ -55,6 +55,24 @@ if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_ser
 	]];
 };
 
+if (_veh getVariable ["was_parked", false]) then
+{
+	if (_veh isKindOf "VTOL_Base_F") then
+	{
+		player action ["VTOLVectoring", _veh]; // vertical takeoff mode
+		player action ["VectoringUp", _veh];
+		player action ["VectoringUp", _veh];
+	};
+
+	_veh setVariable ["was_parked", nil];
+};
+
+if (_veh isKindOf "Plane" && !(_veh isKindOf "VTOL_Base_F")) then
+{
+	player action ["FlapsDown", _veh]; // decreases required takeoff speed
+	player action ["FlapsDown", _veh];
+};
+
 _oldVeh = objectFromNetId (player getVariable ["lastVehicleRidden", ""]);
 
 // reset retarded ejection seat crap

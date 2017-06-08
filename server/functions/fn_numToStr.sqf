@@ -17,7 +17,9 @@
 */
 if (!finite _this) exitWith { "0" };
 
-private ["_tmp", "_buf"];
+((_this - (_this % 1)) toFixed 0) + ((str abs (_this % 1)) select [1])
+
+/*private ["_tmp", "_buf"];
 _tmp = abs _this;
 _buf = [];
 
@@ -40,4 +42,4 @@ if (_this < 0) then
 };
 
 reverse _buf;
-toString _buf + (str (abs _this % 1) select [1])
+toString _buf + (str (abs _this % 1) select [1])*/

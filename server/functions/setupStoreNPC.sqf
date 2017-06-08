@@ -271,7 +271,7 @@ if (hasInterface) then
 				for "_i" from 1 to 2 do
 				{
 					_sellBox setVelocity [0,0,0];
-					_sellBox setVectorDirAndUp [[vectorDir _desk, -90] call BIS_fnc_rotateVector2D, [0,0,1]];
+					_sellBox setVectorDirAndUp [[vectorDir _desk, -90] call BIS_fnc_rotateVector2D, vectorUp _desk];
 					_sellBox setPosASL _deskOffset;
 					_boxPos = getPos _sellBox;
 

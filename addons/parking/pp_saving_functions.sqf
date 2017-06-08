@@ -84,7 +84,7 @@ if (isServer) then {
         {
           deleteVehicle _x;
         };
-      } forEach nearestObjects [_markerPos, ["LandVehicle","Air","Ship"], 25];
+      } forEach nearestObjects [_markerPos, ["LandVehicle","Air","Ship"], 25 max sizeOf _class];
 
       call fn_restoreSavedVehicle;
 
@@ -279,8 +279,7 @@ if (isClient) then {
     _marker setMarkerColorLocal "ColorBlue";
     //_marker setMarkerTextLocal _name;
 
-    player action ["VTOLVectoring", _vehicle]; // vertical takeoff mode
-    player action ["VectoringUp", _vehicle];
+    _vehicle setVariable ["was_parked", true];
 
     if (!alive getConnectedUAV player) then {
       player connectTerminalToUAV _vehicle; // attempt uav connect

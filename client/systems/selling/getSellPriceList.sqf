@@ -125,6 +125,7 @@ _allObjItems = [];
 	_itemQty = _x select 1;
 	_itemQtyArr = nil;
 	_itemValue = 10;
+	_sellValue = 0;
 
 	if (typeName _itemQty == "ARRAY") then
 	{
@@ -175,7 +176,7 @@ _allObjItems = [];
 		_itemName = getText (configFile >> _cfgCategory >> _itemClass >> "displayName");
 
 		_item set [2, _itemName];
-		_item set [3, _itemValue];
+		_item set [3, [_itemValue, _sellValue] select (_sellValue > 0)];
 	};
 } forEach _allObjItems;
 

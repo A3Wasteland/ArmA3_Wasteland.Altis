@@ -147,7 +147,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				{
 					deleteVehicle _x;
 				};
-			} forEach nearestObjects [_spawnPosAGL, ["LandVehicle","Air","Ship"], 25];
+			} forEach nearestObjects [_spawnPosAGL, ["LandVehicle","Air","Ship"], 25 max sizeOf _class];
 
 			if (_player getVariable [_timeoutKey, true]) then { breakOut "spawnStoreObject" }; // Timeout
 
