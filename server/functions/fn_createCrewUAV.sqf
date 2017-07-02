@@ -8,7 +8,11 @@ params [["_uav",objNull,[objNull]], ["_side",sideUnknown,[sideUnknown]], ["_skip
 
 if (!unitIsUAV _uav) exitWith {};
 
-private _crewCount = count allTurrets _uav + 1; // +1 because allTurrets doesn't include driver
+private _vehCfg = configFile >> "CfgVehicles" >> typeOf _uav;
+private _crewCount = {round getNumber (_x >> "dontCreateAI") < 1 && 
+                      ((_x == _vehCfg && {round getNumber (_x >> "hasDriver") > 0}) ||
+                       (_x != _vehCfg && {round getNumber (_x >> "hasGunner") > 0}))} count ([_uav, configNull] call BIS_fnc_getTurrets);
+
 private _crewNotReady = {alive _uav && {alive _x} count crew _uav < _crewCount};
 private "_time";
 
