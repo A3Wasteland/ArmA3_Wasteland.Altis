@@ -27,5 +27,5 @@ _ai setVariable ["A3W_driverAssistOwner", player, true];
 
 	if (driver _veh != _ai) exitWith {};
 
-	["lockDriver", _veh] call A3W_fnc_towingHelper;
+	["lockDriver", netId _veh] call A3W_fnc_towingHelper;
 };

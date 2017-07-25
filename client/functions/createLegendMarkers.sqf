@@ -23,7 +23,7 @@ if (["A3W_privateStorage"] call isConfigOn) then
 	_markers pushBack ["Storage", "mil_dot", "ColorUNKNOWN", [1,1]];
 };
 
-_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
+_mapSize = worldSize;
 _markerSpacing = 0.025 * _mapSize;
 _legendMarginX = 0.035 * _mapSize;
 _legendMarginY = 0.035 * _mapSize;

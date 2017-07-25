@@ -56,7 +56,19 @@ _respawnPos = markerPos (_respawnMarkers call BIS_fnc_selectRandom);
 
 if !(_respawnPos isEqualTo [0,0,0]) then
 {
-	_player setPos _respawnPos;
+	private "_waterPos";
+	if (surfaceIsWater _respawnPos) then
+	{
+		_top = +_respawnPos;
+		_top set [2, (_top select 2) + 1000];
+		_buildings = (lineIntersectsSurfaces [_top, _respawnPos, objNull, objNull, true, -1, "GEOM", "NONE"]) select {(_x select 2) isKindOf "Land_Pier_Box_F"};
+
+		if !(_buildings isEqualTo []) then
+		{
+			_waterPos = _buildings select 0 select 0;
+		};
+	};
+	if (isNil "_waterPos") then { _player setPos _respawnPos } else { _player setPosASL _waterPos };
 };
 
 _player call playerSetup;
