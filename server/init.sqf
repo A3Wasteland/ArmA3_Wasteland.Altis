@@ -82,6 +82,8 @@ if (isServer) then
 
 if (isServer) then
 {
+	call compile preprocessFileLineNumbers "mapConfig\init.sqf";
+
 	_serverCompileHandle = [] spawn compile preprocessFileLineNumbers "server\functions\serverCompile.sqf"; // scriptDone stays stuck on false when using execVM on Linux
 
 	[] execVM "server\functions\broadcaster.sqf";
