@@ -6,17 +6,13 @@
 //	@file Author: AgentRev
 //	@file Created: 04/01/2014 02:51
 
-private ["_assignCompileKey", "_assignChecksum", "_assignPacketKey", "_rscParams", "_payload", "_compileKey", "_checksum", "_packetKey"];
+params [["_assignCompileKey","",[""]], ["_assignChecksum","",[""]], ["_assignPacketKey","",[""]], ["_rscParams",[],[[]]], ["_payload",0,[0,{}]]];
 
-_assignCompileKey = param [0, "", [""]];
-_assignChecksum = param [1, "", [""]];
-_assignPacketKey = param [2, "", [""]];
-_rscParams = param [3, [], [[]]];
-_payload = param [4, 0];
+private _compileKey = call compile (_assignCompileKey + "_compileKey");
+private _checksum = call compile (_assignChecksum + "_flagChecksum");
+private _packetKey = call compile (_assignPacketKey + "_mpPacketKey");
 
-_compileKey = call compile (_assignCompileKey + "_compileKey");
-_checksum = call compile (_assignChecksum + "_flagChecksum");
-_packetKey = call compile (_assignPacketKey + "_mpPacketKey");
+scopeName "compileFuncs";
 
 //if (isNil {missionNamespace getVariable _compileKey}) then
 //{
@@ -32,12 +28,17 @@ _packetKey = call compile (_assignPacketKey + "_mpPacketKey");
 		// Kick back to lobby if assignment fails
 		if (!isServer && {str (missionNamespace getVariable [_func, ""]) != str _finalVal}) then
 		{
-			uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
-			_msgBox = ["The antihack failed to compile.<br/>Please restart the game."] spawn BIS_fnc_guiMessage;
-			_time = diag_tickTime;
-			waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 5};
-			endMission "LOSER";
-			waitUntil {uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; closeDialog 0; false};
+			0 spawn
+			{
+				uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
+				_msgBox = ["The antihack failed to compile.<br/>Please restart the game."] spawn BIS_fnc_guiMessage;
+				_time = diag_tickTime;
+				waitUntil {scriptDone _msgBox || diag_tickTime - _time >= 5};
+				endMission "LOSER";
+				waitUntil {uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; closeDialog 0; false};
+			};
+
+			breakOut "compileFuncs";
 		};
 	}
 	forEach
@@ -50,6 +51,7 @@ _packetKey = call compile (_assignPacketKey + "_mpPacketKey");
 		["A3W_fnc_chatBroadcast", _assignChecksum, "server\antihack\chatBroadcast.sqf"],
 		["A3W_fnc_adminMenuLog", _assignChecksum, "server\antihack\adminMenuLog.sqf"],
 		["A3W_fnc_logMemAnomaly", _assignChecksum, "server\antihack\logMemAnomaly.sqf"],
+		["A3W_fnc_remoteExecIntruder", _assignChecksum, "server\antihack\remoteExecIntruder.sqf"],
 		["notifyAdminMenu", _assignChecksum, "server\antihack\notifyAdminMenu.sqf"]
 	];
 
@@ -60,7 +62,7 @@ _packetKey = call compile (_assignPacketKey + "_mpPacketKey");
 
 	if (!isDedicated) then
 	{
-		if (typeName _payload == "CODE") then
+		if (_payload isEqualType {}) then
 		{
 			[_checksum, _rscParams] spawn _payload;
 		}

@@ -10,9 +10,8 @@
 
 if (isServer || !hasInterface) exitWith {};
 
-private ["_flagChecksum", "_rscParams", "_cheatFlag", "_cfgPatches", "_escCheck", "_patchClass", "_patchName", "_ctrlCfg", "_memAnomaly", "_minRecoil", "_currentRecoil", "_loopCount"];
-_flagChecksum = _this select 0;
-_rscParams = _this select 1;
+params ["_flagChecksum", "_rscParams"];
+private ["_cheatFlag", "_cfgPatches", "_escCheck", "_patchClass", "_patchName", "_ctrlCfg", "_memAnomaly", "_currentRecoil", "_loopCount"];
 
 waitUntil {!isNull player};
 
@@ -216,7 +215,7 @@ if (isNil "_cheatFlag") then
 			sleep 1;
 		};
 
-		[[profileName, getPlayerUID player, "hack menu", _cheatFlag, _flagChecksum], "A3W_fnc_flagHandler", false] call A3W_fnc_MP;
+		[player, "hack menu", _cheatFlag, _flagChecksum] remoteExecCall ["A3W_fnc_flagHandler", 2];
 
 		waitUntil {alive player};
 
@@ -278,28 +277,41 @@ while { true } do
 		if (isNil "_cheatFlag" && isNil "_memAnomaly") then
 		{
 			// Diplay validator based on Tonic's SpyGlass
+
+			scopeName "memScan";
+
 			{
-				_rscName = _x select 0;
-				_onLoadValid = _x select 1;
-				_onUnloadValid = _x select 2;
+				_x params ["_rscName", "_onLoadServer", "_onUnloadServer"];
 
 				_onLoad = getText (configFile >> _rscName >> "onLoad");
 				_onUnload = getText (configFile >> _rscName >> "onUnload");
 
 				{
-					if (_x select 1 != _x select 2) exitWith
+					_x params ["_valName", "_clientVal", "_serverVal"];
+
+					if (_clientVal != "") then
 					{
-						[[[toArray getPlayerUID player, _rscName, _x], _flagChecksum], "A3W_fnc_logMemAnomaly", false, false] call A3W_fnc_MP;
-						_memAnomaly = true;
+						private _lowClientVal = toLower _clientVal;
+
+						if (_clientVal != _serverVal) then
+						{
+							[[toArray getPlayerUID player, _rscName, _x], _flagChecksum] remoteExec ["A3W_fnc_logMemAnomaly", 2];
+							_memAnomaly = true;
+						};
+
+						if (_lowClientVal find "uinamespace" == -1) then
+						{
+							_cheatFlag = ["script injector", _x];
+						};
+
+						if (!isNil "_memAnomaly" || !isNil "_cheatFlag") then { breakTo "memScan" };
 					};
 				}
 				forEach
 				[
-					["onLoad", _onLoad, _onLoadValid],
-					["onUnload", _onUnload, _onUnloadValid]
+					["onLoad", _onLoad, _onLoadServer],
+					["onUnload", _onUnload, _onUnloadServer]
 				];
-
-				if (!isNil "_memAnomaly") exitWith {};
 
 				sleep 0.01;
 			} forEach _rscParams;
@@ -327,7 +339,7 @@ while { true } do
 	{
 		//diag_log str [profileName, getPlayerUID player, _cheatFlag select 0, _cheatFlag select 1];
 
-		[profileName, getPlayerUID player, _cheatFlag select 0, _cheatFlag select 1, _flagChecksum] remoteExec ["A3W_fnc_flagHandler", 2];
+		[player, _cheatFlag select 0, _cheatFlag select 1, _flagChecksum] remoteExecCall ["A3W_fnc_flagHandler", 2];
 
 		waitUntil {alive player};
 

@@ -17,14 +17,12 @@ fn_requestPlayerData =
 	playerData_alive = nil;
 	playerData_loaded = nil;
 	playerData_resetPos = nil;
-	pvar_requestPlayerData = [player, getPlayerUID player, netId player];
-	publicVariableServer "pvar_requestPlayerData";
+	[player] remoteExecCall ["A3W_fnc_requestPlayerData", 2];
 } call mf_compile;
 
 fn_deletePlayerData =
 {
-	pvar_deletePlayerData = player;
-	publicVariableServer "pvar_deletePlayerData";
+	[player] remoteExecCall ["A3W_fnc_deletePlayerData", 2];
 	playerData_infoPairs = nil;
 	playerData_savePairs = nil;
 } call mf_compile;
