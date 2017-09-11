@@ -174,16 +174,27 @@ drawPlayerIcons_thread = [] spawn
 				};
 			} forEach allUnits;
 
-			if (_detectedMinesDisabled && "MineDetector" in items player) then
+			if ("MineDetector" in items player) then
 			{
-				_posCode = 0 call drawPlayerIcons_posCode;
-
+				// override manual mine detection
 				{
-					if (mineActive _x && _x distance player <= MINE_ICON_MAX_DISTANCE) then
+					if (mineActive _x && !(_x mineDetectedBy playerSide)) then
 					{
-						_newArray pushBack [[_mineIcon, _mineColor, CENTER_POS(_x), 1, 1, 0, "", 2, 0, "PuristaMedium", "", true], _x, _posCode];
+						playerSide revealMine _x;
 					};
-				} forEach detectedMines playerSide;
+				} forEach (player nearObjects ["MineBase", 10]);
+
+				if (_detectedMinesDisabled) then
+				{
+					_posCode = 0 call drawPlayerIcons_posCode;
+
+					{
+						if (mineActive _x && _x distance player <= MINE_ICON_MAX_DISTANCE) then
+						{
+							_newArray pushBack [[_mineIcon, _mineColor, CENTER_POS(_x), 1, 1, 0, "", 2, 0, "PuristaMedium", "", true], _x, _posCode];
+						};
+					} forEach detectedMines playerSide;
+				};
 			};
 
 			if (_noBuiltInThermal || (currentWeapon player) select [0,15] == "Laserdesignator") then

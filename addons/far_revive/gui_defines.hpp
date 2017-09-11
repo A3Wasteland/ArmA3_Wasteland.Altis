@@ -5,7 +5,7 @@
 //	@file Author: AgentRev
 
 #define ReviveBlankGUI_IDD 27910
-#define ReviveGUI_IDD 27911
+#define ReviveGUI_IDD 8823
 #define RevProgBar_IDC 27912
 #define RevBarText_IDC 27913
 #define RevSuicideBtn_IDC 27914

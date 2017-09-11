@@ -197,5 +197,13 @@ class playerSettings {
 			x = 0.02; y = 0.57;
 			w = 0.125; h = 0.033 * safezoneH;
 		};
+
+		class btnKillfeed : w_RscButton {
+			idc = -1;
+			text = "Killfeed";
+			onButtonClick = "with missionNamespace do { [] call A3W_fnc_killFeedMenu }";
+			x = 0.158; y = 0.57;
+			w = 0.125; h = 0.033 * safezoneH;
+		};
 	};
 };

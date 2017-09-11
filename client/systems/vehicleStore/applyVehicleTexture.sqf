@@ -47,6 +47,7 @@ if (_texture isEqualType "") then
 		_selections = switch (true) do
 		{
 			case (_veh isKindOf "Van_01_base_F"):                 { [0,1] };
+			case (_veh isKindOf "Van_02_base_F"):                 { [0] };
 
 			case (_veh isKindOf "MRAP_01_base_F"):                { [0,2] };
 			case (_veh isKindOf "MRAP_02_base_F"):                { [0,1,2] };

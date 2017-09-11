@@ -129,6 +129,11 @@ switch (true) do
 		// Add quadbike horn to karts
 		_vehicle addWeaponTurret ["MiniCarHorn", [-1]];
 	};
+	case (_class isKindOf "B_GEN_Offroad_01_gen_F"):
+	{
+		_vehicle removeWeaponTurret ["SportCarHorn", [-1]];
+		_vehicle addWeaponTurret ["AmbulanceHorn", [-1]];
+	};
 };
 
 // Double minigun ammo to compensate for Bohemia's incompetence (http://feedback.arma3.com/view.php?id=21613)

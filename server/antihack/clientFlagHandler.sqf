@@ -34,10 +34,14 @@ if (typeName _this == "ARRAY" && {count _this > 1}) then
 		2 fadeMusic 1;
 		playMusic "RadioAmbient1";
 
-		999999 cutText ["", "BLACK", 5];
-		sleep 5;
+		1e11 cutText ["", "BLACK", 5];
+		sleep 3;
 
-		// baibai hacker
+		_dummyVar = "A3W_fnc_antihackLog_" + (random 1e11 toFixed 0);
+		missionNamespace setVariable [_dummyVar, getPlayerUID player];
+		publicVariableServer _dummyVar;
+
+		sleep 1;
 		call compile preprocessFile "client\functions\quit.sqf";
 	};
 };

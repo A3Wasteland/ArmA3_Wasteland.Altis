@@ -18,7 +18,7 @@ call compile preprocessFileLineNumbers "addons\far_revive\FAR_revive_funcs.sqf";
 FAR_isDragging = false;
 FAR_isDragging_EH = [];
 FAR_deathMessage = [];
-FAR_Debugging = false;
+FAR_Debugging = true;
 
 FAR_Reset_Unit =
 {
@@ -33,6 +33,7 @@ FAR_Reset_Unit =
 	_this setVariable ["FAR_handleStabilize", nil, true];
 	_this setVariable ["FAR_reviveModeReady", nil];
 	_this setVariable ["FAR_headshotHitTimeout", nil];
+	_this setUnconscious false;
 	_this setCaptive false;
 
 	if (isPlayer _this) then
@@ -49,11 +50,24 @@ call mf_compile;
 
 FAR_Reset_Killer_Info =
 {
-	_this setVariable ["FAR_killerPrimeSuspectData", nil, !isServer]; // only do this on respawn or revive, but not on death
-	_this setVariable ["FAR_killerPrimeSuspect", nil];
-	_this setVariable ["FAR_killerVehicle", nil];
-	_this setVariable ["FAR_killerAmmo", nil];
-	_this setVariable ["FAR_killerSuspects", nil];
+	[
+		_this,
+		[
+			["FAR_killerVehicle", nil],
+			["FAR_killerVehicleClass", nil],
+			["FAR_killerUnit", nil],
+			["FAR_killerName", nil],
+			["FAR_killerUID", nil],
+			["FAR_killerGroup", nil],
+			["FAR_killerSide", nil],
+			["FAR_killerFriendly", nil],
+			["FAR_killerAI", nil],
+			["FAR_killerWeapon", nil],
+			["FAR_killerAmmo", nil],
+			["FAR_killerDistance", nil],
+			["FAR_killerSuspects", nil]
+		]
+	] call A3W_fnc_setVarServer;
 }
 call mf_compile;
 
@@ -150,11 +164,13 @@ FAR_findKiller = "addons\far_revive\FAR_findKiller.sqf" call mf_compile;
 	[
 		"Killed",
 		{
-			terminate (player getVariable ["FAR_Player_Unconscious_thread", scriptNull]);
+			//terminate (player getVariable ["FAR_Player_Unconscious_thread", scriptNull]);
 			(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
-			(findDisplay ReviveGUI_IDD) closeDisplay 0;
+			//(findDisplay ReviveGUI_IDD) closeDisplay 0;
+			(uiNamespace getVariable ["ReviveGUI", displayNull]) closeDisplay 0;
 			FAR_cutTextLayer cutText ["", "PLAIN"];
-			//(FAR_cutTextLayer + 1) cutText ["", "PLAIN"];
+			(FAR_cutTextLayer + 1) cutText ["", "PLAIN"];
+			(ReviveGUI_IDD + 9) cutText ["", "PLAIN"];
 
 			player call FAR_Reset_Unit;
 			player allowDamage true;

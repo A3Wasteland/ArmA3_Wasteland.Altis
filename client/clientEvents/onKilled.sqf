@@ -6,39 +6,52 @@
 //	@file Author: [404] Deadbeat, MercyfulFate, AgentRev
 //	@file Created: 20/11/2012 05:19
 
-params ["_player", "_presumedKiller"];
+params ["_player", "_presumedKiller", "_instigator"];
 
 _presumedKiller = effectiveCommander _presumedKiller;
-_killer = _player getVariable "FAR_killerPrimeSuspect";
-_killerData = _player getVariable "FAR_killerPrimeSuspectData";
+_killer = _player getVariable "FAR_killerUnit";
 
-if (isNil "_killer" && !isNil "FAR_findKiller") then { _killer = _player call FAR_findKiller; _killerData = [] };
+if (isNil "_killer" && !isNil "FAR_findKiller") then
+{
+	_killer = _player call FAR_findKiller;
+};
+
 if (isNil "_killer" || {isNull _killer}) then
 {
-	if (isNil "_killer") then
-	{
-		_killerData = [];
-	};
-
-	_killer = _presumedKiller;
+	_killer = [_instigator, _presumedKiller] select isNull _instigator;
 };
 
 _killer = effectiveCommander _killer;
 _deathCause = _player getVariable ["A3W_deathCause_local", []];
 
+if (_player getVariable ["FAR_isUnconscious", 0] == 1 && _deathCause isEqualTo []) then
+{
+	_deathCause = ["bleedout"];
+	_player setVariable ["A3W_deathCause_local", _deathCause];
+};
+
+private _killerTemp = _killer;
+
 if (_killer == _player) then
 {
 	if (_deathCause isEqualTo []) then
 	{
-		_deathCause = [["suicide","drown"] select (getOxygenRemaining _player <= 0 && (_player modelToWorld [0,0,0]) select 2 < 0), serverTime];
+		_deathCause = switch (true) do
+		{
+			case (_player == player && ([missionNamespace getVariable "thirstLevel"] param [0,1,[0]] <= 0 || [missionNamespace getVariable "hungerLevel"] param [0,1,[0]] <= 0)): { "survival" };
+			case (getOxygenRemaining _player <= 0 && (_player modelToWorld [0,0,0]) select 2 < -0.1): { "drown" };
+			default { "suicide" };
+		};
+
+		_deathCause = [_deathCause, serverTime];
 		_player setVariable ["A3W_deathCause_local", _deathCause];
 	};
 
-	_killer = objNull;
+	_killerTemp = objNull;
 };
 
-[_player, _killer, _presumedKiller, _deathCause] remoteExecCall ["A3W_fnc_serverPlayerDied", 2];
-[0, _player, _killer, [_killer, _player] call A3W_fnc_isFriendly] call A3W_fnc_deathMessage;
+[_player, _killerTemp, _presumedKiller, _deathCause] remoteExecCall ["A3W_fnc_serverPlayerDied", 2];
+[_player, true] call A3W_fnc_killBroadcast;
 
 if (_player == player) then
 {
@@ -68,10 +81,8 @@ if (_player == player) then
 
 diag_log format ["KILLED by %1", if (isPlayer _killer) then { "player " + str [name _killer, getPlayerUID _killer] } else { _killer }];
 
-_player setVariable ["FAR_killerPrimeSuspect", nil];
-_player setVariable ["FAR_killerVehicle", nil];
-_player setVariable ["FAR_killerAmmo", nil];
-_player setVariable ["FAR_killerSuspects", nil];
+// reset var in case Killed event triggers twice (happens on rare occasions)
+_player setVariable ["FAR_killerUnit", nil];
 
 _player spawn
 {
@@ -97,17 +108,13 @@ removeAllActions _player;
 // Handle teamkills
 if (_player == player && playerSide in [BLUFOR,OPFOR] && player != _killer && vehicle player != vehicle _killer) then
 {
-	_killerData params
-	[
-		["_killerUID", getPlayerUID _killer, [""]],
-		"", // group
-		["_killerSide", side group _killer, [sideUnknown]],
-		["_killerName", name _killer, [""]]
-	];
+	private _killerName = [_player getVariable "FAR_killerName"] param [0,"",[""]];
+	private _killerUID = [_player getVariable "FAR_killerUID"] param [0,"",[""]];
+	private _killerSide = [_player getVariable "FAR_killerSide"] param [0,sideUnknown,[sideUnknown]];
 
 	if (playerSide == _killerSide) then
 	{
-		if (_killerUID in ["","0"]) then
+		if (_killerUID in ["", "0", getPlayerUID player]) then
 		{
 			pvar_PlayerTeamKiller = []; // not a valid player
 		}

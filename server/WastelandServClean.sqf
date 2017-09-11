@@ -30,7 +30,7 @@ _objCleanup =
 
 	if (_isWreck) then
 	{
-		if (_baseClass == "UAV_01_base_F" && {fuel _obj > 0 || !isNull ((uavControl _obj) select 0)}) exitWith
+		if (_baseClass in ["UAV_01_base_F","UAV_06_base_F"] && {fuel _obj > 0 || !isNull ((uavControl _obj) select 0)}) exitWith
 		{
 			if (_processedDeath > 0) then
 			{
@@ -188,7 +188,7 @@ while {true} do
 
 	_delQtyO = 0;
 	_entityCleanup forEach ([0,0] nearEntities ["All", 1e11]);
-	{ private _baseClass = _x; _wreckCleanup forEach allMissionObjects _x } forEach ["CraterLong","Ruins","#destructioneffects","UAV_01_base_F"];
+	{ private _baseClass = _x; _wreckCleanup forEach allMissionObjects _x } forEach ["CraterLong","Ruins","#destructioneffects","UAV_01_base_F","UAV_06_base_F"];
 	{ _storeCleanup forEach nearestObjects [_x, ["GroundWeaponHolder"], STORE_CLEANUP_RADIUS] } forEach _storeNPCs;
 	_parachuteCleanup forEach ([0,0] nearEntities ["ParachuteBase", 1e11]); // delete glitched parachutes
 

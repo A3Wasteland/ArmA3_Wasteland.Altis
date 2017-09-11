@@ -46,7 +46,7 @@ A3W_fnc_savePlayerData =
 			[
 				["BankMoney", _player getVariable ["bmoney", 0]],
 				["Bounty", _player getVariable ["bounty", 0]],
-				["BountyKills", _player getVariable ["bountyKills", 0]]
+				["BountyKills", _player getVariable ["bountyKills", []]]
 			];
 
 			[_UID, _info, _data] call fn_saveAccount;

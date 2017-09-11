@@ -6,7 +6,7 @@
 
 if (!alive player) exitWith {};
 
-if (["Are you sure you want to give up?", "Confirm", "Yes", true] call BIS_fnc_guiMessage) then
+if (["Are you sure you want to respawn?", "Confirm", true, true] call BIS_fnc_guiMessage) then
 {
 	player allowDamage true;
 

@@ -715,9 +715,16 @@ genItemArray = compileFinal str
 	["UAV Terminal (NATO)", "B_UavTerminal", 150, "gps"],
 	["UAV Terminal (CSAT)", "O_UavTerminal", 150, "gps"],
 	["UAV Terminal (AAF)", "I_UavTerminal", 150, "gps"],
-	["Quadrotor UAV (NATO)", "B_UAV_01_backpack_F", 1000, "backpack"],
-	["Quadrotor UAV (CSAT)", "O_UAV_01_backpack_F", 1000, "backpack"],
-	["Quadrotor UAV (AAF)", "I_UAV_01_backpack_F", 1000, "backpack"],
+	["Quadcopter UAV (NATO)", "B_UAV_01_backpack_F", 2500, "backpack"],
+	["Quadcopter UAV (CSAT)", "O_UAV_01_backpack_F", 2500, "backpack"],
+	["Quadcopter UAV (AAF)", "I_UAV_01_backpack_F", 2500, "backpack"],
+	["Hexacopter UAV (NATO)", "B_UAV_06_backpack_F", 1000, "backpack"],
+	["Hexacopter UAV (CSAT)", "O_UAV_06_backpack_F", 1000, "backpack"],
+	["Hexacopter UAV (AAF)", "I_UAV_06_backpack_F", 1000, "backpack"],
+	["Hexacopter Medical UAV (NATO)", "B_UAV_06_medical_backpack_F", 2500, "backpack"],
+	["Hexacopter Medical UAV (CSAT)", "O_UAV_06_medical_backpack_F", 2500, "backpack"],
+	["Hexacopter Medical UAV (AAF)", "I_UAV_06_medical_backpack_F", 2500, "backpack"],
+	["Hexacopter Demining UAV", "C_IDAP_UAV_06_antimine_backpack_F", 5000, "backpack"],
 	["Remote Designator (Sand)", "B_Static_Designator_01_weapon_F", 750, "backpack"],
 	["Remote Designator (Hex)", "O_Static_Designator_02_weapon_F", 750, "backpack"],
 	["GPS", "ItemGPS", 100, "gps"],
@@ -862,14 +869,20 @@ landArray = compileFinal str
 
 	["Offroad", "C_Offroad_01_F", 1100, "vehicle", "SKIPSAVE"],
 	["Offroad Camo", "B_G_Offroad_01_F", 1250, "vehicle", "SKIPSAVE"],
+	["Offroad Police", "B_GEN_Offroad_01_gen_F", 1250, "vehicle", "SKIPSAVE"],
 	["Offroad Repair", "C_Offroad_01_repair_F", 1500, "vehicle", "SKIPSAVE"],
 	["Offroad HMG", "B_G_Offroad_01_armed_F", 2500, "vehicle", "SKIPSAVE"],
 
 	["Truck", "C_Van_01_transport_F", 700, "vehicle", "SKIPSAVE"],
-	["Truck (Camo)", "B_G_Van_01_transport_F", 800, "vehicle", "SKIPSAVE"],
+	["Truck Camo", "B_G_Van_01_transport_F", 800, "vehicle", "SKIPSAVE"],
 	["Truck Box", "C_Van_01_box_F", 900, "vehicle", "SKIPSAVE"],
 	["Fuel Truck", "C_Van_01_fuel_F", 2000, "vehicle", "SKIPSAVE"],
-	["Fuel Truck (Camo)", "B_G_Van_01_fuel_F", 2100, "vehicle", "SKIPSAVE"],
+	["Fuel Truck Camo", "B_G_Van_01_fuel_F", 2100, "vehicle", "SKIPSAVE"],
+
+	["Van Cargo", "C_Van_02_vehicle_F", 1000, "vehicle", "SKIPSAVE"],
+	["Van Transport", "C_Van_02_transport_F", 1000, "vehicle", "SKIPSAVE"],
+	["Van Ambulance", "C_Van_02_medevac_F", 1500, "vehicle", "SKIPSAVE"],
+	["Van Repair", "C_Van_02_service_F", 2000, "vehicle", "SKIPSAVE"],
 
 	["HEMTT Tractor", "B_Truck_01_mover_F", 4000, "vehicle"],
 	["HEMTT Resupply", "B_Truck_01_ammo_F", 5000, "vehicle"],
@@ -993,6 +1006,8 @@ planesArray = compileFinal str
 	["V-44 X Blackfish (Gunship)", "B_T_VTOL_01_armed_F", 60000, "vehicle"],
 	["Y-32 Xi'an", "O_T_VTOL_02_infantry_dynamicLoadout_F", 60000, "vehicle"],
 
+	["KH-3A Fenghuang Missile UAV", "O_T_UAV_04_CAS_F", 30000, "vehicle"],
+
 	["MQ4A Greyhawk Missile UAV", "B_UAV_02_dynamicLoadout_F", 30000, "vehicle", "variant_greyhawkMissile"],
 	["K40 Ababil-3 Missile UAV", "O_UAV_02_dynamicLoadout_F", 30000, "vehicle", "variant_greyhawkMissile"],
 	["K40 Ababil-3 Missile UAV", "I_UAV_02_dynamicLoadout_F", 30000, "vehicle", "variant_greyhawkMissile"],
@@ -1001,10 +1016,13 @@ planesArray = compileFinal str
 	["K40 Ababil-3 Bomber UAV", "O_UAV_02_dynamicLoadout_F", 15000, "vehicle", "variant_greyhawkBomber"],
 	["K40 Ababil-3 Bomber UAV", "I_UAV_02_dynamicLoadout_F", 15000, "vehicle", "variant_greyhawkBomber"],
 
-	["KH-3A Fenghuang Missile UAV", "O_T_UAV_04_CAS_F", 30000, "vehicle"],
+	["MQ4A Greyhawk Cluster UAV", "B_UAV_02_dynamicLoadout_F", 15000, "vehicle", "variant_greyhawkCluster"],
+	["K40 Ababil-3 Cluster UAV", "O_UAV_02_dynamicLoadout_F", 15000, "vehicle", "variant_greyhawkCluster"],
+	["K40 Ababil-3 Cluster UAV", "I_UAV_02_dynamicLoadout_F", 15000, "vehicle", "variant_greyhawkCluster"],
 
 	["UCAV Sentinel Missile", "B_UAV_05_F", 40000, "vehicle", "variant_sentinelMissile"],
-	["UCAV Sentinel Bomber", "B_UAV_05_F", 20000, "vehicle", "variant_sentinelBomber"]
+	["UCAV Sentinel Bomber", "B_UAV_05_F", 20000, "vehicle", "variant_sentinelBomber"],
+	["UCAV Sentinel Cluster", "B_UAV_05_F", 20000, "vehicle", "variant_sentinelCluster"]
 ];
 
 boatsArray = compileFinal str
@@ -1133,6 +1151,38 @@ colorsArray = compileFinal str
 			["Red (Kart)", [[0, _kartDir + "kart_01_base_red_co.paa"]]] // no red TextureSource :(
 		]
 	],
+	[ // Ambulance color
+		"Van_02_medevac_base_F",
+		[
+			["IDAP Ambulance (Van)", ["IdapAmbulance"]]
+		]
+	],
+	[ // Van colors
+		"Van_02_base_F",
+		[
+			["AAN News (Van)", ["AAN"]],
+			["Battle Bus (Van)", ["BattleBus"]],
+			["Black (Van)", ["Black"]],
+			["Blue (Van)", ["Blue"]],
+			["Blue Pearl (Van)", ["BluePearl"]],
+			["Daltgreen (Van)", ["Daltgreen"]],
+			["Dazzle (Van)", ["Masked"]],
+			["Guerilla 1 (Van)", ["FIA1"]],
+			["Guerilla 2 (Van)", ["FIA2"]],
+			["Guerilla 3 (Van)", ["FIA3"]],
+			["Fuel (Van)", ["Fuel"]],
+			["Green (Van)", ["Green"]],
+			["IDAP (Van)", ["IDAP"]],
+			["Orange (Van)", ["Orange"]],
+			["Port Authority (Van)", ["CivService"]],
+			["Red (Van)", ["Red"]],
+			["Redstone (Van)", ["Redstone"]],
+			["Swifd (Van)", ["Swifd"]],
+			["Syndikat (Van)", ["Syndikat"]],
+			["Vrana (Van)", ["Vrana"]],
+			["White (Van)", ["White"]]
+		]
+	],
 	[ // MH-9 colors
 		"Heli_Light_01_base_F",
 		[
@@ -1168,6 +1218,12 @@ colorsArray = compileFinal str
 				[0, _mohawkDir + "Skins\heli_transport_02_1_ion_co.paa"],
 				[1, _mohawkDir + "Skins\heli_transport_02_2_ion_co.paa"],
 				[2, _mohawkDir + "Skins\heli_transport_02_3_ion_co.paa"]
+			]],
+			["IDAP (Mohawk)", [
+				[0, "\A3\air_f_orange\heli_transport_02\data\heli_transport_02_1_idap_co.paa"],
+				[1, "\A3\air_f_orange\heli_transport_02\data\heli_transport_02_2_idap_co.paa"],
+				[2, "\A3\air_f_orange\heli_transport_02\data\heli_transport_02_3_idap_co.paa"],
+				[3, "\A3\air_f_orange\heli_transport_02\data\heli_transport_02_int_02_idap_co.paa"]
 			]]
 		]
 	],

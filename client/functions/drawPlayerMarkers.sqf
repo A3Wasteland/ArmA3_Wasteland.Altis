@@ -129,7 +129,7 @@ A3W_mapDraw_thread = [] spawn
 			} forEach _allDeadMen;
 
 			{
-				if (IS_FRIENDLY_PLAYER(_x) && !(_x getVariable ["playerSpawning", false])) then
+				if (alive _x && IS_FRIENDLY_PLAYER(_x) && !(_x getVariable ["playerSpawning", false])) then
 				{
 					_veh = vehicle _x;
 					_driver = (crew _veh) select 0;

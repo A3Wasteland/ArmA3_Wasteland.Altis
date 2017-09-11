@@ -4,72 +4,21 @@
 //	@file Name: fn_deathMessage.sqf
 //	@file Author: AgentRev
 
-if (round difficultyOption "deathMessages" > 0) exitWith {};
+// this script must ONLY be called within fn_killFeedEntry.sqf
 
-params
-[
-	["_mode", 0, [0]], // 0 = server-side processing, 1 = broadcast message from server to all clients
-	["_victim", objNull, [objNull,""]], // victim unit or name string
-	["_killer", objNull, [objNull,""]], // killer unit or name string
-	["_friendlyFire", false, [false]], // friendly fire boolean, determines if teamkill message needs to be used
-	["_aiKiller", false, [false]], // AI killer boolean, ignored if mode = 0
-	["_cause", "", [""]] // cause of death string, ignored if mode = 0
-];
+private _killerUnit = _killer;
+private _victimUnit = _victim;
+private _aiKiller = _killerAI;
+private _friendlyFire = _killerFriendly;
 
-scopeName "fn_deathMessage";
+params [["_killer",_killerName,[""]], ["_victim",_victimName,[""]]]; // custom names
 
-if (_mode isEqualTo 0) then
-{
-	private _victimName = _victim getVariable ["A3W_handleDisconnect_name", ""];
-
-	if (_victimName isEqualTo "") then
-	{
-		if (!alive _victim && !isPlayer _victim) exitWith // "Error: No unit"
-		{
-			breakOut "fn_deathMessage";
-		};
-
-		_victimName = name _victim;
-	};
-
-	_causeLocal = _victim getVariable ["A3W_deathCause_local", []];
-	_causeRemote = _victim getVariable ["A3W_deathCause_remote", []];
-
-	_causeLocal params [["_cLocalString","",[""]], ["_cLocalTime",nil,[0]]]; // _cLocalTime nil = force use local cause
-	_causeRemote params [["_cRemoteString","",[""]], ["_cRemoteTime",2e11,[0]]];
-
-	// death cause tagged by remote sources have an expiry time of 10 secs (serverTime)
-	private _causeParams = [_causeLocal, _causeRemote] select (!isNil "_cLocalTime" && {_cRemoteTime < _cLocalTime && _cRemoteTime > _cLocalTime - 10});
-
-	if ((_causeParams param [0,""]) isEqualTo "") then
-	{
-		if !("" in [_cLocalString, _cRemoteString]) then
-		{
-			_causeParams = [_causeLocal, _causeRemote] select (_cLocalString isEqualTo ""); // fallback
-		};
-	};
-
-	_cause = _causeParams param [0,""];
-
-	if (_cause == "slay") then
-	{
-		_killer = _causeParams param [2,objNull,[objNull]]; // no friendly fire handling needed here
-	};
-
-	private _killerName = if (alive _killer || isPlayer _killer) then { name _killer } else { "" };
-	_aiKiller = (!isNull _killer && !isPlayer _killer && isNil {_killer getVariable "cmoney"});
-
-	[1, _victimName, _killerName, _friendlyFire, _aiKiller, _cause] remoteExecCall ["A3W_fnc_deathMessage"];
-}
-else
-{
-	if (!hasInterface) exitWith {};
-	if !([_victim,_killer] isEqualTypeAll "") exitWith {};
+// you have access to all _killParams variables defined at the bottom of fn_killBroadcast.sqf
 
 	// FOR CONSISTENT USER EXPERIENCE, MESSAGES SHOULD BE LOWERCASE, INVARIABLE, AND EXPLICIT (NO PUNS OR EUPHEMISMS), JUST LIKE DEFAULT ARMA MESSAGES
-	private _message = switch (_cause) do
+	private _message = switch (_victimCause) do
 	{
-		case "headshot": // enemy player headshot with A3W_headshotNoRevive = 1;
+		case "headshot": // enemy player headshot with A3W_headshotNoRevive = 1; - feature currently disabled
 		{
 			if (_killer != "") then { format ["%1 headshot %2", _killer, _victim] }
 			else                    { format ["%1 was headshot", _victim] } // not supposed to happen, but just in case
@@ -87,12 +36,24 @@ else
 
 		case "drown": { format ["%1 drowned", _victim] }; // ran out of oxygen underwater, or sank while bleeding
 
+		case "survival": { format ["%1 has died of dysentery", _victim] }; // starvation, dehydration
+
 		case "forcekill": { format ["%1 was killed", _victim] }; // admin slay, antihack/teamkill kick
 
 		default
 		{
 			switch (true) do
 			{
+				case (!_victimDead): // injury
+				{
+					switch (true) do
+					{
+						case (_killer == ""):                                { format ["%1 was injured", _victim] }; // injured by self or unknown sources
+						case (_aiKiller):                                    { format ["%1 was injured by AI", _victim] }; // injured by AI
+						case (_friendlyFire && _victimCause == "roadkill"):  { format ["%1 injured %2 with vehicle (friendly fire)", _killer, _victim] }; // roadkill injury by friendly
+						default                                              { format ["%1 injured %2%3", _killer, _victim, [""," (friendly fire)"] select _friendlyFire] }; // injured by other player
+					};
+				};
 				case (_aiKiller):           { format ["%1 was killed by AI", _victim] }; // vehicle destroyed by AI
 				case (_killer != ""): 
 				{
@@ -108,5 +69,4 @@ else
 		};
 	};
 
-	systemChat _message;
-};
+_message

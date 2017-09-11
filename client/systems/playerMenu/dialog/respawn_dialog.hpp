@@ -9,7 +9,7 @@
 class RespawnSelectionDialog
 {
 	idd = respawn_dialog;
-	movingEnable = false;
+	movingEnable = true;
 	enableSimulation = true;
 	onLoad = "uiNamespace setVariable ['RespawnSelectionDialog', _this select 0]";
 
@@ -20,6 +20,7 @@ class RespawnSelectionDialog
 			idc = -1;
 			colorText[] = {1, 1, 1, 1};
 			colorBackground[] = {1,1,1,0.09};
+			moving = true;
 
 			#define RspnMainBG_W ((0.809 * X_SCALE) min safezoneW)
 			#define RspnMainBG_H ((0.620 * Y_SCALE) min safezoneH)
@@ -297,17 +298,31 @@ class RespawnSelectionDialog
 		};
 
 		#define RspnGroupButton_X (RspnLobbyButton_X + RspnButton_W + (0.015 * X_SCALE))
-		#define RspnGroupButton_W (0.175 * X_SCALE)
+		//#define RspnGroupButton_W (0.075 * X_SCALE)
 
 		class RspnGroupButton: RspnButton
 		{
 			idc = respawn_GroupMgmt_Button;
-			text = "Group Management";
+			text = "Group";
 			onButtonClick = "[] execVM 'client\systems\groups\loadGroupManagement.sqf'";
 
 			x = RspnGroupButton_X;
 			y = RspnLobbyButton_Y;
-			w = RspnGroupButton_W;
+			//w = RspnGroupButton_W;
+		};
+
+		#define RspnKillfeedButton_X (RspnGroupButton_X + RspnButton_W + (0.015 * X_SCALE))
+		//#define RspnKillfeedButton_W (0.075 * X_SCALE)
+
+		class RspnKillfeedButton: RspnButton
+		{
+			idc = -1;
+			text = "Killfeed";
+			onButtonClick = "with missionNamespace do { [] call A3W_fnc_killFeedMenu }";
+
+			x = RspnKillfeedButton_X;
+			y = RspnLobbyButton_Y;
+			//w = RspnKillfeedButton_W;
 		};
 	};
 };

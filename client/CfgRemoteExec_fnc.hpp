@@ -25,6 +25,7 @@ class A3W_fnc_deletePlayerData { allowedTargets = 2; };
 class A3W_fnc_flagHandler { allowedTargets = 2; };
 class A3W_fnc_getInFast {};
 class A3W_fnc_initPlayerServer { allowedTargets = 2; };
+class A3W_fnc_killBroadcast { allowedTargets = 2; };
 class A3W_fnc_logMemAnomaly { allowedTargets = 2; };
 class A3W_fnc_pushVehicle {};
 //class A3W_fnc_registerKillScore { allowedTargets = 2; }; // only needed for injury kill points, not currently enabled due to point farming concerns
@@ -35,6 +36,7 @@ class A3W_fnc_serverPlayerDied { allowedTargets = 2; };
 class A3W_fnc_setItemCleanup { allowedTargets = 2; };
 class A3W_fnc_setLockState {};
 class A3W_fnc_setName { jip = 1; };
+class A3W_fnc_setVarServer { allowedTargets = 2; };
 class A3W_fnc_takeOwnership { allowedTargets = 2; };
 class A3W_fnc_titleTextMessage {};
 class A3W_fnc_towingHelper {};
