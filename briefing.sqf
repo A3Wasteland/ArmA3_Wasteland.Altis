@@ -19,6 +19,20 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.4",
+"
+<br/>[Added] Laws of War DLC
+<br/>[Added] Killfeed HUD
+<br/>[Changed] Improved revive system
+<br/>[Changed] Improved kill attribution
+<br/>[Changed] Improved antihack
+<br/>[Fixed] Prone reload freeze
+<br/>[Fixed] Many minor changes and fixes
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.3c",
 "
 <br/>[Added] Jets DLC
