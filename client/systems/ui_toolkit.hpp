@@ -73,4 +73,4 @@
 #define Y_POS(VALUE) (SZ_TOP + ((VALUE + Y_OFFSET) * Y_SCALE)) // stretches Y value to full screen height
 
 // Function to find child offset relative to parent pos for centering inside
-#define CENTER(PARENT_SIZE, CHILD_SIZE) ((PARENT_SIZE / 2) - (CHILD_SIZE / 2))
+#define CENTER(PARENT_SIZE,CHILD_SIZE) (((PARENT_SIZE) / 2) - ((CHILD_SIZE) / 2))

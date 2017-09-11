@@ -24,11 +24,21 @@ A3W_fnc_checkPlayerFlag =
 	[0, getPlayerUID _player, name _player, _jip, owner _player] spawn fn_kickPlayerIfFlagged;
 } call mf_compile;
 
-"pvar_savePlayerData" addPublicVariableEventHandler
+
+A3W_fnc_savePlayerData =
 {
-	(_this select 1) spawn
+	params [["_player",objNull,[objNull]], ["_info",[],[[]]], ["_data",[],[[]]]];
+
+	if (!isPlayer _player) exitWith {};
+
+	if (isRemoteExecuted && !(remoteExecutedOwner in [owner _player, clientOwner])) exitWith
 	{
-		params ["_UID", "_info", "_data", "_player"];
+		["forged savePlayerData", [_player,_info,_data]] call A3W_fnc_remoteExecIntruder;
+	};
+
+	[_player, getPlayerUID _player, _info, _data] spawn
+	{
+		params ["_player", "_UID", "_info", "_data"];
 
 		if (!isNull _player && alive _player && !(_player call A3W_fnc_isUnconscious)) then
 		{
@@ -36,7 +46,7 @@ A3W_fnc_checkPlayerFlag =
 			[
 				["BankMoney", _player getVariable ["bmoney", 0]],
 				["Bounty", _player getVariable ["bounty", 0]],
-				["BountyKills", _player getVariable ["bountyKills", 0]]
+				["BountyKills", _player getVariable ["bountyKills", []]]
 			];
 
 			[_UID, _info, _data] call fn_saveAccount;
@@ -47,19 +57,27 @@ A3W_fnc_checkPlayerFlag =
 			_UID call fn_deletePlayerSave;
 		};
 	};
-};
+} call mf_compile;
 
-"pvar_requestPlayerData" addPublicVariableEventHandler
+A3W_fnc_requestPlayerData =
 {
-	(_this select 1) spawn
+	params [["_player",objNull,[objNull]]];
+
+	if (!isPlayer _player) exitWith {};
+
+	if (isRemoteExecuted && !(remoteExecutedOwner in [owner _player, clientOwner])) exitWith
+	{
+		["forged requestPlayerData", _player] call A3W_fnc_remoteExecIntruder;
+	};
+
+	[_player, getPlayerUID _player] spawn
 	{
 		params ["_player", "_UID"];
 		_data = [_UID, _player] call fn_loadAccount;
 
-		[[_this, _data],
+		[[_player, _UID, _data],
 		{
-			params ["_pVal", "_data"];
-			_pVal params ["_player", "_UID", "_pNetId"];
+			params ["_player", "_UID", "_data"];
 
 			_pvarName = "pvar_applyPlayerData_" + _UID;
 
@@ -76,17 +94,21 @@ A3W_fnc_checkPlayerFlag =
 				};
 			} forEach _data;
 
-			diag_log format ["pvar_requestPlayerData: %1", [owner _player, _player, objectFromNetId _pNetId]];
+			diag_log format ["pvar_requestPlayerData: %1", [owner _player, _player]];
 		}] execFSM "call.fsm";
 	};
-};
+} call mf_compile;
 
-"pvar_deletePlayerData" addPublicVariableEventHandler
+A3W_fnc_deletePlayerData =
 {
-	_player = param [1, objNull, [objNull]];
+	params [["_player",objNull,[objNull]]];
 
-	if (isPlayer _player) then
+	if (!isPlayer _player) exitWith {};
+
+	if (isRemoteExecuted && !(remoteExecutedOwner in [owner _player, clientOwner])) exitWith
 	{
-		(getPlayerUID _player) spawn fn_deletePlayerSave;
+		["forged deletePlayerData", _player] call A3W_fnc_remoteExecIntruder;
 	};
-};
+
+	(getPlayerUID _player) spawn fn_deletePlayerSave;
+} call mf_compile;

@@ -9,8 +9,8 @@
 	CHVD_allowTerrain = false; // disabled because too many issues
 
 	//Define variables, load from profileNamespace
-	if (isNil "CHVD_allowNoGrass") then { CHVD_allowNoGrass = true };
-	if (isNil "CHVD_allowTerrain") then { CHVD_allowTerrain = true };
+	CHVD_allowNoGrass = false; // deprecated // if (isNil "CHVD_allowNoGrass") then { CHVD_allowNoGrass = false };
+	if (isNil "CHVD_allowTerrain") then { CHVD_allowTerrain = false };
 	if (isNil "CHVD_maxView") then { CHVD_maxView = 12000 };
 	if (isNil "CHVD_maxObj") then { CHVD_maxObj = 12000};
 
@@ -22,9 +22,9 @@
 	CHVD_car = (profileNamespace getVariable ["CHVD_car", viewDistance]) min CHVD_maxView max 200;
 	CHVD_air = (profileNamespace getVariable ["CHVD_air", viewDistance]) min CHVD_maxView max 200;
 
-	CHVD_footObj = (profileNamespace getVariable ["CHVD_footObj", viewDistance]) min CHVD_maxObj max 0;
-	CHVD_carObj = (profileNamespace getVariable ["CHVD_carObj", viewDistance]) min CHVD_maxObj max 0;
-	CHVD_airObj = (profileNamespace getVariable ["CHVD_airObj", viewDistance]) min CHVD_maxObj max 0;
+	CHVD_footObj = (profileNamespace getVariable ["CHVD_footObj", getObjectViewDistance param [0,viewDistance,[0]]]) min CHVD_maxObj max 0;
+	CHVD_carObj = (profileNamespace getVariable ["CHVD_carObj", getObjectViewDistance param [0,viewDistance,[0]]]) min CHVD_maxObj max 0;
+	CHVD_airObj = (profileNamespace getVariable ["CHVD_airObj", getObjectViewDistance param [0,viewDistance,[0]]]) min CHVD_maxObj max 0;
 
 	/*if (CHVD_allowTerrain) then
 	{
@@ -34,9 +34,9 @@
 
 		if (!CHVD_allowNoGrass) then
 		{
-			CHVD_footTerrain = CHVD_footTerrain min 48.99 max 3.125;
-			CHVD_carTerrain = CHVD_carTerrain min 48.99 max 3.125;
-			CHVD_airTerrain = CHVD_airTerrain min 48.99 max 3.125;
+			CHVD_footTerrain = CHVD_footTerrain min 10 max 3.125;
+			CHVD_carTerrain = CHVD_carTerrain min 10 max 3.125;
+			CHVD_airTerrain = CHVD_airTerrain min 10 max 3.125;
 		};
 	}
 	else

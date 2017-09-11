@@ -1,23 +1,30 @@
 //	@file Name: functions.sqf
 //	@file Author: IvanMMM, micovery, AgentRev
 
-scopeName "UAV_Control";
 private ["_perm", "_uav", "_currUav"];
 _perm = ["A3W_uavControl", "side"] call getPublicVar;
 
-if (_perm == "side") then
+if (_perm == "side" && !(playerSide in [BLUFOR,OPFOR])) then
 {
-	if (playerSide in [BLUFOR,OPFOR]) exitWith
-	{
-		breakOut "UAV_Control";
-	};
-
 	_perm = "group"; // always enforce group-only for indies if A3W_uavControl is side
 };
 
 while {true} do
 {
 	waitUntil {_uav = getConnectedUAV player; !isNull _uav};
+
+	// medical UAV setup
+	if (isNil {_uav getVariable "FAR_uavReviveAction"}) then
+	{
+		if (round getNumber (configFile >> "CfgVehicles" >> typeOf _uav >> "attendant") > 0 && !isNil "FAR_Check_Revive") then
+		{
+			_uav setVariable ["FAR_uavReviveAction", _uav addAction ["<t color='#00FF00'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", "_target == vehicle _this && FAR_Check_Revive"]]; // _target = UAV, _this = UAV_AI
+		}
+		else
+		{
+			_uav setVariable ["FAR_uavReviveAction", -1];
+		};
+	};
 
 	// ignore remote designators and autoturrets unless indie
 	if (!(_uav isKindOf "StaticWeapon") || !(playerSide in [BLUFOR,OPFOR])) then
@@ -28,7 +35,7 @@ while {true} do
 
 		_ownerGroup = _uav getVariable ["ownerGroupUAV", grpNull];
 
-		if (getPlayerUID player == _ownerUID) exitWith
+		if (getPlayerUID player isEqualTo _ownerUID) exitWith
 		{
 			if (_ownerGroup != group player) then
 			{
@@ -56,4 +63,5 @@ while {true} do
 	};
 
 	waitUntil {_uav != getConnectedUAV player};
+	_uav removeAction (_uav getVariable ["FAR_uavReviveAction", -1]);
 };

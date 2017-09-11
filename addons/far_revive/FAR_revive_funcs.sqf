@@ -2,6 +2,7 @@
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
 #include "FAR_defines.sqf"
+#include "gui_defines.hpp"
 
 #define FAR_Max_Distance 2.5
 #define FAR_Revive_Duration 10 //seconds
@@ -17,7 +18,7 @@ FAR_Player_Actions =
 		{ [player, _x] call fn_addManagedAction } forEach
 		[
 			["<t color='#FF0000'>" + "Finish off" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_slay"], 101, true, true, "", FAR_Check_Slay],
-			["<t color='#00FF00'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", FAR_Check_Revive],
+			["<t color='#00FF00'>" + "Revive" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_revive"], 100, true, true, "", FAR_Check_Revive], // also defined in addons\UAV_Control\functions.sqf
 			["<t color='#00FF00'>" + "Stabilize" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_stabilize"], 99, true, true, "", FAR_Check_Stabilize],
 			["<t color='#FFFF00'>" + "Drag" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_drag"], 98, true, true, "", FAR_Check_Dragging],
 			["<t color='#FFFF00'>" + "Eject injured units from vehicle" + "</t>", "addons\FAR_revive\FAR_handleAction.sqf", ["action_eject"], 5.2, false, true, "", FAR_Check_Eject_Injured]
@@ -47,7 +48,7 @@ FAR_Player_Unconscious = "addons\far_revive\FAR_Player_Unconscious.sqf" call mf_
 ////////////////////////////////////////////////
 FAR_HandleRevive =
 {
-	[_this select 0, true] call FAR_HandleTreating;
+	[_this select 0, _this select 1, true] call FAR_HandleTreating;
 }
 call mf_compile;
 
@@ -56,7 +57,7 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_HandleStabilize =
 {
-	[_this select 0, false] call FAR_HandleTreating;
+	[_this select 0, _this select 1, false] call FAR_HandleTreating;
 }
 call mf_compile;
 
@@ -65,16 +66,16 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_HandleTreating =
 {
-	private "_treatThread";
-	_treatThread = _this spawn
+	params ["", "_healer"];
+	private _treatThread = _this spawn
 	{
-		params ["_target", ["_revive",false]]; // _revive false = stabilize
+		params ["_target", "_healer", ["_revive",false]]; // _revive false = stabilize
 		private "_medicMove";
 
 		if (alive _target) then
 		{
-			_target setVariable ["FAR_treatedBy", player, true];
-			player setVariable ["FAR_isTreating", _target];
+			_target setVariable ["FAR_treatedBy", _healer, true];
+			_healer setVariable ["FAR_isTreating", _target];
 
 			//_medicMove = format ["AinvPknlMstpSlayW%1Dnon_medic", [player, true] call getMoveWeapon];
 			//player playMove _medicMove;
@@ -83,7 +84,7 @@ FAR_HandleTreating =
 			{
 				params ["_progress", "_target", "_isRevive"];
 				private _failed = true;
-				private _text = "Action failed!";
+				private _text = "Revive failed!";
 
 				if (CAN_PERFORM) then
 				{
@@ -94,7 +95,30 @@ FAR_HandleTreating =
 				[_failed, _text];
 			};
 
-			_success = [FAR_Revive_Duration, "", _checks, [_target, _revive]] call a3w_actions_start;
+			private _success = true;
+
+			if (_healer == player) then
+			{
+				_success = [FAR_Revive_Duration, "", _checks, [_target, _revive]] call a3w_actions_start;
+			}
+			else // UAV
+			{
+				private _progress = 0;
+				private _timeStart = diag_tickTime;
+				private "_complete";
+
+				waitUntil
+				{
+					_progress = (diag_tickTime - _timeStart) / FAR_Revive_Duration;
+					([_progress, _target, _revive] call _checks) params ["_failed", "_text"];
+					_complete = (_progress >= 1 || _failed);
+
+					(ReviveGUI_IDD + 9) cutText [format ["\n\n%1", _text], "PLAIN DOWN", [0.01, 0.5] select _complete]; // (FAR_cutTextLayer + 1)
+
+					_success = !_failed;
+					_complete
+				};
+			};
 
 			if (_success && CAN_PERFORM) then
 			{
@@ -109,13 +133,13 @@ FAR_HandleTreating =
 					_target setVariable ["FAR_handleStabilize", true, true];
 				};
 
-				if !("Medikit" in items player) then
+				if (_healer == player && !("Medikit" in items player)) then
 				{
 					player removeItem "FirstAidKit";
 				};
 			};
 
-			if (TREATED_BY(_target) == player) then
+			if (TREATED_BY(_target) == _healer) then
 			{
 				_target setVariable ["FAR_treatedBy", nil, true];
 			};
@@ -123,7 +147,7 @@ FAR_HandleTreating =
 	};
 
 	waitUntil {scriptDone _treatThread};
-	player setVariable ["FAR_isTreating", nil];
+	_healer setVariable ["FAR_isTreating", nil];
 }
 call mf_compile;
 
@@ -135,17 +159,19 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_Drag =
 {
-	if (primaryWeapon player == "") exitWith
+	/*if (primaryWeapon player == "") exitWith
 	{
 		titleText ["You need a primary weapon to be able to drag,\notherwise your player will freeze.\n(Arma 3 bug)", "PLAIN DOWN", 0.5];
-	};
+	};*/
 
 	FAR_isDragging = true;
 
 	private ["_target", "_actions"];
 	_target = _this select 0;
 
-	player playMoveNow "AcinPknlMstpSrasWrflDnon";
+	private _oldForceWalk = isForcedWalk player;
+	[player, "AcinPknlMstpSnonWpstDnon"] call switchMoveGlobal; // NEED TO FORCE WEAPON THING
+	player forceWalk true; // prevent stuck bug
 
 	_target attachTo [player, [0, 1.1, 0.092]];
 	_target setVariable ["FAR_draggedBy", player, true];
@@ -206,7 +232,15 @@ FAR_Drag =
 
 	FAR_isDragging = false;
 	player setVariable ["FAR_isDragging", objNull];
-	if (vehicle player == player) then { player playMove "AmovPknlMstpSrasWrflDnon" };
+
+	if (vehicle player == player) then
+	{
+		private _wep = [player, true] call getMoveWeapon;
+		[player, format ["AmovPknlMstpS%1W%2Dnon", ["ras","non"] select (_wep == "non"), _wep]] call switchMoveGlobal;
+	};
+
+	player forceWalk false;
+
 	{ [player, _x] call fn_removeManagedAction } forEach _actions;
 }
 call mf_compile;
@@ -290,22 +324,7 @@ FAR_public_EH =
 			};
 		};
 
-		case "FAR_deathMessage":
-		{
-			_value params [["_unit",objNull,[objNull]], ["_unitName",[],[[]]], ["_killerName",[],[[]]], ["_friendlyFire",false,[false]]];
-
-			if (alive _unit && !(_unitName isEqualTo [])) then
-			{
-				if (_killerName isEqualTo []) then
-				{
-					systemChat format ["%1 was injured", toString _unitName];
-				}
-				else
-				{
-					systemChat format ["%1 injured %2%3", toString _killerName, toString _unitName, [""," (friendly fire)"] select _friendlyFire];
-				};
-			};
-		};
+		// case "FAR_deathMessage": moved to server\functions\fn_deathMessage.sqf case (!_victimDead)
 
 		case "FAR_slayTarget":
 		{
@@ -339,37 +358,47 @@ FAR_Check_Suicide =
 }
 call mf_compile;
 
-#define ABDOMEN_ASL(UNIT) (AGLtoASL (UNIT modelToWorldVisual (UNIT selectionPosition "spine1")))
-#define FAR_Target_INVALID(TARGET) (!alive TARGET || (!isPlayer TARGET && !FAR_Debugging) || TARGET distance player > FAR_Max_Distance || !UNCONSCIOUS(TARGET) || BEING_TREATED(TARGET) || DRAGGED(TARGET) || \
-(TARGET != cursorTarget && {!(lineIntersectsObjs [ABDOMEN_ASL(player), ABDOMEN_ASL(TARGET), TARGET, player, false, 4] isEqualTo [])}))
-
-// lineIntersectsObjs is to check whether or not there is a wall between an imaginary line that goes from the medic's abdomen to the target's abdomen, if the target is not being aimed at directly
-
 ////////////////////////////////////////////////
 // Find target for actions
 ////////////////////////////////////////////////
 FAR_FindTarget =
 {
-	private ["_target", "_unit"];
-	_target = cursorTarget;
+	private _target = cursorTarget;
 
 	if (FAR_Target_INVALID(_target)) then
 	{
 		_target = objNull;
+		private ["_unit", "_valid"];
 
 		{
 			_unit = _x;
-			_relDir = player getRelDir _unit;
-			if (_relDir > 180) then { _relDir = _relDir - 360 };
+			_valid = true;
 
-			if (abs _relDir < 45 && {!FAR_Target_INVALID(_unit)}) exitWith // medic must have target visible within a 90° horizontal FoV
+			if (HEALER == player) then
+			{
+				_relDir = player getRelDir _unit;
+				if (_relDir > 180) then { _relDir = _relDir - 360 };
+				_valid = (abs _relDir <= 45); // medic must have target visible within a 90° horizontal FoV
+			};
+
+			if (_valid && {!FAR_Target_INVALID(_unit)}) exitWith 
 			{
 				_target = _unit;
 			};
-		} forEach ((player modelToWorldVisual [0,0,0]) nearEntities ["CAManBase", FAR_Max_Distance]);
+		} forEach ((HEALER modelToWorldVisual [0,0,0]) nearEntities ["CAManBase", FAR_Max_Distance]);
 	};
 
 	_target
+}
+call mf_compile;
+
+////////////////////////////////////////////////
+// General Injured Action Check
+////////////////////////////////////////////////
+FAR_Check_Injured_Action =
+{
+	// Make sure player is alive and target is an injured unit
+	(alive player && !UNCONSCIOUS(player) && !IS_TREATING(player) && !FAR_isDragging && !isNull _target)
 }
 call mf_compile;
 
@@ -378,8 +407,10 @@ call mf_compile;
 ////////////////////////////////////////////////
 FAR_Check_Dragging =
 {
+	private _target = call FAR_FindTarget;
+
 	// Make sure player is alive and target is an injured unit
-	(alive player && !UNCONSCIOUS(player) && !IS_TREATING(player) && !FAR_isDragging && !isNull call FAR_FindTarget)
+	(call FAR_Check_Injured_Action && {["Unconscious", animationState _target] call fn_startsWith})
 }
 call mf_compile;
 
@@ -391,7 +422,7 @@ FAR_Check_Stabilize =
 	private _target = call FAR_FindTarget;
 
 	// do not show Stabilize if Revive is shown, unless target is enemy
-	(!IS_MEDIC(player) || !([player, _target] call A3W_fnc_isFriendly)) && FAR_Check_Dragging && {!STABILIZED(_target) && !(["FirstAidKit","Medikit"] arrayIntersect items player isEqualTo [])}
+	(!IS_MEDIC(player) || !([player, _target] call A3W_fnc_isFriendly)) && FAR_Check_Injured_Action && {!STABILIZED(_target) && !(["FirstAidKit","Medikit"] arrayIntersect items player isEqualTo [])}
 }
 call mf_compile;
 
@@ -403,7 +434,7 @@ FAR_Check_Revive =
 	private _target = call FAR_FindTarget;
 
 	// do not show Revive if target is enemy
-	IS_MEDIC(player) && [player, _target] call A3W_fnc_isFriendly && FAR_Check_Dragging
+	IS_MEDIC(HEALER) && [player, _target] call A3W_fnc_isFriendly && FAR_Check_Injured_Action
 }
 call mf_compile;
 
@@ -414,7 +445,7 @@ FAR_Check_Slay =
 {
 	private _target = if (_this isEqualType []) then { param [0,objNull,[objNull]] } else { call FAR_FindTarget }; // if not array then it's an addAction condition check
 
-	!([_target, player] call A3W_fnc_isFriendly) && FAR_Check_Dragging
+	!([_target, player] call A3W_fnc_isFriendly) && FAR_Check_Injured_Action
 }
 call mf_compile;
 
@@ -455,48 +486,61 @@ call mf_compile;
 
 FAR_CheckFriendlies =
 {
-	scopeName "FAR_CheckFriendlies";
-	private ["_units", "_msg", "_medics", "_medicsText", "_dir", "_cardinal"];
+	private ["_veh", "_dir", "_cardinal", "_medic", "_name"];
 
-	_units = player nearEntities ["AllVehicles", 1000];
-	_msg = "<t underline='true'>Nearby medics</t>"; // Non-breaking space (Alt+255) between "nearby" and "medics", otherwise the underline is split between the 2 words
-	_medics = [];
-	_medicsText = "";
+	private _medics = [];
+	private _medicsText = [format ["<t underline='true'>%1</t>", "Nearby medics" splitString " " joinString toString [160]]]; // 160 = non-breaking space, otherwise the underline is split between the words
+	private _units = player nearEntities ["AllVehicles", 1000];
 
 	{
 		{
-			if (alive _x && (_x != player) && (isPlayer _x || FAR_Debugging) && {_x call FAR_IsFriendlyMedic}) then
+			if (alive _x) then
 			{
-				_medics pushBack _x;
+				_veh = vehicle _x;
+				if (unitIsUAV _veh && {driver _veh == _x && isPlayer ((uavControl _veh) select 0)}) then { _x = _veh };
 
-				if (count _medics >= 7) then
+				if (_x != player && (isPlayer _x || unitIsUAV _x || FAR_Debugging) && {_x call FAR_IsFriendlyMedic}) then
 				{
-					breakTo "FAR_CheckFriendlies";
+					_medics pushBack [_veh distance player, _x];
 				};
 			};
 		} forEach crew _x;
 	} forEach _units;
 
-	[_medics, [], {(vehicle _x) distance player}, "ASCEND"] call BIS_fnc_sortBy;
-
+	if (_medics isEqualTo []) then
 	{
-		_dir = [player, _x] call BIS_fnc_dirTo;
-		_cardinal = switch (true) do
+		_medicsText pushBack "- none -";
+	}
+	else
+	{
+		_medics sort true;
+
 		{
-			case (_dir >= 337.5): { "N" };
-			case (_dir >= 292.5): { "NW" };
-			case (_dir >= 247.5): { "W" };
-			case (_dir >= 202.5): { "SW" };
-			case (_dir >= 157.5): { "S" };
-			case (_dir >= 112.5): { "SE" };
-			case (_dir >= 67.5):  { "E" };
-			case (_dir >= 22.5):  { "NE" };
-			default               { "N" };
-		};
+			if (_forEachIndex >= 7) exitWith {}; // max 7 names displayed
 
-		_medicsText = _medicsText + format ["<br/>%1 - %2m %3", name _x, floor ((vehicle _x) distance player), _cardinal];
-	} forEach _medics;
+			_x params ["_dist", "_unit"];
+			_dir = player getDir _unit;
 
-	_msg + (if (_medicsText == "") then { "<br/>- none -" } else { _medicsText })
+			_cardinal = switch (true) do
+			{
+				case (_dir >= 337.5): { "N" };
+				case (_dir >= 292.5): { "NW" };
+				case (_dir >= 247.5): { "W" };
+				case (_dir >= 202.5): { "SW" };
+				case (_dir >= 157.5): { "S" };
+				case (_dir >= 112.5): { "SE" };
+				case (_dir >= 67.5):  { "E" };
+				case (_dir >= 22.5):  { "NE" };
+				default               { "N" };
+			};
+
+			_medic = [_unit, (uavControl _unit) select 0] select unitIsUAV _unit;
+			_name = (name _medic) call fn_encodeText;
+			if (unitIsUAV _unit) then { _name = format ["[AI - %1]", _name] };
+			_medicsText pushBack format ["%1 - %2m %3", _name, floor _dist, _cardinal];
+		} forEach _medics;
+	};
+
+	_medicsText joinString "<br/>"
 }
 call mf_compile;

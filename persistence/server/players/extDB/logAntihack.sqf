@@ -12,4 +12,4 @@ _playerName = _this select 1;
 _hackType = _this select 2;
 _hackValue = _this select 3;
 
-[format ["addAntihackLog:%1:%2:%3:%4:%5", call A3W_extDB_ServerID, toString (toArray _playerName - FILTERED_CHARS), _playerUID, _hackType, _hackValue]] call extDB_Database_async;
+[["addAntihackLog", call A3W_extDB_ServerID, toString (toArray _playerName - FILTERED_CHARS), _playerUID, _hackType, toString (toArray _hackValue - FILTERED_CHARS)]] call extDB_Database_async;

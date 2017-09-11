@@ -331,7 +331,7 @@ while {true} do
 	};
 
 	// override no-grass exploits
-	if (getTerrainGrid != 10) then
+	if (getTerrainGrid > 10) then
 	{
 		setTerrainGrid 10;
 	};

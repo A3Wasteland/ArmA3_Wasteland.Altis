@@ -19,7 +19,7 @@ if !(player getVariable ["performingDuty", false]) then
 			titleText [format ["ERROR: invalid class '%1'", _mineType], "PLAIN", 0.5];
 		};
 
-		if (["Perform your duty?", "", "Yes", "No"] call BIS_fnc_guiMessage) then
+		if (["Perform your duty?", "", true, true] call BIS_fnc_guiMessage) then
 		{
 			player setVariable ["performingDuty", true];
 

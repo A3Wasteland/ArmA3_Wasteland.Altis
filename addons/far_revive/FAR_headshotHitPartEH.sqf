@@ -4,6 +4,8 @@
 //	@file Name: FAR_headshotHitPartEH.sqf
 //	@file Author: AgentRev
 
+// this file is outdated and no longer functional
+
 #include "FAR_defines.sqf"
 
 params [["_vals",0]];
@@ -32,12 +34,12 @@ if (!(_selections arrayIntersect ["head","face_hub"] isEqualTo []) && _direct) t
 			if (UNCONSCIOUS(_target)) then
 			{
 				private "_killerVehicle";
-				_killerVehicle = _target getVariable "FAR_killerVehicle";
+				_killerVehicle = _target getVariable "FAR_killerUnit";
 
 				if (isNil "_killerVehicle") then
 				{
 					[_target, _shooter, _ammo] call FAR_setKillerInfo;
-					_killerVehicle = _target getVariable ["FAR_killerVehicle", objNull];
+					_killerVehicle = _target getVariable ["FAR_killerUnit", objNull];
 				};
 
 				if (_killerVehicle isEqualTo _shooter && _target getVariable ["FAR_killerAmmo", ""] == _ammo) then

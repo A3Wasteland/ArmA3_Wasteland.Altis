@@ -5,31 +5,25 @@
 //	@file Author: AgentRev
 
 #define IMPACT_DAMAGE_MULTIPLIER 0.5
+#define IMPACT_DAMAGE_SEATED_MULTIPLIER 0.1
 
-_unit = _this select 0;
+params ["_unit", "_selection", "_damage", "_source", "_ammo"];
 
 if (_unit getVariable ["playerSpawning", false]) exitWith {0};
 
-_selection = toLower (_this select 1);
-_damage = _this select 2;
-
 if (_selection != "?") then
 {
-	_source = _this select 3;
-	_ammo = _this select 4;
-
-	// Reduce impact damage (from vehicle collisions and falling)
-	if (_ammo == "" && (isNull _source || _source == _unit)) then
+	// Vehicle collisions and falling damage
+	if (_ammo == "" && (vehicle _source) in [vehicle _unit, objNull]) then
 	{
-		_oldDamage = if (_selection == "") then { damage _unit } else { _unit getHit _selection };
+		_oldDamage = [_unit getHit _selection, damage _unit] select (_selection isEqualTo "");
 
-		if (!isNil "_oldDamage") then
+		_damage = switch (true) do
 		{
-			_damage = if ((vehicle _unit) isKindOf "ParachuteBase") then {
-				_oldDamage // Disable collision damage while in parachute
-			} else {
-				((_damage - _oldDamage) * IMPACT_DAMAGE_MULTIPLIER) + _oldDamage
-			};
+			case (isNil "_oldDamage"):                         { _damage };
+			case ((vehicle _unit) isKindOf "ParachuteBase"):   { _oldDamage }; // Disable self-collision damage while in parachute
+			case (!isNull objectParent _unit):                 { ((_damage - _oldDamage) * IMPACT_DAMAGE_SEATED_MULTIPLIER) + _oldDamage }; // Greatly reduce in-vehicle unit self-impact damage
+			default                                            { ((_damage - _oldDamage) * IMPACT_DAMAGE_MULTIPLIER) + _oldDamage }; // Reduce on-foot self-impact and falling damage
 		};
 	};
 

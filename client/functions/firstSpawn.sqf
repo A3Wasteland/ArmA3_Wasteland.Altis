@@ -58,8 +58,14 @@ player addEventHandler ["WeaponDisassembled", { _this spawn weaponDisassembledEv
 player addEventHandler ["WeaponAssembled",
 {
 	params ["_player", "_obj"];
+	_objClass = typeOf _obj;
 
-	if (round getNumber (configFile >> "CfgVehicles" >> typeOf _obj >> "isUav") > 0) then
+	clearBackpackCargoGlobal _obj;
+	clearMagazineCargoGlobal _obj;
+	clearWeaponCargoGlobal _obj;
+	clearItemCargoGlobal _obj;
+
+	if (unitIsUAV _obj) then
 	{
 		// ownerUID handled thru save funcs
 
@@ -84,12 +90,11 @@ player addEventHandler ["WeaponAssembled",
 			_player connectTerminalToUAV _obj;
 		};
 
-		if ({_obj isKindOf _x} count ["Static_Designator_01_base_F","Static_Designator_02_base_F"] > 0) then
+		if (["_Designator_", _objClass] call fn_findString != -1) then
 		{
 			_obj setAutonomous false; // disable autonomous mode by default on static designators so they stay on target after releasing controls
 		};
 
-		
 		if (isNil {_obj getVariable "A3W_handleDamageEH"}) then
 		{
 			_obj setVariable ["A3W_handleDamageEH", _obj addEventHandler ["HandleDamage", vehicleHandleDamage]];

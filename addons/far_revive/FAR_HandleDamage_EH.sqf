@@ -9,22 +9,17 @@
 
 //private ["_unit", "_selection", "_damage", "_source", "_fatalHit", "_killerVehicle", "_oldDamage"];
 
-_unit = _this select 0;
-//_selection = _this select 1;
-//_damage = _this select 2;
-_source = _this select 3;
-_ammo = _this select 4;
+params ["_unit", "", "", "_source", "_ammo", "", "_instigator"];
 
 // a critical hit is if this type of selection can trigger death upon suffering damage >= 1 (usually all of them except "hands", "arms", and "legs")
 // this is intercepted to prevent engine-triggered death and put the unit in revive mode instead; behavior and selections can change with game updates
-
 _criticalHit = (_selection in ["","body","head","spine1","spine2","spine3","pelvis","neck","face_hub"]);
 _fatalHit = (_damage >= 1 && alive _unit && _criticalHit);
 
 // Find suspects
-if (_fatalHit && !isNull _source && isNil {_unit getVariable "FAR_killerVehicle"}) then
+if (_fatalHit && (!isNull _source || !isNull _instigator) && isNil {_unit getVariable "FAR_killerUnit"}) then
 {
-	[_unit, _source, _ammo] call FAR_setKillerInfo;
+	[_unit, _source, _ammo, _instigator] call FAR_setKillerInfo;
 };
 
 //diag_log format ["FAR_HandleDamage_EH %1 - alive: %2", [_unit, _selection, _damage, _source, _ammo], alive _unit];
@@ -48,7 +43,7 @@ if (UNCONSCIOUS(_unit) && !_skipRevive) then
 				_oldDamage = _damage min 0.5;
 			};
 
-			_damage = ((_damage - _oldDamage) min 10) * FAR_DamageMultiplier + _oldDamage; // max damage inflicted per hit is capped (via min 10) to prevent insta-bleedout
+			_damage = ((_damage - _oldDamage) * FAR_DamageMultiplier) min 0.2 + _oldDamage; // max damage inflicted per hit is capped (via min 0.2) to prevent insta-bleedout - 0.2 is 40% of 0.5
 		};
 	//};
 }
@@ -71,7 +66,8 @@ else
 		if (_unit == player) then
 		{
 			(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
-			(findDisplay ReviveGUI_IDD) closeDisplay 0;
+			//(findDisplay ReviveGUI_IDD) closeDisplay 0;
+			(uiNamespace getVariable ["ReviveGUI", displayNull]) closeDisplay 0;
 		};
 
 		if (_skipRevive) exitWith {};
@@ -87,7 +83,7 @@ else
 	};
 };
 
-if (UNCONSCIOUS(_unit) && !_reviveReady) then
+/*if (UNCONSCIOUS(_unit) && !_reviveReady) then
 {
 	_headshotQueue = _unit getVariable "FAR_headshotHitPartEH_queued";
 
@@ -102,6 +98,6 @@ if (UNCONSCIOUS(_unit) && !_reviveReady) then
 
 		_unit setVariable ["FAR_headshotHitPartEH_queued", nil];
 	};
-};
+};*/
 
 //_damage

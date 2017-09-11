@@ -70,8 +70,7 @@ savePlayerHandle = [_this,
 		{
 			if (count _info > 0 || count _data > 0) then
 			{
-				pvar_savePlayerData = [_UID, _info, _data, player];
-				publicVariableServer "pvar_savePlayerData";
+				[player, _info, _data] remoteExecCall ["A3W_fnc_savePlayerData", 2];
 			};
 
 			if (_manualSave) then

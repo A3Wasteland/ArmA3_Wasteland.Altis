@@ -13,12 +13,12 @@ switch (toLower _action) do
 {
 	case "action_revive":
 	{
-		[call FAR_FindTarget] spawn FAR_HandleRevive;
+		[call FAR_FindTarget, _target] spawn FAR_HandleRevive;
 	};
 
 	case "action_stabilize":
 	{
-		[call FAR_FindTarget] spawn FAR_HandleStabilize;
+		[call FAR_FindTarget, _target] spawn FAR_HandleStabilize;
 	};
 
 	case "action_suicide":

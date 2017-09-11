@@ -48,7 +48,7 @@ briefing = 0; // if 0, skip Continue button
 #include "client\items\warchest\dialog.hpp"
 #include "client\items\atm\atm_gui.hpp"
 #include "client\actions\gui.hpp"
-#include "addons\far_revive\revive_gui.hpp"
+#include "addons\far_revive\reviveBlank_gui.hpp"
 #include "client\systems\playerMenu\dialog\player_settings.hpp"
 #include "client\systems\groups\dialog\groupManagement.hpp"
 #include "client\systems\gunStore\dialog\gunshop_settings.hpp"
@@ -64,6 +64,7 @@ briefing = 0; // if 0, skip Continue button
 #include "client\systems\adminPanel\dialog\objectSearch.hpp"
 #include "client\systems\playerMenu\dialog\respawn_dialog.hpp"
 #include "client\systems\playerMenu\dialog\teamkill_dialog.hpp"
+#include "client\systems\killFeed\killFeedMenu_gui.hpp"
 #include "addons\proving_ground\PG_config.hpp"
 #include "addons\outlw_magrepack\config.hpp"
 #include "addons\gui\gui.hpp"
@@ -77,7 +78,8 @@ class RscTitles
 	#include "client\systems\hud\dialog\hud.hpp"
 	#include "client\systems\playerMenu\dialog\welcome.hpp"
 	#include "client\systems\scoreboard\score_gui.hpp"
-	//#include "addons\far_revive\revive_gui.hpp"
+	#include "client\systems\killFeed\killFeed_gui.hpp"
+	#include "addons\far_revive\revive_gui.hpp"
 };
 
 class CfgFunctions

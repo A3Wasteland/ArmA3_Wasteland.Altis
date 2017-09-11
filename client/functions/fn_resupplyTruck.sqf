@@ -4,7 +4,7 @@
 //  @file Name: fn_resupplyTruck.sqf
 //  @file Author: Wiking, AgentRev, micovery
 
-#define RESUPPLY_TRUCK_DISTANCE 20
+#define RESUPPLY_TRUCK_DISTANCE (10 max (sizeOf typeOf _vehicle * 0.75)) // this must match the addAction condition in fn_setupResupplyTruck.sqf
 #define REARM_TIME_SLICE 5
 #define REPAIR_TIME_SLICE 1
 #define REFUEL_TIME_SLICE 1

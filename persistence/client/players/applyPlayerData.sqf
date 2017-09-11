@@ -83,7 +83,7 @@ else
 
 			if (_value != "") then
 			{
-				if (_value isKindOf "Weapon_Bag_Base" && ({_value isKindOf _x} count ["B_UAV_01_backpack_F", "B_Static_Designator_01_weapon_F", "O_Static_Designator_02_weapon_F"] == 0)) then
+				if (_value isKindOf "Weapon_Bag_Base" && [["_UAV_","_Designator_"], _value] call fn_findString == -1) then
 				{
 					player addBackpack "B_AssaultPack_rgr"; // NO SOUP FOR YOU
 				}

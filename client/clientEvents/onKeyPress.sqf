@@ -7,6 +7,8 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
+#define UNCONSCIOUS (player call A3W_fnc_isUnconscious)
+
 private ["_key", "_shift", "_ctrl", "_alt", "_handled"];
 
 _key = _this select 1;
@@ -29,7 +31,7 @@ switch (true) do
 	// Tilde (key above Tab)
 	case (_key in A3W_customKeys_playerMenu):
 	{
-		[] spawn loadPlayerMenu;
+		if (alive player && !UNCONSCIOUS) then { [] spawn loadPlayerMenu } else { [] call A3W_fnc_killFeedMenu };
 		_handled = true;
 	};
 
@@ -56,6 +58,9 @@ switch (true) do
 };
 
 // ********** Action keys **********
+
+if (!UNCONSCIOUS) then // ####################
+{
 
 // Parachute
 if (!_handled && _key in actionKeys "GetOver") then
@@ -106,6 +111,32 @@ if (!_handled && _key in actionKeys "GetOut") then
 	};
 };
 
+// Override prone reload freeze (ffs BIS)
+if (!_handled && _key in (actionKeys "MoveDown" + actionKeys "MoveUp")) then
+{
+	if ((toLower animationState player) find "reloadprone" != -1) then
+	{
+		[player, format ["AmovPknlMstpSrasW%1Dnon", [player, true] call getMoveWeapon]] call switchMoveGlobal;
+		reload player;
+	};
+};
+
+} // ####################
+else // UNCONSCIOUS
+{
+	if (_key == 57) then // spacebar
+	{
+		execVM "client\functions\confirmSuicide.sqf";
+		_handled = true;
+	};
+
+	if (_key == 14) then // backspace
+	{
+		execVM "addons\far_revive\FAR_lastResort.sqf";
+		_handled = true;
+	};
+};
+
 // Scoreboard
 if (!_handled && _key in actionKeys "NetworkStats") then
 {
@@ -137,13 +168,12 @@ if (!_handled && _key in (actionKeys "UavView" + actionKeys "UavViewToggle")) th
 	};
 };
 
-// Override prone reload freeze (ffs BIS)
-if (!_handled && _key in (actionKeys "MoveDown" + actionKeys "MoveUp")) then
+// Block 3rd person and group cam while injured
+if (!_handled && _key in (actionKeys "PersonView" + actionKeys "TacticalView")) then
 {
-	if ((toLower animationState player) find "reloadprone" != -1) then
+	if (UNCONSCIOUS) then
 	{
-		[player, format ["AmovPknlMstpSrasW%1Dnon", [player, true] call getMoveWeapon]] call switchMoveGlobal;
-		reload player;
+		_handled = true;
 	};
 };
 

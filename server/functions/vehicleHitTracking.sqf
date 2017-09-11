@@ -61,34 +61,21 @@ private _killerVehicle = _vehicle getVariable ["FAR_killerVehicle", objNull];
 
 if (_dead || (_aboutToExplode && isNull _killerVehicle)) then
 {
-	if (_dead && _source in crew _vehicle) then // Vehicle crash
+	//systemChat format ["veh %1, source %2, ammo %3, insti %4, pilot %5, conn %6", typeof _vehicle, typeof _source, _ammo, typeof _instigator, typeof (_vehicle call fn_findPilot), isUavConnected _vehicle];
+
+	if (isNull _instigator && (isNull _source || (vehicle _source == _vehicle && _ammo == ""))) then // vehicle crash
 	{
 		if (isNull _killerVehicle) then
 		{
-			_uavOwner = (uavControl _vehicle) select 0;
-			if (isPlayer _uavOwner) then { _source = _uavOwner };
-
-			[_vehicle, _source, _ammo] call FAR_setKillerInfo;
-			_vehicle setVariable ["FAR_killerVehicle", _vehicle call FAR_findKiller, true];
+			//systemChat str [_vehicle, _vehicle call fn_findPilot, _ammo];
+			[_vehicle, _vehicle call fn_findPilot, _ammo] call FAR_setKillerInfo;
 		};
 	}
 	else
 	{
-		if (_source != _vehicle) then
-		{
-			if (_ammo in ["","FuelExplosion"] && !isNull _source) then // Killed by explosion
-			{
-				_vehicle setVariable ["FAR_killerVehicle", _source getVariable ["FAR_killerVehicle", objNull], true];
-				_vehicle setVariable ["FAR_killerAmmo", _source getVariable ["FAR_killerAmmo", ""], true];
-				//diag_log format ["vehicleHitTracking2: %1 - %2", typeOf _vehicle, typeOf _source, typeOf (_vehicle getVariable ["FAR_killerVehicle", objNull])];
-			}
-			else // Killed by direct hit
-			{
-				[_vehicle, _source, _ammo] call FAR_setKillerInfo;
-				_vehicle setVariable ["FAR_killerVehicle", _vehicle call FAR_findKiller, true];
-				//diag_log format ["vehicleHitTracking: %1 - %2", typeOf _vehicle, typeOf (_vehicle getVariable ["FAR_killerVehicle", objNull])];
-			};
-		};
+		//systemChat "else";
+		[_vehicle, _source, _ammo, _instigator] call FAR_setKillerInfo;
+		//diag_log format ["vehicleHitTracking: %1 - %2", typeOf _vehicle, typeOf (_vehicle getVariable ["FAR_killerVehicle", objNull])];
 	};
 
 	//diag_log format ["vehicleHitTracking3: %1, %2, %3", typeOf _vehicle, typeOf _source, _ammo];

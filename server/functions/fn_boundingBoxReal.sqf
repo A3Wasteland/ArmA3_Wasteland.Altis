@@ -52,6 +52,7 @@ _realBoundingBoxes =
 			["Van_01_box_base_F", [[-1.2,-3.5,-1.9],[1.2,2.2,1.5]]],
 			["Van_01_fuel_base_F", [[-1.2,-3.3,-1.9],[1.2,2.2,1]]],
 			["Van_01_base_F", [[-1.2,-3.5,-1.9],[1.2,2.2,0.8]]],
+			["Van_02_base_F", [[-1.2,-3.5,-1.7],[1.2,4.2,1.1]]],
 			["B_Truck_01_ammo_F", [[-1.2,-4.9,-1.9],[1.3,5,1.6]]],
 			["B_Truck_01_box_F", [[-1.3,-5.8,-2.3],[1.3,5.2,2.2]]],
 			["B_Truck_01_fuel_F", [[-1.2,-5.2,-2],[1.3,4.9,1.6]]],
@@ -159,7 +160,9 @@ _realBoundingBoxes =
 			["UAV_02_base_F", [[-5.1,-3.4,-1.6],[5.1,3.3,0.8]]],
 			["UAV_03_base_F", [[-5.6,-6,-1.7],[4.8,5.7,1.7]]],
 			["UAV_04_base_F", [[-4.5,-2.8,-1.7],[4.5,2.6,0.7]]],
-			["UAV_05_Base_F", [[-10.2,-6.3,-1.9],[10.2,6.4,1.9]]]
+			["UAV_05_Base_F", [[-10.2,-6.3,-1.9],[10.2,6.4,1.9]]],
+			["UAV_06_antimine_base_F", [[-0.3,-0.3,-0.3],[0.3,0.4,0.2]]],
+			["UAV_06_base_F", [[-0.2,-0.4,-0.2],[0.2,0.4,0.2]]]
 		]
 	]
 ];
@@ -232,6 +235,7 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["C_Van_01_box_F", "Van_01_box_base_F"],
 		["C_Van_01_fuel_F", "Van_01_fuel_base_F"],
 		["C_Van_01_transport_F", "Van_01_base_F"],
+		["C_Van_02_vehicle_F", "Van_02_base_F"],
 		["B_Truck_01_ammo_F", "B_Truck_01_ammo_F"],
 		["B_Truck_01_box_F", "B_Truck_01_box_F"],
 		["B_Truck_01_fuel_F", "B_Truck_01_fuel_F"],
@@ -323,7 +327,9 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["B_UAV_02_CAS_F", "UAV_02_base_F"],
 		["B_T_UAV_03_F", "UAV_03_base_F"],
 		["O_T_UAV_04_CAS_F", "UAV_04_base_F"],
-		["B_UAV_05_F", "UAV_05_Base_F"]
+		["B_UAV_05_F", "UAV_05_Base_F"],
+		["C_IDAP_UAV_06_antimine_F", "UAV_06_antimine_base_F"],
+		["B_UAV_06_F", "UAV_06_base_F"]
 	];
 
 	_classesBBox = [];

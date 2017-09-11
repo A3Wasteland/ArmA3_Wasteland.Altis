@@ -18,6 +18,8 @@ if (isServer) then
 {
 	vChecksum = compileFinal str call A3W_fnc_generateKey;
 
+	//addMissionEventHandler ["EntityRespawned", { diag_log format ["test123 Respawned %1", _this] }];
+
 	// Corpse deletion on disconnect if player alive and player saving on + inventory save
 	addMissionEventHandler ["HandleDisconnect",
 	{
@@ -46,8 +48,9 @@ if (isServer) then
 				[_unit] spawn dropPlayerItems;
 				[_uid, "deathCount", 1] call fn_addScore;
 				_unit setVariable ["A3W_handleDisconnect_name", _name];
+				_unit setVariable ["A3W_handleDisconnect_UID", _uid];
 				_unit setVariable ["A3W_deathCause_local", ["bleedout"]];
-				[_unit, objNull, objNull, true] call A3W_fnc_registerKillScore; // killer retrieved via FAR_killerPrimeSuspectData
+				[_unit, objNull, objNull, true] call A3W_fnc_registerKillScore; // killer retrieved via FAR_killerUnit
 			}
 			else
 			{

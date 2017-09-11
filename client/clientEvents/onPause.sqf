@@ -100,7 +100,7 @@ if (!isNil "_getPublicVar" && !isNil "_isConfigOn") then
 									_text = format ["\nCannot pussy out during combat! (%1)", _timer];
 								};
 
-								cutText [_text, "PLAIN DOWN"];
+								10290 cutText [_text, "PLAIN DOWN"]; // 10290 is higher than ReviveGUI_IDD
 								_time = diag_tickTime;
 							};
 
@@ -108,7 +108,7 @@ if (!isNil "_getPublicVar" && !isNil "_isConfigOn") then
 						};
 
 						true call _enableButtons;
-						cutText ["", "PLAIN DOWN"];
+						10290 cutText ["", "PLAIN DOWN"];
 					};
 
 					!isNull findDisplay 49

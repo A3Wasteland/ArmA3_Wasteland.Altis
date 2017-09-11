@@ -13,12 +13,23 @@ private ["_unit", "_killer", "_names"];
 _unit = _this select 0;
 //_killer = _this select 1;
 
-_unit setCaptive true;
-
-_unit spawn
+if (alive _unit) then
 {
-	_unit = _this;
-	a3w_actions_mutex = false; // prevent revive dance
+	_unit setCaptive true;
+	_unit setUnconscious true;
+
+	if (_unit == player) then
+	{
+		a3w_actions_mutex = false; // prevent revive dance
+	};
+};
+
+[_unit, diag_tickTime] spawn
+{
+	params ["_unit", "_time"];
+	private "_animTimer";
+
+	waitUntil {diag_tickTime - _time >= 3};
 
 	while {UNCONSCIOUS(_unit) && alive _unit} do
 	{
@@ -27,47 +38,48 @@ _unit spawn
 			_draggedBy = DRAGGED_BY(_unit);
 			_anim = animationState _unit;
 
-			if (isWeaponDeployed _unit || isWeaponRested _unit) then
-			{
-				_unit playMove "";
-			};
-
 			if (((isTouchingGround _unit || getPos _unit select 2 < 0.5) && vectorMagnitude velocity _unit < 5) || {alive _draggedBy && !UNCONSCIOUS(_draggedBy)}) then
 			{
-				// Anim is stuck due to stance change in progress during injury
-				if (_anim == "AinjPpneMstpSnonWrflDnon_rolltofront") then
+				if !(["UnconsciousRevive", _anim] call fn_startsWith) then
 				{
-					_unit switchMove "";
-					sleep 0.01;
-					waitUntil {count animationState _unit <= 24}; // > 24 usually means the anim is still in transition
-					[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
-					_anim = animationState _unit;
-				};
+					if (["Unconscious", _anim] call fn_startsWith) then
+					{
+						if (isNil "_animTimer") then
+						{
+							_animTimer = diag_tickTime;
+						};
+					};
 
-				if !((toLower _anim) in ["ainjppnemstpsnonwrfldnon","unconscious"]) then
+					if (isNil "_animTimer" || {diag_tickTime - _animTimer > 7.5}) then
+					{
+						[_unit, "UnconsciousReviveDefault"] call switchMoveGlobal;
+					};
+				}
+				else
 				{
-					[_unit, "AinjPpneMstpSnonWrflDnon"] call switchMoveGlobal;
+					_animTimer = nil;
 				};
 			}
 			else
 			{
-				if (_anim == "AinjPpneMstpSnonWrflDnon") then
+				if (["Unconscious", _anim] call fn_startsWith) then
 				{
 					[_unit, ""] call switchMoveGlobal;
+					_animTimer = nil;
 				};
 			};
 		};
 
-		sleep 0.2;
+		sleep 0.1;
 	};
 };
 
 if (_unit == player) then
 {
-	if (createDialog "ReviveBlankGUI") then
+	/*if (createDialog "ReviveBlankGUI") then
 	{
-		(findDisplay ReviveBlankGUI_IDD) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
-	};
+		(findDisplay ReviveBlankGUI_IDD) displayAddEventHandler ["KeyDown", { _this select 1 == 1 }]; // blocks Esc to prevent closing
+	};*/
 
 	[100] call BIS_fnc_bloodEffect;
 	FAR_cutTextLayer cutText ["", "BLACK OUT"];
@@ -96,9 +108,6 @@ waitUntil {!isNil {_unit getVariable "FAR_killerSuspects"}};
 
 // Find killer
 _killer = _unit call FAR_findKiller;
-_unit setVariable ["FAR_killerPrimeSuspect", _killer];
-_perpetrator = effectiveCommander _killer;
-_unit setVariable ["FAR_killerPrimeSuspectData", [getPlayerUID _perpetrator, group _perpetrator, side group _perpetrator, name _perpetrator], true];
 //[_unit, _killer] remoteExecCall ["A3W_fnc_registerKillScore", 2];
 
 diag_log format ["INCAPACITATED by [%1] with [%2]", _killer, _unit getVariable ["FAR_killerAmmo", ""]];
@@ -114,32 +123,15 @@ if (!isPlayer _unit) then
 };
 
 // Injury message
-if (FAR_EnableDeathMessages && (round difficultyOption "deathMessages" > 0 || ["A3W_customDeathMessages"] call isConfigOn) && !isNil "_killer") then
+if (FAR_EnableDeathMessages && (isPlayer _unit || FAR_Debugging)) then
 {
-	[[_unit, _killer],
+	_unit spawn
 	{
-		params ["_victim", "_killer"];
+		waitUntil {!UNCONSCIOUS(_this) || !alive _this || _this getVariable ["FAR_headshotHitTimeout", false]};
+		if (!alive _this) exitWith {};
 
-		if (isPlayer _victim || FAR_Debugging) then
-		{
-			_msgArr = [_victim, toArray name _victim];
-
-			if (!isNull _killer && {(isPlayer _killer || FAR_Debugging) && _killer != _victim}) then
-			{
-				_msgArr append [toArray name _killer, [_killer, _victim] call A3W_fnc_isFriendly];
-			};
-
-			[_victim, _msgArr] spawn
-			{
-				params ["_victim", "_msgArr"];
-
-				waitUntil {!UNCONSCIOUS(_victim) || !alive _victim || _victim getVariable ["FAR_headshotHitTimeout", false]};
-				if (!alive _victim) exitWith {};
-
-				["FAR_deathMessage", _msgArr] remoteExecCall ["FAR_fnc_public_EH"];
-			};
-		};
-	}] execFSM "call.fsm";
+		[_this, false] call A3W_fnc_killBroadcast;
+	};
 };
 
 if (!alive vehicle _unit) exitWith
@@ -157,7 +149,7 @@ _unit spawn
 
 	while {UNCONSCIOUS(_unit) && alive _unit} do
 	{
-		if (_unit == player && cameraView != "INTERNAL") then
+		if ((_unit == player && cameraView != "INTERNAL") || cameraOn != vehicle player) then
 		{
 			(vehicle player) switchCamera "INTERNAL";
 		};
@@ -167,7 +159,7 @@ _unit spawn
 			_unit setFatigue 1;
 		};
 
-		uiSleep 0.25;
+		uiSleep 0.01;
 	};
 
 	if (_unit == player && !alive player) then
@@ -228,8 +220,14 @@ _unit spawn
 
 		if !(_unit getVariable ["FAR_cancelAutoEject", false]) then
 		{
-			if (_veh != _unit && {(isTouchingGround _veh || (getPos _veh) select 2 < 1) && (vectorMagnitude velocity _unit < 1)}) then
+		
+			if (_veh != _unit && (_veh isKindOf "ParachuteBase" || {(isTouchingGround _veh || (getPos _veh) select 2 < 1) && (vectorMagnitude velocity _unit < 1)})) then
 			{
+				if (_veh isKindOf "ParachuteBase") then
+				{
+					deleteVehicle _veh;
+				};
+
 				moveOut _unit;
 				unassignVehicle _unit;
 			};
@@ -259,10 +257,13 @@ if (isPlayer _unit) then
 		FAR_cutTextLayer cutText ["", "BLACK IN"];
 		(findDisplay ReviveBlankGUI_IDD) closeDisplay 0;
 
-		if (createDialog "ReviveGUI" && !FAR_Debugging) then
+		ReviveGUI_IDD cutRsc ["ReviveGUI", "PLAIN"];
+		/*_reviveGUI = uiNamespace getVariable ["ReviveGUI", displayNull];
+
+		if (!isNull _reviveGUI && !FAR_Debugging) then
 		{
-			(findDisplay ReviveGUI_IDD) displayAddEventHandler ["KeyDown", "_this select 1 == 1"]; // blocks Esc to prevent closing
-		};
+			_reviveGUI displayAddEventHandler ["KeyDown", { _this select 1 == 1 }]; // blocks Esc to prevent closing
+		};*/
 	};
 
 	// Mute ACRE
@@ -290,7 +291,7 @@ private ["_reviveGUI", "_progBar", "_progText", "_reviveText", "_bleedPause", "_
 
 if (_unit == player) then
 {
-	_reviveGUI = findDisplay ReviveGUI_IDD;
+	_reviveGUI = uiNamespace getVariable ["ReviveGUI", displayNull];
 	_progBar = _reviveGUI displayCtrl RevProgBar_IDC;
 	_progText = _reviveGUI displayCtrl RevBarText_IDC;
 	_reviveText = _reviveGUI displayCtrl RevText_IDC;
@@ -298,15 +299,18 @@ if (_unit == player) then
 
 while {UNCONSCIOUS(_unit) && diag_tickTime < _bleedOut} do
 {
-	if (!alive vehicle _unit || (getPosASL _unit) select 2 < -1.5) exitWith
+	_veh = vehicle _unit;
+	_drown = ((getPosASL _unit) select 2 < -1.5);
+
+	if ((!alive _veh && {_veh isKindOf _x} count ["ParachuteBase","Ejection_Seat_Base_F"] == 0) || _drown) exitWith
 	{
-		if (damage _unit < 1) then // if check required to prevent "Killed" EH from getting triggered twice
+		if (_drown) then
 		{
 			_unit setVariable ["A3W_deathCause_local", ["drown"]];
-			_unit setDamage 1;
 			_unit setOxygenRemaining 0;
 		};
 
+		if (damage _unit < 1) then { _unit setDamage 1 }; // if check required to prevent "Killed" EH from getting triggered twice
 		if (_unit == player) then { FAR_cutTextLayer cutText ["", "PLAIN"] };
 	};
 
@@ -446,7 +450,8 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 		{ _unit enableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
 	};
 
-	_unit playMove format ["AmovPpneMstpSrasW%1Dnon", _unit call getMoveWeapon];
+	private _wep = [_unit, true] call getMoveWeapon;
+	_unit playMove format ["AmovPpneMstpS%1W%2Dnon", ["ras","non"] select (_wep == "non"), _wep];
 }
 else // Player bled out
 {
@@ -464,6 +469,6 @@ else // Player bled out
 
 if (_unit == player) then
 {
-	(findDisplay ReviveGUI_IDD) closeDisplay 0;
+	(uiNamespace getVariable ["ReviveGUI", displayNull]) closeDisplay 0;
 	uiNamespace setVariable ["BIS_fnc_guiMessage_status", false];
 };

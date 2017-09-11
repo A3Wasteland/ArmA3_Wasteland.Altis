@@ -24,7 +24,7 @@ if (_selection != "?") then
 		_damage = 0; // Block goddamn fuel leak
 	};
 
-	_oldDamage = if (_selection == "") then { damage _vehicle } else { _vehicle getHit _selection };
+	_oldDamage = [_vehicle getHit _selection, damage _vehicle] select (_selection isEqualTo "");
 
 	if (!isNil "_oldDamage") then
 	{
@@ -69,13 +69,8 @@ if (_selection != "?") then
 			{
 				//if (_isMissile) then
 				//{
-					_scale = if ({_vehicle isKindOf _x} count ["APC_Tracked_01_base_F", "APC_Tracked_02_base_F", "APC_Tracked_03_base_F"] > 0) then {
-						IFV_DMG_SCALE
-					} else {
-						TANK_DMG_SCALE
-					};
-
-					_damage = ((_damage - _oldDamage) * _scale) + _oldDamage;
+					#define TANKTYPE_DMG_SCALE ([TANK_DMG_SCALE, IFV_DMG_SCALE] select ({_vehicle isKindOf _x} count ["APC_Tracked_01_base_F","APC_Tracked_02_base_F","APC_Tracked_03_base_F"] > 0))
+					_damage = ((_damage - _oldDamage) * TANKTYPE_DMG_SCALE) + _oldDamage;
 				//};
 			};
 

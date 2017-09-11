@@ -117,20 +117,20 @@ if (!isNil "_itemEntry") then
 						//_name = getText (_weapon >> "displayName");
 						_description = "The perfect companion for wanna-be pilots!<br/>One-time use.";
 					};
+					case (["_UAV_06_antimine_backpack_", _itemType] call fn_findString != -1):
+					{
+						_description = "Remote-controlled hexacopter to bomb the shit out of 'em, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
+					};
+					case (_itemType isKindOf "UAV_06_medical_backpack_base_F"):
+					{
+						_description = "Remote-controlled hexacopter to revive and heal your teammates, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
+					};
+					case (_itemType isKindOf "UAV_06_backpack_base_F"):
+					{
+						_description = "Remote-controlled hexacopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
+					};
 					case (["_UAV_01_backpack_", _itemType] call fn_findString != -1):
 					{
-						private "_uavType";
-
-						switch (playerSide) do
-						{
-							case BLUFOR: { _uavType = "B_UAV_01_F" };
-							case OPFOR:  { _uavType = "O_UAV_01_F" };
-							default      { _uavType = "I_UAV_01_F" };
-						};
-
-						_weapon = configFile >> "CfgVehicles" >> _uavType;
-
-						//_name = getText (_weapon >> "displayName") + " UAV";
 						_description = "Remote-controlled quadcopter to spy on your neighbors, pre-packaged in a backpack.<br/>UAV Terminal sold separately. Ages 8+";
 					};
 					case (["_Static_Designator_", _itemType] call fn_findString != -1):
@@ -227,6 +227,14 @@ if (!isNil "_itemEntry") then
 						_description = getText (_weapon >> "descriptionShort") + "<br/>Assign to GPS slot.";
 					};
 				};
+			};
+		};
+
+		if (_itemType isKindOf "UAV_06_backpack_base_F") then
+		{
+			if ({_x == "NVG" || _x == "Ti"} count getArray (configFile >> "CfgVehicles" >> _itemType >> "Viewoptics" >> "visionMode") == 0) then
+			{
+				_description = format ["%1%2%3", _description, ["<br/>",""] select (_description isEqualTo ""), "<t color='#FF8000'>NO THERMAL / NIGHTVISION, THANKS BOHEMIA</t>"];
 			};
 		};
 	};

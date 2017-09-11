@@ -6,18 +6,17 @@
 
 #include "gui_defines.hpp"
 
-// To block input without showing anything
-class ReviveBlankGUI
-{
-	idd = ReviveBlankGUI_IDD;
-	movingEnabled = false;
-};
-
 class ReviveGUI : IGUIBack
 {
 	idd = ReviveGUI_IDD;
+	fadeOut = 0;
+	fadeIn = 0;
+	duration = 1e11;
+	name = "ReviveGUI";
 	movingEnabled = false;
-	controls[] = {RevProgBar, RevBarText, RevSuicideBtn, RevTextBG, RevText, RevLastResortBtn};
+	onLoad = "uiNamespace setVariable ['ReviveGUI', _this select 0]";
+	onUnload = "uiNamespace setVariable ['ReviveGUI', nil]";
+	controls[] = {RevProgBar, RevBarText /*, RevSuicideBtn*/, RevRespawnText, RevTextBG, RevText /*, RevLastResortBtn*/};
 	controlsBackground[] = {RevBG};
 
 	class RevBG : IGUIBack
@@ -35,8 +34,8 @@ class ReviveGUI : IGUIBack
 		h = RevBG_H;
 	};
 
-	#define BORDER_X (0.01 * X_SCALE)
-	#define BORDER_Y (0.01 * Y_SCALE)
+	#define RevBORDER_X (0.01 * X_SCALE)
+	#define RevBORDER_Y (0.01 * Y_SCALE)
 
 	class RevProgBar : RscProgressBar
 	{
@@ -46,10 +45,10 @@ class ReviveGUI : IGUIBack
 		texture = "#(argb,8,8,3)color(0.75,0,0,1)";
 
 		// inside RevBG at the top
-		#define RevProgBar_W (RevBG_W - (BORDER_X * 2)) // background width minus 0.01 border on each side
+		#define RevProgBar_W (RevBG_W - (RevBORDER_X * 2)) // background width minus 0.01 border on each side
 		#define RevProgBar_H (0.035 * Y_SCALE)
 		#define RevProgBar_X (RevBG_X + CENTER(RevBG_W, RevProgBar_W)) // middle of background
-		#define RevProgBar_Y (RevBG_Y + BORDER_Y) // 0.01 below background top
+		#define RevProgBar_Y (RevBG_Y + RevBORDER_Y) // 0.01 below background top
 
 		x = RevProgBar_X;
 		y = RevProgBar_Y;
@@ -77,7 +76,7 @@ class ReviveGUI : IGUIBack
 		};
 	};
 
-	class RevSuicideBtn : w_RscButton
+	/*class RevSuicideBtn : w_RscButton
 	{
 		idc = RevSuicideBtn_IDC;
 		text = "Give up";
@@ -92,12 +91,34 @@ class ReviveGUI : IGUIBack
 		#define RevSuicideBtn_W (0.10 * X_SCALE)
 		#define RevSuicideBtn_H (0.035 * Y_SCALE)
 		#define RevSuicideBtn_X (RevProgBar_X + CENTER(RevProgBar_W, RevSuicideBtn_W)) // centered under RevProgBar
-		#define RevSuicideBtn_Y (RevProgBar_Y + RevProgBar_H + BORDER_Y) // below RevProgBar
+		#define RevSuicideBtn_Y (RevProgBar_Y + RevProgBar_H + RevBORDER_Y) // below RevProgBar
 
 		x = RevSuicideBtn_X;
 		y = RevSuicideBtn_Y;
 		w = RevSuicideBtn_W;
 		h = RevSuicideBtn_H;
+	};*/
+
+	class RevRespawnText : RscStructuredText
+	{
+		idc = -1;
+		text = "Press spacebar to respawn";
+		size = 0.04 * TEXT_SCALE;
+
+		class Attributes {
+			align = "center";
+		};
+
+		// below RevProgBar
+		#define RevRespawnText_W RevProgBar_W
+		#define RevRespawnText_H (0.02 * Y_SCALE)
+		#define RevRespawnText_X (RevProgBar_X + CENTER(RevProgBar_W, RevRespawnText_W)) // centered under RevProgBar
+		#define RevRespawnText_Y (RevProgBar_Y + RevProgBar_H + RevBORDER_Y) // below RevProgBar
+
+		x = RevRespawnText_X;
+		y = RevRespawnText_Y;
+		w = RevRespawnText_W;
+		h = RevRespawnText_H;
 	};
 
 	class RevTextBG : IGUIBack
@@ -105,11 +126,11 @@ class ReviveGUI : IGUIBack
 		idc = -1;
 		colorBackground[] = {0, 0, 0, 0.4};
 
-		// below RevSuicideBtn
+		// below RevRespawnText
 		#define RevTextBG_X RevProgBar_X
-		#define RevTextBG_Y (RevSuicideBtn_Y + RevSuicideBtn_H + BORDER_Y)
+		#define RevTextBG_Y (RevRespawnText_Y + RevRespawnText_H + RevBORDER_Y)
 		#define RevTextBG_W RevProgBar_W
-		#define RevTextBG_H (((RevBG_Y + RevBG_H) - RevTextBG_Y) - BORDER_Y) // ends above background bottom minus border
+		#define RevTextBG_H (((RevBG_Y + RevBG_H) - RevTextBG_Y) - RevBORDER_Y) // ends above background bottom minus border
 
 		x = RevTextBG_X;
 		y = RevTextBG_Y;
@@ -128,10 +149,10 @@ class ReviveGUI : IGUIBack
 		};
 
 		// centered inside RevTextBG
-		#define RevText_W (RevTextBG_W - BORDER_X)
-		#define RevText_H (RevTextBG_H - BORDER_Y)
-		#define RevText_X (RevTextBG_X + (BORDER_X / 2))
-		#define RevText_Y (RevTextBG_Y + (BORDER_Y / 2))
+		#define RevText_W (RevTextBG_W - RevBORDER_X)
+		#define RevText_H (RevTextBG_H - RevBORDER_Y)
+		#define RevText_X (RevTextBG_X + (RevBORDER_X / 2))
+		#define RevText_Y (RevTextBG_Y + (RevBORDER_Y / 2))
 
 		x = RevText_X;
 		y = RevText_Y;
@@ -139,7 +160,7 @@ class ReviveGUI : IGUIBack
 		h = RevText_H;
 	};
 
-	class RevLastResortBtn : w_RscButton
+	/*class RevLastResortBtn : w_RscButton // now Backspace key!
 	{
 		idc = RevLastResortBtn_IDC;
 		action = "execVM 'addons\far_revive\FAR_lastResort.sqf'";
@@ -159,5 +180,5 @@ class ReviveGUI : IGUIBack
 		y = RevLastResortBtn_Y;
 		w = RevLastResortBtn_W;
 		h = RevLastResortBtn_H;
-	};
+	};*/
 };

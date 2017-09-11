@@ -24,7 +24,7 @@ if ((getPlayerUID player) call isAdmin) then
 		};
 
 		(findDisplay 27910) closeDisplay 0; // ReviveBlankGUI_IDD
-		(findDisplay 27911) closeDisplay 0; // ReviveGUI_IDD
+		//(findDisplay 27911) closeDisplay 0; // ReviveGUI_IDD
 
 		hint "You are now invulnerable";
 	}
