@@ -721,10 +721,10 @@ genItemArray = compileFinal str
 	["Hexacopter UAV (NATO)", "B_UAV_06_backpack_F", 1000, "backpack"],
 	["Hexacopter UAV (CSAT)", "O_UAV_06_backpack_F", 1000, "backpack"],
 	["Hexacopter UAV (AAF)", "I_UAV_06_backpack_F", 1000, "backpack"],
-	["Hexacopter Medical UAV (NATO)", "B_UAV_06_medical_backpack_F", 2500, "backpack"],
-	["Hexacopter Medical UAV (CSAT)", "O_UAV_06_medical_backpack_F", 2500, "backpack"],
-	["Hexacopter Medical UAV (AAF)", "I_UAV_06_medical_backpack_F", 2500, "backpack"],
-	["Hexacopter Demining UAV", "C_IDAP_UAV_06_antimine_backpack_F", 5000, "backpack"],
+	["Hexacopter Medical UAV (NATO)", "B_UAV_06_medical_backpack_F", 1500, "backpack"],
+	["Hexacopter Medical UAV (CSAT)", "O_UAV_06_medical_backpack_F", 1500, "backpack"],
+	["Hexacopter Medical UAV (AAF)", "I_UAV_06_medical_backpack_F", 1500, "backpack"],
+	["Hexacopter Demining UAV", "C_IDAP_UAV_06_antimine_backpack_F", 10000, "backpack"],
 	["Remote Designator (Sand)", "B_Static_Designator_01_weapon_F", 750, "backpack"],
 	["Remote Designator (Hex)", "O_Static_Designator_02_weapon_F", 750, "backpack"],
 	["GPS", "ItemGPS", 100, "gps"],
@@ -954,6 +954,8 @@ tanksArray = compileFinal str
 
 helicoptersArray = compileFinal str
 [
+	["Hexacopter Demining UAV", "C_IDAP_UAV_06_antimine_F", (call genItemArray) select {_x select 1 == "C_IDAP_UAV_06_antimine_backpack_F"} select 0 select 2, "vehicle", "HIDDEN"], // for resupply price
+
 	["M-900 Civilian", "C_Heli_Light_01_civil_F", 4000, "vehicle"], // MH-6, no flares
 	["MH-9 Hummingbird", "B_Heli_Light_01_F", 5000, "vehicle"], // MH-6
 	["PO-30 Orca (Unarmed)", "O_Heli_Light_02_unarmed_F", 6000, "vehicle"], // Ka-60
