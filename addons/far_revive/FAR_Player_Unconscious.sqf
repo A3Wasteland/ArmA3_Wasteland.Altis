@@ -220,16 +220,26 @@ _unit spawn
 
 		if !(_unit getVariable ["FAR_cancelAutoEject", false]) then
 		{
-		
-			if (_veh != _unit && (_veh isKindOf "ParachuteBase" || {(isTouchingGround _veh || (getPos _veh) select 2 < 1) && (vectorMagnitude velocity _unit < 1)})) then
+			if (_veh != _unit) then
 			{
 				if (_veh isKindOf "ParachuteBase") then
 				{
 					deleteVehicle _veh;
-				};
+				}
+				else
+				{
+					if ((isTouchingGround _veh || (getPos _veh) select 2 < 1) && (vectorMagnitude velocity _unit < 1)) then
+					{
+						moveOut _unit;
+						unassignVehicle _unit;
 
-				moveOut _unit;
-				unassignVehicle _unit;
+						// ejection bug workaround
+						if (!isNull objectParent _unit) then
+						{
+							_unit setPos (_unit modelToWorldVisual [0,0,0]);
+						};
+					};
+				};
 			};
 		}
 		else
