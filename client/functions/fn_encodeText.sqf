@@ -7,4 +7,4 @@
 // convert special characters to their XML entities for subsequent use with parseText
 // https://en.wikipedia.org/wiki/Character_encodings_in_HTML#XML_character_references
 
-_this splitString "" apply {["&amp;","&lt;","&gt;","&quot;","&apos;",_x] select (["&","<",">",'"',"'",_x] find _x)} joinString ""
+param [0,"",[""]] splitString "" apply {["&amp;","&lt;","&gt;","&quot;","&apos;",_x] select (["&","<",">",'"',"'",_x] find _x)} joinString ""
