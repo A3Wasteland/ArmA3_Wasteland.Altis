@@ -84,14 +84,20 @@ if (_texturesVar isEqualTypeAll "") then // TextureSource
 else // texture paths
 {
 	_doubleBSlash = (call A3W_savingMethod == "extDB");
-
+	private _missionDir = [_veh getVariable "A3W_objectTextures_missionDir"] param [0, call currMissionDir, [""]];
+	private _missionDirLen = count _missionDir;
 	private _addTexture =
 	{
 		_tex = _x select 1;
 
+		if (_tex select [0, _missionDirLen] == _missionDir) then
+		{
+			_tex = _tex select [_missionDirLen]; // exclude mission dir from path
+		};
+
 		if (_doubleBSlash) then
 		{
-			_tex = (_tex splitString "\") joinString "\\";
+			_tex = (["","\\"] select (_tex select [0,1] == "\")) + (_tex splitString "\" joinString "\\");
 		};
 
 		[_textures, _tex, [_x select 0]] call fn_addToPairs;

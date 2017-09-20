@@ -37,8 +37,6 @@ if (_texture isEqualType [] && {_texture isEqualTypeAll ""}) then
 	{ _texture pushBack [_forEachIndex, _x]	} forEach _srcTextures;
 };
 
-_veh setVariable ["A3W_objectTextures", if (isNil "_textureSource") then { _textures } else { [_textureSource] }, true];
-
 // Apply texture to all appropriate parts
 if (_texture isEqualType "") then
 {
@@ -104,3 +102,6 @@ else
 		[_textures, _sel, _tex] call fn_setToPairs;
 	} forEach _texture;
 };
+
+_veh setVariable ["A3W_objectTextures", if (isNil "_textureSource") then { _textures } else { [_textureSource] }, true];
+_veh setVariable ["A3W_objectTextures_missionDir", call currMissionDir, true]; // dirty workaround for bohemia's setObjectTextureGlobal client-server path mismatch retarded bullshit
