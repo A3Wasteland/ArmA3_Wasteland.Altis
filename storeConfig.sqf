@@ -803,6 +803,8 @@ allStoreGear = compileFinal str (call headArray + call uniformArray + call vestA
 
 genObjectsArray = compileFinal str
 [
+	["Camo Net", "CamoNet_INDP_open_F", 200, "object", "HIDDEN"], // unlisted, only for object saving
+
 	["Pier Ladder", "Land_PierLadder_F", 250, "object"],
 	["Ammo Cache", "Box_FIA_Support_F", 250, "ammocrate"],
 	//["Metal Barrel", "Land_MetalBarrel_F", 25, "object"],

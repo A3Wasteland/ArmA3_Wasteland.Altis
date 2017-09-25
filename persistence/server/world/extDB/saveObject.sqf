@@ -24,7 +24,7 @@ if (isNil "_objectID") then
 _updateValues = [[_obj] call fn_getObjectProperties, 0] call extDB_pairsToSQL;
 
 _locked = _obj getVariable ["objectLocked", false];
-_deployable = (_obj getVariable ["a3w_spawnBeacon", false] || _obj getVariable ["a3w_warchest", false]);
+_deployable = (_obj getVariable ["a3w_spawnBeacon", false] || _obj getVariable ["a3w_warchest", false] || _obj isKindOf "CamoNet_INDP_open_F");
 
 _updateValues = _updateValues + (",Locked=" + (if (_locked) then { "1" } else { "0" }));
 _updateValues = _updateValues + (",Deployable=" + (if (_deployable) then { "1" } else { "0" }));

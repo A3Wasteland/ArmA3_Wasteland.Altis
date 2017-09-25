@@ -41,9 +41,13 @@ _hasFailed = {
 _success =  [DURATION, ANIM, _hasFailed, []] call a3w_actions_start;
 
 if (_success) then {
-	_pos = getPosATL player;
-	_netting = MF_ITEMS_CAMO_NET_TYPE createVehicle _pos;
-	_netting setPosATL _pos;
+	_netting = createVehicle [MF_ITEMS_CAMO_NET_TYPE, getPosATL player, [], 0, "CAN_COLLIDE"];
+	_netting setDir getDir player;
+	_netting setVariable ["ownerUID", getPlayerUID player, true];
+	_netting setVariable ["objectLocked", true, true];
+	_netting setVariable ["allowDamage", true, true];
+	pvar_manualObjectSave = netId _netting;
+	publicVariableServer "pvar_manualObjectSave";
 	["You successfully unpacked the Camouflage Netting", 5] call mf_notify_client;
 };
 _success
