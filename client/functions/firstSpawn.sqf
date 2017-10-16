@@ -76,33 +76,13 @@ player addEventHandler ["WeaponAssembled",
 			(crew _obj) joinSilent createGroup _playerSide;
 		};
 
-		if (_obj isKindOf "StaticWeapon") then
-		{
-			[_obj, _player] call fn_forceSaveObject;
-		}
-		else
-		{
-			[_obj, _player] call A3W_fnc_takeOwnership;
-		};
-
 		if (!alive getConnectedUAV _player) then
 		{
 			_player connectTerminalToUAV _obj;
 		};
 
-		if (["_Designator_", _objClass] call fn_findString != -1) then
-		{
-			_obj setAutonomous false; // disable autonomous mode by default on static designators so they stay on target after releasing controls
-		};
-
-		if (isNil {_obj getVariable "A3W_handleDamageEH"}) then
-		{
-			_obj setVariable ["A3W_handleDamageEH", _obj addEventHandler ["HandleDamage", vehicleHandleDamage]];
-		};
-
-		{
-			[_x, ["UAV","",""]] remoteExec ["A3W_fnc_setName", 0, _x]; 
-		} forEach crew _obj;
+		[_obj, _playerSide, true] call fn_createCrewUAV;
+		[_obj, _player, false] call A3W_fnc_takeOwnership;
 	};
 }];
 

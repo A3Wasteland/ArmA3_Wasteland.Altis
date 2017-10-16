@@ -4,7 +4,7 @@
 //	@file Name: vehicleHitTracking.sqf
 //	@file Author: AgentRev
 
-params ["_vehicle", "_selection", "_damage", "_source", "_ammo", "_instigator"];
+params ["_vehicle", "_selection", "_damage", "_source", "_ammo", "_instigator", "_hitPoint"];
 
 if (!alive _vehicle) exitWith {};
 
@@ -32,7 +32,7 @@ if (!_dead && !_aboutToExplode) then
 {
 	if (_damage > 0.9) then
 	{
-		private _hitPoint = _vehicle getVariable ["A3W_hitPoint_" + _selection, ""];
+		//private _hitPoint = _vehicle getVariable ["A3W_hitPoint_" + _selection, ""];
 
 		if (_class isKindOf "Tank" && _hitPoint == "HitHull") exitWith
 		{

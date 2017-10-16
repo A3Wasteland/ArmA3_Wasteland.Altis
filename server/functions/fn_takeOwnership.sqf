@@ -4,7 +4,7 @@
 //	@file Name: fn_takeOwnership.sqf
 //	@file Author: AgentRev
 
-params [["_veh",objNull,[objNull,""]], ["_player",objNull,[objNull]]];
+params [["_veh",objNull,[objNull,""]], ["_player",objNull,[objNull]], ["_createCrewUAV",true,[false]]];
 
 if (!isPlayer _player) exitWith {};
 
@@ -26,18 +26,18 @@ if (_veh getVariable ["A3W_skipAutoSave", false]) then
 	_veh setVariable ["A3W_skipAutoSave", nil, true];
 };
 
-[_veh, side _player] spawn
+if (unitIsUAV _veh && _createCrewUAV) then
 {
-	params ["_veh", "_side"];
-
-	// Swap UAV team
-	if (unitIsUAV _veh) then
+	[_veh, side _player, true] remoteExecCall ["fn_createCrewUAV", _veh];
+}
+else
+{
+	if (_veh isKindOf "AllVehicles" && !(_veh isKindOf "StaticWeapon")) then
 	{
-		[_veh, _side, true] call fn_createCrewUAV;
-	};
-
-	if (!isNil "fn_manualVehicleSave") then
+		if (!isNil "fn_manualVehicleSave") then { _veh call fn_manualVehicleSave };
+	}
+	else
 	{
-		_veh call fn_manualVehicleSave;
+		if (!isNil "fn_manualObjectSave") then { _veh call fn_manualObjectSave };
 	};
 };

@@ -4,6 +4,8 @@
 //	@file Name: territoryPayroll.sqf
 //	@file Author: AgentRev
 
+#define SLEEP_REALTIME(SECS) if (hasInterface) then { sleep SECS } else { uiSleep SECS }
+
 if (!isServer) exitWith {};
 
 _timeInterval = ["A3W_payrollInterval", 30*60] call getPublicVar;
@@ -15,11 +17,11 @@ while {true} do
 {
 	if (_territoryCapped) then
 	{
-		sleep _timeInterval;
+		SLEEP_REALTIME(_timeInterval);
 	}
 	else
 	{
-		sleep 60;
+		SLEEP_REALTIME(60);
 	};
 
 	_payouts = [];

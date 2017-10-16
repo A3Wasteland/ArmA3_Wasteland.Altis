@@ -13,7 +13,7 @@
 #define IFV_DMG_SCALE 1.5
 #define TANK_DMG_SCALE 2.0
 
-params ["_vehicle", "_selection", "_damage", "_source", "_ammo", "", "_instigator"];
+params ["_vehicle", "_selection", "_damage", "_source", "_ammo", "", "_instigator", "_hitPoint"];
 
 if (_selection != "?") then
 {
@@ -85,7 +85,7 @@ if (_selection != "?") then
 		};
 	};
 
-	[_vehicle, _selection, _damage, _source, _ammo, _instigator] call vehicleHitTracking;
+	[_vehicle, _selection, _damage, _source, _ammo, _instigator, _hitPoint] call vehicleHitTracking;
 };
 
 _damage
