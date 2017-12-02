@@ -169,6 +169,7 @@ switch (true) do
 		{
 			case "greyhawkBomber": { _pylons = ["PylonMissile_1Rnd_Bomb_04_F","PylonMissile_1Rnd_Bomb_04_F"] };
 			case "greyhawkCluster": { _pylons = ["PylonMissile_1Rnd_BombCluster_01_F","PylonMissile_1Rnd_BombCluster_01_F"] };
+			case "greyhawkDAGR":    { _pylons = ["PylonRack_12Rnd_PG_missiles","PylonWeapon_2000Rnd_65x39_belt"] };
 			default
 			{
 				_pylons = ["PylonRack_3Rnd_LG_scalpel","PylonRack_3Rnd_LG_scalpel"];
@@ -193,6 +194,18 @@ switch (true) do
 	// UCAV Sentinel
 	case (_class isKindOf "B_UAV_05_F"):
 	{
+		_mags =
+		[
+			["120Rnd_CMFlare_Chaff_Magazine", [-1]],
+			["magazine_Fighter04_Gun20mm_AA_x250", [-1]],
+			["Laserbatteries", [0]]
+		];
+		_weapons =
+		[
+			["CMFlareLauncher", [-1]],
+			["weapon_Fighter_Gun20mm_AA", [-1]],
+			["Laserdesignator_mounted", [0]]
+		];
 		switch (_variant) do
 		{
 			case "sentinelBomber": { _pylons = ["PylonRack_Bomb_GBU12_x2","PylonRack_Bomb_GBU12_x2"] };

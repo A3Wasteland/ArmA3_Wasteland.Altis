@@ -71,6 +71,30 @@ if (_brandNew || _resupply) then
 		{ _veh setPylonLoadOut [_forEachIndex + 1, _x, true, _paths select _forEachIndex] } forEach _pylons;
 	};
 
+	// Double minigun ammo to compensate for Bohemia's incompetence
+	if (_brandNew) then
+	{
+		{
+			_x params ["_mag", "_path"];
+
+			if (_mag select [0,5] != "Pylon" && (toLower getText (configFile >> "CfgMagazines" >> _mag >> "ammo")) find "_minigun_" != -1) then
+			{
+				_veh addMagazineTurret [_mag, _path];
+			};
+		} forEach magazinesAllTurrets _veh;
+	};
+
+	private "_magCfg";
+
+	{
+		_magCfg = configFile >> "CfgMagazines" >> _x;
+
+		if ((toLower getText (_magCfg >> "ammo")) find "_minigun_" != -1) then
+		{
+			_veh setAmmoOnPylon [_forEachIndex + 1, 2 * getNumber (_magCfg >> "count")];
+		};
+	} forEach getPylonMagazines _veh;
+
 	if (!isNil "_customCode") then
 	{
 		call _customCode;
