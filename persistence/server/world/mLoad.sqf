@@ -42,7 +42,7 @@ _exclMineIDs = [];
 			[_mine, _dir] remoteExecCall ["setVectorDirAndUp", 0, _mine];
 		};
 
-		_dummy = createVehicle [STICKY_CHARGE_DUMMY_OBJ, [-1e6,-1e6,1e6], [], 0, ""];
+		_dummy = createVehicle [STICKY_CHARGE_DUMMY_OBJ, [-1e6,-1e6,1e6], [], 0, "NONE"];
 		_dummy setVariable ["A3W_stickyCharges_isDummy", true, true];
 		_dummy setObjectTextureGlobal [0,""];
 		_dummy attachTo [_mine, [0,0,0]];

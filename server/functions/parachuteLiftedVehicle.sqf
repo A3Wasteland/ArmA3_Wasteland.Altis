@@ -33,7 +33,7 @@ waitUntil {isNull attachedTo _veh};
 uiSleep 0.01;
 //_veh setVelocity _vel;
 
-_para = createVehicle [format ["%1_parachute_02_F", _type], [0,0,999999], [], 0, ""];
+_para = createVehicle [format ["%1_parachute_02_F", _type], [0,0,999999], [], 0, "NONE"];
 
 pvar_disableCollision = [netId _para, netId _heli];
 (owner _heli) publicVariableClient "pvar_disableCollision";

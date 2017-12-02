@@ -151,7 +151,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 
 			if (_player getVariable [_timeoutKey, true]) then { breakOut "spawnStoreObject" }; // Timeout
 
-			_object = createVehicle [_class, _safePos, [], 0, ""];
+			_object = createVehicle [_class, _safePos, [], 0, "NONE"];
 
 			if (_waterNonBoat) then
 			{

@@ -81,7 +81,7 @@ ps_create_boxes = {
 
     _model = ps_box_models call BIS_fnc_selectRandom;
 
-    _box = createVehicle [_model, ASLtoATL _pos, [], 1, ""];
+    _box = createVehicle [_model, ASLtoATL _pos, [], 1, "NONE"];
     _pos = getPosASL _box;
     _pos set [2, (_pos select 2) - (getPos _box select 2)];
     _box setPosASL _pos;

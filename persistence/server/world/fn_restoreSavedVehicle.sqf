@@ -13,10 +13,10 @@ private _isUAV = (round getNumber (configFile >> "CfgVehicles" >> _class >> "isU
 private ([["_flying"],[]] select isNil "_flying");
 _flying = (!isNil "_flying" && {_flying > 0});
 
-private _special = ["","FLY"] select (_isUAV && _flying);
+private _special = ["NONE","FLY"] select (_isUAV && _flying);
 private _tempPos = +_pos;
 
-if (isNil "_safeDistance" && _special == "") then
+if (isNil "_safeDistance" && _special in ["","NONE"]) then
 {
 	_tempPos set [2, 9000000 + random 999999];
 };

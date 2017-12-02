@@ -89,8 +89,7 @@ player addEventHandler ["WeaponAssembled",
 player addEventHandler ["InventoryOpened",
 {
 	_obj = _this select 1;
-	if (!simulationEnabled _obj) then { _obj enableSimulation true };
-	_obj setVariable ["inventoryIsOpen", true];
+	_blocked = false;
 
 	if !(_obj isKindOf "Man") then
 	{
@@ -105,9 +104,17 @@ player addEventHandler ["InventoryOpened",
 				["This object is locked.", 5] call mf_notify_client;
 			};
 
-			true
+			_blocked = true;
 		};
 	};
+
+	if (!_blocked) then
+	{
+		if (!simulationEnabled _obj) then { _obj enableSimulation true };
+		_obj setVariable ["inventoryIsOpen", true];
+	};
+
+	_blocked
 }];
 
 player addEventHandler ["InventoryClosed",
