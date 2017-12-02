@@ -232,9 +232,9 @@ if (!isNil "_itemEntry") then
 
 		if (_itemType isKindOf "UAV_06_backpack_base_F") then
 		{
-			if ({_x == "NVG" || _x == "Ti"} count getArray (configFile >> "CfgVehicles" >> _itemType >> "Viewoptics" >> "visionMode") == 0) then
+			if ({_x == "Ti"} count getArray (configFile >> "CfgVehicles" >> _itemType >> "Viewoptics" >> "visionMode") == 0) then
 			{
-				_description = format ["%1%2%3", _description, ["<br/>",""] select (_description isEqualTo ""), "<t color='#FF8000'>NO THERMAL / NIGHTVISION, THANKS BOHEMIA</t>"];
+				_description = format ["%1%2%3", _description, ["<br/>",""] select (_description isEqualTo ""), "<t color='#FF8000'>NO THERMAL IMAGING</t>"];
 			};
 		};
 	};

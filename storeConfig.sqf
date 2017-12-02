@@ -883,6 +883,8 @@ landArray = compileFinal str
 
 	["Van Cargo", "C_Van_02_vehicle_F", 1000, "vehicle", "SKIPSAVE"],
 	["Van Transport", "C_Van_02_transport_F", 1000, "vehicle", "SKIPSAVE"],
+	["Van Police Cargo", "B_GEN_Van_02_vehicle_F", 1250, "vehicle", "SKIPSAVE"],
+	["Van Police Transport", "B_GEN_Van_02_transport_F", 1250, "vehicle", "SKIPSAVE"],
 	["Van Ambulance", "C_Van_02_medevac_F", 1500, "vehicle", "SKIPSAVE"],
 	["Van Repair", "C_Van_02_service_F", 2000, "vehicle", "SKIPSAVE"],
 
@@ -1292,9 +1294,12 @@ colorsArray = compileFinal str
 			["Tan (Strider)", ["Blufor"]]
 		]
 	],
-	[ // Gorgon NATO color
+	[ // Gorgon paintjobs
 		"APC_Wheeled_03_base_F",
 		[
+			["Guerilla 1 (Gorgon)", ["Guerilla_01"]],
+			["Guerilla 2 (Gorgon)", ["Guerilla_02"]],
+			["Guerilla 3 (Gorgon)", ["Guerilla_03"]],
 			["Tan (Gorgon)", [
 				[0, _gorgonDir + "apc_wheeled_03_ext_co.paa"],
 				[1, _gorgonDir + "apc_wheeled_03_ext2_co.paa"],

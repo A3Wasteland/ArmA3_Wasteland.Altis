@@ -30,11 +30,11 @@ params [["_killer",_killerName,[""]], ["_victim",_victimName,[""]]]; // custom n
 			else                    { format ["%1 was finished off", _victim] } // not supposed to happen, but just in case
 		};
 
-		case "bleedout": { format ["%1 bled out", _victim] }; // bleedout timer ran out, gave up while bleeding
+		case "bleedout": { format ["%1 bled out", _victim] }; // bleedout timer ran out, respawned or disconnected while bleeding
 
 		case "suicide": { format ["%1 suicided", _victim] }; // respawned from pause menu, crashed vehicle, last resort, player setDamage 1
 
-		case "drown": { format ["%1 drowned", _victim] }; // ran out of oxygen underwater, or sank while bleeding
+		case "drown": { format ["%1 drowned", _victim] }; // ran out of oxygen underwater, sank while bleeding
 
 		case "survival": { format ["%1 has died of dysentery", _victim] }; // starvation, dehydration
 
@@ -63,7 +63,7 @@ params [["_killer",_killerName,[""]], ["_victim",_victimName,[""]]]; // custom n
 				default
 				{
 					if (_friendlyFire) then { format ["%1 was teamkilled", _victim] } // not supposed to happen, but just in case
-					else                    { format ["%1 died", _victim] } // disconnected while bleeding, any other cause not covered above
+					else                    { format ["%1 died", _victim] } // any other cause not covered above
 				};
 			}
 		};
