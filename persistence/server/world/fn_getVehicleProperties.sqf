@@ -122,10 +122,16 @@ _backpacks = [];
 if (_class call fn_hasInventory) then
 {
 	// Save weapons & ammo
-	_weapons = (getWeaponCargo _veh) call cargoToPairs;
-	_magazines = _veh call fn_magazineAmmoCargo;
-	_items = (getItemCargo _veh) call cargoToPairs;
-	_backpacks = (getBackpackCargo _veh) call cargoToPairs;
+	//_weapons = (getWeaponCargo _veh) call cargoToPairs;
+	//_magazines = _veh call fn_magazineAmmoCargo;
+	//_items = (getItemCargo _veh) call cargoToPairs;
+	//_backpacks = (getBackpackCargo _veh) call cargoToPairs;
+
+	private _cargo = _veh call fn_containerCargoToPairs;
+	_weapons = _cargo select 0;
+	_magazines = _cargo select 1;
+	_items = _cargo select 2;
+	_backpacks = _cargo select 3;
 };
 
 // _turretMags is deprecated, leave empty
