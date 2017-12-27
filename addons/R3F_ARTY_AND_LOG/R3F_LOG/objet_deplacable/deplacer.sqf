@@ -16,9 +16,16 @@ _config = configFile >> "CfgMovesMaleSdr" >> "States" >> _currentAnim;
 _onLadder =	(getNumber (_config >> "onLadder"));
 if(_onLadder == 1) exitWith{player globalChat "You can't move this object while on a ladder";};
 
-if (R3F_LOG_mutex_local_verrou) then
+if (R3F_LOG_mutex_local_verrou) exitWith
 {
 	player globalChat STR_R3F_LOG_mutex_action_en_cours;
+};
+
+private _objet = _this select 0;
+
+if (unitIsUAV _objet && {!(_objet getVariable ["ownerUID","0"] isEqualTo getPlayerUID player) && !(group (uavControl _objet select 0) in [grpNull, group player])}) then
+{
+	player globalChat STR_R3F_LOG_action_deplacer_objet_UAV_group;
 }
 else
 {
@@ -26,9 +33,8 @@ else
 
 	R3F_LOG_objet_selectionne = objNull;
 
-	private ["_objet", "_isSwimming", "_est_calculateur", "_arme_principale", "_arme_principale_accessoires", "_arme_principale_magasines", "_action_menu_release_relative", "_action_menu_release_horizontal" , "_action_menu_45", "_action_menu_90", "_action_menu_180", "_azimut_canon", "_muzzles", "_magazine", "_ammo", "_adjustPOS"];
+	private ["_isSwimming", "_est_calculateur", "_arme_principale", "_arme_principale_accessoires", "_arme_principale_magasines", "_action_menu_release_relative", "_action_menu_release_horizontal" , "_action_menu_45", "_action_menu_90", "_action_menu_180", "_azimut_canon", "_muzzles", "_magazine", "_ammo", "_adjustPOS"];
 
-	_objet = _this select 0;
 	if(isNil {_objet getVariable "R3F_Side"}) then {
 		_objet setVariable ["R3F_Side", (playerSide), true];
 	};

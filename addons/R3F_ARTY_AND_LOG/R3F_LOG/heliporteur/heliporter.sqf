@@ -10,6 +10,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define VEHICLE_UNLOCKED(VEH) (locked (VEH) < 2 || (VEH) getVariable ["ownerUID","0"] isEqualTo getPlayerUID player)
+
 if (R3F_LOG_mutex_local_verrou) then
 {
 	player globalChat STR_R3F_LOG_mutex_action_en_cours;
@@ -34,7 +36,7 @@ else
 	_heliporteur = _this select 0;
 	_objet = (nearestObjects [_heliporteur, R3F_LOG_CFG_objets_heliportables, 20]) select {_obj = _x; _x call _hasNoProhibitedCargo && (_heliporteur getVariable ["R3F_LOG_heliporteurH",false] || {{_obj isKindOf _x} count R3F_LOG_CFG_objets_heliportablesH == 0})};
 	// Parce que l'héliporteur peut être un objet héliportable
-	_objet = (_objet select {!(_x getVariable "R3F_LOG_disabled")}) - [_heliporteur];
+	_objet = (_objet select {VEHICLE_UNLOCKED(_x) && !(_x getVariable "R3F_LOG_disabled")}) - [_heliporteur];
 
 	if (count _objet > 0) then
 	{
@@ -42,6 +44,11 @@ else
 
 		if !(_objet getVariable "R3F_LOG_disabled") then
 		{
+			if (unitIsUAV _objet && {!(_objet getVariable ["ownerUID","0"] isEqualTo getPlayerUID player) && !(group (uavControl _objet select 0) in [grpNull, group player])}) exitWith
+			{
+				player globalChat STR_R3F_LOG_action_heliporter_UAV_group;
+			};
+
 			if (isNull (_objet getVariable "R3F_LOG_est_transporte_par")) then
 			{
 				if ({isPlayer _x} count crew _objet == 0) then

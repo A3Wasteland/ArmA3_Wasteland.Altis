@@ -5,6 +5,7 @@
 
 STR_R3F_LOG_action_heliporter = "Heliporter l'objet";
 STR_R3F_LOG_action_heliporter_fait = "Objet ""%1"" attaché.";
+STR_R3F_LOG_action_heliporter_UAV_group = "Vous devez être dans le même groupe que l'utilisateur du drone pour l'héliporter.";
 STR_R3F_LOG_action_heliporter_deja_transporte = "L'objet ""%1"" est déjà transporté un véhicule.";
 STR_R3F_LOG_action_heliporter_deplace_par_joueur = "L'objet ""%1"" est en train d'être déplacé par un joueur.";
 STR_R3F_LOG_action_heliporter_joueur_dans_objet = "Un joueur se trouve dans l'objet ""%1"".";
@@ -14,6 +15,7 @@ STR_R3F_LOG_action_heliport_parachute = "Parachuter l'objet";
 STR_R3F_LOG_action_heliport_larguer_fait = "Objet ""%1"" largué.";
 
 STR_R3F_LOG_action_deplacer_objet = "Prendre cet objet";
+STR_R3F_LOG_action_deplacer_objet_UAV_group = "Vous devez être dans le même groupe que l'utilisateur du drone pour le prendre.";
 STR_R3F_LOG_action_relacher_objet = "Relacher l'objet";
 STR_R3F_LOG_ne_pas_monter_dans_vehicule = "Vous ne pouvez pas monter dans un véhicule tant que vous portez cet objet !";
 STR_R3F_LOG_courir_trop_vite = "Vous marchez trop vite ! (Touche majuscule pour ralentir)";
@@ -34,6 +36,7 @@ STR_R3F_LOG_action_charger_deplace_fait = "L'objet a été chargé dans le véhi
 STR_R3F_LOG_action_charger_deplace_pas_assez_de_place = "Il n'y pas assez de place pour cet objet dans ce véhicule.";
 
 STR_R3F_LOG_action_selectionner_objet_remorque = "Remorquer à...";
+STR_R3F_LOG_action_selectionner_objet_remorque_UAV_group = "Vous devez être dans le même groupe que l'utilisateur du drone pour le remorquer.";
 STR_R3F_LOG_action_selectionner_objet_remorque_fait = "Sélectionnez maintenant le véhicule dans lequel charger l'objet ""%1""...";
 
 STR_R3F_LOG_action_remorquer_selection = "... remorquer l'objet sélectionné à ce véhicule";

@@ -15,6 +15,10 @@ if (!local _veh) exitWith
 };
 
 _state = round _state max 1 min 3;
-
 _veh lock _state;
-_veh setVariable ["R3F_LOG_disabled", _state > 1, true];
+
+// do not set ["R3F_LOG_disabled", true, true] on locked vehicles, so that their owner can still use R3F on them
+if (_state < 2) then 
+{
+	_veh setVariable ["R3F_LOG_disabled", false, true];
+};

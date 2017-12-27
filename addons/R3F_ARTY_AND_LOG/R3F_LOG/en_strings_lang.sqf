@@ -5,6 +5,7 @@
 
 STR_R3F_LOG_action_heliporter = "Lift the object";
 STR_R3F_LOG_action_heliporter_fait = "Object ""%1"" attached.";
+STR_R3F_LOG_action_heliporter_UAV_group = "You must be in the same group as the UAV user to lift it.";
 STR_R3F_LOG_action_heliporter_deja_transporte = "The object ""%1"" is already being transported by a vehicle.";
 STR_R3F_LOG_action_heliporter_deplace_par_joueur = "The object ""%1"" is being moved by a player.";
 STR_R3F_LOG_action_heliporter_joueur_dans_objet = "There is a player in the object ""%1"".";
@@ -14,6 +15,7 @@ STR_R3F_LOG_action_heliport_parachute = "Paradrop the object";
 STR_R3F_LOG_action_heliport_larguer_fait = "Object ""%1"" dropped.";
 
 STR_R3F_LOG_action_deplacer_objet = "Move this object";
+STR_R3F_LOG_action_deplacer_objet_UAV_group = "You must be in the same group as the UAV user to move it.";
 STR_R3F_LOG_action_relacher_objet = "Release the object";
 STR_R3F_LOG_ne_pas_monter_dans_vehicule = "You can't get in a vehicle while you're carrying this object !";
 STR_R3F_LOG_courir_trop_vite = "Moving too fast! (Press C to slow down)";
@@ -37,6 +39,7 @@ STR_R3F_LOG_action_charger_deplace_fait = "The object has been loaded in the veh
 STR_R3F_LOG_action_charger_deplace_pas_assez_de_place = "There is not enough space in this vehicle.";
 
 STR_R3F_LOG_action_selectionner_objet_remorque = "Tow to a vehicle";
+STR_R3F_LOG_action_selectionner_objet_remorque_UAV_group = "You must be in the same group as the UAV user to tow it.";
 STR_R3F_LOG_action_selectionner_objet_remorque_fait = "Now select the vehicle which will tow ""%1""...";
 
 STR_R3F_LOG_action_remorquer_selection = "... tow the selected object to this vehicle";

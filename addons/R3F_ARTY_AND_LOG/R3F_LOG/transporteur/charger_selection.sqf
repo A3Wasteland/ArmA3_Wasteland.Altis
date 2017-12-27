@@ -10,6 +10,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define VEHICLE_UNLOCKED(VEH) (locked (VEH) < 2 || (VEH) getVariable ["ownerUID","0"] isEqualTo getPlayerUID player)
+
 if (R3F_LOG_mutex_local_verrou) then
 {
 	player globalChat STR_R3F_LOG_mutex_action_en_cours;
@@ -23,7 +25,7 @@ else
 	_objet = R3F_LOG_objet_selectionne;
 	_transporteur = _this select 0;
 
-	if (!(isNull _objet) && !(_objet getVariable "R3F_LOG_disabled")) then
+	if (!(isNull _objet) && VEHICLE_UNLOCKED(_objet) && !(_objet getVariable "R3F_LOG_disabled")) then
 	{
 		if (isNull (_objet getVariable "R3F_LOG_est_transporte_par") && (isNull (_objet getVariable "R3F_LOG_est_deplace_par") || (!alive (_objet getVariable "R3F_LOG_est_deplace_par")))) then
 		{
