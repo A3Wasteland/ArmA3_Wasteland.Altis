@@ -280,6 +280,12 @@ FAR_Eject_Injured =
 		{
 			moveOut _x;
 			unassignVehicle _x;
+
+			// ejection bug workaround
+			if (!isNull objectParent _x) then
+			{
+				_x setPos (_x modelToWorldVisual [0,0,0]);
+			};
 		};
 	} forEach crew _veh;
 }
