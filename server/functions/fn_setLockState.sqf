@@ -16,6 +16,7 @@ if (!local _veh) exitWith
 
 _state = round _state max 1 min 3;
 _veh lock _state;
+_veh enableRopeAttach (_state < 2); // slingload
 
 // do not set ["R3F_LOG_disabled", true, true] on locked vehicles, so that their owner can still use R3F on them
 if (_state < 2) then 
