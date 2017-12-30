@@ -4,18 +4,26 @@
 //	@file Name: playerRespawnServer.sqf
 //	@file Author: AgentRev
 
-private ["_player", "_corpse", "_bmoney"];
-_player = _this select 0;
-_corpse = _this select 1;
+params ["_player", "_corpse"];
+scopeName "playerRespawnServer";
 
 //diag_log format ["playerRespawnServer: %1", _this];
 
 if (!local _player) then
 {
-	//_player addEventHandler ["WeaponDisassembled", weaponDisassembledServer];
+	if (getPlayerUID _player isEqualTo "") then
+	{
+		diag_log format ["ErrorSteamID(%1) - %2, %3, %4", isPlayer _player, _player, name _player, side _player];
+
+		if (isPlayer _player) then
+		{
+			"ErrorSteamID" remoteExecCall ["endMission", _player];
+			breakOut "playerRespawnServer";
+		}
+	};
 
 	// Bank money reset fix attempt
-	_bmoney = _corpse getVariable "bmoney";
+	private _bmoney = _corpse getVariable "bmoney";
 	if (!isNil "_bmoney") then
 	{
 		_player setVariable ["bmoney", _bmoney, true];

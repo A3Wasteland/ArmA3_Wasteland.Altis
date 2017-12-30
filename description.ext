@@ -82,6 +82,16 @@ class RscTitles
 	#include "addons\far_revive\revive_gui.hpp"
 };
 
+class CfgDebriefing
+{
+	class ErrorSteamID
+	{
+		title = "Error";
+		subtitle = "";
+		description = "The server is unable to find your Steam ID due to an Arma engine network bug. Please rejoin the server.<br/>If the problem persists after rejoining, please restart the game.";
+	};
+};
+
 class CfgFunctions
 {
 	class A3W
