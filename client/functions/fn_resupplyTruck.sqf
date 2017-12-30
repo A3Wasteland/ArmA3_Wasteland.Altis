@@ -161,7 +161,7 @@ _resupplyThread = [_vehicle, _unit] spawn
 		{
 			_text = format ["%1\n%2", "Resupply sequence started", "Please get out of the static weapon."];
 			titleText [_text, "PLAIN DOWN", 0.5];
-			sleep 10;
+			sleep 5;
 
 			call _checkAbortConditions;
 		};
@@ -304,42 +304,45 @@ _resupplyThread = [_vehicle, _unit] spawn
 		_checkDone = true;
 
 		(getAllHitPointsDamage _vehicle) params ["_hitPoints", "_selections", "_dmgValues"];
-		_repairSlice = if (count _hitPoints > 0) then { REPAIR_TIME_SLICE min (10 / (count _hitPoints)) } else { 0 }; // no longer than 10 seconds
 
+		if (!isNil "_hitPoints") then
 		{
-	
-			if (_dmgValues select _forEachIndex > 0.001) then
+			_repairSlice = if (count _hitPoints > 0) then { REPAIR_TIME_SLICE min (10 / (count _hitPoints)) } else { 0 }; // no longer than 10 seconds
+
 			{
-				if (_checkDone) then
+				if (_dmgValues select _forEachIndex > 0.001) then
 				{
-					_checkDone = false;
-					sleep 3;
-				};
-
-				call _checkAbortConditions;
-
-				"Repairing..." call _titleText;
-				sleep (_repairSlice / 2);
-				call _checkAbortConditions;
-
-				if (_x != "") then
-				{
-					_vehicle setHitpointDamage [_x, 0];
-				}
-				else
-				{
-					_selName = _selections select _forEachIndex;
-
-					if (_selName != "") then
+					if (_checkDone) then
 					{
-						_vehicle setHit [_selName, 0];
+						_checkDone = false;
+						sleep 3;
 					};
-				};
 
-				sleep (_repairSlice / 2);
-				_repaired = true;
-			};
-		} forEach _hitPoints;
+					call _checkAbortConditions;
+
+					"Repairing..." call _titleText;
+					sleep (_repairSlice / 2);
+					call _checkAbortConditions;
+
+					if (_x != "") then
+					{
+						_vehicle setHitpointDamage [_x, 0];
+					}
+					else
+					{
+						_selName = _selections select _forEachIndex;
+
+						if (_selName != "") then
+						{
+							_vehicle setHit [_selName, 0];
+						};
+					};
+
+					sleep (_repairSlice / 2);
+					_repaired = true;
+				};
+			} forEach _hitPoints;
+		};
 
 		if (damage _vehicle > 0.001) then
 		{
