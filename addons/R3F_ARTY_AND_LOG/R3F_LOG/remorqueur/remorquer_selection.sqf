@@ -60,7 +60,7 @@ else
 						[["disableDriving", netId _objet], "A3W_fnc_towingHelper", _objet] call A3W_fnc_MP;
 					};
 
-					player switchMove "AinvPknlMstpSlayWrflDnon_medic";
+					[player, "AinvPknlMstpSlayWrflDnon_medic"] call switchMoveGlobal;
 
 					/*player addEventHandler ["AnimDone",
 					{
@@ -143,7 +143,10 @@ else
 
 					sleep 5;
 
-					player switchMove "";
+					if (isNull objectParent player) then
+					{
+						[player, ""] call switchMoveGlobal;
+					};
 				}
 				else {
 					player globalChat "You can't tow more than one vehicle.";

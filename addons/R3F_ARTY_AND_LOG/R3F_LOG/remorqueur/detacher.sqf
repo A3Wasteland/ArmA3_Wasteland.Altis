@@ -26,7 +26,7 @@ else
 	// Ne pas permettre de décrocher un objet s'il est porté héliporté
 	if ({_remorqueur isKindOf _x} count R3F_LOG_CFG_remorqueurs > 0) then
 	{
-		player switchMove "AinvPknlMstpSlayWrflDnon_medic";
+		[player, "AinvPknlMstpSlayWrflDnon_medic"] call switchMoveGlobal;
 
 		/*player addEventHandler ["AnimDone",
 		{
@@ -75,7 +75,10 @@ else
 
 		sleep 4;
 
-		player switchMove "";
+		if (isNull objectParent player) then
+		{
+			[player, ""] call switchMoveGlobal;
+		};
 
 		if ({_objet isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 		{
