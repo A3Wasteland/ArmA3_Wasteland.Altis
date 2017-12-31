@@ -39,7 +39,7 @@ if (_killer == _player) then
 		_deathCause = switch (true) do
 		{
 			case (_player == player && ([missionNamespace getVariable "thirstLevel"] param [0,1,[0]] <= 0 || [missionNamespace getVariable "hungerLevel"] param [0,1,[0]] <= 0)): { "survival" };
-			case (getOxygenRemaining _player <= 0 && (_player modelToWorld [0,0,0]) select 2 < -0.1): { "drown" };
+			case (getOxygenRemaining _player <= 0 && getPosASLW _player select 2 < -0.1): { "drown" };
 			default { "suicide" };
 		};
 
