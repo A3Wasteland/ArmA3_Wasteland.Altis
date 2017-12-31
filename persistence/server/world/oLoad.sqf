@@ -5,6 +5,7 @@
 //	@file Author: AgentRev, JoSchaap, Austerror
 
 #include "functions.sqf"
+#define STR_TO_SIDE(VAL) ([sideUnknown,BLUFOR,OPFOR,INDEPENDENT,CIVILIAN,sideLogic] select ((["WEST","EAST","GUER","CIV","LOGIC"] find toUpper (VAL)) + 1))
 
 private ["_maxLifetime", "_isWarchestEntry", "_isBeaconEntry", "_worldDir", "_methodDir", "_objCount", "_objects", "_exclObjectIDs"];
 
@@ -90,6 +91,9 @@ _exclObjectIDs = [];
 			_obj setVariable ["ownerUID", _owner, true];
 		};
 
+		private _uavSide = if (isNil "_playerSide") then { sideUnknown } else { _playerSide };
+		private _uavAuto = true;
+
 		{
 			_var = _x select 0;
 			_value = _x select 1;
@@ -114,10 +118,26 @@ _exclObjectIDs = [];
 						default { _value = "[Beacon]" };
 					};
 				};
+				case "uavSide":
+				{
+					if (_uavSide isEqualTo sideUnknown) then { _uavSide = STR_TO_SIDE(_value) };
+				};
+				case "uavAuto":
+				{
+					if (_value isEqualType true) then
+					{
+						_uavAuto = _value;
+					};
+				};
 			};
 
 			_obj setVariable [_var, _value, true];
 		} forEach _variables;
+
+		if (unitIsUAV _obj) then
+		{
+			[_obj, _uavSide, false, _uavAuto] spawn fn_createCrewUAV;
+		};
 
 		clearWeaponCargoGlobal _obj;
 		clearMagazineCargoGlobal _obj;

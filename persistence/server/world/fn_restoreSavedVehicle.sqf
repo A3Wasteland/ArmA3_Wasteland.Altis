@@ -49,6 +49,7 @@ if (!isNil "_dir") then
 };
 
 private _uavSide = if (isNil "_playerSide") then { sideUnknown } else { _playerSide };
+private _uavAuto = true;
 
 {
 	_x params ["_var", "_val"];
@@ -62,6 +63,13 @@ private _uavSide = if (isNil "_playerSide") then { sideUnknown } else { _playerS
 		case "uavSide":
 		{
 			if (_uavSide isEqualTo sideUnknown) then { _uavSide = STR_TO_SIDE(_val) };
+		};
+		case "uavAuto":
+		{
+			if (_val isEqualType true) then
+			{
+				_uavAuto = _val;
+			};
 		};
 	};
 
@@ -85,11 +93,11 @@ if (_isUAV) then
 	};
 
 	//assign AI to the vehicle so it can actually be used
-	[_veh, _flying, _uavSide] spawn
+	[_veh, _flying, _uavSide, _uavAuto] spawn
 	{
-		params ["_uav", "_flying", "_uavSide"];
+		params ["_uav", "_flying", "_uavSide", "_uavAuto"];
 
-		_grp = [_uav, _uavSide, true] call fn_createCrewUAV;
+		_grp = [_uav, _uavSide, true, _uavAuto] call fn_createCrewUAV;
 
 		if (_flying) then
 		{

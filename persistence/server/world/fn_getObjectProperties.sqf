@@ -54,6 +54,16 @@ switch (true) do
 	};
 };
 
+if (unitIsUAV _obj) then
+{
+	if (side _obj in [BLUFOR,OPFOR,INDEPENDENT]) then
+	{
+		_variables pushBack ["uavSide", str side _obj];
+	};
+
+	_variables pushBack ["uavAuto", isAutonomous _obj];
+};
+
 _owner = _obj getVariable ["ownerUID", ""];
 
 _r3fSide = _obj getVariable "R3F_Side";

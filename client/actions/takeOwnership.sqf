@@ -24,7 +24,7 @@ private _checks =
 	[_failed, _text]
 };
 
-private _success = [DURATION, ANIMATION, _checks, [_vehicle]] call a3w_actions_start;
+private _success = [[DURATION, 5] select (_vehicle getVariable ["ownerUID","0"] isEqualTo getPlayerUID player), ANIMATION, _checks, [_vehicle]] call a3w_actions_start;
 
 if (_success) then
 {

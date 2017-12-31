@@ -4,7 +4,7 @@
 //	@file Name: fn_createCrewUAV.sqf
 //	@file Author: AgentRev
 
-params [["_uav",objNull,[objNull]], ["_side",sideUnknown,[sideUnknown]], ["_skipCreate",false,[false]]];
+params [["_uav",objNull,[objNull]], ["_side",sideUnknown,[sideUnknown]], ["_skipCreate",false,[false]], ["_autonomous",nil,[false]]];
 
 if (!unitIsUAV _uav) exitWith { grpNull };
 
@@ -37,7 +37,19 @@ if (_side != sideUnknown && side _uav != _side) then
 	(crew _uav) joinSilent _grp;
 };
 
-if (["_Designator_", _uavClass] call fn_findString != -1) then { _uav setAutonomous false }; // disable autonomous mode by default on designators so they stay on target after releasing controls
+if (isNil "_autonomous") then
+{
+	// disable autonomous mode by default on designators so they stay on target after releasing controls
+	if (["_Designator_", _uavClass] call fn_findString != -1) then
+	{
+		_uav setAutonomous false;
+	};
+}
+else
+{
+	_uav setAutonomous _autonomous;
+};
+
 if !(_uav isKindOf "StaticWeapon") then { _grp setCombatMode "BLUE" }; // hold fire to prevent auto-teamkill shenanigans
 (crew _uav) doWatch objNull; // stop aiming turret at player
 _uav addRating 1e11;

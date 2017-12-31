@@ -57,11 +57,16 @@ if (_resupplyTruck) then
 	_variables pushBack ["A3W_resupplyTruck", true];
 };
 
-private _isUav = (round getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0);
+private _isUav = unitIsUAV _veh;
 
-if (_isUav && side _veh in [BLUFOR,OPFOR,INDEPENDENT]) then
+if (_isUav) then
 {
-	_variables pushBack ["uavSide", str side _veh];
+	if (side _veh in [BLUFOR,OPFOR,INDEPENDENT]) then
+	{
+		_variables pushBack ["uavSide", str side _veh];
+	};
+
+	_variables pushBack ["uavAuto", isAutonomous _veh];
 };
 
 _owner = _veh getVariable ["ownerUID", ""];
