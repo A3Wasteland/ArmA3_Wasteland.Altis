@@ -24,6 +24,8 @@ if (alive _unit) then
 	};
 };
 
+private _unitWeapon = currentWeapon _unit;
+
 [_unit, diag_tickTime] spawn
 {
 	params ["_unit", "_time"];
@@ -460,8 +462,10 @@ if (alive _unit && !UNCONSCIOUS(_unit)) then // Player got revived
 		{ _unit enableAI _x } forEach ["MOVE","FSM","TARGET","AUTOTARGET"];
 	};
 
-	private _wep = [_unit, true] call getMoveWeapon;
-	_unit playMove format ["AmovPpneMstpS%1W%2Dnon", ["ras","non"] select (_wep == "non"), _wep];
+	// prevent rocket launcher switch because of annoying position freeze
+	if (_unitWeapon == secondaryWeapon _unit) then { _unitWeapon = primaryWeapon _unit };
+	if (_unitWeapon == "") then { _unitWeapon = handgunWeapon _unit };
+	_unit selectWeapon _unitWeapon;
 }
 else // Player bled out
 {
