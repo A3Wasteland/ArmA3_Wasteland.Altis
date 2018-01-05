@@ -148,7 +148,7 @@ if (isServer) then {
       def(_display_name);
       _display_name = [typeOf _vehicle] call generic_display_name;
 
-      if (!isNil "fn_untrackSavedVehicle") then { [netId _vehicle] call fn_untrackSavedVehicle };
+      if (!isNil "fn_untrackSavedVehicle") then { _vehicle call fn_untrackSavedVehicle };
       deleteVehicle _vehicle;
 
       _player setVariable ["parked_vehicles", _parked_vehicles]; //, true];

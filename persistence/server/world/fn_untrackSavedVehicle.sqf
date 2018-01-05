@@ -4,16 +4,13 @@
 //	@file Name: fn_untrackSavedVehicle.sqf
 //	@file Author: AgentRev
 
+params [["_vehID","",["",objNull]]];
+if (_vehID isEqualType objNull) then { _vehID = _vehID getVariable ["A3W_vehicleID", ""] };
+
 if (!isNil "A3W_hcObjSaving_unit" && {!isNull A3W_hcObjSaving_unit && !local A3W_hcObjSaving_unit}) then
 {
-	_this remoteExecCall ["fn_untrackSavedVehicle", A3W_hcObjSaving_unit];
+	_vehID remoteExecCall ["fn_untrackSavedVehicle", A3W_hcObjSaving_unit];
 };
 
-params ["_veh"];
-
-if (_veh isEqualType "") then { _veh = objectFromNetId _veh };
-_vehID = _veh getVariable "A3W_vehicleID";
-
-if (isNil "_vehID" || isNil "A3W_vehicleIDs") exitWith {};
-
+if (isNil "A3W_vehicleIDs") exitWith {};
 A3W_vehicleIDs deleteAt (A3W_vehicleIDs find _vehID);
