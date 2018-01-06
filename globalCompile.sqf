@@ -104,6 +104,7 @@ fn_findString = [_serverFunc, "fn_findString.sqf"] call mf_compile;
 fn_findTurretShooter = [_clientFunc, "fn_findTurretShooter.sqf"] call mf_compile;
 fn_forceAddItem = [_clientFunc, "fn_forceAddItem.sqf"] call mf_compile;
 fn_getFromPairs = [_serverFunc, "fn_getFromPairs.sqf"] call mf_compile;
+fn_getParentWeapon = [_clientFunc, "fn_getParentWeapon.sqf"] call mf_compile;
 fn_getPos3D = [_serverFunc, "fn_getPos3D.sqf"] call mf_compile;
 fn_getPylonsAmmo = [_serverFunc, "fn_getPylonsAmmo.sqf"] call mf_compile;
 fn_getScore = [_serverFunc, "fn_getScore.sqf"] call mf_compile;

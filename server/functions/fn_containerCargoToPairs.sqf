@@ -24,7 +24,7 @@ private _backpacks = (getBackpackCargo _container) call cargoToPairs;
 private ["_weapon", "_linkedItems", "_item"];
 
 {
-	_weapon = _x deleteAt 0;
+	_weapon = [_x deleteAt 0] call fn_getParentWeapon;
 	[_weapons, _weapon, 1] call fn_addToPairs;
 	_linkedItems = (configProperties [configFile >> "CfgWeapons" >> _weapon >> "LinkedItems", "isClass _x"]) apply {getText (_x >> "item")};
 
