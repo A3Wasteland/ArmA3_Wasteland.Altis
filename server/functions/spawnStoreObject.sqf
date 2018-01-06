@@ -74,7 +74,7 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			if (count _results > 0) then
 			{
 				_itemEntry = _results select 0;
-				_marker = _marker + "_seaSpawn";
+				_marker = _marker + (["_seaSpawn","_landSpawn"] select (markerType (_marker + "_seaSpawn") isEqualTo "")); // allow boat on landSpawn if no seaSpawn
 				_seaSpawn = true;
 			};
 		};
@@ -136,9 +136,10 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 			}
 			else // normal spawn
 			{
-				_safePos = _markerPos findEmptyPosition [0, 50, _class];
+				_safePos = _markerPos findEmptyPosition [0, 50, [_class, "B_Truck_01_transport_F"] select (!surfaceIsWater _markerPos && _seaSpawn)]; // use HEMTT in findEmptyPosition for boats on lands 
 				if (count _safePos == 0) then { _safePos = _markerPos };
 				_spawnPosAGL = _safePos;
+				if (_seaSpawn) then { _safePos vectorAdd [0,0,0.05] };
 			};
 
 			// delete wrecks near spawn
