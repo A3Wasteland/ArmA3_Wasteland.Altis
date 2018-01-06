@@ -11,15 +11,16 @@ scopeName "playerRespawnServer";
 
 if (!local _player) then
 {
-	if (getPlayerUID _player isEqualTo "") then
+	// TODO: remoteExecutedOwner
+	if (getPlayerUID _player isEqualTo "" && _player isKindOf "Man") then
 	{
-		diag_log format ["ErrorSteamID(%1) - %2, %3, %4", isPlayer _player, _player, name _player, side _player];
+		diag_log format ["ErrorSteamID(%1) - %2, %3, %4, %5", isPlayer _player, _player, name _player, side _player, owner _player];
 
-		if (isPlayer _player) then
-		{
+		//if (isPlayer _player) then
+		//{
 			"ErrorSteamID" remoteExecCall ["endMission", _player];
 			breakOut "playerRespawnServer";
-		}
+		//};
 	};
 
 	// Bank money reset fix attempt
