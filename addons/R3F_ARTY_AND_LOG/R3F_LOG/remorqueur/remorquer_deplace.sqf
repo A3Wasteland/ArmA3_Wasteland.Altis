@@ -75,8 +75,6 @@ else
 				detach player;
 			};
 
-			// Faire relacher l'objet au joueur (si il l'a dans "les mains")
-			R3F_LOG_joueur_deplace_objet = objNull;
 			[player, "AinvPknlMstpSlayWrflDnon_medic"] call switchMoveGlobal;
 			sleep 2;
 
@@ -90,10 +88,12 @@ else
 				(_towerGroundPos select 2) - (_objectMinBB select 2) + 0.1
 			]];
 
+			// Faire relacher l'objet au joueur (si il l'a dans "les mains")
+			R3F_LOG_joueur_deplace_objet = objNull;
 			detach player;
 
 			// Si l'objet est une arme statique, on corrige l'orientation en fonction de la direction du canon
-			if (_objet isKindOf "StaticWeapon") then
+			/*if (_objet isKindOf "StaticWeapon") then
 			{
 				private ["_azimut_canon"];
 
@@ -115,7 +115,7 @@ else
 				{
 					publicVariable "R3F_ARTY_AND_LOG_PUBVAR_setDir";
 				};
-			};
+			};*/
 
 			sleep 5;
 

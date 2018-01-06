@@ -117,7 +117,7 @@ else
 					detach player;
 
 					// Si l'objet est une arme statique, on corrige l'orientation en fonction de la direction du canon
-					if (_objet isKindOf "StaticWeapon") then
+					/*if (_objet isKindOf "StaticWeapon") then
 					{
 						private ["_azimut_canon"];
 
@@ -139,7 +139,7 @@ else
 						{
 							publicVariable "R3F_ARTY_AND_LOG_PUBVAR_setDir";
 						};
-					};
+					};*/
 
 					sleep 5;
 
