@@ -236,4 +236,27 @@ switch (true) do
 			["Laserdesignator_mounted", [0]]
 		];
 	};
+
+	// SDV SDAR turret
+	case (_class isKindOf "SDV_01_base_F"):
+	{
+		_mags =
+		[
+			["20Rnd_556x45_UW_mag", [0]],
+			["20Rnd_556x45_UW_mag", [0]],
+			["20Rnd_556x45_UW_mag", [0]],
+			["20Rnd_556x45_UW_mag", [0]],
+			["20Rnd_556x45_UW_mag", [0]],
+			["20Rnd_556x45_UW_mag", [0]],
+			["30Rnd_556x45_Stanag", [0]],
+			["30Rnd_556x45_Stanag", [0]],
+			["30Rnd_556x45_Stanag", [0]],
+			["Laserbatteries", [0]]
+		];
+		_weapons =
+		[
+			["arifle_SDAR_F", [0]],
+			["Laserdesignator_mounted", [0]]
+		];
+	};
 };
