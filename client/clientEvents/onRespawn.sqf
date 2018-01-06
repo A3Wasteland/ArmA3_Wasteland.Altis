@@ -7,7 +7,7 @@
 //	@file Created: 20/11/2012 05:19
 //	@file Args:
 
-private ["_player", "_corpse"];
+params ["_player", "_corpse"];
 
 playerSetupComplete = false;
 playerSpawning = true;
@@ -15,14 +15,10 @@ playerSpawning = true;
 9999 cutText ["", "BLACK", 0.01];
 9123 cutRsc ["RscEmpty", "PLAIN"];
 
-_player = _this select 0;
-_corpse = _this select 1;
-
 _corpse setVariable ["newRespawnedUnit", _player, true];
 _player setVariable ["playerSpawning", true, true];
 
-pvar_playerRespawn = _this;
-publicVariableServer "pvar_playerRespawn";
+_this remoteExec ["A3W_fnc_playerRespawnServer", 2];
 
 _group = _player getVariable ["currentGroupRestore", grpNull];
 

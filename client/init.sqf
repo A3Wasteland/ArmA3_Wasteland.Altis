@@ -57,8 +57,7 @@ call compile preprocessFileLineNumbers "addons\far_revive\FAR_revive_init.sqf";
 
 A3W_scriptThreads pushBack execVM "client\functions\evalManagedActions.sqf";
 
-pvar_playerRespawn = [player, objNull];
-publicVariableServer "pvar_playerRespawn";
+[player, objNull] remoteExec ["A3W_fnc_playerRespawnServer", 2];
 
 //Player setup
 player call playerSetupStart;
