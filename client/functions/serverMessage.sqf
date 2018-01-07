@@ -8,4 +8,5 @@
 diag_log format["Message %1",messageSystem];
 
 _hint = messageSystem;
-hint parseText _hint;
+if (_hint isEqualType "") then { _hint = parseText _hint };
+hint _hint;
