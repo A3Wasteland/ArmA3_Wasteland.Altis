@@ -17,6 +17,7 @@ playerSpawning = true;
 
 _corpse setVariable ["newRespawnedUnit", _player, true];
 _player setVariable ["playerSpawning", true, true];
+_player setVariable ["A3W_oldCorpse", _corpse];
 
 _this remoteExec ["A3W_fnc_playerRespawnServer", 2];
 
