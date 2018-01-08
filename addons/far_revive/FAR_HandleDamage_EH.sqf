@@ -14,13 +14,24 @@ params ["_unit", "", "", "_source", "_ammo", "", "_instigator"];
 // a critical hit is if this type of selection can trigger death upon suffering damage >= 1 (usually all of them except "hands", "arms", and "legs")
 // this is intercepted to prevent engine-triggered death and put the unit in revive mode instead; behavior and selections can change with game updates
 _criticalHit = (_selection in ["","body","head","spine1","spine2","spine3","pelvis","neck","face_hub"]);
-_fatalHit = (_damage >= 1 && alive _unit && _criticalHit);
+_fatalHit = {_damage >= 1 && alive _unit && _criticalHit};
 
-// Find suspects
-if (_fatalHit && (!isNull _source || !isNull _instigator) && isNil {_unit getVariable "FAR_killerUnit"}) then
+_killerUnit = _unit getVariable "FAR_killerUnit";
+_killerUID = _unit getVariable ["FAR_killerUID",""];
+
+_setKillerInfo =
 {
-	[_unit, _source, _ammo, _instigator] call FAR_setKillerInfo;
+	params ["_unconsciousDmg"];
+
+	// Find suspects; the UID check will allow players killing injured players to be credited for the kill if the source of injury is not another player
+	if ((!isNull _source || !isNull _instigator) && _fatalHit && (isNil "_killerUnit" || {_unconsciousDmg && !isNull _killerUnit && (_killerUnit in [_unit,_source,_instigator] || _killerUID isEqualTo "")})) then
+	{
+		[_unit, _source, _ammo, _instigator] call FAR_setKillerInfo;
+		if (_unconsciousDmg) then { _unit setVariable ["A3W_deathCause_local", ["kill"]]; systemChat "FUCKINGFAG" }; // fatal hit while unconscious if cause of initial injury is not another player
+	};
 };
+
+false call _setKillerInfo;
 
 //diag_log format ["FAR_HandleDamage_EH %1 - alive: %2", [_unit, _selection, _damage, _source, _ammo], alive _unit];
 
@@ -38,19 +49,21 @@ if (UNCONSCIOUS(_unit) && !_skipRevive) then
 		if (!isNil "_oldDamage") then
 		{
 			// Apply part of the damage without multiplier when below the stabilization threshold of 50% damage
-			if (_criticalHit && {STABILIZED(_unit) && FAR_DamageMultiplier < 1}) then
+			if (_criticalHit && {STABILIZED(_unit) && (FAR_DamageMultiplier min 0.1) < 1}) then
 			{
 				_oldDamage = _damage min 0.5;
 			};
 
-			_damage = ((_damage - _oldDamage) * FAR_DamageMultiplier) min 0.2 + _oldDamage; // max damage inflicted per hit is capped (via min 0.2) to prevent insta-bleedout - 0.2 is 40% of 0.5
+			_damage = ((_damage - _oldDamage) * (FAR_DamageMultiplier min 0.1)) min 0.2 + _oldDamage; // max damage inflicted per hit is capped (via min 0.2) to prevent insta-bleedout - 0.2 is 40% of 0.5
 		};
 	//};
+
+	true call _setKillerInfo;
 }
 else
 {
 	// Allow revive if unit is dead and not in exploded vehicle
-	if (_fatalHit && alive vehicle _unit) then
+	if (alive vehicle _unit && _fatalHit) then
 	{
 		if (_unit == player && !isNil "fn_deletePlayerData") then { call fn_deletePlayerData };
 

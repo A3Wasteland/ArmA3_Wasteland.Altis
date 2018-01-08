@@ -32,6 +32,7 @@ FAR_Reset_Unit =
 	_this setVariable ["FAR_cancelAutoEject", nil, true];
 	_this setVariable ["FAR_handleStabilize", nil, true];
 	_this setVariable ["FAR_reviveModeReady", nil];
+	_this setVariable ["FAR_injuryBroadcast", nil];
 	_this setVariable ["FAR_headshotHitTimeout", nil];
 	_this setUnconscious false;
 	_this setCaptive false;

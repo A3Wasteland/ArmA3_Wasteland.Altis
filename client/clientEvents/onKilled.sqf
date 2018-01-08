@@ -26,7 +26,7 @@ _deathCause = _player getVariable ["A3W_deathCause_local", []];
 
 if (_player getVariable ["FAR_isUnconscious", 0] == 1 && _deathCause isEqualTo []) then
 {
-	_deathCause = ["bleedout"];
+	_deathCause = [["kill","bleedout"] select (_player getVariable ["FAR_injuryBroadcast", false])];
 	_player setVariable ["A3W_deathCause_local", _deathCause];
 };
 

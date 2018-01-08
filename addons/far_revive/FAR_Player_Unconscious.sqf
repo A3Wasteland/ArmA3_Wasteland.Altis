@@ -130,9 +130,13 @@ if (FAR_EnableDeathMessages && (isPlayer _unit || FAR_Debugging)) then
 	_unit spawn
 	{
 		waitUntil {!UNCONSCIOUS(_this) || !alive _this || _this getVariable ["FAR_headshotHitTimeout", false]};
-		if (!alive _this) exitWith {};
 
-		[_this, false] call A3W_fnc_killBroadcast;
+		[_this,
+		{
+			if (!alive _this) exitWith {};
+			_this setVariable ["FAR_injuryBroadcast", true];
+			[_this, false] call A3W_fnc_killBroadcast;
+		}] execFSM "call.fsm";
 	};
 };
 
