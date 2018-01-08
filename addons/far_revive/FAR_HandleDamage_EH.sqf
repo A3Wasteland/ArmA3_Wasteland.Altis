@@ -27,7 +27,7 @@ _setKillerInfo =
 	if ((!isNull _source || !isNull _instigator) && _fatalHit && (isNil "_killerUnit" || {_unconsciousDmg && !isNull _killerUnit && (_killerUnit in [_unit,_source,_instigator] || _killerUID isEqualTo "")})) then
 	{
 		[_unit, _source, _ammo, _instigator] call FAR_setKillerInfo;
-		if (_unconsciousDmg) then { _unit setVariable ["A3W_deathCause_local", ["kill"]]; systemChat "FUCKINGFAG" }; // fatal hit while unconscious if cause of initial injury is not another player
+		if (_unconsciousDmg) then { _unit setVariable ["A3W_deathCause_local", ["kill"]] }; // fatal hit while unconscious if cause of initial injury is not another player
 	};
 };
 
