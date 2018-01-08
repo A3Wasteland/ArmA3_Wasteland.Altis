@@ -15,10 +15,19 @@ if (!local _player) then
 {
 	if (getPlayerUID _player isEqualTo "") then
 	{
-		diag_log format ["ErrorSteamID - %1", [_player, name _player, side _player, _playerOwner, isPlayer _player]];
+		_player spawn
+		{
+			for "_i" from 1 to 3 do
+			{
+				diag_log format ["ErrorSteamID - %1", [netId _this, _this, name _this, side _this, owner _this, isPlayer _this]];
+				uiSleep 3;
+			};
+		};
 
-		"ErrorSteamID" remoteExecCall ["endMission", _player];
-		breakOut "playerRespawnServer";
+		//diag_log format ["ErrorSteamID - %1", [_player, name _player, side _player, _playerOwner, isPlayer _player]];
+
+		//"ErrorSteamID" remoteExecCall ["endMission", _player];
+		//breakOut "playerRespawnServer";
 	};
 
 	if (_playerOwner isEqualTo owner _corpse) then
