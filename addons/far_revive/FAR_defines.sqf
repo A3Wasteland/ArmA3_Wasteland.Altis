@@ -8,11 +8,11 @@
 // Unused
 #define SCRIPT_VERSION "1.5"
 
+// Set to true if you want to completely disable the revive system
+#define FAR_DisableRevive false
+
 // Seconds until unconscious unit bleeds out and dies. Set to 0 to disable.
 #define FAR_BleedOut ((["A3W_bleedingTime", 60] call getPublicVar) max 10)
-
-// Broadcast notifications when player is injured and becomes unconscious
-#define FAR_EnableDeathMessages true
 
 // If enabled, unconscious units will not be able to use ACRE radio, hear other people or use proximity chat
 #define FAR_MuteACRE false

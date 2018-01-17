@@ -7,27 +7,31 @@
 #include "FAR_defines.sqf"
 #include "gui_defines.hpp"
 
+_skipRevive = FAR_DisableRevive; // set to true if you want to completely disable revive
+
 //private ["_unit", "_selection", "_damage", "_source", "_fatalHit", "_killerVehicle", "_oldDamage"];
 
 params ["_unit", "", "", "_source", "_ammo", "", "_instigator"];
 
-// a critical hit is if this type of selection can trigger death upon suffering damage >= 1 (usually all of them except "hands", "arms", and "legs")
+// a critical hit is if this type of selection can trigger death upon suffering damage >= 1 (usually all of them except "hands", "arms", "legs", "?")
 // this is intercepted to prevent engine-triggered death and put the unit in revive mode instead; behavior and selections can change with game updates
-_criticalHit = (_selection in ["","body","head","spine1","spine2","spine3","pelvis","neck","face_hub"]);
-_fatalHit = {_damage >= 1 && alive _unit && _criticalHit};
+_criticalHit = _selection in ["","body","head","spine1","spine2","spine3","pelvis","neck","face_hub"];
+_fatalHit = {_damage >= 1 && alive _unit && _criticalHit}; // do not remove curly braces
 
 _killerUnit = _unit getVariable "FAR_killerUnit";
-_killerUID = _unit getVariable ["FAR_killerUID",""];
+_killerEmptyUID = _unit getVariable ["FAR_killerUID",""] isEqualTo "";
 
 _setKillerInfo =
 {
 	params ["_unconsciousDmg"];
 
-	// Find suspects; the UID check will allow players killing injured players to be credited for the kill if the source of injury is not another player
-	if ((!isNull _source || !isNull _instigator) && _fatalHit && (isNil "_killerUnit" || {_unconsciousDmg && !isNull _killerUnit && (_killerUnit in [_unit,_source,_instigator] || _killerUID isEqualTo "")})) then
+	// the _unconsciousDmg condition allows player X to be credited for killing Y if Y was initially injured by something other than player Z
+	if ((!isNull _source || !isNull _instigator) && _fatalHit && (isNil "_killerUnit" || {_unconsciousDmg && !isNull _killerUnit && (_killerUnit in [_unit,_source,_instigator] || _killerEmptyUID)})) then
 	{
 		[_unit, _source, _ammo, _instigator] call FAR_setKillerInfo;
-		if (_unconsciousDmg) then { _unit setVariable ["A3W_deathCause_local", ["kill"]] }; // fatal hit while unconscious if cause of initial injury is not another player
+
+		// show "X killed Y" on final death instead of "Y bled out" if _skipRevive or if Y was initially injured by something other than player Z
+		if (_skipRevive || _unconsciousDmg) then { _unit setVariable ["A3W_deathCause_local", ["kill"]] };
 	};
 };
 
@@ -36,7 +40,6 @@ false call _setKillerInfo;
 //diag_log format ["FAR_HandleDamage_EH %1 - alive: %2", [_unit, _selection, _damage, _source, _ammo], alive _unit];
 
 _reviveReady = _unit getVariable ["FAR_reviveModeReady", false];
-_skipRevive = false;
 
 if (UNCONSCIOUS(_unit) && !_skipRevive) then
 {

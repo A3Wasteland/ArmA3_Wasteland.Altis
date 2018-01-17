@@ -125,7 +125,7 @@ if (!isPlayer _unit) then
 };
 
 // Injury message
-if (FAR_EnableDeathMessages && (isPlayer _unit || FAR_Debugging)) then
+if (isPlayer _unit || FAR_Debugging) then
 {
 	_unit spawn
 	{
