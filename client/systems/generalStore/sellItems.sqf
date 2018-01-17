@@ -45,6 +45,7 @@ storeSellingHandle = [] spawn
 		player setVariable ["cmoney", _playerMoney + _price, true];
 		_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable "cmoney"] call fn_numbersText];
 		[] execVM "client\systems\generalStore\getInventory.sqf";
+		playSound "FD_Finish_F";
 	};
 };
 

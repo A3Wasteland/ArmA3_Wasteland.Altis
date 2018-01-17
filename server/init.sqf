@@ -169,6 +169,11 @@ if (isServer) then
 		"A3W_privateParkingLimit",
 		"A3W_privateParkingCost",
 		"A3W_vehicleLocking",
+		"A3W_artilleryStrike",
+		"A3W_artilleryShells",
+		"A3W_artilleryRadius",
+		"A3W_artilleryCooldown",
+		"A3W_artilleryAmmo",
 		"A3W_disableBuiltInThermal",
 		"A3W_headshotNoRevive"
 	];

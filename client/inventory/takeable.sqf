@@ -26,7 +26,7 @@ _takeable = objNull;
 	// Make the point of intersection a little higher to prevent any ground clipping issues
 	_objectPos set [2, (_objectPos select 2) + 0.2];
 	_playerPos = eyePos player;
-	_lineOfSightBroken = lineIntersects [_playerPos, _objectPos, player, _x];
+	_lineOfSightBroken = !(lineIntersectsObjs [_playerPos, _objectPos, player, _x, false, 4] isEqualTo []);
 
 	switch (true) do {
 		case (_lineOfSightBroken): {};

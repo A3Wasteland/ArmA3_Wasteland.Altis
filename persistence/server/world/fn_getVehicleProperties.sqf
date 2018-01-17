@@ -77,6 +77,12 @@ if (_ownerName != "") then
 	_variables pushBack ["ownerName", toArray _ownerName];
 };
 
+private _artiCount = [_veh getVariable "artillery"] param [0,0,[0]];
+if (_artiCount >= 1) then
+{
+	_variables pushBack ["artillery", 1]; // capped at 1 for safety
+};
+
 private _locked = 1 max locked _veh; // default vanilla state is always 1, so we ignore 0's
 
 _textures = [];

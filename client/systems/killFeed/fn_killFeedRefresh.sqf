@@ -18,7 +18,7 @@ with missionNamespace do
 
 		if (isNull _feedDisp) then
 		{
-			"A3W_killFeed" cutRsc ["A3W_killFeed","PLAIN"];
+			A3W_killFeed_IDD cutRsc ["A3W_killFeed","PLAIN"];
 			_feedDisp = uiNamespace getVariable ["A3W_killFeed", displayNull];
 		};
 

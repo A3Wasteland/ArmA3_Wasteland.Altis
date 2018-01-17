@@ -33,6 +33,7 @@ if (count _this > 2) then {
 };
 private ["_item", "_current"];
 _item = _id call mf_inventory_get;
+if (_item isEqualTo objNull) exitWith {};
 _current = _item select QTY;
 if (_abs) then {
 	_item set [QTY, _qty];

@@ -102,6 +102,11 @@ storeSellingHandle = _this spawn
 			clearItemCargoGlobal _this;
 		};
 
+		{
+			_x params ["", "_item"];
+			_crate setVariable [_item, nil, true];
+		} forEach call customPlayerItems;
+
 		waitUntil {scriptDone _clearing};
 
 		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];

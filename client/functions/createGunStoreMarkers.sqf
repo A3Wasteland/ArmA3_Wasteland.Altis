@@ -6,7 +6,7 @@
 //	@file Author: [404] Deadbeat, [404] Costlyy, [GoT] JoSchaap
 //	@file Args:
 
-_radius = 70;
+_radius = 70; // also defined in client\items\artillery\artilleryMapClick.sqf
 _status = [];
 _gunStores = [];
 _col_empty = "ColorYellow";

@@ -97,3 +97,11 @@ switch (_boxType) do
 };
 
 [_box, _boxItems] call processItems;
+
+if (["A3W_artilleryStrike"] call isConfigOn) then
+{
+	if (random 1.0 < ["A3W_artilleryCrateOdds", 1/10] call getPublicVar) then
+	{
+		_box setVariable ["artillery", 1, true];
+	};
+};

@@ -31,6 +31,12 @@ switch (true) do
 	};
 };
 
+private _artiCount = [_obj getVariable "artillery"] param [0,0,[0]];
+if (_artiCount >= 1) then
+{
+	_variables pushBack ["artillery", 1]; // capped at 1 for safety
+};
+
 switch (true) do
 {
 	case (_obj call _isBox):

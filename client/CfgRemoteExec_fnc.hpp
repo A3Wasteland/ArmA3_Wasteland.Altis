@@ -15,6 +15,7 @@ class BIS_fnc_objectVar {};
 
 // A3W vanilla
 class A3W_fnc_adminMenuLog { allowedTargets = 2; };
+class A3W_fnc_artilleryStrike { allowedTargets = 2; };
 class A3W_fnc_chatBroadcast {};
 class A3W_fnc_checkHackedVehicles { allowedTargets = 2; };
 class A3W_fnc_checkPlayerFlag { allowedTargets = 2; };
@@ -38,6 +39,7 @@ class A3W_fnc_setItemCleanup { allowedTargets = 2; };
 class A3W_fnc_setLockState {};
 class A3W_fnc_setName { jip = 1; };
 class A3W_fnc_setVarServer { allowedTargets = 2; };
+class A3W_fnc_takeArtilleryStrike { allowedTargets = 2; };
 class A3W_fnc_takeOwnership { allowedTargets = 2; };
 class A3W_fnc_titleTextMessage {};
 class A3W_fnc_towingHelper {};
