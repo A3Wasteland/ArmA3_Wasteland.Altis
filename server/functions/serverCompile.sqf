@@ -52,6 +52,7 @@ convertTerritoryOwner = "territory\server\convertTerritoryOwner.sqf" call mf_com
 defendArea = [_path, "defendArea.sqf"] call mf_compile;
 dropPlayerItems = [_path, "dropPlayerItems.sqf"] call mf_compile;
 findClientPlayer = [_path, "findClientPlayer.sqf"] call mf_compile;
+fn_entityKilled = [_path, "fn_entityKilled.sqf"] call mf_compile;
 fn_onPlayerConnected = [_path, "fn_onPlayerConnected.sqf"] call mf_compile;
 fn_onPlayerDisconnected = [_path, "fn_onPlayerDisconnected.sqf"] call mf_compile;
 fn_publicVariableAll = [_path, "fn_publicVariableAll.sqf"] call mf_compile;

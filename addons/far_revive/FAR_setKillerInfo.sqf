@@ -63,11 +63,7 @@ if (!(_killer isKindOf "Man") || (_ammo == "" && _targetVehicle != _sourceVehicl
 				if (isAgent teamMember _driver && !isNull (_driver getVariable ["A3W_driverAssistOwner", objNull])) then // driver assist roadkill
 				{
 					private _effComm = effectiveCommander _killerVehicle;
-
-					if (alive _effComm || isPlayer _effComm) then
-					{
-						_killer = _effComm;
-					};
+					if (alive _effComm || isPlayer _effComm) then { _killer = _effComm };
 				};
 
 				_target setVariable ["A3W_deathCause_local", ["roadkill"]];
@@ -91,14 +87,10 @@ if (!(_killer isKindOf "Man") || (_ammo == "" && _targetVehicle != _sourceVehicl
 };
 
 // killed by UAV
-if (isUavConnected _killerVehicle /*&& _targetVehicle != _killerVehicle*/) then
+if (isUavConnected _killerVehicle && {isNull _killer || {getText (configFile >> "CfgVehicles" >> typeOf _killer >> "simulation") == "UAVPilot"}}) then
 {
 	private _uavOwner = (uavControl _killerVehicle) select 0;
-
-	if (!isNull _uavOwner) then
-	{
-		_killer = _uavOwner;
-	};
+	if (!isNull _uavOwner) then { _killer = _uavOwner };
 };
 
 // find murder explosive
