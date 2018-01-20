@@ -23,7 +23,7 @@ waitUntil
 if (isNull _corpse) exitWith {};
 
 private _targetPos = getPosWorld _veh;
-_targetPos set [2, (getPosATL _corpse) select 2];
+_targetPos set [2, (getPosATL _corpse select 2) max 0 + 0.01];
 
 if (_veh != _corpse && damage _veh > 0.99) then
 {
