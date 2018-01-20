@@ -9,7 +9,7 @@ if (!isServer) exitWith {};
 params ["_entity", "_presumedKiller", "_instigator"];
 
 // AI killed
-if (_entity isKindOf "CAManBase" && !isPlayer _entity && {isNil {_killer getVariable "cmoney"} && getText (configFile >> "CfgVehicles" >> typeOf _entity >> "simulation") != "UAVPilot"}) then
+if (_entity isKindOf "CAManBase" && !isPlayer _entity && {isNil {_entity getVariable "cmoney"} && getText (configFile >> "CfgVehicles" >> typeOf _entity >> "simulation") != "UAVPilot"}) then
 {
 	[_entity, _presumedKiller, "", _instigator] call FAR_setKillerInfo;
 
