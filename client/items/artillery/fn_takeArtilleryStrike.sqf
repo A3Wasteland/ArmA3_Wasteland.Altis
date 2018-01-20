@@ -30,6 +30,16 @@ else // server process
 		private _strikeCount = _obj getVariable ["artillery", 0];
 		if (_strikeCount < 1) exitWith {};
 		_obj setVariable ["artillery", _strikeCount - 1, true];
+
+		if (_obj isKindOf "AllVehicles" && !(_obj isKindOf "StaticWeapon")) then
+		{
+			if (!isNil "fn_manualVehicleSave") then { _obj call fn_manualVehicleSave };
+		}
+		else
+		{
+			if (!isNil "fn_manualObjectSave") then { _obj call fn_manualObjectSave };
+		};
+
 		_granted = true;
 	};
 
