@@ -21,6 +21,7 @@ storeSellingHandle = _this spawn
 	_price = 1000;
 	_objClass = typeOf _vehicle;
 	_objName = getText (configFile >> "CfgVehicles" >> _objClass >> "displayName");
+	_isStaticWep = _type isKindOf "StaticWeapon";
 
 	if (isNull _vehicle) exitWith
 	{
@@ -42,7 +43,7 @@ storeSellingHandle = _this spawn
 		{
 			_price = (ceil (((_x select 2) / CHOPSHOP_PRICE_RELATIONSHIP) / 5)) * 5;
 		};
-	} forEach (call allVehStoreVehicles);
+	} forEach (call allVehStoreVehicles + call staticGunsArray);
 
 	if (!isNil "_price") then
 	{
