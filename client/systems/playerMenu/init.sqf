@@ -2,7 +2,7 @@
 // * This project is licensed under the GNU Affero GPL v3. Copyright © 2014 A3Wasteland.com *
 // ******************************************************************************************
 #include "dialog\player_sys.sqf";
-if(isnil {player getVariable "cmoney"}) then {player setVariable["cmoney",0,true];};
+//if(isnil {player getVariable "cmoney"}) then {player setVariable["cmoney",0,true];};
 if(dialog) exitwith{};
 
 disableSerialization;

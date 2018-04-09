@@ -197,7 +197,8 @@ _resupplyThread = [_vehicle, _unit] spawn
 		call _checkPlayerMoney;
 
 		//start resupply here
-		player setVariable ["cmoney", (player getVariable ["cmoney",0]) - _price, true];
+		//player setVariable ["cmoney", (player getVariable ["cmoney",0]) - _price, true];
+		[player, -_price] call A3W_fnc_setCMoney;
 		_text = format ["%1\n%2", format ["You paid $%1 to resupply %2.", _price, _vehName], "Please stand by..."];
 		[_text, 10] call mf_notify_client;
 		[] spawn fn_savePlayerData;

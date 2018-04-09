@@ -4,13 +4,13 @@
 //	@file Name: playerEventServer.sqf
 //	@file Author: AgentRev
 
-_type = param [0, "", [""]];
+params [["_type","",[""]]];
 
 switch (toLower _type) do
 {
 	case "pickupmoney":
 	{
-		_amount = param [1, 0, [0]];
+		params ["", ["_amount",0,[0]]];
 
 		if (_amount > 0) then
 		{
@@ -25,7 +25,7 @@ switch (toLower _type) do
 
 	case "transaction":
 	{
-		_amount = param [1, 0, [0]];
+		params ["", ["_amount",0,[0]]];
 
 		if (_amount != 0) then
 		{
@@ -51,8 +51,7 @@ switch (toLower _type) do
 
 	case "atmtransfersent":
 	{
-		_amount = param [1, 0, [0]];
-		_name = param [2, "", [""]];
+		params ["", ["_amount",0,[0]], ["_name","",[""]]];
 
 		if (_amount != 0) then
 		{
@@ -76,8 +75,7 @@ switch (toLower _type) do
 
 	case "atmtransferreceived":
 	{
-		_amount = param [1, 0, [0]];
-		_name = param [2, "", [""]];
+		params ["", ["_amount",0,[0]], ["_name","",[""]]];
 
 		_message = if (isStreamFriendlyUIEnabled) then {
 			"You have received $%1 from a bank transfer" 

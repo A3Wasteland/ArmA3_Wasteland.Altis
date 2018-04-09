@@ -74,7 +74,8 @@ storeSellingHandle = _this spawn
 		{
 			removeUniform player;
 
-			player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+			//player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+			[player, _sellValue] call A3W_fnc_setCMoney;
 
 			hint format ['You sold "%1" for $%2', _objName, _sellValue];
 			playSound "FD_Finish_F";

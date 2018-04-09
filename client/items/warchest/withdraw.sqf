@@ -27,5 +27,6 @@ if ([_var, 0] call getPublicVar < _amount) exitWith
 	playSound "FD_CP_Not_Clear_F";
 };
 
-pvar_processTransaction = ["warchest", player, -_amount];
-publicVariableServer "pvar_processTransaction";
+// pvar_processTransaction = ["warchest", player, -_amount];
+// publicVariableServer "pvar_processTransaction";
+["warchest", player, -_amount] call A3W_fnc_processTransaction;

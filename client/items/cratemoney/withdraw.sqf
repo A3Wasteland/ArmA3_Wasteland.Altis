@@ -29,5 +29,6 @@ if (_crate getVariable ["cmoney", 0] < _amount) exitWith
 	playSound "FD_CP_Not_Clear_F";
 };
 
-pvar_processTransaction = ["crateMoney", player, netId _crate, -_amount];
-publicVariableServer "pvar_processTransaction";
+// pvar_processTransaction = ["crateMoney", player, netId _crate, -_amount];
+// publicVariableServer "pvar_processTransaction";
+["crateMoney", player, _crate, -_amount] call A3W_fnc_processTransaction;

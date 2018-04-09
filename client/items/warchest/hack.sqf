@@ -53,8 +53,9 @@ if (_success) then {
 			publicVariable "pvar_warchest_funds_west";
 		};
 	};
-	_money = (player getVariable ["cmoney", 0]) + _amount;
-	player setVariable ["cmoney", _money, true];
+	//_money = (player getVariable ["cmoney", 0]) + _amount;
+	//player setVariable ["cmoney", _money, true];
+	[player, _amount] call A3W_fnc_setCMoney;
 	[format["Warchest Hacking Complete! You stole $%1", [_amount] call fn_numbersText], 5] call mf_notify_client;
 };
 _success;

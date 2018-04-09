@@ -85,8 +85,9 @@ format [MSG_CONFIRM_LINE3, [_total] call fn_numbersText];
 	_transferKey = call A3W_fnc_generateKey + "_atmTransfer";
 	player setVariable [_transferKey, true, false];
 
-	pvar_processTransaction = ["atmTranfer", player, _selAcc, _amount, _feeAmount, _transferKey];
-	publicVariableServer "pvar_processTransaction";
+	// pvar_processTransaction = ["atmTranfer", player, _selAcc, _amount, _feeAmount, _transferKey];
+	// publicVariableServer "pvar_processTransaction";
+	["atmTranfer", player, _selAcc, _amount, _feeAmount, _transferKey] call A3W_fnc_processTransaction;
 
 	_dialog = findDisplay AtmGUI_IDD;
 	_input = _dialog displayCtrl AtmAmountInput_IDC;

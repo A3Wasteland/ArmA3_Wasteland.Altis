@@ -169,7 +169,8 @@ storePurchaseHandle = _this spawn
 		{
 			vehicleStore_lastPurchaseTime = diag_tickTime;
 
-			player setVariable ["cmoney", _playerMoney - _price, true];
+			//player setVariable ["cmoney", _playerMoney - _price, true];
+			[player, -_price] call A3W_fnc_setCMoney;
 			_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
 
 			if (["A3W_playerSaving"] call isConfigOn) then

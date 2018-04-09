@@ -44,5 +44,8 @@ if (_amount < 1) exitWith
 
 _input ctrlSetText (_amount call fn_numToStr);
 
-pvar_processTransaction = ["atm", player, _amount];
-publicVariableServer "pvar_processTransaction";
+if (!isServer) then { player setVariable ["cmoney", (player getVariable ["cmoney", 0]) - _amount, false] }; // temp client-side update, do not set to true
+
+// pvar_processTransaction = ["atm", player, _amount];
+// publicVariableServer "pvar_processTransaction";
+["atm", player, _amount] call A3W_fnc_processTransaction;

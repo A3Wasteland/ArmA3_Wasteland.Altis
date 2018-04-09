@@ -96,14 +96,15 @@ if (_uid call isAdmin) then
 		};
 		case 5: //Remove All Money
 		{
-			_targetUID = getPlayerUID _target;
+			/*_targetUID = getPlayerUID _target;
 			{
 				if(getPlayerUID _x == _targetUID) exitWith
 				{
 					_x setVariable["cmoney",0,true];
 				};
 			}forEach playableUnits;
-			["PlayerMgmt_RemoveMoney", format ["%1 (%2)", name _target, getPlayerUID _target]] call notifyAdminMenu;
+			["PlayerMgmt_RemoveMoney", format ["%1 (%2)", name _target, getPlayerUID _target]] call notifyAdminMenu;*/
+			["This option has been disabled since money is now server-sided."] spawn BIS_fnc_guiMessage;
 		};
 		case 6: //Remove All Weapons
 		{

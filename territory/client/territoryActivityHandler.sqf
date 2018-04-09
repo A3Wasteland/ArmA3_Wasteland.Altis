@@ -19,7 +19,8 @@ if (typeName _this == "ARRAY" && {count _this >= 1}) then {
 
 	titleText [_msg, "plain down", 0.5];
 	if (_money > 0) then {
-		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
+		//player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
+		[player, _money] call A3W_fnc_setCMoney;
 	};
 
 	playSound 'FD_Finish_F'; // Nice sound effect to draw players attention to the notification

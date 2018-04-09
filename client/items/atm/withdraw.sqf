@@ -27,5 +27,6 @@ if (player getVariable ["bmoney", 0] < _amount) exitWith
 	playSound "FD_CP_Not_Clear_F";
 };
 
-pvar_processTransaction = ["atm", player, -_amount];
-publicVariableServer "pvar_processTransaction";
+// pvar_processTransaction = ["atm", player, -_amount];
+// publicVariableServer "pvar_processTransaction";
+["atm", player, -_amount] call A3W_fnc_processTransaction;

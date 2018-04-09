@@ -89,7 +89,8 @@ _player spawn
 	_player = _this;
 
 	_money = _player getVariable ["cmoney", 0];
-	_player setVariable ["cmoney", 0, true];
+	//_player setVariable ["cmoney", 0, true];
+	[player, 0, true] call A3W_fnc_setCMoney;
 
 	_items = if (_player == player) then { true call mf_inventory_list } else { [] };
 

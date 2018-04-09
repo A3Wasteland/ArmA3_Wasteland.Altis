@@ -42,7 +42,8 @@ storeSellingHandle = [] spawn
 	{
 		[_itemData, 1] call mf_inventory_remove;
 
-		player setVariable ["cmoney", _playerMoney + _price, true];
+		//player setVariable ["cmoney", _playerMoney + _price, true];
+		[player, _price] call A3W_fnc_setCMoney;
 		_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable "cmoney"] call fn_numbersText];
 		[] execVM "client\systems\generalStore\getInventory.sqf";
 		playSound "FD_Finish_F";

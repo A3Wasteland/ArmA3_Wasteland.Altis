@@ -130,6 +130,7 @@ mutexScriptInProgress = false;
 if (_success) then
 {
 	deleteVehicle _vehicle;
-	player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
+	//player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _money, true];
+	[player, _money] call A3W_fnc_setCMoney;
 	[format ["You have obtained $%1 from salvaging", [_money] call fn_numbersText], 5] call mf_notify_client;
 };

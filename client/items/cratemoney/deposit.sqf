@@ -23,13 +23,14 @@ _amount = _input call mf_verify_money_input;
 
 if (_amount < 1) exitWith {};
 
-_money = player getVariable ["cmoney", 0];
-
-if (_money < _amount) exitWith
+if (player getVariable ["cmoney", 0] < _amount) exitWith
 {
 	[ERR_NOT_ENOUGH_FUNDS, 5] call mf_notify_client;
 	playSound "FD_CP_Not_Clear_F";
 };
 
-pvar_processTransaction = ["crateMoney", player, netId _crate, _amount];
-publicVariableServer "pvar_processTransaction";
+if (!isServer) then { player setVariable ["cmoney", (player getVariable ["cmoney", 0]) - _amount, false] }; // temp client-side update, do not set to true
+
+// pvar_processTransaction = ["crateMoney", player, netId _crate, _amount];
+// publicVariableServer "pvar_processTransaction";
+["crateMoney", player, _crate, _amount] call A3W_fnc_processTransaction;

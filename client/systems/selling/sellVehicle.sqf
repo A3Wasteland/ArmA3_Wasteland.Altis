@@ -13,30 +13,45 @@ storeSellingHandle = _this spawn
 	#define CHOPSHOP_PRICE_RELATIONSHIP 2
 	#define VEHICLE_MAX_SELLING_DISTANCE 50
 
-	private ["_vehicle", "_type", "_price", "_confirmMsg", "_text"];
-
 	_storeNPC = _this select 0;
 	_vehicle = objectFromNetId (player getVariable ["lastVehicleRidden", ""]);
-	_type = typeOf _vehicle;
-	_price = 1000;
-	_objClass = typeOf _vehicle;
-	_objName = getText (configFile >> "CfgVehicles" >> _objClass >> "displayName");
-	_isStaticWep = _type isKindOf "StaticWeapon";
 
 	if (isNull _vehicle) exitWith
 	{
 		playSound "FD_CP_Not_Clear_F";
-		["Your previous vehicle does not exist anymore.", "Error"] call  BIS_fnc_guiMessage;
+		["Your previous vehicle was not found.", "Error"] call  BIS_fnc_guiMessage;
 	};
 
-	if (_vehicle distance _storeNPC > VEHICLE_MAX_SELLING_DISTANCE) exitWith
+	_type = typeOf _vehicle;
+	_objName = getText (configFile >> "CfgVehicles" >> _type >> "displayName");
+
+	_checkValidDistance =
 	{
-		playSound "FD_CP_Not_Clear_F";
-		[format [' The "%1" is further away than %2m from the store.', _objname, VEHICLE_MAX_SELLING_DISTANCE], "Error"] call  BIS_fnc_guiMessage;
+		if (_vehicle distance _storeNPC > VEHICLE_MAX_SELLING_DISTANCE) then
+		{
+			playSound "FD_CP_Not_Clear_F";
+			[format ['"%1" is further away than %2m from the store.', _objName, VEHICLE_MAX_SELLING_DISTANCE], "Error"] call  BIS_fnc_guiMessage;
+			false
+		} else { true };
 	};
+
+	_checkValidOwnership =
+	{
+		if (!local _vehicle) then
+		{
+			playSound "FD_CP_Not_Clear_F";
+			[format ['You are not the owner of "%1", try getting in the driver seat.', _objName], "Error"] call  BIS_fnc_guiMessage;
+			false
+		} else { true };
+	};
+
+	if (!call _checkValidDistance) exitWith {};
+	if (!call _checkValidOwnership) exitWith {};
 
 	private _variant = _vehicle getVariable ["A3W_vehicleVariant", ""];
 	if (_variant != "") then { _variant = "variant_" + _variant };
+
+	_price = 1000;
 
 	{
 		if (_type == _x select 1 && (_variant == "" || {_variant in _x})) exitWith
@@ -53,7 +68,8 @@ storeSellingHandle = _this spawn
 		// Display confirm message
 		if ([parseText _confirmMsg, "Confirm", "Sell", true] call BIS_fnc_guiMessage) then
 		{
-			sleep 1;
+			if (!call _checkValidDistance) exitWith {};
+			if (!call _checkValidOwnership) exitWith {};
 
 			if (_vehicle distance _storeNPC > VEHICLE_MAX_SELLING_DISTANCE) exitWith
 			{
@@ -63,7 +79,8 @@ storeSellingHandle = _this spawn
 
 			deleteVehicle _vehicle;
 
-			player setVariable ["cmoney", (player getVariable ["cmoney",0]) + _price, true];
+			//player setVariable ["cmoney", (player getVariable ["cmoney",0]) + _price, true];
+			[player, _price] call A3W_fnc_setCMoney;
 			[format ['The %1 has been sold!', _objname, VEHICLE_MAX_SELLING_DISTANCE], "Thank You"] call  BIS_fnc_guiMessage;
 
 			if (["A3W_playerSaving"] call isConfigOn) then

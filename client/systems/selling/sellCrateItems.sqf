@@ -64,7 +64,8 @@ storeSellingHandle = _this spawn
 		clearWeaponCargoGlobal _crate;
 		clearItemCargoGlobal _crate;
 
-		player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+		//player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+		[player, _sellValue] call A3W_fnc_setCMoney;
 		hint format [format ['The inventory of "%1" was sold for $%2', _objName, _sellValue]];
 		playSound "FD_Finish_F";
 	}
@@ -121,7 +122,8 @@ storeSellingHandle = _this spawn
 					};
 				};
 
-				player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+				//player setVariable ["cmoney", (player getVariable ["cmoney", 0]) + _sellValue, true];
+				[player, _sellValue] call A3W_fnc_setCMoney;
 
 				_hintMsg = if (_deleteObject) then { 'You sold "%1" for $%2' } else { 'You sold the inventory of "%1" for $%2' };
 				hint format [_hintMsg, _objName, _sellValue];

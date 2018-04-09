@@ -30,8 +30,6 @@ publicVariable "currentInvites";
 	["pvar_parachuteLiftedVehicle", { PVAL spawn parachuteLiftedVehicle }],
 	["pvar_spawnStoreObject", { PVAL call spawnStoreObject }],
 	["pvar_processGroupInvite", { PVAL call processGroupInvite }],
-	["pvar_processMoneyPickup", { PVAL call processMoneyPickup }],
-	["pvar_processTransaction", { PVAL call processTransaction }],
 	["pvar_punishTeamKiller", { PVAL call punishTeamKiller }],
 	["pvar_teamSwitchLock", { PVAL call teamSwitchLock }],
 	["pvar_teamSwitchUnlock", { PVAL call teamSwitchUnlock }],

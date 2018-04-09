@@ -29,12 +29,14 @@ class A3W_fnc_initPlayerServer { allowedTargets = 2; };
 class A3W_fnc_killBroadcast { allowedTargets = 2; };
 class A3W_fnc_logMemAnomaly { allowedTargets = 2; };
 class A3W_fnc_playerRespawnServer { allowedTargets = 2; };
+class A3W_fnc_processTransaction { allowedTargets = 2; };
 class A3W_fnc_pushVehicle {};
 //class A3W_fnc_registerKillScore { allowedTargets = 2; }; // only needed for injury kill points, not currently enabled due to point farming concerns
 class A3W_fnc_requestPlayerData { allowedTargets = 2; };
 class A3W_fnc_requestTickTime { allowedTargets = 2; };
 class A3W_fnc_savePlayerData { allowedTargets = 2; };
 class A3W_fnc_serverPlayerDied { allowedTargets = 2; };
+class A3W_fnc_setCMoney { allowedTargets = 2; };
 class A3W_fnc_setItemCleanup { allowedTargets = 2; };
 class A3W_fnc_setLockState {};
 class A3W_fnc_setName { jip = 1; };

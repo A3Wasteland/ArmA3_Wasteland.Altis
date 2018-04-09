@@ -40,7 +40,7 @@ else
 		};
 		case "Hunger": { hungerLevel = _value };
 		case "Thirst": { thirstLevel = _value };
-		case "Money": { player setVariable ["cmoney", _value, true] };
+		case "Money": { [player, _value, true] call A3W_fnc_setCMoney }; //{ player setVariable ["cmoney", _value, true] };
 		/*case "Position":
 		{
 			if (count _value == 3) then

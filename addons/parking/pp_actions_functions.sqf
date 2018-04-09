@@ -206,7 +206,8 @@ pp_retrieve_transaction_ok = {
     false
   };
 
-  _player setVariable ["cmoney", _cmoney - _cost, true];
+  //_player setVariable ["cmoney", _cmoney - _cost, true];
+  [player, -_cost] call A3W_fnc_setCMoney;
   true
 };
 
