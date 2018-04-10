@@ -21,8 +21,12 @@ _dialog = findDisplay vehshop_DIALOG;
 _vehlist = _dialog displayCtrl vehshop_veh_list;
 _vehText = _dialog displayCtrl vehshop_veh_TEXT;
 _colorlist = _dialog displayCtrl vehshop_color_list;
+_partList = _dialog displayCtrl vehshop_part_list;
+
 lbClear _colorlist;
+lbClear _partList;
 _colorlist lbSetCurSel -1;
+_partList lbSetCurSel -1;
 
 //Get Selected Item
 _itemIndex = lbCurSel _vehlist;
@@ -39,8 +43,11 @@ if (isNil "_itemData") exitWith
 _itemData params ["", "_vehClass", "_price"];
 _vehText ctrlSetText format ["Price: $%1", [_price] call fn_numbersText];
 
-if (getArray (configfile >> "CfgVehicles" >> _vehClass >> "hiddenSelections") isEqualTo []) exitWith {}; // unpaintable
+_vehCfg = configFile >> "CfgVehicles" >> _vehClass;
 
+/****************************************************************************************************/
+if !(getArray (_vehCfg >> "hiddenSelections") isEqualTo []) then
+{
 _colorsArray  = [];
 
 _cfgColors = call colorsArray;
@@ -52,16 +59,39 @@ reverse _cfgColors;
 
 	if (_class == "All" || {_vehClass isKindOf _class}) then
 	{
+		// add all unlisted TextureSources before adding generic colors, except the M-900 because its textures are a fucking mess
+		if (_class == "All") then
+		{
+			if !(_vehClass isKindOf "Heli_Light_01_base_F") then
+			{
+				private ["_texSrcCfg", "_texSrc", "_texName"];
+
+				{
+					_texSrcCfg = _x;
+					_texSrc = configName _texSrcCfg;
+
+					if (_colorsArray findIf {_x select 1 isEqualTo [_texSrc]} == -1) then
+					{
+						_texName = getText (_texSrcCfg >> "displayName");
+						_texName = format ["%1 - %2" , [_texName,_texSrc] select (_texName == ""), getText (_vehCfg >> "displayName")];
+						[_colorsArray, _texName, [_texSrc]] call fn_setToPairs;
+					};
+				} forEach configProperties [_vehCfg >> "TextureSources", "!(getArray (_x >> 'textures') isEqualTo [])"];
+			};
+
+			_colorsArray sort true;
+		};
+
 		{
 			_color = _x select 0;
 			_tex = _x select 1;
 			_added = false;
 
-			if (typeName _tex == "ARRAY") then
+			if (_tex isEqualType []) then
 			{
 				_existingTex = [_colorsArray, _color, ""] call fn_getFromPairs;
 
-				if (typeName _existingTex == "ARRAY") then
+				if (_existingTex isEqualType []) then
 				{
 					{
 						[_existingTex, _x select 0, _x select 1] call fn_setToPairs;
@@ -81,13 +111,13 @@ reverse _cfgColors;
 
 {
 	_x params ["_texName", "_texData"];
-	private _tex = _texData;
+	_tex = _texData;
 
 	if (_tex isEqualType []) then
 	{
 		if (count _tex == 1 && _tex isEqualTypeAll "") then
 		{
-			private _srcTextures = getArray (configFile >> "CfgVehicles" >> _vehClass >> "TextureSources" >> (_tex select 0) >> "textures");
+			_srcTextures = getArray (_vehCfg >> "TextureSources" >> (_tex select 0) >> "textures");
 
 			if !(_srcTextures isEqualTo []) then
 			{
@@ -108,3 +138,42 @@ reverse _cfgColors;
 		_colorlist lbSetData [_colorlistIndex, str _texData];
 	};
 } forEach _colorsArray;
+};
+/****************************************************************************************************/
+
+// disable custom parts for MH-9 Hummingbird, because if "Add back seats" is unticked, people can still sit in the back and are invisible from the outside
+if (_vehClass isKindOf "B_Heli_Light_01_F") exitWith {};
+
+// default initPhase
+_animSources = (configProperties [_vehCfg >> "AnimationSources", "getText (_x >> 'displayName') != ''"]) apply { [configName _x, getNumber (_x >> "initPhase")] };
+
+// animationList initPhase override
+_animList = getArray (_vehCfg >> "animationList");
+for "_i" from 0 to (count _animList - 1) step 2 do
+{
+	_initOdds = _animList select (_i+1);
+	[_animSources, _animList select _i, round _initOdds] call fn_setToPairs;
+};
+
+_parts = [];
+
+{
+	_x params ["_animSrc", "_initPhase"];
+	_animSrcCfg = _vehCfg >> "AnimationSources" >> _animSrc;
+	_animName = getText (_animSrcCfg >> "displayName");
+	_animScope = _animSrcCfg >> "scope";
+
+	if (_animName != "" && {getNumber _animScope > 1 || !isNumber _animScope}) then // same display conditions as in BIS_fnc_garage (vehicle appearance editor)
+	{
+		_parts pushBack [_animName, _animSrc, vehshop_list_checkboxTextures select (_initPhase >= 1)];
+	};
+} forEach _animSources;
+
+_parts sort true;
+
+{
+	_x params ["_animName", "_animData", "_animPicture"];
+	_partListIndex = _partList lbAdd _animName;
+	_partList lbSetPicture [_partListIndex, _animPicture];
+	_partList lbSetData [_partListIndex, _animData];
+} forEach _parts;

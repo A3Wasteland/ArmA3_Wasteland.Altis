@@ -76,6 +76,18 @@ if (!isNil "_owner") then
 	};
 } foreach (call storeOwnerConfig);
 
+private _partList = _Dialog displayCtrl vehshop_part_list;
+_partList ctrlEnable false;
+_partList ctrlAddEventHandler ["LBSelChanged", compile preprocessFileLineNumbers "client\systems\vehicleStore\partInfo.sqf"];
+
+private _defPartsChk = _Dialog displayCtrl vehshop_defparts_checkbox;
+_defPartsChk cbSetChecked true;
+_defPartsChk ctrlAddEventHandler ["CheckedChanged",
+{
+	params ["_defPartsChk", "_checked"];
+	((ctrlParent _defPartsChk) displayCtrl vehshop_part_list) ctrlEnable (_checked < 1);
+}];
+
 [] spawn
 {
 	disableSerialization;

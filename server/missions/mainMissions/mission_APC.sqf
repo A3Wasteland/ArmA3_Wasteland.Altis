@@ -13,23 +13,26 @@ private ["_vehicleClass", "_nbUnits"];
 
 _setupVars =
 {
-	_vehicleClass =
+	_vehicleClass = // to specify a vehicleLoadouts variant, simply write "class/variant", e.g. "O_Heli_Light_02_dynamicLoadout_F/orcaDAR"
 	[
-		"B_APC_Wheeled_01_cannon_F",
-		"O_APC_Wheeled_02_rcws_F",
-		"I_APC_Wheeled_03_cannon_F",
-		"B_APC_Tracked_01_rcws_F",
-		"O_APC_Tracked_02_cannon_F",
-		"I_APC_tracked_03_cannon_F",
-		"B_APC_Tracked_01_AA_F",
-		"O_APC_Tracked_02_AA_F"
-	] call BIS_fnc_selectRandom;
+		["B_APC_Wheeled_01_cannon_F", "B_APC_Tracked_01_rcws_F", "B_APC_Tracked_01_AA_F"],
+		["O_APC_Wheeled_02_rcws_v2_F", "O_APC_Tracked_02_cannon_F", "O_APC_Tracked_02_AA_F"],
+		["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F"],
+		["B_AFV_Wheeled_01_cannon_F", "B_AFV_Wheeled_01_up_cannon_F"] // Tanks DLC
+	];
+
+	while {_vehicleClass isEqualType []} do { _vehicleClass = selectRandom _vehicleClass };
+	if (_vehicleClass find "/" != -1) then { _vehicleClass = _vehicleClass splitString "/" };
+
+	private _vehicleClassTmp = _vehicleClass;
+	if (_vehicleClassTmp isEqualType []) then { _vehicleClassTmp = _vehicleClassTmp select 0 };
 
 	_missionType = switch (true) do
 	{
-		case ({_vehicleClass isKindOf _x} count ["B_APC_Tracked_01_AA_F", "O_APC_Tracked_02_AA_F"] > 0): { "Anti Aircraft Vehicle" };
-		case (_vehicleClass isKindOf "Tank_F"):                                                          { "Infantry Fighting Vehicle" };
-		default                                                                                          { "Armored Personnel Carrier" };
+		case ({_vehicleClassTmp isKindOf _x} count ["B_APC_Tracked_01_AA_F", "O_APC_Tracked_02_AA_F"] > 0): { "Anti Aircraft Vehicle" };
+		case (_vehicleClassTmp isKindOf "Tank_F"):                                                          { "Infantry Fighting Vehicle" };
+		case (_vehicleClassTmp isKindOf "AFV_Wheeled_01_base_F"):                                           { "Armored Fighting Vehicle" };
+		default                                                                                             { "Armored Personnel Carrier" };
 	};
 
 	_locationsArray = MissionSpawnMarkers;

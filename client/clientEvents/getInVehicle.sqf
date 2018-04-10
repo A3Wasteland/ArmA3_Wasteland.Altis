@@ -102,6 +102,7 @@ if (_veh isKindOf "Ejection_Seat_Base_F" && _oldVeh isKindOf "Plane") then
 
 		if (!alive _plane || !local _plane || !_locked) exitWith {};
 
+		_plane setVariable ["bis_ejected", nil, true];
 		{ _plane animate [_x, 0, true] } forEach ["canopy_hide", "ejection_seat_motion", "ejection_seat_hide"];
 		_plane setFuel _oldFuel;
 		[_plane, 1] call A3W_fnc_setLockState; // Unlock

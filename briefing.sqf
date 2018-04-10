@@ -19,6 +19,25 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.4c",
+"
+<br/>[Added] Tanks DLC
+<br/>[Added] 3rd column in vehicle store for parts
+<br/>[Added] AA jet variants
+<br/>[Added] HE cannons to gun-only jets
+<br/>[Added] Smoke launchers to tank driver and gunner seats
+<br/>[Changed] All hidden vehicle paintjobs now available
+<br/>[Changed] Improved crate and supply truck loot
+<br/>[Changed] Some store prices
+<br/>[Fixed] Mortar resupply bugs
+<br/>[Fixed] Selling of laser designators
+<br/>[Fixed] More money exploits
+<br/>[Fixed] Other minor changes and fixes
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.4b",
 "
 <br/>[Added] Artillery Strike in random mission crates

@@ -16,6 +16,7 @@
 	["Damage", "_damage"],
 	["Fuel", "_fuel"],
 	["HitPoints", "_hitPoints"],
+	["AnimPhases", "_animPhases"],
 	["OwnerUID", "_owner"],
 	["LockState", "_lockState"],
 	["Variables", "_variables"],

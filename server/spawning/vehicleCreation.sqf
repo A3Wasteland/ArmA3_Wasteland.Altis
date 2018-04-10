@@ -47,12 +47,19 @@ if (!isNil "_respawnSettings") then
 //Set Vehicle Attributes
 _vehicle setFuel (0.2 + random 0.1);
 
-// Reset armed Offroad to 1 mag
+// Reset Offroad HMG to 1-2 mags
 if (_vehicleType isKindOf "Offroad_01_armed_base_F") then
 {
-	_vehicle removeMagazinesTurret ["100Rnd_127x99_mag_Tracer_Yellow", [0]];
-	_vehicle addMagazineTurret ["100Rnd_127x99_mag_Tracer_Yellow", [0]];
-	reload _vehicle;
+	_vehicle setVehicleAmmo ((1 + floor random 2) / 4);
+};
+
+// Reset Offroad AT to 0-4 rockets 
+if (_vehicleType isKindOf "Offroad_01_AT_base_F") then
+{
+	{
+		_x params ["_mag", "_path", "_ammo"];
+		_vehicle setMagazineTurretAmmo [_mag, _path, floor random 3];
+	} forEach magazinesAllTurrets _vehicle;
 };
 
 //if (_type > 1) then { _vehicle setVehicleAmmo (random 1.0) };

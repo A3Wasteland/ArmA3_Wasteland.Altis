@@ -158,6 +158,13 @@ if (!isNil "_textures") then
 	};
 };
 
+if (!isNil "_animPhases") then
+{
+	private _animList = [];
+	{ _animList append [_x select 0, [0,1] select (_x select 1 >= 1)] } forEach _animPhases;
+	[_veh, false, _animList, true] call BIS_fnc_initVehicle;
+};
+
 if (!isNil "_owner") then
 {
 	_veh setVariable ["ownerUID", _owner, true];

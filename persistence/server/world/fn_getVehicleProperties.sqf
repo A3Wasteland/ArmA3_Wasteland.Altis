@@ -10,6 +10,7 @@ _veh = _this select 0;
 _flying = if (count _this > 1) then { _this select 1 } else { false };
 
 _class = typeOf _veh;
+private _vehCfg = configFile >> "CfgVehicles" >> _class;
 _purchasedVehicle = _veh getVariable ["A3W_purchasedVehicle", false];
 _missionVehicle = (_veh getVariable ["A3W_missionVehicle", false] && !(_veh getVariable ["R3F_LOG_disabled", false]));
 
@@ -28,6 +29,10 @@ _hpDamage = getAllHitPointsDamage _veh;
 		_hitPoints pushBack [_x, (_hpDamage select 2) select _forEachIndex];
 	};
 } forEach (_hpDamage select 0);
+
+// same display conditions as in BIS_fnc_garage (vehicle appearance editor)
+private _animPhases = (configProperties [_vehCfg >> "AnimationSources", "getText (_x >> 'displayName') != '' && {getNumber (_x >> 'scope') > 1 || !isNumber (_x >> 'scope')}"])
+                      apply { [configName _x, [0,1] select (_veh animationPhase configName _x >= 1)] };
 
 _variables = [];
 
@@ -115,7 +120,7 @@ else // texture paths
 	};
 
 	// vehicle has at least 2 random textures, save everything
-	if (count getArray (configFile >> "CfgVehicles" >> _class >> "textureList") >= 4) then
+	if (count getArray (_vehCfg >> "textureList") >= 4) then
 	{
 		{ _x = [_forEachIndex, _x]; call _addTexture } forEach getObjectTextures _veh;
 	}
@@ -152,7 +157,7 @@ _turretMags3 = _veh call fn_getPylonsAmmo;
 
 // deprecated
 /*
-_hasDoorGuns = isClass (configFile >> "CfgVehicles" >> _class >> "Turrets" >> "RightDoorGun");
+_hasDoorGuns = isClass (_vehCfg >> "Turrets" >> "RightDoorGun");
 
 _turrets = allTurrets [_veh, false];
 
@@ -210,6 +215,7 @@ _props =
 	["Fuel", _fuel],
 	["Damage", _damage],
 	["HitPoints", _hitPoints],
+	["AnimPhases", _animPhases],
 	["OwnerUID", _owner],
 	["LockState", _locked],
 	["Variables", _variables],

@@ -314,8 +314,8 @@ while {true} do
 		} forEach _mapCtrls;
 	};
 
-	// Improve revealing and aimlocking of targetted vehicles
-	{
+	// disabled due to lag - Improve revealing and aimlocking of targetted vehicles
+	/*{
 		if (!isNull _x) then
 		{
 			if ((group player) knowsAbout _x < 4) then
@@ -323,7 +323,7 @@ while {true} do
 				(group player) reveal [_x, 4];
 			};
 		};
-	} forEach [cursorTarget, cursorObject];
+	} forEach [cursorTarget, cursorObject];*/
 
 	if (_disableUavFeed && shownUavFeed) then
 	{

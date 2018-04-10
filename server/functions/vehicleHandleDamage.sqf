@@ -7,11 +7,12 @@
 #define COLLISION_DMG_SCALE 0.2
 #define PLANE_COLLISION_DMG_SCALE 0.5
 #define WHEEL_COLLISION_DMG_SCALE 0.05
-#define MRAP_MISSILE_DMG_SCALE 4.0 // Temporary fix for http://feedback.arma3.com/view.php?id=21743
+#define MRAP_MISSILE_DMG_SCALE 1.5
 #define HELI_MISSILE_DMG_SCALE 2.0
 #define PLANE_MISSILE_DMG_SCALE 1.5
 #define IFV_DMG_SCALE 1.5
 #define TANK_DMG_SCALE 2.0
+#define NYX_TRACK_DMG_SCALE 0.25
 
 params ["_vehicle", "_selection", "_damage", "_source", "_ammo", "", "_instigator", "_hitPoint"];
 
@@ -64,8 +65,17 @@ if (_selection != "?") then
 				};
 			};
 
+			// If vehicle is Nyx light tank then reduce track damage
+			case (_vehicle isKindOf "LT_01_base_F"):
+			{
+				if (_hitPoint in ["hitltrack","hitrtrack"]) then
+				{
+					_damage = ((_damage - _oldDamage) * NYX_TRACK_DMG_SCALE) + _oldDamage;
+				};
+			};
+
 			// If vehicle is tank then multiply damage
-			case (_vehicle isKindOf "Tank"):
+			case (_vehicle isKindOf "Tank"); //&& !(_vehicle isKindOf "LT_01_base_F")):
 			{
 				//if (_isMissile) then
 				//{

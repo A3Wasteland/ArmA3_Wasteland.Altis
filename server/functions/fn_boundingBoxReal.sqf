@@ -49,8 +49,8 @@ _realBoundingBoxes =
 	[
 		"Truck_F",
 		[
-			["Van_01_box_base_F", [[-1.2,-3.5,-1.9],[1.2,2.2,1.5]]],
-			["Van_01_fuel_base_F", [[-1.2,-3.3,-1.9],[1.2,2.2,1]]],
+			["Van_01_box_base_F", [[-1.2,-3.6,-2],[1.2,2,1.5]]],
+			["Van_01_fuel_base_F", [[-1.2,-3.6,-1.9],[1.2,2,1]]],
 			["Van_01_base_F", [[-1.2,-3.5,-1.9],[1.2,2.2,0.8]]],
 			["Van_02_base_F", [[-1.2,-3.5,-1.7],[1.2,4.2,1.1]]],
 			["B_Truck_01_ammo_F", [[-1.2,-4.9,-1.9],[1.3,5,1.6]]],
@@ -59,15 +59,16 @@ _realBoundingBoxes =
 			["B_Truck_01_medical_F", [[-1.4,-5,-2.2],[1.2,5.1,1.3]]],
 			["B_Truck_01_Repair_F", [[-1.3,-5.8,-2.3],[1.3,5.2,2.2]]],
 			["B_Truck_01_mover_F", [[-1.2,-4.7,-1.9],[1.3,4.3,1.1]]],
-			["Truck_01_base_F", [[-1.3,-5.1,-2.3],[1.4,5.1,1.3]]],
-			["O_Truck_02_ammo_F", [[-1.4,-4,-2.4],[1.3,4.2,1]]],
+			["Truck_01_base_F", [[-1.3,-5,-2.3],[1.4,5.1,1.3]]],
+			["O_Truck_02_ammo_F", [[-1.4,-4,-2.4],[1.3,4.1,1]]],
 			["O_Truck_02_medical_F", [[-1.4,-4,-2.4],[1.3,4,1]]],
-			["O_Truck_02_box_F", [[-1.4,-4,-2.4],[1.3,4.2,1]]],
+			["O_Truck_02_box_F", [[-1.4,-4,-2.4],[1.3,4.1,1]]],
 			["O_Truck_02_fuel_F", [[-1.3,-4,-2.4],[1.3,4,0.9]]],
-			["I_Truck_02_ammo_F", [[-1.4,-4,-2.4],[1.3,4.2,1]]],
+			["I_Truck_02_ammo_F", [[-1.4,-4,-2.4],[1.3,4.1,1]]],
 			["I_Truck_02_medical_F", [[-1.4,-4,-2.4],[1.3,4,1]]],
-			["I_Truck_02_box_F", [[-1.4,-4,-2.4],[1.3,4.2,1]]],
+			["I_Truck_02_box_F", [[-1.4,-4,-2.4],[1.3,4.1,1]]],
 			["I_Truck_02_fuel_F", [[-1.3,-4,-2.4],[1.3,4,0.9]]],
+			["Truck_02_MRL_base_F", [[-1.5,-4,-2.6],[1.4,4,1]]],
 			["Truck_02_base_F", [[-1.3,-4,-2.4],[1.3,4,1]]],
 			["O_Truck_03_ammo_F", [[-1.7,-5.3,-2.1],[1.7,3.5,1.4]]],
 			["O_Truck_03_device_F", [[-1.7,-5.3,-2.1],[1.7,3.5,1.2]]],
@@ -80,19 +81,25 @@ _realBoundingBoxes =
 	[
 		"Tank_F",
 		[
-			["B_APC_Tracked_01_AA_F", [[-2,-4.9,-2.8],[2,2.7,0.7]]],
-			["B_APC_Tracked_01_CRV_F", [[-2.1,-4.9,-2.4],[2,3.8,0.8]]],
-			["APC_Tracked_01_base_F", [[-2,-4.9,-2.4],[2,2.6,0.6]]],
-			["O_APC_Tracked_02_AA_F", [[-1.9,-5,-2.7],[2,2.5,0.5]]],
-			["APC_Tracked_02_base_F", [[-1.9,-5,-2.4],[2,2.5,1.1]]],
-			["APC_Tracked_03_base_F", [[-1.7,-3.8,-2.4],[1.7,2.9,0.8]]],
+			["LT_01_AT_base_F", [[-1.6,-2.7,-2],[1.2,2.9,0.9]]],
+			["LT_01_AA_base_F", [[-1.6,-2.7,-2],[1.2,2.9,0.9]]],
+			["LT_01_cannon_base_F", [[-1.6,-2.6,-1.9],[1.2,2.7,0.6]]],
+			["LT_01_base_F", [[-1.6,-2.6,-1.9],[1.2,2.7,0.8]]],
+			["B_APC_Tracked_01_AA_F", [[-2,-4.8,-2.8],[2,2.7,0.7]]],
+			["B_APC_Tracked_01_CRV_F", [[-2.1,-4.8,-2.4],[2,3.9,0.8]]],
+			["APC_Tracked_01_base_F", [[-2,-4.8,-2.4],[2,2.6,0.6]]],
+			["O_APC_Tracked_02_AA_F", [[-2.2,-5.4,-2.7],[2.2,2.9,0.5]]],
+			["APC_Tracked_02_base_F", [[-2.2,-5.4,-2.3],[2.2,2.9,1.1]]],
+			["APC_Tracked_03_base_F", [[-1.9,-4.2,-2.4],[2,3.1,0.7]]],
 			["MBT_01_arty_base_F", [[-2,-5.6,-2.8],[2.1,5.6,1.1]]],
-			["MBT_01_mlrs_base_F", [[-1.9,-4.5,-1.9],[2,2.9,2.2]]],
-			["B_MBT_01_TUSK_F", [[-1.9,-4.5,-2.6],[2,4.2,0.3]]],
-			["MBT_01_base_F", [[-1.9,-4.5,-2.4],[2,4.2,0.3]]],
+			["MBT_01_mlrs_base_F", [[-1.3,-4.6,-1.9],[2.6,2.9,2.2]]],
+			["B_MBT_01_TUSK_F", [[-1.9,-4.6,-2.7],[2,4.2,0.4]]],
+			["MBT_01_base_F", [[-1.9,-4.6,-2.6],[2,4.2,0.4]]],
 			["MBT_02_arty_base_F", [[-2,-5.5,-2.7],[2.1,5.7,0.9]]],
 			["MBT_02_base_F", [[-1.8,-5,-2.2],[1.8,5.1,0.8]]],
-			["MBT_03_base_F", [[-2.2,-5.8,-2.5],[2.2,5.2,0.8]]]
+			["MBT_03_base_F", [[-2.2,-5.7,-2.6],[2.2,5.3,0.8]]],
+			["MBT_04_command_base_F", [[-2.1,-5.7,-2.6],[1.9,5.2,0.9]]],
+			["MBT_04_base_F", [[-2.2,-5.7,-2.3],[2.1,5.2,1.4]]]
 		]
 	],
 	[
@@ -101,13 +108,19 @@ _realBoundingBoxes =
 			["Kart_01_Base_F", [[-0.6,-0.9,-1.1],[0.7,1.2,-0.4]]],
 			["Quadbike_01_base_F", [[-0.6,-1.2,-1.7],[0.6,1.1,-0.4]]],
 			["Hatchback_01_base_F", [[-1,-2.6,-1.5],[0.9,2.3,0.3]]],
-			["Offroad_01_armed_base_F", [[-1.1,-2.9,-2.3],[1.1,2.9,0.3]]],
-			["Offroad_01_repair_base_F", [[-1.1,-3,-1.7],[1.1,2.7,0.5]]],
-			["Offroad_01_base_F", [[-1.1,-3,-1.7],[1.1,2.8,0.5]]],
+			["Offroad_01_armed_base_F", [[-1.3,-2.9,-2.3],[1.2,2.9,0.3]]],
+			["Offroad_01_repair_base_F", [[-1.1,-3,-1.7],[1.1,2.8,0.6]]],
+			["Offroad_01_base_F", [[-1.3,-3,-1.7],[1.2,2.8,0.6]]],
+			["Offroad_02_AT_base_F", [[-1.1,-1.8,-1.6],[1,2.4,1]]],
+			["Offroad_02_LMG_base_F", [[-1.1,-1.8,-2.2],[1,2.4,0.3]]],
 			["Offroad_02_base_F", [[-1.1,-1.8,-1.6],[1,2.4,0.5]]],
 			["SUV_01_base_F", [[-1.1,-3,-1.7],[1.1,2.4,0.4]]],
+			["UGV_01_rcws_base_F", [[-0.8,-2.1,-2.2],[1.7,2.1,0.1]]],
+			["UGV_01_base_F", [[-0.8,-2.1,-2.2],[1.7,2.1,-0.3]]],
+			["LSV_01_AT_base_F", [[-1.1,-2.5,-1.9],[1.1,2.3,0.7]]],
 			["LSV_01_armed_base_F", [[-1.1,-2.5,-2.2],[1.1,2.3,-0.2]]],
 			["LSV_01_base_F", [[-1.1,-2.1,-2.2],[1.1,2.3,-0.2]]],
+			["LSV_02_AT_base_F", [[-1.2,-2.5,-1.7],[0.9,2.4,0.8]]],
 			["LSV_02_armed_base_F", [[-1.2,-2.5,-1.7],[0.9,2.4,0.8]]],
 			["LSV_02_base_F", [[-1.2,-2.5,-1.7],[0.9,2.4,0.4]]],
 			["MRAP_01_gmg_base_F", [[-1.3,-4.7,-2.9],[1.3,1.7,0.9]]],
@@ -116,11 +129,11 @@ _realBoundingBoxes =
 			["MRAP_02_base_F", [[-1.6,-4.9,-2.4],[1.6,1.7,0.8]]],
 			["MRAP_03_hmg_base_F", [[-1.4,-3.3,-2.4],[1.4,2.6,0.5]]],
 			["MRAP_03_base_F", [[-1.4,-3.3,-1.8],[1.4,2.6,1]]],
-			["APC_Wheeled_01_base_F", [[-1.5,-4.8,-2.6],[1.5,2.8,1]]],
-			["APC_Wheeled_02_base_F", [[-1.2,-4.6,-2.6],[1.8,1.9,0.7]]],
-			["APC_Wheeled_03_base_F", [[-0.9,-5.1,-2.6],[1.9,2.9,1.2]]],
-			["UGV_01_rcws_base_F", [[-0.8,-2.1,-2],[1.7,2.1,0.1]]],
-			["UGV_01_base_F", [[-0.8,-2.1,-2],[1.7,2.1,-0.3]]]
+			["APC_Wheeled_01_base_F", [[-1.9,-5,-2.5],[1.9,3.4,0.9]]],
+			["APC_Wheeled_02_base_F", [[-1.7,-4.8,-2.6],[2.1,2.1,0.7]]],
+			["APC_Wheeled_03_base_F", [[-1.4,-5.1,-2.7],[2.3,3.4,1.2]]],
+			["AFV_Wheeled_01_up_base_F", [[-1.9,-4.7,-2.4],[1.9,3.9,1.1]]],
+			["AFV_Wheeled_01_base_F", [[-1.9,-4.7,-2.1],[1.9,3.9,0.5]]]
 		]
 	],
 	[
@@ -129,10 +142,9 @@ _realBoundingBoxes =
 			["SDV_01_base_F", [[-1,-4.1,-1.9],[1,2,1]]],
 			["Scooter_Transport_01_base_F", [[-0.6,-1.4,-1.5],[0.6,1.9,-0.2]]],
 			["Rubber_duck_base_F", [[-1.1,-2.5,-1.5],[1.1,2.4,-0.1]]],
-			["C_Boat_Civil_01_police_F", [[-1,-3.4,-1.6],[1,3.6,0.3]]],
 			["Boat_Civil_01_base_F", [[-1,-3.4,-1.6],[1,3.6,0.3]]],
-			["Boat_Transport_02_base_F", [[-1.5,-3.5,-1.9],[1.5,3.5,0.7]]],
-			["Boat_Armed_01_base_F", [[-1.9,-5.5,-3.5],[2,6.4,1.2]]]
+			["Boat_Transport_02_base_F", [[-1.5,-3.3,-1.9],[1.5,3.8,0.7]]],
+			["Boat_Armed_01_base_F", [[-1.8,-5.5,-3.5],[2,6.4,1.2]]]
 		]
 	],
 	[
@@ -152,7 +164,7 @@ _realBoundingBoxes =
 			["Plane_Fighter_02_Base_F", [[-7.6,-10.7,-2.4],[7.7,11.1,2.4]]],
 			["Plane_Fighter_03_base_F", [[-5,-6.4,-2.5],[5.1,6.5,2.4]]],
 			["Plane_Fighter_04_Base_F", [[-4.2,-6.9,-2.4],[4.2,7.8,2.3]]],
-			["Plane_CAS_01_base_F", [[-8.8,-7.8,-2.6],[8.8,7.7,2.7]]],
+			["Plane_CAS_01_base_F", [[-8.8,-7.8,-2.3],[8.8,7.7,2.8]]],
 			["Plane_CAS_02_base_F", [[-6.5,-8.1,-3.1],[6.5,7,3]]],
 			["VTOL_01_base_F", [[-18.1,-13.5,-6.8],[18.1,13.4,4.1]]],
 			["VTOL_02_base_F", [[-8.2,-8.3,-3.4],[8.2,8.4,3.5]]],
@@ -185,7 +197,7 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 // Here is the intersect scanner, which is used in the editor. The resulting array is copied into the clipboard.
 
 /*
-[] spawn
+0 spawn
 {
 	_precision = 0.1; comment "change this for higher/lower precision";
 	_lineColor1 = [0,1,0,1];
@@ -251,6 +263,7 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["I_Truck_02_medical_F", "I_Truck_02_medical_F"],
 		["I_Truck_02_box_F", "I_Truck_02_box_F"],
 		["I_Truck_02_fuel_F", "I_Truck_02_fuel_F"],
+		["I_Truck_02_MRL_F", "Truck_02_MRL_base_F"],
 		["I_Truck_02_covered_F", "Truck_02_base_F"],
 		["O_Truck_03_ammo_F", "O_Truck_03_ammo_F"],
 		["O_Truck_03_device_F", "O_Truck_03_device_F"],
@@ -259,6 +272,10 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["O_Truck_03_repair_F", "O_Truck_03_repair_F"],
 		["O_Truck_03_covered_F", "Truck_03_base_F"],
 
+		["I_LT_01_AT_F", "LT_01_AT_base_F"],
+		["I_LT_01_AA_F", "LT_01_AA_base_F"],
+		["I_LT_01_cannon_F", "LT_01_cannon_base_F"],
+		["I_LT_01_scout_F", "LT_01_base_F"],
 		["B_APC_Tracked_01_AA_F", "B_APC_Tracked_01_AA_F"],
 		["B_APC_Tracked_01_CRV_F", "B_APC_Tracked_01_CRV_F"],
 		["B_APC_Tracked_01_rcws_F", "APC_Tracked_01_base_F"],
@@ -272,6 +289,8 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["O_MBT_02_arty_F", "MBT_02_arty_base_F"],
 		["O_MBT_02_cannon_F", "MBT_02_base_F"],
 		["I_MBT_03_cannon_F", "MBT_03_base_F"],
+		["O_MBT_04_command_F", "MBT_04_command_base_F"],
+		["O_MBT_04_cannon_F", "MBT_04_base_F"],
 
 		["C_Kart_01_F", "Kart_01_Base_F"],
 		["C_Quadbike_01_F", "Quadbike_01_base_F"],
@@ -279,10 +298,16 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["B_G_Offroad_01_armed_F", "Offroad_01_armed_base_F"],
 		["C_Offroad_01_repair_F", "Offroad_01_repair_base_F"],
 		["C_Offroad_01_F", "Offroad_01_base_F"],
+		["I_C_Offroad_02_AT_F", "Offroad_02_AT_base_F"],
+		["I_C_Offroad_02_LMG_F", "Offroad_02_LMG_base_F"],
 		["C_Offroad_02_unarmed_F", "Offroad_02_base_F"],
 		["C_SUV_01_F", "SUV_01_base_F"],
-		["B_LSV_01_armed_F", "LSV_01_armed_base_F"],
-		["B_LSV_01_unarmed_F", "LSV_01_base_F"],
+		["B_UGV_01_rcws_F", "UGV_01_rcws_base_F"],
+		["B_UGV_01_F", "UGV_01_base_F"],
+		["B_T_LSV_01_AT_F", "LSV_01_AT_base_F"],
+		["B_T_LSV_01_armed_F", "LSV_01_armed_base_F"],
+		["B_T_LSV_01_unarmed_F", "LSV_01_base_F"],
+		["O_T_LSV_02_AT_F", "LSV_02_AT_base_F"],
 		["O_T_LSV_02_armed_F", "LSV_02_armed_base_F"],
 		["O_T_LSV_02_unarmed_F", "LSV_02_base_F"],
 		["B_MRAP_01_gmg_F", "MRAP_01_gmg_base_F"],
@@ -292,15 +317,14 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["I_MRAP_03_hmg_F", "MRAP_03_hmg_base_F"],
 		["I_MRAP_03_F", "MRAP_03_base_F"],
 		["B_APC_Wheeled_01_cannon_F", "APC_Wheeled_01_base_F"],
-		["O_APC_Wheeled_02_rcws_F", "APC_Wheeled_02_base_F"],
+		["O_APC_Wheeled_02_rcws_v2_F", "APC_Wheeled_02_base_F"],
 		["I_APC_Wheeled_03_cannon_F", "APC_Wheeled_03_base_F"],
-		["B_UGV_01_rcws_F", "UGV_01_rcws_base_F"],
-		["B_UGV_01_F", "UGV_01_base_F"],
+		["B_AFV_Wheeled_01_up_cannon_F", "AFV_Wheeled_01_up_base_F"],
+		["B_AFV_Wheeled_01_cannon_F", "AFV_Wheeled_01_base_F"],
 
 		["B_SDV_01_F", "SDV_01_base_F"],
 		["C_Scooter_Transport_01_F", "Scooter_Transport_01_base_F"],
 		["C_Rubberboat", "Rubber_duck_base_F"],
-		["C_Boat_Civil_01_police_F", "C_Boat_Civil_01_police_F"],
 		["C_Boat_Civil_01_F", "Boat_Civil_01_base_F"],
 		["C_Boat_Transport_02_F", "Boat_Transport_02_base_F"],
 		["B_Boat_Armed_01_minigun_F", "Boat_Armed_01_base_F"],
@@ -347,6 +371,15 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		_kind = _x select 1;
 
 		_vehicle = createVehicle [_class, _pos, [], 0, "None"];
+
+		{
+			_vehicle animate [configName _x, 0, true];
+		} forEach configProperties [configFile >> "CfgVehicles" >> _class >> "AnimationSources", "(configName _x) select [0,4] == 'hide'"];
+
+		{
+			_vehicle animate [configName _x, 1, true];
+		} forEach configProperties [configFile >> "CfgVehicles" >> _class >> "AnimationSources", "(configName _x) select [0,4] == 'show'"];
+
 		_vehicle setDir _dir;
 		_vehicle enableSimulation false;
 

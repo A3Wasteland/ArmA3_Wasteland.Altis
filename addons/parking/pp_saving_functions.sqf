@@ -72,9 +72,9 @@ if (isServer) then {
       private _varVals = [_vehData, _varNames] call fn_preprocessSavedData;
 
       private ["_veh", "_hoursAlive", "_hoursUnused"];
-      private (_varVals apply {_x select 0});
-
-      { (_x select 1) call compile format ["%1 = _this", _x select 0] } forEach _varVals;
+      //private (_varVals apply {_x select 0});
+      //{ (_x select 1) call compile format ["%1 = _this", _x select 0] } forEach _varVals;
+      [] params _varVals; // automagic assignation
 
       private _lockState = [1,2] select (["A3W_vehicleLocking"] call isConfigOn);
 

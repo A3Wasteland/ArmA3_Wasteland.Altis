@@ -51,7 +51,11 @@ _resupplyThread = [_vehicle, _unit] spawn
 		};
 	} forEach (call allVehStoreVehicles + call staticGunsArray);
 
-	_titleText = { titleText [_this, "PLAIN DOWN", ((REARM_TIME_SLICE max 1) / 10) max 0.3] };
+	_titleText =
+	{
+		params ["_text", ["_time",((REARM_TIME_SLICE max 1) / 10) max 0.3,[0]]];
+		titleText [_text, "PLAIN DOWN", _time];
+	};
 
 	_checkAbortConditions =
 	{
@@ -206,6 +210,7 @@ _resupplyThread = [_vehicle, _unit] spawn
 		call _checkAbortConditions;
 
 		private _pathArrs = [];
+		private _notFull = false;
 
 		// Collect turret mag data
 		{
@@ -223,6 +228,7 @@ _resupplyThread = [_vehicle, _unit] spawn
 				if (_ammo < getNumber (configFile >> "CfgMagazines" >> _mag >> "count")) then
 				{
 					(_pathArr select _index) set [2, true]; // mark mag for reload
+					_notFull = true;
 				};
 
 				if (_new) then { _pathArrs pushBack [_path, _pathArr] };
@@ -232,7 +238,7 @@ _resupplyThread = [_vehicle, _unit] spawn
 		_checkDone = true;
 
 		// Reload turret mags
-		{
+		/*{
 			_x params ["_path", "_magPairs"];
 
 			{
@@ -274,7 +280,7 @@ _resupplyThread = [_vehicle, _unit] spawn
 					sleep (REARM_TIME_SLICE / 2);
 				};
 			} forEach _magPairs;
-		} forEach _pathArrs;
+		} forEach _pathArrs;*/
 
 		_pylonPaths = (configProperties [_vehCfg >> "Components" >> "TransportPylonsComponent" >> "Pylons", "isClass _x"]) apply {getArray (_x >> "turret")};
 
@@ -285,7 +291,9 @@ _resupplyThread = [_vehicle, _unit] spawn
 
 				if (_vehicle ammoOnPylon (_forEachIndex + 1) < getNumber (_magCfg >> "count")) then
 				{
-					call _checkAbortConditions;
+					_notFull = true;
+
+					/*call _checkAbortConditions;
 
 					_text = format ["Reloading %1...", getText (_magCfg >> "displayName")];
 					_text call _titleText;
@@ -295,11 +303,24 @@ _resupplyThread = [_vehicle, _unit] spawn
 
 					_vehicle setPylonLoadOut [_forEachIndex + 1, _x, true, _pylonPaths select _forEachIndex];
 
-					sleep (REARM_TIME_SLICE / 2);
+					sleep (REARM_TIME_SLICE / 2);*/
 				};
 			};
 		} forEach getPylonMagazines _vehicle;
 
+		// let's skip all the above reload bullshit, and instead just put a 5-sec sleep then setVehicleAmmo 1, much simpler
+		if (_notFull) then
+		{
+			call _checkAbortConditions;
+
+			_text = "Reloading...";
+			[_text, REARM_TIME_SLICE / 10] call _titleText;
+
+			sleep REARM_TIME_SLICE;
+			call _checkAbortConditions;
+		};
+
+		_vehicle setVehicleAmmo 1;
 		[_vehicle, false, true, true] call A3W_fnc_setVehicleLoadout;
 
 		_checkDone = true;
@@ -360,6 +381,7 @@ _resupplyThread = [_vehicle, _unit] spawn
 		// reset ejection seat crap
 		if (_vehicle isKindOf "Plane") then
 		{
+			_vehicle setVariable ["bis_ejected", nil, true];
 			{ _vehicle animate [_x, 0, true] } forEach ["canopy_hide", "ejection_seat_motion", "ejection_seat_hide"];
 		};
 

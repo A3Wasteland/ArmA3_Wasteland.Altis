@@ -25,7 +25,8 @@ _exclObjectIDs = [];
 {
 	private ["_allowed", "_obj", "_objectID", "_class", "_pos", "_dir", "_locked", "_damage", "_allowDamage", "_owner", "_variables", "_weapons", "_magazines", "_items", "_backpacks", "_turretMags", "_ammoCargo", "_fuelCargo", "_repairCargo", "_hoursAlive", "_valid"];
 
-	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
+	//{ (_x select 1) call compile format ["%1 = _this", _x select 0] } forEach _x;
+	[] params _x; // automagic assignation
 
 	if (isNil "_locked") then { _locked = 1 };
 	if (isNil "_hoursAlive") then { _hoursAlive = 0 };

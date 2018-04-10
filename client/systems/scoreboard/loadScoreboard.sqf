@@ -26,16 +26,16 @@ _code =
 		_civColor = ["Map", "Civilian"] call BIS_fnc_displayColorGet;
 		_defColor = [0,0,0,1]; //["Map", "Unknown"] call BIS_fnc_displayColorGet;
 
-		_allPlayers = allPlayers;
+		_allPlayers = allPlayers - entities "HeadlessClient_F";
 
 		// Exclude headless
-		for "_i" from (count _allPlayers - 1) to 0 step -1 do
+		/*for "_i" from (count _allPlayers - 1) to 0 step -1 do
 		{
 			if (side (_allPlayers select _i) == sideLogic) then
 			{
 				_allPlayers deleteAt _i;
 			};
-		};
+		};*/
 
 		_scoreOrdering = { ((([_x, "playerKills"] call fn_getScore) - ([_x, "teamKills"] call fn_getScore)) * 1000) + ([_x, "aiKills"] call fn_getScore) };
 		_players = [_allPlayers, [], _scoreOrdering, "DESCEND"] call BIS_fnc_sortBy;

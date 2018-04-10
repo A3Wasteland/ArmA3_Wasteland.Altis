@@ -95,6 +95,9 @@ class w_RscText {
 	sizeEx = 0.025;
 	h = 0.25;
 	text = "";
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscTextCenter : w_RscText
@@ -123,6 +126,9 @@ class w_RscStructuredText
 	text = "";
 	size = 0.03921;
 	shadow = 2;
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscStructuredTextLeft
@@ -146,6 +152,9 @@ class w_RscStructuredTextLeft
 	text = "";
 	size = 0.03921;
 	shadow = 2;
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscBackground
@@ -159,6 +168,9 @@ class w_RscBackground
 	colorText[]       = {1, 1, 1, 1};
 	font              = "PuristaMedium";
 	sizeEx            = 0.04;
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscEdit
@@ -178,6 +190,9 @@ class w_RscEdit
 
 	autocomplete = false;
 	colorSelection[] = {0,0,0,1};
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscListBox
@@ -191,10 +206,10 @@ class w_RscListBox
 	colorText[] = {1, 1, 1, 1};
 	colorDisabled[] = {1, 1, 1, 0.25};
 	colorScrollbar[] = {1, 0, 0, 0};
-	colorSelect[] = {0, 0, 0, 1};
-	colorSelect2[] = {0, 0, 0, 1};
-	colorSelectBackground[] = {0.95, 0.95, 0.95, 1};
-	colorSelectBackground2[] = {1, 1, 1, 0.5};
+	colorSelect[] = {0, 0, 0, 1}; // primary
+	colorSelect2[] = {0, 0, 0, 1}; // blink
+	colorSelectBackground[] = {0.95, 0.95, 0.95, 1}; // primary
+	colorSelectBackground2[] = {1, 1, 1, 0.5}; // blink
 	colorBackground[] = {0, 0, 0, 0.3};
 	soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect", 0.09, 1};
 	autoScrollSpeed = -1;
@@ -204,7 +219,7 @@ class w_RscListBox
 	arrowFull = "#(argb,8,8,3)color(1,1,1,1)";
 	colorPicture[] = {1, 1, 1, 1};
 	colorPictureSelected[] = {1, 1, 1, 1};
-	colorPictudeDisabled[] = {1, 1, 1, 0.25};
+	colorPictureDisabled[] = {1, 1, 1, 0.25};
 	tooltipColorText[] = {1, 1, 1, 1};
 	tooltipColorBox[] = {1, 1, 1, 1};
 	tooltipColorShade[] = {0, 0, 0, 0.65};
@@ -212,9 +227,8 @@ class w_RscListBox
 	sizeEx = 0.035;
 	shadow = 0;
 	colorShadow[] = {0, 0, 0, 0.5};
-	period = 0.8;
+	period = 0.75; // blink period
 	maxHistoryDelay = 1;
-	colorPictureDisabled[] = {1, 1, 1, 1};
 
 	class ListScrollBar
 	{
@@ -247,7 +261,9 @@ class w_RscPicture
 	w = 0.2; h = 0.2;
 
 	text = "";
-
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscButtonBase {
@@ -332,6 +348,10 @@ class w_RscButtonBase {
 		align = "left";
 
 	};
+
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscButton
@@ -370,6 +390,9 @@ class w_RscButton
 	offsetPressedX = 0.002;
 	offsetPressedY = 0.002;
 	borderSize = 0;
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscCombo {
@@ -415,6 +438,10 @@ class w_RscCombo {
 		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
 		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
 	};
+
+	tooltipColorText[] = {1, 1, 1, 1};
+	tooltipColorBox[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 };
 
 class w_RscCheckBox
@@ -447,7 +474,7 @@ class w_RscCheckBox
 	textureDisabledUnchecked = "\A3\Ui_f\data\GUI\RscCommon\RscCheckBox\CheckBox_unchecked_ca.paa";
 	tooltipColorText[] = {1, 1, 1, 1};
 	tooltipColorBox[] = {1, 1, 1, 1};
-	tooltipColorShade[] = {1, 1, 1, 1};
+	tooltipColorShade[] = {0, 0, 0, 0.65};
 	soundEnter[] = {1, 1, 1, 1};
 	soundPush[] = {1, 1, 1, 1};
 	soundClick[] = {1, 1, 1, 1};

@@ -7,19 +7,29 @@
 #include "defines.sqf"
 
 private _forEachSleep = [0, 0.01] select (_savingInterval > 0);
-
-uiSleep _savingInterval;
-
-private _objCount = 0;
-private _currObjectIDs = [];
-private _newObjectIDs = [];
 private "_oldIDs";
 
-_currObjectIDs append A3W_objectIDs;
+SLEEP_REALTIME(_savingInterval);
 
+if ((_timeSavingOn && !isNil "A3W_timeSavingInitDone") || (!_timeSavingOn && _weatherSavingOn)) then
+{
+	call fn_saveTime;
+};
+
+if (_warchestMoneySavingOn) then
+{
+	call fn_saveWarchestMoney;
+};
+
+// Object saving
 if (_objectSavingOn) then
 {
+	private _objCount = 0;
+	private _currObjectIDs = [];
+	private _newObjectIDs = [];
 	private ["_obj", "_objID"];
+
+	_currObjectIDs append A3W_objectIDs;
 
 	{
 		_obj = _x;
@@ -42,26 +52,16 @@ if (_objectSavingOn) then
 	if (_isHC) then { "A3W_objectIDs" call _hcSaveProfileVar };
 
 	diag_log format ["A3W - %1 baseparts and objects have been saved with %2", _objCount, call A3W_savingMethodName];
+
+	_oldIDs = _currObjectIDs - _newObjectIDs;
+	A3W_objectIDs = A3W_objectIDs - _oldIDs;
+
+	[_oldIDs, _objCount] call fn_postObjectSave;
+
+	if (_isHC) then { "A3W_objectIDs" call _hcSaveProfileVar };
 };
 
-if (_warchestMoneySavingOn) then
-{
-	call fn_saveWarchestMoney;
-};
-
-if ((_timeSavingOn && !isNil "A3W_timeSavingInitDone") || (!_timeSavingOn && _weatherSavingOn)) then
-{
-	call fn_saveTime;
-};
-
-_oldIDs = _currObjectIDs - _newObjectIDs;
-A3W_objectIDs = A3W_objectIDs - _oldIDs;
-
-[_oldIDs, _objCount] call fn_postObjectSave;
-
-if (_isHC) then { "A3W_objectIDs" call _hcSaveProfileVar };
-
-uiSleep _savingInterval;
+SLEEP_REALTIME(_savingInterval);
 
 // Vehicle saving
 if (_vehicleSavingOn) then
@@ -101,7 +101,7 @@ if (_vehicleSavingOn) then
 	[_oldIDs, _vehCount] call fn_postVehicleSave;
 };
 
-uiSleep _savingInterval;
+SLEEP_REALTIME(_savingInterval);
 
 // Mine saving
 if (_mineSavingOn) then

@@ -17,6 +17,8 @@ if (!unitIsUAV _veh) then
 	{
 		[_veh, 1] call A3W_fnc_setLockState; // Unlock
 	};
+
+	call fn_disableDriverAssist;
 };
 
 { _veh removeAction _x } forEach (_veh getVariable ["A3W_serviceBeaconActions", []]);

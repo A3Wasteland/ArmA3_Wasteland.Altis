@@ -21,7 +21,8 @@ _exclMineIDs = [];
 {
 	private ["_mine", "_dummy", "_mineID", "_class", "_pos", "_dir", "_damage", "_owner", "_variables", "_hoursAlive", "_valid"];
 
-	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
+	//{ (_x select 1) call compile format ["%1 = _this", _x select 0] } forEach _x;
+	[] params _x; // automagic assignation
 
 	if (isNil "_hoursAlive") then { _hoursAlive = 0 };
 	_valid = false;

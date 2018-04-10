@@ -40,7 +40,7 @@ storeSellingHandle = [] spawn
 		{
 			_sellValue = GET_HALF_PRICE(_x select 2);
 		};
-	} forEach (call allGunStoreFirearms);
+	} forEach (call allGunStoreFirearms + call genItemArray);
 
 	_magsToSell = [];
 

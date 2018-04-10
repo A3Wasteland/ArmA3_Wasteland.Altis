@@ -164,11 +164,12 @@ A3W_mapDraw_thread = [] spawn
 				};
 			} forEach _playableUnits;
 
-			if (!_mapIconsEnabled) then
-			{
+			// defaullt icons always disabled via disableMapIndicators
+			//if (!_mapIconsEnabled) then
+			//{
 				_veh = vehicle player;
 				_newArrayIcons pushBack [["\A3\ui_f\Data\IGUI\Cfg\IslandMap\iconplayer_ca.paa", [1,0,0,1], nil, 26, 26, getDirVisual _veh], _veh, A3W_mapDraw_iconPos]; // draw player circle
-			};
+			//};
 		};
 
 		A3W_mapDraw_arrIcons = _newArrayIcons;

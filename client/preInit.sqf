@@ -13,6 +13,7 @@ if (!hasInterface) exitWith {};
 } forEach getArray (missionConfigFile >> "disableChannels");
 
 2 enableChannel false; // force disable useless command channel for everyone
+disableMapIndicators [true,true,true,false]; // simulate difficulty option mapContent=0;
 
 0 spawn
 {

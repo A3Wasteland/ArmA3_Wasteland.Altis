@@ -5,3 +5,4 @@
 //	@file Author: AgentRev
 
 #define STICKY_CHARGE_DUMMY_OBJ "Sign_Sphere10cm_F"
+#define SLEEP_REALTIME(SECS) if (hasInterface) then { sleep (SECS) } else { uiSleep (SECS) }

@@ -4,12 +4,14 @@
 //	@file Name: init.sqf
 //	@file Author: Torndeco, AgentRev
 
-#define MIN_DB_VERSION 2.06
+#define MIN_DB_VERSION 2.07
 
 private ["_lock", "_return", "_result", "_setupDir", "_serverID", "_env", "_mapID"];
 _lock = (["A3W_extDB_Lock", 1] call getPublicVar != 0);
 
 // uiNamespace is persistent across mission restarts (but not game restarts)
+
+private _dbError = { diag_log _this; [_this, "Error"] remoteExec ["BIS_fnc_guiMessage", 0, true] };
 
  _return = if (isNil {uiNamespace getVariable "A3W_extDB_databaseID"} || !_lock) then
 {
@@ -18,20 +20,20 @@ _lock = (["A3W_extDB_Lock", 1] call getPublicVar != 0);
 	if (isNil {uiNamespace getVariable "A3W_extDB_databaseID"}) then
 	{
 		_result = parseSimpleArray ("extDB3" callExtension format ["9:ADD_DATABASE:%1", call A3W_extDB_ConfigName]);
-		if (_result select 0 == 0) exitWith { diag_log format ["[extDB3] ███ Database error! %1", _result]; false };
+		if (_result select 0 == 0) exitWith { (format ["[extDB3] ███ Database error, check @extDB3\logs -- %1", _result]) call _dbError; false };
 	};
 
 	A3W_extDB_databaseID = compileFinal str floor random 999997;
 	A3W_extDB_miscID = compileFinal str (call A3W_extDB_databaseID + 1);
 
 	_result = parseSimpleArray ("extDB3" callExtension format ["9:ADD_DATABASE_PROTOCOL:%1:SQL_CUSTOM:%2:%3", call A3W_extDB_ConfigName, call A3W_extDB_databaseID, call A3W_extDB_IniName]);
-	if (_result select 0 == 0) exitWith { diag_log format ["[extDB3] ███ SQL_CUSTOM Protocol error! %1", _result]; false };
+	if (_result select 0 == 0) exitWith { (format ["[extDB3] ███ SQL_CUSTOM Protocol error, check @extDB3\logs -- %1", _result]) call _dbError; false };
 	diag_log "[extDB3] Initialized SQL_CUSTOM protocol";
 
 	if (["A3W_extDB_Misc"] call isConfigOn) then
 	{
 		_result = parseSimpleArray ("extDB3" callExtension format ["9:ADD_PROTOCOL:MISC:%1", call A3W_extDB_miscID]);
-		if (_result select 0 == 0) exitWith { diag_log format ["[extDB3] ███ MISC Protocol error! %1", _result]; false };
+		if (_result select 0 == 0) exitWith { (format ["[extDB3] ███ MISC Protocol error, check @extDB3\logs -- %1", _result]) call _dbError; false };
 		diag_log "[extDB3] Initialized MISC protocol";
 	};
 
@@ -69,7 +71,7 @@ if (_return) then
 	};
 
 	_result = (["getDBVersion", 2] call extDB_Database_async) select 0;
-	if (_result < MIN_DB_VERSION) exitWith { diag_log format ["[extDB3] ███ Outdated A3Wasteland database version! %1 - min: %2", _result, MIN_DB_VERSION]; _return = false };
+	if (_result < MIN_DB_VERSION) exitWith { (format ["[extDB3] ███ Outdated A3Wasteland DB v%1 - minimum: v%2 - Check <a href='https://github.com/A3Wasteland/Release_Files/tree/master/extDB'>Release_Files</a> on GitHub to get the latest version", _result, MIN_DB_VERSION]) call _dbError; _return = false };
 
 	_serverID = ["A3W_extDB_ServerID", 1] call getPublicVar;
 	A3W_extDB_ServerID = compileFinal str _serverID;
@@ -83,7 +85,7 @@ if (_return) then
 		_result = ([format ["checkServerInstance:%1", _serverID], 2] call extDB_Database_async) select 0;
 		if (!_result) then
 		{
-			diag_log format ["[extDB3] ███ Unable to create ServerInstance with ServerID %1", _serverID];
+			(format ["[extDB3] ███ Unable to create ServerInstance with ServerID %1, check @extDB3\logs", _serverID]) call _dbError;
 			_return = false;
 			breakOut "extDB_envSetup";
 		};
@@ -98,7 +100,7 @@ if (_return) then
 		_mapID = ([format ["getServerMapID:%1:%2", worldName, _env], 2] call extDB_Database_async) select 0;
 		if (_mapID == 0) then
 		{
-			diag_log format ["[extDB3] ███ Unable to create ServerMap with WorldName '%1'", worldName];
+			(format ["[extDB3] ███ Unable to create ServerMap with WorldName '%1', check @extDB3\logs", worldName]) call _dbError;
 			_return = false;
 			breakOut "extDB_envSetup";
 		};

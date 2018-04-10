@@ -15,6 +15,7 @@ R3F_LOG_CFG_remorqueurs =
 	"MRAP_01_base_F",
 	"MRAP_02_base_F",
 	"MRAP_03_base_F",
+	"LT_01_base_F",
 	"Boat_Armed_01_base_F"
 ];
 
@@ -27,7 +28,13 @@ R3F_LOG_CFG_remorqueursH =
 	"Truck_02_base_F",
 	"Truck_03_base_F",
 	"Wheeled_APC_F",
-	"Tank_F"
+	"APC_Tracked_01_base_F",
+	"APC_Tracked_02_base_F",
+	"APC_Tracked_03_base_F",
+	"MBT_01_base_F",
+	"MBT_02_base_F",
+	"MBT_03_base_F",
+	"MBT_04_base_F"
 ];
 
 R3F_LOG_CFG_remorqueurs append R3F_LOG_CFG_remorqueursH;
@@ -40,6 +47,7 @@ R3F_LOG_CFG_objets_remorquables =
 	"Car_F",
 	"Ship_F",
 	"Plane",
+	"LT_01_base_F",
 	"UAV_03_base_F",
 	"Heli_Light_01_base_F",
 	"Heli_Light_02_base_F",
@@ -53,7 +61,13 @@ R3F_LOG_CFG_objets_remorquables =
 R3F_LOG_CFG_objets_remorquablesH =
 [
 	"Wheeled_APC_F",
-	"Tank_F",
+	"APC_Tracked_01_base_F",
+	"APC_Tracked_02_base_F",
+	"APC_Tracked_03_base_F",
+	"MBT_01_base_F",
+	"MBT_02_base_F",
+	"MBT_03_base_F",
+	"MBT_04_base_F",
 	"Heli_Attack_02_base_F",
 	"Heli_Transport_01_base_F",
 	"Heli_Transport_02_base_F",
@@ -106,6 +120,7 @@ R3F_LOG_CFG_objets_heliportables =
 	"Car_F",
 	"Ship_F",
 	"Plane",
+	"LT_01_base_F",
 	"UAV_03_base_F",
 	"Heli_Light_01_base_F"
 ];
@@ -116,7 +131,13 @@ R3F_LOG_CFG_objets_heliportables =
 R3F_LOG_CFG_objets_heliportablesH =
 [
 	"Wheeled_APC_F",
-	"Tank_F",
+	"APC_Tracked_01_base_F",
+	"APC_Tracked_02_base_F",
+	"APC_Tracked_03_base_F",
+	"MBT_01_base_F",
+	"MBT_02_base_F",
+	"MBT_03_base_F",
+	"MBT_04_base_F",
 	"Heli_Light_02_base_F",
 	"Heli_light_03_base_F",
 	"Heli_Attack_01_base_F",
@@ -160,6 +181,7 @@ R3F_LOG_CFG_transporteurs =
 	["B_Truck_01_box_F", 150],
 	["Truck_F", 75],
 	["Wheeled_APC_F", 30],
+	["LT_01_base_F", 10],
 	["Tank_F", 30],
 	["Scooter_Transport_01_base_F", 5],
 	["SDV_01_base_F", 10],

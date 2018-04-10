@@ -40,6 +40,10 @@ if (_static) then
 	{
 		_veh setDamage 0;
 		_veh enableSimulationGlobal false;
+	}
+	else
+	{
+		_veh enableSimulation false;
 	};
 };
 

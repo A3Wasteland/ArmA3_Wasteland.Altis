@@ -21,9 +21,9 @@ _exclVehicleIDs = [];
 
 {
 	private ["_veh", "_hoursAlive", "_hoursUnused"];
-	private (_x apply {_x select 0});
-
-	{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
+	//private (_x apply {_x select 0});
+	//{ (_x select 1) call compile format ["%1 = _this", _x select 0]	} forEach _x;
+	[] params _x; // automagic assignation
 
 	if (isNil "_flying") then { _flying = 0 };
 	if (isNil "_hoursAlive") then { _hoursAlive = 0 };

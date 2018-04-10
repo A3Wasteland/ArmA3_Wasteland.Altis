@@ -17,13 +17,14 @@ civilianVehicles =
 	"C_Hatchback_01_sport_F",
 	"C_SUV_01_F",
 	"C_Offroad_01_F",
-	["C_Van_01_box_F", "C_Van_01_transport_F"]
+	["C_Van_01_box_F", "C_Van_01_transport_F", "C_Van_01_fuel_F"]
 ];
 
 //Light Military Vehicle List - Random Spawns
 lightMilitaryVehicles =
 [
-	["I_G_Offroad_01_F", "I_G_Offroad_01_armed_F"]
+	"I_G_Offroad_01_F", "I_G_Offroad_01_armed_F", "I_G_Offroad_01_AT_F",
+	"I_G_Offroad_01_F", "I_G_Offroad_01_armed_F"
 ];
 
 //Medium Military Vehicle List - Random Spawns

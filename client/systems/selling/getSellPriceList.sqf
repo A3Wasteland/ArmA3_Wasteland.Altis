@@ -58,7 +58,7 @@ _objWeapons = [];
 } forEach everyContainer _obj;
 
 _allStoreMagazines = call allStoreMagazines;
-_allGunStoreFirearms = call allGunStoreFirearms;
+_allGunStoreFirearms = call allGunStoreFirearms + call genItemArray;
 _allStoreItems = call allRegularStoreItems + call allStoreGear;
 
 // Find parent or children equivalents to weapons which aren't listed in the gunstore

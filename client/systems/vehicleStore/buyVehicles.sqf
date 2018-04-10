@@ -51,6 +51,18 @@ storePurchaseHandle = _this spawn
 	_colorText = _colorlist lbText _colorIndex;
 	_colorData = call compile (_colorlist lbData _colorIndex);
 
+	_partList = _dialog displayCtrl vehshop_part_list;
+	_defPartsChk = _dialog displayCtrl vehshop_defparts_checkbox;
+	_animList = []; // ["anim1", 1, "anim2", 0, ...] - formatted for BIS_fnc_initVehicle
+
+	if (!cbChecked _defPartsChk) then
+	{
+		for "_i" from 0 to (lbSize _partList - 1) do
+		{
+			_animList append [_partList lbData _i, (vehshop_list_checkboxTextures find (_partList lbPicture _i)) max 0];
+		};
+	};
+
 	_showInsufficientFundsError =
 	{
 		_itemText = _this select 0;
@@ -76,26 +88,27 @@ storePurchaseHandle = _this spawn
 
 	_applyVehProperties =
 	{
-		private ["_vehicle", "_colorText", "_playerItems", "_playerAssignedItems", "_uavTerminal", "_allUAV"];
-		_vehicle = _this select 0;
-		_colorText = _this select 1;
-		_colorData = _this select 2;
-		_texArray  = [];
+		params ["_vehicle", "_colorText", "_colorData", "_animList"];
 
 		if (count _colorData > 0) then
 		{
 			[_vehicle, _colorData] call applyVehicleTexture;
 		};
 
-		// If UAV or UGV, fill vehicle with UAV AI, give UAV terminal to our player, and connect it to the vehicle
-		if (round getNumber (configFile >> "CfgVehicles" >> typeOf _vehicle >> "isUav") > 0) then
+		if (count _animList > 0) then
 		{
-			switch (playerSide) do
+			[_vehicle, false, _animList, true] remoteExecCall ["BIS_fnc_initVehicle", _vehicle];
+		};
+
+		// If UAV or UGV, fill vehicle with UAV AI, give UAV terminal to our player, and connect it to the vehicle
+		if (unitIsUAV _vehicle) then
+		{
+			private _uavTerminal = configName (configFile >> "CfgWeapons" >> (switch (playerSide) do // retrieve case-sensitive name
 			{
-				case BLUFOR: { _uavTerminal = "B_UavTerminal" };
-				case OPFOR:	 { _uavTerminal = "O_UavTerminal" };
-				default	     { _uavTerminal = "I_UavTerminal" };
-			};
+				case BLUFOR: { "B_UavTerminal" };
+				case OPFOR:  { "O_UavTerminal" };
+				default      { "I_UavTerminal" };
+			}));
 
 			if !(_uavTerminal in assignedItems player) then
 			{
@@ -147,7 +160,7 @@ storePurchaseHandle = _this spawn
 
 		if (!isNil "_vehicle" && {!isNull _vehicle}) then
 		{
-			[_vehicle, _colorText, if (!isNil "_colorData") then { _colorData } else { "" }] call _applyVehProperties;
+			[_vehicle, _colorText, if (!isNil "_colorData") then { _colorData } else { "" }, _animList] call _applyVehProperties;
 		};
 	};
 

@@ -17,9 +17,11 @@ _dialog = findDisplay vehshop_DIALOG;
 _vehlisttext = _dialog displayCtrl vehshop_veh_TEXT;
 _vehlist = _dialog displayCtrl vehshop_veh_list;
 _colorlist = _dialog displayCtrl vehshop_color_list;
+private _partList = _dialog displayCtrl vehshop_part_list;
 
 lbClear _vehlist;
 lbClear _colorlist;
+lbClear _partList;
 _vehlist lbSetCurSel -1;
 
 _vehArray = switch (_switch) do

@@ -15,6 +15,7 @@
 	[["Damage", "NUMBER"], "_damage"],
 	[["Fuel", "NUMBER"], "_fuel"],
 	[["HitPoints", "ARRAY"], "_hitPoints"],
+	[["AnimPhases", "ARRAY"], "_animPhases"],
 	[["OwnerUID", "STRING"], "_owner"],
 	[["LockState", "NUMBER"], "_lockState"],
 	[["Variables", "ARRAY"], "_variables"],
