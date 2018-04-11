@@ -58,7 +58,7 @@ if (_vehicleType isKindOf "Offroad_01_AT_base_F") then
 {
 	{
 		_x params ["_mag", "_path", "_ammo"];
-		_vehicle setMagazineTurretAmmo [_mag, _path, floor random 3];
+		_vehicle setMagazineTurretAmmo [_mag, floor random 3, _path];
 	} forEach magazinesAllTurrets _vehicle;
 };
 

@@ -75,7 +75,7 @@ if (_selection != "?") then
 			};
 
 			// If vehicle is tank then multiply damage
-			case (_vehicle isKindOf "Tank"); //&& !(_vehicle isKindOf "LT_01_base_F")):
+			case (_vehicle isKindOf "Tank"): //&& !(_vehicle isKindOf "LT_01_base_F")):
 			{
 				//if (_isMissile) then
 				//{

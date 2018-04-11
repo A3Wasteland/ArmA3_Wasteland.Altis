@@ -32,7 +32,6 @@ if (_boxType == "mission_USSpecial2") then { _boxType = "mission_USSpecial" };
 
 switch (_boxType) do
 {
-		["launch_O_Vorona_brown_F", "launch_O_Vorona_green_F", 2000, "noDLC"],
 	case "mission_USLaunchers":
 	{
 		_boxItems =
