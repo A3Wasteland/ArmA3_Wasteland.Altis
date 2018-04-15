@@ -77,7 +77,10 @@ storeSellingHandle = _this spawn
 				[format ['The %1 has already been sold!', _objname, VEHICLE_MAX_SELLING_DISTANCE], "Error"] call  BIS_fnc_guiMessage;
 			};
 
+			private _attachedObjs = attachedObjects _vehicle;
 			deleteVehicle _vehicle;
+
+			{ ["detach", _x] call A3W_fnc_towingHelper } forEach _attachedObjs;
 
 			//player setVariable ["cmoney", (player getVariable ["cmoney",0]) + _price, true];
 			[player, _price] call A3W_fnc_setCMoney;

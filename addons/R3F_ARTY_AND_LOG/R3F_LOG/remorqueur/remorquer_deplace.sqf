@@ -37,14 +37,7 @@ else
 			// On mémorise aussi sur le réseau que le canon est attaché en remorque
 			_objet setVariable ["R3F_LOG_est_transporte_par", _remorqueur, true];
 
-			if (local _objet) then
-			{
-				_objet lockDriver true;
-			}
-			else
-			{
-				[["lockDriver", netId _objet], "A3W_fnc_towingHelper", _objet] call A3W_fnc_MP;
-			};
+			["disableDriving", _objet] call A3W_fnc_towingHelper;
 
 			_towerBB = _remorqueur call fn_boundingBoxReal;
 			_towerMinBB = _towerBB select 0;

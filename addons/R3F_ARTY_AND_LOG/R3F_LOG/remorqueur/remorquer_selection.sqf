@@ -51,14 +51,7 @@ else
 					// On mémorise aussi sur le réseau que le canon est attaché en remorque
 					_objet setVariable ["R3F_LOG_est_transporte_par", _remorqueur, true];
 
-					if (local _objet) then
-					{
-						["disableDriving", _objet] call A3W_fnc_towingHelper;
-					}
-					else
-					{
-						[["disableDriving", netId _objet], "A3W_fnc_towingHelper", _objet] call A3W_fnc_MP;
-					};
+					["disableDriving", _objet] call A3W_fnc_towingHelper;
 
 					[player, "AinvPknlMstpSlayWrflDnon_medic"] call switchMoveGlobal;
 

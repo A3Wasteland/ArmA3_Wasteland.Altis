@@ -148,8 +148,11 @@ if (isServer) then {
       def(_display_name);
       _display_name = [typeOf _vehicle] call generic_display_name;
 
+      private _attachedObjs = attachedObjects _vehicle;
       if (!isNil "fn_untrackSavedVehicle") then { _vehicle call fn_untrackSavedVehicle };
       deleteVehicle _vehicle;
+
+      { ["detach", _x] call A3W_fnc_towingHelper } forEach _attachedObjs;
 
       _player setVariable ["parked_vehicles", _parked_vehicles]; //, true];
       ["parked_vehicles", _parked_vehicles] remoteExecCall ["A3W_fnc_setVarPlayer", _player];

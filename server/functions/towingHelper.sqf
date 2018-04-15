@@ -22,12 +22,9 @@ switch (_type) do
 	{
 		_veh enableSimulation true;
 		(attachedTo _veh) enableSimulation true;
-
-		sleep 0.3;
 		detach _veh;
 
-		_veh lockDriver false;
-		_veh enableCopilot true;
+		["enableDriving", _veh] call A3W_fnc_towingHelper;
 
 		private _pos = getPosATL _veh;
 
@@ -47,8 +44,13 @@ switch (_type) do
 	};
 	case "disableDriving":
 	{
-		_veh lockDriver true;
+		if (!unitIsUAV _veh) then { _veh lockDriver true };
 		_veh enableCopilot false;
 		_veh engineOn false;
+	};
+	case "enableDriving":
+	{
+		if (!isAgent teamMember driver _veh) then { _veh lockDriver false }; // isAgent == driverAssist active
+		_veh enableCopilot true;
 	};
 };
