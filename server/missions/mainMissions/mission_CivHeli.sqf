@@ -13,12 +13,17 @@ private ["_vehicleClass", "_nbUnits"];
 
 _setupVars =
 {
-	_vehicleClass = ["I_Heli_Transport_02_F", "B_Heli_Transport_03_unarmed_F", "O_Heli_Transport_04_bench_F"] call BIS_fnc_selectRandom;
+	_vehicleClass = selectRandom ["I_Heli_Transport_02_F", "B_Heli_Transport_03_unarmed_F", "O_Heli_Transport_04_covered_F"];
 
-	_missionType = "Transport Helicopter";
+	_missionType = "Supply Helicopter";
 	_locationsArray = MissionSpawnMarkers;
 
 	_nbUnits = if (missionDifficultyHard) then { AI_GROUP_LARGE } else { AI_GROUP_MEDIUM };
+};
+
+private _customVehicleSetup =
+{
+	_vehicle call fn_refilltruck;
 };
 
 _this call mission_VehicleCapture;

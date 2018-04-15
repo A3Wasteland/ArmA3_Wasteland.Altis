@@ -26,6 +26,8 @@ _setupObjects =
 		_vehicleClass = _vehicleClass select 0;
 	};
 
+	if (!isNil "_customVehicleSetup") then { call _customVehicleSetup };
+
 	/*switch (true) do
 	{
 		// GMG MRAPs
