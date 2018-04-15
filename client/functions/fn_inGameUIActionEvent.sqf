@@ -69,15 +69,24 @@ if (_unit == player && (_showWindow || _menuOpen)) then
 
 			if ({_veh isKindOf _x} count ["Heli_Attack_01_base_F","Heli_Attack_02_base_F","VTOL_02_base_F"] > 0 && isNull gunner _veh) then
 			{
-				_bob = createAgent ["B_UAV_AI", [0,0,0], [], 0, "NONE"];
+				private _class = format ["%1_UAV_AI", ["B","O","I"] select (([BLUFOR,OPFOR,INDEPENDENT] find playerSide) max 0)];
+				private _bob = createAgent [_class, _veh, [], 0, "NONE"];
+
+				_bob allowDamage false;
+				_bob setVariable ["A3W_driverAssistOwner", player, true];
 				_bob setName ["","",""];
+				[_bob, ["","",""]] remoteExec ["A3W_fnc_setName"];
 				_bob moveInGunner _veh;
 
-				[_veh, _bob] spawn
+				private _turretCfg = ([_veh, configNull] call BIS_fnc_getTurrets) param [1, configNull];
+				private _rotH = getText (_turretCfg >> "animationSourceBody");
+				private _rotV = getText (_turretCfg >> "animationSourceGun");
+
+				[_veh, _bob, _rotH, _rotV] spawn
 				{
-					params ["_veh", "_bob"];
+					params ["_veh", "_bob", "_rotH", "_rotV"];
 					_time = time;
-					waitUntil {sleep 0.5; (abs (_veh animationSourcePhase "MainTurret") < 0.001 && abs (_veh animationSourcePhase "MainGun") < 0.001) || time - _time > 10};
+					waitUntil {_bob doWatch objNull; (abs (_veh animationSourcePhase _rotH) < 0.001 && abs (_veh animationSourcePhase _rotV) < 0.001) || time - _time > 10};
 					deleteVehicle _bob;
 				};
 			};

@@ -150,7 +150,8 @@ _realBoundingBoxes =
 	[
 		"Air",
 		[
-			["Heli_Light_01_base_F", [[-3.7,-5,-1.8],[3.8,3.7,1.1]]],
+			["Heli_Light_01_civil_base_F", [[-3.7,-4.1,-0.7],[3.8,4.9,2.3]]],
+			["Heli_Light_01_base_F", [[-3.7,-5,-1.8],[3.8,4.1,1.1]]],
 			["Heli_Light_02_base_F", [[-6.8,-7.9,-2.4],[6.7,8,2.4]]],
 			["Heli_light_03_base_F", [[-4.5,-7.6,-1.5],[4.6,5.8,2.5]]],
 			["Heli_Transport_01_base_F", [[-7.2,-8.5,-2.3],[7.1,8.1,1.8]]],
@@ -329,6 +330,7 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["C_Boat_Transport_02_F", "Boat_Transport_02_base_F"],
 		["B_Boat_Armed_01_minigun_F", "Boat_Armed_01_base_F"],
 
+		["C_Heli_Light_01_civil_F", "Heli_Light_01_civil_base_F"],
 		["B_Heli_Light_01_armed_F", "Heli_Light_01_base_F"],
 		["O_Heli_Light_02_F", "Heli_Light_02_base_F"],
 		["I_Heli_light_03_F", "Heli_light_03_base_F"],
@@ -354,6 +356,13 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 		["B_UAV_05_F", "UAV_05_Base_F"],
 		["C_IDAP_UAV_06_antimine_F", "UAV_06_antimine_base_F"],
 		["B_UAV_06_F", "UAV_06_base_F"]
+	];
+
+	comment "this is to take into account heli rotors";
+	_extraOffsets =
+	[
+		["Heli_Light_01_base_F", [[0,0,0],[0,0.4,0]]],
+		["Heli_Transport_03_base_F", [[0,0,0],[0,2.2,0]]]
 	];
 
 	_classesBBox = [];
@@ -487,6 +496,14 @@ if (isNil "_boundingBoxReal") then { boundingBoxReal _vehicle } else { _bounding
 
 		_minReal = [_minXreal, _minYreal, _minZreal];
 		_maxReal = [_maxXreal, _maxYreal, _maxZreal];
+
+		{
+			if (_vehicle isKindOf (_x select 0)) exitWith
+			{
+				_minReal = _minReal vectorAdd (_x select 1 select 0);
+				_maxReal = _maxReal vectorAdd (_x select 1 select 1);
+			};
+		} forEach _extraOffsets;
 
 		{
 			if (_vehicle isKindOf (_x select 0)) exitWith

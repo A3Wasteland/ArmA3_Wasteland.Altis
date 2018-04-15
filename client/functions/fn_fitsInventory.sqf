@@ -49,8 +49,8 @@ if (!isNil "_allowedContainers") then
 		{
 			switch (toLower _x) do
 			{
-				case "uniform":  { _allowedContainers set [_forEachIndex, 701] };
-				case "vest":     { _allowedContainers set [_forEachIndex, 801] };
+				case "uniform":  { _allowedContainers set [_forEachIndex, 801] };
+				case "vest":     { _allowedContainers set [_forEachIndex, 701] };
 				case "backpack": { _allowedContainers set [_forEachIndex, 901] };
 			};
 		};

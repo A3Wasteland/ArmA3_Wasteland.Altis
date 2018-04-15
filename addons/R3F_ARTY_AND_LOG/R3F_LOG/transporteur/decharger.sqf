@@ -47,6 +47,12 @@ else
 
 		detach _objet_a_decharger;
 
+		if (unitIsUAV _objet_a_decharger) then
+		{
+			[_objet_a_decharger, 1] call A3W_fnc_setLockState; // unlock
+			["enableDriving", _objet_a_decharger] call A3W_fnc_towingHelper;
+		};
+
 		if ({_objet_a_decharger isKindOf _x} count R3F_LOG_CFG_objets_deplacables > 0) then
 		{
 			[_objet_a_decharger] execVM "addons\R3F_ARTY_AND_LOG\R3F_LOG\objet_deplacable\deplacer.sqf";

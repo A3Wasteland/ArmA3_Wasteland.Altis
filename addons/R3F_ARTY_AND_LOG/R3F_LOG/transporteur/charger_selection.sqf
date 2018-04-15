@@ -91,6 +91,13 @@ else
 
 					[R3F_LOG_PUBVAR_point_attache, true] call fn_enableSimulationGlobal;
 					[_objet, true] call fn_enableSimulationGlobal;
+
+					if (unitIsUAV _objet) then
+					{
+						[_objet, 2] call A3W_fnc_setLockState; // lock
+						["disableDriving", _objet] call A3W_fnc_towingHelper;
+					};
+
 					_objet attachTo [R3F_LOG_PUBVAR_point_attache, _position_attache];
 
 					R3F_LOG_objet_selectionne = objNull;

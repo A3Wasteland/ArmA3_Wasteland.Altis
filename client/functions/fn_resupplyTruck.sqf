@@ -280,9 +280,10 @@ _resupplyThread = [_vehicle, _unit] spawn
 					sleep (REARM_TIME_SLICE / 2);
 				};
 			} forEach _magPairs;
-		} forEach _pathArrs;*/
+		} forEach _pathArrs;
 
 		_pylonPaths = (configProperties [_vehCfg >> "Components" >> "TransportPylonsComponent" >> "Pylons", "isClass _x"]) apply {getArray (_x >> "turret")};
+		*/
 
 		{
 			if (_x != "") then

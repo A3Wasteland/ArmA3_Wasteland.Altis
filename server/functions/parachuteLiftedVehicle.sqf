@@ -28,7 +28,7 @@ _objectCenterX = (_objectMinBB select 0) + (((_objectMaxBB select 0) - (_objectM
 _objectCenterY = (_objectMinBB select 1) + (((_objectMaxBB select 1) - (_objectMinBB select 1)) / 2);
 
 _vel = velocity _veh;
-[["detach", netId _veh], "A3W_fnc_towingHelper", _veh] call A3W_fnc_MP;
+["detach", _veh] call A3W_fnc_towingHelper;
 waitUntil {isNull attachedTo _veh};
 uiSleep 0.01;
 //_veh setVelocity _vel;
@@ -60,7 +60,7 @@ while {(getPos _veh) select 2 > 3 && attachedTo _veh == _para} do
 
 if (attachedTo _veh == _para) then
 {
-	[["detach", netId _veh], "A3W_fnc_towingHelper", _veh] call A3W_fnc_MP;
+	["detach", _veh] call A3W_fnc_towingHelper;
 	waitUntil {isNull attachedTo _veh};
 	_veh setVectorUp [0,0,1];
 };
