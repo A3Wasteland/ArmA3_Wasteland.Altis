@@ -47,6 +47,16 @@ _setupObjects =
 		//_vehicle setVariable ["A3W_skipAutoSave", true, true];
 		[_vehicle] call vehicleSetup;
 
+		// apply tropical textures to vehicles on Tanoa
+		if (worldName == "Tanoa" && _type select [1,3] != "_T_") then
+		{
+			switch (toUpper (_type select [0,2])) do
+			{
+				case "B_": { [_vehicle, ["Olive"]] call applyVehicleTexture };
+				case "O_": { [_vehicle, ["GreenHex"]] call applyVehicleTexture };
+			};
+		};
+
 		_vehicle setDir _direction;
 		_aiGroup addVehicle _vehicle;
 

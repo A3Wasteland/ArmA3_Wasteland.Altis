@@ -44,4 +44,14 @@ _veh setDamage _damage;
 _veh setVariable ["R3F_LOG_disabled", true, true];
 _veh setVariable ["A3W_lockpickDisabled", true, true];
 
+// apply tropical textures to vehicles on Tanoa
+if (worldName == "Tanoa" && _class select [1,3] != "_T_") then
+{
+	switch (toUpper (_class select [0,2])) do
+	{
+		case "B_": { [_veh, ["Olive"]] call applyVehicleTexture };
+		case "O_": { [_veh, ["GreenHex"]] call applyVehicleTexture };
+	};
+};
+
 _veh
