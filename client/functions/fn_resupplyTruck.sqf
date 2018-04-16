@@ -313,12 +313,15 @@ _resupplyThread = [_vehicle, _unit] spawn
 		if (_notFull) then
 		{
 			call _checkAbortConditions;
+			playSound3D ["A3\Sounds_F\arsenal\weapons_static\Static_HMG\reload_static_HMG.wss", _vehicle, false, getPosASL _vehicle, 10, 1, 20 max sizeOf _vehClass];
 
-			_text = "Reloading...";
-			[_text, REARM_TIME_SLICE / 10] call _titleText;
-
-			sleep REARM_TIME_SLICE;
-			call _checkAbortConditions;
+			private "_i";
+			for "_i" from 1 to REARM_TIME_SLICE do
+			{
+				"Reloading..." call _titleText;
+				sleep 1;
+				call _checkAbortConditions;
+			};
 		};
 
 		_vehicle setVehicleAmmo 1;
