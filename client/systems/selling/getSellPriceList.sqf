@@ -39,7 +39,11 @@ _objWeapons = [];
 	_class = _x select 0;
 	_container = _x select 1;
 
-	[_objItems, _class, 1] call fn_addToPairs;
+	// only add backpacks, since uniforms and vests already in _objItems via getItemCargo
+	if (_class isKindOf "Bag_Base") then
+	{
+		[_objItems, _class, 1] call fn_addToPairs;
+	};
 
 	{
 		[_objItems, _x select 0, _x select 1] call fn_addToPairs;
