@@ -23,7 +23,7 @@ _isVehStore = ["VehStore", _npcName] call fn_startsWith;
 private _storeNPC = missionNamespace getVariable [_npcName, objNull];
 private _marker = _npcName;
 
-if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore}) then
+if (_key != "" && _player isKindOf "Man" && {_isGenStore || _isGunStore || _isVehStore}) then
 {
 	_timeoutKey = _key + "_timeout";
 	_objectID = "";
@@ -203,8 +203,9 @@ if (_key != "" && isPlayer _player && {_isGenStore || _isGunStore || _isVehStore
 				};
 			};
 
-			if (isPlayer _player && !(_player getVariable [_timeoutKey, true])) then
+			if !(_player getVariable [_timeoutKey, true]) then
 			{
+				[_player, -_itemPrice] call A3W_fnc_setCMoney;
 				_player setVariable [_key, _objectID, true];
 			}
 			else // Timeout

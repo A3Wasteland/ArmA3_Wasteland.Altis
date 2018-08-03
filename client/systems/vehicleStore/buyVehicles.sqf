@@ -164,32 +164,17 @@ storePurchaseHandle = _this spawn
 		};
 	};
 
-	if (!isNil "_price" && {_price > -1}) then
+	if (!isNil "_price" && {_price > -1}) then // vehicle price now handled in spawnStoreObject.sqf
 	{
-		_playerMoney = player getVariable ["cmoney", 0];
+		vehicleStore_lastPurchaseTime = diag_tickTime;
 
-		// Re-check for money after purchase
-		if (_price > _playerMoney) then
+		//player setVariable ["cmoney", _playerMoney - _price, true];
+		//[player, -_price] call A3W_fnc_setCMoney;
+		_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
+
+		if (["A3W_playerSaving"] call isConfigOn) then
 		{
-			if (!isNil "_requestKey" && {!isNil _requestKey}) then
-			{
-				deleteVehicle objectFromNetId (missionNamespace getVariable _requestKey);
-			};
-
-			[_itemText] call _showInsufficientFundsError;
-		}
-		else
-		{
-			vehicleStore_lastPurchaseTime = diag_tickTime;
-
-			//player setVariable ["cmoney", _playerMoney - _price, true];
-			[player, -_price] call A3W_fnc_setCMoney;
-			_playerMoneyText ctrlSetText format ["Cash: $%1", [player getVariable ["cmoney", 0]] call fn_numbersText];
-
-			if (["A3W_playerSaving"] call isConfigOn) then
-			{
-				[] spawn fn_savePlayerData;
-			};
+			[] spawn fn_savePlayerData;
 		};
 	};
 
