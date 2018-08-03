@@ -15,13 +15,13 @@ if (isClass _magCfg) then
 	_mag = configName _magCfg;
 	private _parentMagCfg = inheritsFrom _magCfg;
 
-	while {["_Tracer", configName _magCfg] call fn_findString != -1 && round getNumber (_parentMagCfg >> "scope") > 0} do
+	while {["_Tracer", configName _magCfg] call fn_findString != -1 && round getNumber (_parentMagCfg >> "scope") > 1} do
 	{
 		_magCfg = _parentMagCfg;
 		_parentMagCfg = inheritsFrom _magCfg;
 	};
 
-	if (isClass _magCfg) then
+	if (["_Tracer", configName _magCfg] call fn_findString == -1) then
 	{
 		_mag = configName _magCfg;
 	};
