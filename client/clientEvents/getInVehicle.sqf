@@ -31,17 +31,15 @@ if (isNil {_veh getVariable "A3W_dammagedEH"}) then
 
 if (!_uavConnect) then
 {
-	// Eject Independents of vehicle if it is already used by another group
-	if !(playerSide in [BLUFOR,OPFOR]) then
-	{
+		// Eject from vehicle if it is already used by enemies
 		{
-			if (isPlayer _x && alive _x && group _x != group player) exitWith 
+			if (isPlayer _x && alive _x && !([_x, player] call A3W_fnc_isFriendly)) exitWith 
 			{
 				moveOut player;
-				["You can't enter vehicles being used by enemy groups.", 5] call mf_notify_client;
+				["You can't enter vehicles being used by enemies.", 5] call mf_notify_client;
 
 				// ejection bug workaround
-				if (!isNull objectParent player) then
+				if (!alive player || lifeState player == "INCAPACITATED") then
 				{
 					player setPos (player modelToWorldVisual [0,0,0]);
 				};
@@ -49,7 +47,6 @@ if (!_uavConnect) then
 				breakOut "getInVehicle";
 			};
 		} forEach crew _veh;
-	};
 };
 
 if (isNil {_veh getVariable "A3W_engineEH"}) then
