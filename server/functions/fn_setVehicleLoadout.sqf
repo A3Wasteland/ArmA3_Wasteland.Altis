@@ -77,7 +77,7 @@ if (_brandNew || _resupply) then
 		{
 			_x params ["_mag", "_path"];
 
-			if (_mag select [0,5] != "Pylon" && (toLower getText (configFile >> "CfgMagazines" >> _mag >> "ammo")) find "_minigun_" != -1) then
+			if (!isText (configFile >> "CfgMagazines" >> _mag >> "pylonWeapon") && (toLower getText (configFile >> "CfgMagazines" >> _mag >> "ammo")) find "_minigun_" != -1) then
 			{
 				_veh addMagazineTurret [_mag, _path];
 			};

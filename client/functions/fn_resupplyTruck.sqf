@@ -216,7 +216,7 @@ _resupplyThread = [_vehicle, _unit] spawn
 		{
 			_x params ["_mag", "_path", "_ammo"];
 
-			if (_mag != "FakeWeapon" && _mag select [0,5] != "Pylon") then
+			if (_mag != "FakeWeapon" && !isText (configFile >> "CfgMagazines" >> _mag >> "pylonWeapon")) then
 			{
 				_pathArr = [_pathArrs, _path] call fn_getFromPairs;
 				_new = isNil "_pathArr";

@@ -152,7 +152,7 @@ if (_class call fn_hasInventory) then
 
 // _turretMags is deprecated, leave empty
 _turretMags = []; // magazinesAmmo _veh;
-_turretMags2 = (magazinesAllTurrets _veh) select {_x select 0 != "FakeWeapon" && (_x select 0) select [0,5] != "Pylon"} apply {_x select [0,3]};
+_turretMags2 = (magazinesAllTurrets _veh) select {_x select 0 != "FakeWeapon" && !isText (configFile >> "CfgMagazines" >> (_x select 0) >> "pylonWeapon")} apply {_x select [0,3]};
 _turretMags3 = _veh call fn_getPylonsAmmo;
 
 // deprecated
