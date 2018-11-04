@@ -76,7 +76,7 @@ if (isServer) then {
       //{ (_x select 1) call compile format ["%1 = _this", _x select 0] } forEach _varVals;
       [] params _varVals; // automagic assignation
 
-      private _lockState = [1,2] select (["A3W_vehicleLocking"] call isConfigOn);
+      private _lockState = [1,2] select (["A3W_vehicleLocking"] call isConfigOn && round getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") < 1);
 
       // delete wrecks near spawn
       {
