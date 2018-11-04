@@ -45,7 +45,7 @@
 #define HEALER ([player, cameraOn] select (cameraOn == getConnectedUAV player))
 #define ABDOMEN_ASL(UNIT) (AGLtoASL (UNIT modelToWorldVisual (UNIT selectionPosition "spine1")))
 #define FAR_Target_INVALID(TARGET) (!alive TARGET || (!isPlayer TARGET && !FAR_Debugging) || TARGET distance HEALER > FAR_Max_Distance || !UNCONSCIOUS(TARGET) || BEING_TREATED(TARGET) || DRAGGED(TARGET) || \
-(TARGET != cursorTarget && {!(lineIntersectsObjs [ABDOMEN_ASL(HEALER), ABDOMEN_ASL(TARGET), TARGET, HEALER, false, 4] isEqualTo [])}))
+(isNull objectParent TARGET && !isNull objectParent HEALER) || (TARGET != cursorTarget && {!(lineIntersectsObjs [ABDOMEN_ASL(HEALER), ABDOMEN_ASL(TARGET), TARGET, HEALER, false, 4] isEqualTo [])}))
 
 // lineIntersectsObjs is to check whether or not there is a wall between an imaginary line that goes from the medic's abdomen to the target's abdomen, if the target is not being aimed at directly
 
