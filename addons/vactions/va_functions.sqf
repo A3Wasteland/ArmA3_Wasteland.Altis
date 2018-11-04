@@ -517,7 +517,7 @@ va_outside_target = {
   if (!isARRAY(_objects) || {count _objects == 0}) exitWith {};
   _target = cursorObject;
 
-  if (isNil "_target") exitWith {};
+  if (_player distance _target > 10) exitWith {};
 
   if (({_target isKindOf _x } count ["Helicopter", "Plane", "Ship_F", "Car", "Motorcycle", "Tank"]) == 0) exitWith {};
 
