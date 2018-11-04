@@ -189,7 +189,7 @@ _setupObjects =
 
 	_vehicles = [];
 	{
-		_vehicles pushBack ([_x, _starts select 0, _startdirs select 0, _aiGroup] call _createVehicle);
+		_vehicles pushBack ([_x, _starts select (_forEachIndex max 0 min (count _starts - 1)), _startdirs select (_forEachIndex max 0 min (count _startdirs - 1)), _aiGroup] call _createVehicle);
 	} forEach _vehClasses;
 
 	_veh2 = _vehClasses select (1 min (count _vehClasses - 1));
