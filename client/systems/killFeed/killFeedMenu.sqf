@@ -22,6 +22,39 @@ with missionNamespace do
 	if (isNil "A3W_fnc_killFeedMenuRefresh") then { A3W_fnc_killFeedMenuRefresh = compile preprocessFileLineNumbers "client\systems\killFeed\fn_killFeedMenuRefresh.sqf" };
 };
 
+private _options =
+[
+	// [idc, event, fnc, pvar, idcEdit, min, max, default, decimals]
+
+	[A3W_killFeedMenu_MaxKillsSlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_maxKills", A3W_killFeedMenu_MaxKillsEdit_IDC, 0, 20, A3W_killFeed_maxKills_defaultVal, 0],
+	[A3W_killFeedMenu_MaxKillsEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_maxKills", A3W_killFeedMenu_MaxKillsSlider_IDC, 0, 100, A3W_killFeed_maxKills_defaultVal, 0],
+
+	[A3W_killFeedMenu_FadeTimeSlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_fadeTime", A3W_killFeedMenu_FadeTimeEdit_IDC, 0, 120, A3W_killFeed_fadeTime_defaultVal, 0],
+	[A3W_killFeedMenu_FadeTimeEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_fadeTime", A3W_killFeedMenu_FadeTimeSlider_IDC, 0, 600, A3W_killFeed_fadeTime_defaultVal, 0],
+
+	[A3W_killFeedMenu_ShowIconsCheck_IDC, "CheckedChanged", "A3W_fnc_killFeedMenuCheckbox", "A3W_killFeed_showIcons", -1, "nil", "nil", A3W_killFeed_showIcons_defaultVal, 0],
+
+	[A3W_killFeedMenu_OffsetXSlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_offsetX", A3W_killFeedMenu_OffsetXEdit_IDC, "-safeZoneWAbs/2", "+safeZoneWAbs/2", A3W_killFeed_offsetX_defaultVal, 3],
+	[A3W_killFeedMenu_OffsetXEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_offsetX", A3W_killFeedMenu_OffsetXSlider_IDC, "nil", "nil", A3W_killFeed_offsetX_defaultVal, 3],
+
+	[A3W_killFeedMenu_OffsetYSlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_offsetY", A3W_killFeedMenu_OffsetYEdit_IDC, "0", "+safeZoneH", A3W_killFeed_offsetY_defaultVal, 3],
+	[A3W_killFeedMenu_OffsetYEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_offsetY", A3W_killFeedMenu_OffsetYSlider_IDC, "nil", "nil", A3W_killFeed_offsetY_defaultVal, 3],
+
+	[A3W_killFeedMenu_OpacitySlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_opacity", A3W_killFeedMenu_OpacityEdit_IDC, 0, 1, A3W_killFeed_opacity_defaultVal, 2],
+	[A3W_killFeedMenu_OpacityEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_opacity", A3W_killFeedMenu_OpacitySlider_IDC, 0, 1, A3W_killFeed_opacity_defaultVal, 2]
+];
+
+if (round difficultyOption "deathMessages" <= 0) then
+{
+	_options pushBack [A3W_killFeedMenu_ShowChatCheck_IDC, "CheckedChanged", "A3W_fnc_killFeedMenuCheckbox", "A3W_killFeed_showChat", -1, "nil", "nil", A3W_killFeed_showChat_defaultVal, 0];
+}
+else
+{
+	// if deathMessages = 1, chat deaths cannot be disabled at all, so gray out checkbox
+	_feedMenuDisp displayCtrl A3W_killFeedMenu_ShowChatCheck_IDC cbSetChecked true;
+	_feedMenuDisp displayCtrl A3W_killFeedMenu_ShowChatCheck_IDC ctrlEnable false;
+};
+
 {
 	_x params ["_idc", "_event", "_fn", "_var", "_idc2", "_min", "_max", "_default", "_precision"];
 
@@ -42,28 +75,7 @@ with missionNamespace do
 	};
 
 	_ctrl ctrlSetEventHandler [_event, format ["with missionNamespace do { [_this, %1, %2, %3, %4, %5, %6] call %7 }", str _var, _idc2, _min, _max, _default, _precision, _fn]];
-}
-forEach
-[
-	[A3W_killFeedMenu_MaxKillsSlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_maxKills", A3W_killFeedMenu_MaxKillsEdit_IDC, 0, 20, A3W_killFeed_maxKills_defaultVal, 0],
-	[A3W_killFeedMenu_MaxKillsEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_maxKills", A3W_killFeedMenu_MaxKillsSlider_IDC, 0, 100, A3W_killFeed_maxKills_defaultVal, 0],
-
-	[A3W_killFeedMenu_FadeTimeSlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_fadeTime", A3W_killFeedMenu_FadeTimeEdit_IDC, 0, 120, A3W_killFeed_fadeTime_defaultVal, 0],
-	[A3W_killFeedMenu_FadeTimeEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_fadeTime", A3W_killFeedMenu_FadeTimeSlider_IDC, 0, 600, A3W_killFeed_fadeTime_defaultVal, 0],
-
-	[A3W_killFeedMenu_ShowIconsCheck_IDC, "CheckedChanged", "A3W_fnc_killFeedMenuCheckbox", "A3W_killFeed_showIcons", -1, "nil", "nil", A3W_killFeed_showIcons_defaultVal, 0],
-
-	[A3W_killFeedMenu_ShowChatCheck_IDC, "CheckedChanged", "A3W_fnc_killFeedMenuCheckbox", "A3W_killFeed_showChat", -1, "nil", "nil", A3W_killFeed_showChat_defaultVal, 0],
-
-	[A3W_killFeedMenu_OffsetXSlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_offsetX", A3W_killFeedMenu_OffsetXEdit_IDC, "-safeZoneWAbs/2", "+safeZoneWAbs/2", A3W_killFeed_offsetX_defaultVal, 3],
-	[A3W_killFeedMenu_OffsetXEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_offsetX", A3W_killFeedMenu_OffsetXSlider_IDC, "nil", "nil", A3W_killFeed_offsetX_defaultVal, 3],
-
-	[A3W_killFeedMenu_OffsetYSlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_offsetY", A3W_killFeedMenu_OffsetYEdit_IDC, "0", "+safeZoneH", A3W_killFeed_offsetY_defaultVal, 3],
-	[A3W_killFeedMenu_OffsetYEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_offsetY", A3W_killFeedMenu_OffsetYSlider_IDC, "nil", "nil", A3W_killFeed_offsetY_defaultVal, 3],
-
-	[A3W_killFeedMenu_OpacitySlider_IDC, "SliderPosChanged", "A3W_fnc_killFeedMenuSlider", "A3W_killFeed_opacity", A3W_killFeedMenu_OpacityEdit_IDC, 0, 1, A3W_killFeed_opacity_defaultVal, 2],
-	[A3W_killFeedMenu_OpacityEdit_IDC, "KeyDown", "A3W_fnc_killFeedMenuEditbox", "A3W_killFeed_opacity", A3W_killFeedMenu_OpacitySlider_IDC, 0, 1, A3W_killFeed_opacity_defaultVal, 2]
-];
+} forEach _options;
 
 private _logLimitList = _feedMenuDisp displayCtrl A3W_killFeedMenu_LogLimitList_IDC;
 _logLimitList ctrlRemoveAllEventHandlers "LBSelChanged";

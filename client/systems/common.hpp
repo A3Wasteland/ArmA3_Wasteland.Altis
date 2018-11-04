@@ -456,7 +456,7 @@ class w_RscCheckBox
 	colorFocused[] = {1, 1, 1, 1};
 	colorHover[] = {1, 1, 1, 1};
 	colorPressed[] = {1, 1, 1, 1};
-	colorDisabled[] = {1, 1, 1, 0.2};
+	colorDisabled[] = {1, 1, 1, 0.25};
 	colorBackground[] = {0, 0, 0, 0};
 	colorBackgroundFocused[] = {0, 0, 0, 0};
 	colorBackgroundHover[] = {0, 0, 0, 0};
