@@ -32,7 +32,24 @@ smgArray = compileFinal str
 	["PDW2000 SMG", "hgun_PDW2000_F", 100],
 	["Protector SMG", "SMG_05_F", 100],
 	["Sting SMG", "SMG_02_F", 125],
-	["Vermin SMG", "SMG_01_F", 125]
+	["Vermin SMG", "SMG_01_F", 125],
+
+	["ADR-97C (Black)", "SMG_03C_black", 100],
+	["ADR-97C (Camo)", "SMG_03C_camo", 100],
+	["ADR-97C (Hex)", "SMG_03C_hex", 100],
+	["ADR-97C (Khaki)","SMG_03C_khaki", 100],
+	["ADR-97C TR (Black)", "SMG_03C_TR_black", 125],
+	["ADR-97C TR (Camo)", "SMG_03C_TR_camo", 125],
+	["ADR-97C TR (Hex)", "SMG_03C_TR_hex", 125],
+	["ADR-97C TR (Khaki)", "SMG_03C_TR_khaki", 125],
+	["ADR-97 (Black)", "SMG_03_black", 125],
+	["ADR-97 (Camo)", "SMG_03_camo", 125],
+	["ADR-97 (Hex)", "SMG_03_hex", 125],
+	["ADR-97 (Khaki)", "SMG_03_khaki", 125],
+	["ADR-97 TR (Black)", "SMG_03_TR_black", 150],
+	["ADR-97 TR (Camo)", "SMG_03_TR_camo", 150],
+	["ADR-97 TR (Hex)", "SMG_03_TR_hex", 150],
+	["ADR-97 TR (Khaki)", "SMG_03_TR_khaki", 150]
 ];
 
 rifleArray = compileFinal str
@@ -259,6 +276,7 @@ ammoArray = compileFinal str
 	["5.56mm 200Rnd Box", "200Rnd_556x45_Box_F", 125],
 	["5.56mm 200Rnd Tracer (Yellow) Box", "200Rnd_556x45_Box_Tracer_F", 100],
 	["5.56mm 200Rnd Tracer (Red) Box", "200Rnd_556x45_Box_Tracer_Red_F", 100],
+	["5.7mm 50Rnd ADR-97 Mag", "50Rnd_570x28_SMG_03", 20],
 	["5.8mm 30Rnd Mag", "30Rnd_580x42_Mag_F", 20],
 	["5.8mm 30Rnd Tracer (Green) Mag", "30Rnd_580x42_Mag_Tracer_F", 15],
 	["5.8mm 100Rnd Mag", "100Rnd_580x42_Mag_F", 100],
@@ -339,6 +357,7 @@ accessoriesArray = compileFinal str
 	["Suppressor 5.56mm", "muzzle_snds_M", 100, "item"],
 	["Suppressor 5.56mm (Khaki)", "muzzle_snds_m_khk_F", 100, "item", "noDLC"],
 	["Suppressor 5.56mm (Sand)", "muzzle_snds_m_snd_F", 100, "item", "noDLC"],
+	["Suppressor 5.7mm", "muzzle_snds_570", 75, "item"],
 	["Suppressor 5.8mm", "muzzle_snds_58_blk_F", 100, "item"],
 	["Suppressor 5.8mm (Hex)", "muzzle_snds_58_hex_F", 100, "item"],
 	["Suppressor 5.8mm (G Hex)", "muzzle_snds_58_ghex_F", 100, "item"],
