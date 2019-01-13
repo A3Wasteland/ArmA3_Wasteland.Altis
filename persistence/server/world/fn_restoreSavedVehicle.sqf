@@ -150,7 +150,7 @@ if (!isNil "_textures") then
 
 			{
 				_veh setObjectTextureGlobal [_x, _texture];
-				[_objTextures, _x, _texture] call fn_setToPairs;
+				_objTextures set [_x, _texture];
 			} forEach (_x select 1);
 		} forEach _textures;
 

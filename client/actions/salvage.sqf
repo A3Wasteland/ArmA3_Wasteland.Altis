@@ -115,7 +115,7 @@ if (_variant != "") then { _variant = "variant_" + _variant };
 
 // Final money reward is decided from vehicle store price
 {
-	if (_x select 1 == _vehClass && (_variant == "" || {_variant in _x})) exitWith
+	if (_vehClass == _x select 1 && ((_variant == "" && {{_x isEqualType "" && {_x select [0,8] == "variant_"}} count _x == 0}) || {_variant in _x})) exitWith
 	{
 		_money = GET_ONE_TENTH_PRICE(_x select 2);
 	};

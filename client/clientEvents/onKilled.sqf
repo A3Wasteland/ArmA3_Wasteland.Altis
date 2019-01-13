@@ -58,6 +58,7 @@ if (_player == player) then
 	(findDisplay 2001) closeDisplay 0; // Close Gunstore
 	(findDisplay 2009) closeDisplay 0; // Close Genstore
 	(findDisplay 5285) closeDisplay 0; // Close Vehstore
+	(findDisplay 5785) closeDisplay 0; // Close Paintshop
 	(findDisplay 63211) closeDisplay 0; // Close ATM
 	uiNamespace setVariable ["BIS_fnc_guiMessage_status", false]; // close message boxes
 	closeDialog 0;

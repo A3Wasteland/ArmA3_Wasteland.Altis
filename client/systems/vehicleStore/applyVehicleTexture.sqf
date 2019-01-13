@@ -11,23 +11,21 @@
 
 // Generally called from buyVehicles.sqf
 
-private ["_veh", "_texture", "_textureSource", "_selections", "_textures"];
+params [["_veh",objNull,[objNull]], ["_texture","",["",[]]], ["_selections",[],[[]]]];
 
-_veh = param [0, objNull, [objNull]];
-_texture = param [1, "", ["",[]]];
-_selections = param [2, [], [[]]];
-
-if (isNull _veh || count _texture == 0) exitWith {};
+if (isNull _veh || _texture isEqualTo []) exitWith {};
 
 _veh setVariable ["BIS_enableRandomization", false, true];
 
-_textures = _veh getVariable ["A3W_objectTextures", []];
-
 scopeName "applyVehicleTexture";
+
+private _textures = _veh getVariable ["A3W_objectTextures", []];
 private _vehCfg = configFile >> "CfgVehicles" >> typeOf _veh;
+private _defaultTextures = getArray (_vehCfg >> "hiddenSelectionsTextures");
+private "_textureSource";
 
 // if _texture == ["string"], extract data from TextureSources config
-if (_texture isEqualType [] && {_texture isEqualTypeAll ""}) then
+if (_texture isEqualType [] && {_texture isEqualTypeArray [""]}) then
 {
 	_textureSource = _texture select 0;
 	private _srcTextures = getArray (_vehCfg >> "TextureSources" >> _textureSource >> "textures");
@@ -38,12 +36,23 @@ if (_texture isEqualType [] && {_texture isEqualTypeAll ""}) then
 	{ _texture pushBack [_forEachIndex, _x]	} forEach _srcTextures;
 };
 
+if (_texture isEqualTo "") then // reset to default
+{
+	_texture = _defaultTextures;
+};
+
+// if painting on top of existing TextureSource, preserve non-colored selections
+if (_textures isEqualTypeArray [""]) then
+{
+	_textures = getObjectTextures _veh;
+};
+
 // Apply texture to all appropriate parts
 if (_texture isEqualType "") then
 {
 	if (_selections isEqualTo []) then
 	{
-		{ _selections pushBack _forEachIndex } forEach getArray (_vehCfg >> "hiddenSelections"); // gather all selections
+		{ _selections pushBack _forEachIndex } forEach _defaultTextures; // gather all selections
 
 		// test color: vehicle player setObjectTextureGlobal [0, "#(rgb,1,1,1)color(0.5,0.03,0.3,1)"];
 
@@ -118,18 +127,26 @@ if (_texture isEqualType "") then
 
 	{
 		_veh setObjectTextureGlobal [_x, _texture];
-		[_textures, _x, _texture] call fn_setToPairs;
+		_textures set [_x, _texture];
 	} forEach _selections;
 }
 else
 {
+	if (_texture isEqualTypeAll []) then
 	{
-		_sel = _x select 0;
-		_tex = _x select 1;
-
-		_veh setObjectTextureGlobal [_sel, _tex];
-		[_textures, _sel, _tex] call fn_setToPairs;
-	} forEach _texture;
+		{
+			_x params ["_sel", "_tex"];
+			_veh setObjectTextureGlobal [_sel, _tex];
+			_textures set [_sel, _tex];
+		} forEach _texture;
+	};
+	if (_texture isEqualTypeAll "") then
+	{
+		{
+			_veh setObjectTextureGlobal [_forEachIndex, _x];
+			_textures set [_forEachIndex, _x];
+		} forEach _texture;
+	};
 };
 
 _veh setVariable ["A3W_objectTextures", if (isNil "_textureSource") then { _textures } else { [_textureSource] }, true];

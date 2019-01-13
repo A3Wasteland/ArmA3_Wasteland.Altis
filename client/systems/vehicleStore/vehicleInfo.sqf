@@ -10,14 +10,14 @@
 #include "dialog\vehiclestoreDefines.hpp";
 
 disableSerialization;
-private ["_dialog", "_vehlist", "_vehText", "_colorlist", "_itemIndex", "_itemText", "_itemData", "_colorsArray", "_cfgColors", "_class", "_texs", "_color", "_tex", "_added", "_existingTex", "_colorlistIndex"];
+private ["_dialog", "_vehlist", "_vehText", "_colorlist", "_itemIndex", "_itemText", "_colorsArray", "_cfgColors", "_class", "_texs", "_color", "_tex", "_added", "_existingTex", "_colorlistIndex"];
 
 //Initialize Values
 _vehClass = "";
 _price = 0;
 
 // Grab access to the controls
-_dialog = findDisplay vehshop_DIALOG;
+_dialog = ctrlParent (_this select 0);
 _vehlist = _dialog displayCtrl vehshop_veh_list;
 _vehText = _dialog displayCtrl vehshop_veh_TEXT;
 _colorlist = _dialog displayCtrl vehshop_color_list;
@@ -31,17 +31,16 @@ _partList lbSetCurSel -1;
 //Get Selected Item
 _itemIndex = lbCurSel _vehlist;
 _itemText = _vehlist lbText _itemIndex;
-_itemData = _vehlist lbData _itemIndex;
-
-_itemData = call compile _itemData; // [name, class, price, type, variant, ...]
+_itemData = if (isNil "_itemData") then compile (_vehlist lbData _itemIndex) else { _itemData }; // [name, class, price, type, variant, ...]
 
 if (isNil "_itemData") exitWith
 {
 	_vehText ctrlSetText "";
 };
 
-_itemData params ["", "_vehClass", "_price"];
-_vehText ctrlSetText format ["Price: $%1", [_price] call fn_numbersText];
+_itemData params ["_vehName", "_vehClass", "_price"];
+
+_vehText ctrlSetText format ["%1Price: $%2", [_vehName + "\n", ""] select isNil "_repaint", [_price] call fn_numbersText];
 
 _vehCfg = configFile >> "CfgVehicles" >> _vehClass;
 
@@ -109,6 +108,12 @@ reverse _cfgColors;
 	};
 } forEach _cfgColors;
 
+if (!isNil "_repaint" && {_repaint}) then
+{
+	_colorlistIndex = _colorlist lbAdd "default";
+	_colorlist lbSetData [_colorlistIndex, "''"];
+};
+
 {
 	_x params ["_texName", "_texData"];
 	_tex = _texData;
@@ -145,14 +150,23 @@ reverse _cfgColors;
 if (_vehClass isKindOf "B_Heli_Light_01_F") exitWith {};
 
 // default initPhase
-_animSources = (configProperties [_vehCfg >> "AnimationSources", "getText (_x >> 'displayName') != ''"]) apply { [configName _x, getNumber (_x >> "initPhase")] };
+_animSources = configProperties [_vehCfg >> "AnimationSources", "getText (_x >> 'displayName') != ''"];
 
-// animationList initPhase override
-_animList = getArray (_vehCfg >> "animationList");
-for "_i" from 0 to (count _animList - 1) step 2 do
+if (!isNil "_vehicle" && {!isNull _vehicle}) then // repaint old vehicle
 {
-	_initOdds = _animList select (_i+1);
-	[_animSources, _animList select _i, round _initOdds] call fn_setToPairs;
+	_animSources = _animSources apply { [configName _x, _vehicle animationSourcePhase configName _x] };
+}
+else // new vehicle
+{
+	_animSources = _animSources apply { [configName _x, getNumber (_x >> "initPhase")] };
+
+	// animationList initPhase override
+	_animList = getArray (_vehCfg >> "animationList");
+	for "_i" from 0 to (count _animList - 1) step 2 do
+	{
+		_initOdds = _animList select (_i+1);
+		[_animSources, _animList select _i, round _initOdds] call fn_setToPairs;
+	};
 };
 
 _parts = [];

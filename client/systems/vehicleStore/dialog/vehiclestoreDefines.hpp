@@ -15,6 +15,9 @@
 #define vehshop_button4 5294 // Planes
 #define vehshop_button5 5295 // Boats
 #define vehshop_button6 5296 // Submarines (unused)
+#define vehshop_BuyButton_IDC 100
+
+#define A3W_vehPaintIDD 5785
 
 #define vehshop_list_textureChecked (toLower getText (configFile >> "RscCheckBox" >> "textureChecked"))
 #define vehshop_list_textureUnchecked (toLower getText (configFile >> "RscCheckBox" >> "textureUnchecked"))
