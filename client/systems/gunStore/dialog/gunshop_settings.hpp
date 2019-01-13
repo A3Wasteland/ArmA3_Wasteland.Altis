@@ -10,7 +10,7 @@ class gunshopd
 	idd = gunshop_DIALOG;
 	movingEnable = true;
 	enableSimulation = true;
-	onLoad = "[[0], populateGunStore] execFSM 'call.fsm'";
+	onLoad = "[0] call populateGunStore";
 
 	class ControlsBackground
 	{
@@ -126,10 +126,41 @@ class gunshopd
 			sizeEx = 0.04 * TEXT_SCALE;
 			rowHeight = 0.05 * TEXT_SCALE;
 
-			x = GunStoreMainBG_X + (0.4433 * SZ_SCALE);
-			y = GunStoreMainBG_Y + (0.075 * SZ_SCALE);
-			w = 0.276 * SZ_SCALE;
+			#define GunStore_AmmoList_X (GunStoreMainBG_X + (0.4433 * SZ_SCALE))
+			#define GunStore_AmmoList_Y (GunStoreMainBG_Y + (0.075 * SZ_SCALE))
+			#define GunStore_AmmoList_W (0.276 * SZ_SCALE)
+
+			x = GunStore_AmmoList_X;
+			y = GunStore_AmmoList_Y;
+			w = GunStore_AmmoList_W;
 			h = 0.4222 * SZ_SCALE;
+		};
+
+		class WeaponFilterText: w_RscStructuredTextLeft
+		{
+			idc = gunshop_WeaponFilterText_IDC;
+			text = "Weapon filter:";
+			size = 0.04 * TEXT_SCALE;
+
+			#define GunStore_WeaponFilterText_H (0.02 * Y_SCALE)
+
+			x = GunStore_AmmoList_X;
+			y = GunStore_AmmoList_Y;
+			w = 0.119 * SZ_SCALE;
+			h = GunStore_WeaponFilterText_H;
+		};
+
+		class WeaponFilterDropdown: RscCombo
+		{
+			idc = gunshop_WeaponFilterDropdown_IDC;
+			sizeEx = 0.04 * TEXT_SCALE;
+			wholeHeight = 0.35 * Y_SCALE;
+			colorBackground[] = {0, 0, 0, 0.6};
+
+			x = GunStore_AmmoList_X;
+			y = GunStore_AmmoList_Y + GunStore_WeaponFilterText_H + (0.01 * Y_SCALE);
+			w = GunStore_AmmoList_W;
+			h = 0.028 * Y_SCALE;
 		};
 
 		class BuyGun: w_RscButton

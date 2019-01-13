@@ -24,7 +24,7 @@ pistolArray = compileFinal str
 	["Rook-40 Pistol", "hgun_Rook40_F", 50],
 	["ACP-C2 Pistol", "hgun_ACPC2_F", 75],
 	["Zubr Revolver", "hgun_Pistol_heavy_02_F", 75],
-	["4-Five Pistol", "hgun_Pistol_heavy_01_F", 100]
+	["4-five Pistol", "hgun_Pistol_heavy_01_F", 100]
 ];
 
 smgArray = compileFinal str
@@ -390,8 +390,8 @@ accessoriesArray = compileFinal str
 	["Flashlight", "acc_flashlight", 25, "item"],
 	["Pistol Flashlight" ,"acc_flashlight_pistol", 25, "item"],
 	["IR Laser Pointer", "acc_pointer_IR", 25, "item"],
-	["Yorris Sight (Zubr Revolver)", "optic_Yorris", 50, "item"],
-	["MRD Sight (4-Five Pistol)", "optic_MRD", 50, "item"],
+	["Yorris J2 (Zubr)", "optic_Yorris", 25, "item"],
+	["MRD (4-five)", "optic_MRD", 25, "item"],
 	["ACO SMG (Red)", "optic_aco_smg", 50, "item"],
 	["ACO SMG (Green)", "optic_ACO_grn_smg", 50, "item"],
 	["ACO (Red)", "optic_Aco", 75, "item"],
