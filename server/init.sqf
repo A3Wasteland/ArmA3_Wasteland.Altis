@@ -174,6 +174,7 @@ if (isServer) then
 		"A3W_artilleryRadius",
 		"A3W_artilleryCooldown",
 		"A3W_artilleryAmmo",
+		"A3W_territoryWarningIcons",
 		"A3W_disableBuiltInThermal",
 		"A3W_headshotNoRevive"
 	];

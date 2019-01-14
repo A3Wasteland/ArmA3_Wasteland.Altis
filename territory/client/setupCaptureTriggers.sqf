@@ -11,6 +11,8 @@
 
 if (!hasInterface) exitWith {};
 
+_warningIcons = ["A3W_territoryWarningIcons"] call isConfigOn;
+
 {
 	_trig = _x;
 	_marker = _trig getVariable ["captureTriggerMarker", ""];
@@ -31,5 +33,23 @@ if (!hasInterface) exitWith {};
 		_trig setTriggerArea [_markerSize select 0, _markerSize select 1, markerDir _marker, markerShape _marker == "RECTANGLE"];
 		_trig setTriggerActivation ["ANY", "PRESENT", true];
 		_trig setTriggerStatements ["(vehicle player) in thislist && (player call fn_getPos3D) select 2 <= 250", _onEnter, _onExit];
+
+		if (_warningIcons) then
+		{
+			_warnMark = createMarkerLocal [_marker + "_warn", markerPos _marker];
+			_warnMark setMarkerAlphaLocal 0;
+			_warnMark setMarkerShapeLocal "ICON";
+			_warnMark setMarkerTypeLocal "mil_warning";
+			_warnMark setMarkerColorLocal "ColorOrange";
+			_warnMark setMarkerSizeLocal [0.8, 0.8];
+
+			_onEnter = format ["'%1' setMarkerAlphaLocal 1", _warnMark];
+			_onExit = format ["'%1' setMarkerAlphaLocal 0", _warnMark];
+
+			_warnTrig = createTrigger ["EmptyDetector", markerPos _marker, false];
+			_warnTrig setTriggerArea [_markerSize select 0, _markerSize select 1, markerDir _marker, markerShape _marker == "RECTANGLE"];
+			_warnTrig setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+			_warnTrig setTriggerStatements ["{isPlayer _x && {!([_x, player] call A3W_fnc_isFriendly) && (_x modelToWorld [0,0,0]) select 2 <= 250}} count thisList > 0", _onEnter, _onExit];
+		};
 	};
 } forEach allMissionObjects "EmptyDetector";
