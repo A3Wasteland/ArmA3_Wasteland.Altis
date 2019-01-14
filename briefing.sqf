@@ -19,6 +19,19 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["changelog",
 [
+"v1.4d",
+"
+<br/>[Added] ADR-97 SMG
+<br/>[Added] Paint vehicle option at stores
+<br/>[Added] Weapon filter for gunstore accessories
+<br/>[Added] Territory capture warning icons on map
+<br/>[Fixed] UAVs retrieved from parking are unconnectable
+<br/>[Fixed] Other minor changes and fixes
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
 "v1.4c",
 "
 <br/>[Added] Tanks DLC
