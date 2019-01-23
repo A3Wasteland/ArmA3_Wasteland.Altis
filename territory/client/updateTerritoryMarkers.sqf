@@ -41,6 +41,8 @@ if (_team isEqualType grpNull && {(side _team) in [BLUFOR,OPFOR]}) then
 			_marker setMarkerColorLocal ([_team, false] call A3W_fnc_getTeamMarkerColor);
 			_marker setMarkerBrushLocal MARKER_BRUSH_OTHER;
 		};
+
+		missionNamespace setVariable [_marker + "_team", _team, false];
 	}
 	else
 	{
@@ -56,5 +58,7 @@ if (_team isEqualType grpNull && {(side _team) in [BLUFOR,OPFOR]}) then
 			_marker setMarkerColorLocal ([_team, false] call A3W_fnc_getTeamMarkerColor);
 			_marker setMarkerBrushLocal MARKER_BRUSH_OTHER;
 		};
+
+		missionNamespace setVariable [_marker + "_team", _team, false];
 	};
 } forEach _territories;
