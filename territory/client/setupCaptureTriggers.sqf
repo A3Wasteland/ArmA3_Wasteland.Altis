@@ -49,7 +49,7 @@ _warningIcons = ["A3W_territoryWarningIcons"] call isConfigOn;
 			_warnTrig = createTrigger ["EmptyDetector", markerPos _marker, false];
 			_warnTrig setTriggerArea [_markerSize select 0, _markerSize select 1, markerDir _marker, markerShape _marker == "RECTANGLE"];
 			_warnTrig setTriggerActivation ["ANYPLAYER", "PRESENT", true];
-			_warnTrig setTriggerStatements [format ["_ownerTeam = missionNamespace getVariable ['%1_team', sideUnknown]; _friendlyTerr = if (_ownerTeam isEqualType sideUnknown) then { _ownerTeam == playerSide } else { [_ownerTeam, player] call A3W_fnc_isFriendly }; _friendlyTerr && {thisList findIf {isPlayer _x && {([_x, player] call A3W_fnc_isFriendly) && (_x modelToWorld [0,0,0]) select 2 <= 250}} != -1}", _marker], _onEnter, _onExit];
+			_warnTrig setTriggerStatements [format ["_ownerTeam = missionNamespace getVariable ['%1_team', sideUnknown]; _friendlyTerr = if (_ownerTeam isEqualType sideUnknown) then { _ownerTeam == playerSide } else { [_ownerTeam, player] call A3W_fnc_isFriendly }; _friendlyTerr && {thisList findIf {isPlayer _x && {!([_x, player] call A3W_fnc_isFriendly) && (_x modelToWorld [0,0,0]) select 2 <= 250}} != -1}", _marker], _onEnter, _onExit];
 		};
 	};
 } forEach allMissionObjects "EmptyDetector";
