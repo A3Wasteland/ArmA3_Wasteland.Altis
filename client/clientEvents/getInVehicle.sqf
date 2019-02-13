@@ -54,6 +54,11 @@ if (isNil {_veh getVariable "A3W_engineEH"}) then
 	_veh setVariable ["A3W_engineEH", _veh addEventHandler ["Engine", vehicleEngineEvent]];
 };
 
+if (isNil {_veh getVariable "A3W_incomingMissileEH"} && _veh isKindOf "Heli_Light_01_base_F") then
+{
+	_veh setVariable ["A3W_incomingMissileEH", _veh addEventHandler ["IncomingMissile", { if (vehicle player == _this select 0) then { playSound "MissileAlarm" } }]];
+};
+
 if (_veh isKindOf "Offroad_01_repair_base_F" && isNil {_veh getVariable "A3W_serviceBeaconActions"}) then
 {
 	_veh setVariable ["A3W_serviceBeaconActions",

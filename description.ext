@@ -110,6 +110,12 @@ class CfgNotifications
 	#include "client\CfgNotifications.hpp"
 };
 
+class CfgSounds
+{
+	sounds[] = {};
+	#include "client\CfgSounds.hpp"
+};
+
 class CfgRemoteExec // applies only to clients
 {
 	class Functions
