@@ -1048,11 +1048,11 @@ planesArray = compileFinal str
 
 	["F/A-181 Black Wasp (Gun-Only)", "B_Plane_Fighter_01_Stealth_F", 20000, "vehicle"], // no missiles or bombs
 	["F/A-181 Black Wasp AA", "B_Plane_Fighter_01_F", 40000, "vehicle", "variant_blackwaspAA"],
-	["F/A-181 Black Wasp CAS", "B_Plane_Fighter_01_F", 65000, "vehicle"],
+	["F/A-181 Black Wasp CAS", "B_Plane_Fighter_01_F", 65000, "vehicle", "variant_blackwaspCAS"],
 
 	["To-201 Shikra (Gun-Only)", "O_Plane_Fighter_02_Stealth_F", 25000, "vehicle"], // no missiles or bombs
 	["To-201 Shikra AA", "O_Plane_Fighter_02_F", 50000, "vehicle", "variant_shikraAA"],
-	["To-201 Shikra CAS", "O_Plane_Fighter_02_F", 75000, "vehicle"],
+	["To-201 Shikra CAS", "O_Plane_Fighter_02_F", 75000, "vehicle", "variant_shikraCAS"],
 
 	["A-164 Wipeout CAS", "B_Plane_CAS_01_dynamicLoadout_F", 75000, "vehicle"],
 	["To-199 Neophron CAS", "O_Plane_CAS_02_dynamicLoadout_F", 75000, "vehicle"],

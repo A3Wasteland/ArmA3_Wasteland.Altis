@@ -44,7 +44,7 @@ _resupplyThread = [_vehicle, _unit] spawn
 	if (_variant != "") then { _variant = "variant_" + _variant };
 
 	{
-		if (_vehClass == _x select 1 && ((_variant == "" && {{_x isEqualType "" && {_x select [0,8] == "variant_"}} count _x == 0}) || {_variant in _x})) exitWith
+		if (_vehClass == _x select 1 && (_variant == "" || {_variant in _x})) exitWith
 		{
 			_price = _x select 2;
 			_price = round (_price / PRICE_RELATIONSHIP);

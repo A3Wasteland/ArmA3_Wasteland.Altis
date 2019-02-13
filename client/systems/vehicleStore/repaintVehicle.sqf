@@ -79,7 +79,7 @@ if (_variant != "") then { _variant = "variant_" + _variant };
 _itemData = [_objName, _type];
 
 {
-	if (_type == _x select 1 && ((_variant == "" && {{_x isEqualType "" && {_x select [0,8] == "variant_"}} count _x == 0}) || {_variant in _x})) exitWith
+	if (_type == _x select 1 && (_variant == "" || {_variant in _x})) exitWith
 	{
 		_itemData = _x;
 	};

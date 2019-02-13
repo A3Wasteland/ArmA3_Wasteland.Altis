@@ -65,7 +65,7 @@ storeSellingHandle = _this spawn
 	_price = 1000;
 
 	{
-		if (_type == _x select 1 && ((_variant == "" && {{_x isEqualType "" && {_x select [0,8] == "variant_"}} count _x == 0}) || {_variant in _x})) exitWith
+		if (_type == _x select 1 && (_variant == "" || {_variant in _x})) exitWith
 		{
 			_price = (ceil (((_x select 2) / CHOPSHOP_PRICE_RELATIONSHIP) / 5)) * 5;
 		};
