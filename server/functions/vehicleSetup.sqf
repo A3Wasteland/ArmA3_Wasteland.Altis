@@ -78,9 +78,9 @@ switch (true) do
 		_centerOfMass set [2, (_centerOfMass select 2) - 0.1]; // cannot be static number like SUV due to different values for each variant
 		_vehicle setCenterOfMass _centerOfMass;
 	};
-	case (_class isKindOf "Heli_Light_01_base_F"):
+	case ({_class isKindOf _x} count ["Heli_Light_01_base_F","Plane_Civil_01_base_F"] > 0):
 	{
-		// Add flares to poor MH-9's
+		// Add flares to poor MH-9 and Caesar BTT
 		_vehicle removeWeaponTurret ["CMFlareLauncher", [-1]];
 
 		if (_brandNew) then
