@@ -107,6 +107,8 @@ if (_texture isEqualType "") then
 //			case (_veh isKindOf "Heli_Transport_03_base_F"):       { [] };
 //			case (_veh isKindOf "Heli_Transport_04_base_F"):       { [] };
 
+			case (_veh isKindOf "Heli_Light_01_armed_base_F"):     { [1] };
+
 //			case (_veh isKindOf "Heli_Attack_02_base_F"):          { [] };
 
 //			case (_veh isKindOf "VTOL_Base_F"):                    { [] };
