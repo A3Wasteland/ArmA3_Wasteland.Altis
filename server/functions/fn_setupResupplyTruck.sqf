@@ -27,6 +27,7 @@ if (local _veh) then
 	if (_static) then
 	{
 		_veh lock 2;
+		_veh enableRopeAttach false;
 	};
 };
 
