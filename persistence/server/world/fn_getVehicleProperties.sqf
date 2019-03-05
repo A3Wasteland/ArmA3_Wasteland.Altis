@@ -93,7 +93,7 @@ private _locked = 1 max locked _veh; // default vanilla state is always 1, so we
 _textures = [];
 private _texturesVar = _veh getVariable ["A3W_objectTextures", []];
 
-if (_texturesVar isEqualTypeArray [""]) then // TextureSource
+if (_texturesVar isEqualType "") then // TextureSource
 {
 	_textures = _texturesVar;
 }

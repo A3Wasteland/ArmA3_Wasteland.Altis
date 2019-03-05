@@ -131,7 +131,8 @@ if (!isNil "_textures") then
 {
 	_veh setVariable ["BIS_enableRandomization", false, true];
 
-	if (_textures isEqualTypeAll "") then // TextureSource
+	if (_textures isEqualType "") then { _textures = [_textures] }; // assume TextureSource
+	if (_textures isEqualTypeArray [""]) then // TextureSource
 	{
 		[_veh, _textures] call applyVehicleTexture;
 	}

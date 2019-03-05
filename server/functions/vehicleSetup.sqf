@@ -138,6 +138,12 @@ switch (true) do
 	};
 };
 
+// Disable AH-9 painted crosshair when not needed
+if (_class isKindOf "Heli_Light_01_armed_base_F" && difficultyOption "weaponCrosshair" > 0) then
+{
+	_vehicle setObjectTextureGlobal [1,""];
+};
+
 _weapons = getArray (configFile >> "CfgVehicles" >> _class >> "weapons");
 
 // Horn customizations
