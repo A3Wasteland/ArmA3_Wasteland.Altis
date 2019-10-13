@@ -56,14 +56,21 @@ if (_showAmmo) then
 	{
 		_configMags = [];
 		{
-			_configMags = _configMags + getArray ((if (_x == "this") then { _weapon } else { _weapon >> _x }) >> "magazines");
+			_conf = if (_x == "this") then { _weapon } else { _weapon >> _x };
+			_configMags append getArray (_conf >> "magazines");
+
+			{
+				{
+					_configMags append getArray _x;
+				} forEach configProperties [configFile >> "CfgMagazineWells" >> _x, "isArray _x"];
+			} forEach getArray (_conf >> "magazineWell");
 		} forEach getArray (_weapon >> "muzzles");
 
 		{
 			_shopMag = _x;
 			_shopMagClass = _x select 1;
 
-			if ({_x == _shopMagClass} count _configMags > 0) then
+			if (_configMags findIf {_x == _shopMagClass} != -1) then
 			{
 				_conf = configFile >> "CfgMagazines" >> _shopMagClass;
 				_name = _shopMag select 0;
