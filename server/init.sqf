@@ -81,7 +81,7 @@ if (isServer) then
 	[] execVM "server\admins.sqf";
 };
 
-[] execVM "server\functions\serverVars.sqf";
+call compile preprocessFileLineNumbers "server\functions\serverVars.sqf";
 
 if (isServer) then
 {
