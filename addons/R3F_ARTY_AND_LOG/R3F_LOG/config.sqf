@@ -24,6 +24,7 @@ R3F_LOG_CFG_remorqueurs =
  */
 R3F_LOG_CFG_remorqueursH =
 [
+	"Tractor_01_base_F",
 	"Truck_01_base_F",
 	"Truck_02_base_F",
 	"Truck_03_base_F",
@@ -60,6 +61,7 @@ R3F_LOG_CFG_objets_remorquables =
  */
 R3F_LOG_CFG_objets_remorquablesH =
 [
+	"Tractor_01_base_F",
 	"Wheeled_APC_F",
 	"APC_Tracked_01_base_F",
 	"APC_Tracked_02_base_F",
@@ -130,6 +132,7 @@ R3F_LOG_CFG_objets_heliportables =
  */
 R3F_LOG_CFG_objets_heliportablesH =
 [
+	"Tractor_01_base_F",
 	"Wheeled_APC_F",
 	"APC_Tracked_01_base_F",
 	"APC_Tracked_02_base_F",
@@ -178,9 +181,11 @@ R3F_LOG_CFG_transporteurs =
 	["MRAP_01_base_F", 20],
 	["MRAP_02_base_F", 20],
 	["MRAP_03_base_F", 20],
+	["Tractor_01_base_F", 20],
 	["B_Truck_01_box_F", 150],
 	["Truck_F", 75],
 	["Wheeled_APC_F", 30],
+	["UGV_02_Base_F", 3],
 	["LT_01_base_F", 10],
 	["Tank_F", 30],
 	["Scooter_Transport_01_base_F", 5],
@@ -217,6 +222,7 @@ R3F_LOG_CFG_objets_transportables =
 	["Rubber_duck_base_F", 10],
 	["UAV_01_base_F", 2],
 	["UAV_06_base_F", 2],
+	["UGV_02_Base_F", 2],
 	["Land_PierLadder_F", 3],
 	["Land_BagBunker_Large_F", 10],
 	["Land_BagBunker_Small_F", 5],
@@ -276,6 +282,7 @@ R3F_LOG_CFG_objets_deplacables =
 	"SDV_01_base_F",
 	"UAV_01_base_F",
 	"UAV_06_base_F",
+	"UGV_02_Base_F",
 	"Land_PierLadder_F",
 	"Land_BagBunker_Large_F",
 	"Land_BagBunker_Small_F",
