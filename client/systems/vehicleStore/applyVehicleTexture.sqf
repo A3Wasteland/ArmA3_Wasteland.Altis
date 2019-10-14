@@ -75,6 +75,7 @@ if (_texture isEqualType "") then
 //			case (_veh isKindOf "Truck_03_base_F"):                { [] };
 
 			case (_veh isKindOf "UGV_01_base_F"):                  { [1] };
+			case (_veh isKindOf "UGV_02_Base_F"):                  { [1] };
 
 //			case (_veh isKindOf "MRAP_01_base_F"):                 { [1] };
 //			case (_veh isKindOf "MRAP_02_base_F"):                 { [] };
@@ -120,6 +121,7 @@ if (_texture isEqualType "") then
 
 //			case (_veh isKindOf "UAV_03_base_F"):                  { [] };
 			case (_veh isKindOf "UAV_05_Base_F"):                  { [2,3,4,5] };
+			case (_veh isKindOf "UAV_06_medical_base_F"):          { [1] };
 
 			case (_veh isKindOf "Boat_Civil_01_base_F"):           { [1] };
 
