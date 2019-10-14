@@ -57,7 +57,7 @@ vector_angle = {
   _m = (_v1m * _v2m);
   if (_m == 0) exitWith {0};
   
-  (acos(_vdp / _m))
+  acos((_vdp / _m) max -1 min 1)
 };
 
 vector_normalize = {

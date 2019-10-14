@@ -17,7 +17,7 @@ A3W_fnc_unflip = {
   _object setPos _pos;
   _object setVectorUp _vector;
   [_object] spawn {
-    sleep 5;
+    sleep 1;
     ARGVX3(0,_object,objNull);
     _object allowDamage true;
   };
