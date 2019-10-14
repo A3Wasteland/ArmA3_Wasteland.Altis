@@ -149,6 +149,9 @@ if (!isNil "_repaint" && {_repaint}) then
 // disable custom parts for MH-9 Hummingbird, because if "Add back seats" is unticked, people can still sit in the back and are invisible from the outside
 if (_vehClass isKindOf "B_Heli_Light_01_F") exitWith {};
 
+// disable custom parts for NATO designator since "Hide designator" is undesirable
+if (_vehClass isKindOf "Static_Designator_01_base_F") exitWith {};
+
 // default initPhase
 _animSources = configProperties [_vehCfg >> "AnimationSources", "getText (_x >> 'displayName') != ''"];
 
