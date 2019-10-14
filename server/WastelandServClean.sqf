@@ -30,7 +30,7 @@ _objCleanup =
 
 	if (_isWreck) then
 	{
-		if (_baseClass in ["UAV_01_base_F","UAV_06_base_F"] && {fuel _obj > 0 || !isNull ((uavControl _obj) select 0)}) exitWith
+		if (_baseClass in ["UAV_01_base_F","UAV_06_base_F","UGV_02_Base_F"] && {fuel _obj > 0 || !isNull ((uavControl _obj) select 0)}) exitWith
 		{
 			if (_processedDeath > 0) then
 			{
