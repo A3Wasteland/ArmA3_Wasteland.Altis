@@ -48,7 +48,7 @@ _gunDesc ctrlSetStructuredText parseText _description;
 // If firearm, add compatible mags to ammo list
 if (_showAmmo) then
 {
-	private ["_configMags", "_shopMag", "_shopMagClass", "_conf", "_name", "_picture"];
+	private ["_configMags", "_shopMag", "_shopMagClass", "_magIndex", "_conf", "_name", "_picture"];
 
 	_weapon = configFile >> _parentCfg >> _itemData;
 
@@ -69,8 +69,9 @@ if (_showAmmo) then
 		{
 			_shopMag = _x;
 			_shopMagClass = _x select 1;
+			_magIndex = _configMags findIf {_x == _shopMagClass};
 
-			if (_configMags findIf {_x == _shopMagClass} != -1) then
+			if (_magIndex != -1) then
 			{
 				_conf = configFile >> "CfgMagazines" >> _shopMagClass;
 				_name = _shopMag select 0;
@@ -78,6 +79,11 @@ if (_showAmmo) then
 				_ammolistIndex = _ammolist lbAdd format ["%1", if (_name == "") then { getText (_conf >> "displayName") } else { _name }];
 				_ammolist lbSetPicture [_ammolistIndex,_picture];
 				_ammolist lbSetData [_ammolistIndex, _shopMagClass];
+
+				if (_magIndex == 0) then
+				{
+					_ammolist lbSetCurSel _ammolistIndex;
+				};
 			};
 		} forEach (call ammoArray);
 
