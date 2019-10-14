@@ -203,6 +203,11 @@ if (_key != "" && _player isKindOf "Man" && {_isGenStore || _isGunStore || _isVe
 				};
 			};
 
+			if (_skipSave) then
+			{
+				_object setVariable ["A3W_skipAutoSave", true, true];
+			};
+
 			if !(_player getVariable [_timeoutKey, true]) then
 			{
 				[_player, -_itemPrice] call A3W_fnc_setCMoney;
@@ -269,11 +274,7 @@ if (_key != "" && _player isKindOf "Man" && {_isGenStore || _isGunStore || _isVe
 				_object addMagazineCargoGlobal ["30Rnd_556x45_Stanag", 2];
 			};
 
-			if (_skipSave) then
-			{
-				_object setVariable ["A3W_skipAutoSave", true, true];
-			}
-			else
+			if (!_skipSave) then
 			{
 				if (_object getVariable ["A3W_purchasedVehicle", false] && !isNil "fn_manualVehicleSave") then
 				{

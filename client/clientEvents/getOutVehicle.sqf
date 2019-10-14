@@ -23,3 +23,9 @@ if (!unitIsUAV _veh) then
 
 { _veh removeAction _x } forEach (_veh getVariable ["A3W_serviceBeaconActions", []]);
 _veh setVariable ["A3W_serviceBeaconActions", nil];
+
+[_veh, _veh getVariable ["A3W_flipDroneAction", -1]] call fn_removeManagedAction;
+_veh setVariable ["A3W_flipDroneAction", nil];
+
+{ [_veh, _x] call fn_removeManagedAction } forEach (_veh getVariable ["A3W_saveDroneActions", []]);
+_veh setVariable ["A3W_saveDroneActions", nil];

@@ -243,6 +243,26 @@ switch (true) do
 		];
 	};
 
+	// ED-1D Demining UGV
+	case (_class isKindOf "UGV_02_Demining_Base_F"):
+	{
+		_mags =
+		[
+			["200Rnd_556x45_Box_F", [0]],
+			["15Rnd_12Gauge_Pellets", [0]],
+			["15Rnd_12Gauge_Slug", [0]],
+			["Laserbatteries", [0]],
+			["SmokeLauncherMag", [0]]
+		];
+		_weapons =
+		[
+			["LMG_03_Vehicle_F", [0]],
+			["DeminingDisruptor_01_F", [0]],
+			["Laserdesignator_mounted", [0]],
+			["SmokeLauncher", [0]]
+		];
+	};
+
 	// SDV SDAR turret
 	case (_class isKindOf "SDV_01_base_F"):
 	{

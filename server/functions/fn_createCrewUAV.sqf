@@ -66,4 +66,10 @@ if (round getNumber (configFile >> "CfgVehicles" >> _uavClass >> "attendant") > 
 	_uav animateSource ["LED_lights_hide", 0, true]; // show medical beacons
 };
 
+// Disable UAV thermal vision if desired, adjust classnames as needed
+/*if ({_uav isKindOf _x} count ["UGV_02_Base_F"] > 0) then
+{
+	_uav disableTIEquipment true;
+};*/
+
 _grp

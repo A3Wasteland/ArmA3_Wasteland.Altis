@@ -4,9 +4,6 @@
 //	@file Name: canForceSaveStaticWeapon.sqf
 //	@file Author: AgentRev
 
-private "_veh";
-_veh = cursorTarget;
-
-alive _veh && {player distance _veh <= (sizeOf typeOf _veh / 2) max 2} && 
-(["A3W_extDB_SaveUnlockedObjects"] call isConfigOn || _veh getVariable ["objectLocked", false]) &&
-{_veh isKindOf "StaticWeapon" && (!(_veh getVariable ["R3F_LOG_disabled", false]) || locked _veh == 2)}
+alive _this && {cameraOn distance _this <= (sizeOf typeOf _this / 2) max 2} && 
+(["A3W_extDB_SaveUnlockedObjects"] call isConfigOn || _this getVariable ["objectLocked", false]) &&
+{_this isKindOf "StaticWeapon" && (!(_this getVariable ["R3F_LOG_disabled", false]) || locked _this == 2)}

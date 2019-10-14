@@ -10,7 +10,14 @@ _unit setVariable ["lastVehicleRidden", netId _vehicle, true];
 
 if (_vehicle isKindOf "StaticWeapon" && owner _vehicle != owner _unit) then
 {
-	_vehicle setOwner owner _unit;
+	if (isNull group _vehicle) then
+	{
+		_vehicle setOwner owner _unit;
+	}
+	else
+	{
+		(group _vehicle) setGroupOwner owner _unit;
+	};
 };
 
 if (isPlayer _unit && owner _vehicle == owner _unit) then

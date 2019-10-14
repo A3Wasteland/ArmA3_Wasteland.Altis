@@ -4,9 +4,15 @@
 //	@file Name: fn_takeOwnership.sqf
 //	@file Author: AgentRev
 
-params [["_veh",objNull,[objNull,""]], ["_player",objNull,[objNull]], ["_createCrewUAV",true,[false]]];
+params [["_veh",objNull,[objNull,""]], ["_player",objNull,[objNull]], ["_createCrewUAV",true,[false]], ["_playerUID",nil,[""]]];
 
-if (!isPlayer _player) exitWith {};
+//if (!isPlayer _player) exitWith {};
+
+if (local _player) then
+{
+	_playerUID = getPlayerUID _player;
+	_this set [3, _playerUID];
+};
 
 if (_veh isEqualType "") then { _veh = objectFromNetId _veh };
 
@@ -17,7 +23,7 @@ if (!isServer) exitWith
 	_this remoteExecCall ["A3W_fnc_takeOwnership", 2];
 };
 
-_veh setVariable ["ownerUID", getPlayerUID _player, true];
+_veh setVariable ["ownerUID", if (isNil "_playerUID") then { getPlayerUID _player } else { _playerUID }, true];
 _veh setVariable ["ownerName", name _player, true];
 [_veh, 1] call A3W_fnc_setLockState; // Unlock
 

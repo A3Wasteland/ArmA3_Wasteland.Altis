@@ -65,7 +65,6 @@ storePurchaseHandle = _this spawn
 
 	_showInsufficientFundsError =
 	{
-		_itemText = _this select 0;
 		hint parseText format ["Not enough money for<br/>""%1""", _itemText];
 		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
@@ -73,7 +72,6 @@ storePurchaseHandle = _this spawn
 
 	_showItemSpawnTimeoutError =
 	{
-		_itemText = _this select 0;
 		hint parseText format ["<t color='#ffff00'>An unknown error occurred.</t><br/>The purchase of ""%1"" has been cancelled.", _itemText];
 		playSound "FD_CP_Not_Clear_F";
 		_price = -1;
@@ -81,8 +79,7 @@ storePurchaseHandle = _this spawn
 
 	_showItemSpawnedOutsideMessage =
 	{
-		_itemText = _this select 0;
-		hint format ["""%1"" has been spawned outside, in front of the store.", _itemText];
+		hint format ["""%1"" has been spawned outside, in front of the store.%2", _itemText, ["","\n\nVehicle saving will not start until manually enabled."] select ((objectFromNetId _object) getVariable ["A3W_skipAutoSave", false])];
 		playSound "FD_Finish_F";
 	};
 

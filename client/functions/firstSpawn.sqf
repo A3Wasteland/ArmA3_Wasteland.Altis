@@ -55,7 +55,7 @@ player addEventHandler ["Put",
 	};
 }];
 
-player addEventHandler ["WeaponDisassembled", { _this spawn weaponDisassembledEvent }];
+//player addEventHandler ["WeaponDisassembled", { _this spawn weaponDisassembledEvent }]; // now handled in fn_inGameUIActionEvent.sqf
 player addEventHandler ["WeaponAssembled",
 {
 	params ["_player", "_obj"];
@@ -68,7 +68,7 @@ player addEventHandler ["WeaponAssembled",
 
 	if (unitIsUAV _obj) then
 	{
-		// ownerUID handled thru save funcs
+		// Don't disable UAV thermal vision here, do it at the bottom of fn_createCrewUAV.sqf
 
 		_playerSide = side group _player;
 
@@ -77,12 +77,18 @@ player addEventHandler ["WeaponAssembled",
 			(crew _obj) joinSilent createGroup _playerSide;
 		};
 
+		[_obj, _playerSide, true] call fn_createCrewUAV;
+
 		if (!alive getConnectedUAV _player) then
 		{
 			_player connectTerminalToUAV _obj;
 		};
 
-		[_obj, _playerSide, true] call fn_createCrewUAV;
+		if (isNil {_obj getVariable "ownerUID"}) then
+		{
+			[_obj, true] call A3W_fnc_setVehicleLoadout;
+		};
+
 		[_obj, _player, false] call A3W_fnc_takeOwnership;
 	};
 }];
