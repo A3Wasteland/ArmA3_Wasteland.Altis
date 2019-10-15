@@ -59,6 +59,7 @@ private _uavAuto = true;
 		case "ownerName":
 		{
 			if (_val isEqualType []) then { _val = toString _val };
+			if !(_val in ["", "Error: No unit", "Error: No vehicle"]) then { _veh setPlateNumber _val };
 		};
 		case "uavSide":
 		{

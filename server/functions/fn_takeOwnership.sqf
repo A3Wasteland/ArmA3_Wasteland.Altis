@@ -25,6 +25,7 @@ if (!isServer) exitWith
 
 _veh setVariable ["ownerUID", if (isNil "_playerUID") then { getPlayerUID _player } else { _playerUID }, true];
 _veh setVariable ["ownerName", name _player, true];
+if (isPlayer _player) then { [_veh, name _player] remoteExec ["setPlateNumber", _veh] };
 [_veh, 1] call A3W_fnc_setLockState; // Unlock
 
 if (_veh getVariable ["A3W_skipAutoSave", false]) then

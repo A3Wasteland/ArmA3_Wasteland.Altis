@@ -175,6 +175,7 @@ if (_key != "" && _player isKindOf "Man" && {_isGenStore || _isGunStore || _isVe
 			_object setVariable ["A3W_purchasedStoreObject", true];
 			_object setVariable ["ownerUID", getPlayerUID _player, true];
 			_object setVariable ["ownerName", name _player, true];
+			if (isPlayer _player) then { _object setPlateNumber name _player };
 
 			private _variant = (_itemEntry select {_x isEqualType "" && {_x select [0,8] == "variant_"}}) param [0,""];
 
