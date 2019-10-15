@@ -92,6 +92,11 @@ if (_unit == player && (_showWindow || _menuOpen)) then
 			};
 		};
 
+		case (_target isKindOf "UGV_02_Base_F" && _action == "MoveToTurret"): // Block glitched "To Gunner's seat" action on Demining UGV
+		{
+			_handled = true;
+		};
+
 		case (_action select [0,5] == "GetIn"): // Speed up get in vehicle animation since player unit appears idle for other players
 		{
 			0 spawn
