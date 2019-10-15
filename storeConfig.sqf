@@ -1031,8 +1031,9 @@ landArray = compileFinal str
 [
 	// SKIPSAVE = will not be autosaved until first manual force save, good for cheap vehicles that usually get abandoned
 
-	["Remote Designator (NATO)", "B_Static_Designator_01_F", GENSTORE_ITEM_PRICE("B_Static_Designator_01_weapon_F"), "vehicle", "SKIPSAVE", "HIDDEN"], // for sell vehicle price
-	["Remote Designator (CSAT)", "O_Static_Designator_02_F", GENSTORE_ITEM_PRICE("O_Static_Designator_02_weapon_F"), "vehicle", "SKIPSAVE", "HIDDEN"],
+		["Remote Designator (Khaki)", "B_W_Static_Designator_01_F", GENSTORE_ITEM_PRICE("B_W_Static_Designator_01_weapon_F"), "vehicle", "SKIPSAVE", "HIDDEN"], // hidden, for paint & sell price
+		["Remote Designator (Sand)", "B_Static_Designator_01_F", GENSTORE_ITEM_PRICE("B_Static_Designator_01_weapon_F"), "vehicle", "SKIPSAVE", "HIDDEN"], //
+		["Remote Designator (Hex)", "O_Static_Designator_02_F", GENSTORE_ITEM_PRICE("O_Static_Designator_02_weapon_F"), "vehicle", "SKIPSAVE", "HIDDEN"], //
 
 	["Kart", "C_Kart_01_F", 400, "vehicle", "SKIPSAVE"],
 	["Tractor", "C_Tractor_01_F", 500, "vehicle", "SKIPSAVE"],
