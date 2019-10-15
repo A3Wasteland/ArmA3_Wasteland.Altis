@@ -79,6 +79,10 @@ player addEventHandler ["WeaponAssembled",
 		if (isNil {_obj getVariable "ownerUID"}) then
 		{
 			_obj setVariable ["A3W_skipAutoSave", true, true]; // SKIPSAVE on first assembly
+
+			_obj allowDamage true;
+			_obj setVariable ["allowDamage", true, true];
+
 			[_obj, true] call A3W_fnc_setVehicleLoadout;
 		};
 
