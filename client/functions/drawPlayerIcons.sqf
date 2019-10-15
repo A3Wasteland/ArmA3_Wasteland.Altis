@@ -217,7 +217,7 @@ drawPlayerIcons_thread = [] spawn
 
 					if (_thermalActive && {cameraOn == vehicle player && _weapon in weapons player && _ownWeapon &&
 						({_x == "TI"} count getArray (configFile >> "CfgWeapons" >> _weapon >> "visionMode") > 0 ||
-						 {!("{_x == 'TI'} count getArray (_x >> 'visionMode') > 0" configClasses (configFile >> "CfgWeapons" >> _weapon >> "OpticsModes") isEqualTo [])})}) then
+						 {!(configProperties [configFile >> "CfgWeapons" >> _weapon >> "OpticsModes", "isClass _x && {{_x == 'TI'} count getArray (_x >> 'visionMode') > 0}"] isEqualTo [])})}) then
 					{
 						if (isNil "A3W_builtInThermalOffline") then
 						{

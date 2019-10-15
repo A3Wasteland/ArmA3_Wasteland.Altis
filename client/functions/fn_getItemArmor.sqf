@@ -23,7 +23,7 @@ if (_hitpoint == "") then
 			_cfgHitpoint = _x;
 			_armor = _armorTmp;
 		};
-	} forEach ("true" configClasses _cfgHitpointsPI);
+	} forEach configProperties [_cfgHitpointsPI, "isClass _x"];
 }
 else
 {

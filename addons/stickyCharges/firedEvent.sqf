@@ -77,7 +77,7 @@ if (_this select 1 == "Put") then
 	if (getObjectType _target isEqualTo 8 && simulationEnabled _target && !(_target isKindOf "TimeBombCore") &&
 	    {_target isKindOf "AllVehicles" || !_allowDamage ||
 	     {!((toLower getText (_targetCfg >> "destrType")) in ["destructbuilding","destructtent","destructtree","destructwall"]) &&
-	      ("getText (_x >> 'simulation') == 'ruin'" configClasses (_targetCfg >> "DestructionEffects")) isEqualTo []}}) then
+	      configProperties [_targetCfg >> "DestructionEffects", "isClass _x && {getText (_x >> 'simulation') == 'ruin'}"] isEqualTo []}}) then
 	{
 		_bomb attachTo [_target, _target worldToModelVisual ASLtoAGL _posASL];
 		_vecUp = _target worldToModelVisual ASLtoAGL ((AGLtoASL (_target modelToWorldVisual [0,0,0])) vectorAdd _normal);
