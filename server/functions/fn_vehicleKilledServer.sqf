@@ -20,3 +20,9 @@ if (!isNil "fn_manualVehicleDelete") then
 		deleteVehicle _x;
 	};
 } forEach crew _vehicle;
+
+// Stop vehicle siren
+if (isClass (configFile >> "CfgVehicles" >> (typeOf _veh) >> "UserActions" >> "siren_stop")) then
+{
+	[_veh,'CustomSoundController1',0,0.4] remoteExec ['BIS_fnc_setCustomSoundController'];
+};
