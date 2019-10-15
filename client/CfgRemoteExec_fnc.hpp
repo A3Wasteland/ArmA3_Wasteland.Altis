@@ -11,6 +11,7 @@ class BIS_fnc_debugConsoleExec {}; // secure function made by Killzone Kid for B
 class BIS_fnc_effectKilledAirDestruction {};
 class BIS_fnc_effectKilledSecondaries {};
 class BIS_fnc_initVehicle {}; // required for vehicle parts like tank cages
+class BIS_fnc_setCustomSoundController {}; // police siren
 class BIS_fnc_objectVar {};
 // do NOT whitelist BIS_fnc_execVM or BIS_fnc_spawn, hackers will exploit them!
 
