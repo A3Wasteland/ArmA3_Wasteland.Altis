@@ -690,7 +690,7 @@ uniformArray = compileFinal str
 	["Granit-T Suit", "U_O_R_Gorka_01_camo_F", 200, "uni"],
 	["Granit-N Suit", "U_O_R_Gorka_01_black_F", 200, "uni"],
 	["Default Uniform (NATO)", "U_B_CombatUniform_mcam", 25, "uni"],
-	["Default Uniform (CSAT)", "U_O_OfficerUniform_ocamo", 25, "uni"],
+	["Default Uniform (CSAT)", "U_O_officer_noInsignia_hex_F", 25, "uni", "noDLC"],
 	["Default Uniform (AAF)", "U_I_CombatUniform", 25, "uni"],
 	["Recon Fatigues (MTP)", "U_B_CombatUniform_mcam_vest", 25, "uni"],
 	["Recon Fatigues (Tropic)", "U_B_T_Soldier_SL_F", 25, "uni", "noDLC"],
