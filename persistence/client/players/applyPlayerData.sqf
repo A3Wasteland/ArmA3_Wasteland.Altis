@@ -83,7 +83,10 @@ else
 
 			if (_value != "") then
 			{
-				if (_value isKindOf "Weapon_Bag_Base" && [["_UAV_","_Designator_"], _value] call fn_findString == -1) then
+				// block armed drones and turrets, allow unarmed drones
+				if (_value isKindOf "Weapon_Bag_Base" &&
+				    {[["_UAV_","_UGV_","_Designator_"], _value] call fn_findString == -1 ||
+				     ["C_IDAP_UAV_06_antimine_backpack_F","UGV_02_Demining_backpack_base_F"] findIf {_value isKindOf _x} != -1}) then
 				{
 					player addBackpack "B_AssaultPack_rgr"; // NO SOUP FOR YOU
 				}
