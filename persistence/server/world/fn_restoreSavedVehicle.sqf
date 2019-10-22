@@ -265,7 +265,7 @@ if (!isNil "_turretMags2") then
 // Restore pylons
 {
 	_x params ["_mag", "_path", "_ammo"];
-	[_veh, [_forEachIndex + 1, _mag, true, _path]] call fn_setPylonLoadOut;
+	_veh setPylonLoadOut [_forEachIndex + 1, _mag, true, _path];
 	_veh setAmmoOnPylon [_forEachIndex + 1, _ammo];
 } forEach _pylons;
 
