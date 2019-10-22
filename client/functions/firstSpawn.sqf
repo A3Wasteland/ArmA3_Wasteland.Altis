@@ -88,6 +88,7 @@ player addEventHandler ["WeaponAssembled",
 
 		_obj setVariable ["ownerUID", getPlayerUID _player, true];
 		_obj setVariable ["ownerName", name _player, true];
+		_obj setPlateNumber name _player;
 
 		[_obj, _playerSide, true] call fn_createCrewUAV;
 
