@@ -199,7 +199,7 @@ if (!isNil "_backpacks") then
 	{
 		_x params ["_bpack"];
 
-		if (!(_bpack isKindOf "Weapon_Bag_Base") || {[["_UAV_","_Designator_"], _bpack] call fn_findString != -1}) then
+		if (!(_bpack isKindOf "Weapon_Bag_Base") || {[["_UAV_","_UGV_","_Designator_"], _bpack] call fn_findString != -1}) then
 		{
 			_veh addBackpackCargoGlobal _x;
 		};
@@ -265,7 +265,7 @@ if (!isNil "_turretMags2") then
 // Restore pylons
 {
 	_x params ["_mag", "_path", "_ammo"];
-	_veh setPylonLoadOut [_forEachIndex + 1, _mag, true, _path];
+	[_veh, [_forEachIndex + 1, _mag, true, _path]] call fn_setPylonLoadOut;
 	_veh setAmmoOnPylon [_forEachIndex + 1, _ammo];
 } forEach _pylons;
 

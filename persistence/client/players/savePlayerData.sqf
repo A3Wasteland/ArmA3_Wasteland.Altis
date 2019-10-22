@@ -75,7 +75,7 @@ savePlayerHandle = [_this,
 
 			if (_manualSave) then
 			{
-				cutText ["\nPlayer saved!", "PLAIN DOWN", 0.2];
+				cutText ["\nPlayer saved!" + (["\nBackpacks inside your backpack are not saved.",""] select(backpackCargo backpackContainer player isEqualTo [])), "PLAIN DOWN", 0.2];
 			};
 		};
 
