@@ -9,9 +9,7 @@
 _pos = _pos apply { if (_x isEqualType "") then { parseNumber _x } else { _x } };
 
 private _isUAV = (round getNumber (configFile >> "CfgVehicles" >> _class >> "isUav") > 0);
-
-private ([["_flying"],[]] select isNil "_flying");
-_flying = (!isNil "_flying" && {_flying > 0});
+private _flying = (!isNil "_flying" && {_flying > 0});
 
 private _special = ["NONE","FLY"] select (_isUAV && _flying);
 private _tempPos = +_pos;
@@ -90,7 +88,7 @@ if (_isUAV) then
 		};
 
 		_veh setVelocity _vel;
-		_veh flyInHeight (((_veh call fn_getPos3D) select 2) max 500);
+		_veh flyInHeight ((_veh modelToWorld [0,0,0]) select 2);
 	};
 
 	//assign AI to the vehicle so it can actually be used
