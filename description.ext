@@ -7,6 +7,7 @@ joinUnassigned = 0;
 enableItemsDropping = 0;
 forceRotorLibSimulation = 0; // if you set this to 1, you deny freedom of choice to the players, which is the very principle this mission is built upon
 weaponPool = 0;
+unsafeCVL = 1; // required for store selling bins and private storage
 corpseManagerMode = 1;
 corpseRemovalMinTime = 30*60;
 corpseRemovalMaxTime = 30*60;
