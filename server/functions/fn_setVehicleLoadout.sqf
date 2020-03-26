@@ -77,14 +77,14 @@ if (_brandNew || _resupply) then
 		{
 			_x params ["_mag", "_path"];
 
-			if (!isText (configFile >> "CfgMagazines" >> _mag >> "pylonWeapon") && (toLower getText (configFile >> "CfgMagazines" >> _mag >> "ammo")) find "_minigun_" != -1) then
+			if (/*!isText (configFile >> "CfgMagazines" >> _mag >> "pylonWeapon") && */(toLower getText (configFile >> "CfgMagazines" >> _mag >> "ammo")) find "_minigun_" != -1) then
 			{
 				_veh addMagazineTurret [_mag, _path];
 			};
 		} forEach magazinesAllTurrets _veh;
 	};
 
-	private "_magCfg";
+	/*private "_magCfg";
 
 	{
 		_magCfg = configFile >> "CfgMagazines" >> _x;
@@ -93,7 +93,7 @@ if (_brandNew || _resupply) then
 		{
 			_veh setAmmoOnPylon [_forEachIndex + 1, 2 * getNumber (_magCfg >> "count")];
 		};
-	} forEach getPylonMagazines _veh;
+	} forEach getPylonMagazines _veh;*/
 
 	if (!isNil "_customCode") then
 	{

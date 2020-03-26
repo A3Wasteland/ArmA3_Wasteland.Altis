@@ -244,7 +244,7 @@ va_information_action = {
   private _variant = _vehicle getVariable ["A3W_vehicleVariant", ""];
   if (_variant != "") then { _variant = "variant_" + _variant };
 
-  _display_name = [_class, _variant] call generic_display_name;
+  _display_name = [_class, _variant] call generic_display_name_variant;
 
   def(_owner);
   def(_tag);

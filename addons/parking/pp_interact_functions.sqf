@@ -73,7 +73,7 @@ pp_interact_park_vehicle_wait = {
 
     if (_variant != "") then { _variant = "variant_" + _variant };
 
-    _name = [_class, _variant] call generic_display_name;
+    _name = [_class, _variant] call generic_display_name_variant;
     _picture = [_class] call generic_picture_path;
 
     def(_index);

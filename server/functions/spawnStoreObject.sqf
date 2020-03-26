@@ -224,7 +224,7 @@ if (_key != "" && _player isKindOf "Man" && {_isGenStore || _isGunStore || _isVe
 			{
 				if (!surfaceIsWater _safePos) then
 				{
-					_object setPosATL [_safePos select 0, _safePos select 1, 0.05];
+					_object setPosATL [_safePos select 0, _safePos select 1, 0.25];
 				};
 
 				_object setVelocity [0,0,0.01];
