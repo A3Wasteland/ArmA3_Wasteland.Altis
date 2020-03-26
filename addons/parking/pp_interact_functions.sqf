@@ -48,27 +48,36 @@ pp_interact_park_vehicle_wait = {
 
     def(_vehicle_id);
     def(_class);
+    private _vehicle_tag = "";
+    private _variant = "";
 
     if (isOBJECT(_vehicle_data) && {alive _vehicle_data}) then {
       init(_vehicle,_vehicle_data);
       _vehicle_id = netId _vehicle;
+      _vehicle_tag = [_vehicle] call va_get_tag;
       _class = typeOf _vehicle;
+      _variant = _vehicle getVariable ["A3W_vehicleVariant", ""];
     }
     else { if (isARRAY(_vehicle_data)) then {
       _vehicle_id = _vehicle_data select 0;
+      _vehicle_tag = _vehicle_id;
       _vehicle_data = _vehicle_data select 1;
       _class = [_vehicle_data, "Class"] call fn_getFromPairs;
+      _variant = [[_vehicle_data, "Variables", []] call fn_getFromPairs, "A3W_vehicleVariant", ""] call fn_getFromPairs;
     };};
 
     if (isNil "_class") exitWith {};
 
     def(_picture);
     def(_name);
-    _name = [_class] call generic_display_name;
+
+    if (_variant != "") then { _variant = "variant_" + _variant };
+
+    _name = [_class, _variant] call generic_display_name;
     _picture = [_class] call generic_picture_path;
 
     def(_index);
-    _index = _list lbAdd format["%1 (%2)",_name, _vehicle_id];
+    _index = _list lbAdd format["%1 [#%2]",_name, _vehicle_tag];
     _list lbSetData [_index, _vehicle_id];
     _list lbSetPicture [_index, _picture];
   };} forEach _vehicle_list;

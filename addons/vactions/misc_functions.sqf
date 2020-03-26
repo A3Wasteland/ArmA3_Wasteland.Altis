@@ -43,8 +43,21 @@ generic_picture_path = {
 };
 
 generic_display_name = {
-  ARGVX3(0,_id,"");
-  ([_id, "displayName"] call generic_config_text)
+  params [["_class","",[""]], ["_variant","",[""]]];
+  private _name = "";
+
+  if (_variant != "") then
+  {
+    {
+      if (_class == _x select 1 && _variant in _x) exitWith
+      {
+        _name = _x select 0;
+      };
+    } forEach (call allVehStoreVehicles + call staticGunsArray);
+  };
+
+  if (_name == "") exitWith { [_class, "displayName"] call generic_config_text };
+  _name
 };
 
 generic_icon_path = {
