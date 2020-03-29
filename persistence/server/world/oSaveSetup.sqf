@@ -72,7 +72,7 @@ if (_mineSavingOn) then
 		_ammoParentClass = _ammoClass;
 
 		// this is needed because some identical user-placed vs script-placed mines have different ammo classes, but share the same vehicle class for createMine
-		while {_ammoClass find _ammoParentClass == 0} do
+		while {_ammoParentClass != "" && _ammoClass find _ammoParentClass == 0} do
 		{
 			A3W_mineSaving_ammoClasses pushBack _ammoParentClass;
 			A3W_mineSaving_vehicleClasses pushBack _vehClass;
