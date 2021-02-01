@@ -45,7 +45,7 @@ _exclMineIDs = [];
 
 		_dummy = createVehicle [STICKY_CHARGE_DUMMY_OBJ, [-1e6,-1e6,1e6], [], 0, "NONE"];
 		_dummy setVariable ["A3W_stickyCharges_isDummy", true, true];
-		_dummy setObjectTextureGlobal [0,""];
+		_dummy setObjectTextureGlobal [0, "#(argb,8,8,3)color(0,0,0,0)"];
 		_dummy attachTo [_mine, [0,0,0]];
 
 		_dummy setVariable ["A3W_stickyCharges_linkedBomb", _mine, true];
