@@ -71,6 +71,11 @@ if (isServer) then
 			{
 				_unit spawn fn_ejectCorpse;
 			};
+
+			if (["A3W_playerSaving"] call isConfigOn) then
+			{
+				_uid spawn fn_deletePlayerSave;
+			};
 		};
 
 		false
