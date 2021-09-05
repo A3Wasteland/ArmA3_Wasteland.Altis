@@ -25,6 +25,11 @@ params [["_killParams",[],[[]]]];
 
 diag_log ("_killParams = " + str _killParams);
 
+if (_killerName isEqualTo "Error: No vehicle" && _killerSide isEqualTo sideUnknown) then
+{
+	_killerName = "";
+};
+
 private _killerNameEncoded = _killerName call fn_encodeText;
 private _victimNameEncoded = _victimName call fn_encodeText;
 

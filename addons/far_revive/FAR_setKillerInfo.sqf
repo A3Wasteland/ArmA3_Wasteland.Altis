@@ -59,13 +59,6 @@ if (!(_killer isKindOf "Man") || (_ammo == "" && _targetVehicle != _sourceVehicl
 			if (!isNull _driver) then // roadkill with driver still seated
 			{
 				_killer = _driver;
-
-				if (isAgent teamMember _driver && !isNull (_driver getVariable ["A3W_driverAssistOwner", objNull])) then // driver assist roadkill
-				{
-					private _effComm = effectiveCommander _killerVehicle;
-					if (alive _effComm || isPlayer _effComm) then { _killer = _effComm };
-				};
-
 				_target setVariable ["A3W_deathCause_local", ["roadkill"]];
 			};
 		}
@@ -84,6 +77,13 @@ if (!(_killer isKindOf "Man") || (_ammo == "" && _targetVehicle != _sourceVehicl
 			};
 		};
 	};
+};
+
+// Killed by driver assist
+if (isAgent teamMember _killer) then
+{
+	private _assistOwner = _killer getVariable ["A3W_driverAssistOwner", objNull];
+	if (alive _assistOwner || isPlayer _assistOwner) then { _killer = _assistOwner };
 };
 
 // killed by UAV
@@ -150,7 +150,15 @@ if (!isNull _killerEntity) then
 	_killerDistance = _target distance _killerEntity;
 };
 
-private _killerUnit = [objNull, _killer] select (_killer isKindOf "Man");
+private _killerUnit = objNull;
+private _killerName = "";
+
+if (_killer isKindOf "Man") then
+{
+	_killerUnit = _killer;
+	_killerName = name _killer;
+};
+
 private _killerVehicleVar = [_killerVehicle, _killer] select isNull _killerVehicle;
 private _killerAI = (!isNull _killer && !isPlayer _killer && isNil {_killer getVariable "cmoney"});
 
@@ -160,7 +168,7 @@ private _killerAI = (!isNull _killer && !isPlayer _killer && isNil {_killer getV
 		["FAR_killerVehicle", _killerVehicleVar],
 		["FAR_killerVehicleClass", typeOf _killerVehicleVar],
 		["FAR_killerUnit", _killerUnit],
-		["FAR_killerName", name _killerUnit],
+		["FAR_killerName", _killerName],
 		["FAR_killerUID", getPlayerUID _killerUnit],
 		["FAR_killerGroup", group _killerUnit],
 		["FAR_killerSide", side group _killerUnit],
