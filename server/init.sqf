@@ -67,6 +67,8 @@ if (isServer) then
 		}
 		else
 		{
+			if (isNull _unit) exitWith {};
+
 			if (!isNull _veh) then
 			{
 				_unit spawn fn_ejectCorpse;
