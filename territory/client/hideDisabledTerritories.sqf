@@ -4,7 +4,7 @@
 //	@file Name: hideDisabledTerritories.sqf
 //	@file Author: AgentRev
 
-if (isServer) exitWith {};
+if (!hasInterface) exitWith {};
 
 {
 	_marker = _x;

@@ -13,36 +13,27 @@
 	Returns: Boolean - test result
 */
 
-private ["_needles", "_haystack", "_caseSensitive", "_found", "_testArray", "_testStr"];
+params [["_needles",[],["",[]]], ["_haystack","",[""]], ["_caseSensitive",false,[false]]];
 
-_needles = param [0, [], ["",[]]];
-_haystack = param [1, "", [""]];
-_caseSensitive = param [2, false, [false]];
-
-if (typeName _needles != "ARRAY") then
+if (_needles isEqualType "") exitWith
 {
-	_needles = [_needles];
-};
+	if (_needles isEqualTo "") exitWith { false };
 
-_found = false;
+	if (_caseSensitive) then
+	{
+		_needles isEqualTo (_haystack select [0, count _needles])
+	}
+	else
+	{
+		_needles == (_haystack select [0, count _needles])
+	}
+};
 
 if (_caseSensitive) then
 {
-	{
-		if (_x != "" && _x isEqualTo (_haystack select [0, count _x])) exitWith
-		{
-			_found = true;
-		};
-	} forEach _needles;
+	_needles findIf {_x isEqualTo (_haystack select [0, count _x])} != -1
 }
 else
 {
-	{
-		if (_x != "" && _x == (_haystack select [0, count _x])) exitWith
-		{
-			_found = true;
-		};
-	} forEach _needles;
-};
-
-_found
+	_needles findIf {_x == (_haystack select [0, count _x])} != -1
+}

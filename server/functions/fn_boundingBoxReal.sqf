@@ -4,8 +4,8 @@
 //	@file Name: fn_boundingBoxReal.sqf
 //	@file Author: AgentRev
 
-// Since BIS are unable to make a command that returns the actual, genuine bounding box of an object (boundingBoxReal is shit and boundingBox is ever shittier),
-// I decided to extract the bounding boxes using an intersect scanner I made, which is at the bottom of this file
+// Since BIS are unable to make a command that returns the actual, genuine bounding box of an object (boundingBoxReal is shit and boundingBox is even shittier),
+// I decided to extract the bounding boxes using an intersect scanner I made, which is at the bottom of this file.
 
 private ["_vehicle", "_vehClass", "_realBoundingBoxes", "_boundingBoxReal"];
 _vehicle = _this;
@@ -13,7 +13,7 @@ _vehClass = typeOf _vehicle;
 
 _realBoundingBoxes =
 [
-	// Vehicle variants are ordered according to their class inheritance, disrupting those orders can cause unexpected results
+	// Vehicle variants are ordered according to their class inheritance, from lowest child to highest parent. Disrupting those orders can cause unexpected results.
 	[
 		"ReammoBox_F",
 		[

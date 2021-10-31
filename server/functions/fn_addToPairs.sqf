@@ -12,55 +12,51 @@ params ["_arr", "_key", "_val"];
 
 private _index = [_arr, _key] call fn_findInPairs;
 
-if (_index isEqualTo -1) then
+if (_index isEqualTo -1) exitWith
 {
-	_index = _arr pushBack [_key, _val];
-}
-else
-{
-	private _pair = _arr select _index;
-	private _target = _pair select 1;
+	_arr pushBack [_key, _val]
+};
 
-	if (isNil "_target") then
+private _pair = _arr select _index;
+private _target = _pair select 1;
+
+if (isNil "_target") exitWith
+{
+	_pair set [1, _val];
+	_index
+};
+
+if (_target isEqualType []) exitWith
+{
+	if (_val isEqualType []) then
 	{
-		_pair set [1, _val];
+		_target append _val;
 	}
 	else
 	{
-		if (_target isEqualType []) then
-		{
-			if (_val isEqualType []) then
-			{
-				_target append _val;
-			}
-			else
-			{
-				_target pushBack _val;
-			};
-		}
-		else
-		{
-			if ([_target,_val] isEqualTypeAll 0) then
-			{
-				_target = _target + _val;
-			}
-			else
-			{
-				_target = [_target];
+		_target pushBack _val;
+	};
 
-				if (_val isEqualType []) then
-				{
-					_target append _val;
-				}
-				else
-				{
-					_target pushBack _val;
-				};
-			};
+	_index
+};
 
-			_pair set [1, _target];
-		};
+if ([_target,_val] isEqualTypeAll 0) then
+{
+	_target = _target + _val;
+}
+else
+{
+	_target = [_target];
+
+	if (_val isEqualType []) then
+	{
+		_target append _val;
+	}
+	else
+	{
+		_target pushBack _val;
 	};
 };
 
+_pair set [1, _target];
 _index

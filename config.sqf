@@ -34,6 +34,6 @@ config_refuel_amounts = compileFinal str
 
 if (isServer) then
 {
-	config_territory_markers = compileFinal preprocessFileLineNumbers "mapConfig\territories.sqf";
+	config_territory_markers = compileFinal str call compile preprocessFileLineNumbers "mapConfig\territories.sqf";
 	publicVariable "config_territory_markers";
 };

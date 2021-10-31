@@ -14,8 +14,8 @@ _DEBUG = format ["%1", _this select 0];
 // Compile a function from a file.
 // if in debug mode, the function will be dyncamically compiled every call.
 // if not in debug mode, the function will be compileFinal'd
-// example: my_fnc_name = ["path/to/folder", "my_fnc.sqf"] call mf_compile;
-// example: my_fnc_name = ["path/to/folder/my_fnc.sqf"] call mf_compile;
+// example: my_fnc_name = ["path\to\folder", "my_fnc.sqf"] call mf_compile;
+// example: my_fnc_name = ["path\to\folder\my_fnc.sqf"] call mf_compile;
 // later in the code you can simply use call my_fnc_name;
 // you can also pass raw code to get it compileFinal'd
 // example: my_fnc_name = {diag_log "hey"} call mf_compile;
@@ -25,17 +25,16 @@ mf_compile = compileFinal
 	_path = "";
 	_isDebug = ' + _DEBUG + ';
 
-	switch (toUpper typeName _this) do {
-		case "STRING": {
+	switch (true) do {
+		case (_this isEqualType ""): {
 			_path = _this;
 		};
-		case "ARRAY": {
-			_path = format["%1\%2", _this select 0, _this select 1];
+		case (_this isEqualType []): {
+			_path = _this joinString "\";
 		};
-		case "CODE": {
-			_code = toArray str _this;
-			_code set [0, (toArray " ") select 0];
-			_code set [count _code - 1, (toArray " ") select 0];
+		case (_this isEqualType {}): {
+			_code = str _this;
+			_code = _code select [1, count _code - 2];
 		};
 	};
 
@@ -44,14 +43,14 @@ mf_compile = compileFinal
 			compile format ["call compile preProcessFileLineNumbers ""%1""", _path]
 		} else {
 			compileFinal preProcessFileLineNumbers _path
-		};
+		}
 	} else {
 		if (_isDebug) then {
-			compile toString _code
+			_this
 		} else {
-			compileFinal toString _code
-		};
-	};
+			compileFinal _code
+		}
+	}
 ');
 
 // Simple command I use to make initialization scripts clean and simple.

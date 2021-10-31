@@ -59,7 +59,7 @@ _setupObjects =
 		_soldier moveInDriver _vehicle;
 
 		_soldier = [_aiGroup, _position] call createRandomSoldier;
-		_soldier moveInCargo [_vehicle, 0];
+		_soldier moveInCargo [_vehicle, [0,3] select (_type == "I_G_Offroad_01_F")]; // FFV seat
 
 		switch (true) do
 		{

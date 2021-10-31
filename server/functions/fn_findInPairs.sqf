@@ -12,13 +12,5 @@ params ["_arr", "_key"];
 
 private "_x0";
 private _equalsKey = [{_x0 isEqualType _key && {_x0 == _key}}, {_x0 isEqualTo _key}] select (_key isEqualTypeAny [0,[],false]);
-private _index = -1;
 
-{
-	if (_x isEqualType [] && {_x0 = _x select 0; !isNil "_x0" && _equalsKey}) exitWith
-	{
-		_index = _forEachIndex;
-	};
-} forEach _arr;
-
-_index
+_arr findIf {_x isEqualType [] && {_x0 = _x select 0; !isNil "_x0" && _equalsKey}}

@@ -342,5 +342,5 @@ while {true} do
 		showChat true;
 	};
 
-	uiSleep 1;
+	uiSleep 1; // do NOT set higher than 1, this will cause unintended side effects
 };

@@ -9,6 +9,7 @@ _unit = _this select 0;
 _corpse = _this select 1;
 
 _unit setVariable ["playerSpawning", true];
+_unit setVariable ["processedDeath", nil, true];
 _unit setVariable ["A3W_killScoreRegistered", nil];
 _unit setVariable ["A3W_deathCause_local", nil, true];
 _unit setVariable ["A3W_deathCause_remote", nil, true];
