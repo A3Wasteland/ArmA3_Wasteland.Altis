@@ -9,7 +9,7 @@
 
 if (!isServer) exitWith {};
 
-params ["_markerPos", ["_boatType","",[""]], ["_respawnSettings",nil,[[]]]];
+params ["_markerPos", ["_boatType","",[""]], ["_respawnSettings",nil,[createHashMap]]];
 private ["_pos", "_boat"];
 
 if (_boatType == "") then
@@ -33,7 +33,7 @@ _boat setDamage (random 0.5); // setDamage must always be called before vehicleS
 
 if (!isNil "_respawnSettings") then
 {
-	[_respawnSettings, "Vehicle", _boat] call fn_setToPairs;
+	_respawnSettings set ["_veh", _boat];
 	_boat setVariable ["vehicleRespawn_settingsArray", _respawnSettings];
 };
 

@@ -9,7 +9,7 @@
 
 if (!isServer) exitWith {};
 
-params ["_markerPos", ["_vehicleType","",[""]], ["_respawnSettings",nil,[[]]]];
+params ["_markerPos", ["_vehicleType","",[""]], ["_respawnSettings",nil,[createHashMap]]];
 private ["_pos", "_vehicle", "_hitPoint"];
 
 //_pos = [_markerPos, 2, 25, 5, 0, 60 * (pi / 180), 0, [], [_markerPos]] call BIS_fnc_findSafePos;
@@ -37,7 +37,7 @@ _vehicle setDamage (random 0.5); // setDamage must always be called before vehic
 
 if (!isNil "_respawnSettings") then
 {
-	[_respawnSettings, "Vehicle", _vehicle] call fn_setToPairs;
+	_respawnSettings set ["_veh", _vehicle];
 	_vehicle setVariable ["vehicleRespawn_settingsArray", _respawnSettings];
 };
 

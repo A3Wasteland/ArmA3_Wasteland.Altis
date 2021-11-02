@@ -35,20 +35,20 @@ _minDistance =    PARAM(6, 10);     // Minimum displacement distance from origin
 
 if (isNil "A3W_respawningVehicles") then { A3W_respawningVehicles = [] };
 
-_settings =
+_settings = createHashMapFromArray
 [
-	["Vehicle", _vehicle],
-	["Class", typeOf _vehicle],
-	["StartPos", getPosWorld _vehicle],
-	["LastSeenAlive", diag_tickTime],
-	["RespawnPos", _respawnPos],
-	["RespawnTimer", _respawnTimer],
-	["MinDistance", _minDistance],
-	["DesertedTimer", _desertedTimer],
-	["ProxyTimer", _proxyTimer],
-	["ProxyDistance", _proxyDistance],
-	["DesertedTimeout", 0],
-	["BrokenTimeout", 0]
+	["_veh", _vehicle],
+	["_vehClass", typeOf _vehicle],
+	["_startPos", getPosWorld _vehicle],
+	["_lastSeenAlive", diag_tickTime],
+	["_respawnPos", _respawnPos],
+	["_respawnTimer", _respawnTimer],
+	["_minDistance", _minDistance],
+	["_desertedTimer", _desertedTimer],
+	["_proxyTimer", _proxyTimer],
+	["_proxyDistance", _proxyDistance],
+	["_desertedTimeout", 0],
+	["_brokenTimeout", 0]
 ];
 
 A3W_respawningVehicles pushBack _settings;
