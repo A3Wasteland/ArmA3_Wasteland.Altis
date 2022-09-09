@@ -25,7 +25,7 @@ if (isNil "A3W_atmArray") then
 				if !(_x in A3W_atmArray) then { A3W_atmArray pushBack _x };
 			};
 		};
-	} forEach nearestObjects [_x, [], 5];
+	} forEach nearestTerrainObjects [_x, ["HIDE"], 5];
 } forEach call compile preprocessFileLineNumbers "mapConfig\atmPositions.sqf";
 
 // Get rid of map ATMs that are within 3m of mission ones
@@ -37,7 +37,7 @@ if (isNil "A3W_atmArray") then
 			{
 				_x setDamage 1;
 			};
-		} forEach nearestObjects [_x, [], 3];
+		} forEach nearestTerrainObjects [_x, ["HIDE"], 3];
 	};
 } forEach A3W_atmArray;
 
