@@ -16,7 +16,7 @@ _setupVars =
 	_vehicleClass = // to specify a vehicleLoadouts variant, simply write "class/variant", e.g. "O_Heli_Light_02_dynamicLoadout_F/orcaDAR"
 	[
 		"B_MBT_01_cannon_F",
-		"O_MBT_02_cannon_F",
+		["O_MBT_02_cannon_F", "O_MBT_02_railgun_F"],
 		"I_MBT_03_cannon_F",
 		["O_MBT_04_cannon_F", "O_MBT_04_command_F"] // Tanks DLC
 	];
