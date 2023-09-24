@@ -61,12 +61,7 @@ if (_brandNew || _resupply) then
 	if (!isNil "_pylons") then
 	{
 		private _paths = (configProperties [configFile >> "CfgVehicles" >> _class >> "Components" >> "TransportPylonsComponent" >> "Pylons", "isClass _x"]) apply {getArray (_x >> "turret")};
-		private _pathCount = count _paths;
-
-		if (count _pylons > _pathCount) then
-		{
-			_pylons resize _pathCount;
-		};
+		_pylons resize [count _paths, ""];
 
 		{ _veh setPylonLoadOut [_forEachIndex + 1, _x, true, _paths select _forEachIndex] } forEach _pylons;
 	};
